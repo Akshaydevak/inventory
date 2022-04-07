@@ -66,7 +66,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   void initState() {
     super.initState();
     // employees = getEmployeeData();
-    employeeDataSource = EmployeeDataSource(employeeData: employees);
+    //employeeDataSource = EmployeeDataSource(employeeData: employees);
   }
 
   @override
@@ -816,7 +816,8 @@ print("checking"+unitcost.toString());
                                     // ),
 
                                     ScrollableTable(
-                                        onTotal: totalUnitcost
+                                        onTotal: totalUnitcost,
+
                                     ),
                                   ],
                                 ),
