@@ -767,7 +767,8 @@ class _$OrderLinesTearOff {
   const _$OrderLinesTearOff();
 
   _OrderLines call(
-      {@JsonKey(name: "supplier_code") String? supplierCode,
+      {int? vat,
+      @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
@@ -784,6 +785,7 @@ class _$OrderLinesTearOff {
       @JsonKey(name: "excess_tax") int? excessTax,
       @JsonKey(name: "actual_cost") int? actualCost}) {
     return _OrderLines(
+      vat: vat,
       supplierCode: supplierCode,
       variantId: variantId,
       variantName: variantName,
@@ -813,6 +815,7 @@ const $OrderLines = _$OrderLinesTearOff();
 
 /// @nodoc
 mixin _$OrderLines {
+  int? get vat => throw _privateConstructorUsedError;
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
@@ -858,7 +861,8 @@ abstract class $OrderLinesCopyWith<$Res> {
           OrderLines value, $Res Function(OrderLines) then) =
       _$OrderLinesCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: "supplier_code") String? supplierCode,
+      {int? vat,
+      @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
@@ -886,6 +890,7 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? vat = freezed,
     Object? supplierCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
@@ -904,6 +909,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
     Object? actualCost = freezed,
   }) {
     return _then(_value.copyWith(
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as int?,
       supplierCode: supplierCode == freezed
           ? _value.supplierCode
           : supplierCode // ignore: cast_nullable_to_non_nullable
@@ -979,7 +988,8 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       __$OrderLinesCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: "supplier_code") String? supplierCode,
+      {int? vat,
+      @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
@@ -1009,6 +1019,7 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? vat = freezed,
     Object? supplierCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
@@ -1027,6 +1038,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
     Object? actualCost = freezed,
   }) {
     return _then(_OrderLines(
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as int?,
       supplierCode: supplierCode == freezed
           ? _value.supplierCode
           : supplierCode // ignore: cast_nullable_to_non_nullable
@@ -1099,7 +1114,8 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_OrderLines implements _OrderLines {
   const _$_OrderLines(
-      {@JsonKey(name: "supplier_code") this.supplierCode,
+      {this.vat,
+      @JsonKey(name: "supplier_code") this.supplierCode,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "barcode") this.barcode,
@@ -1119,6 +1135,8 @@ class _$_OrderLines implements _OrderLines {
   factory _$_OrderLines.fromJson(Map<String, dynamic> json) =>
       _$$_OrderLinesFromJson(json);
 
+  @override
+  final int? vat;
   @override
   @JsonKey(name: "supplier_code")
   final String? supplierCode;
@@ -1170,13 +1188,15 @@ class _$_OrderLines implements _OrderLines {
 
   @override
   String toString() {
-    return 'OrderLines(supplierCode: $supplierCode, variantId: $variantId, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
+    return 'OrderLines(vat: $vat, supplierCode: $supplierCode, variantId: $variantId, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _OrderLines &&
+            (identical(other.vat, vat) ||
+                const DeepCollectionEquality().equals(other.vat, vat)) &&
             (identical(other.supplierCode, supplierCode) ||
                 const DeepCollectionEquality()
                     .equals(other.supplierCode, supplierCode)) &&
@@ -1228,6 +1248,7 @@ class _$_OrderLines implements _OrderLines {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(supplierCode) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantName) ^
@@ -1258,7 +1279,8 @@ class _$_OrderLines implements _OrderLines {
 
 abstract class _OrderLines implements OrderLines {
   const factory _OrderLines(
-      {@JsonKey(name: "supplier_code") String? supplierCode,
+      {int? vat,
+      @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
@@ -1278,6 +1300,8 @@ abstract class _OrderLines implements OrderLines {
   factory _OrderLines.fromJson(Map<String, dynamic> json) =
       _$_OrderLines.fromJson;
 
+  @override
+  int? get vat => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;

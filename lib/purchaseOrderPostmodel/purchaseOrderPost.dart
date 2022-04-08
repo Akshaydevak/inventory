@@ -36,6 +36,7 @@ class PurchaseOrderPost with _$PurchaseOrderPost {
 @freezed
 class OrderLines with _$OrderLines {
   const factory OrderLines({
+    final int? vat,
     @JsonKey(name: "supplier_code") final String? supplierCode,
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "variant_name") final String? variantName,
@@ -51,6 +52,7 @@ class OrderLines with _$OrderLines {
     @JsonKey(name: "grand_total") final int? grandTotal,
     @JsonKey(name: "vatable_amount") final int? variableAmount,
     @JsonKey(name: "excess_tax") final int? excessTax,
+
     @JsonKey(name: "actual_cost") final int? actualCost,
   }) = _OrderLines;
   factory OrderLines.fromJson(Map<String, dynamic> json) =>

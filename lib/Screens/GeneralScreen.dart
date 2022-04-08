@@ -55,6 +55,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   String? salesUOM;
   String? purchaseUom;
   int unitcost=0;
+  int grands=0;
 
 
 
@@ -74,13 +75,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
   Widget build(BuildContext context) {
     ak = Provider.of<NavigationProvider>(context);
     print("unitcost"+unitcost.toString());
-    Future totalUnitcost(int? value)async{
+    Future totalUnitcost(int? value,int grandTotal)async{
+      print("grandTotal"+grandTotal.toString());
 
 
       print("value isssss$value");
 
   unitcost=value!;
-
+grands=grandTotal;
       print("unit cost is$unitcost");
       // unitcourse.text=unitcost.toString();
       print(unitcourse.text);
@@ -97,6 +99,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
     }
 print("checking"+unitcost.toString());
      unitcourse.text=unitcost.toString();
+     grandtotal.text=grands.toString();
 
 
     double height = MediaQuery.of(context).size.height;
