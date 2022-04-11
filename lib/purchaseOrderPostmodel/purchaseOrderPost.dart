@@ -52,7 +52,6 @@ class OrderLines with _$OrderLines {
     @JsonKey(name: "grand_total") final int? grandTotal,
     @JsonKey(name: "vatable_amount") final int? variableAmount,
     @JsonKey(name: "excess_tax") final int? excessTax,
-
     @JsonKey(name: "actual_cost") final int? actualCost,
   }) = _OrderLines;
   factory OrderLines.fromJson(Map<String, dynamic> json) =>

@@ -48,7 +48,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this);
+    TabController _tabController = TabController(length: 3, vsync: this,initialIndex: 1);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;

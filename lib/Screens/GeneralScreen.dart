@@ -55,7 +55,17 @@ class _GeneralScreenState extends State<GeneralScreen> {
   String? salesUOM;
   String? purchaseUom;
   int unitcost=0;
+  int discountValue=0;
   int grands=0;
+  int focValue=0;
+  int VatableValue=0;
+  int excessTax=0;
+  int vatValue=0;
+  int actualValue=0;
+  int excessTAxValue=0;
+  int vatableValue=0;
+  List<OrderLines>orderLisnes=[];
+
 
 
 
@@ -74,15 +84,27 @@ class _GeneralScreenState extends State<GeneralScreen> {
 
   Widget build(BuildContext context) {
     ak = Provider.of<NavigationProvider>(context);
-    print("unitcost"+unitcost.toString());
-    Future totalUnitcost(int? value,int grandTotal)async{
-      print("grandTotal"+grandTotal.toString());
 
-
-      print("value isssss$value");
+    Future totalUnitcost(int? value,int? grand,int? foc,int?
+    actualCost, int? vat,List<OrderLines> orderLines,int ? discount,int ? excesstax,int ?vatableAmount)async{
 
   unitcost=value!;
-grands=grandTotal;
+  discountValue=discount!;
+  grands=grand!;
+  focValue=foc!;
+  orderLisnes=orderLines;
+  VatableValue=vatableAmount!;
+  excessTAxValue=excesstax!;
+
+  print("+++++++++++++++");
+  print(orderLines);
+
+  vatValue=vat!;
+  actualValue=actualCost!;
+
+
+
+
       print("unit cost is$unitcost");
       // unitcourse.text=unitcost.toString();
       print(unitcourse.text);
@@ -91,15 +113,19 @@ grands=grandTotal;
       // });
 
 
-
-
-
-
-
     }
-print("checking"+unitcost.toString());
+
+
+
      unitcourse.text=unitcost.toString();
      grandtotal.text=grands.toString();
+     vat.text=vatValue.toString();
+    actualcost.text=actualValue.toString();
+    foc.text=focValue.toString();
+    discount.text=discountValue.toString();
+    excesstax.text=excessTAxValue.toString();
+    Variableamount.text=VatableValue.toString();
+
 
 
     double height = MediaQuery.of(context).size.height;
@@ -136,8 +162,12 @@ print("checking"+unitcost.toString());
                                       SizedBox(
                                         height: height * .030,
                                       ),
+                                      SizedBox(
+                                        height: height * .035,
+                                      ),
+
                                       SelectableDropDownpopUp(
-                                        label: "purchase UOM",
+                                        label: "order type",
                                         type: "sellingngPrice-basedOn",
                                         value: purchaseUom,
                                         onSelection: (String? va) {
@@ -160,15 +190,20 @@ print("checking"+unitcost.toString());
                                       ),
                                       NewInputCard(
                                           controller: ordercode
-                                          , title: "Order code"),
+                                          , title: "Order code",
+                                        readOnly: true,
+                                      ),
                                       SizedBox(
                                         height: height * .030,
                                       ),
-                                      NewInputCard(
-                                        controller: orderDate,
-                                        title: "Order date",
-                                        colors: Color(0xff3E4F5B),
+                                      BuildDateFormField(
+                                        label: "Order date",
+                                        onSaved: (newValue) {
+                                          print(newValue);
+                                      orderDate.text = newValue.toString();
+                                        },
                                       ),
+
                                       SizedBox(
                                         height: height * .030,
                                       ),
@@ -200,9 +235,16 @@ print("checking"+unitcost.toString());
                                       SizedBox(
                                         height: height * .030,
                                       ),
-                                      NewInputCard(
-                                          controller: promised_receipt_date,
-                                          title: "Promised reciept date"),
+                                      BuildDateFormField(
+                                        label: "Promised reciept date",
+                                        onSaved: (newValue) {
+                                          print(newValue);
+                                          promised_receipt_date.text = newValue.toString();
+                                        },
+                                      ),
+                                      // NewInputCard(
+                                      //     controller: promised_receipt_date,
+                                      //     title: "Promised reciept date"),
                                       SizedBox(
                                         height: height * .030,
                                       ),
@@ -215,13 +257,24 @@ print("checking"+unitcost.toString());
                                       child: Column(
                                     children: [
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .040,
                                       ),
-                                      NewInputCard(
-                                          controller: planned_receipt_date,
-                                          title: "Planned reciept date"),
+
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
+                                      ),
+                                      BuildDateFormField(
+                                        label: "Planned reciept date",
+                                        onSaved: (newValue) {
+                                          print(newValue);
+                                          planned_receipt_date.text = newValue.toString();
+                                        },
+                                      ),
+                                      // NewInputCard(
+                                      //     controller: planned_receipt_date,
+                                      //     title: "Planned reciept date"),
+                                      SizedBox(
+                                        height: height * .020,
                                       ),
                                       NewInputCard(
                                           controller: Paymentcode, title: "Payment code"),
@@ -229,25 +282,25 @@ print("checking"+unitcost.toString());
                                         height: height * .030,
                                       ),
                                       NewInputCard(
-                                          controller: Paymentstatus, title: "Payment status"),
+                                          controller: Paymentstatus, title: "Payment status",readOnly: true,),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
                                       ),
                                       NewInputCard(
-                                          controller: orderStatus, title: "Order status"),
+                                          controller: orderStatus, title: "Order status",readOnly: true,),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
                                       ),
                                       NewInputCard(
                                           controller: Recievingstatus,
-                                          title: "Recieving status"),
+                                          title: "Recieving status",readOnly: true,),
                                       SizedBox(
                                         height: height * .030,
                                       ),
                                       NewInputCard(
-                                          controller: invoicestatus, title: "Invoice status"),
+                                          controller: invoicestatus, title: "Invoice status",readOnly: true,),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
                                       ),
                                       NewInputCard(
                                         controller: note,
@@ -257,61 +310,62 @@ print("checking"+unitcost.toString());
                                         maxLines: 3,
                                       ),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
                                       ),
-                                      NewInputCard(controller: discount, title: "Discount"),
-                                      SizedBox(
-                                        height: height * .030,
-                                      ),
-                                      SizedBox(
-                                        height: height * .030,
-                                      ),
-                                    ],
-                                  )),
-                                  Expanded(
-                                      child: Column(
-                                    children: [
-
                                       NewInputCard(
                                         controller: remarks,
                                         title: "Remarks",
                                         height: 90,
                                         maxLines: 3,
                                       ),
+
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .020,
+                                      ),
+
+                                    ],
+                                  )),
+                                  Expanded(
+                                      child: Column(
+                                    children: [
+
+                                      NewInputCard(controller: discount, title: "Discount",readOnly: true,),
+                                      SizedBox(
+                                        height: height * .035,
                                       ),
                                       NewInputCard(controller: foc, title: "Foc"),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .035,
                                       ),
                                       NewInputCard(
-                                          controller: unitcourse, title: "Unit course"),
+                                          controller: unitcourse, title: "Unit cost",readOnly: true,),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .035,
                                       ),
                                       NewInputCard(
-                                          controller: Variableamount,
-                                          title: "Variable amount"),
+                                          controller: Variableamount,readOnly: true,
+                                          title: "Vartable amount"),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .035,
                                       ),
                                       NewInputCard(
-                                          controller: excesstax, title: "Excess tax"),
+                                          controller: excesstax,
+                                          readOnly: true,
+                                          title: "Excess tax"),
                                       SizedBox(
-                                        height: height * .030,
+                                        height: height * .035,
                                       ),
-                                      NewInputCard(controller: vat, title: "Vat"),
+                                      NewInputCard(controller: vat, title: "Vat",readOnly: true,),
                                       SizedBox(
-                                        height: height * .030,
-                                      ),
-                                      NewInputCard(
-                                          controller: actualcost, title: "Actual cost"),
-                                      SizedBox(
-                                        height: height * .030,
+                                        height: height * .035,
                                       ),
                                       NewInputCard(
-                                          controller: grandtotal, title: "Grand total"),
+                                          controller: actualcost, title: "Actual cost",readOnly: true,),
+                                      SizedBox(
+                                        height: height * .035,
+                                      ),
+                                      NewInputCard(
+                                          controller: grandtotal, title: "Grand total",readOnly: true,),
                                       SizedBox(
                                         height: height * .008,
                                       ),
@@ -341,485 +395,11 @@ print("checking"+unitcost.toString());
                                   physics: ScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   children: [
-                                    //   Container(
-                                    //     height: 500,
-                                    //      width: MediaQuery.of(context).size.height-10,
-                                    //   padding: EdgeInsets.all(10),
-                                    //   child: customTable(
-                                    //     border: TableBorder(
-                                    //         verticalInside: BorderSide(
-                                    //             width: 1,
-                                    //             color: Colors.black45,
-                                    //             // color: Colors.blue,
-                                    //             style: BorderStyle.solid),
-                                    //         horizontalInside: BorderSide.none),
-                                    //     tableWidth: .5,
-                                    //     childrens: [
-                                    //       TableRow(
-                                    //         // decoration: BoxDecoration(
-                                    //         //     color: Colors.green.shade200,
-                                    //         //     shape: BoxShape.rectangle,
-                                    //         //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-                                    //           children: [
-                                    //             tableHeadtext(
-                                    //               'Picking Line Code',
-                                    //               padding: EdgeInsets.all(7),
-                                    //               height: 30,
-                                    //               size: 13,
-                                    //               // color: Palette.containerDarknew,
-                                    //               // textColor: Palette.white,
-                                    //             ),
-                                    //             tableHeadtext('Orderline ID',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Variant ID',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Quantity',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             // tableHeadtext('description', size: 10, color: null),
-                                    //             tableHeadtext('Product Verified',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Quantity Verified',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Picking Verified',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Ready to pack',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Picked By',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             tableHeadtext('Move To',
-                                    //                 padding: EdgeInsets.all(7),
-                                    //                 height: 30,
-                                    //                 size: 13,
-                                    //                 // color: Palette.containerDarknew,
-                                    //                 // textColor: Palette.white
-                                    //             ),
-                                    //             // if (widget.onAddNew) textPadding(''),
-                                    //           ]),
-                                    //       // if (!widget.onAddNew &&
-                                    //       //     widget.order?.orderLines != null &&
-                                    //       //     widget.order!.orderLines!.isNotEmpty) ...[
-                                    //       //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
-                                    //       TableRow(
-                                    //           decoration: BoxDecoration(
-                                    //               color: Colors.grey.shade200,
-                                    //               shape: BoxShape.rectangle,
-                                    //               border: Border(
-                                    //                   left: BorderSide(
-                                    //                       width: 1,
-                                    //                       color: Colors.black45,
-                                    //                       style: BorderStyle.solid),
-                                    //                   right: BorderSide(
-                                    //                       color: Colors.black45,
-                                    //                       width: 1,
-                                    //                       style: BorderStyle.solid))),
-                                    //           children: [
-                                    //             textPadding("841",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("01",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             InkWell(
-                                    //               onTap: () {
-                                    //                // isClicked1 = !isClicked1;
-                                    //                 setState(() {});
-                                    //               },
-                                    //               child: Card(
-                                    //                 color:  Colors.green ,
-                                    //                 child: Container(
-                                    //                   // color: isClicked1 ? Colors.green : Colors.grey.shade100,
-                                    //                     width: 200,
-                                    //                     height: 300,
-                                    //                     decoration: BoxDecoration(
-                                    //                         border: Border.all(color: Colors.black12)),
-                                    //                     child: Row(
-                                    //                       children: [
-                                    //                         Icon(
-                                    //                           Icons.check,
-                                    //                           color:  Colors.black,
-                                    //                         ),
-                                    //                      SizedBox(height: 1,),
-                                    //                         Text(
-                                    //                           "Packing",
-                                    //                           style: TextStyle(
-                                    //                             color:  Colors.black,
-                                    //                           ),
-                                    //                         ),
-                                    //                       ],
-                                    //                     )),
-                                    //               ),
-                                    //             )
-                                    //             // padding: EdgeInsets.all(7), fontSize: 12
-                                    //
-                                    //             // textPadding(""),
-                                    //             // textPadding("${widget.order?.orderLines?[i].id}", fontSize: 10),
-                                    //             // textPadding("${widget.order?.orderLines?[i].variantId}",
-                                    //             //     fontSize: 10),
-                                    //             // textPadding("${widget.order?.orderLines?[i].totalQuantity} ${widget.order?.orderLines?[i].meta?.uom}",
-                                    //             //     fontSize: 10),
-                                    //             // textPadding("${widget.order?.orderLines?[i].meta?.name}",
-                                    //             //     fontSize: 10),
-                                    //             //     textPadding("${widget.order?.orderLines?[i].meta?.description}",
-                                    //             //     fontSize: 10,),
-                                    //             // TableFileViewField(fileUrl: ""
-                                    //             //     // "${widget.order?.orderLines?[i].meta?.image}"
-                                    //             //     ),
-                                    //             // TableFileUploadField(
-                                    //             //   onChange: (p0) {},
-                                    //             // ),
-                                    //             // if (widget.onAddNew) textPadding(''),
-                                    //           ]),
-                                    //       TableRow(
-                                    //           decoration: BoxDecoration(
-                                    //             color: Colors.grey.shade100,
-                                    //             shape: BoxShape.rectangle,
-                                    //             border: Border(
-                                    //                 left: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid),
-                                    //                 right: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid)),
-                                    //             // border: Border(
-                                    //             //     bottom: BorderSide(
-                                    //             //         color: Colors.black87,
-                                    //             //         width: 1,
-                                    //             //         style: BorderStyle.solid))
-                                    //           ),
-                                    //           children: [
-                                    //             textPadding("841",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("01",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             Padding(
-                                    //               padding: const EdgeInsets.only(top: 5),
-                                    //               child: InkWell(
-                                    //                 onTap: () {
-                                    //                   // isClicked2 = !isClicked2;
-                                    //                   setState(() {});
-                                    //                 },
-                                    //                 child: Card(
-                                    //                   color: Colors.grey.shade200,
-                                    //                   child: Container(
-                                    //                       width: 200,
-                                    //                       height:300,
-                                    //                       decoration: BoxDecoration(
-                                    //                           border: Border.all(color: Colors.black12)),
-                                    //                       child: Row(
-                                    //                         children: [
-                                    //                           Icon(
-                                    //                             Icons.check,
-                                    //                             color:  Colors.black,
-                                    //                           ),
-                                    //                           SizedBox(width: 1,),
-                                    //                           Text(
-                                    //                             "Packing",
-                                    //                             style: TextStyle(
-                                    //                               color:
-                                    //                                Colors.black,
-                                    //                             ),
-                                    //                           ),
-                                    //                         ],
-                                    //                       )),
-                                    //                 ),
-                                    //               ),
-                                    //             )
-                                    //             // if (widget.onAddNew) textPadding(''),
-                                    //           ]),
-                                    //       TableRow(
-                                    //           decoration: BoxDecoration(
-                                    //             color: Colors.grey.shade200,
-                                    //             shape: BoxShape.rectangle,
-                                    //             border: Border(
-                                    //                 left: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid),
-                                    //                 right: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid)),
-                                    //           ),
-                                    //           children: [
-                                    //             textPadding("841",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("01",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             Padding(
-                                    //               padding: const EdgeInsets.only(top: 5),
-                                    //               child: InkWell(
-                                    //                 onTap: () {
-                                    //                   // isClicked3 = !isClicked3;
-                                    //                   setState(() {});
-                                    //                 },
-                                    //                 child: Card(
-                                    //                   color:  Colors.grey.shade200,
-                                    //                   child: Container(
-                                    //                       width: 200,
-                                    //                       height: 300,
-                                    //                       decoration: BoxDecoration(
-                                    //                           border: Border.all(color: Colors.black12)),
-                                    //                       child: Row(
-                                    //                         children: [
-                                    //                           Icon(
-                                    //                             Icons.check,
-                                    //                             color:  Colors.black,
-                                    //                           ),
-                                    //                           SizedBox(width: 1,),
-                                    //                           Text(
-                                    //                             "Packing",
-                                    //                             style: TextStyle(
-                                    //                               color:
-                                    //                               Colors.black,
-                                    //                             ),
-                                    //                           ),
-                                    //                         ],
-                                    //                       )),
-                                    //                 ),
-                                    //               ),
-                                    //             )
-                                    //             // if (widget.onAddNew) textPadding(''),
-                                    //           ]),
-                                    //       TableRow(
-                                    //           decoration: BoxDecoration(
-                                    //             color: Colors.grey.shade100,
-                                    //             shape: BoxShape.rectangle,
-                                    //             border: Border(
-                                    //                 left: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid),
-                                    //                 bottom: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid),
-                                    //                 right: BorderSide(
-                                    //                     color: Colors.black45,
-                                    //                     width: 1,
-                                    //                     style: BorderStyle.solid)),
-                                    //           ),
-                                    //           children: [
-                                    //             textPadding("841",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("842",
-                                    //                 fontSize: 12,
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("01",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             textPadding("Lorem",
-                                    //                 padding: EdgeInsets.only(left: 11.5, top: 11.5),
-                                    //                 fontWeight: FontWeight.w500),
-                                    //             Padding(
-                                    //               padding: const EdgeInsets.only(top: 5),
-                                    //               child: InkWell(
-                                    //                 onTap: () {
-                                    //                   // isClicked4 = !isClicked4;
-                                    //                   setState(() {});
-                                    //                 },
-                                    //                 child: Card(
-                                    //                   color: Colors.grey.shade200,
-                                    //                   child: Container(
-                                    //                       width: 200,
-                                    //                       height:  300,
-                                    //                       decoration: BoxDecoration(
-                                    //                           border: Border.all(color: Colors.black12)),
-                                    //                       child: Row(
-                                    //                         children: [
-                                    //                           Icon(
-                                    //                             Icons.check,
-                                    //                             color: Colors.black,
-                                    //                           ),
-                                    //                          SizedBox(width: 1,),
-                                    //                           Text(
-                                    //                             "Packing",
-                                    //                             style: TextStyle(
-                                    //                               color:
-                                    //                               Colors.black,
-                                    //                             ),
-                                    //                           ),
-                                    //                         ],
-                                    //                       )),
-                                    //                 ),
-                                    //               ),
-                                    //             )
-                                    //             // if (widget.onAddNew) textPadding(''),
-                                    //           ]),
-                                    //       // ],
-                                    //       // if (widget.onAddNew &&
-                                    //       //     widget.order != null &&
-                                    //       //     widget.order!.orderLines != null &&
-                                    //       //     widget.order!.orderLines!.isNotEmpty) ...[
-                                    //       //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
-                                    //       //     TableRow(children: [
-                                    //       //       textPadding("${widget.order?.orderLines?[i].id}", fontSize: 10),
-                                    //
-                                    //       //       textPadding("${widget.order?.orderLines?[i].skuId}",
-                                    //       //           fontSize: 10),
-                                    //       //       textPadding("${widget.order?.orderLines?[i].totalQuantity}",
-                                    //       //           fontSize: 10),
-                                    //
-                                    //       //     ]),
-                                    //       // ],
-                                    //     ],
-                                    //     widths: {
-                                    //       // 0: FractionColumnWidth(.9),
-                                    //       // 1: FractionColumnWidth(.9),
-                                    //       // 2: FractionColumnWidth(.9),
-                                    //       // 3: FractionColumnWidth(.9),
-                                    //       // 4: FractionColumnWidth(.9),
-                                    //       // 5: FractionColumnWidth(.9),
-                                    //       // 6: FractionColumnWidth(.9),
-                                    //       // 7: FractionColumnWidth(.9),
-                                    //       // 8: FractionColumnWidth(.9),
-                                    //       // 9: FractionColumnWidth(.19),
-                                    //     },
-                                    //   ),
-                                    // ),
 
                                     ScrollableTable(
                                         onTotal: totalUnitcost,
+
+
 
                                     ),
                                   ],
@@ -871,7 +451,7 @@ print("checking"+unitcost.toString());
                                       grandTotal: int.parse(grandtotal.text),
                                       variableAmount:int.parse( Variableamount.text),
                                       createdBy: "www",
-                                      orderLines: [],
+                                      orderLines:orderLisnes,
 
 
                                     );
