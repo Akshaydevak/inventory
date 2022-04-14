@@ -3,6 +3,8 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/commonWidget/Navigationprovider.dart';
+import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
+import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
 import 'package:inventory/purchaseorderpostcubit/cubit/purchaseorderpost_cubit.dart';
@@ -10,6 +12,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 import 'package:syncfusion_flutter_core/theme.dart';
@@ -23,6 +26,7 @@ class GeneralScreen extends StatefulWidget {
 }
 
 class _GeneralScreenState extends State<GeneralScreen> {
+  List<OrderLines>table=[];
 
   TextEditingController inventoryId = TextEditingController();
   TextEditingController vendortrnnumber = TextEditingController();
@@ -64,6 +68,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   int actualValue=0;
   int excessTAxValue=0;
   int vatableValue=0;
+  String ?variantId;
   List<OrderLines>orderLisnes=[];
 
 
@@ -75,10 +80,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
 
   @override
   void initState() {
+
     super.initState();
-    // employees = getEmployeeData();
-    //employeeDataSource = EmployeeDataSource(employeeData: employees);
+    table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
+    addition();
+
+
   }
+  addition(){}
 
   @override
 
@@ -389,19 +398,644 @@ class _GeneralScreenState extends State<GeneralScreen> {
                               isAlwaysShown: true,
                               child: Container(
                                 height: 410,
-                                width: MediaQuery.of(context).size.width,
+                                //  width: MediaQuery.of(context).size.width,
                                 child: ListView(
                                   controller: _scrollController,
                                   physics: ScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   children: [
+                                    Container(
+                                      // height: 500,
+                                      width: MediaQuery.of(context).size.width,
+                                      padding: EdgeInsets.all(10),
+                                      child: customTable(
+                                        border: TableBorder(
 
-                                    ScrollableTable(
-                                        onTotal: totalUnitcost,
+                                            verticalInside: BorderSide(
+                                                width: 1,
+                                                color: Colors.black45,
+                                                // color: Colors.blue,
+                                                style: BorderStyle.solid),
+                                            horizontalInside: BorderSide.none),
+                                        tableWidth: .5,
+                                        childrens: [
+
+                                          TableRow(
+                                            // decoration: BoxDecoration(
+                                            //     color: Colors.green.shade200,
+                                            //     shape: BoxShape.rectangle,
+                                            //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                                              children: [
+                                                tableHeadtext(
+                                                  'Sno',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white,
+                                                ),
+                                                tableHeadtext('Variant id',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 50,
+                                                  size: 12,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('Variant Name',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('Vendor ref code',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                // tableHeadtext('description', size: 10, color: null),
+                                                tableHeadtext('barcode',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+
+                                                tableHeadtext('current qty',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('purchase uom',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('requested qty',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('Min order qty',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('Max order qty',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('is recieved',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('Unit cost',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('discount',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('foc',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('vatable amount',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('excise tax',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('vat',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('actual cost',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('grand total',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('is invoiced',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                tableHeadtext('is active',
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Palette.containerDarknew,
+                                                  // textColor: Palette.white
+                                                ),
+                                                // if (widget.onAddNew) textPadding(''),
+                                              ]),
+                                          // if (!widget.onAddNew &&
+                                          //     widget.order?.orderLines != null &&
+                                          //     widget.order!.orderLines!.isNotEmpty) ...[
+                                          //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
+                                          for(var i=0;i<table.length;i++)
+                                            TableRow(
+
+                                                decoration: BoxDecoration(
+                                                    color: Colors.grey.shade200,
+                                                    shape: BoxShape.rectangle,
+                                                    border: Border(
+                                                        left: BorderSide(
+                                                            width: 1,
+                                                            color: Colors.black45,
+                                                            style: BorderStyle.solid),
+                                                        right: BorderSide(
+                                                            color: Colors.black45,
+                                                            width: 1,
+                                                            style: BorderStyle.solid))),
+                                                children: [
+                                                  textPadding("841",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  PopUpCall(
+                                                    // label: "purchase UOM",
+                                                    type: "cost-method-list",
+                                                    value: variantId,
+                                                    onSelection: (VariantId? va) {
+                                                      print(va!.id.toString());
+                                                      print("+++++++++++++++++++++++"+va.toString());
+                                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                      setState(() {
+                                                        variantId = va?.name;
+                                                        int? id=va!.id;
+                                                        //context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
 
 
+                                                        onChange = true;
+                                                        // orderType = va!;
+                                                      });
+                                                    },
+                                                    onAddNew: () {},
+                                                    // restricted: true,
+                                                  ),
+                                                  textPadding("841",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("842",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("842",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("01",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
 
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("841",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("842",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("842",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding(table[i].variableAmount.toString(),
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+                                                  textPadding("Lorem",
+                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                      fontWeight: FontWeight.w500),
+
+                                                  // InkWell(
+                                                  //   onTap: () {
+                                                  //    // isClicked1 = !isClicked1;
+                                                  //     setState(() {});
+                                                  //   },
+                                                  //   child: Card(
+                                                  //     color:  Colors.green ,
+                                                  //     child: Container(
+                                                  //       // color: isClicked1 ? Colors.green : Colors.grey.shade100,
+                                                  //         width:60,
+                                                  //       //  height: 10,
+                                                  //         decoration: BoxDecoration(
+                                                  //             border: Border.all(color: Colors.black12)),
+                                                  //         child: Row(
+                                                  //           children: [
+                                                  //             Icon(
+                                                  //               Icons.check,
+                                                  //               color:  Colors.black,
+                                                  //             ),
+                                                  //          SizedBox(height: 1,),
+                                                  //             Text(
+                                                  //               "Packing",
+                                                  //               style: TextStyle(
+                                                  //                 color:  Colors.black,
+                                                  //               ),
+                                                  //             ),
+                                                  //           ],
+                                                  //         )),
+                                                  //   ),
+                                                  // )
+                                                  // padding: EdgeInsets.all(7), fontSize: 12
+
+                                                  // textPadding(""),
+                                                  // textPadding("${widget.order?.orderLines?[i].id}", fontSize: 10),
+                                                  // textPadding("${widget.order?.orderLines?[i].variantId}",
+                                                  //     fontSize: 10),
+                                                  // textPadding("${widget.order?.orderLines?[i].totalQuantity} ${widget.order?.orderLines?[i].meta?.uom}",
+                                                  //     fontSize: 10),
+                                                  // textPadding("${widget.order?.orderLines?[i].meta?.name}",
+                                                  //     fontSize: 10),
+                                                  //     textPadding("${widget.order?.orderLines?[i].meta?.description}",
+                                                  //     fontSize: 10,),
+                                                  // TableFileViewField(fileUrl: ""
+                                                  //     // "${widget.order?.orderLines?[i].meta?.image}"
+                                                  //     ),
+                                                  // TableFileUploadField(
+                                                  //   onChange: (p0) {},
+                                                  // ),
+                                                  // if (widget.onAddNew) textPadding(''),
+                                                ]),
+                                          // TableRow(
+                                          //     decoration: BoxDecoration(
+                                          //       color: Colors.grey.shade100,
+                                          //       shape: BoxShape.rectangle,
+                                          //       border: Border(
+                                          //           left: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid),
+                                          //           right: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid)),
+                                          //       // border: Border(
+                                          //       //     bottom: BorderSide(
+                                          //       //         color: Colors.black87,
+                                          //       //         width: 1,
+                                          //       //         style: BorderStyle.solid))
+                                          //     ),
+                                          //     children: [
+                                          //       textPadding("841",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("01",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       Padding(
+                                          //         padding: const EdgeInsets.only(top: 5),
+                                          //         child: InkWell(
+                                          //           onTap: () {
+                                          //             // isClicked2 = !isClicked2;
+                                          //             setState(() {});
+                                          //           },
+                                          //           child: Card(
+                                          //             color: Colors.grey.shade200,
+                                          //             child: Container(
+                                          //                 width: 200,
+                                          //                 height:10,
+                                          //                 decoration: BoxDecoration(
+                                          //                     border: Border.all(color: Colors.black12)),
+                                          //                 child: Row(
+                                          //                   children: [
+                                          //                     Icon(
+                                          //                       Icons.check,
+                                          //                       color:  Colors.black,
+                                          //                     ),
+                                          //                     SizedBox(width: 1,),
+                                          //                     Text(
+                                          //                       "Packing",
+                                          //                       style: TextStyle(
+                                          //                         color:
+                                          //                          Colors.black,
+                                          //                       ),
+                                          //                     ),
+                                          //                   ],
+                                          //                 )),
+                                          //           ),
+                                          //         ),
+                                          //       )
+                                          //       // if (widget.onAddNew) textPadding(''),
+                                          //     ]),
+                                          // TableRow(
+                                          //     decoration: BoxDecoration(
+                                          //       color: Colors.grey.shade200,
+                                          //       shape: BoxShape.rectangle,
+                                          //       border: Border(
+                                          //           left: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid),
+                                          //           right: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid)),
+                                          //     ),
+                                          //     children: [
+                                          //       textPadding("841",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("01",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       Padding(
+                                          //         padding: const EdgeInsets.only(top: 5),
+                                          //         child: InkWell(
+                                          //           onTap: () {
+                                          //             // isClicked3 = !isClicked3;
+                                          //             setState(() {});
+                                          //           },
+                                          //           child: Card(
+                                          //             color:  Colors.grey.shade200,
+                                          //             child: Container(
+                                          //                 width: 200,
+                                          //                 height: 10,
+                                          //                 decoration: BoxDecoration(
+                                          //                     border: Border.all(color: Colors.black12)),
+                                          //                 child: Row(
+                                          //                   children: [
+                                          //                     Icon(
+                                          //                       Icons.check,
+                                          //                       color:  Colors.black,
+                                          //                     ),
+                                          //                     SizedBox(width: 1,),
+                                          //                     Text(
+                                          //                       "Packing",
+                                          //                       style: TextStyle(
+                                          //                         color:
+                                          //                         Colors.black,
+                                          //                       ),
+                                          //                     ),
+                                          //                   ],
+                                          //                 )),
+                                          //           ),
+                                          //         ),
+                                          //       )
+                                          //       // if (widget.onAddNew) textPadding(''),
+                                          //     ]),
+                                          // TableRow(
+                                          //     decoration: BoxDecoration(
+                                          //       color: Colors.grey.shade100,
+                                          //       shape: BoxShape.rectangle,
+                                          //       border: Border(
+                                          //           left: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid),
+                                          //           bottom: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid),
+                                          //           right: BorderSide(
+                                          //               color: Colors.black45,
+                                          //               width: 1,
+                                          //               style: BorderStyle.solid)),
+                                          //     ),
+                                          //     children: [
+                                          //       textPadding("841",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("842",
+                                          //           fontSize: 12,
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("01",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       textPadding("Lorem",
+                                          //           padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                          //           fontWeight: FontWeight.w500),
+                                          //       Padding(
+                                          //         padding: const EdgeInsets.only(top: 5),
+                                          //         child: InkWell(
+                                          //           onTap: () {
+                                          //             // isClicked4 = !isClicked4;
+                                          //             setState(() {});
+                                          //           },
+                                          //           child: Card(
+                                          //             color: Colors.grey.shade200,
+                                          //             child: Container(
+                                          //                 width: 200,
+                                          //                 height:  10,
+                                          //                 decoration: BoxDecoration(
+                                          //                     border: Border.all(color: Colors.black12)),
+                                          //                 child: Row(
+                                          //                   children: [
+                                          //                     Icon(
+                                          //                       Icons.check,
+                                          //                       color: Colors.black,
+                                          //                     ),
+                                          //                    SizedBox(width: 1,),
+                                          //                     Text(
+                                          //                       "Packing",
+                                          //                       style: TextStyle(
+                                          //                         color:
+                                          //                         Colors.black,
+                                          //                       ),
+                                          //                     ),
+                                          //                   ],
+                                          //                 )),
+                                          //           ),
+                                          //         ),
+                                          //       )
+                                          //       // if (widget.onAddNew) textPadding(''),
+                                          //     ]),
+                                          // ],
+                                          // if (widget.onAddNew &&
+                                          //     widget.order != null &&
+                                          //     widget.order!.orderLines != null &&
+                                          //     widget.order!.orderLines!.isNotEmpty) ...[
+                                          //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
+                                          //     TableRow(children: [
+                                          //       textPadding("${widget.order?.orderLines?[i].id}", fontSize: 10),
+
+                                          //       textPadding("${widget.order?.orderLines?[i].skuId}",
+                                          //           fontSize: 10),
+                                          //       textPadding("${widget.order?.orderLines?[i].totalQuantity}",
+                                          //           fontSize: 10),
+
+                                          //     ]),
+                                          // ],
+                                        ],
+                                        widths: {
+                                          0: FractionColumnWidth(.035),
+                                          //  1: FractionColumnWidth(.05),
+                                          //  2: FractionColumnWidth(.05),
+                                          //  3: FractionColumnWidth(.06),
+                                          //  4: FractionColumnWidth(.05),
+                                          //  5: FractionColumnWidth(.05),
+                                          //  6: FractionColumnWidth(.05),
+                                          //  7: FractionColumnWidth(.05),
+                                          //  8: FractionColumnWidth(.05,),
+                                          //  9: FractionColumnWidth(.05),
+                                          //  10: FractionColumnWidth(.05),
+                                          //  11: FractionColumnWidth(.05),
+                                          //  12: FractionColumnWidth(.05),
+                                          13: FractionColumnWidth(.03),
+                                          //  14: FractionColumnWidth(.05),
+                                          //  15: FractionColumnWidth(.05),
+                                          //  16: FractionColumnWidth(.03),
+                                          // 17: FractionColumnWidth(.05),
+                                          //  18: FractionColumnWidth(.05),
+                                          //  19: FractionColumnWidth(.05),
+                                          //  20: FractionColumnWidth(.05),
+
+                                        },
+                                      ),
                                     ),
+
+
                                   ],
                                 ),
                               ),

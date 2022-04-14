@@ -2,7 +2,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'purchase_order_type_cubit.dart';
+part of 'table_details_cubit_dart_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,8 +14,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$PurchaseOrderTypeStateTearOff {
-  const _$PurchaseOrderTypeStateTearOff();
+class _$TableDetailsCubitDartStateTearOff {
+  const _$TableDetailsCubitDartStateTearOff();
 
   _Initial initial() {
     return const _Initial();
@@ -25,11 +25,11 @@ class _$PurchaseOrderTypeStateTearOff {
     return const _Loading();
   }
 
-  _Error error() {
-    return const _Error();
+  _Error1 error() {
+    return const _Error1();
   }
 
-  _Success success(PurchaseOrdertype? data) {
+  _Success success(PurchaseOrderTableModel data) {
     return _Success(
       data,
     );
@@ -37,16 +37,16 @@ class _$PurchaseOrderTypeStateTearOff {
 }
 
 /// @nodoc
-const $PurchaseOrderTypeState = _$PurchaseOrderTypeStateTearOff();
+const $TableDetailsCubitDartState = _$TableDetailsCubitDartStateTearOff();
 
 /// @nodoc
-mixin _$PurchaseOrderTypeState {
+mixin _$TableDetailsCubitDartState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PurchaseOrdertype? data) success,
+    required TResult Function(PurchaseOrderTableModel data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$PurchaseOrderTypeState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$PurchaseOrderTypeState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -70,7 +70,7 @@ mixin _$PurchaseOrderTypeState {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
+    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
   }) =>
       throw _privateConstructorUsedError;
@@ -78,7 +78,7 @@ mixin _$PurchaseOrderTypeState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
@@ -86,7 +86,7 @@ mixin _$PurchaseOrderTypeState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) =>
@@ -94,20 +94,20 @@ mixin _$PurchaseOrderTypeState {
 }
 
 /// @nodoc
-abstract class $PurchaseOrderTypeStateCopyWith<$Res> {
-  factory $PurchaseOrderTypeStateCopyWith(PurchaseOrderTypeState value,
-          $Res Function(PurchaseOrderTypeState) then) =
-      _$PurchaseOrderTypeStateCopyWithImpl<$Res>;
+abstract class $TableDetailsCubitDartStateCopyWith<$Res> {
+  factory $TableDetailsCubitDartStateCopyWith(TableDetailsCubitDartState value,
+          $Res Function(TableDetailsCubitDartState) then) =
+      _$TableDetailsCubitDartStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$PurchaseOrderTypeStateCopyWithImpl<$Res>
-    implements $PurchaseOrderTypeStateCopyWith<$Res> {
-  _$PurchaseOrderTypeStateCopyWithImpl(this._value, this._then);
+class _$TableDetailsCubitDartStateCopyWithImpl<$Res>
+    implements $TableDetailsCubitDartStateCopyWith<$Res> {
+  _$TableDetailsCubitDartStateCopyWithImpl(this._value, this._then);
 
-  final PurchaseOrderTypeState _value;
+  final TableDetailsCubitDartState _value;
   // ignore: unused_field
-  final $Res Function(PurchaseOrderTypeState) _then;
+  final $Res Function(TableDetailsCubitDartState) _then;
 }
 
 /// @nodoc
@@ -118,7 +118,7 @@ abstract class _$InitialCopyWith<$Res> {
 
 /// @nodoc
 class __$InitialCopyWithImpl<$Res>
-    extends _$PurchaseOrderTypeStateCopyWithImpl<$Res>
+    extends _$TableDetailsCubitDartStateCopyWithImpl<$Res>
     implements _$InitialCopyWith<$Res> {
   __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
       : super(_value, (v) => _then(v as _Initial));
@@ -134,7 +134,7 @@ class _$_Initial implements _Initial {
 
   @override
   String toString() {
-    return 'PurchaseOrderTypeState.initial()';
+    return 'TableDetailsCubitDartState.initial()';
   }
 
   @override
@@ -151,7 +151,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PurchaseOrdertype? data) success,
+    required TResult Function(PurchaseOrderTableModel data) success,
   }) {
     return initial();
   }
@@ -162,7 +162,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
   }) {
     return initial?.call();
   }
@@ -173,7 +173,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -187,7 +187,7 @@ class _$_Initial implements _Initial {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
+    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
   }) {
     return initial(this);
@@ -198,7 +198,7 @@ class _$_Initial implements _Initial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
   }) {
     return initial?.call(this);
@@ -209,7 +209,7 @@ class _$_Initial implements _Initial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
@@ -220,7 +220,7 @@ class _$_Initial implements _Initial {
   }
 }
 
-abstract class _Initial implements PurchaseOrderTypeState {
+abstract class _Initial implements TableDetailsCubitDartState {
   const factory _Initial() = _$_Initial;
 }
 
@@ -232,7 +232,7 @@ abstract class _$LoadingCopyWith<$Res> {
 
 /// @nodoc
 class __$LoadingCopyWithImpl<$Res>
-    extends _$PurchaseOrderTypeStateCopyWithImpl<$Res>
+    extends _$TableDetailsCubitDartStateCopyWithImpl<$Res>
     implements _$LoadingCopyWith<$Res> {
   __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
       : super(_value, (v) => _then(v as _Loading));
@@ -248,7 +248,7 @@ class _$_Loading implements _Loading {
 
   @override
   String toString() {
-    return 'PurchaseOrderTypeState.loading()';
+    return 'TableDetailsCubitDartState.loading()';
   }
 
   @override
@@ -265,7 +265,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PurchaseOrdertype? data) success,
+    required TResult Function(PurchaseOrderTableModel data) success,
   }) {
     return loading();
   }
@@ -276,7 +276,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
   }) {
     return loading?.call();
   }
@@ -287,7 +287,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -301,7 +301,7 @@ class _$_Loading implements _Loading {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
+    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
   }) {
     return loading(this);
@@ -312,7 +312,7 @@ class _$_Loading implements _Loading {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
   }) {
     return loading?.call(this);
@@ -323,7 +323,7 @@ class _$_Loading implements _Loading {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
@@ -334,40 +334,40 @@ class _$_Loading implements _Loading {
   }
 }
 
-abstract class _Loading implements PurchaseOrderTypeState {
+abstract class _Loading implements TableDetailsCubitDartState {
   const factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$Error1CopyWith<$Res> {
+  factory _$Error1CopyWith(_Error1 value, $Res Function(_Error1) then) =
+      __$Error1CopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res>
-    extends _$PurchaseOrderTypeStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
+class __$Error1CopyWithImpl<$Res>
+    extends _$TableDetailsCubitDartStateCopyWithImpl<$Res>
+    implements _$Error1CopyWith<$Res> {
+  __$Error1CopyWithImpl(_Error1 _value, $Res Function(_Error1) _then)
+      : super(_value, (v) => _then(v as _Error1));
 
   @override
-  _Error get _value => super._value as _Error;
+  _Error1 get _value => super._value as _Error1;
 }
 
 /// @nodoc
 
-class _$_Error implements _Error {
-  const _$_Error();
+class _$_Error1 implements _Error1 {
+  const _$_Error1();
 
   @override
   String toString() {
-    return 'PurchaseOrderTypeState.error()';
+    return 'TableDetailsCubitDartState.error()';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Error);
+    return identical(this, other) || (other is _Error1);
   }
 
   @override
@@ -379,7 +379,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PurchaseOrdertype? data) success,
+    required TResult Function(PurchaseOrderTableModel data) success,
   }) {
     return error();
   }
@@ -390,7 +390,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
   }) {
     return error?.call();
   }
@@ -401,7 +401,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -415,7 +415,7 @@ class _$_Error implements _Error {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
+    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
   }) {
     return error(this);
@@ -426,7 +426,7 @@ class _$_Error implements _Error {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
   }) {
     return error?.call(this);
@@ -437,7 +437,7 @@ class _$_Error implements _Error {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
@@ -448,22 +448,22 @@ class _$_Error implements _Error {
   }
 }
 
-abstract class _Error implements PurchaseOrderTypeState {
-  const factory _Error() = _$_Error;
+abstract class _Error1 implements TableDetailsCubitDartState {
+  const factory _Error1() = _$_Error1;
 }
 
 /// @nodoc
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({PurchaseOrdertype? data});
+  $Res call({PurchaseOrderTableModel data});
 
-  $PurchaseOrdertypeCopyWith<$Res>? get data;
+  $PurchaseOrderTableModelCopyWith<$Res> get data;
 }
 
 /// @nodoc
 class __$SuccessCopyWithImpl<$Res>
-    extends _$PurchaseOrderTypeStateCopyWithImpl<$Res>
+    extends _$TableDetailsCubitDartStateCopyWithImpl<$Res>
     implements _$SuccessCopyWith<$Res> {
   __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
       : super(_value, (v) => _then(v as _Success));
@@ -479,17 +479,13 @@ class __$SuccessCopyWithImpl<$Res>
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as PurchaseOrdertype?,
+              as PurchaseOrderTableModel,
     ));
   }
 
   @override
-  $PurchaseOrdertypeCopyWith<$Res>? get data {
-    if (_value.data == null) {
-      return null;
-    }
-
-    return $PurchaseOrdertypeCopyWith<$Res>(_value.data!, (value) {
+  $PurchaseOrderTableModelCopyWith<$Res> get data {
+    return $PurchaseOrderTableModelCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value));
     });
   }
@@ -501,11 +497,11 @@ class _$_Success implements _Success {
   const _$_Success(this.data);
 
   @override
-  final PurchaseOrdertype? data;
+  final PurchaseOrderTableModel data;
 
   @override
   String toString() {
-    return 'PurchaseOrderTypeState.success(data: $data)';
+    return 'TableDetailsCubitDartState.success(data: $data)';
   }
 
   @override
@@ -531,7 +527,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(PurchaseOrdertype? data) success,
+    required TResult Function(PurchaseOrderTableModel data) success,
   }) {
     return success(data);
   }
@@ -542,7 +538,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
   }) {
     return success?.call(data);
   }
@@ -553,7 +549,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(PurchaseOrdertype? data)? success,
+    TResult Function(PurchaseOrderTableModel data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -567,7 +563,7 @@ class _$_Success implements _Success {
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
-    required TResult Function(_Error value) error,
+    required TResult Function(_Error1 value) error,
     required TResult Function(_Success value) success,
   }) {
     return success(this);
@@ -578,7 +574,7 @@ class _$_Success implements _Success {
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
   }) {
     return success?.call(this);
@@ -589,7 +585,7 @@ class _$_Success implements _Success {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
+    TResult Function(_Error1 value)? error,
     TResult Function(_Success value)? success,
     required TResult orElse(),
   }) {
@@ -600,10 +596,10 @@ class _$_Success implements _Success {
   }
 }
 
-abstract class _Success implements PurchaseOrderTypeState {
-  const factory _Success(PurchaseOrdertype? data) = _$_Success;
+abstract class _Success implements TableDetailsCubitDartState {
+  const factory _Success(PurchaseOrderTableModel data) = _$_Success;
 
-  PurchaseOrdertype? get data => throw _privateConstructorUsedError;
+  PurchaseOrderTableModel get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;

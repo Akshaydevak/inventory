@@ -11,7 +11,6 @@ class PurchaseorderpostCubit extends Cubit<PurchaseorderpostState> {
   final InventoryRepository repo = InventoryRepositoryImpl();
   PurchaseorderpostCubit() : super(PurchaseorderpostState.initial());
   Future postPurchase(PurchaseOrderPost model) async {
-
     emit(_Loading());
     print("akkkkk??????????????????????????????????");
     final result = await repo.postPurchase(model);

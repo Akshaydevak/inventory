@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:inventory/cubit/purchaseordertype/cubit/purchase_order_type_cubit.dart';
+
+import 'package:inventory/cubits/cubit/cubit/purchase_order_type_cubit_dart_cubit.dart';
+import 'package:inventory/cubits/cubit/variant_id_cubit_dart_cubit.dart';
+import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 
 class PopUpCall extends StatefulWidget {
@@ -27,7 +30,6 @@ class PopUpCall extends StatefulWidget {
 }
 
 class _PopUpCallState extends State<PopUpCall> {
-
   @override
   Widget build(BuildContext context) {
     Widget data = SellingPriceBasedPopUpCall(
@@ -102,7 +104,6 @@ class _SellingPriceBasedPopUpCallState
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     label = widget.value;
@@ -110,36 +111,34 @@ class _SellingPriceBasedPopUpCallState
         create: (context) => PurchaseOrderTypeCubit(),
         child: Builder(
           builder: (context) {
-            context
-                .read<PurchaseOrderTypeCubit>()
-                .getPurchaseOrdertype();
+            context.read<PurchaseOrderTypeCubit>().getPurchaseOrdertype();
             return BlocBuilder<PurchaseOrderTypeCubit,
-                PurchaseOrderTypeState>(builder: (context, state) {
-                  print(state);
+                PurchaseOrderTypeCubitDartState>(builder: (context, state) {
+              print(state);
               return state.maybeWhen(
                 orElse: () => Center(
                   child: CircularProgressIndicator(),
                 ),
-               // error: () => {errorLoader(widget.onAddNew)},
+                // error: () => {errorLoader(widget.onAddNew)},
                 success: (data) {
-                  print("data==="+data.toString());
+                  print("data===" + data.toString());
                   List<String> list = [];
                   // list=data.orderTypes;
-int? length =data?.orderTypes?.length;
-for(var i=0;i<length!;i++){
-  list.add(data!.orderTypes![i]);
-
-}
+                  int? length = data?.orderTypes?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.orderTypes![i]);
+                  }
                   String? onSellingBasedSelect(var value, List<String> list) {
-  print("value"+value.toString());
- // print("value"+list.toString());
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
 
                     PurchaseOrdertype? newData;
                     list.forEach((element) {
                       newData?.orderTypes?.add(element);
                     });
                     return value;
-                  }          // });
+                  } // });
+
                   if (widget.onAddNew != null) list.add("");
                   _controller = TextEditingController(text: label);
                   return TypeAheadFormField(
@@ -160,8 +159,7 @@ for(var i=0;i<length!;i++){
                         widget.onAddNew!();
                       else {
                         widget.onSelection(onSellingBasedSelect(
-                            suggestion.toString(),
-                            data!.orderTypes!));
+                            suggestion.toString(), data!.orderTypes!));
                         // data.sellingPercntageBasedOn?.forEach((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;
@@ -191,6 +189,7 @@ for(var i=0;i<length!;i++){
           },
         ));
   }
+
   List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
     List<String> newList = [];
     list.forEach((element) {
@@ -201,6 +200,7 @@ for(var i=0;i<length!;i++){
     return newList;
   }
 }
+
 class CostMethodPopUpCall extends StatefulWidget {
   final String? value;
   final VoidCallback? onAddNew;
@@ -210,21 +210,19 @@ class CostMethodPopUpCall extends StatefulWidget {
   final List<String>? list;
   const CostMethodPopUpCall(
       {Key? key,
-        this.value,
-        this.onAddNew,
-        required this.onSelection,
-        required this.type,
-        required this.enable,
-        this.list})
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
       : super(key: key);
 
   @override
-  _CostMethodPopUpCallState createState() =>
-      _CostMethodPopUpCallState();
+  _CostMethodPopUpCallState createState() => _CostMethodPopUpCallState();
 }
 
-class _CostMethodPopUpCallState
-    extends State<CostMethodPopUpCall> {
+class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
   String? label;
   TextEditingController _controller = TextEditingController();
   @override
@@ -233,19 +231,16 @@ class _CostMethodPopUpCallState
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     label = widget.value;
-    return BlocProvider<PurchaseOrderTypeCubit>(
-        create: (context) => PurchaseOrderTypeCubit(),
+    return BlocProvider<VariantIdCubitDartCubit>(
+        create: (context) => VariantIdCubitDartCubit(),
         child: Builder(
           builder: (context) {
-            context
-                .read<PurchaseOrderTypeCubit>()
-                .getPurchaseOrdertype();
-            return BlocBuilder<PurchaseOrderTypeCubit,
-                PurchaseOrderTypeState>(builder: (context, state) {
+            context.read<VariantIdCubitDartCubit>().getVariantId();
+            return BlocBuilder<VariantIdCubitDartCubit,
+                VariantIdCubitDartState>(builder: (context, state) {
               print(state);
               return state.maybeWhen(
                 orElse: () => Center(
@@ -253,24 +248,35 @@ class _CostMethodPopUpCallState
                 ),
                 // error: () => {errorLoader(widget.onAddNew)},
                 success: (data) {
-                  print("data==="+data.toString());
-                  List<String> list = [];
+                  print("data===" + data.toString());
+                  List<String?> list = [];
+                  int? length=data.length;
                   // list=data.orderTypes;
-                  int? length =data?.orderTypes?.length;
-                  for(var i=0;i<length!;i++){
-                    list.add(data!.orderTypes![i]);
+                  for(var i=0;i<length;i++){
+                    list.add(data[i].name);
 
                   }
-                  String? onSellingBasedSelect(var value, List<String> list) {
-                    print("value"+value.toString());
+
+                  VariantId? onSellingBasedSelect(var value, List<VariantId> list) {
+                    VariantId ? newData;
+                    list.forEach((element) {
+                      if (element.name != null &&
+                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                      if (element.id != null &&
+                          element.id == (value.toLowerCase())) newData = element;
+
+
+                    });
+                    print("value" + value.toString());
                     // print("value"+list.toString());
 
-                    PurchaseOrdertype? newData;
-                    list.forEach((element) {
-                      newData?.orderTypes?.add(element);
-                    });
-                    return value;
-                  }          // });
+                    // PurchaseOrdertype? newData;
+                    // list.forEach((element) {
+                    //   newData?.orderTypes?.add(element);
+                    // });
+                    return newData;
+                  } // });
+
                   if (widget.onAddNew != null) list.add("");
                   _controller = TextEditingController(text: label);
                   return TypeAheadFormField(
@@ -285,15 +291,15 @@ class _CostMethodPopUpCallState
                         decoration: InputDecoration(
                             border: InputBorder.none,
                             isDense: true,
-                           // border: OutlineInputBorder(),
+                            // border: OutlineInputBorder(),
                             suffixIcon: Icon(Icons.arrow_downward_outlined))),
                     onSuggestionSelected: (suggestion) {
+                      print("suggestion"+suggestion.toString());
                       if (suggestion == "Add new")
                         widget.onAddNew!();
                       else {
                         widget.onSelection(onSellingBasedSelect(
-                            suggestion.toString(),
-                            data!.orderTypes!));
+                            suggestion.toString(), data));
                         // data.sellingPercntageBasedOn?.forEach((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;
@@ -311,7 +317,7 @@ class _CostMethodPopUpCallState
                         title: Text(suggestion.toString()),
                       );
                     },
-                    suggestionsCallback: (String? value) async {
+                    suggestionsCallback: (String value) async {
                       return value == null || value.isEmpty
                           ? list
                           : search(value, list, widget.onAddNew);
@@ -323,14 +329,15 @@ class _CostMethodPopUpCallState
           },
         ));
   }
-  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+
+  List<String> search(String value, List<String?> list, VoidCallback? onAddNew) {
+    print("value"+value.toString());
     List<String> newList = [];
-    list.forEach((element) {
-      if (element.toLowerCase().contains(value.toLowerCase()))
-        newList.add(element);
-    });
-    onAddNew != null ? newList.add("Add new") : null;
+    // list.forEach((element) {
+    //   if (element.toLowerCase().contains(value.toLowerCase()))
+    //     newList.add(element);
+    // });
+    // onAddNew != null ? newList.add("Add new") : null;
     return newList;
   }
 }
-

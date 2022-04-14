@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/commonWidget/appurl.dart';
+import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
+import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
 import 'package:inventory/widgets/responseutils.dart';
@@ -14,6 +16,8 @@ abstract class LogisticDataSource {
   Future<PurchaseOrdertype> getPurchaseOrdertype();
 
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
+  Future<List<VariantId>> getVariantId();
+  Future<PurchaseOrderTableModel> getTableDetails(int id);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -63,7 +67,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseOrdertype> getPurchaseOrdertype() async {
-    final response = await client.get("http://192.168.1.8:9000/purchase-order/create-purchase-order",
+    final response = await client.get(
+      "http://192.168.1.8:9000/purchase-order/create-purchase-order",
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -85,11 +90,12 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model) async {
-    print(postPurchaseurl,);
-    print("++++++++++++++++++++++++++++++");
-    final response = await client.post(
+    print(
       postPurchaseurl,
-        data:model.toJson(),
+    );
+    print("++++++++++++++++++++++++++++++");
+    final response = await client.post(postPurchaseurl,
+        data: model.toJson(),
         // {
         //   "purchase_order_type": model.purchaseOrderType,
         //   "inventory_id": model.iventoryId,
@@ -124,5 +130,62 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<List<VariantId>> getVariantId() async {
+    print("repooooosss");
+
+    String path =
+        "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test";
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    //print(response.data['results']);
+    List<VariantId> items = [];
+
+    (response.data['data']['results'] as List).forEach((element) {
+      // print("data");
+
+      items.add(VariantId.fromJson(element));
+    });
+    return items;
+  }
+
+  @override
+  Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
+    String path =
+        "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/1";
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    PurchaseOrderTableModel dataa =
+        PurchaseOrderTableModel.fromJson(response.data['data']);
+    print(dataa);
+    return dataa;
   }
 }
