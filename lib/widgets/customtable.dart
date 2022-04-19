@@ -14,7 +14,7 @@ Widget customTable({
       columnWidths: widths,
       border: border ??
           TableBorder.all(
-              color: Colors.black, style: BorderStyle.solid, width: tableWidth),
+              color: Colors.grey, style: BorderStyle.solid, width: tableWidth),
       children: childrens,
     );
 
@@ -22,11 +22,12 @@ Widget tableHeadtext(
     String label, {
       double height = 10,
       double? size,
-      Color? textColor = Colors.red,
+      Color? textColor = Colors.black,
        Color? color =  Pellet.tableHeader,
       EdgeInsets? padding,
     }) =>
     Container(
+      alignment: Alignment.topCenter,
       height: height,
       padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
       color: color,
@@ -41,8 +42,8 @@ Widget textPadding(String label,
       EdgeInsets? padding,
       FontWeight fontWeight = FontWeight.w100}) =>
     Padding(
-      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
-      child: Text(
+      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
+      child: label=="0"?Text(''):Text(
         label,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
       ),

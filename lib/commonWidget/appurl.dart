@@ -1,3 +1,4 @@
-const baseUrl="http://192.168.1.8:9000/";
+const baseUrl="http://65.1.61.201:8111/";
 const postPurchaseurl=baseUrl+"purchase-order/create-purchase-order";
 const  purchaseOrdertype=baseUrl+"purchase-order/create-purchase-order";
+const  purchaseCurrentStockqty=baseUrl+"inventory-stock/get-stock-quantity-by-variant/testing002/aa";

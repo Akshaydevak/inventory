@@ -64,6 +64,9 @@ Map<String, dynamic> _$$_PurchaseOrderPostToJson(
 _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
     _$_OrderLines(
       vat: json['vat'] as int?,
+      isRecieved: json['isRecieved'] as bool?,
+      isActive: json['isActive'] as bool?,
+      currentQty: json['currentQty'] as int?,
       supplierCode: json['supplier_code'] as String?,
       variantId: json['variant_id'] as String?,
       variantName: json['variant_name'] as String?,
@@ -85,6 +88,9 @@ _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_OrderLinesToJson(_$_OrderLines instance) =>
     <String, dynamic>{
       'vat': instance.vat,
+      'isRecieved': instance.isRecieved,
+      'isActive': instance.isActive,
+      'currentQty': instance.currentQty,
       'supplier_code': instance.supplierCode,
       'variant_id': instance.variantId,
       'variant_name': instance.variantName,

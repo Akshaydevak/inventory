@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/commonWidget/appurl.dart';
+import 'package:inventory/model/purchase_current_stock_qty.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/model/variantid.dart';
@@ -18,6 +19,7 @@ abstract class LogisticDataSource {
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
   Future<List<VariantId>> getVariantId();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
+  Future<PurchaseCureentStockQty> getCurrentStock(int? id);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -27,7 +29,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PaginatedResponse<List<PurchaseOrder>>> getInventorySearch(
       String? next) async {
     String path =
-        "https://api-purchase-order-staging.rgcdynamics.net/purchase-order/list-purchase-order/test";
+        "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -68,7 +70,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrdertype> getPurchaseOrdertype() async {
     final response = await client.get(
-      "http://192.168.1.8:9000/purchase-order/create-purchase-order",
+      "http://65.1.61.201:8111/purchase-order/create-purchase-order",
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -91,9 +93,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model) async {
     print(
-      postPurchaseurl,
+    "post"+  postPurchaseurl.toString(),
     );
-    print("++++++++++++++++++++++++++++++");
+    print("++++++++sssssssssssss");
+    print("model"+model.toString());
     final response = await client.post(postPurchaseurl,
         data: model.toJson(),
         // {
@@ -168,6 +171,29 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
         "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/1";
+    try {
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("response" + response.toString());
+      PurchaseOrderTableModel dataa =
+          PurchaseOrderTableModel.fromJson(response.data['data']);
+      print(dataa);
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
     final response = await client.get(
       path,
       // data:
@@ -182,10 +208,58 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("response" + response.toString());
+    print("responseddddd" + response.toString());
     PurchaseOrderTableModel dataa =
         PurchaseOrderTableModel.fromJson(response.data['data']);
     print(dataa);
     return dataa;
+  }
+
+  @override
+  Future<PurchaseCureentStockQty> getCurrentStock(int? id) async {
+   String path="http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/test001/test";
+    try {
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsessssssssssssssssssssssssss" + response.toString());
+      PurchaseCureentStockQty dataa =
+          PurchaseCureentStockQty.fromJson(response.data['data']);
+      print(dataa);
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    PurchaseCureentStockQty dataa =
+        PurchaseCureentStockQty.fromJson(response.data['data']);
+    print(dataa);
+    return dataa;
+    ;
   }
 }

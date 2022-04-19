@@ -12,13 +12,10 @@ _$_PurchaseOrderTableModel _$$_PurchaseOrderTableModelFromJson(
       id: json['id'] as int?,
       code: json['code'] as String?,
       name: json['name'] as String?,
-      vat: json['vat'] as String?,
       purchaseUom: json['purchase_uom'] as String?,
       purchaseUomName: json['purchase_uom_name'] as String?,
-      excessTax: json['excess_tax'] as String?,
-      unitCost: json['unit_cost'] as String?,
-      returnType: json['return_type'] as String?,
-      returnTime: json['return_time'] as String?,
+      excessTax: json['excess_tax'] as int?,
+      unitCost: (json['unit_cost'] as num?)?.toDouble(),
       vendorDetails: json['vendor_details'] == null
           ? null
           : VendorDetails.fromJson(
@@ -34,13 +31,10 @@ Map<String, dynamic> _$$_PurchaseOrderTableModelToJson(
       'id': instance.id,
       'code': instance.code,
       'name': instance.name,
-      'vat': instance.vat,
       'purchase_uom': instance.purchaseUom,
       'purchase_uom_name': instance.purchaseUomName,
       'excess_tax': instance.excessTax,
       'unit_cost': instance.unitCost,
-      'return_type': instance.returnType,
-      'return_time': instance.returnTime,
       'vendor_details': instance.vendorDetails,
       'barcode': instance.barCode,
     };

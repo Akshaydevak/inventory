@@ -12,7 +12,7 @@ class PurchaseorderpostCubit extends Cubit<PurchaseorderpostState> {
   PurchaseorderpostCubit() : super(PurchaseorderpostState.initial());
   Future postPurchase(PurchaseOrderPost model) async {
     emit(_Loading());
-    print("akkkkk??????????????????????????????????");
+    print("assa");
     final result = await repo.postPurchase(model);
     print(result);
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));

@@ -265,6 +265,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               // padding: EdgeInsets.only(bottom: 10),
 
                               controller: _tabController,
+                              physics: NeverScrollableScrollPhysics(),
                               tabs: [
                                 Text(
                                   "Dashboard",
@@ -445,6 +446,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                   left: width * .014, right: width * .014),
                               color: Color(0xffFFFFFF),
                               child: TabBarView(
+                                physics: NeverScrollableScrollPhysics(),
                                 controller: _tabController,
                                 children: [
                                   Text("Akshay"),

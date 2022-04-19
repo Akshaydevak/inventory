@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
+import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/widgets/titleIcon.dart';
 
 import 'GeneralScreen.dart';
@@ -16,12 +19,31 @@ class PurchaseScreen extends StatefulWidget {
 }
 
 class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderStateMixin {
+  PurchaseOrderTableModel? purchaseTable;
+  double ? unitCost=0;
   @override
   Widget build(BuildContext context) {
     TabController _tabController = TabController(length: 5, vsync: this);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
-    return SingleChildScrollView(
+    return BlocProvider(
+  create: (context) => TableDetailsCubitDartCubit(),
+  child: BlocListener<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
+  listener: (context, state) {
+    state.maybeWhen(orElse: (){},
+        error: (){print("error");},success: (data){
+          print("++++++++++++++++++++++++++++++++++++++++++++++SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+          print(data);
+          purchaseTable=data;
+          unitCost=purchaseTable?.unitCost;
+
+          print("unitCost+++++++++++++++++++++++++++"+unitCost.toString());
+          print(purchaseTable);
+
+
+        });
+  },
+  child: SingleChildScrollView(
       child: Container(
         color:Color(0xffF2F3F5),
         child: Column(
@@ -71,7 +93,9 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                             labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
                               unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
                               padding: EdgeInsets.only(left: 13),
-                              isScrollable: true,
+                              isScrollable: false,
+                              physics: NeverScrollableScrollPhysics(),
+
                               //indicatorSize:TabBarIndicatorSize.tab ,
 
                               indicatorColor: Color(0xff3E4F5B),
@@ -121,9 +145,10 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                      height: height-100,
 
                     child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
                       controller: _tabController,
                       children: [
-                        GeneralScreen(widget.isCollapsed),
+                        GeneralScreen(widget.isCollapsed,purchaseTable,unitcost:unitCost),
                         PurchaseRecievinScreen(),
                         RequestFormScreen(),
                         RequestFormReceivigScreen(),
@@ -141,7 +166,9 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
           ],
         ),
       )
-    );
+    ),
+),
+);
 
   }
 }

@@ -37,6 +37,9 @@ class PurchaseOrderPost with _$PurchaseOrderPost {
 class OrderLines with _$OrderLines {
   const factory OrderLines({
     final int? vat,
+    final bool? isRecieved,
+    final bool? isActive,
+    int ? currentQty,
     @JsonKey(name: "supplier_code") final String? supplierCode,
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "variant_name") final String? variantName,

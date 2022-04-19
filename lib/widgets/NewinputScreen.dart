@@ -190,7 +190,7 @@ class _BuildDateFormFieldState extends State<BuildDateFormField> {
   Widget build(BuildContext context) {
     // final mFormat = DateFormat("12,08,2021");
     final mFormat =
-        widget.format ??DateFormat('yyyy-MM-dd');
+        widget.format ??DateFormat.yMd();
     return
          Padding(
            padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
@@ -233,25 +233,82 @@ class _BuildDateFormFieldState extends State<BuildDateFormField> {
                        //  onFieldSubmitted: widget.onSaved,
                        onShowPicker: (context, currentValue) async {
                          DateTime? date;
-                         if (widget.enable)
-                           date = await showDatePicker(
+
+                         date = await showDatePicker(
                                context: context,
                                firstDate: DateTime(1900),
                                initialDate: currentValue ?? DateTime.now(),
-                               lastDate: DateTime(2100));
-                         // if (date != null) {
-                         final time = await showTimePicker(
-                           context: context,
-                           initialTime:
-                           TimeOfDay.fromDateTime(currentValue ?? DateTime.now()),
-                         );
-                         return DateTimeField.combine(date!, time);
-                         // }
-                       },)
+                               lastDate: DateTime(2100));return date?? currentValue;
+                       })
 
              ],
            ),
          );
    
+  }
+}
+class UnderLinedInput extends StatefulWidget {
+  //  final String label;
+  // final bool required;
+  final VoidCallback? onClick;
+  final bool enable;
+  final String initial;
+  final bool restricted;
+  final String hintText;
+  // final String? tileName;
+  final int maxLines;
+  final TextEditingController? controller;
+  final Function(String)? onChanged;
+  final VoidCallback? onComplete;
+  // final List<String>? items;
+  const UnderLinedInput(
+      {Key? key,
+        this.enable = true,
+        this.initial="",
+        this.hintText = "",
+        this.maxLines = 1,
+        this.controller,
+        this.onChanged,
+        this.onComplete,
+        this.restricted = false,
+        this.onClick})
+      : super(key: key);
+
+  @override
+  _UnderLinedInputState createState() => _UnderLinedInputState();
+}
+
+class _UnderLinedInputState extends State<UnderLinedInput> {
+  @override
+  Widget build(BuildContext context) {
+    print("initialllll"+widget.initial.toString());
+    return Column(
+      children: [
+        Container(
+          color: Colors.grey.shade200,
+          child: TextFormField(
+            initialValue: widget.initial,
+            onTap: () {
+              if (widget.onClick != null) widget.onClick!();
+            },
+            maxLines: widget.maxLines,
+
+            controller: widget.controller,
+            enabled: widget.enable,
+            keyboardType: TextInputType.number,
+            onEditingComplete: widget.onComplete,
+            onChanged: widget.onChanged,
+            decoration: InputDecoration(
+
+              contentPadding: EdgeInsets.all(10),
+              isDense: true,
+              hintText: widget.hintText,
+              hintStyle: TextStyle(fontSize: 10),
+              border:InputBorder.none,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
