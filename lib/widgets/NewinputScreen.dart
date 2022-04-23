@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class NewInputCard extends StatefulWidget {
@@ -204,11 +205,12 @@ class _BuildDateFormFieldState extends State<BuildDateFormField> {
                SizedBox(height:3),
            DateTimeField(
 
-                     // initialValue: widget.initialValue,
+                     initialValue: widget.initialValue,
                        controller: widget.controller,
                        enabled: widget.enable,
                        validator: (value) => value == null ? "* required" : null,
                        decoration: InputDecoration(
+                         suffixIcon: Icon(Icons.calendar_today_outlined),
                          contentPadding: null,
                          labelStyle: TextStyle(color: Colors.black),
                          // labelText: widget.initialValue?.toString().split(" ")[0],
@@ -296,6 +298,9 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             controller: widget.controller,
             enabled: widget.enable,
             keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
             onEditingComplete: widget.onComplete,
             onChanged: widget.onChanged,
             decoration: InputDecoration(
@@ -312,3 +317,21 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
     );
   }
 }
+// class CustomCheckBox extends StatefulWidget {
+//   final bool value;
+//   final Function(bool?)? change;
+//   CustomCheckBox({required this.value,required this.change})
+//   @override
+//   _CustomCheckBoxState createState() => _CustomCheckBoxState();
+// }
+//
+// class _CustomCheckBoxState extends State<CustomCheckBox> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return  Checkbox(
+//       value:widget.value,
+//       onChanged:(){widget.change()}
+//
+//     );
+//   }
+// }

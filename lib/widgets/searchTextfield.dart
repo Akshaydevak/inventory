@@ -21,7 +21,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
         width: 600,
         height: 32,
         // color: Palette.white,
-        color:Color(0xFF423E3F),
+       // color:Color(0xFF423E3F),
         // padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),
         child: Theme(
           data: Theme.of(context).copyWith(primaryColor: Colors.blue),
@@ -57,7 +57,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
                   padding: const EdgeInsets.only(right: 10),
                   child: GestureDetector(
                     child: const Icon(
-                      Icons.search,color: Colors.white,
+                      Icons.search,color: Colors.grey,
                     ),
                   )),
               hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),

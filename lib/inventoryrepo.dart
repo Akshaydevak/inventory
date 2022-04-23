@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:inventory/inventoryDatasource.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
+import 'package:inventory/model/purchase_order_read.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
@@ -21,6 +22,9 @@ abstract class InventoryRepository {
   Future<Either<Failure, List<VariantId>>> getVariantId();
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
   Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id);
+  Future<Either<Failure, PurchaseOrderRead>> getGeneralPurchaseRead(int id);
+  Future<Either<Failure, DoubleResponse>> getGeneralPurchasePatch(
+      PurchaseOrderPost model,int? id);
 }
 
 class InventoryRepositoryImpl extends InventoryRepository {
@@ -72,5 +76,20 @@ class InventoryRepositoryImpl extends InventoryRepository {
   Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id) {
     return repoExecute<PurchaseCureentStockQty>(
         () async => remoteDataSource.getCurrentStock(id));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseOrderRead>> getGeneralPurchaseRead(int id) {
+    print("Anvar");
+    return repoExecute<PurchaseOrderRead>(
+        () async => remoteDataSource.getGeneralPurchaseRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getGeneralPurchasePatch(
+      PurchaseOrderPost model,int? id) {
+    print("sunithi1"+id.toString());
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.getGeneralPurchasePatch(model, id));
   }
 }

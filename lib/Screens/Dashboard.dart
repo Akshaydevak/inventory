@@ -61,9 +61,9 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     BlocProvider(
   create: (context) => InventorysearchCubit()..getInventorySearch("code"),
 ),
-    BlocProvider(
-      create: (context) => PurchaseorderpostCubit(),
-    ),
+    // BlocProvider(
+    //   create: (context) => PurchaseorderpostCubit(),
+    // ),
   ],
   child: BlocConsumer<InventorysearchCubit, InventorysearchState>(
   listener: (context, state) {
@@ -290,149 +290,149 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
               Expanded(
                 child: Row(
                   children: [
-                    Visibility(
-                      visible: !isCollapsed,
-                      child: Container(
-                        height: double.infinity,
-                        width: MediaQuery.of(context).size.width * .172,
-                        //width: 232,
-                        color: Color(0xff1D2C37),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(5),
-                                child: SearchTextfiled(
-                                  color: Color(0xff2B3944),
-                                  hintText: "Search...",
-                                  ctrlr: itemsearch,
-                                  onChanged:( va){
-                                    context.read<InventorysearchCubit>().getSearch(itemsearch.text);
-
-                                  },
-
-                                )),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height * .008,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                left: width * 0.009,
-                                right: width * 0.007,
-                              ),
-
-                              child: Row(
-                                //mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  RectangleContainer(
-                                      "asset/rect1.png", context),
-                                  SizedBox(
-                                    width: width * .003,
-                                  ),
-                                  Container(
-                                    color: Color(0xff2B3944),
-                                    //color: Colors.red,
-                                    //width: 131,
-                                    height: width * .0197,
-                                    width: width * .111,
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        SizedBox(
-                                          width: width * .001,
-                                        ),
-                                        Icon(
-                                          Icons.add,
-                                          color: Colors.white,
-                                          size: 14,
-                                        ),
-                                        SizedBox(
-                                          width: width * .007,
-                                        ),
-                                        Container(
-                                          child: Text(
-                                            "Add a Varient",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: width * .010,
-                                                overflow:
-                                                    TextOverflow.ellipsis),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: width * .003,
-                                  ),
-                                  RectangleContainer(
-                                      "asset/rect2.png", context),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: height * .015,
-                            ),
-                            Divider(
-                              height: 0,
-                              color: Color(0xff2B3944),
-                              // thickness: 1,
-                            ),
-                            Expanded(
-                                child: Container(
-                                    height: 0,
-                                    child: ListView.separated(
-
-                                      separatorBuilder: (context, index) {
-                                        return Divider(
-                                          height: 0,
-                                          color: Color(0xff2B3944),
-                                          // thickness: 1,
-                                        );
-                                      },
-                                      physics: ScrollPhysics(),
-                                      controller: controller,
-                                      itemBuilder: (context, index) {
-                                        return AutoScrollTag(
-                                          highlightColor: Colors.red,
-                                          controller: controller,
-                                          key: ValueKey(index),
-                                          index: index,
-                                          child:ItemCard(item: result[index].orderCode,
-                                            id: result[index].id.toString(),
-
-
-                                          )
-
-                                        );
-                                      },
-                                      itemCount: result.length,
-                                    )
-                                    //     Container(
-                                    //   decoration: BoxDecoration(
-                                    //     border: Border(
-                                    //       top: BorderSide(width: 16.0, color: Colors.white),
-                                    //       bottom: BorderSide(width: 16.0, color: Colors.red),
-                                    //     ),
-                                    //   ),
-                                    //   child: ListTile(
-                                    //
-                                    //
-                                    //     title: Text(
-                                    //       "name",
-                                    //       style: TextStyle(fontSize: 11, color: Colors.white,fontWeight: FontWeight.bold),
-                                    //     ),subtitle:
-                                    //   Text(
-                                    //     "name",
-                                    //     style: TextStyle(fontSize: 15, color: Colors.white,fontWeight: FontWeight.w400),
-                                    //   ),
-                                    //   ),
-                                    // ) )))
-
-                                    ))
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Visibility(
+                    //   visible: !isCollapsed,
+                    //   child: Container(
+                    //     height: double.infinity,
+                    //     width: MediaQuery.of(context).size.width * .172,
+                    //     //width: 232,
+                    //     color: Color(0xff1D2C37),
+                    //     child: Column(
+                    //       children: [
+                    //         Container(
+                    //             margin: EdgeInsets.all(5),
+                    //             child: SearchTextfiled(
+                    //               color: Color(0xff2B3944),
+                    //               hintText: "Search...",
+                    //               ctrlr: itemsearch,
+                    //               onChanged:( va){
+                    //                 context.read<InventorysearchCubit>().getSearch(itemsearch.text);
+                    //
+                    //               },
+                    //
+                    //             )),
+                    //         SizedBox(
+                    //           height: MediaQuery.of(context).size.height * .008,
+                    //         ),
+                    //         Container(
+                    //           margin: EdgeInsets.only(
+                    //             left: width * 0.009,
+                    //             right: width * 0.007,
+                    //           ),
+                    //
+                    //           child: Row(
+                    //             //mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: [
+                    //               RectangleContainer(
+                    //                   "asset/rect1.png", context),
+                    //               SizedBox(
+                    //                 width: width * .003,
+                    //               ),
+                    //               Container(
+                    //                 color: Color(0xff2B3944),
+                    //                 //color: Colors.red,
+                    //                 //width: 131,
+                    //                 height: width * .0197,
+                    //                 width: width * .111,
+                    //                 child: Row(
+                    //                   mainAxisAlignment: MainAxisAlignment.center,
+                    //                   children: [
+                    //                     SizedBox(
+                    //                       width: width * .001,
+                    //                     ),
+                    //                     Icon(
+                    //                       Icons.add,
+                    //                       color: Colors.white,
+                    //                       size: 14,
+                    //                     ),
+                    //                     SizedBox(
+                    //                       width: width * .007,
+                    //                     ),
+                    //                     Container(
+                    //                       child: Text(
+                    //                         "Add a Varient",
+                    //                         style: TextStyle(
+                    //                             color: Colors.white,
+                    //                             fontSize: width * .010,
+                    //                             overflow:
+                    //                                 TextOverflow.ellipsis),
+                    //                       ),
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //               ),
+                    //               SizedBox(
+                    //                 width: width * .003,
+                    //               ),
+                    //               RectangleContainer(
+                    //                   "asset/rect2.png", context),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //         SizedBox(
+                    //           height: height * .015,
+                    //         ),
+                    //         Divider(
+                    //           height: 0,
+                    //           color: Color(0xff2B3944),
+                    //           // thickness: 1,
+                    //         ),
+                    //         Expanded(
+                    //             child: Container(
+                    //                 height: 0,
+                    //                 child: ListView.separated(
+                    //
+                    //                   separatorBuilder: (context, index) {
+                    //                     return Divider(
+                    //                       height: 0,
+                    //                       color: Color(0xff2B3944),
+                    //                       // thickness: 1,
+                    //                     );
+                    //                   },
+                    //                   physics: ScrollPhysics(),
+                    //                   controller: controller,
+                    //                   itemBuilder: (context, index) {
+                    //                     return AutoScrollTag(
+                    //                       highlightColor: Colors.red,
+                    //                       controller: controller,
+                    //                       key: ValueKey(index),
+                    //                       index: index,
+                    //                       child:ItemCard(item: result[index].orderCode,
+                    //                         id: result[index].id.toString(),
+                    //
+                    //
+                    //                       )
+                    //
+                    //                     );
+                    //                   },
+                    //                   itemCount: result.length,
+                    //                 )
+                    //                 //     Container(
+                    //                 //   decoration: BoxDecoration(
+                    //                 //     border: Border(
+                    //                 //       top: BorderSide(width: 16.0, color: Colors.white),
+                    //                 //       bottom: BorderSide(width: 16.0, color: Colors.red),
+                    //                 //     ),
+                    //                 //   ),
+                    //                 //   child: ListTile(
+                    //                 //
+                    //                 //
+                    //                 //     title: Text(
+                    //                 //       "name",
+                    //                 //       style: TextStyle(fontSize: 11, color: Colors.white,fontWeight: FontWeight.bold),
+                    //                 //     ),subtitle:
+                    //                 //   Text(
+                    //                 //     "name",
+                    //                 //     style: TextStyle(fontSize: 15, color: Colors.white,fontWeight: FontWeight.w400),
+                    //                 //   ),
+                    //                 //   ),
+                    //                 // ) )))
+                    //
+                    //                 ))
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
 
                     //******************************************************************** */
                     Expanded(
@@ -480,7 +480,7 @@ Widget RectangleContainer(String url, BuildContext context) {
     // width: 25,
     height: MediaQuery.of(context).size.width * .019,
     width: MediaQuery.of(context).size.width * .019,
-    color: Color(0xff2B3944),
+    color: Colors.white,
     child: Center(
         child: Image.asset(
       url,

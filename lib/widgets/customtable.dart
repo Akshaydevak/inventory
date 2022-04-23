@@ -43,7 +43,7 @@ Widget textPadding(String label,
       FontWeight fontWeight = FontWeight.w100}) =>
     Padding(
       padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
-      child: label=="0"?Text(''):Text(
+      child:label=="0"?Text(''):Text(
         label,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
       ),

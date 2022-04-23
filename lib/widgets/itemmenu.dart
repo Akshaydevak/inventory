@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 
 class ItemCard<T> extends StatefulWidget {
   final String id;
+  final int selectedVertical;
+  final int index;
   //final String name;
   final T item;
- // final VoidCallback onClick;
+ final VoidCallback onClick;
  // final VoidCallback? onDelete;
  // final bool isSelected;
   const ItemCard(
       {Key? key,
-        //required this.isSelected,
-      //  required this.onClick,
+        required  this.index,
+     required  this.selectedVertical,
+       required this.onClick,
         required this.item,
         required this.id,
        // this.onDelete,
@@ -28,6 +33,8 @@ class _ItemCardState extends State<ItemCard> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+    return BlocBuilder<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
+  builder: (context, state) {
     return MouseRegion(
       onEnter: (event) {
         isHover = true;
@@ -38,7 +45,7 @@ class _ItemCardState extends State<ItemCard> {
         setState(() {});
       },
       child: InkWell(
-        onTap:(){},
+        onTap:widget.onClick,
         //widget.onClick,
         child: Container(
           height: height * .084,
@@ -55,10 +62,13 @@ class _ItemCardState extends State<ItemCard> {
           //             color: Palette.Grey.withOpacity(.4), width: 2))
           //         : null),
           child: Container(
-            // color: Colors.green,
-            // alignment: Alignment.topCenter,
-            // padding: EdgeInsets.only(bottom: 29),
-            // margin: EdgeInsets.symmetric(horizontal: 5, vertical: 2.5),
+            decoration: BoxDecoration(
+              border:widget.selectedVertical==widget.index? Border(
+                left:  BorderSide(width: 4.0, color: Color(0xff3E4F5B)),
+              ):  Border(left:  BorderSide(width:0, color:Colors.transparent),),
+              color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):Color(0xffEDF1F2),
+            ),
+
             child: Center(
     child: ListTile(
     title: Column(
@@ -72,8 +82,9 @@ class _ItemCardState extends State<ItemCard> {
     child: Text(
    widget.id.toString(),
     style: TextStyle(
-    color: Color(
-    0xffCED7DE,
+    color:
+    Color(
+    0xff838383,
     ),
     fontWeight:
     FontWeight
@@ -88,9 +99,11 @@ class _ItemCardState extends State<ItemCard> {
     child: Text(
     widget.item.toString(),
     style: TextStyle(
-    color: Color(
-    0xffFFFFFF,
-    ),
+      fontWeight: FontWeight.w400,
+    color:Colors.black,
+    // Color(
+    // 0x000000,
+    // ),
     fontSize:
     height *
     .0215),
@@ -104,5 +117,7 @@ class _ItemCardState extends State<ItemCard> {
         ),
       ),)
     );
+  },
+);
   }
 }

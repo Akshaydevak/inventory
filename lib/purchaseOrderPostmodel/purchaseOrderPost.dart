@@ -38,8 +38,9 @@ class OrderLines with _$OrderLines {
   const factory OrderLines({
     final int? vat,
     final bool? isRecieved,
-    final bool? isActive,
-    int ? currentQty,
+
+    final int ? currentQty,
+    @JsonKey(name: "isActive",defaultValue: false) final bool? isActive,
     @JsonKey(name: "supplier_code") final String? supplierCode,
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "variant_name") final String? variantName,

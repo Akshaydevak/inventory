@@ -1,12 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
+import 'package:inventory/model/purchase_order_read.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
 import 'package:inventory/widgets/responseutils.dart';
+
+import 'core/uttils/variable.dart';
 
 abstract class LogisticDataSource {
   Future<PaginatedResponse<List<PurchaseOrder>>> getInventorySearch(
@@ -20,6 +23,8 @@ abstract class LogisticDataSource {
   Future<List<VariantId>> getVariantId();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
   Future<PurchaseCureentStockQty> getCurrentStock(int? id);
+  Future<PurchaseOrderRead> getGeneralPurchaseRead(int id);
+  Future<DoubleResponse> getGeneralPurchasePatch(PurchaseOrderPost model,int? id);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -93,44 +98,21 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model) async {
     print(
-    "post"+  postPurchaseurl.toString(),
+      "post" + postPurchaseurl.toString(),
     );
-    print("++++++++sssssssssssss");
-    print("model"+model.toString());
+
     final response = await client.post(postPurchaseurl,
         data: model.toJson(),
-        // {
-        //   "purchase_order_type": model.purchaseOrderType,
-        //   "inventory_id": model.iventoryId,
-        //   "vendor_id": model.vendorId,
-        //   "vendor_trn_number": model.vendorTrnNumber,
-        //   "vendor_mail_id": model.vendorMailId,
-        //   "vendor_address":model.vendorAddress,
-        //   "address_1": model.address1,
-        //   "address_2": model.address2,
-        //   "promised_receipt_date": model.promisedReceiptdate,
-        //   "planned_receipt_date": model.plannedRecieptDate,
-        //   "note": model.note,
-        //   "remarks": model.remarks,
-        //   "discount":model.discount,
-        //   "foc":model.foc,
-        //   "unit_cost":model.unitcost,
-        //   "excess_tax":model.excessTax,
-        //   "actual_cost": model.actualCost,
-        //   "vat":model.vat,
-        //   "grand_total": model.grandTotal,
-        //   "vatable_amount":model.variableAmount,
-        //   "created_by": "cvd",
-        //   "order_lines": []
-        // }
-
         options: Options(headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
         }));
-    print("as");
+    print("");
     print(response);
-
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
   }
@@ -170,7 +152,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/1";
+        "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/$id";
     try {
       final response = await client.get(
         path,
@@ -217,7 +199,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseCureentStockQty> getCurrentStock(int? id) async {
-   String path="http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/test001/test";
+    String path =
+        "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/test001/test";
     try {
       final response = await client.get(
         path,
@@ -261,5 +244,76 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print(dataa);
     return dataa;
     ;
+  }
+
+  @override
+  Future<PurchaseOrderRead> getGeneralPurchaseRead(int id) async {
+    try {
+      String path = generalPurchaseRead + id.toString();
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseOrderRead dataa =
+          PurchaseOrderRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+    String path = generalPurchaseRead + id.toString();
+    print(path);
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    PurchaseOrderRead dataa = PurchaseOrderRead.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> getGeneralPurchasePatch(
+      PurchaseOrderPost model,int? id) async {
+    print("sunithi2"+id.toString());
+String path=generalPurchasePatch+id.toString();
+print(path);
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
   }
 }
