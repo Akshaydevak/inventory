@@ -22,7 +22,7 @@ abstract class LogisticDataSource {
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
   Future<List<VariantId>> getVariantId();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
-  Future<PurchaseCureentStockQty> getCurrentStock(int? id);
+  Future<PurchaseCureentStockQty> getCurrentStock(int? id,String ? invdendotyId);
   Future<PurchaseOrderRead> getGeneralPurchaseRead(int id);
   Future<DoubleResponse> getGeneralPurchasePatch(PurchaseOrderPost model,int? id);
 }
@@ -198,7 +198,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<PurchaseCureentStockQty> getCurrentStock(int? id) async {
+  Future<PurchaseCureentStockQty> getCurrentStock(int? id,String ? invdendotyId) async {
     String path =
         "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/test001/test";
     try {

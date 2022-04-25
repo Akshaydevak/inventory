@@ -14,7 +14,7 @@ _$_PurchaseOrderTableModel _$$_PurchaseOrderTableModelFromJson(
       name: json['name'] as String?,
       purchaseUom: json['purchase_uom'] as String?,
       purchaseUomName: json['purchase_uom_name'] as String?,
-      excessTax: json['excess_tax'] as int?,
+      excessTax: (json['excess_tax'] as num?)?.toDouble(),
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       vendorDetails: json['vendor_details'] == null
           ? null

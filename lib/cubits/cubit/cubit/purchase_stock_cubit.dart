@@ -9,11 +9,11 @@ part 'purchase_stock_cubit.freezed.dart';
 class PurchaseStockCubit extends Cubit<PurchaseStockState> {
   PurchaseStockCubit() : super(PurchaseStockState.initial());
   final InventoryRepository repo = InventoryRepositoryImpl();
-  Future getCurrentStock(int? id) async {
+  Future getCurrentStock(int? id,String? invdendotyId) async {
     emit(_Loading());
     print("sssssssssssssssssssssssdd");
 
-    final result = await repo.getCurrentStock(id);
+    final result = await repo.getCurrentStock(id,invdendotyId);
     print("result+" + result.toString());
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
   }

@@ -20,14 +20,14 @@ _$_PurchaseOrderPost _$$_PurchaseOrderPostFromJson(Map<String, dynamic> json) =>
       plannedRecieptDate: json['planned_receipt_date'] as String?,
       note: json['note'] as String?,
       remarks: json['remarks'] as String?,
-      discount: json['discount'] as int?,
-      foc: json['foc'] as int?,
-      unitcost: json['unit_cost'] as int?,
-      excessTax: json['excess_tax'] as int?,
-      actualCost: json['actual_cost'] as int?,
-      vat: json['vat'] as int?,
-      grandTotal: json['grand_total'] as int?,
-      variableAmount: json['vatable_amount'] as int?,
+      discount: (json['discount'] as num?)?.toDouble(),
+      foc: (json['foc'] as num?)?.toDouble(),
+      unitcost: (json['unit_cost'] as num?)?.toDouble(),
+      excessTax: (json['excess_tax'] as num?)?.toDouble(),
+      actualCost: (json['actual_cost'] as num?)?.toDouble(),
+      vat: (json['vat'] as num?)?.toDouble(),
+      grandTotal: (json['grand_total'] as num?)?.toDouble(),
+      variableAmount: (json['vatable_amount'] as num?)?.toDouble(),
       createdBy: json['created_by'] as String?,
       orderLines: (json['order_lines'] as List<dynamic>?)
           ?.map((e) => OrderLines.fromJson(e as Map<String, dynamic>))
@@ -63,7 +63,7 @@ Map<String, dynamic> _$$_PurchaseOrderPostToJson(
 
 _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
     _$_OrderLines(
-      vat: json['vat'] as int?,
+      vat: (json['vat'] as num?)?.toDouble(),
       isRecieved: json['isRecieved'] as bool?,
       currentQty: json['currentQty'] as int?,
       isActive: json['isActive'] as bool? ?? false,
@@ -73,16 +73,16 @@ _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
       barcode: json['barcode'] as String?,
       purchaseuom: json['purchase_uom'] as String?,
       cvd: json['cvd'] as String?,
-      foc: json['foc'] as int?,
+      foc: (json['foc'] as num?)?.toDouble(),
       discount: json['discount'] as int?,
       requestedQty: json['requested_qty'] as int?,
       minimumQty: json['minimum_qty'] as int?,
       maximumQty: json['maximum_qty'] as int?,
-      unitCost: json['unit_cost'] as int?,
-      grandTotal: json['grand_total'] as int?,
-      variableAmount: json['vatable_amount'] as int?,
-      excessTax: json['excess_tax'] as int?,
-      actualCost: json['actual_cost'] as int?,
+      unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      grandTotal: (json['grand_total'] as num?)?.toDouble(),
+      variableAmount: (json['vatable_amount'] as num?)?.toDouble(),
+      excessTax: (json['excess_tax'] as num?)?.toDouble(),
+      actualCost: (json['actual_cost'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$$_OrderLinesToJson(_$_OrderLines instance) =>

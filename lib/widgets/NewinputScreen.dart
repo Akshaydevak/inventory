@@ -187,11 +187,26 @@ class BuildDateFormField extends StatefulWidget {
 }
 
 class _BuildDateFormFieldState extends State<BuildDateFormField> {
+
+bool initialdatecheck=false;
+@override
+  void initState() {
+  if(widget.initialValue!=null&&widget.initialValue!=""){
+    setState(() {
+      initialdatecheck=true;
+    });
+  }
+    
+  }
+
+
   @override
   Widget build(BuildContext context) {
+    print("widget.initialValue"+widget.initialValue.toString());
     // final mFormat = DateFormat("12,08,2021");
     final mFormat =
-        widget.format ??DateFormat.yMd();
+        widget.format ??
+            DateFormat.yMd();
     return
          Padding(
            padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
@@ -205,7 +220,7 @@ class _BuildDateFormFieldState extends State<BuildDateFormField> {
                SizedBox(height:3),
            DateTimeField(
 
-                     initialValue: widget.initialValue,
+                    initialValue:widget.initialValue,
                        controller: widget.controller,
                        enabled: widget.enable,
                        validator: (value) => value == null ? "* required" : null,

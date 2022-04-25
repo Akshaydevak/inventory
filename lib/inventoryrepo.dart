@@ -21,7 +21,7 @@ abstract class InventoryRepository {
   Future<Either<Failure, DoubleResponse>> postPurchase(PurchaseOrderPost model);
   Future<Either<Failure, List<VariantId>>> getVariantId();
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
-  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id);
+  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id,String ? invdendotyId);
   Future<Either<Failure, PurchaseOrderRead>> getGeneralPurchaseRead(int id);
   Future<Either<Failure, DoubleResponse>> getGeneralPurchasePatch(
       PurchaseOrderPost model,int? id);
@@ -73,9 +73,9 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id) {
+  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id,String?invdendotyId) {
     return repoExecute<PurchaseCureentStockQty>(
-        () async => remoteDataSource.getCurrentStock(id));
+        () async => remoteDataSource.getCurrentStock(id,invdendotyId));
   }
 
   @override

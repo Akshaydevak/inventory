@@ -61,7 +61,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController ordercode = TextEditingController();
   ScrollController? _scrollController = ScrollController();
   TextEditingController vendoraddress = TextEditingController();
-  TextEditingController planned_receipt_date = TextEditingController();
+  TextEditingController planned_receipt_date=TextEditingController() ;
   TextEditingController promised_receipt_date = TextEditingController();
   TextEditingController remarks = TextEditingController();
   TextEditingController foc = TextEditingController();
@@ -82,9 +82,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController discount = TextEditingController();
   NavigationProvider vm = NavigationProvider();
 
-  List<Employee> employees = <Employee>[];
-  late EmployeeDataSource employeeDataSource;
+  // List<Employee> employees = <Employee>[];
+  // late EmployeeDataSource employeeDataSource;
   bool? isRecieved = false;
+  bool? tableEdit=false;
   int selectedVertical=0;
   bool? isInvoiced = false;
   double? check = 0;
@@ -96,29 +97,29 @@ class _GeneralScreenState extends State<GeneralScreen> {
   String? varinatname = "";
   double? Vamount = 0;
   String? Vbarcode = "";
-  int? vvat = 0;
+  double? vvat = 0;
   int? vmaxnqty = 0;
   int? vminqty = 0;
-  int? Vgrnadtotal = 0;
-  int? vactualCost = 0;
+  double? Vgrnadtotal = 0;
+  double? vactualCost = 0;
   int? Qty = 0;
-  int? eTax = 0;
-  int? vfoc = 0;
+  double? eTax = 0;
+  double? vfoc = 0;
   int? Vdiscount = 0;
   int? vid = 0;
   String? vrefcod = "";
   String? salesUOM;
   String? purchaseUom;
-  int unitcost = 0;
+  double unitcost = 0;
   int discountValue = 0;
-  int grands = 0;
-  int focValue = 0;
-  int VatableValue = 0;
-  int excessTax = 0;
-  int vatValue = 0;
-  int actualValue = 0;
-  int excessTAxValue = 0;
-  int vatableValue = 0;
+  double grands = 0;
+  double focValue = 0;
+  double VatableValue = 0;
+  double excessTax = 0;
+  double vatValue = 0;
+  double actualValue = 0;
+  double excessTAxValue = 0;
+  double vatableValue = 0;
   String? variantId;
   List<OrderLines> orderLisnes = [];
 
@@ -346,6 +347,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           vendoraddress.text=data.data?.vendorAddress??"";
                           note.text=data.data?.note??"";
                           purchaseUom=data.data?.purchaseOrderType??"";
+                          orderType=data.data?.purchaseOrderType??"";
 
                           remarks.text=data.data?.remarks??"";
                           unitcourse.text=data.data?.unitcost.toString()??"";
@@ -365,15 +367,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           promised_receipt_date.text=data.data?.promisedReceiptdate??"";
                           planned_receipt_date.text=data.data?.plannedRecieptDate??"";
                           print("promised_receipt_date.text"+promised_receipt_date.text.toString());
-                          print("data.data?.promisedReceiptdate${data.data?.promisedReceiptdate}");
+                          print("data.data?.promisedReceiptdate${ planned_receipt_date.text}");
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
-
-
-
-
-
-
 
 
                         });
@@ -382,7 +378,6 @@ class _GeneralScreenState extends State<GeneralScreen> {
               ),
               BlocListener<PurchaseOrderPatchCubit, PurchaseOrderPatchState>(
                 listener: (context, state) {
-                  print("shamana"+state.toString());
 
                   state.maybeWhen(orElse: () {
                     // context.
@@ -542,6 +537,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                         .toString(),
                                                     onClick: () {
                                                       setState(() {
+                                                        select=false;
                                                         selectedVertical=index;
 
                                                         veritiaclid =
@@ -605,16 +601,6 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                             address2="";
                                             address1="";
                                             purchaseUom="";
-
-
-
-
-
-
-
-
-
-
 
                                           });
 
@@ -733,12 +719,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                       height: height * .030,
                                                     ),
                                                     BuildDateFormField(
-                                                      label:
-                                                          "Promised reciept date",
+                                                    //  initialValue :DateTime.parse(planned_receipt_date.text),
+                                                      label: "Promised reciept date",
                                                       onSaved: (newValue) {
                                                         print(newValue);
+                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
                                                         promised_receipt_date.text =
-                                                            newValue.toString();
+                                                            formattedDate.toString();
                                                       },
                                                     ),
                                                     // NewInputCard(
@@ -763,12 +750,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                       height: height * .020,
                                                     ),
                                                     BuildDateFormField(
-                                                     // initialValue:DateTime.parse(planned_receipt_date.text.toString()),
+                                                      initialValue :planned_receipt_date.text!=""?DateTime.parse(planned_receipt_date.text):DateTime.now(),
                                                       label: "Planned reciept date",
                                                       onSaved: (newValue) {
-                                                        print(newValue);
+                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+
+
                                                         planned_receipt_date.text =
-                                                            newValue.toString();
+                                                            formattedDate.toString();
                                                       },
                                                     ),
                                                     // NewInputCard(
@@ -1250,8 +1239,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                         .w500),
                                                             textPadding(
                                                                 table[i]
-                                                                    .currentQty
-                                                                    .toString(),
+                                                                    .currentQty==null?"": table[i]
+                    .currentQty.toString(),
+
                                                                 padding: EdgeInsets
                                                                     .only(
                                                                         left:
@@ -1279,6 +1269,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                     .tryParse(
                                                                         p0);
                                                                 print(Qty);
+                                                                print("editwork"+i.toString());
+                                                                setState(() {
+                                                                  tableEdit=true;
+                                                                });
                                                               },
                                                               enable: true,
                                                               onComplete: () {
@@ -1295,6 +1289,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                 setState(() {});
                                                               },
                                                             ),
+                                                            tableEdit==true?Text("Akkkkk"):
                                                             textPadding(
                                                                 table[i]
                                                                     .minimumQty
@@ -1536,7 +1531,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                   .read<
                                                                       PurchaseStockCubit>()
                                                                   .getCurrentStock(
-                                                                  id);
+                                                                  id,inventoryId.text);
 
                                                               // orderType = va!;
                                                             });
@@ -1618,12 +1613,12 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                         ((Vamount! *
                                                                                 vvat!) /
                                                                             100))
-                                                                    .toInt();
+                                                                    ;
                                                                 Vgrnadtotal = (Vamount! +
                                                                         ((Vamount! *
                                                                                 vvat!) /
                                                                             100))
-                                                                    .toInt();
+                                                                    ;
 
                                                                 if (Vamount !=
                                                                     0) {
@@ -1705,9 +1700,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                         Vamount =
                                                                             (((check! * Qty!) + eTax!) - Vdiscount!).toDouble();
                                                                         vactualCost =
-                                                                            (Vamount! + ((Vamount! * vvat!) / 100)).toInt();
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100));
                                                                         Vgrnadtotal =
-                                                                            (Vamount! + ((Vamount! * vvat!) / 100)).toInt();
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100));
                                                                       }
                                                                     });
                                                                   }
@@ -1739,7 +1734,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                   } else {
                                                                     setState(
                                                                         () {
-                                                                      eTax = int
+                                                                      eTax = double
                                                                           .tryParse(
                                                                               p0);
                                                                     });
@@ -1753,10 +1748,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                           .toDouble();
                                                                       vactualCost =
                                                                           (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              .toInt();
+                                                                              ;
                                                                       Vgrnadtotal =
                                                                           (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              .toInt();
+                                                                              ;
                                                                     }
                                                                   });
                                                                 },
@@ -1778,7 +1773,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                   } else {
                                                                     setState(
                                                                         () {
-                                                                      eTax = int.tryParse(
+                                                                      eTax = double.tryParse(
                                                                               p0);
                                                                     });
                                                                   }
@@ -1791,10 +1786,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                           .toDouble();
                                                                       vactualCost =
                                                                           (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              .toInt();
+                                                                              ;
                                                                       Vgrnadtotal =
                                                                           (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              .toInt();
+                                                                              ;
                                                                     }
                                                                   });
                                                                 },
@@ -1826,12 +1821,12 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                     ((Vamount! *
                                                                             vvat!) /
                                                                         100))
-                                                                .toInt();
+                                                                ;
                                                             Vgrnadtotal = (Vamount! +
                                                                     ((Vamount! *
                                                                             vvat!) /
                                                                         100))
-                                                                .toInt();
+                                                               ;
 
                                                             setState(() {});
                                                           },
@@ -1860,7 +1855,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                 });
                                                               else {
                                                                 setState(() {
-                                                                  vfoc = int
+                                                                  vfoc = double
                                                                       .tryParse(
                                                                           p0);
                                                                 });
@@ -1889,29 +1884,29 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                         ((Vamount! *
                                                                                 vvat!) /
                                                                             100))
-                                                                    .toInt();
+                                                                   ;
                                                                 Vgrnadtotal = (Vamount! +
                                                                         ((Vamount! *
                                                                                 vvat!) /
                                                                             100))
-                                                                    .toInt();
+                                                                   ;
                                                               });
                                                             }
                                                             print("vvvaaat" +
                                                                 p0.toString());
-                                                            vvat = int.tryParse(
+                                                            vvat = double.tryParse(
                                                                 p0);
                                                             setState(() {
                                                               vactualCost = (Vamount! +
                                                                       ((Vamount! *
                                                                               vvat!) /
                                                                           100))
-                                                                  .toInt();
+                                                                 ;
                                                               Vgrnadtotal = (Vamount! +
                                                                       ((Vamount! *
                                                                               vvat!) /
                                                                           100))
-                                                                  .toInt();
+                                                                  ;
                                                             });
                                                           },
                                                           enable: true,
@@ -2048,13 +2043,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                   requestedQty:
                                                                       Qty ?? 0,
                                                                   unitCost:
-                                                                      check!.toInt() ??
+                                                                      check!??
                                                                           0,
                                                                   grandTotal:
                                                                       Vgrnadtotal ??
                                                                           0,
                                                                   variableAmount:
-                                                                      Vamount!.toInt() ??
+                                                                      Vamount! ??
                                                                           0,
                                                                   currentQty:
                                                                       stockQty ??
@@ -2173,13 +2168,13 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                         requestedQty:
                                                         Qty ?? 0,
                                                         unitCost:
-                                                        check!.toInt() ??
+                                                        check! ??
                                                             0,
                                                         grandTotal:
                                                         Vgrnadtotal ??
                                                             0,
                                                         variableAmount:
-                                                        Vamount!.toInt() ??
+                                                        Vamount! ??
                                                             0,
                                                         currentQty:
                                                         stockQty ??
@@ -2299,9 +2294,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                   : vendoraddress.text,
                                           address1: address1??"",
                                           address2: address2??"",
-                                          promisedReceiptdate: "2022-04-29",
+                                          promisedReceiptdate: promised_receipt_date.text,
                                           //promised_receipt_date.text,
-                                          plannedRecieptDate: "2022-04-29",
+                                          plannedRecieptDate: planned_receipt_date.text,
                                           //planned_receipt_date.text,
                                           note:
                                               note.text == "" ? "" : note.text,
@@ -2310,29 +2305,29 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                               : remarks.text,
                                           discount: discount.text == ""
                                               ? 0
-                                              : int.parse(discount.text),
+                                              : double.parse(discount.text),
                                           foc: foc.text == ""
                                               ? 0
-                                              : int.parse(foc.text),
+                                              : double.parse(foc.text),
                                           unitcost: unitcourse.text == ""
                                               ? 0
-                                              : int.parse(unitcourse.text),
+                                              : double.parse(unitcourse.text),
                                           excessTax: excesstax.text == ""
                                               ? 0
-                                              : int.parse(excesstax.text),
+                                              : double.parse(excesstax.text),
                                           actualCost: actualcost.text == ""
                                               ? 0
-                                              : int.parse(actualcost.text),
+                                              : double.parse(actualcost.text),
                                           vat: vat.text == ""
                                               ? 0
-                                              : int.parse(vat.text),
+                                              : double.parse(vat.text),
                                           grandTotal: grandtotal.text == ""
                                               ? 0
-                                              : int.parse(grandtotal.text),
+                                              : double.parse(grandtotal.text),
                                           variableAmount: Variableamount.text ==
                                                   ""
                                               ? 0
-                                              : int.parse(Variableamount.text),
+                                              : double.parse(Variableamount.text),
                                           createdBy: "www",
                                           orderLines: table,
                                         );

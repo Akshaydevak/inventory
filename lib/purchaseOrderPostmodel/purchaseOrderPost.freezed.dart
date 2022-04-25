@@ -34,14 +34,14 @@ class _$PurchaseOrderPostTearOff {
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "note") String? note,
       @JsonKey(name: "remarks") String? remarks,
-      @JsonKey(name: "discount") int? discount,
-      @JsonKey(name: "foc") int? foc,
-      @JsonKey(name: "unit_cost") int? unitcost,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
-      @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
+      @JsonKey(name: "discount") double? discount,
+      @JsonKey(name: "foc") double? foc,
+      @JsonKey(name: "unit_cost") double? unitcost,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "vat") double? vat,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines}) {
     return _PurchaseOrderPost(
@@ -105,21 +105,21 @@ mixin _$PurchaseOrderPost {
   @JsonKey(name: "remarks")
   String? get remarks => throw _privateConstructorUsedError;
   @JsonKey(name: "discount")
-  int? get discount => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: "foc")
-  int? get foc => throw _privateConstructorUsedError;
+  double? get foc => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
-  int? get unitcost => throw _privateConstructorUsedError;
+  double? get unitcost => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
-  int? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
   @JsonKey(name: "vat")
-  int? get vat => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
-  int? get variableAmount => throw _privateConstructorUsedError;
+  double? get variableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
   @JsonKey(name: "order_lines")
@@ -149,14 +149,14 @@ abstract class $PurchaseOrderPostCopyWith<$Res> {
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "note") String? note,
       @JsonKey(name: "remarks") String? remarks,
-      @JsonKey(name: "discount") int? discount,
-      @JsonKey(name: "foc") int? foc,
-      @JsonKey(name: "unit_cost") int? unitcost,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
-      @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
+      @JsonKey(name: "discount") double? discount,
+      @JsonKey(name: "foc") double? foc,
+      @JsonKey(name: "unit_cost") double? unitcost,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "vat") double? vat,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines});
 }
@@ -247,35 +247,35 @@ class _$PurchaseOrderPostCopyWithImpl<$Res>
       discount: discount == freezed
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       foc: foc == freezed
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       unitcost: unitcost == freezed
           ? _value.unitcost
           : unitcost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       excessTax: excessTax == freezed
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -308,14 +308,14 @@ abstract class _$PurchaseOrderPostCopyWith<$Res>
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "note") String? note,
       @JsonKey(name: "remarks") String? remarks,
-      @JsonKey(name: "discount") int? discount,
-      @JsonKey(name: "foc") int? foc,
-      @JsonKey(name: "unit_cost") int? unitcost,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
-      @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
+      @JsonKey(name: "discount") double? discount,
+      @JsonKey(name: "foc") double? foc,
+      @JsonKey(name: "unit_cost") double? unitcost,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "vat") double? vat,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines});
 }
@@ -408,35 +408,35 @@ class __$PurchaseOrderPostCopyWithImpl<$Res>
       discount: discount == freezed
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       foc: foc == freezed
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       unitcost: unitcost == freezed
           ? _value.unitcost
           : unitcost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       excessTax: excessTax == freezed
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
@@ -517,28 +517,28 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
   final String? remarks;
   @override
   @JsonKey(name: "discount")
-  final int? discount;
+  final double? discount;
   @override
   @JsonKey(name: "foc")
-  final int? foc;
+  final double? foc;
   @override
   @JsonKey(name: "unit_cost")
-  final int? unitcost;
+  final double? unitcost;
   @override
   @JsonKey(name: "excess_tax")
-  final int? excessTax;
+  final double? excessTax;
   @override
   @JsonKey(name: "actual_cost")
-  final int? actualCost;
+  final double? actualCost;
   @override
   @JsonKey(name: "vat")
-  final int? vat;
+  final double? vat;
   @override
   @JsonKey(name: "grand_total")
-  final int? grandTotal;
+  final double? grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  final int? variableAmount;
+  final double? variableAmount;
   @override
   @JsonKey(name: "created_by")
   final String? createdBy;
@@ -671,14 +671,14 @@ abstract class _PurchaseOrderPost implements PurchaseOrderPost {
           @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
           @JsonKey(name: "note") String? note,
           @JsonKey(name: "remarks") String? remarks,
-          @JsonKey(name: "discount") int? discount,
-          @JsonKey(name: "foc") int? foc,
-          @JsonKey(name: "unit_cost") int? unitcost,
-          @JsonKey(name: "excess_tax") int? excessTax,
-          @JsonKey(name: "actual_cost") int? actualCost,
-          @JsonKey(name: "vat") int? vat,
-          @JsonKey(name: "grand_total") int? grandTotal,
-          @JsonKey(name: "vatable_amount") int? variableAmount,
+          @JsonKey(name: "discount") double? discount,
+          @JsonKey(name: "foc") double? foc,
+          @JsonKey(name: "unit_cost") double? unitcost,
+          @JsonKey(name: "excess_tax") double? excessTax,
+          @JsonKey(name: "actual_cost") double? actualCost,
+          @JsonKey(name: "vat") double? vat,
+          @JsonKey(name: "grand_total") double? grandTotal,
+          @JsonKey(name: "vatable_amount") double? variableAmount,
           @JsonKey(name: "created_by") String? createdBy,
           @JsonKey(name: "order_lines") List<OrderLines>? orderLines}) =
       _$_PurchaseOrderPost;
@@ -724,28 +724,28 @@ abstract class _PurchaseOrderPost implements PurchaseOrderPost {
   String? get remarks => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "discount")
-  int? get discount => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "foc")
-  int? get foc => throw _privateConstructorUsedError;
+  double? get foc => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "unit_cost")
-  int? get unitcost => throw _privateConstructorUsedError;
+  double? get unitcost => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "excess_tax")
-  int? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vat")
-  int? get vat => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vatable_amount")
-  int? get variableAmount => throw _privateConstructorUsedError;
+  double? get variableAmount => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
@@ -767,7 +767,7 @@ class _$OrderLinesTearOff {
   const _$OrderLinesTearOff();
 
   _OrderLines call(
-      {int? vat,
+      {double? vat,
       bool? isRecieved,
       int? currentQty,
       @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
@@ -777,16 +777,16 @@ class _$OrderLinesTearOff {
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
-      @JsonKey(name: "foc") int? foc,
+      @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") int? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
-      @JsonKey(name: "unit_cost") int? unitCost,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost}) {
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost}) {
     return _OrderLines(
       vat: vat,
       isRecieved: isRecieved,
@@ -821,7 +821,7 @@ const $OrderLines = _$OrderLinesTearOff();
 
 /// @nodoc
 mixin _$OrderLines {
-  int? get vat => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
   bool? get isRecieved => throw _privateConstructorUsedError;
   int? get currentQty => throw _privateConstructorUsedError;
   @JsonKey(name: "isActive", defaultValue: false)
@@ -839,7 +839,7 @@ mixin _$OrderLines {
   @JsonKey(name: "cvd")
   String? get cvd => throw _privateConstructorUsedError;
   @JsonKey(name: "foc")
-  int? get foc => throw _privateConstructorUsedError;
+  double? get foc => throw _privateConstructorUsedError;
   @JsonKey(name: "discount")
   int? get discount => throw _privateConstructorUsedError;
   @JsonKey(name: "requested_qty")
@@ -849,15 +849,15 @@ mixin _$OrderLines {
   @JsonKey(name: "maximum_qty")
   int? get maximumQty => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
-  int? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
-  int? get variableAmount => throw _privateConstructorUsedError;
+  double? get variableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
-  int? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -871,7 +871,7 @@ abstract class $OrderLinesCopyWith<$Res> {
           OrderLines value, $Res Function(OrderLines) then) =
       _$OrderLinesCopyWithImpl<$Res>;
   $Res call(
-      {int? vat,
+      {double? vat,
       bool? isRecieved,
       int? currentQty,
       @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
@@ -881,16 +881,16 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
-      @JsonKey(name: "foc") int? foc,
+      @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") int? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
-      @JsonKey(name: "unit_cost") int? unitCost,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost});
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost});
 }
 
 /// @nodoc
@@ -928,7 +928,7 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       isRecieved: isRecieved == freezed
           ? _value.isRecieved
           : isRecieved // ignore: cast_nullable_to_non_nullable
@@ -968,7 +968,7 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
       foc: foc == freezed
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       discount: discount == freezed
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -988,23 +988,23 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
       unitCost: unitCost == freezed
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       excessTax: excessTax == freezed
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ));
   }
 }
@@ -1016,7 +1016,7 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       __$OrderLinesCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? vat,
+      {double? vat,
       bool? isRecieved,
       int? currentQty,
       @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
@@ -1026,16 +1026,16 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
-      @JsonKey(name: "foc") int? foc,
+      @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") int? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
-      @JsonKey(name: "unit_cost") int? unitCost,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost});
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost});
 }
 
 /// @nodoc
@@ -1075,7 +1075,7 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       isRecieved: isRecieved == freezed
           ? _value.isRecieved
           : isRecieved // ignore: cast_nullable_to_non_nullable
@@ -1115,7 +1115,7 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
       foc: foc == freezed
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       discount: discount == freezed
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
@@ -1135,23 +1135,23 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
       unitCost: unitCost == freezed
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       excessTax: excessTax == freezed
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
     ));
   }
 }
@@ -1185,7 +1185,7 @@ class _$_OrderLines implements _OrderLines {
       _$$_OrderLinesFromJson(json);
 
   @override
-  final int? vat;
+  final double? vat;
   @override
   final bool? isRecieved;
   @override
@@ -1213,7 +1213,7 @@ class _$_OrderLines implements _OrderLines {
   final String? cvd;
   @override
   @JsonKey(name: "foc")
-  final int? foc;
+  final double? foc;
   @override
   @JsonKey(name: "discount")
   final int? discount;
@@ -1228,19 +1228,19 @@ class _$_OrderLines implements _OrderLines {
   final int? maximumQty;
   @override
   @JsonKey(name: "unit_cost")
-  final int? unitCost;
+  final double? unitCost;
   @override
   @JsonKey(name: "grand_total")
-  final int? grandTotal;
+  final double? grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  final int? variableAmount;
+  final double? variableAmount;
   @override
   @JsonKey(name: "excess_tax")
-  final int? excessTax;
+  final double? excessTax;
   @override
   @JsonKey(name: "actual_cost")
-  final int? actualCost;
+  final double? actualCost;
 
   @override
   String toString() {
@@ -1347,7 +1347,7 @@ class _$_OrderLines implements _OrderLines {
 
 abstract class _OrderLines implements OrderLines {
   const factory _OrderLines(
-      {int? vat,
+      {double? vat,
       bool? isRecieved,
       int? currentQty,
       @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
@@ -1357,22 +1357,22 @@ abstract class _OrderLines implements OrderLines {
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
       @JsonKey(name: "cvd") String? cvd,
-      @JsonKey(name: "foc") int? foc,
+      @JsonKey(name: "foc") double? foc,
       @JsonKey(name: "discount") int? discount,
       @JsonKey(name: "requested_qty") int? requestedQty,
       @JsonKey(name: "minimum_qty") int? minimumQty,
       @JsonKey(name: "maximum_qty") int? maximumQty,
-      @JsonKey(name: "unit_cost") int? unitCost,
-      @JsonKey(name: "grand_total") int? grandTotal,
-      @JsonKey(name: "vatable_amount") int? variableAmount,
-      @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost}) = _$_OrderLines;
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? variableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost}) = _$_OrderLines;
 
   factory _OrderLines.fromJson(Map<String, dynamic> json) =
       _$_OrderLines.fromJson;
 
   @override
-  int? get vat => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
   @override
   bool? get isRecieved => throw _privateConstructorUsedError;
   @override
@@ -1400,7 +1400,7 @@ abstract class _OrderLines implements OrderLines {
   String? get cvd => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "foc")
-  int? get foc => throw _privateConstructorUsedError;
+  double? get foc => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "discount")
   int? get discount => throw _privateConstructorUsedError;
@@ -1415,19 +1415,19 @@ abstract class _OrderLines implements OrderLines {
   int? get maximumQty => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "unit_cost")
-  int? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vatable_amount")
-  int? get variableAmount => throw _privateConstructorUsedError;
+  double? get variableAmount => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "excess_tax")
-  int? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$OrderLinesCopyWith<_OrderLines> get copyWith =>
