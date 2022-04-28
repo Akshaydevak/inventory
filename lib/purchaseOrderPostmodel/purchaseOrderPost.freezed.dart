@@ -770,7 +770,7 @@ class _$OrderLinesTearOff {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
-      @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
@@ -824,7 +824,7 @@ mixin _$OrderLines {
   double? get vat => throw _privateConstructorUsedError;
   bool? get isRecieved => throw _privateConstructorUsedError;
   int? get currentQty => throw _privateConstructorUsedError;
-  @JsonKey(name: "isActive", defaultValue: false)
+  @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
@@ -874,7 +874,7 @@ abstract class $OrderLinesCopyWith<$Res> {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
-      @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
@@ -1019,7 +1019,7 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
-      @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
@@ -1163,7 +1163,7 @@ class _$_OrderLines implements _OrderLines {
       {this.vat,
       this.isRecieved,
       this.currentQty,
-      @JsonKey(name: "isActive", defaultValue: false) this.isActive,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "supplier_code") this.supplierCode,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
@@ -1191,7 +1191,7 @@ class _$_OrderLines implements _OrderLines {
   @override
   final int? currentQty;
   @override
-  @JsonKey(name: "isActive", defaultValue: false)
+  @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
   @override
   @JsonKey(name: "supplier_code")
@@ -1350,7 +1350,7 @@ abstract class _OrderLines implements OrderLines {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
-      @JsonKey(name: "isActive", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
@@ -1378,7 +1378,7 @@ abstract class _OrderLines implements OrderLines {
   @override
   int? get currentQty => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "isActive", defaultValue: false)
+  @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "supplier_code")

@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/purchase_order_patch_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/model/purchase_order_read.dart';
@@ -85,6 +86,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   // List<Employee> employees = <Employee>[];
   // late EmployeeDataSource employeeDataSource;
   bool? isRecieved = false;
+
   bool? tableEdit=false;
   int selectedVertical=0;
   bool? isInvoiced = false;
@@ -140,9 +142,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
     super.initState();
   }
 
+
   addition() {
     print("enterd");
-    print("+==" + table.length.toString());
+    print("+==" + table.toString());
     for (var i = 0; i < table.length; i++) {
       if (table[i].isActive == true) {
         unitcost = unitcost + table[i].unitCost!;
@@ -154,7 +157,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
         focValue = focValue + table[i].foc!;
 
         VatableValue = VatableValue + table[i].variableAmount!;
-
+print("excessTaxvalue"+excessTAxValue.toString());
         excessTAxValue = excessTAxValue + table[i].excessTax!;
       }
     }
@@ -181,55 +184,6 @@ class _GeneralScreenState extends State<GeneralScreen> {
     Size size = MediaQuery.of(context).size;
     vm = Provider.of<NavigationProvider>(context);
 
-    //   Future totalUnitcost(int? value,int? grand,int? foc,int?
-    //   actualCost, int? vat,List<OrderLines> orderLines,int ? discount,int ? excesstax,int ?vatableAmount)async{
-    //
-    // unitcost=value!;
-    // discountValue=discount!;
-    // grands=grand!;
-    // focValue=foc!;
-    // orderLisnes=orderLines;
-    // VatableValue=vatableAmount!;
-    // excessTAxValue=excesstax!;
-    //
-    // print("+++++++++++++++");
-    // print(orderLines);
-    //
-    // vatValue=vat!;
-    // actualValue=actualCost!;
-    //
-    //
-    //
-    //
-    //     print("unit cost is$unitcost");
-    //     // unitcourse.text=unitcost.toString();
-    //     print(unitcourse.text);
-    //     // setState(() {
-    //     //
-    //     // });
-    //
-    //
-    //   }
-    //
-    //
-    // if (table.length == 0) {
-    //   unitcourse.text = check == 0 ? "" : check.toString();
-    //   grandtotal.text = Vgrnadtotal == 0 ? "" : Vgrnadtotal.toString();
-    //   vat.text = vvat == 0 ? "" : vvat.toString();
-    //   actualcost.text = vactualCost == 0 ? "" : vactualCost.toString();
-    //   print("vfoc" + vfoc.toString());
-    //   foc.text = vfoc == 0 ? "" : vfoc.toString();
-    //   discount.text = Vdiscount == 0 ? "" : Vdiscount.toString();
-    //   excesstax.text = excessTAxValue == 0 ? "" : excessTAxValue.toString();
-    //   Variableamount.text = Vamount == 0 ? "" : Vamount.toString();
-    // }
-//
-
-//
-// }
-//
-
-// }
 
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
@@ -292,21 +246,34 @@ class _GeneralScreenState extends State<GeneralScreen> {
                       success: (data) {
                         purchaseTable = data;
                         setState(() {
-                          varinatname = purchaseTable?.name;
-                          check = purchaseTable?.unitCost;
-                          vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                          print(
-                              "vm.totalUnitcost" + vm.totalUnitcost.toString());
+                          print("Variable.tableedit"+Variable.tableedit.toString());
+                          print("Variable.tableedit"+Variable.tableindex.toString());
 
-                          check1 = purchaseTable?.purchaseUomName;
-                          vrefcod = purchaseTable?.code;
-                          vid = purchaseTable?.id;
-                          purchaseTable?.excessTax != null
-                              ? eTax = purchaseTable?.excessTax
-                              : eTax = 0;
+                          if(Variable.tableedit==true){
 
-                          Vbarcode =
-                              purchaseTable?.barCode?.barcodeNumber.toString();
+                            table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
+                                variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
+                                ,unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount
+                            )]);
+                          }
+                          else{
+                            print("shamnaaaaa");
+                            varinatname = purchaseTable?.name;
+                            check = purchaseTable?.unitCost;
+                            vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
+                            print(
+                                "vm.totalUnitcost" + vm.totalUnitcost.toString());
+
+                            check1 = purchaseTable?.purchaseUomName;
+                            vrefcod = purchaseTable?.code;
+                            vid = purchaseTable?.id;
+                            purchaseTable?.excessTax != null
+                                ? eTax = purchaseTable?.excessTax
+                                : eTax = 0;
+
+                            Vbarcode =
+                                purchaseTable?.barCode?.barcodeNumber.toString();
+                          }
                         });
                       });
                 },
@@ -321,10 +288,21 @@ class _GeneralScreenState extends State<GeneralScreen> {
                         print("error");
                       },
                       success: (data) {
-                        purchaseCurrentStock = data;
-                        stockQty = purchaseCurrentStock?.StockQty;
-                        setState(() {});
+                    if(Variable.tableedit==false) {
+                      purchaseCurrentStock = data;
+                      stockQty = purchaseCurrentStock?.StockQty;
+                      setState(() {});
+                    }
+                    else{
+                      table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
+                          variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
+                          ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
+                      )]);
+                      setState(() {});
+
+                    }
                       });
+
                 },
               ),
               BlocListener<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
@@ -342,6 +320,8 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           data.data?.orderLines != null
                               ? table = data.data?.orderLines ?? []
                               : table = [];
+                          print("tablsssssssssssssssssse"+table.toString());
+
                           inventoryId.text=data.data?.iventoryId??"";
                           vendortrnnumber.text=data.data?.vendorTrnNumber??"";
                           vendoraddress.text=data.data?.vendorAddress??"";
@@ -366,7 +346,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                           Paymentcode.text=data.data?.paymentcode??"";
                           promised_receipt_date.text=data.data?.promisedReceiptdate??"";
                           planned_receipt_date.text=data.data?.plannedRecieptDate??"";
-                          print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                          print("Invalid date formatsssssssssssssssssssssssss"+promised_receipt_date.text.toString());
                           print("data.data?.promisedReceiptdate${ planned_receipt_date.text}");
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
@@ -429,7 +409,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                             child: Container(
                               height: height,
                               // height: double.minPositive,
-                              width: MediaQuery.of(context).size.width * .172,
+                              width: width * .172,
                               //width: 232,
                               color: Color(0xffEDF1F2),
                               child: Column(
@@ -718,8 +698,20 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                     SizedBox(
                                                       height: height * .030,
                                                     ),
+                                                    promised_receipt_date.text==''?
                                                     BuildDateFormField(
-                                                    //  initialValue :DateTime.parse(planned_receipt_date.text),
+                                                      // initialValue :DateTime.parse(planned_receipt_date.text),
+                                                      label: "Planned reciept date",
+                                                      onSaved: (newValue) {
+                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+
+
+                                                        promised_receipt_date.text =
+                                                            formattedDate.toString();
+                                                      },
+                                                    ):
+                                                    BuildDateFormField(
+                                                     initialValue :DateTime.parse( promised_receipt_date.text),
                                                       label: "Promised reciept date",
                                                       onSaved: (newValue) {
                                                         print(newValue);
@@ -749,8 +741,20 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                     SizedBox(
                                                       height: height * .020,
                                                     ),
+                                                    if(planned_receipt_date.text=="")...[
+                                                BuildDateFormField(
+                                                 // initialValue :DateTime.parse(planned_receipt_date.text),
+                                                  label: "Planned reciept date",
+                                                  onSaved: (newValue) {
+                                                    var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+
+
+                                                    planned_receipt_date.text =
+                                                        formattedDate.toString();
+                                                  },
+                                                )]else...[
                                                     BuildDateFormField(
-                                                      initialValue :planned_receipt_date.text!=""?DateTime.parse(planned_receipt_date.text):DateTime.now(),
+                                                      initialValue :DateTime.parse(planned_receipt_date.text),
                                                       label: "Planned reciept date",
                                                       onSaved: (newValue) {
                                                         var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
@@ -760,6 +764,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                             formattedDate.toString();
                                                       },
                                                     ),
+                                                    ],
                                                     // NewInputCard(
                                                     //     controller: planned_receipt_date,
                                                     //     title: "Planned reciept date"),
@@ -912,8 +917,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                   controller: _scrollController,
                                   isAlwaysShown: true,
                                   child: Container(
-                                    height: 410,
-                                    //  width: MediaQuery.of(context).size.width,
+                                    alignment: Alignment.topRight,
+                                   height: 300,
+                                    // height: MediaQuery.of(context).size.height,
                                     child: ListView(
                                       controller: _scrollController,
                                       physics: ScrollPhysics(),
@@ -921,362 +927,1149 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                       children: [
                                         Row(
                                           children: [
-                                            Container(
-                                              // height: 500,
-                                              width: MediaQuery.of(context)
-                                                  .size
-                                                  .width,
-                                              padding: EdgeInsets.all(10),
-                                              child: customTable(
-                                                border: TableBorder(
-                                                    verticalInside: BorderSide(
-                                                        width: 1,
-                                                        color: Colors.black45,
-                                                        // color: Colors.blue,
-                                                        style:
-                                                            BorderStyle.solid),
-                                                    horizontalInside:
-                                                        BorderSide.none),
-                                                tableWidth: .5,
-                                                childrens: [
-                                                  TableRow(
-                                                      // decoration: BoxDecoration(
-                                                      //     color: Colors.green.shade200,
-                                                      //     shape: BoxShape.rectangle,
-                                                      //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-                                                      children: [
-                                                        tableHeadtext(
-                                                          'Sno',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white,
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Variant id',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 50,
-                                                          size: 12,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Variant Name',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Vendor ref code',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        // tableHeadtext('description', size: 10, color: null),
-                                                        tableHeadtext(
-                                                          'barcode',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
+                                            SingleChildScrollView(
+                                              child: Container(
+                                                // height: 500,
+                                                width: MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                                padding: EdgeInsets.all(10),
+                                                child: customTable(
+                                                  border: const TableBorder(
+                                                      verticalInside: BorderSide(
+                                                          width: 1,
+                                                          color: Colors.black45,
+                                                          // color: Colors.blue,
+                                                          style:
+                                                              BorderStyle.solid),
+                                                      horizontalInside:
+                                                          BorderSide.none),
+                                                  tableWidth: .5,
+                                                  childrens: [
+                                                    TableRow(
+                                                        // decoration: BoxDecoration(
+                                                        //     color: Colors.green.shade200,
+                                                        //     shape: BoxShape.rectangle,
+                                                        //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                                                        children: [
+                                                          tableHeadtext(
+                                                            'Sno',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white,
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Variant id',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 50,
+                                                            size: 12,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Variant Name',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Vendor ref code',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          // tableHeadtext('description', size: 10, color: null),
+                                                          tableHeadtext(
+                                                            'barcode',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
 
-                                                        tableHeadtext(
-                                                          'current qty',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'purchase uom',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'requested qty',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Min order qty',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Max order qty',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'is recieved',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'Unit cost',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'excise tax',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'discount',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'foc',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'vatable amount',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
+                                                          tableHeadtext(
+                                                            'current qty',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'purchase uom',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'requested qty',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Min order qty',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Max order qty',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'is recieved',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'Unit cost',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'excise tax',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'discount',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'foc',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'vatable amount',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
 
-                                                        tableHeadtext(
-                                                          'vat',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'actual cost',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'grand total',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'is invoiced',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        tableHeadtext(
-                                                          'is active',
-                                                          padding:
-                                                              EdgeInsets.all(7),
-                                                          height: 46,
-                                                          size: 13,
-                                                          // color: Palette.containerDarknew,
-                                                          // textColor: Palette.white
-                                                        ),
-                                                        // if (widget.onAddNew) textPadding(''),
-                                                      ]),
-                                                  // if (!widget.onAddNew &&
-                                                  //     widget.order?.orderLines != null &&
-                                                  //     widget.order!.orderLines!.isNotEmpty) ...[
-                                                  //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
-                                                  if (table != null)
-                                                    for (var i = 0;
-                                                        i < table.length;
-                                                        i++)
-                                                      TableRow(
-                                                          decoration: BoxDecoration(
-                                                              color: Colors.grey
-                                                                  .shade200,
-                                                              shape: BoxShape
-                                                                  .rectangle,
-                                                              border: Border(
-                                                                  left: BorderSide(
-                                                                      width: .5,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      style: BorderStyle
-                                                                          .solid),
-                                                                  bottom: BorderSide(
-                                                                      width: .5,
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      style: BorderStyle
-                                                                          .solid),
-                                                                  right: BorderSide(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      width: .5,
-                                                                      style: BorderStyle
-                                                                          .solid))),
-                                                          children: [
-                                                            textPadding(
-                                                                (i + 1)
-                                                                    .toString(),
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .variantId!,
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .variantName!,
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                vrefcod!,
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .barcode!,
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .currentQty==null?"": table[i]
+                                                          tableHeadtext(
+                                                            'vat',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'actual cost',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'grand total',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'is invoiced',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          tableHeadtext(
+                                                            'is active',
+                                                            padding:
+                                                                EdgeInsets.all(7),
+                                                            height: 46,
+                                                            size: 13,
+                                                            // color: Palette.containerDarknew,
+                                                            // textColor: Palette.white
+                                                          ),
+                                                          // if (widget.onAddNew) textPadding(''),
+                                                        ]),
+                                                    // if (!widget.onAddNew &&
+                                                    //     widget.order?.orderLines != null &&
+                                                    //     widget.order!.orderLines!.isNotEmpty) ...[
+                                                    //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
+                                                    if (table != null)
+                                                      for (var i = 0;
+                                                          i < table.length;
+                                                          i++)
+                                                        TableRow(
+                                                            decoration: BoxDecoration(
+                                                                color: Colors.grey
+                                                                    .shade200,
+                                                                shape: BoxShape
+                                                                    .rectangle,
+                                                                border:const  Border(
+                                                                    left: BorderSide(
+                                                                        width: .5,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        style: BorderStyle
+                                                                            .solid),
+                                                                    bottom: BorderSide(
+                                                                        width: .5,
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        style: BorderStyle
+                                                                            .solid),
+                                                                    right: BorderSide(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        width: .5,
+                                                                        style: BorderStyle
+                                                                            .solid))),
+                                                            children: [
+                                                              textPadding(
+                                                                  (i + 1)
+                                                                      .toString(),
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                PopUpCall(
+
+                type:
+                "cost-method-list",
+                value: table[i].variantId,
+                onSelection:
+                (VariantId? va) {
+
+                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
+                      variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                      ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                  )]);
+                setState(() {
+                // variantId =
+                // va?.code;
+                int? id = va!.id;
+            Variable.tableindex =i;
+            Variable.tableedit=true;
+
+
+                onChange = true;
+                context
+                    .read<
+                TableDetailsCubitDartCubit>()
+                    .getTableDetails(
+                id);
+                context
+                    .read<
+                PurchaseStockCubit>()
+                    .getCurrentStock(
+                id,inventoryId.text);
+
+                // orderType = va!;
+                });
+                },
+                onAddNew: () {},
+                // restricted: true,
+                ),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .variantName!,
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              1.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              textPadding(
+                                                                  table[i].supplierCode.toString(),
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .barcode!,
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .currentQty==null?"": table[i]
                     .currentQty.toString(),
 
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .purchaseuom!,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            UnderLinedInput(
-                                                              onChanged: (p0) {
-                                                                Qty = int
-                                                                    .tryParse(
-                                                                        p0);
-                                                                print(Qty);
-                                                                print("editwork"+i.toString());
-                                                                setState(() {
-                                                                  tableEdit=true;
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .purchaseuom!,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+
+
+                         //88888888888888888888                                   //**********************************************
+                                                              tableEdit==true?
+                                                              UnderLinedInput(
+                                                                onChanged: (p0) {
+                                                                  // setState(() {
+                                                                  //   tableEdit=true;
+                                                                  // });
+                                                                  if(p0==""){
+                                                                    setState(() {
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
+                                                                          variableAmount:0,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: 0,actualCost: 0,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                      print("table"+table.toString());
+                                                                    });
+
+
+                                                                  }
+                                                                  else {
+                                                                    setState(() {
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].maximumQty,requestedQty: int.tryParse(p0),
+                                                                          variableAmount:0,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                    });
+                                                                  }
+                                                                  setState(() {
+                                                                    var ucost=table[i].unitCost;
+                                                                    var vamount;
+                                                                    var qty=table[i].requestedQty;
+                                                                    var etax=table[i].excessTax;
+                                                                    var disc=table[i].discount;
+                                                                    var vat=table[i].vat;
+                                                                    double actual=0;
+                                                                    double grnad=0;
+                                                                    print("++++++++++++unitcost"+ucost.toString());
+                                                                    print("++++++++++++gty"+qty.toString());
+                                                                    print("++++++++++++etax"+etax.toString());
+                                                                    print("++++++++++++vat"+vat.toString());
+                                                                    if(ucost!=0){
+                                                                      vamount=(((ucost!*qty!)+etax!)-disc!);
+                                                                      actual=(vamount!+(vamount!*vat/100));
+                                                                       grnad=(vamount!+(vamount!*vat/100));
+                                                                      if(vamount!=0){
+                                                                        vamount=(((ucost!*qty!)+etax)-disc!);
+
+
+                                                                      }
+
+
+
+
+                                                                    }
+                                                                    table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:int.tryParse( p0),maximumQty:table[i].minimumQty,requestedQty:table[i].requestedQty,
+                                                                        variableAmount:vamount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                        ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: grnad,actualCost: actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                    )]);
+                                                                    print("table..editcase"+table.toString());
+
+
+                                                                  });
+                                                                  print(Qty);
+                                                                },
+                                                                enable: true,
+                                                                onComplete: () {
+                                                                  setState(() {
+                                                                    if (Vamount !=
+                                                                        0) {
+                                                                      Vamount = (((check! * Qty!) +
+                                                                                  eTax!) -
+                                                                              Vdiscount!)
+                                                                          .toDouble();
+                                                                    }
+                                                                  });
+
+                                                                  setState(() {});
+                                                                },
+                                                              ):
+                UnderLinedInput(
+                initial: table[i].requestedQty.toString(),
+                onChanged: (p0) {
+                  setState(() {
+                   tableEdit=true;
+
+                  });
+
+                print(p0);
+
+
+
+                },
+                enable: true,
+                onComplete: () {
+
+                setState(() {  print("maxxxx"+table.toString());});
+                },
+                ),
+
+
+                tableEdit==true?
+                                                              UnderLinedInput(
+                                                                initial: table[i].minimumQty.toString(),
+                                                                onChanged: (p0) {
+
+                                                                  print(p0);
+
+                                                                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:int.tryParse( p0),maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                      variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                      ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                  )]);
+
+
+                                                                },
+                                                                enable: true,
+                                                                onComplete: () {
+
+                                                                  setState(() {  print("maxxxx"+table.toString());});
+                                                                },
+                                                              ):
+                UnderLinedInput(
+                  initial: table[i].minimumQty.toString(),
+                  onChanged: (p0) {
+                    setState(() {
+                      tableEdit=true;
+
+                    });
+
+                    print(p0);
+
+
+
+                  },
+                  enable: true,
+                  onComplete: () {
+
+                    setState(() {  print("maxxxx"+table.toString());});
+                  },
+                ),
+
+                                                                  tableEdit==true?
+                                                                  UnderLinedInput(
+                                                                    onChanged: (p0) {
+
+                                                                        print(p0);
+
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:int.tryParse( p0),minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                          variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                        ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+
+
+                                                                    },
+                                                                    enable: true,
+                                                                    onComplete: () {
+
+                                                                      setState(() {  print("maxxxx"+table.toString());});
+                                                                    },
+                                                                  ):
+
+
+                UnderLinedInput(
+                initial: table[i].maximumQty.toString(),
+                onChanged: (p0) {
+                setState(() {
+                tableEdit=true;
+
+                });
+
+                print(p0);
+
+
+
+                },
+                enable: true,
+                onComplete: () {
+
+                setState(() {  print("maxxxx"+table.toString());});
+                },
+                ),
+                                                              Checkbox(
+                                                                value: table[i]
+                                                                    .isRecieved==null?false: table[i]
+                                                                    .isRecieved,
+                                                                onChanged: (bool?
+                                                                    value) {
+                                                                  setState(() {
+                                                                    this.isRecieved =
+                                                                        value;
+                                                                  });
+                                                                },
+                                                              ),
+
+     //*************UNITCOST*******************uNIT COST*******************UNITCOST***********UNITCOST************************************************
+                                                              //
+
+                UnderLinedInput(
+                initial: table[i].unitCost
+                    .toString(),
+                onChanged:
+                (p0) {
+                  var ucost=table[i].unitCost;
+                  print("unitcosttest-ucost"+ucost.toString());
+                  var vamount;
+                  var qty=table[i].requestedQty;
+                  var etax=table[i].excessTax;
+                  var disc=table[i].discount;
+                  var vat=table[i].vat;
+                  double actual=0;
+                  double grnad=0;
+                if (p0 ==
+                "") {
+                setState(
+                () {
+                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                      variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                      ,unitCost: 0,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                  )]);
+                if (vamount !=
+                0) {
+                  ucost=table[i].unitCost;
+                  vamount =
+                (((ucost! * qty!) + etax!) - disc!).toDouble();
+                  actual =
+                (vamount! + ((vamount! * vat!) / 100));
+                grnad =
+                (vamount! + ((vamount! * vat!) / 100));
+                }
+                });
+                }
+                setState(() {
+                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                      variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                      ,unitCost: double.tryParse(p0),foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                  )]);
+                  ucost=table[i].unitCost;
+                vamount = (((ucost! * qty!) +
+                etax!) -
+                disc!)
+                    .toDouble();
+                  actual =
+                  (vamount! + ((vamount! * vat!) / 100));
+                  grnad =
+                  (vamount! + ((vamount! * vat!) / 100));
+
+
+                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                      variableAmount:vamount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                      ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: grnad,actualCost: actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                  )]);
+                });
+                },
+                enable: true,
+                onComplete:
+                () {},
+                ),
+
+
+        //Excess tax***********************************Excesstax***********************************************************************
+                                                      tableEdit==true?
+                                                      UnderLinedInput(
+                                                        initial: table[i].excessTax.toString(),
+                                                        onChanged:
+                                                            (p0) {
+                                                          if (p0 ==
+                                                              "") {
+                                                            setState(
+                                                                    () {
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                          variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: 0,supplierCode: table[i].supplierCode
+                                                                          ,unitCost:table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
                                                                 });
-                                                              },
-                                                              enable: true,
-                                                              onComplete: () {
+                                                          } else {
+                                                            setState(
+                                                                    () {
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                          variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: double.tryParse(p0),supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                });
+                                                          }
+                                                          var ucost=table[i].unitCost;
+                                                          print("unitcosttest-ucost"+ucost.toString());
+                                                          var vamount;
+                                                          var qty=table[i].requestedQty;
+                                                          var etax=table[i].excessTax;
+                                                          var disc=table[i].discount;
+                                                          var vat=table[i].vat;
+                                                          double actual=0;
+                                                          double grnad=0;
+
+                                                          setState(() {
+                                                            if (vamount !=
+                                                                0) {
+                                                              vamount = (((ucost! * qty!) + etax!) -
+                                                                  disc!)
+                                                                  .toDouble();
+                                                              actual =
+                                                              (vamount! + ((vamount! * vat!) / 100))
+                                                              ;
+                                                              grnad =
+                                                              (vamount! + ((vamount! * vat!) / 100))
+                                                              ;
+                                                            }
+                                                            table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                variableAmount:vamount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: grnad,actualCost:actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                            )]);
+                                                          });
+                                                        },
+                                                        enable: true,
+                                                        onComplete:
+                                                            () {},
+                                                      ):
+                UnderLinedInput(
+                initial: table[i].excessTax.toString(),
+                onChanged: (p0) {
+                setState(() {
+                tableEdit=true;
+
+                });
+
+                print(p0);
+
+                },
+                enable: true,
+                onComplete: () {
+
+                setState(() {  print("maxxxx"+table.toString());});
+                },
+                ),
+
+              //****************************************DISCOUNT***************************DISCOUNT*********************************
+  tableEdit==true?
+  UnderLinedInput(
+  onChanged: (p0) {
+    if (p0 == '')
+      setState(() {
+        table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+            variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+            ,unitCost:table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: 0
+        )]);
+      });
+    else {
+      setState(() {
+        table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+            variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+            ,unitCost:table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: int.tryParse(p0)
+        )]);
+      });
+    }
+    var ucost=table[i].unitCost;
+    print("unitcosttest-ucost"+ucost.toString());
+    var vamount;
+    var qty=table[i].requestedQty;
+    var etax=table[i].excessTax;
+    var disc=table[i].discount;
+    var vat=table[i].vat;
+    double actual=0;
+    double grnad=0;
+
+    vamount = (((ucost! *
+        qty!) +
+        etax!) -
+        disc!)
+        .toDouble();
+
+    actual = (vamount! +
+        ((vamount! *
+            vat!) /
+            100))
+    ;
+    grnad = (vamount! +
+        ((vamount! *
+            vat!) /
+            100))
+    ;
+    table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,maximumQty:table[i].maximumQty,minimumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+        variableAmount:vamount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+        ,unitCost:table[i].unitCost,foc: table[i].foc,grandTotal: grnad,actualCost: actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+    )]);
+
+    setState(() {});
+  },
+  enable: true,
+  onComplete: () {
+
+    setState(() {});
+  },
+):
+  UnderLinedInput(
+    initial: table[i].discount.toString(),
+    onChanged: (p0) {
+      setState(() {
+        tableEdit=true;
+
+      });
+
+      print(p0);
+
+
+
+    },
+    enable: true,
+    onComplete: () {
+
+      setState(() {  print("maxxxx"+table.toString());});
+    },
+  ),
+                                                              tableEdit==true?
+                                                              UnderLinedInput(
+                                                                initial: table[i].foc.toString(),
+                                                                onChanged: (p0) {
+
+                                                                  print(p0);
+
+                                                                  table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:  table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                      variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                      ,unitCost: table[i].unitCost,foc:double.tryParse( p0),grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                  )]);
+
+
+                                                                },
+                                                                enable: true,
+                                                                onComplete: () {
+
+                                                                  setState(() {  print("maxxxx"+table.toString());});
+                                                                },
+                                                              ):
+                                                              UnderLinedInput(
+                                                                initial: table[i].foc.toString(),
+                                                                onChanged: (p0) {
+                                                                  setState(() {
+                                                                    tableEdit=true;
+
+                                                                  });
+
+                                                                  print(p0);
+
+
+
+                                                                },
+                                                                enable: true,
+                                                                onComplete: () {
+
+                                                                  setState(() {  print("maxxxx"+table.toString());});
+                                                                },
+                                                              ),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .variableAmount
+                                                                      .toString(),
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                      11.5,
+                                                                      top:
+                                                                      11.5),
+                                                                  fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+
+                                 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
+                                                              tableEdit==true?
+                                                              UnderLinedInput(
+                                                                onChanged: (p0) {
+                                                                  if (p0 == "") {
+
+                                                                    setState(() {
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:  table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                          variableAmount:table[i].variableAmount,vat: 0,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc:table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                      var ucost=table[i].unitCost;
+                                                                      print("unitcosttest-ucost"+ucost.toString());
+                                                                      var vamount=table[i].variableAmount;
+                                                                      var qty=table[i].requestedQty;
+                                                                      var etax=table[i].excessTax;
+                                                                      var disc=table[i].discount;
+                                                                      var vat=table[i].vat;
+                                                                      double actual=0;
+                                                                      double grnad=0;
+
+                                                                      actual = (vamount! +
+                                                                          ((vamount! *
+                                                                              vat!) /
+                                                                              100))
+                                                                      ;
+                                                                      grnad  = (vamount! +
+                                                                          ((vamount! *
+                                                                              vat!) /
+                                                                              100))
+                                                                      ;
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:  table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                          variableAmount:table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc:table[i].foc,grandTotal: grnad,actualCost: actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                    });
+                                                                  }
+
+
+                                                                  setState(() {
+                                                                    table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:  table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                        variableAmount:table[i].variableAmount,vat:double.tryParse(p0),currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                        ,unitCost: table[i].unitCost,foc:table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                    )]);
+                                                                    var ucost=table[i].unitCost;
+                                                                    print("unitcosttest-ucost"+ucost.toString());
+                                                                    var vamount=table[i].variableAmount;
+                                                                    var qty=table[i].requestedQty;
+                                                                    var etax=table[i].excessTax;
+                                                                    var disc=table[i].discount;
+                                                                    var vat=table[i].vat;
+                                                                    double actual=0;
+                                                                    double grnad=0;
+
+                                                                    actual = (vamount! +
+                                                                        ((vamount! *
+                                                                            vat!) /
+                                                                            100))
+                                                                    ;
+                                                                    grnad = (vamount! +
+                                                                        ((vamount! *
+                                                                            vat!) /
+                                                                            100));
+                                                                    table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:  table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: table[i].requestedQty,
+                                                                        variableAmount:table[i].variableAmount,vat:double.tryParse(p0),currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                        ,unitCost: table[i].unitCost,foc:table[i].foc,grandTotal: grnad,actualCost: actual,variantId: table[i].variantId,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                    )]);
+
+                                                                  });
+                                                                },
+                                                                enable: true,
+                                                                onComplete: () {
+                                                                  // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
+                                                                  print("vactualCost" +
+                                                                      vactualCost
+                                                                          .toString());
+                                                                  print("+++++" +
+                                                                      table.length
+                                                                          .toString());
+
+                                                                  // table?.add(oderlines1);
+                                                                  // print("+++++"+oderlines.toString());
+
+                                                                  // widget.onAdd(VendorDetails(id: id, name: name));
+                                                                  // id = "";
+                                                                  // name = "";
+                                                                  // print("oncomplete");
+                                                                },
+                                                              ):
+                UnderLinedInput(
+                initial: table[i].vat.toString(),
+                onChanged: (p0) {
+                setState(() {
+                tableEdit=true;
+
+                });
+
+                print(p0);
+
+
+
+                },
+                enable: true,
+                onComplete: () {
+
+                setState(() {  print("maxxxx"+table.toString());});
+                },
+                ),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .actualCost
+                                                                      .toString(),
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              textPadding(
+                                                                  table[i]
+                                                                      .grandTotal
+                                                                      .toString(),
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                              Checkbox(
+                                                                value: table[i]
+                                                                    .isRecieved==null?false:table[i]
+                                                                    .isRecieved,
+                                                                onChanged: (bool?
+                                                                    value) {
+                                                                  setState(() {
+                                                                    // this.isRecieved =
+                                                                    //     value;
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Checkbox(
+                                                                value: table[i]
+                                                                    .isActive==null?false:table[i]
+                                                                    .isActive,
+                                                                onChanged: (bool?
+                                                                    value) {
+                                                                  setState(() {
+                                                                    // this.isRecieved =
+                                                                    //     value;
+                                                                  });
+                                                                },
+                                                              ),
+                                                            ]),
+//********************************************************************************************************************
+                                                    TableRow(
+                                                        decoration: BoxDecoration(
+                                                            color: Colors
+                                                                .grey.shade200,
+                                                            shape: BoxShape
+                                                                .rectangle,
+                                                            border: const Border(
+                                                                left: BorderSide(
+                                                                    width: 1,
+                                                                    color: Colors
+                                                                        .black45,
+                                                                    style:
+                                                                        BorderStyle
+                                                                            .solid),
+                                                                right: BorderSide(
+                                                                    color: Colors
+                                                                        .black45,
+                                                                    width: 1,
+                                                                    style: BorderStyle
+                                                                        .solid))),
+                                                        children: [
+                                                          textPadding(
+                                                              (table.length + 1)
+                                                                  .toString(),
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          PopUpCall(
+                                                            // label: "purchase UOM",
+                                                            type:
+                                                                "cost-method-list",
+                                                            value: variantId,
+                                                            onSelection:
+                                                                (VariantId? va) {
+                                                              print(va!.id
+                                                                  .toString());
+                                                              print("code" +
+                                                                  va!.code
+                                                                      .toString());
+
+                                                              setState(() {
+                                                                variantId =
+                                                                    va?.code;
+                                                                int? id = va!.id;
+                                                                print("is is"+id.toString());
+                                                                Variable.tableedit=false;
+
+                                                                onChange = true;
+                                                                context
+                                                                    .read<
+                                                                        TableDetailsCubitDartCubit>()
+                                                                    .getTableDetails(
+                                                                        id);
+                                                                context
+                                                                    .read<
+                                                                        PurchaseStockCubit>()
+                                                                    .getCurrentStock(
+                                                                    id,inventoryId.text);
+
+                                                                // orderType = va!;
+                                                              });
+                                                            },
+                                                            onAddNew: () {},
+                                                            // restricted: true,
+                                                          ),
+                                                          textPadding(
+                                                              varinatname!,
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textPadding(vrefcod!,
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textPadding(
+                                                              Vbarcode.toString(),
+                                                              fontSize: 12,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textPadding(
+                                                              stockQty.toString(),
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textPadding(check1!,
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
+                                                              if (p0 == '') {
                                                                 setState(() {
+                                                                  Qty = 0;
+                                                                  Vamount = 0;
+                                                                  Vgrnadtotal = 0;
+                                                                  vactualCost = 0;
+                                                                });
+                                                              } else {
+                                                                setState(() {
+                                                                  Qty = int
+                                                                      .tryParse(
+                                                                          p0);
+                                                                });
+                                                              }
+                                                              setState(() {
+                                                                if (check != 0) {
+                                                                  Vamount = (((check! *
+                                                                                  Qty!) +
+                                                                              eTax!) -
+                                                                          Vdiscount!)
+                                                                      .toDouble();
+
+                                                                  vactualCost = (Vamount! +
+                                                                          ((Vamount! *
+                                                                                  vvat!) /
+                                                                              100))
+                                                                      ;
+                                                                  Vgrnadtotal = (Vamount! +
+                                                                          ((Vamount! *
+                                                                                  vvat!) /
+                                                                              100))
+                                                                      ;
+
                                                                   if (Vamount !=
                                                                       0) {
                                                                     Vamount = (((check! * Qty!) +
@@ -1284,602 +2077,270 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                             Vdiscount!)
                                                                         .toDouble();
                                                                   }
-                                                                });
-
-                                                                setState(() {});
-                                                              },
-                                                            ),
-                                                            tableEdit==true?Text("Akkkkk"):
-                                                            textPadding(
-                                                                table[i]
-                                                                    .minimumQty
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .maximumQty
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            Checkbox(
-                                                              value: table[i]
-                                                                  .isRecieved==null?false: table[i]
-                                                                  .isRecieved,
-                                                              onChanged: (bool?
-                                                                  value) {
-                                                                setState(() {
-                                                                  this.isRecieved =
-                                                                      value;
-                                                                });
-                                                              },
-                                                            ),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .unitCost
-                                                                    .toString(),
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            1.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .excessTax
-                                                                    .toString(),
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            UnderLinedInput(
-                                                              onChanged: (p0) {
-                                                                Vdiscount = int
-                                                                    .tryParse(
-                                                                        p0);
-                                                                print(
-                                                                    Vdiscount);
-                                                              },
-                                                              enable: true,
-                                                              onComplete: () {
-                                                                setState(() {
-                                                                  Vamount = (((check! * Qty!) +
-                                                                              eTax!) -
-                                                                          Vdiscount!)
-                                                                      .toDouble();
-                                                                  print("Vamount" +
-                                                                      Vamount
-                                                                          .toString());
-                                                                });
-
-                                                                setState(() {});
-                                                              },
-                                                            ),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .discount
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .variableAmount
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .vat
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                    left:
-                                                                    11.5,
-                                                                    top:
-                                                                    11.5),
-                                                                fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .actualCost
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            textPadding(
-                                                                table[i]
-                                                                    .grandTotal
-                                                                    .toString(),
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
-                                                            Checkbox(
-                                                              value: table[i]
-                                                                  .isRecieved==null?false:table[i]
-                                                                  .isRecieved,
-                                                              onChanged: (bool?
-                                                                  value) {
-                                                                setState(() {
-                                                                  // this.isRecieved =
-                                                                  //     value;
-                                                                });
-                                                              },
-                                                            ),
-                                                            Checkbox(
-                                                              value: table[i]
-                                                                  .isActive==null?false:table[i]
-                                                                  .isActive,
-                                                              onChanged: (bool?
-                                                                  value) {
-                                                                setState(() {
-                                                                  // this.isRecieved =
-                                                                  //     value;
-                                                                });
-                                                              },
-                                                            ),
-                                                          ]),
-//********************************************************************************************************************
-                                                  TableRow(
-                                                      decoration: BoxDecoration(
-                                                          color: Colors
-                                                              .grey.shade200,
-                                                          shape: BoxShape
-                                                              .rectangle,
-                                                          border: const Border(
-                                                              left: BorderSide(
-                                                                  width: 1,
-                                                                  color: Colors
-                                                                      .black45,
-                                                                  style:
-                                                                      BorderStyle
-                                                                          .solid),
-                                                              right: BorderSide(
-                                                                  color: Colors
-                                                                      .black45,
-                                                                  width: 1,
-                                                                  style: BorderStyle
-                                                                      .solid))),
-                                                      children: [
-                                                        textPadding(
-                                                            (table.length + 1)
-                                                                .toString(),
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        PopUpCall(
-                                                          // label: "purchase UOM",
-                                                          type:
-                                                              "cost-method-list",
-                                                          value: variantId,
-                                                          onSelection:
-                                                              (VariantId? va) {
-                                                            print(va!.id
-                                                                .toString());
-                                                            print("code" +
-                                                                va!.code
-                                                                    .toString());
-
-                                                            setState(() {
-                                                              variantId =
-                                                                  va?.code;
-                                                              int? id = va!.id;
-                                                              print("is is"+id.toString());
-
-                                                              onChange = true;
-                                                              context
-                                                                  .read<
-                                                                      TableDetailsCubitDartCubit>()
-                                                                  .getTableDetails(
-                                                                      id);
-                                                              context
-                                                                  .read<
-                                                                      PurchaseStockCubit>()
-                                                                  .getCurrentStock(
-                                                                  id,inventoryId.text);
-
-                                                              // orderType = va!;
-                                                            });
-                                                          },
-                                                          onAddNew: () {},
-                                                          // restricted: true,
-                                                        ),
-                                                        textPadding(
-                                                            varinatname!,
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        textPadding(vrefcod!,
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        textPadding(
-                                                            Vbarcode.toString(),
-                                                            fontSize: 12,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        textPadding(
-                                                            stockQty.toString(),
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        textPadding(check1!,
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            if (p0 == '') {
-                                                              setState(() {
-                                                                Qty = 0;
-                                                                Vamount = 0;
-                                                                Vgrnadtotal = 0;
-                                                                vactualCost = 0;
-                                                              });
-                                                            } else {
-                                                              setState(() {
-                                                                Qty = int
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
-                                                            setState(() {
-                                                              if (check != 0) {
-                                                                Vamount = (((check! *
-                                                                                Qty!) +
-                                                                            eTax!) -
-                                                                        Vdiscount!)
-                                                                    .toDouble();
-
-                                                                vactualCost = (Vamount! +
-                                                                        ((Vamount! *
-                                                                                vvat!) /
-                                                                            100))
-                                                                    ;
-                                                                Vgrnadtotal = (Vamount! +
-                                                                        ((Vamount! *
-                                                                                vvat!) /
-                                                                            100))
-                                                                    ;
-
-                                                                if (Vamount !=
-                                                                    0) {
-                                                                  Vamount = (((check! * Qty!) +
-                                                                              eTax!) -
-                                                                          Vdiscount!)
-                                                                      .toDouble();
                                                                 }
-                                                              }
-                                                            });
-                                                            print(Qty);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            setState(() {});
+                                                              });
+                                                              print(Qty);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              setState(() {});
 
-                                                            setState(() {});
-                                                          },
-                                                        ),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            vminqty =
-                                                                int.tryParse(
-                                                                    p0);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            setState(() {});
-                                                          },
-                                                        ),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            vmaxnqty =
-                                                                int.tryParse(
-                                                                    p0);
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            setState(() {});
-                                                          },
-                                                        ),
-                                                        Checkbox(
-                                                          value:
-                                                              this.isRecieved,
-                                                          onChanged:
-                                                              (bool? value) {
-                                                            setState(() {
-                                                              // this.isRecieved =
-                                                              //     value;
-                                                            });
-                                                          },
-                                                        ),
-                                                        check == 0
-                                                            ? textPadding(
-                                                                check
-                                                                    .toString(),
-                                                                fontSize: 12,
-                                                                padding: EdgeInsets
-                                                                    .only(
-                                                                        left:
-                                                                            11.5,
-                                                                        top:
-                                                                            11.5),
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500)
-                                                            : UnderLinedInput(
-                                                                initial: check
-                                                                    .toString(),
-                                                                onChanged:
-                                                                    (p0) {
-                                                                  if (p0 ==
-                                                                      "") {
-                                                                    setState(
-                                                                        () {
-                                                                      check = 0;
-                                                                      if (Vamount !=
-                                                                          0) {
-                                                                        Vamount =
-                                                                            (((check! * Qty!) + eTax!) - Vdiscount!).toDouble();
-                                                                        vactualCost =
-                                                                            (Vamount! + ((Vamount! * vvat!) / 100));
-                                                                        Vgrnadtotal =
-                                                                            (Vamount! + ((Vamount! * vvat!) / 100));
-                                                                      }
-                                                                    });
-                                                                  }
-                                                                  setState(() {
-                                                                    check = double
-                                                                        .tryParse(
-                                                                            p0);
-
-                                                                    Vamount = (((check! * Qty!) +
-                                                                                eTax!) -
-                                                                            Vdiscount!)
-                                                                        .toDouble();
-                                                                  });
-                                                                },
-                                                                enable: true,
-                                                                onComplete:
-                                                                    () {},
-                                                              ),
-                                                        eTax == 0
-                                                            ? UnderLinedInput(
-                                                                onChanged:
-                                                                    (p0) {
-                                                                  if (p0 ==
-                                                                      "") {
-                                                                    setState(
-                                                                        () {
-                                                                      eTax = 0;
-                                                                    });
-                                                                  } else {
-                                                                    setState(
-                                                                        () {
-                                                                      eTax = double
+                                                              setState(() {});
+                                                            },
+                                                          ),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
+                                                              vminqty =
+                                                                  int.tryParse(
+                                                                      p0);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              setState(() {});
+                                                            },
+                                                          ),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
+                                                              vmaxnqty =
+                                                                  int.tryParse(
+                                                                      p0);
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              setState(() {});
+                                                            },
+                                                          ),
+                                                          Checkbox(
+                                                            value:
+                                                                this.isRecieved,
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                // this.isRecieved =
+                                                                //     value;
+                                                              });
+                                                            },
+                                                          ),
+                                                          check == 0
+                                                              ? textPadding(
+                                                                  check
+                                                                      .toString(),
+                                                                  fontSize: 12,
+                                                                  padding: EdgeInsets
+                                                                      .only(
+                                                                          left:
+                                                                              11.5,
+                                                                          top:
+                                                                              11.5),
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500)
+                                                              : UnderLinedInput(
+                                                                  initial: check
+                                                                      .toString(),
+                                                                  onChanged:
+                                                                      (p0) {
+                                                                    if (p0 ==
+                                                                        "") {
+                                                                      setState(
+                                                                          () {
+                                                                        check = 0;
+                                                                        if (Vamount !=
+                                                                            0) {
+                                                                          Vamount =
+                                                                              (((check! * Qty!) + eTax!) - Vdiscount!).toDouble();
+                                                                          vactualCost =
+                                                                              (Vamount! + ((Vamount! * vvat!) / 100));
+                                                                          Vgrnadtotal =
+                                                                              (Vamount! + ((Vamount! * vvat!) / 100));
+                                                                        }
+                                                                      });
+                                                                    }
+                                                                    setState(() {
+                                                                      check = double
                                                                           .tryParse(
                                                                               p0);
-                                                                    });
-                                                                  }
 
-                                                                  setState(() {
-                                                                    if (Vamount !=
-                                                                        0) {
-                                                                      Vamount = (((check! * Qty!) + eTax!) -
+                                                                      Vamount = (((check! * Qty!) +
+                                                                                  eTax!) -
                                                                               Vdiscount!)
                                                                           .toDouble();
                                                                       vactualCost =
-                                                                          (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              ;
+                                                                      (Vamount! + ((Vamount! * vvat!) / 100));
                                                                       Vgrnadtotal =
-                                                                          (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              ;
-                                                                    }
-                                                                  });
-                                                                },
-                                                                enable: true,
-                                                                onComplete:
-                                                                    () {},
-                                                              )
-                                                            : UnderLinedInput(
-                                                                initial: eTax
-                                                                    .toString(),
-                                                                onChanged:
-                                                                    (p0) {
-                                                                  if (p0 ==
-                                                                      "") {
-                                                                    setState(
-                                                                        () {
-                                                                      eTax = 0;
+                                                                      (Vamount! + ((Vamount! * vvat!) / 100));
                                                                     });
-                                                                  } else {
-                                                                    setState(
-                                                                        () {
-                                                                      eTax = double.tryParse(
-                                                                              p0);
-                                                                    });
-                                                                  }
-
-                                                                  setState(() {
-                                                                    if (Vamount !=
-                                                                        0) {
-                                                                      Vamount = (((check! * Qty!) + eTax!) -
-                                                                              Vdiscount!)
-                                                                          .toDouble();
-                                                                      vactualCost =
-                                                                          (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              ;
-                                                                      Vgrnadtotal =
-                                                                          (Vamount! + ((Vamount! * vvat!) / 100))
-                                                                              ;
+                                                                  },
+                                                                  enable: true,
+                                                                  onComplete:
+                                                                      () {},
+                                                                ),
+                                                          eTax == 0
+                                                              ? UnderLinedInput(
+                                                                  onChanged:
+                                                                      (p0) {
+                                                                    if (p0 ==
+                                                                        "") {
+                                                                      setState(
+                                                                          () {
+                                                                        eTax = 0;
+                                                                      });
+                                                                    } else {
+                                                                      setState(
+                                                                          () {
+                                                                        eTax = double
+                                                                            .tryParse(
+                                                                                p0);
+                                                                      });
                                                                     }
-                                                                  });
-                                                                },
-                                                                enable: true,
-                                                                onComplete:
-                                                                    () {},
-                                                              ),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            if (p0 == '')
-                                                              setState(() {
-                                                                Vdiscount = 0;
-                                                              });
-                                                            else {
-                                                              setState(() {
-                                                                Vdiscount = int
-                                                                    .tryParse(
-                                                                        p0);
-                                                              });
-                                                            }
 
-                                                            Vamount = (((check! *
-                                                                            Qty!) +
-                                                                        eTax!) -
-                                                                    Vdiscount!)
-                                                                .toDouble();
+                                                                    setState(() {
+                                                                      if (Vamount !=
+                                                                          0) {
+                                                                        Vamount = (((check! * Qty!) + eTax!) -
+                                                                                Vdiscount!)
+                                                                            .toDouble();
+                                                                        vactualCost =
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100))
+                                                                                ;
+                                                                        Vgrnadtotal =
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100))
+                                                                                ;
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  enable: true,
+                                                                  onComplete:
+                                                                      () {},
+                                                                )
+                                                              : UnderLinedInput(
+                                                                  initial: eTax
+                                                                      .toString(),
+                                                                  onChanged:
+                                                                      (p0) {
+                                                                    if (p0 ==
+                                                                        "") {
+                                                                      setState(
+                                                                          () {
+                                                                        eTax = 0;
+                                                                      });
+                                                                    } else {
+                                                                      setState(
+                                                                          () {
+                                                                        eTax = double.tryParse(
+                                                                                p0);
+                                                                      });
+                                                                    }
 
-                                                            vactualCost = (Vamount! +
-                                                                    ((Vamount! *
-                                                                            vvat!) /
-                                                                        100))
-                                                                ;
-                                                            Vgrnadtotal = (Vamount! +
-                                                                    ((Vamount! *
-                                                                            vvat!) /
-                                                                        100))
-                                                               ;
-
-                                                            setState(() {});
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            vm.totalDiscount =
-                                                                (vm.totalDiscount!) +
-                                                                    (Vdiscount!);
-                                                            print("vm.totalDiscount" +
-                                                                vm.totalDiscount
-                                                                    .toString());
-
-                                                            // widget.onAdd(VendorDetails(id: id, name: name));
-                                                            // id = "";
-                                                            // name = "";
-                                                            // print("oncomplete");
-                                                            setState(() {});
-                                                          },
-                                                        ),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            setState(() {
+                                                                    setState(() {
+                                                                      if (Vamount !=
+                                                                          0) {
+                                                                        Vamount = (((check! * Qty!) + eTax!) -
+                                                                                Vdiscount!)
+                                                                            .toDouble();
+                                                                        vactualCost =
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100))
+                                                                                ;
+                                                                        Vgrnadtotal =
+                                                                            (Vamount! + ((Vamount! * vvat!) / 100))
+                                                                                ;
+                                                                      }
+                                                                    });
+                                                                  },
+                                                                  enable: true,
+                                                                  onComplete:
+                                                                      () {},
+                                                                ),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
                                                               if (p0 == '')
                                                                 setState(() {
-                                                                  vfoc = 0;
+                                                                  Vdiscount = 0;
                                                                 });
                                                               else {
                                                                 setState(() {
-                                                                  vfoc = double
+                                                                  Vdiscount = int
                                                                       .tryParse(
                                                                           p0);
                                                                 });
                                                               }
-                                                            });
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {},
-                                                        ),
-                                                        textPadding(
-                                                            Vamount.toString(),
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        UnderLinedInput(
-                                                          onChanged: (p0) {
-                                                            if (p0 == "") {
-                                                              print("null");
+
+                                                              Vamount = (((check! *
+                                                                              Qty!) +
+                                                                          eTax!) -
+                                                                      Vdiscount!)
+                                                                  .toDouble();
+
+                                                              vactualCost = (Vamount! +
+                                                                      ((Vamount! *
+                                                                              vvat!) /
+                                                                          100))
+                                                                  ;
+                                                              Vgrnadtotal = (Vamount! +
+                                                                      ((Vamount! *
+                                                                              vvat!) /
+                                                                          100))
+                                                                 ;
+
+                                                              setState(() {});
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+
+                                                              setState(() {});
+                                                            },
+                                                          ),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
                                                               setState(() {
-                                                                vvat = 0;
+                                                                if (p0 == '')
+                                                                  setState(() {
+                                                                    vfoc = 0;
+                                                                  });
+                                                                else {
+                                                                  setState(() {
+                                                                    vfoc = double
+                                                                        .tryParse(
+                                                                            p0);
+                                                                  });
+                                                                }
+                                                              });
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {},
+                                                          ),
+                                                          textPadding(
+                                                              Vamount.toString(),
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          UnderLinedInput(
+                                                            onChanged: (p0) {
+                                                              if (p0 == "") {
+                                                                print("null");
+                                                                setState(() {
+                                                                  vvat = 0;
+                                                                  vactualCost = (Vamount! +
+                                                                          ((Vamount! *
+                                                                                  vvat!) /
+                                                                              100))
+                                                                     ;
+                                                                  Vgrnadtotal = (Vamount! +
+                                                                          ((Vamount! *
+                                                                                  vvat!) /
+                                                                              100))
+                                                                     ;
+                                                                });
+                                                              }
+                                                              print("vvvaaat" +
+                                                                  p0.toString());
+                                                              vvat = double.tryParse(
+                                                                  p0);
+                                                              setState(() {
                                                                 vactualCost = (Vamount! +
                                                                         ((Vamount! *
                                                                                 vvat!) /
@@ -1889,235 +2350,224 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                                         ((Vamount! *
                                                                                 vvat!) /
                                                                             100))
-                                                                   ;
+                                                                    ;
                                                               });
-                                                            }
-                                                            print("vvvaaat" +
-                                                                p0.toString());
-                                                            vvat = double.tryParse(
-                                                                p0);
-                                                            setState(() {
-                                                              vactualCost = (Vamount! +
-                                                                      ((Vamount! *
-                                                                              vvat!) /
-                                                                          100))
-                                                                 ;
-                                                              Vgrnadtotal = (Vamount! +
-                                                                      ((Vamount! *
-                                                                              vvat!) /
-                                                                          100))
-                                                                  ;
-                                                            });
-                                                          },
-                                                          enable: true,
-                                                          onComplete: () {
-                                                            // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
-                                                            print("vactualCost" +
-                                                                vactualCost
-                                                                    .toString());
-                                                            print("+++++" +
-                                                                table.length
-                                                                    .toString());
+                                                            },
+                                                            enable: true,
+                                                            onComplete: () {
+                                                              // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
+                                                              print("vactualCost" +
+                                                                  vactualCost
+                                                                      .toString());
+                                                              print("+++++" +
+                                                                  table.length
+                                                                      .toString());
 
-                                                            // table?.add(oderlines1);
-                                                            // print("+++++"+oderlines.toString());
+                                                              // table?.add(oderlines1);
+                                                              // print("+++++"+oderlines.toString());
 
-                                                            // widget.onAdd(VendorDetails(id: id, name: name));
-                                                            // id = "";
-                                                            // name = "";
-                                                            // print("oncomplete");
-                                                          },
-                                                        ),
-                                                        textPadding(
-                                                            vactualCost
-                                                                .toString(),
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        textPadding(
-                                                            Vgrnadtotal
-                                                                .toString(),
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                                    left: 11.5,
-                                                                    top: 11.5),
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w500),
-                                                        Checkbox(
-                                                          value: isInvoiced,
-                                                          onChanged:
-                                                              (bool? value) {
-                                                            setState(() {
-                                                              // this.isRecieved =
-                                                              //     value;
-                                                            });
-                                                          },
-                                                        ),
-                                                        InkWell(
-                                                          child: Center(
-                                                              child: Container(
-                                                                  margin: EdgeInsets
-                                                                      .only(
-                                                                          top:
-                                                                              11.5),
-                                                                  decoration: BoxDecoration(
-                                                                      color: _value
-                                                                          ? Colors
-                                                                              .blue
-                                                                          : Colors
-                                                                              .transparent,
-                                                                      border: Border.all(
-                                                                          width:
-                                                                              2,
-                                                                          color:
-                                                                              Colors.grey)),
-                                                                  child: _value
-                                                                      ? Icon(
-                                                                          Icons
-                                                                              .check,
-                                                                          size:
-                                                                              15,
-                                                                        )
-                                                                      : SizedBox(
-                                                                          height:
-                                                                              15,
-                                                                          width:
-                                                                              15,
-                                                                        ))),
-                                                          onTap: () {
-                                                            setState(() {
-                                                              if (vminqty! >
-                                                                  vmaxnqty!) {
-                                                                context.showSnackBarError(
-                                                                    "the minimum order is always less than maximum order");
-                                                              } else {
-                                                                _value =
-                                                                    !_value;
-                                                                table.add(
-                                                                    OrderLines(
-                                                                  isRecieved:
-                                                                      isRecieved ??
-                                                                          false,
-                                                                  isActive:
-                                                                      _value ??
-                                                                          false,
-                                                                  supplierCode:
-                                                                      vid.toString() ??
-                                                                          "",
-                                                                  variantId:
-                                                                      variantId ??
-                                                                          "",
-                                                                  variantName:
-                                                                      varinatname ??
-                                                                          "",
-                                                                  barcode:
-                                                                      Vbarcode ??
-                                                                          "",
-                                                                  cvd: "sss",
-                                                                  foc:
-                                                                      vfoc ?? 0,
-                                                                  maximumQty:
-                                                                      vmaxnqty ??
-                                                                          0,
-                                                                  minimumQty:
-                                                                      vminqty ??
-                                                                          0,
-                                                                  excessTax:
-                                                                      eTax ?? 0,
-                                                                  vat:
-                                                                      vvat ?? 0,
-                                                                  actualCost:
-                                                                      vactualCost ??
-                                                                          0,
-                                                                  purchaseuom:
-                                                                      check1 ??
-                                                                          "",
-                                                                  discount:
-                                                                      Vdiscount ??
-                                                                          0,
-                                                                  requestedQty:
-                                                                      Qty ?? 0,
-                                                                  unitCost:
-                                                                      check!??
-                                                                          0,
-                                                                  grandTotal:
-                                                                      Vgrnadtotal ??
-                                                                          0,
-                                                                  variableAmount:
-                                                                      Vamount! ??
-                                                                          0,
-                                                                  currentQty:
-                                                                      stockQty ??
-                                                                          0,
-                                                                ));
-                                                                print("gtable" +
-                                                                    table
-                                                                        .toString());
-                                                                addition();
-                                                                vid = 0;
-                                                                eTax = 0;
-                                                                variantId = "";
-                                                                varinatname =
-                                                                    "";
-                                                                vrefcod = "";
-                                                                Vbarcode = "";
-                                                                check1 = "";
-                                                                check = 0;
-                                                                Qty = 0;
-                                                                Vdiscount = 0;
-                                                                Vamount = 0;
-                                                                Vgrnadtotal = 0;
-                                                                vactualCost = 0;
-                                                                unitcost = 0;
-                                                                grands = 0;
-                                                                actualValue = 0;
-                                                                VatableValue =
-                                                                    0;
-                                                                discountValue =
-                                                                    0;
-                                                                vatValue = 0;
-                                                                stockQty = 0;
-                                                                _value = false;
-                                                                isRecieved =
-                                                                    false;
+                                                              // widget.onAdd(VendorDetails(id: id, name: name));
+                                                              // id = "";
+                                                              // name = "";
+                                                              // print("oncomplete");
+                                                            },
+                                                          ),
+                                                          textPadding(
+                                                              vactualCost
+                                                                  .toString(),
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          textPadding(
+                                                              Vgrnadtotal
+                                                                  .toString(),
+                                                              padding:
+                                                                  EdgeInsets.only(
+                                                                      left: 11.5,
+                                                                      top: 11.5),
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                          Checkbox(
+                                                            value: isInvoiced,
+                                                            onChanged:
+                                                                (bool? value) {
+                                                              setState(() {
+                                                                // this.isRecieved =
+                                                                //     value;
+                                                              });
+                                                            },
+                                                          ),
+                                                          InkWell(
+                                                            child: Center(
+                                                                child: Container(
+                                                                    margin: EdgeInsets
+                                                                        .only(
+                                                                            top:
+                                                                                11.5),
+                                                                    decoration: BoxDecoration(
+                                                                        color: _value
+                                                                            ? Colors
+                                                                                .blue
+                                                                            : Colors
+                                                                                .transparent,
+                                                                        border: Border.all(
+                                                                            width:
+                                                                                2,
+                                                                            color:
+                                                                                Colors.grey)),
+                                                                    child: _value
+                                                                        ? Icon(
+                                                                            Icons
+                                                                                .check,
+                                                                            size:
+                                                                                15,
+                                                                          )
+                                                                        : SizedBox(
+                                                                            height:
+                                                                                15,
+                                                                            width:
+                                                                                15,
+                                                                          ))),
+                                                            onTap: () {
+                                                              setState(() {
+                                                                if (vminqty! >
+                                                                    vmaxnqty!) {
+                                                                  context.showSnackBarError(
+                                                                      "the minimum order is always less than maximum order");
+                                                                } else {
+                                                                  _value =
+                                                                      !_value;
+                                                                  table.add(
+                                                                      OrderLines(
+                                                                    isRecieved:
+                                                                        isRecieved ??
+                                                                            false,
+                                                                    isActive:
+                                                                        _value ??
+                                                                            false,
+                                                                    supplierCode:
+                                                                        vid.toString() ??
+                                                                            "",
+                                                                    variantId:
+                                                                        variantId ??
+                                                                            "",
+                                                                    variantName:
+                                                                        varinatname ??
+                                                                            "",
+                                                                    barcode:
+                                                                        Vbarcode ??
+                                                                            "",
+                                                                    cvd: "sss",
+                                                                    foc:
+                                                                        vfoc ?? 0,
+                                                                    maximumQty:
+                                                                        vmaxnqty ??
+                                                                            0,
+                                                                    minimumQty:
+                                                                        vminqty ??
+                                                                            0,
+                                                                    excessTax:
+                                                                        eTax ?? 0,
+                                                                    vat:
+                                                                        vvat ?? 0,
+                                                                    actualCost:
+                                                                        vactualCost ??
+                                                                            0,
+                                                                    purchaseuom:
+                                                                        check1 ??
+                                                                            "",
+                                                                    discount:
+                                                                        Vdiscount ??
+                                                                            0,
+                                                                    requestedQty:
+                                                                        Qty ?? 0,
+                                                                    unitCost:
+                                                                        check!??
+                                                                            0,
+                                                                    grandTotal:
+                                                                        Vgrnadtotal ??
+                                                                            0,
+                                                                    variableAmount:
+                                                                        Vamount! ??
+                                                                            0,
+                                                                    currentQty:
+                                                                        stockQty ??
+                                                                            0,
+                                                                  ));
+                                                                  print("gtable" +
+                                                                      table
+                                                                          .toString());
+                                                                  addition();
+                                                                  vid = 0;
+                                                                  eTax = 0;
+                                                                  variantId = "";
+                                                                  varinatname =
+                                                                      "";
+                                                                  vrefcod = "";
+                                                                  Vbarcode = "";
+                                                                  check1 = "";
+                                                                  check = 0;
+                                                                  Qty = 0;
+                                                                  vvat=0;
+                                                                  vmaxnqty=0;
+                                                                  vmaxnqty=0;
+                                                                  Vdiscount = 0;
+                                                                  Vamount = 0;
+                                                                  Vgrnadtotal = 0;
+                                                                  vactualCost = 0;
+                                                                  unitcost = 0;
+                                                                  grands = 0;
+                                                                  focValue=0;
+                                                                  actualValue = 0;
+                                                                  excessTAxValue=0;
+                                                                  VatableValue =
+                                                                      0;
+                                                                  discountValue =
+                                                                      0;
+                                                                  vatValue = 0;
+                                                                  stockQty = 0;
+                                                                  _value = false;
+                                                                  isRecieved =
+                                                                      false;
 
-                                                                // _value=false;
+                                                                  // _value=false;
 
-                                                                setState(() {});
-                                                              }
-                                                            });
-                                                          },
-                                                        ),
-                                                      ]),
-                                                ],
-                                                widths: {
-                                                  0: FractionColumnWidth(.035),
-                                                  //  1: FractionColumnWidth(.05),
-                                                  //  2: FractionColumnWidth(.05),
-                                                  //  3: FractionColumnWidth(.06),
-                                                  //  4: FractionColumnWidth(.05),
-                                                  //  5: FractionColumnWidth(.05),
-                                                  //  6: FractionColumnWidth(.05),
-                                                  //  7: FractionColumnWidth(.05),
-                                                  //  8: FractionColumnWidth(.05,),
-                                                  //  9: FractionColumnWidth(.05),
-                                                  //  10: FractionColumnWidth(.05),
-                                                  //  11: FractionColumnWidth(.05),
-                                                  //  12: FractionColumnWidth(.05),
-                                                  13: FractionColumnWidth(.03),
-                                                  //  14: FractionColumnWidth(.05),
-                                                  //  15: FractionColumnWidth(.05),
-                                                  //  16: FractionColumnWidth(.03),
-                                                  // 17: FractionColumnWidth(.05),
-                                                  //  18: FractionColumnWidth(.05),
-                                                  //  19: FractionColumnWidth(.05),
-                                                  //  20: FractionColumnWidth(.05),
-                                                },
+                                                                  setState(() {});
+                                                                }
+                                                              });
+                                                            },
+                                                          ),
+                                                        ]),
+                                                  ],
+                                                  widths: {
+                                                    0: FractionColumnWidth(.035),
+                                                    //  1: FractionColumnWidth(.05),
+                                                    //  2: FractionColumnWidth(.05),
+                                                    //  3: FractionColumnWidth(.06),
+                                                    //  4: FractionColumnWidth(.05),
+                                                    //  5: FractionColumnWidth(.05),
+                                                    //  6: FractionColumnWidth(.05),
+                                                    //  7: FractionColumnWidth(.05),
+                                                    //  8: FractionColumnWidth(.05,),
+                                                    //  9: FractionColumnWidth(.05),
+                                                    //  10: FractionColumnWidth(.05),
+                                                    //  11: FractionColumnWidth(.05),
+                                                    //  12: FractionColumnWidth(.05),
+                                                    13: FractionColumnWidth(.03),
+                                                    //  14: FractionColumnWidth(.05),
+                                                    //  15: FractionColumnWidth(.05),
+                                                    //  16: FractionColumnWidth(.03),
+                                                    // 17: FractionColumnWidth(.05),
+                                                    //  18: FractionColumnWidth(.05),
+                                                    //  19: FractionColumnWidth(.05),
+                                                    //  20: FractionColumnWidth(.05),
+                                                  },
+                                                ),
                                               ),
                                             ),
                                             InkWell(
@@ -2191,6 +2641,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                   "";
                                                   vrefcod = "";
                                                   Vbarcode = "";
+                                                  vvat=0;
+                                                  focValue=0;
+                                                  excessTAxValue=0;
+
                                                   check1 = "";
                                                   check = 0;
                                                   Qty = 0;
@@ -2201,6 +2655,8 @@ class _GeneralScreenState extends State<GeneralScreen> {
                                                   unitcost = 0;
                                                   grands = 0;
                                                   actualValue = 0;
+                                                  vmaxnqty=0;
+                                                  vmaxnqty=0;
                                                   VatableValue =
                                                   0;
                                                   discountValue =

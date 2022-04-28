@@ -40,7 +40,7 @@ class OrderLines with _$OrderLines {
     final bool? isRecieved,
 
     final int ? currentQty,
-    @JsonKey(name: "isActive",defaultValue: false) final bool? isActive,
+    @JsonKey(name:"is_active",defaultValue: false) final bool? isActive,
     @JsonKey(name: "supplier_code") final String? supplierCode,
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "variant_name") final String? variantName,
@@ -57,7 +57,10 @@ class OrderLines with _$OrderLines {
     @JsonKey(name: "vatable_amount") final double? variableAmount,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "actual_cost") final double? actualCost,
+
   }) = _OrderLines;
+
   factory OrderLines.fromJson(Map<String, dynamic> json) =>
       _$OrderLinesFromJson(json);
+
 }
