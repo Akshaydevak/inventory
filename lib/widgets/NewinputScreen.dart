@@ -246,8 +246,8 @@ bool initialdatecheck=false;
                        ),
                        format: mFormat,
                        style: TextStyle(fontSize: 12),
-                       onChanged: widget.onSaved,
-                       //  onFieldSubmitted: widget.onSaved,
+                       // onChanged: widget.onSaved,
+                        onFieldSubmitted: widget.onSaved,
                        onShowPicker: (context, currentValue) async {
                          DateTime? date;
 
@@ -256,7 +256,9 @@ bool initialdatecheck=false;
                                firstDate: DateTime(1900),
                                initialDate: currentValue ?? DateTime.now(),
                                lastDate: DateTime(2100));return date?? currentValue;
+
                        })
+
 
              ],
            ),
@@ -269,7 +271,8 @@ class UnderLinedInput extends StatefulWidget {
   // final bool required;
   final VoidCallback? onClick;
   final bool enable;
-  final String initial;
+  final  String  initial;
+  final String ? last;
   final bool restricted;
   final String hintText;
   // final String? tileName;
@@ -280,8 +283,9 @@ class UnderLinedInput extends StatefulWidget {
   // final List<String>? items;
   const UnderLinedInput(
       {Key? key,
+       required this.last,
         this.enable = true,
-        this.initial="",
+         this.initial='',
         this.hintText = "",
         this.maxLines = 1,
         this.controller,
@@ -298,13 +302,14 @@ class UnderLinedInput extends StatefulWidget {
 class _UnderLinedInputState extends State<UnderLinedInput> {
   @override
   Widget build(BuildContext context) {
-    print("initialllll"+widget.initial.toString());
+    print("widget.akshay"+widget.last.toString());
+
     return Column(
       children: [
         Container(
           color: Colors.grey.shade200,
           child: TextFormField(
-            initialValue: widget.initial,
+            initialValue:widget.last=="0"?"":widget.last,
             onTap: () {
               if (widget.onClick != null) widget.onClick!();
             },

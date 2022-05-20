@@ -11,6 +11,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
   final InventoryRepository _repos = InventoryRepositoryImpl();
   InventorysearchCubit() : super(InventorysearchState.initial());
   Future getInventorySearch(String code) async {
+    print("aaaa");
     final result = await _repos.getInventorySearch(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

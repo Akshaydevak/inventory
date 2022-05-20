@@ -10,6 +10,7 @@ class GeneralPurchaseReadCubit extends Cubit<GeneralPurchaseReadState> {
   GeneralPurchaseReadCubit() : super(GeneralPurchaseReadState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
   Future getGeneralPurchaseRead(int id) async {
+    print("idddidd"+id.toString());
     final result = await _repos.getGeneralPurchaseRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

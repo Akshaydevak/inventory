@@ -248,9 +248,9 @@ class _$DataTearOff {
       @JsonKey(name: "foc") int? foc,
       @JsonKey(name: "unit_cost") int? unitcost,
       @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
+      @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
+      @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") int? variableAmount,
       @JsonKey(name: "created_by") String? createdBy}) {
     return _Data(
@@ -338,11 +338,11 @@ mixin _$Data {
   @JsonKey(name: "excess_tax")
   int? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
   @JsonKey(name: "vat")
   int? get vat => throw _privateConstructorUsedError;
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
   int? get variableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
@@ -380,9 +380,9 @@ abstract class $DataCopyWith<$Res> {
       @JsonKey(name: "foc") int? foc,
       @JsonKey(name: "unit_cost") int? unitcost,
       @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
+      @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
+      @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") int? variableAmount,
       @JsonKey(name: "created_by") String? createdBy});
 }
@@ -517,7 +517,7 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
@@ -525,7 +525,7 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
@@ -566,9 +566,9 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       @JsonKey(name: "foc") int? foc,
       @JsonKey(name: "unit_cost") int? unitcost,
       @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
+      @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
+      @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") int? variableAmount,
       @JsonKey(name: "created_by") String? createdBy});
 }
@@ -704,7 +704,7 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       actualCost: actualCost == freezed
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
@@ -712,7 +712,7 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       grandTotal: grandTotal == freezed
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       variableAmount: variableAmount == freezed
           ? _value.variableAmount
           : variableAmount // ignore: cast_nullable_to_non_nullable
@@ -826,13 +826,13 @@ class _$_Data implements _Data {
   final int? excessTax;
   @override
   @JsonKey(name: "actual_cost")
-  final int? actualCost;
+  final double? actualCost;
   @override
   @JsonKey(name: "vat")
   final int? vat;
   @override
   @JsonKey(name: "grand_total")
-  final int? grandTotal;
+  final double? grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
   final int? variableAmount;
@@ -987,9 +987,9 @@ abstract class _Data implements Data {
       @JsonKey(name: "foc") int? foc,
       @JsonKey(name: "unit_cost") int? unitcost,
       @JsonKey(name: "excess_tax") int? excessTax,
-      @JsonKey(name: "actual_cost") int? actualCost,
+      @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "vat") int? vat,
-      @JsonKey(name: "grand_total") int? grandTotal,
+      @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") int? variableAmount,
       @JsonKey(name: "created_by") String? createdBy}) = _$_Data;
 
@@ -1062,13 +1062,13 @@ abstract class _Data implements Data {
   int? get excessTax => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "actual_cost")
-  int? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vat")
   int? get vat => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "grand_total")
-  int? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vatable_amount")
   int? get variableAmount => throw _privateConstructorUsedError;

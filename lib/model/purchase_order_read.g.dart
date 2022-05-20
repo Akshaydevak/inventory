@@ -48,9 +48,9 @@ _$_Data _$$_DataFromJson(Map<String, dynamic> json) => _$_Data(
       foc: json['foc'] as int?,
       unitcost: json['unit_cost'] as int?,
       excessTax: json['excess_tax'] as int?,
-      actualCost: json['actual_cost'] as int?,
+      actualCost: (json['actual_cost'] as num?)?.toDouble(),
       vat: json['vat'] as int?,
-      grandTotal: json['grand_total'] as int?,
+      grandTotal: (json['grand_total'] as num?)?.toDouble(),
       variableAmount: json['vatable_amount'] as int?,
       createdBy: json['created_by'] as String?,
     );

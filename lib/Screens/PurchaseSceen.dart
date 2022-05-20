@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
@@ -23,11 +24,20 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
   double ? unitCost=0;
   @override
   Widget build(BuildContext context) {
+
     TabController _tabController = TabController(length: 5, vsync: this);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
-    return BlocProvider(
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider(
   create: (context) => TableDetailsCubitDartCubit(),
+),
+    BlocProvider(
+      create: (context) =>
+      InventorysearchCubit()..getInventorySearch("code"),
+    ),
+  ],
   child: BlocListener<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
   listener: (context, state) {
     state.maybeWhen(orElse: (){},
@@ -44,6 +54,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
         });
   },
   child: SingleChildScrollView(
+
       child: Container(
         color:Color(0xffF2F3F5),
         child: Column(
@@ -89,6 +100,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                           margin: EdgeInsets.only(top:22),
 
                           child: TabBar(
+
 
                             labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
                               unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
@@ -149,7 +161,9 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                       controller: _tabController,
                       children: [
                         GeneralScreen(widget.isCollapsed,purchaseTable,unitcost:unitCost),
-                        PurchaseRecievinScreen(),
+                        PurchaseRecievinScreen(
+                          // isCollapsed:widget.isCollapsed,
+                        ),
                         RequestFormScreen(),
                         RequestFormReceivigScreen(),
                         InventoryInvoiceScreen()

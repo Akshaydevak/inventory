@@ -6,6 +6,7 @@ import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
+import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/widgets/failiure.dart';
 import 'package:inventory/widgets/repoExecute.dart';
 import 'package:inventory/widgets/responseutils.dart';
@@ -21,10 +22,14 @@ abstract class InventoryRepository {
   Future<Either<Failure, DoubleResponse>> postPurchase(PurchaseOrderPost model);
   Future<Either<Failure, List<VariantId>>> getVariantId();
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
-  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id,String ? invdendotyId);
+  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(
+      int? id, String? invdendotyId);
   Future<Either<Failure, PurchaseOrderRead>> getGeneralPurchaseRead(int id);
   Future<Either<Failure, DoubleResponse>> getGeneralPurchasePatch(
-      PurchaseOrderPost model,int? id);
+      PurchaseOrderPost model, int? id);
+  Future<Either<Failure, DoubleResponse>> generalPurchaseDelet(int? id);
+  Future<Either<Failure, PurchaseRecievingRead>>
+      getGeneralPurchaseRecievingRead(int? id);
 }
 
 class InventoryRepositoryImpl extends InventoryRepository {
@@ -32,6 +37,7 @@ class InventoryRepositoryImpl extends InventoryRepository {
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
       getInventorySearch(String? next) {
+    print("aaaaaa");
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
         () async => remoteDataSource.getInventorySearch(next));
   }
@@ -73,9 +79,10 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(int? id,String?invdendotyId) {
+  Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(
+      int? id, String? invdendotyId) {
     return repoExecute<PurchaseCureentStockQty>(
-        () async => remoteDataSource.getCurrentStock(id,invdendotyId));
+        () async => remoteDataSource.getCurrentStock(id, invdendotyId));
   }
 
   @override
@@ -87,9 +94,23 @@ class InventoryRepositoryImpl extends InventoryRepository {
 
   @override
   Future<Either<Failure, DoubleResponse>> getGeneralPurchasePatch(
-      PurchaseOrderPost model,int? id) {
-    print("sunithi1"+id.toString());
+      PurchaseOrderPost model, int? id) {
     return repoExecute<DoubleResponse>(
         () async => remoteDataSource.getGeneralPurchasePatch(model, id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> generalPurchaseDelet(int? id) {
+    print("id,,,,,,," + id.toString());
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.generalPurchaseDelet(id));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseRecievingRead>>
+      getGeneralPurchaseRecievingRead(int? id) {
+    print("akakakka");
+    return repoExecute<PurchaseRecievingRead>(
+        () async => remoteDataSource.getGeneralPurchaseRecievingRead(id));
   }
 }

@@ -1,9 +1,11 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/purchase_order_patch_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/model/purchase_order_read.dart';
@@ -25,6 +27,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:inventory/widgets/inputfield.dart';
 import 'package:inventory/widgets/itemmenu.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
@@ -86,14 +89,15 @@ class _GeneralScreenState extends State<GeneralScreen> {
   // List<Employee> employees = <Employee>[];
   // late EmployeeDataSource employeeDataSource;
   bool? isRecieved = false;
+  bool? newAddRow=false;
 
-  bool? tableEdit=false;
+  bool? tableEdit=true;
   int selectedVertical=0;
   bool? isInvoiced = false;
   double? check = 0;
   String? check1 = "";
   int? stockQty = 0;
-  int? veritiaclid=1;
+  int? veritiaclid=0;
   String? address1='';
   String ? address2="";
   String? varinatname = "";
@@ -132,7 +136,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
 
   @override
   void initState() {
-    // context.read<GetVariantCubit>().getVariantList();
+    context
+        .read<InventorysearchCubit>()
+        .getInventorySearch("code");
 
     int verticalScrollIndex = 0;
     controller = AutoScrollController(
@@ -140,6 +146,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: Axis.vertical);
     super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
   }
 
 
@@ -177,6 +186,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
   @override
   Widget build(BuildContext context) {
     print("+++++++++++++++");
+    print("Lengthdd"+table.length.toString());
     print(widget.purchaseTable);
     print(widget.unitcost);
     print("+++++++++++++++");
@@ -190,10 +200,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (context) =>
-                InventorysearchCubit()..getInventorySearch("code"),
-          ),
+
           BlocProvider(
             create: (context) => TableDetailsCubitDartCubit(),
           ),
@@ -206,11 +213,12 @@ print("excessTaxvalue"+excessTAxValue.toString());
           BlocProvider(
             create: (context) => PurchaseorderpostCubit(),
           ),
-          BlocProvider(
-            create: (context) => GeneralPurchaseReadCubit()..getGeneralPurchaseRead(veritiaclid!),
-          ),
+
           BlocProvider(
             create: (context) => PurchaseOrderPatchCubit(),
+          ),
+          BlocProvider(
+            create: (context) => PurchaseorderdeleteCubit(),
           ),
         ],
         child: Builder(builder: (context) {
@@ -235,8 +243,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                   });
                 },
               ),
-              BlocListener<TableDetailsCubitDartCubit,
-                  TableDetailsCubitDartState>(
+              BlocListener<TableDetailsCubitDartCubit, TableDetailsCubitDartState>(
                 listener: (context, state) {
                   state.maybeWhen(
                       orElse: () {},
@@ -317,6 +324,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                       success: (data) {
 
                         setState(() {
+                          print("datasssssssssssssss"+data.toString());
                           data.data?.orderLines != null
                               ? table = data.data?.orderLines ?? []
                               : table = [];
@@ -344,8 +352,8 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           Recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
-                          promised_receipt_date.text=data.data?.promisedReceiptdate??"";
-                          planned_receipt_date.text=data.data?.plannedRecieptDate??"";
+                          promised_receipt_date=TextEditingController(text:data.data?.promisedReceiptdate??"");
+                          planned_receipt_date=TextEditingController(text:data.data?.plannedRecieptDate??"");
                           print("Invalid date formatsssssssssssssssssssssssss"+promised_receipt_date.text.toString());
                           print("data.data?.promisedReceiptdate${ planned_receipt_date.text}");
                           address1=data.data?.address1??"";
@@ -357,6 +365,25 @@ print("excessTaxvalue"+excessTAxValue.toString());
                 },
               ),
               BlocListener<PurchaseOrderPatchCubit, PurchaseOrderPatchState>(
+                listener: (context, state) {
+
+                  state.maybeWhen(orElse: () {
+                    // context.
+                    context.showSnackBarError("Loadingggg");
+                  }, error: () {
+                    context.showSnackBarError(Variable.errorMessege);
+                  }, success: (data) {
+                    if (data.data1)
+                      context.showSnackBarSuccess(data.data2);
+                    else {
+                      context.showSnackBarError(data.data2);
+                      print(data.data1);
+                    }
+                    ;
+                  });
+                },
+              ),
+              BlocListener<PurchaseorderdeleteCubit, PurchaseorderdeleteState>(
                 listener: (context, state) {
 
                   state.maybeWhen(orElse: () {
@@ -387,9 +414,12 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
                       result = list.data;
                       setState(() {
+                        veritiaclid=result[0].id;
+                        Variable.verticalid=result[0].id;
+                        print("Variable.ak"+Variable.verticalid.toString());
 
-                        print(result);
-                        print(result[0].id);
+                        print( Variable.verticalid);
+                        print("idssss"+result[0].id.toString());
                       });
                     });
               },
@@ -404,7 +434,8 @@ print("excessTaxvalue"+excessTAxValue.toString());
                         Container(
                           margin: EdgeInsets.all(10),
 
-                          child: Visibility(
+                          child:
+                          Visibility(
                             visible: !widget.isCollapsed,
                             child: Container(
                               height: height,
@@ -555,8 +586,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                       InkWell(
                                         onTap: () {
                                           setState(() {
-                                            select=true;
+
+                                            select=!select;
+
                                             table.clear();
+                                            print("shammmma"+table.toString());
                                             inventoryId.text="";
                                             vendortrnnumber.text="";
                                             ordercode.text="";
@@ -698,28 +732,51 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                     SizedBox(
                                                       height: height * .030,
                                                     ),
-                                                    promised_receipt_date.text==''?
-                                                    BuildDateFormField(
-                                                      // initialValue :DateTime.parse(planned_receipt_date.text),
-                                                      label: "Planned reciept date",
-                                                      onSaved: (newValue) {
-                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+                                                    // promised_receipt_date==null?
+                                                    //
+                                                    // BuildDateFormField(
+                                                    //   // controller: promised_receipt_date,
+                                                    //    label: "Promised reciept date",
+                                                    //   onSaved: (newValue) {
+                                                    //     print("sss"+newValue.toString());
+                                                    //     var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+                                                    //    setState(() {
+                                                    //      promised_receipt_date.text =
+                                                    //          formattedDate.toString();
+                                                    //    });
+                                                    //   },
+                                                    // ):
+                                                    PopUpDateFormField(
 
-
-                                                        promised_receipt_date.text =
-                                                            formattedDate.toString();
-                                                      },
-                                                    ):
-                                                    BuildDateFormField(
-                                                     initialValue :DateTime.parse( promised_receipt_date.text),
-                                                      label: "Promised reciept date",
-                                                      onSaved: (newValue) {
-                                                        print(newValue);
-                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
-                                                        promised_receipt_date.text =
-                                                            formattedDate.toString();
-                                                      },
-                                                    ),
+                                                        format:DateFormat('yyyy-MM-dd'),
+                                                        controller: promised_receipt_date,
+                                                        // initialValue:
+                                                        //     DateTime.parse(fromDate!),
+                                                        label: "Promised reciept date",
+                                                        onSaved: (newValue) {
+                                                          promised_receipt_date.text = newValue
+                                                              ?.toIso8601String()
+                                                              .split("T")[0] ??
+                                                              "";
+                                                          print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                                        },
+                                                        enable: true),
+                                                    // BuildDateFormField(
+                                                    //   format:DateFormat('yyyy-MM-dd') ,
+                                                    //    controller: promised_receipt_date,
+                                                    //   label: "Promised reciept date",
+                                                    //   onSaved: (newValue) {
+                                                    //
+                                                    //
+                                                    //     print("aks2hay"+newValue.toString());
+                                                    //     // var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+                                                    //     // setState(() {
+                                                    //     //   promised_receipt_date =newValue as TextEditingController;
+                                                    //           // formattedDate.toString();
+                                                    //       print("promised_receipt_date.text"+promised_receipt_date.text);
+                                                    //     // });
+                                                    //   },
+                                                    // ),
                                                     // NewInputCard(
                                                     //     controller: promised_receipt_date,
                                                     //     title: "Promised reciept date"),
@@ -741,30 +798,35 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                     SizedBox(
                                                       height: height * .020,
                                                     ),
-                                                    if(planned_receipt_date.text=="")...[
-                                                BuildDateFormField(
-                                                 // initialValue :DateTime.parse(planned_receipt_date.text),
-                                                  label: "Planned reciept date",
-                                                  onSaved: (newValue) {
-                                                    var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+                                                    PopUpDateFormField(
+
+                                                        format:DateFormat('yyyy-MM-dd'),
+                                                        controller: planned_receipt_date,
+                                                        // initialValue:
+                                                        //     DateTime.parse(fromDate!),
+                                                        label: "Promised reciept date",
+                                                        onSaved: (newValue) {
+                                                          planned_receipt_date.text = newValue
+                                                              ?.toIso8601String()
+                                                              .split("T")[0] ??
+                                                              "";
+                                                          print("promised_receipt_date.text"+promised_receipt_date.text.toString());
+                                                        },
+                                                        enable: true),
 
 
-                                                    planned_receipt_date.text =
-                                                        formattedDate.toString();
-                                                  },
-                                                )]else...[
-                                                    BuildDateFormField(
-                                                      initialValue :DateTime.parse(planned_receipt_date.text),
-                                                      label: "Planned reciept date",
-                                                      onSaved: (newValue) {
-                                                        var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
-
-
-                                                        planned_receipt_date.text =
-                                                            formattedDate.toString();
-                                                      },
-                                                    ),
-                                                    ],
+                                                    // BuildDateFormField(
+                                                    //   controller: planned_receipt_date,
+                                                    //   label: "Planned reciept date",
+                                                    //   onSaved: (newValue) {
+                                                    //     print("akkkkkk");
+                                                    //     var formattedDate = "${newValue?.year}-${newValue?.month}-${newValue?.day}";
+                                                    //
+                                                    //
+                                                    //     planned_receipt_date.text =
+                                                    //         formattedDate.toString();
+                                                    //   },
+                                                    // ),
                                                     // NewInputCard(
                                                     //     controller: planned_receipt_date,
                                                     //     title: "Planned reciept date"),
@@ -1150,7 +1212,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                     //     widget.order?.orderLines != null &&
                                                     //     widget.order!.orderLines!.isNotEmpty) ...[
                                                     //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
-                                                    if (table != null)
+                                                   if (table != null)...[
                                                       for (var i = 0;
                                                           i < table.length;
                                                           i++)
@@ -1233,7 +1295,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                 ),
                                                               textPadding(
                                                                   table[i]
-                                                                      .variantName!,
+                                                                      .variantName??"",
                                                                   fontSize: 12,
                                                                   padding: EdgeInsets
                                                                       .only(
@@ -1300,6 +1362,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                          //88888888888888888888                                   //**********************************************
                                                               tableEdit==true?
                                                               UnderLinedInput(
+                    last:"1000",
                                                                 onChanged: (p0) {
                                                                   // setState(() {
                                                                   //   tableEdit=true;
@@ -1362,21 +1425,14 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                 },
                                                                 enable: true,
                                                                 onComplete: () {
-                                                                  setState(() {
-                                                                    if (Vamount !=
-                                                                        0) {
-                                                                      Vamount = (((check! * Qty!) +
-                                                                                  eTax!) -
-                                                                              Vdiscount!)
-                                                                          .toDouble();
-                                                                    }
-                                                                  });
+
 
                                                                   setState(() {});
                                                                 },
                                                               ):
                 UnderLinedInput(
-                initial: table[i].requestedQty.toString(),
+
+                last: "2000",
                 onChanged: (p0) {
                   setState(() {
                    tableEdit=true;
@@ -1394,11 +1450,13 @@ print("excessTaxvalue"+excessTAxValue.toString());
                 setState(() {  print("maxxxx"+table.toString());});
                 },
                 ),
+                                                          //    Text(table[i].requestedQty.toString()),
 
 
                 tableEdit==true?
                                                               UnderLinedInput(
-                                                                initial: table[i].minimumQty.toString(),
+                                                                  last:table[i].minimumQty.toString(),
+
                                                                 onChanged: (p0) {
 
                                                                   print(p0);
@@ -1417,10 +1475,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                 },
                                                               ):
                 UnderLinedInput(
-                  initial: table[i].minimumQty.toString(),
+                    last:table[i].minimumQty.toString(),
+
                   onChanged: (p0) {
                     setState(() {
-                      tableEdit=true;
+                     // tableEdit=true;
 
                     });
 
@@ -1438,6 +1497,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
                                                                   tableEdit==true?
                                                                   UnderLinedInput(
+                                                                    last:table[i].maximumQty.toString(),
                                                                     onChanged: (p0) {
 
                                                                         print(p0);
@@ -1458,7 +1518,9 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
 
                 UnderLinedInput(
-                initial: table[i].maximumQty.toString(),
+                    last:table[i].maximumQty.toString(),
+
+                initial: "600",
                 onChanged: (p0) {
                 setState(() {
                 tableEdit=true;
@@ -1493,8 +1555,9 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                               //
 
                 UnderLinedInput(
-                initial: table[i].unitCost
+                last: table[i].unitCost
                     .toString(),
+
                 onChanged:
                 (p0) {
                   var ucost=table[i].unitCost;
@@ -1555,9 +1618,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
 
         //Excess tax***********************************Excesstax***********************************************************************
-                                                      tableEdit==true?
+
                                                       UnderLinedInput(
-                                                        initial: table[i].excessTax.toString(),
+                                                          last: table[i].excessTax
+                    .toString(),
+
                                                         onChanged:
                                                             (p0) {
                                                           if (p0 ==
@@ -1610,28 +1675,12 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                         enable: true,
                                                         onComplete:
                                                             () {},
-                                                      ):
-                UnderLinedInput(
-                initial: table[i].excessTax.toString(),
-                onChanged: (p0) {
-                setState(() {
-                tableEdit=true;
-
-                });
-
-                print(p0);
-
-                },
-                enable: true,
-                onComplete: () {
-
-                setState(() {  print("maxxxx"+table.toString());});
-                },
-                ),
-
+                                                      ),
               //****************************************DISCOUNT***************************DISCOUNT*********************************
-  tableEdit==true?
+  // tableEdit==true?
   UnderLinedInput(
+      last: table[i].discount
+                    .toString(),
   onChanged: (p0) {
     if (p0 == '')
       setState(() {
@@ -1686,29 +1735,32 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
     setState(() {});
   },
-):
-  UnderLinedInput(
-    initial: table[i].discount.toString(),
-    onChanged: (p0) {
-      setState(() {
-        tableEdit=true;
+),
 
-      });
-
-      print(p0);
-
-
-
-    },
-    enable: true,
-    onComplete: () {
-
-      setState(() {  print("maxxxx"+table.toString());});
-    },
-  ),
-                                                              tableEdit==true?
+  //     :
+  // UnderLinedInput(
+  //   initial: table[i].discount.toString(),
+  //   onChanged: (p0) {
+  //     setState(() {
+  //       tableEdit=true;
+  //
+  //     });
+  //
+  //     print(p0);
+  //
+  //
+  //
+  //   },
+  //   enable: true,
+  //   onComplete: () {
+  //
+  //     setState(() {  print("maxxxx"+table.toString());});
+  //   },
+  // ),
+                                                               tableEdit==true?
                                                               UnderLinedInput(
-                                                                initial: table[i].foc.toString(),
+                                                                last: table[i].foc.toString(),
+
                                                                 onChanged: (p0) {
 
                                                                   print(p0);
@@ -1727,7 +1779,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                 },
                                                               ):
                                                               UnderLinedInput(
-                                                                initial: table[i].foc.toString(),
+
+
+                                                                last: table[i].foc.toString(),
+
+
                                                                 onChanged: (p0) {
                                                                   setState(() {
                                                                     tableEdit=true;
@@ -1762,6 +1818,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
                                                               tableEdit==true?
                                                               UnderLinedInput(
+                                                                  last:table[i].vat.toString(),
                                                                 onChanged: (p0) {
                                                                   if (p0 == "") {
 
@@ -1849,7 +1906,8 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                 },
                                                               ):
                 UnderLinedInput(
-                initial: table[i].vat.toString(),
+
+                last: table[i].vat.toString(),
                 onChanged: (p0) {
                 setState(() {
                 tableEdit=true;
@@ -1917,9 +1975,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                   });
                                                                 },
                                                               ),
-                                                            ]),
+                                                            ]),],
+
+
 //********************************************************************************************************************
-                                                    TableRow(
+                                                 TableRow(
                                                         decoration: BoxDecoration(
                                                             color: Colors
                                                                 .grey.shade200,
@@ -2035,7 +2095,11 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                               fontWeight:
                                                                   FontWeight
                                                                       .w500),
+                                                          // Qty==0?Text(""):
+
                                                           UnderLinedInput(
+
+                                                            last:"",
                                                             onChanged: (p0) {
                                                               if (p0 == '') {
                                                                 setState(() {
@@ -2088,7 +2152,9 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                               setState(() {});
                                                             },
                                                           ),
+                                                          //vminqty==0?Text(""):
                                                           UnderLinedInput(
+                                                              last:"",
                                                             onChanged: (p0) {
                                                               vminqty =
                                                                   int.tryParse(
@@ -2100,6 +2166,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                             },
                                                           ),
                                                           UnderLinedInput(
+                                                              last:"",
                                                             onChanged: (p0) {
                                                               vmaxnqty =
                                                                   int.tryParse(
@@ -2121,23 +2188,25 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                               });
                                                             },
                                                           ),
-                                                          check == 0
-                                                              ? textPadding(
-                                                                  check
-                                                                      .toString(),
-                                                                  fontSize: 12,
-                                                                  padding: EdgeInsets
-                                                                      .only(
-                                                                          left:
-                                                                              11.5,
-                                                                          top:
-                                                                              11.5),
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500)
-                                                              : UnderLinedInput(
-                                                                  initial: check
-                                                                      .toString(),
+                                                          // check == 0
+                                                          //     ? textPadding(
+                                                          //         check
+                                                          //             .toString(),
+                                                          //         fontSize: 12,
+                                                          //         padding: EdgeInsets
+                                                          //             .only(
+                                                          //                 left:
+                                                          //                     11.5,
+                                                          //                 top:
+                                                          //                     11.5),
+                                                          //         fontWeight:
+                                                          //             FontWeight
+                                                          //
+                                                          //                 .w500)
+                                                          check==0?Text(""):
+                                                              UnderLinedInput(
+                                                                  last:check.toString(),
+
                                                                   onChanged:
                                                                       (p0) {
                                                                     if (p0 ==
@@ -2177,6 +2246,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                 ),
                                                           eTax == 0
                                                               ? UnderLinedInput(
+                                                            last:"",
                                                                   onChanged:
                                                                       (p0) {
                                                                     if (p0 ==
@@ -2214,6 +2284,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                       () {},
                                                                 )
                                                               : UnderLinedInput(
+                                                            last:"",
                                                                   initial: eTax
                                                                       .toString(),
                                                                   onChanged:
@@ -2252,6 +2323,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                       () {},
                                                                 ),
                                                           UnderLinedInput(
+                                                            last:"",
                                                             onChanged: (p0) {
                                                               if (p0 == '')
                                                                 setState(() {
@@ -2291,6 +2363,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                             },
                                                           ),
                                                           UnderLinedInput(
+                                                              last:"",
                                                             onChanged: (p0) {
                                                               setState(() {
                                                                 if (p0 == '')
@@ -2319,6 +2392,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                   FontWeight
                                                                       .w500),
                                                           UnderLinedInput(
+                                                              last:"",
                                                             onChanged: (p0) {
                                                               if (p0 == "") {
                                                                 print("null");
@@ -2435,13 +2509,17 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                                           ))),
                                                             onTap: () {
                                                               setState(() {
+
                                                                 if (vminqty! >
                                                                     vmaxnqty!) {
+                                                                  print("enterd");
+                                                                  if(vminqty!=0 &&vmaxnqty!=0){
                                                                   context.showSnackBarError(
-                                                                      "the minimum order is always less than maximum order");
+                                                                      "the minimum order is always less than maximum order");}
                                                                 } else {
                                                                   _value =
                                                                       !_value;
+
                                                                   table.add(
                                                                       OrderLines(
                                                                     isRecieved:
@@ -2650,13 +2728,14 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                   Qty = 0;
                                                   Vdiscount = 0;
                                                   Vamount = 0;
+                                                  vmaxnqty=0;
+                                                  vminqty=0;
                                                   Vgrnadtotal = 0;
                                                   vactualCost = 0;
                                                   unitcost = 0;
                                                   grands = 0;
                                                   actualValue = 0;
-                                                  vmaxnqty=0;
-                                                  vmaxnqty=0;
+
                                                   VatableValue =
                                                   0;
                                                   discountValue =
@@ -2717,7 +2796,18 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                     Button(Icons.delete, Colors.red,
                                         ctx: context,
                                         text: "Discard",
-                                        onApply: () {},
+                                        onApply: () {
+                                      print("aaaaaa");
+                                      setState(() {
+                                        context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+
+                                      });
+
+
+
+
+
+                                        },
                                         height: 29,
                                         width: 90,
                                         labelcolor: Colors.red,
@@ -2748,12 +2838,16 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                               vendoraddress.text == ""
                                                   ? ""
                                                   : vendoraddress.text,
-                                          address1: address1??"",
-                                          address2: address2??"",
+                                          address1:"akkk",
+                                          //address1??"akkk",
+                                          address2:"ass",
+                                              //address2??"appp",
                                           promisedReceiptdate: promised_receipt_date.text,
+
                                           //promised_receipt_date.text,
-                                          plannedRecieptDate: planned_receipt_date.text,
-                                          //planned_receipt_date.text,
+                                          plannedRecieptDate:planned_receipt_date.text,
+                                              //planned_receipt_date.text,
+
                                           note:
                                               note.text == "" ? "" : note.text,
                                           remarks: remarks.text == ""
@@ -2787,6 +2881,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                           createdBy: "www",
                                           orderLines: table,
                                         );
+                                        //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
                                         select? context.read<PurchaseorderpostCubit>().postPurchase(model):
                                         context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
 
@@ -2850,7 +2945,7 @@ Widget Button(IconData icon, Color border,
     bool bdr = false}) {
   return InkWell(
     onTap: () {
-      onApply(ctx);
+      onApply();
     },
     child: Container(
       alignment: Alignment.center,

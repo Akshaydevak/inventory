@@ -40,9 +40,9 @@ class Data with _$Data {
     @JsonKey(name: "foc") final int? foc,
     @JsonKey(name: "unit_cost") final int? unitcost,
     @JsonKey(name: "excess_tax") final int? excessTax,
-    @JsonKey(name: "actual_cost") final int? actualCost,
+    @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "vat") final int? vat,
-    @JsonKey(name: "grand_total") final int? grandTotal,
+    @JsonKey(name: "grand_total") final double? grandTotal,
     @JsonKey(name: "vatable_amount") final int? variableAmount,
     @JsonKey(name: "created_by") final String? createdBy,
   }) = _Data;
