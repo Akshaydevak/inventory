@@ -27,7 +27,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
           data: Theme.of(context).copyWith(primaryColor: Colors.blue),
           child: TextFormField(
             onChanged:widget.onChanged,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(color: Colors.black),
             controller: widget.ctrlr,
             maxLines: 1,
             autofocus: true,

@@ -116,7 +116,9 @@ child: Column(
     Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Buttons(icon: Icons.check,iconColor: Colors.white,
+        Buttons(
+          onApply: (){},
+          icon: Icons.check,iconColor: Colors.white,
           text: "generator Order",clr: Color(0xff53A9F9),height: 24,width: 152,labelcolor: Colors.white,),
       ],
     ),
@@ -124,7 +126,9 @@ child: Column(
     Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Buttons(icon: Icons.check,iconColor: Colors.white,
+        Buttons(
+          onApply: (){},
+          icon: Icons.check,iconColor: Colors.white,
           text: "Save",clr: Color(0xff53A9F9),height: 32,width: 90,labelcolor: Colors.white,),
       ],
     )

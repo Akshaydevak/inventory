@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 
 class NavigationProvider extends ChangeNotifier {
   bool _isCollapsed = false;
@@ -8,6 +9,7 @@ class NavigationProvider extends ChangeNotifier {
   double ? totalUnitcost=0;
   int ? totalDiscount=0;
   int ? totalVariableAmount=0;
+  List<RecievingLines> recievingLisnes = [];
   int ?totalExcesstax=0;
   int ? totalVat=0;
   int ? totalActualCost=0;

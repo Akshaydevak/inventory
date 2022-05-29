@@ -16,6 +16,7 @@ class InventorysearchCubit extends Cubit<InventorysearchState> {
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
   Future getSearch(String code) async {
+    print("code"+code.toString());
     final result = await _repos.getSearch(code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

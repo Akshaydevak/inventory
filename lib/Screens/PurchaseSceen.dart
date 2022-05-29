@@ -22,6 +22,7 @@ class PurchaseScreen extends StatefulWidget {
 class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderStateMixin {
   PurchaseOrderTableModel? purchaseTable;
   double ? unitCost=0;
+
   @override
   Widget build(BuildContext context) {
 

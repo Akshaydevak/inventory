@@ -26,7 +26,7 @@ class NewInputCard extends StatefulWidget {
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 35,
+    this.height = 36,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -56,6 +56,7 @@ class _NewInputCardState extends State<NewInputCard> {
           ),
           SizedBox(height:3),
           Container(
+            alignment: Alignment.center,
             height: widget.height,
 
 
@@ -283,7 +284,7 @@ class UnderLinedInput extends StatefulWidget {
   // final List<String>? items;
   const UnderLinedInput(
       {Key? key,
-       required this.last,
+        this.last="",
         this.enable = true,
          this.initial='',
         this.hintText = "",

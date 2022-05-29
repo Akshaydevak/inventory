@@ -9,8 +9,10 @@ class Buttons extends StatelessWidget {
   final Color iconColor;
   final String text;
   final Color labelcolor;
+  final Function onApply;
   Buttons({required this.text,
   this.width=30,
+    required this. onApply,
   this.height=30,
   this.labelcolor=Colors.black,
   this.iconColor=Colors.black,
@@ -19,25 +21,30 @@ class Buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment:  Alignment.center,
-      height: height,
-      width: width,
-      decoration:  BoxDecoration(
-        color: clr,
-        border: Border.all(
-          color: border, //color of border
-          width: 2,
+    return GestureDetector(
+      onTap: (){
+        onApply();
+      },
+      child: Container(
+        alignment:  Alignment.center,
+        height: height,
+        width: width,
+        decoration:  BoxDecoration(
+          color: clr,
+          border: Border.all(
+            color: border, //color of border
+            width: 2,
 
-        ), //Border
+          ), //Border
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon,color: iconColor,),
+            Text(text,style: TextStyle(color: labelcolor,fontWeight: FontWeight.bold),)
+          ],
+        ),//BoxDecoration
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon,color: iconColor,),
-          Text(text,style: TextStyle(color: labelcolor,fontWeight: FontWeight.bold),)
-        ],
-      ),//BoxDecoration
     );
 
   }

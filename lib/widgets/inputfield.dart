@@ -117,6 +117,7 @@ class PopUpDateFormField extends StatefulWidget {
   final DateTime? initialValue;
   final bool enable;
   final bool required;
+  final bool row;
   final TextEditingController? controller;
   // final TextEditingController controller;
   final FormFieldSetter<DateTime>? onSaved;
@@ -125,6 +126,7 @@ class PopUpDateFormField extends StatefulWidget {
       {Key? key,
         required this.label,
         this.controller,
+        this.row=false,
 
         this.enable = true,
         this.required = false,
@@ -141,7 +143,70 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
   @override
   Widget build(BuildContext context) {
     final mFormat = widget.format ?? DateFormat.yMd();
-    return Padding(
+    return widget.row?SizedBox(
+
+        child: ListTile(
+          contentPadding: EdgeInsets.symmetric(
+            //horizontal: 10,
+              vertical: 5),
+          leading: Container(
+
+              width: 70,
+              child: Text.rich(TextSpan(
+                  text: widget.label,
+                  style: TextStyle(fontSize: 12),
+                  children: widget.required
+                      ? [
+                    TextSpan(
+                        text: "*", style: TextStyle(color:Colors.grey))
+                  ]
+                      : []))),
+          title:  Container(
+              height: 38,
+
+              child:
+
+              DateTimeField(
+                initialValue: widget.initialValue,
+                enabled: widget.enable,
+                validator: (value) => value == null ? "* required" : null,
+                decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.calendar_today_outlined),
+                  contentPadding: null,
+                  labelStyle: TextStyle(color: Colors.black),
+                  // labelText: widget.initialValue?.toString().split(" ")[0],
+                  isDense: true,
+                  label: null,
+                  alignLabelWithHint: true,
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+
+                  focusedBorder: OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                  border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
+                ),
+                format: mFormat,
+                style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+                //  onFieldSubmitted: widget.onSaved,
+                onShowPicker: (context, currentValue) async {
+                  DateTime? date;
+                  if (widget.enable)
+                    date = await showDatePicker(
+                        context: context,
+                        firstDate: DateTime(1900),
+                        initialDate: currentValue ?? DateTime.now(),
+                        lastDate: DateTime(2100));
+
+                  return date ?? currentValue;
+                },
+              )
+          )
+        )):  Padding(
       //height: 40,
     //  width: context.blockSizeHorizontal * 20,
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
@@ -199,6 +264,89 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
         ],
       ),
     );
+
+  }
+}
+class Tabledate extends StatefulWidget {
+  final String label;
+  final DateTime? initialValue;
+  final bool enable;
+  final bool required;
+  final bool row;
+  final TextEditingController? controller;
+  // final TextEditingController controller;
+  final FormFieldSetter<DateTime>? onSaved;
+  final DateFormat? format;
+  const Tabledate(
+      {Key? key,
+        required this.label,
+        this.controller,
+        this.row=false,
+
+        this.enable = true,
+        this.required = false,
+        this.onSaved,
+        this.format,
+        this.initialValue})
+      : super(key: key);
+
+  @override
+  _Tabledate createState() => _Tabledate();
+}
+
+class _Tabledate extends State<Tabledate> {
+  @override
+  Widget build(BuildContext context) {
+    final mFormat = widget.format ?? DateFormat.yMd();
+    return  Container(
+        height: 40,
+        width:30,
+
+        child:
+
+
+        DateTimeField(
+          initialValue: widget.initialValue,
+          enabled: widget.enable,
+          validator: (value) => value == null ? "* required" : null,
+          decoration: InputDecoration(
+            //suffixIcon: Icon(Icons.calendar_today_outlined),
+            contentPadding: null,
+            labelStyle: TextStyle(color: Colors.black),
+            // labelText: widget.initialValue?.toString().split(" ")[0],
+            isDense: true,
+            label: null,
+            alignLabelWithHint: true,
+            enabledBorder: OutlineInputBorder(
+                borderRadius:BorderRadius.circular(2),
+
+                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+
+            focusedBorder: OutlineInputBorder(
+                borderRadius:BorderRadius.circular(2),
+
+                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+            border: OutlineInputBorder(
+                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
+          ),
+          format: mFormat,
+          style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+          //  onFieldSubmitted: widget.onSaved,
+          onShowPicker: (context, currentValue) async {
+            DateTime? date;
+            if (widget.enable)
+              date = await showDatePicker(
+                  context: context,
+                  firstDate: DateTime(1900),
+                  initialDate: currentValue ?? DateTime.now(),
+                  lastDate: DateTime(2100));
+
+            return date ?? currentValue;
+          },
+        )
+    );
+
+
 
   }
 }

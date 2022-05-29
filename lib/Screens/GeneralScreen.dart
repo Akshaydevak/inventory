@@ -139,6 +139,10 @@ class _GeneralScreenState extends State<GeneralScreen> {
     context
         .read<InventorysearchCubit>()
         .getInventorySearch("code");
+    context
+        .read<GeneralPurchaseReadCubit>()
+        .getGeneralPurchaseRead(Variable.verticalid!);
+
 
     int verticalScrollIndex = 0;
     controller = AutoScrollController(
@@ -201,15 +205,9 @@ print("excessTaxvalue"+excessTAxValue.toString());
       body: MultiBlocProvider(
         providers: [
 
-          BlocProvider(
-            create: (context) => TableDetailsCubitDartCubit(),
-          ),
-          BlocProvider(
-            create: (context) => TableDetailsCubitDartCubit(),
-          ),
-          BlocProvider(
-            create: (context) => PurchaseStockCubit(),
-          ),
+
+
+
           BlocProvider(
             create: (context) => PurchaseorderpostCubit(),
           ),
@@ -264,7 +262,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                             )]);
                           }
                           else{
-                            print("shamnaaaaa");
+
                             varinatname = purchaseTable?.name;
                             check = purchaseTable?.unitCost;
                             vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
@@ -411,12 +409,21 @@ print("excessTaxvalue"+excessTAxValue.toString());
                       print("error");
                     },
                     success: (list) {
+                      print("listaaaaaaaaaaaa"+list.data.toString());
 
                       result = list.data;
                       setState(() {
-                        veritiaclid=result[0].id;
-                        Variable.verticalid=result[0].id;
-                        print("Variable.ak"+Variable.verticalid.toString());
+if(result.isNotEmpty){ veritiaclid=result[0].id;
+Variable.verticalid=result[0].id;
+print("Variable.ak"+Variable.verticalid.toString());
+}
+
+                        // context
+                        //     .read<GeneralPurchaseReadCubit>()
+                        //     .getGeneralPurchaseRead(Variable.verticalid!);
+                        setState(() {
+
+                        });
 
                         print( Variable.verticalid);
                         print("idssss"+result[0].id.toString());
@@ -436,7 +443,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
                           child:
                           Visibility(
-                            visible: !widget.isCollapsed,
+                            visible: !vm.isCollapsed,
                             child: Container(
                               height: height,
                               // height: double.minPositive,
@@ -455,6 +462,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                           context
                                               .read<InventorysearchCubit>()
                                               .getSearch(itemsearch.text);
+
                                         },
                                       )),
                                   SizedBox(
@@ -988,6 +996,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                       scrollDirection: Axis.horizontal,
                                       children: [
                                         Row(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             SingleChildScrollView(
                                               child: Container(
@@ -999,13 +1008,18 @@ print("excessTaxvalue"+excessTAxValue.toString());
                                                 child: customTable(
                                                   border: const TableBorder(
                                                       verticalInside: BorderSide(
-                                                          width: 1,
+                                                          width:.5,
                                                           color: Colors.black45,
                                                           // color: Colors.blue,
                                                           style:
                                                               BorderStyle.solid),
                                                       horizontalInside:
-                                                          BorderSide.none),
+                                                      BorderSide(
+                                                          width:.3,
+                                                          color: Colors.black45,
+                                                          // color: Colors.blue,
+                                                          style:
+                                                          BorderStyle.solid),),
                                                   tableWidth: .5,
                                                   childrens: [
                                                     TableRow(

@@ -6,6 +6,7 @@ import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
+import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/widgets/failiure.dart';
 import 'package:inventory/widgets/repoExecute.dart';
@@ -30,6 +31,13 @@ abstract class InventoryRepository {
   Future<Either<Failure, DoubleResponse>> generalPurchaseDelet(int? id);
   Future<Either<Failure, PurchaseRecievingRead>>
       getGeneralPurchaseRecievingRead(int? id);
+  Future<Either<Failure, DoubleResponse>> getPurchaseRecievePatch(
+    int? id,
+    PurchaseRecievingRead model,
+  );
+  Future<Either<Failure, DoubleResponse>> generatePost(GenerateMissing model);
+  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(AdditionalGenerateModel model);
+
 }
 
 class InventoryRepositoryImpl extends InventoryRepository {
@@ -45,6 +53,7 @@ class InventoryRepositoryImpl extends InventoryRepository {
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
       String? next) {
+    print("code1"+next.toString());
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
         () async => remoteDataSource.getSearch(next));
   }
@@ -112,5 +121,28 @@ class InventoryRepositoryImpl extends InventoryRepository {
     print("akakakka");
     return repoExecute<PurchaseRecievingRead>(
         () async => remoteDataSource.getGeneralPurchaseRecievingRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getPurchaseRecievePatch(
+      int? id, PurchaseRecievingRead model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.getPurchaseRecievePatch(
+              id,
+              model,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> generatePost(
+      GenerateMissing model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.generatePost(model));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(AdditionalGenerateModel model) { return repoExecute<DoubleResponse>(
+          () async => remoteDataSource.additionlGeneratePost(model));
+
   }
 }

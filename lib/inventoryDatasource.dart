@@ -7,6 +7,7 @@ import 'package:inventory/model/purchaseorder.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
+import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
@@ -30,6 +31,10 @@ abstract class LogisticDataSource {
       PurchaseOrderPost model, int? id);
   Future<DoubleResponse> generalPurchaseDelet(int id);
   Future<PurchaseRecievingRead> getGeneralPurchaseRecievingRead(int? id);
+  Future<DoubleResponse> getPurchaseRecievePatch(
+      int? id, PurchaseRecievingRead model);
+  Future<DoubleResponse> generatePost(GenerateMissing model);
+  Future<DoubleResponse> additionlGeneratePost(AdditionalGenerateModel model);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -40,7 +45,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? next) async {
     print("aaaaaa");
     String path =
-        "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/list-purchase-order/test";
+        "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -50,7 +55,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
     List<PurchaseOrder> items = [];
     (response.data['data']['results'] as List).forEach((element) {
-      items.add(PurchaseOrder.fromJson(element));print("items"+items.toString());
+      items.add(PurchaseOrder.fromJson(element));
+      print("items" + items.toString());
     });
     return PaginatedResponse<List<PurchaseOrder>>(
         items,
@@ -60,8 +66,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next) async {
+    print("code1"+next.toString());
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/purchase-order/list-purchase-order/test?code=$next";
+        "http://65.1.61.201:8111/purchase-order/list-purchase-order/test?code=$next";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -72,6 +79,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     (response.data['data']['results'] as List).forEach((element) {
       items.add(PurchaseOrder.fromJson(element));
     });
+    print("items"+items.toString());
     return PaginatedResponse<List<PurchaseOrder>>(
         items,
         response.data['data']['next'],
@@ -81,7 +89,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrdertype> getPurchaseOrdertype() async {
     final response = await client.get(
-      "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/create-purchase-order",
+      "http://65.1.61.201:8111/purchase-order/create-purchase-order",
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -128,7 +136,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("repooooosss");
 
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test";
+        "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test";
     final response = await client.get(
       path,
       // data:
@@ -158,7 +166,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/read-variant-for-lpo/$id";
+        "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/$id";
     try {
       final response = await client.get(
         path,
@@ -180,10 +188,12 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       print(dataa);
       return dataa;
     } catch (e) {
-      print(e);
+      print("eee"+e.toString());
     }
+    print("ask"+path.toString());
     final response = await client.get(
       path,
+
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -207,7 +217,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PurchaseCureentStockQty> getCurrentStock(
       int? id, String? invdendotyId) async {
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-stock/get-stock-quantity-by-variant/test001/test";
+        "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/test";
     try {
       final response = await client.get(
         path,
@@ -229,8 +239,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       print(dataa);
       return dataa;
     } catch (e) {
-      print(e);
+      print("error" + e.toString());
     }
+    print("path" + path.toString());
     final response = await client.get(
       path,
       // data:
@@ -258,7 +269,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("sssshamna" + id.toString());
     try {
       String path = generalPurchaseRead + id.toString();
-      print("ppppath"+path.toString());
+      print("ppppath" + path.toString());
       print(path);
       final response = await client.get(
         path,
@@ -284,7 +295,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     }
     String path = generalPurchaseRead + id.toString();
     print(path);
-    print("ppppath"+path.toString());
+    print("ppppath" + path.toString());
     final response = await client.get(
       path,
       // data:
@@ -349,53 +360,122 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseRecievingRead> getGeneralPurchaseRecievingRead(int? id) async {
-   try {
-     print("akakakka");
-     String path = purchaseRecievingRead + id.toString();
-     print(path);
-     final response = await client.get(
-       path,
-       // data:
-       // // {"payment_status": "completed", "order_status": "completed"},
-       // {
-       //
-       // },
-       options: Options(
-         headers: {
-           'Content-Type': 'application/json',
-           'Accept': 'application/json'
-         },
-       ),
-     );
-     print("responsesssssd" + response.toString());
-     PurchaseRecievingRead dataa =
-     PurchaseRecievingRead.fromJson(response.data['data']);
-     print("rwead" + dataa.toString());
-     return dataa;
-   }catch(e){
-     print("errorr"+e.toString());
-     print("akakakka");
-     String path = purchaseRecievingRead + id.toString();
-     print(path);
-     final response = await client.get(
-       path,
-       // data:
-       // // {"payment_status": "completed", "order_status": "completed"},
-       // {
-       //
-       // },
-       options: Options(
-         headers: {
-           'Content-Type': 'application/json',
-           'Accept': 'application/json'
-         },
-       ),
-     );
-     print("responsesssssd" + response.toString());
-     PurchaseRecievingRead dataa =
-     PurchaseRecievingRead.fromJson(response.data['data']);
-     print("rwead" + dataa.toString());
-     return dataa;
-   }
+    try {
+      print("akakakka");
+      String path = purchaseRecievingRead + id.toString();
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseRecievingRead dataa =
+          PurchaseRecievingRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("errorr" + e.toString());
+      print("akakakka");
+      String path = purchaseRecievingRead + id.toString();
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseRecievingRead dataa =
+          PurchaseRecievingRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    }
+  }
+
+  @override
+  Future<DoubleResponse> getPurchaseRecievePatch(
+    int? id,
+    PurchaseRecievingRead model,
+  ) async {
+    print("sunithi2" + id.toString());
+    String path = purchaseRecievingPatch + id.toString();
+    print(path);
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> generatePost(GenerateMissing model) async {
+    print(
+      "post" + generatedPo.toString(),
+    );
+
+    final response = await client.post(generatedPo,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> additionlGeneratePost(AdditionalGenerateModel model) async {
+    print(
+     additionalGeneratedPo,
+    );
+
+    final response = await client.post(generatedPo,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+
   }
 }

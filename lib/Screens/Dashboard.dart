@@ -9,6 +9,8 @@ import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
+import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
+import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/purchaseorderpostcubit/cubit/purchaseorderpost_cubit.dart';
 import 'package:inventory/widgets/MenuIcon.dart';
 import 'package:inventory/widgets/itemmenu.dart';
@@ -64,7 +66,13 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   create: (context) => InventorysearchCubit()..getInventorySearch("code"),
 ),
     BlocProvider(
-      create: (context) => GeneralPurchaseReadCubit()..getGeneralPurchaseRead(Variable.verticalid!),
+      create: (context) => GeneralPurchaseReadCubit(),
+    ),
+    BlocProvider(
+      create: (context) => PurchaseStockCubit(),
+    ),
+    BlocProvider(
+      create: (context) => TableDetailsCubitDartCubit(),
     ),
   ],
   child: Builder(
@@ -81,6 +89,17 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             print("Here is the result");
             print(result);
             print(result[0].id);
+            Variable.verticalid=result[0].id;
+            // context
+            //     .read<GeneralPurchaseReadCubit>()
+            //     .getGeneralPurchaseRead(Variable.verticalid!);
+            print("Variable.ak"+Variable.verticalid.toString());
+            setState(() {
+
+            });
+
+            print( Variable.verticalid);
+            print("idssss"+result[0].id.toString());
           });
 
         }
@@ -100,343 +119,14 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
               child: Column(
                 children: [
                   // Titlecard(_tabController,pressed),
-                  Container(
-                    width: size.width,
-                    height: size.height / 6.5,
-                    color: Color(0xff3E4F5B),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: size.width * .024,
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(top: height * .0334
-                                    //size.height*.003,
-                                    ),
-                                child: Image.asset(
-                                  'asset/logo1.png',
-                                  color: Colors.white,
-                                  height: height * .060,
-                                  width: size.width * .08,
-                                  fit: BoxFit.cover,
-                                )),
-                            SizedBox(
-                              width: size.width * .03,
-                            ),
-                            searchField(context),
-                            SizedBox(
-                              width: size.width * .054,
-                            ),
-                            TitleIcon(
-                              image: "asset/icon1.png",
-                            ),
-                            SizedBox(
-                              width: size.width * .023,
-                            ),
-                            TitleIcon(
-                              image: "asset/icon2.png",
-                            ),
-                            SizedBox(
-                              width: size.width * .023,
-                            ),
-                            TitleIcon(
-                              image: "asset/bell2.png",
-                            ),
-                            SizedBox(
-                              width: size.width * .023,
-                            ),
-                            TitleIcon(
-                              image: "asset/vector1.png",
-                            ),
-                            SizedBox(
-                              width: size.width * .023,
-                            ),
-                            TitleIcon(
-                              image: "asset/setting.png",
-                            ),
-                            SizedBox(
-                              width: size.width * .03,
-                            ),
-                            Container(
-                                margin: EdgeInsets.only(
-                                  top: height * .035,
-                                ),
-                                child: Text(
-                                  "William joskinode",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: size.width * .01,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                            SizedBox(
-                              width: size.width * .01,
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(
-                                top: height * .028,
-                              ),
-                              child: CircleAvatar(
-                                  foregroundImage: AssetImage(
-                                    "asset/profile.png",
-                                  ),
-                                  radius: size.width * .01),
-                            ),
-                            SizedBox(
-                              width: size.width * .03,
-                            ),
-                            TitleIcon(
-                              image: "asset/menu.png",
-                            ),
-                          ],
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            isCollapsed == false
-                                ? SizedBox(
-                                    width: size.width * .1680,
-                                  )
-                                : SizedBox(width: width * .015),
-                            InkWell(
-                              onTap: () {
-                                provider.toggleIsCollapsed();
-                                print("taped");
+                  TitleScreen(tabController: _tabController,isCollapsed: isCollapsed,),
 
-                                print(provider.isCollapsed.toString());
-                                setState(() {
-                                  isCollapsed = provider.isCollapsed;
-                                  print("value" + isCollapsed.toString());
-                                });
-                              },
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: size.height * .008),
-                                alignment: Alignment.center,
-                                height: size.width * .016,
-                                width: size.width * .016,
-                                decoration: BoxDecoration(
-                                  color: Colors.transparent,
-                                  borderRadius: BorderRadius.circular(100),
-                                  border: Border.all(
-                                    color: Colors.white,
-                                  ),
 
-                                  //more than 50% of width makes circle
-                                ),
-                                child: Icon(
-                                  isCollapsed == false ? Icons.remove : Icons.add,
-                                  color: Colors.white,
-                                  size: size.width * .010,
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: size.width * .002,
-                            ),
-                            Container(
-                              width: size.width * .298,
-                              height: size.height * .0455,
-                              child: TabBar(
-                                  isScrollable: true,
-                               // labelPadding: EdgeInsets.only(left:size.width * .024,),
-                                 // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
-                                  padding: EdgeInsets.zero,
-                                  labelColor: Colors.white,
-                                  labelStyle: TextStyle(
-                                    fontSize: height * 00.022,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  unselectedLabelColor: Color(0xffEDF1F2),
-                                  unselectedLabelStyle: TextStyle(
-                                      fontSize: height * 00.022,
-                                      fontStyle: FontStyle.normal),
-                                  indicator: UnderlineTabIndicator(
-                                    borderSide: BorderSide(
-                                      width: height * .008,
-                                      color: Colors.white,
-                                    ),
-                                    insets: EdgeInsets.only(
-                                        left: size.width * .015,
-                                        top: size.width * .023,
-                                        right: size.width * .03),
-                                  ),
-                                  indicatorColor: Colors.white,
-                                  indicatorWeight: height * .001,
-                                  // padding: EdgeInsets.only(bottom: 10),
-
-                                  controller: _tabController,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  tabs: [
-                                    Text(
-                                      "Dashboard",
-                                      style: TextStyle(fontSize: height * 00.022),
-                                    ),
-                                    Text(
-                                      "Purchase",
-                                      style: TextStyle(fontSize: height * 00.022),
-                                    ),
-                                    Text(
-                                      "sales",
-                                      style: TextStyle(fontSize: height * 00.022),
-                                    ),
-                                  ]),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
 
                   Expanded(
                     child: Row(
                       children: [
-                        // Visibility(
-                        //   visible: !isCollapsed,
-                        //   child: Container(
-                        //     height: double.infinity,
-                        //     width: MediaQuery.of(context).size.width * .172,
-                        //     //width: 232,
-                        //     color: Color(0xff1D2C37),
-                        //     child: Column(
-                        //       children: [
-                        //         Container(
-                        //             margin: EdgeInsets.all(5),
-                        //             child: SearchTextfiled(
-                        //               color: Color(0xff2B3944),
-                        //               hintText: "Search...",
-                        //               ctrlr: itemsearch,
-                        //               onChanged:( va){
-                        //                 context.read<InventorysearchCubit>().getSearch(itemsearch.text);
-                        //
-                        //               },
-                        //
-                        //             )),
-                        //         SizedBox(
-                        //           height: MediaQuery.of(context).size.height * .008,
-                        //         ),
-                        //         Container(
-                        //           margin: EdgeInsets.only(
-                        //             left: width * 0.009,
-                        //             right: width * 0.007,
-                        //           ),
-                        //
-                        //           child: Row(
-                        //             //mainAxisAlignment: MainAxisAlignment.center,
-                        //             children: [
-                        //               RectangleContainer(
-                        //                   "asset/rect1.png", context),
-                        //               SizedBox(
-                        //                 width: width * .003,
-                        //               ),
-                        //               Container(
-                        //                 color: Color(0xff2B3944),
-                        //                 //color: Colors.red,
-                        //                 //width: 131,
-                        //                 height: width * .0197,
-                        //                 width: width * .111,
-                        //                 child: Row(
-                        //                   mainAxisAlignment: MainAxisAlignment.center,
-                        //                   children: [
-                        //                     SizedBox(
-                        //                       width: width * .001,
-                        //                     ),
-                        //                     Icon(
-                        //                       Icons.add,
-                        //                       color: Colors.white,
-                        //                       size: 14,
-                        //                     ),
-                        //                     SizedBox(
-                        //                       width: width * .007,
-                        //                     ),
-                        //                     Container(
-                        //                       child: Text(
-                        //                         "Add a Varient",
-                        //                         style: TextStyle(
-                        //                             color: Colors.white,
-                        //                             fontSize: width * .010,
-                        //                             overflow:
-                        //                                 TextOverflow.ellipsis),
-                        //                       ),
-                        //                     )
-                        //                   ],
-                        //                 ),
-                        //               ),
-                        //               SizedBox(
-                        //                 width: width * .003,
-                        //               ),
-                        //               RectangleContainer(
-                        //                   "asset/rect2.png", context),
-                        //             ],
-                        //           ),
-                        //         ),
-                        //         SizedBox(
-                        //           height: height * .015,
-                        //         ),
-                        //         Divider(
-                        //           height: 0,
-                        //           color: Color(0xff2B3944),
-                        //           // thickness: 1,
-                        //         ),
-                        //         Expanded(
-                        //             child: Container(
-                        //                 height: 0,
-                        //                 child: ListView.separated(
-                        //
-                        //                   separatorBuilder: (context, index) {
-                        //                     return Divider(
-                        //                       height: 0,
-                        //                       color: Color(0xff2B3944),
-                        //                       // thickness: 1,
-                        //                     );
-                        //                   },
-                        //                   physics: ScrollPhysics(),
-                        //                   controller: controller,
-                        //                   itemBuilder: (context, index) {
-                        //                     return AutoScrollTag(
-                        //                       highlightColor: Colors.red,
-                        //                       controller: controller,
-                        //                       key: ValueKey(index),
-                        //                       index: index,
-                        //                       child:ItemCard(item: result[index].orderCode,
-                        //                         id: result[index].id.toString(),
-                        //
-                        //
-                        //                       )
-                        //
-                        //                     );
-                        //                   },
-                        //                   itemCount: result.length,
-                        //                 )
-                        //                 //     Container(
-                        //                 //   decoration: BoxDecoration(
-                        //                 //     border: Border(
-                        //                 //       top: BorderSide(width: 16.0, color: Colors.white),
-                        //                 //       bottom: BorderSide(width: 16.0, color: Colors.red),
-                        //                 //     ),
-                        //                 //   ),
-                        //                 //   child: ListTile(
-                        //                 //
-                        //                 //
-                        //                 //     title: Text(
-                        //                 //       "name",
-                        //                 //       style: TextStyle(fontSize: 11, color: Colors.white,fontWeight: FontWeight.bold),
-                        //                 //     ),subtitle:
-                        //                 //   Text(
-                        //                 //     "name",
-                        //                 //     style: TextStyle(fontSize: 15, color: Colors.white,fontWeight: FontWeight.w400),
-                        //                 //   ),
-                        //                 //   ),
-                        //                 // ) )))
-                        //
-                        //                 ))
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
+
 
                         //******************************************************************** */
                         Expanded(
@@ -494,4 +184,213 @@ Widget RectangleContainer(String url, BuildContext context) {
       width: 10,
     )),
   );
+}
+class TitleScreen extends StatefulWidget {
+  final TabController tabController;
+   bool  isCollapsed;
+  TitleScreen({required this.tabController,this.isCollapsed=false});
+  @override
+  _TitleScreenState createState() => _TitleScreenState();
+}
+
+class _TitleScreenState extends State<TitleScreen> {
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<NavigationProvider>(context, listen: false);
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    Size size = MediaQuery.of(context).size;
+    return    Container(
+      width: size.width,
+      height: size.height / 6.5,
+      color: Color(0xff3E4F5B),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: size.width * .024,
+              ),
+              Container(
+                  margin: EdgeInsets.only(top: height * .0334
+                    //size.height*.003,
+                  ),
+                  child: Image.asset(
+                    'asset/logo1.png',
+                    color: Colors.white,
+                    height: height * .060,
+                    width: size.width * .08,
+                    fit: BoxFit.cover,
+                  )),
+              SizedBox(
+                width: size.width * .03,
+              ),
+              searchField(context),
+              SizedBox(
+                width: size.width * .054,
+              ),
+              TitleIcon(
+                image: "asset/icon1.png",
+              ),
+              SizedBox(
+                width: size.width * .023,
+              ),
+              TitleIcon(
+                image: "asset/icon2.png",
+              ),
+              SizedBox(
+                width: size.width * .023,
+              ),
+              TitleIcon(
+                image: "asset/bell2.png",
+              ),
+              SizedBox(
+                width: size.width * .023,
+              ),
+              TitleIcon(
+                image: "asset/vector1.png",
+              ),
+              SizedBox(
+                width: size.width * .023,
+              ),
+              TitleIcon(
+                image: "asset/setting.png",
+              ),
+              SizedBox(
+                width: size.width * .03,
+              ),
+              Container(
+                  margin: EdgeInsets.only(
+                    top: height * .035,
+                  ),
+                  child: Text(
+                    "William joskinode",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: size.width * .01,
+                        fontWeight: FontWeight.w400),
+                  )),
+              SizedBox(
+                width: size.width * .01,
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  top: height * .028,
+                ),
+                child: CircleAvatar(
+                    foregroundImage: AssetImage(
+                      "asset/profile.png",
+                    ),
+                    radius: size.width * .01),
+              ),
+              SizedBox(
+                width: size.width * .03,
+              ),
+              TitleIcon(
+                image: "asset/menu.png",
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              provider. isCollapsed == false
+                  ? SizedBox(
+                width: size.width * .1680,
+              )
+                  : SizedBox(width: width * .015),
+              InkWell(
+                onTap: () {
+                  provider.toggleIsCollapsed();
+                  print("taped");
+
+                  print(provider.isCollapsed.toString());
+                  setState(() {
+                  widget.  isCollapsed = provider.isCollapsed;
+
+                  });
+                },
+                child: Container(
+                  margin: EdgeInsets.only(bottom: size.height * .008),
+                  alignment: Alignment.center,
+                  height: size.width * .016,
+                  width: size.width * .016,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
+
+                    //more than 50% of width makes circle
+                  ),
+                  child: Icon(
+                 widget.   isCollapsed == false ? Icons.remove : Icons.add,
+                    color: Colors.white,
+                    size: size.width * .010,
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: size.width * .002,
+              ),
+              Container(
+                width: size.width * .298,
+                height: size.height * .0455,
+                child: TabBar(
+                    isScrollable: true,
+                    // labelPadding: EdgeInsets.only(left:size.width * .024,),
+                    // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
+                    padding: EdgeInsets.zero,
+                    labelColor: Colors.white,
+                    labelStyle: TextStyle(
+                      fontSize: height * 00.022,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    unselectedLabelColor: Color(0xffEDF1F2),
+                    unselectedLabelStyle: TextStyle(
+                        fontSize: height * 00.022,
+                        fontStyle: FontStyle.normal),
+                    indicator: UnderlineTabIndicator(
+                      borderSide: BorderSide(
+                        width: height * .008,
+                        color: Colors.white,
+                      ),
+                      insets: EdgeInsets.only(
+                          left: size.width * .015,
+                          top: size.width * .023,
+                          right: size.width * .03),
+                    ),
+                    indicatorColor: Colors.white,
+                    indicatorWeight: height * .001,
+                    // padding: EdgeInsets.only(bottom: 10),
+
+                    controller: widget.tabController,
+                    physics: NeverScrollableScrollPhysics(),
+                    tabs: [
+                      Text(
+                        "Dashboard",
+                        style: TextStyle(fontSize: height * 00.022),
+                      ),
+                      Text(
+                        "Purchase",
+                        style: TextStyle(fontSize: height * 00.022),
+                      ),
+                      Text(
+                        "sales",
+                        style: TextStyle(fontSize: height * 00.022),
+                      ),
+                    ]),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }
