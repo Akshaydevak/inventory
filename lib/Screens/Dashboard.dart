@@ -78,6 +78,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   child: Builder(
     builder: (context) {
       return BlocConsumer<InventorysearchCubit, InventorysearchState>(
+
       listener: (context, state) {
         state.maybeWhen(orElse:(){},
             error: (){
@@ -89,10 +90,11 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             print("Here is the result");
             print(result);
             print(result[0].id);
+            if(result.isNotEmpty)
             Variable.verticalid=result[0].id;
-            // context
-            //     .read<GeneralPurchaseReadCubit>()
-            //     .getGeneralPurchaseRead(Variable.verticalid!);
+            context
+                .read<GeneralPurchaseReadCubit>()
+                .getGeneralPurchaseRead(result[0].id!);
             print("Variable.ak"+Variable.verticalid.toString());
             setState(() {
 
@@ -108,6 +110,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
       },
       builder: (context, state) {
+
+
         return Scaffold(
 
             body: Row(

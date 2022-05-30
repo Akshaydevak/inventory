@@ -44,8 +44,8 @@ class _VerticalListState extends State<VerticalList> {
     Size size = MediaQuery.of(context).size;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return Scaffold(
-      body: BlocProvider(
+    return Container(
+      child: BlocProvider(
   create: (context) => InventorysearchCubit()..getInventorySearch("code"),
   child: Builder(
     builder: (context) {

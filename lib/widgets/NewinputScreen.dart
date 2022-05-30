@@ -63,11 +63,14 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: widget.colors,
             // color: Colors.grey.shade200,
             child: TextFormField(
+
               readOnly: widget.readOnly,
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: widget.readOnly?Color(0xffF2F3F5).withOpacity(.2):Colors.white,
                 suffixIcon: widget.password
                     ? IconButton(
                   icon: show

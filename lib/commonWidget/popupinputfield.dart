@@ -245,7 +245,7 @@ class _DropDownTileState extends State<DropDownTile> {
   }
 }
 class CheckedBoxs extends StatefulWidget {
-  final bool valueChanger;
+  final bool? valueChanger;
   final Color color;
   final Function(bool?) onSelection;
   CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.white});
@@ -258,7 +258,7 @@ class _CheckedBoxState extends State<CheckedBoxs> {
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      activeColor: widget.color,
+      activeColor: Color(0xff3E4F5B),
       value: widget.valueChanger,
       onChanged: widget.onSelection,
     );

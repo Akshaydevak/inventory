@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/inputfield.dart';
@@ -19,114 +20,120 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(
+        child: Container(
+          child: Column(
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
 
-              children: [
-                Expanded(child: Column(
-                  children: [
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Order type"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Order code"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Order date"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Inventory  id"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Ordered person"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Promised  reciept date"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Planned  reciept date"),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-
-
-                  ],
-                ),),
-                Expanded(child: Column(
-                  children: [
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: 10,),
-
-                    NewInputCard(
-                        controller: controller, title: "Payment code"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Payment status"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Order status"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Receiving status"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Invoice status"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Note",height: 90,maxLines: 3,),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Remarks",height: 90,maxLines: 3,),
-                    SizedBox(height: height*.030,),
-                  ],
-                ),),
-                Expanded(child: Column(
-                  children: [
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Discount"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "foc"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Unit cost"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "Variable amount"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "excess tax"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "vat"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "actual cost"),
-                    SizedBox(height: height*.030,),
-                    NewInputCard(
-                        controller: controller, title: "grand total"),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
-                    SizedBox(height: height*.030,),
+                children: [
+                  VerticalList(),
+                  Expanded(child: Column(
+                    children: [
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Order type"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Order code"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Order date"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Inventory  id"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Ordered person"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Promised  reciept date"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Planned  reciept date"),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
 
 
+                    ],
+                  ),),
+                  Expanded(child: Column(
+                    children: [
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: 10,),
 
-                  ],
-                ),),
+                      NewInputCard(
+                          controller: controller, title: "Payment code"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Payment status"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Order status"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Receiving status"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Invoice status"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Note",height: 90,maxLines: 3,),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Remarks",height: 90,maxLines: 3,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                    ],
+                  ),),
+                  Expanded(child: Column(
+                    children: [
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Discount"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "foc"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Unit cost"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "Variable amount"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "excess tax"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "vat"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "actual cost"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          controller: controller, title: "grand total"),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.030,),
 
-              ],
-            ),
-            SizedBox(height: 61,),
-           // ScrollableTable(),
+
+
+                    ],
+                  ),),
+
+                ],
+              ),
+              SizedBox(height: 61,),
+             // ScrollableTable(),
     SizedBox(height: 78,),
 
     Row(
@@ -148,6 +155,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
 
 
     ],
+          ),
         ),
       ),
     );
