@@ -773,6 +773,7 @@ class _$OrderLinesTearOff {
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
@@ -794,6 +795,7 @@ class _$OrderLinesTearOff {
       isActive: isActive,
       supplierCode: supplierCode,
       variantId: variantId,
+      vendorRefCode: vendorRefCode,
       variantName: variantName,
       barcode: barcode,
       purchaseuom: purchaseuom,
@@ -830,6 +832,8 @@ mixin _$OrderLines {
   String? get supplierCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "barcode")
@@ -877,6 +881,7 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
@@ -909,6 +914,7 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
     Object? isActive = freezed,
     Object? supplierCode = freezed,
     Object? variantId = freezed,
+    Object? vendorRefCode = freezed,
     Object? variantName = freezed,
     Object? barcode = freezed,
     Object? purchaseuom = freezed,
@@ -948,6 +954,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefCode: vendorRefCode == freezed
+          ? _value.vendorRefCode
+          : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
       variantName: variantName == freezed
           ? _value.variantName
@@ -1022,6 +1032,7 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
@@ -1056,6 +1067,7 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? supplierCode = freezed,
     Object? variantId = freezed,
+    Object? vendorRefCode = freezed,
     Object? variantName = freezed,
     Object? barcode = freezed,
     Object? purchaseuom = freezed,
@@ -1095,6 +1107,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefCode: vendorRefCode == freezed
+          ? _value.vendorRefCode
+          : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
       variantName: variantName == freezed
           ? _value.variantName
@@ -1166,6 +1182,7 @@ class _$_OrderLines implements _OrderLines {
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "supplier_code") this.supplierCode,
       @JsonKey(name: "variant_id") this.variantId,
+      @JsonKey(name: "vendor_reference_code") this.vendorRefCode,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "barcode") this.barcode,
       @JsonKey(name: "purchase_uom") this.purchaseuom,
@@ -1199,6 +1216,9 @@ class _$_OrderLines implements _OrderLines {
   @override
   @JsonKey(name: "variant_id")
   final String? variantId;
+  @override
+  @JsonKey(name: "vendor_reference_code")
+  final String? vendorRefCode;
   @override
   @JsonKey(name: "variant_name")
   final String? variantName;
@@ -1244,7 +1264,7 @@ class _$_OrderLines implements _OrderLines {
 
   @override
   String toString() {
-    return 'OrderLines(vat: $vat, isRecieved: $isRecieved, currentQty: $currentQty, isActive: $isActive, supplierCode: $supplierCode, variantId: $variantId, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
+    return 'OrderLines(vat: $vat, isRecieved: $isRecieved, currentQty: $currentQty, isActive: $isActive, supplierCode: $supplierCode, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
   }
 
   @override
@@ -1268,6 +1288,9 @@ class _$_OrderLines implements _OrderLines {
             (identical(other.variantId, variantId) ||
                 const DeepCollectionEquality()
                     .equals(other.variantId, variantId)) &&
+            (identical(other.vendorRefCode, vendorRefCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorRefCode, vendorRefCode)) &&
             (identical(other.variantName, variantName) ||
                 const DeepCollectionEquality()
                     .equals(other.variantName, variantName)) &&
@@ -1319,6 +1342,7 @@ class _$_OrderLines implements _OrderLines {
       const DeepCollectionEquality().hash(isActive) ^
       const DeepCollectionEquality().hash(supplierCode) ^
       const DeepCollectionEquality().hash(variantId) ^
+      const DeepCollectionEquality().hash(vendorRefCode) ^
       const DeepCollectionEquality().hash(variantName) ^
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(purchaseuom) ^
@@ -1353,6 +1377,7 @@ abstract class _OrderLines implements OrderLines {
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "variant_id") String? variantId,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "barcode") String? barcode,
       @JsonKey(name: "purchase_uom") String? purchaseuom,
@@ -1386,6 +1411,9 @@ abstract class _OrderLines implements OrderLines {
   @override
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;

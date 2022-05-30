@@ -68,6 +68,7 @@ class _VerticalListState extends State<VerticalList> {
   },
   builder: (context, state) {
     return Container(
+      height: 400,
             margin: EdgeInsets.all(10),
             child:
             Visibility(

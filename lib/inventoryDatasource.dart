@@ -167,6 +167,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
         "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/$id";
+    print(path);
     try {
       final response = await client.get(
         path,

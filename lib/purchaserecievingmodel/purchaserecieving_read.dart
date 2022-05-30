@@ -56,6 +56,7 @@ class RecievingLines with _$RecievingLines {
     final double? vat,
     @JsonKey(name:"order_line_code") final String? orderLineCode,
     @JsonKey(name:"receiving_line_code") final String? receivinglineCode,
+    @JsonKey(name:"vendor_reference_code") final String? vendorRefCode,
 
     @JsonKey(name:"variant_id") final String? variantId,
     @JsonKey(name:"variant_name") final String? variantName,

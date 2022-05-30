@@ -43,6 +43,7 @@ class OrderLines with _$OrderLines {
     @JsonKey(name:"is_active",defaultValue: false) final bool? isActive,
     @JsonKey(name: "supplier_code") final String? supplierCode,
     @JsonKey(name: "variant_id") final String? variantId,
+    @JsonKey(name: "vendor_reference_code") final String? vendorRefCode,
     @JsonKey(name: "variant_name") final String? variantName,
     @JsonKey(name: "barcode") final String? barcode,
     @JsonKey(name: "purchase_uom") final String? purchaseuom,

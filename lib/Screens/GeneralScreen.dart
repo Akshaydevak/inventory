@@ -102,6 +102,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   String? address1='';
   String ? address2="";
   String? varinatname = "";
+  String? vendorRefCode = "";
   double? Vamount = 0;
   String? Vbarcode = "";
   double? vvat = 0;
@@ -263,8 +264,10 @@ print("excessTaxvalue"+excessTAxValue.toString());
                             )]);
                           }
                           else{
+                            print("searching data"+purchaseTable.toString());
 
                             varinatname = purchaseTable?.name;
+                           vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
                             vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
                             print(
@@ -1026,7 +1029,12 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                   if(_value!=true){
                                                     table.add(
                                                         OrderLines(
+                                                          vendorRefCode: vendorRefCode??"",
+
+
                                                           isRecieved:
+
+
                                                           isRecieved ??
                                                               false,
                                                           isActive:
@@ -1092,6 +1100,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                     "";
                                                     vrefcod = "";
                                                     Vbarcode = "";
+                                                    vendorRefCode="";
                                                     vvat=0;
                                                     focValue=0;
                                                     excessTAxValue=0;
@@ -1473,7 +1482,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(
-                                                                    table[i].supplierCode.toString(),
+                                                                    table[i].vendorRefCode.toString(),
                                                                     fontSize: 12,
                                                                     padding: EdgeInsets
                                                                         .only(
@@ -2192,7 +2201,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                           ),
                                                           TableCell(
                                                             verticalAlignment: TableCellVerticalAlignment.middle,
-                                                            child: textPadding(vrefcod!,
+                                                            child: textPadding(vendorRefCode!,
                                                                 fontSize: 12,
                                                                 padding:
                                                                     EdgeInsets.only(
@@ -2709,6 +2718,7 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                                                     table.add(
                                                                         OrderLines(
+                                                                          vendorRefCode: vendorRefCode??"",
                                                                       isRecieved:
                                                                           isRecieved ??
                                                                               false,
@@ -2776,6 +2786,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                     vrefcod = "";
                                                                     Vbarcode = "";
                                                                     check1 = "";
+                                                                    vendorRefCode="";
                                                                     check = 0;
                                                                     Qty = 0;
                                                                     vvat=0;

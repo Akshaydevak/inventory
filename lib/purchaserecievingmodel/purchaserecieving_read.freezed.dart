@@ -1021,6 +1021,7 @@ class _$RecievingLinesTearOff {
       double? vat,
       @JsonKey(name: "order_line_code") String? orderLineCode,
       @JsonKey(name: "receiving_line_code") String? receivinglineCode,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "supplier_code") String? supplierCode,
@@ -1046,6 +1047,7 @@ class _$RecievingLinesTearOff {
       vat: vat,
       orderLineCode: orderLineCode,
       receivinglineCode: receivinglineCode,
+      vendorRefCode: vendorRefCode,
       variantId: variantId,
       variantName: variantName,
       supplierCode: supplierCode,
@@ -1085,6 +1087,8 @@ mixin _$RecievingLines {
   String? get orderLineCode => throw _privateConstructorUsedError;
   @JsonKey(name: "receiving_line_code")
   String? get receivinglineCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_name")
@@ -1138,6 +1142,7 @@ abstract class $RecievingLinesCopyWith<$Res> {
       double? vat,
       @JsonKey(name: "order_line_code") String? orderLineCode,
       @JsonKey(name: "receiving_line_code") String? receivinglineCode,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "supplier_code") String? supplierCode,
@@ -1175,6 +1180,7 @@ class _$RecievingLinesCopyWithImpl<$Res>
     Object? vat = freezed,
     Object? orderLineCode = freezed,
     Object? receivinglineCode = freezed,
+    Object? vendorRefCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
     Object? supplierCode = freezed,
@@ -1224,6 +1230,10 @@ class _$RecievingLinesCopyWithImpl<$Res>
       receivinglineCode: receivinglineCode == freezed
           ? _value.receivinglineCode
           : receivinglineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefCode: vendorRefCode == freezed
+          ? _value.vendorRefCode
+          : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
       variantId: variantId == freezed
           ? _value.variantId
@@ -1309,6 +1319,7 @@ abstract class _$RecievingLinesCopyWith<$Res>
       double? vat,
       @JsonKey(name: "order_line_code") String? orderLineCode,
       @JsonKey(name: "receiving_line_code") String? receivinglineCode,
+      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "supplier_code") String? supplierCode,
@@ -1348,6 +1359,7 @@ class __$RecievingLinesCopyWithImpl<$Res>
     Object? vat = freezed,
     Object? orderLineCode = freezed,
     Object? receivinglineCode = freezed,
+    Object? vendorRefCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
     Object? supplierCode = freezed,
@@ -1397,6 +1409,10 @@ class __$RecievingLinesCopyWithImpl<$Res>
       receivinglineCode: receivinglineCode == freezed
           ? _value.receivinglineCode
           : receivinglineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefCode: vendorRefCode == freezed
+          ? _value.vendorRefCode
+          : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
       variantId: variantId == freezed
           ? _value.variantId
@@ -1478,6 +1494,7 @@ class _$_RecievingLines implements _RecievingLines {
       this.vat,
       @JsonKey(name: "order_line_code") this.orderLineCode,
       @JsonKey(name: "receiving_line_code") this.receivinglineCode,
+      @JsonKey(name: "vendor_reference_code") this.vendorRefCode,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "supplier_code") this.supplierCode,
@@ -1516,6 +1533,9 @@ class _$_RecievingLines implements _RecievingLines {
   @override
   @JsonKey(name: "receiving_line_code")
   final String? receivinglineCode;
+  @override
+  @JsonKey(name: "vendor_reference_code")
+  final String? vendorRefCode;
   @override
   @JsonKey(name: "variant_id")
   final String? variantId;
@@ -1567,7 +1587,7 @@ class _$_RecievingLines implements _RecievingLines {
 
   @override
   String toString() {
-    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId)';
+    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId)';
   }
 
   @override
@@ -1595,6 +1615,9 @@ class _$_RecievingLines implements _RecievingLines {
             (identical(other.receivinglineCode, receivinglineCode) ||
                 const DeepCollectionEquality()
                     .equals(other.receivinglineCode, receivinglineCode)) &&
+            (identical(other.vendorRefCode, vendorRefCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorRefCode, vendorRefCode)) &&
             (identical(other.variantId, variantId) ||
                 const DeepCollectionEquality()
                     .equals(other.variantId, variantId)) &&
@@ -1637,10 +1660,8 @@ class _$_RecievingLines implements _RecievingLines {
             (identical(other.isActive, isActive) ||
                 const DeepCollectionEquality()
                     .equals(other.isActive, isActive)) &&
-            (identical(other.isFree, isFree) ||
-                const DeepCollectionEquality().equals(other.isFree, isFree)) &&
-            (identical(other.purchaseOrderLineId, purchaseOrderLineId) ||
-                const DeepCollectionEquality().equals(other.purchaseOrderLineId, purchaseOrderLineId)));
+            (identical(other.isFree, isFree) || const DeepCollectionEquality().equals(other.isFree, isFree)) &&
+            (identical(other.purchaseOrderLineId, purchaseOrderLineId) || const DeepCollectionEquality().equals(other.purchaseOrderLineId, purchaseOrderLineId)));
   }
 
   @override
@@ -1654,6 +1675,7 @@ class _$_RecievingLines implements _RecievingLines {
       const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(orderLineCode) ^
       const DeepCollectionEquality().hash(receivinglineCode) ^
+      const DeepCollectionEquality().hash(vendorRefCode) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantName) ^
       const DeepCollectionEquality().hash(supplierCode) ^
@@ -1692,6 +1714,7 @@ abstract class _RecievingLines implements RecievingLines {
           double? vat,
           @JsonKey(name: "order_line_code") String? orderLineCode,
           @JsonKey(name: "receiving_line_code") String? receivinglineCode,
+          @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
           @JsonKey(name: "variant_id") String? variantId,
           @JsonKey(name: "variant_name") String? variantName,
           @JsonKey(name: "supplier_code") String? supplierCode,
@@ -1731,6 +1754,9 @@ abstract class _RecievingLines implements RecievingLines {
   @override
   @JsonKey(name: "receiving_line_code")
   String? get receivinglineCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
