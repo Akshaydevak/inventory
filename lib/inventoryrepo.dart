@@ -16,12 +16,12 @@ import 'model/variantid.dart';
 
 abstract class InventoryRepository {
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getInventorySearch(String? next);
+      getInventorySearch(String? next, {String tab});
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
       String? next);
   Future<Either<Failure, PurchaseOrdertype>> getPurchaseOrdertype();
   Future<Either<Failure, DoubleResponse>> postPurchase(PurchaseOrderPost model);
-  Future<Either<Failure, List<VariantId>>> getVariantId();
+  Future<Either<Failure, List<VariantId>>> getVariantId([String? inventory]);
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
   Future<Either<Failure, PurchaseCureentStockQty>> getCurrentStock(
       int? id, String? invdendotyId);
@@ -36,24 +36,32 @@ abstract class InventoryRepository {
     PurchaseRecievingRead model,
   );
   Future<Either<Failure, DoubleResponse>> generatePost(GenerateMissing model);
-  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(AdditionalGenerateModel model);
-
+  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(
+      AdditionalGenerateModel model);
+  //requestform******************************************************requestform*********************
+  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int id);
+  Future<Either<Failure, DoubleResponse>> postRequest(PurchaseOrderPost model);
+  Future<Either<Failure, PurchaseOrdertype>> getRequestFormOrdertype();
+  Future<Either<Failure, List<OrderedPersonModel>>> getOrderedPerson();
+  Future<Either<Failure, DoubleResponse>> getRequestFormPatch(
+      PurchaseOrderPost model, int? id);
+  Future<Either<Failure, DoubleResponse>> requestFormDelete(int? id);
 }
 
 class InventoryRepositoryImpl extends InventoryRepository {
   InventoryDataSourceImpl remoteDataSource = InventoryDataSourceImpl();
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getInventorySearch(String? next) {
+      getInventorySearch(String? next, {String tab = ""}) {
     print("aaaaaa");
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
-        () async => remoteDataSource.getInventorySearch(next));
+        () async => remoteDataSource.getInventorySearch(next, tab: tab));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
       String? next) {
-    print("code1"+next.toString());
+    print("code1" + next.toString());
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
         () async => remoteDataSource.getSearch(next));
   }
@@ -74,10 +82,11 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<VariantId>>> getVariantId() {
+  Future<Either<Failure, List<VariantId>>> getVariantId([String? inventory]) {
     print("repooooo");
+    print("in" + inventory.toString());
     return repoExecute<List<VariantId>>(
-        () async => remoteDataSource.getVariantId());
+        () async => remoteDataSource.getVariantId(inventory));
   }
 
   @override
@@ -134,15 +143,58 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> generatePost(
-      GenerateMissing model) {
+  Future<Either<Failure, DoubleResponse>> generatePost(GenerateMissing model) {
     return repoExecute<DoubleResponse>(
         () async => remoteDataSource.generatePost(model));
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(AdditionalGenerateModel model) { return repoExecute<DoubleResponse>(
-          () async => remoteDataSource.additionlGeneratePost(model));
+  Future<Either<Failure, DoubleResponse>> additionlGeneratePost(
+      AdditionalGenerateModel model) {
+    print("welcome");
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.additionlGeneratePost(model));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int id) {
+    print("idddidd1" + id.toString());
+    return repoExecute<PurchaseOrderRead>(
+        () async => remoteDataSource.getRequestFormRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postRequest(PurchaseOrderPost model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postRequest(model));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseOrdertype>> getRequestFormOrdertype() {
+    return repoExecute<PurchaseOrdertype>(
+        () async => remoteDataSource.getRequestFormOrdertype());
+  }
+
+  @override
+  Future<Either<Failure, List<OrderedPersonModel>>> getOrderedPerson() {
+    print("orderedPerson" );
+    return repoExecute<List<OrderedPersonModel>>(
+          () async => remoteDataSource.getOrderedPerson());
+
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getRequestFormPatch(PurchaseOrderPost model, int? id) {
+    return repoExecute<DoubleResponse>(
+          () async => remoteDataSource.getRequestFormPatch(model, id));
+
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> requestFormDelete(int? id) {
+    print("id,,,,,,," + id.toString());
+  return repoExecute<DoubleResponse>(
+          () async => remoteDataSource.requestFormDelete(id));
 
   }
 }

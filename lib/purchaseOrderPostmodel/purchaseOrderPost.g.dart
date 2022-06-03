@@ -9,6 +9,7 @@ part of 'purchaseOrderPost.dart';
 _$_PurchaseOrderPost _$$_PurchaseOrderPostFromJson(Map<String, dynamic> json) =>
     _$_PurchaseOrderPost(
       purchaseOrderType: json['purchase_order_type'] as String?,
+      orderedPerson: json['ordered_person'] as String?,
       iventoryId: json['inventory_id'] as String?,
       vendorId: json['vendor_id'] as String?,
       vendorTrnNumber: json['vendor_trn_number'] as String?,
@@ -29,6 +30,7 @@ _$_PurchaseOrderPost _$$_PurchaseOrderPostFromJson(Map<String, dynamic> json) =>
       grandTotal: (json['grand_total'] as num?)?.toDouble(),
       variableAmount: (json['vatable_amount'] as num?)?.toDouble(),
       createdBy: json['created_by'] as String?,
+      edited_by: json['edited_by'] as String?,
       orderLines: (json['order_lines'] as List<dynamic>?)
           ?.map((e) => OrderLines.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -38,6 +40,7 @@ Map<String, dynamic> _$$_PurchaseOrderPostToJson(
         _$_PurchaseOrderPost instance) =>
     <String, dynamic>{
       'purchase_order_type': instance.purchaseOrderType,
+      'ordered_person': instance.orderedPerson,
       'inventory_id': instance.iventoryId,
       'vendor_id': instance.vendorId,
       'vendor_trn_number': instance.vendorTrnNumber,
@@ -58,6 +61,7 @@ Map<String, dynamic> _$$_PurchaseOrderPostToJson(
       'grand_total': instance.grandTotal,
       'vatable_amount': instance.variableAmount,
       'created_by': instance.createdBy,
+      'edited_by': instance.edited_by,
       'order_lines': instance.orderLines,
     };
 
@@ -66,8 +70,11 @@ _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
       vat: (json['vat'] as num?)?.toDouble(),
       isRecieved: json['isRecieved'] as bool?,
       currentQty: json['currentQty'] as int?,
+      id: json['id'] as int?,
       isActive: json['is_active'] as bool? ?? false,
       supplierCode: json['supplier_code'] as String?,
+      isFree: json['is_free'] as bool?,
+      isInvoiced: json['is_invoiced'] as bool?,
       variantId: json['variant_id'] as String?,
       vendorRefCode: json['vendor_reference_code'] as String?,
       variantName: json['variant_name'] as String?,
@@ -91,8 +98,11 @@ Map<String, dynamic> _$$_OrderLinesToJson(_$_OrderLines instance) =>
       'vat': instance.vat,
       'isRecieved': instance.isRecieved,
       'currentQty': instance.currentQty,
+      'id': instance.id,
       'is_active': instance.isActive,
       'supplier_code': instance.supplierCode,
+      'is_free': instance.isFree,
+      'is_invoiced': instance.isInvoiced,
       'variant_id': instance.variantId,
       'vendor_reference_code': instance.vendorRefCode,
       'variant_name': instance.variantName,

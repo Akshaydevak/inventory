@@ -10,9 +10,9 @@ part 'inventorysearch_cubit.freezed.dart';
 class InventorysearchCubit extends Cubit<InventorysearchState> {
   final InventoryRepository _repos = InventoryRepositoryImpl();
   InventorysearchCubit() : super(InventorysearchState.initial());
-  Future getInventorySearch(String code) async {
+  Future getInventorySearch(String code,{String tab=""}) async {
     print("aaaa");
-    final result = await _repos.getInventorySearch(code);
+    final result = await _repos.getInventorySearch(code,tab:tab);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
   Future getSearch(String code) async {

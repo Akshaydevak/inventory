@@ -48,6 +48,7 @@ class _NewInputCardState extends State<NewInputCard> {
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
       child:widget.direction==false? Column(
+
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(

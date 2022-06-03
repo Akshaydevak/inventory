@@ -6,6 +6,7 @@ part 'purchaseOrderPost.g.dart';
 class PurchaseOrderPost with _$PurchaseOrderPost {
   const factory PurchaseOrderPost({
     @JsonKey(name: "purchase_order_type") final String? purchaseOrderType,
+    @JsonKey(name: "ordered_person") final String? orderedPerson,
     @JsonKey(name: "inventory_id") final String? iventoryId,
     @JsonKey(name: "vendor_id") final String? vendorId,
     @JsonKey(name: "vendor_trn_number") final String? vendorTrnNumber,
@@ -26,6 +27,7 @@ class PurchaseOrderPost with _$PurchaseOrderPost {
     @JsonKey(name: "grand_total") final double? grandTotal,
     @JsonKey(name: "vatable_amount") final double? variableAmount,
     @JsonKey(name: "created_by") final String? createdBy,
+    @JsonKey(name: "edited_by") final String? edited_by,
     @JsonKey(name: "order_lines") final List<OrderLines>? orderLines,
     // @JsonKey(name:"grand_total") final int?grandTotal,
   }) = _PurchaseOrderPost;
@@ -40,8 +42,11 @@ class OrderLines with _$OrderLines {
     final bool? isRecieved,
 
     final int ? currentQty,
+    final int ? id,
     @JsonKey(name:"is_active",defaultValue: false) final bool? isActive,
     @JsonKey(name: "supplier_code") final String? supplierCode,
+    @JsonKey(name: "is_free") final bool? isFree,
+    @JsonKey(name: "is_invoiced") final bool? isInvoiced,
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "vendor_reference_code") final String? vendorRefCode,
     @JsonKey(name: "variant_name") final String? variantName,

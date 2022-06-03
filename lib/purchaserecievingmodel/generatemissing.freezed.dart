@@ -683,3 +683,346 @@ abstract class _OrderLines implements OrderLiness {
   _$OrderLinesCopyWith<_OrderLines> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+OrderedPersonModel _$OrderedPersonModelFromJson(Map<String, dynamic> json) {
+  return _OrderedPersonModel.fromJson(json);
+}
+
+/// @nodoc
+class _$OrderedPersonModelTearOff {
+  const _$OrderedPersonModelTearOff();
+
+  _OrderedPersonModel call(
+      {int? id,
+      String? fname,
+      String? lname,
+      @JsonKey(name: "user_login_id") int? userLoginId,
+      @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "organization_code") String? organisationCode,
+      @JsonKey(name: "designation_id") int? designationId,
+      @JsonKey(name: "is_active") bool? isActive}) {
+    return _OrderedPersonModel(
+      id: id,
+      fname: fname,
+      lname: lname,
+      userLoginId: userLoginId,
+      employeeUserCode: employeeUserCode,
+      organisationCode: organisationCode,
+      designationId: designationId,
+      isActive: isActive,
+    );
+  }
+
+  OrderedPersonModel fromJson(Map<String, Object> json) {
+    return OrderedPersonModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $OrderedPersonModel = _$OrderedPersonModelTearOff();
+
+/// @nodoc
+mixin _$OrderedPersonModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get fname => throw _privateConstructorUsedError;
+  String? get lname => throw _privateConstructorUsedError;
+  @JsonKey(name: "user_login_id")
+  int? get userLoginId => throw _privateConstructorUsedError;
+  @JsonKey(name: "employee_usercode")
+  String? get employeeUserCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "organization_code")
+  String? get organisationCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "designation_id")
+  int? get designationId => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active")
+  bool? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $OrderedPersonModelCopyWith<OrderedPersonModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $OrderedPersonModelCopyWith<$Res> {
+  factory $OrderedPersonModelCopyWith(
+          OrderedPersonModel value, $Res Function(OrderedPersonModel) then) =
+      _$OrderedPersonModelCopyWithImpl<$Res>;
+  $Res call(
+      {int? id,
+      String? fname,
+      String? lname,
+      @JsonKey(name: "user_login_id") int? userLoginId,
+      @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "organization_code") String? organisationCode,
+      @JsonKey(name: "designation_id") int? designationId,
+      @JsonKey(name: "is_active") bool? isActive});
+}
+
+/// @nodoc
+class _$OrderedPersonModelCopyWithImpl<$Res>
+    implements $OrderedPersonModelCopyWith<$Res> {
+  _$OrderedPersonModelCopyWithImpl(this._value, this._then);
+
+  final OrderedPersonModel _value;
+  // ignore: unused_field
+  final $Res Function(OrderedPersonModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? fname = freezed,
+    Object? lname = freezed,
+    Object? userLoginId = freezed,
+    Object? employeeUserCode = freezed,
+    Object? organisationCode = freezed,
+    Object? designationId = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      fname: fname == freezed
+          ? _value.fname
+          : fname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lname: lname == freezed
+          ? _value.lname
+          : lname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userLoginId: userLoginId == freezed
+          ? _value.userLoginId
+          : userLoginId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      employeeUserCode: employeeUserCode == freezed
+          ? _value.employeeUserCode
+          : employeeUserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organisationCode: organisationCode == freezed
+          ? _value.organisationCode
+          : organisationCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      designationId: designationId == freezed
+          ? _value.designationId
+          : designationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$OrderedPersonModelCopyWith<$Res>
+    implements $OrderedPersonModelCopyWith<$Res> {
+  factory _$OrderedPersonModelCopyWith(
+          _OrderedPersonModel value, $Res Function(_OrderedPersonModel) then) =
+      __$OrderedPersonModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? id,
+      String? fname,
+      String? lname,
+      @JsonKey(name: "user_login_id") int? userLoginId,
+      @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "organization_code") String? organisationCode,
+      @JsonKey(name: "designation_id") int? designationId,
+      @JsonKey(name: "is_active") bool? isActive});
+}
+
+/// @nodoc
+class __$OrderedPersonModelCopyWithImpl<$Res>
+    extends _$OrderedPersonModelCopyWithImpl<$Res>
+    implements _$OrderedPersonModelCopyWith<$Res> {
+  __$OrderedPersonModelCopyWithImpl(
+      _OrderedPersonModel _value, $Res Function(_OrderedPersonModel) _then)
+      : super(_value, (v) => _then(v as _OrderedPersonModel));
+
+  @override
+  _OrderedPersonModel get _value => super._value as _OrderedPersonModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? fname = freezed,
+    Object? lname = freezed,
+    Object? userLoginId = freezed,
+    Object? employeeUserCode = freezed,
+    Object? organisationCode = freezed,
+    Object? designationId = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_OrderedPersonModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      fname: fname == freezed
+          ? _value.fname
+          : fname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lname: lname == freezed
+          ? _value.lname
+          : lname // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userLoginId: userLoginId == freezed
+          ? _value.userLoginId
+          : userLoginId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      employeeUserCode: employeeUserCode == freezed
+          ? _value.employeeUserCode
+          : employeeUserCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organisationCode: organisationCode == freezed
+          ? _value.organisationCode
+          : organisationCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      designationId: designationId == freezed
+          ? _value.designationId
+          : designationId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_OrderedPersonModel implements _OrderedPersonModel {
+  const _$_OrderedPersonModel(
+      {this.id,
+      this.fname,
+      this.lname,
+      @JsonKey(name: "user_login_id") this.userLoginId,
+      @JsonKey(name: "employee_usercode") this.employeeUserCode,
+      @JsonKey(name: "organization_code") this.organisationCode,
+      @JsonKey(name: "designation_id") this.designationId,
+      @JsonKey(name: "is_active") this.isActive});
+
+  factory _$_OrderedPersonModel.fromJson(Map<String, dynamic> json) =>
+      _$$_OrderedPersonModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? fname;
+  @override
+  final String? lname;
+  @override
+  @JsonKey(name: "user_login_id")
+  final int? userLoginId;
+  @override
+  @JsonKey(name: "employee_usercode")
+  final String? employeeUserCode;
+  @override
+  @JsonKey(name: "organization_code")
+  final String? organisationCode;
+  @override
+  @JsonKey(name: "designation_id")
+  final int? designationId;
+  @override
+  @JsonKey(name: "is_active")
+  final bool? isActive;
+
+  @override
+  String toString() {
+    return 'OrderedPersonModel(id: $id, fname: $fname, lname: $lname, userLoginId: $userLoginId, employeeUserCode: $employeeUserCode, organisationCode: $organisationCode, designationId: $designationId, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _OrderedPersonModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.fname, fname) ||
+                const DeepCollectionEquality().equals(other.fname, fname)) &&
+            (identical(other.lname, lname) ||
+                const DeepCollectionEquality().equals(other.lname, lname)) &&
+            (identical(other.userLoginId, userLoginId) ||
+                const DeepCollectionEquality()
+                    .equals(other.userLoginId, userLoginId)) &&
+            (identical(other.employeeUserCode, employeeUserCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.employeeUserCode, employeeUserCode)) &&
+            (identical(other.organisationCode, organisationCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.organisationCode, organisationCode)) &&
+            (identical(other.designationId, designationId) ||
+                const DeepCollectionEquality()
+                    .equals(other.designationId, designationId)) &&
+            (identical(other.isActive, isActive) ||
+                const DeepCollectionEquality()
+                    .equals(other.isActive, isActive)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(fname) ^
+      const DeepCollectionEquality().hash(lname) ^
+      const DeepCollectionEquality().hash(userLoginId) ^
+      const DeepCollectionEquality().hash(employeeUserCode) ^
+      const DeepCollectionEquality().hash(organisationCode) ^
+      const DeepCollectionEquality().hash(designationId) ^
+      const DeepCollectionEquality().hash(isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  _$OrderedPersonModelCopyWith<_OrderedPersonModel> get copyWith =>
+      __$OrderedPersonModelCopyWithImpl<_OrderedPersonModel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_OrderedPersonModelToJson(this);
+  }
+}
+
+abstract class _OrderedPersonModel implements OrderedPersonModel {
+  const factory _OrderedPersonModel(
+      {int? id,
+      String? fname,
+      String? lname,
+      @JsonKey(name: "user_login_id") int? userLoginId,
+      @JsonKey(name: "employee_usercode") String? employeeUserCode,
+      @JsonKey(name: "organization_code") String? organisationCode,
+      @JsonKey(name: "designation_id") int? designationId,
+      @JsonKey(name: "is_active") bool? isActive}) = _$_OrderedPersonModel;
+
+  factory _OrderedPersonModel.fromJson(Map<String, dynamic> json) =
+      _$_OrderedPersonModel.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get fname => throw _privateConstructorUsedError;
+  @override
+  String? get lname => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "user_login_id")
+  int? get userLoginId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "employee_usercode")
+  String? get employeeUserCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "organization_code")
+  String? get organisationCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "designation_id")
+  int? get designationId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_active")
+  bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$OrderedPersonModelCopyWith<_OrderedPersonModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}

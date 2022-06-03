@@ -141,16 +141,6 @@ Map<String, dynamic> _$$_RecievingLinesToJson(_$_RecievingLines instance) =>
 _$_AdditionalGenerateModel _$$_AdditionalGenerateModelFromJson(
         Map<String, dynamic> json) =>
     _$_AdditionalGenerateModel(
-      remarks: json['remarks'] as String?,
-      note: json['note'] as String?,
-      id: json['id'] as int?,
-      promisedRecieptDate: json['promised_receipt_date'] as String?,
-      plannedRecieptDate: json['planned_receipt_date'] as String?,
-      vendorId: json['vendor_id'] as String?,
-      inventoryId: json['inventory_id'] as String?,
-      vendorTrnNumber: json['vendor_trn_number'] as String?,
-      vendorMailId: json['vendor_mail_id'] as String?,
-      vendorAddress: json['vendor_address'] as String?,
       receivingId: json['receiving_id'] as int?,
       createdBy: json['created_by'] as int?,
       purchaseOrderId: json['purchase_order_id'] as int?,
@@ -162,16 +152,6 @@ _$_AdditionalGenerateModel _$$_AdditionalGenerateModelFromJson(
 Map<String, dynamic> _$$_AdditionalGenerateModelToJson(
         _$_AdditionalGenerateModel instance) =>
     <String, dynamic>{
-      'remarks': instance.remarks,
-      'note': instance.note,
-      'id': instance.id,
-      'promised_receipt_date': instance.promisedRecieptDate,
-      'planned_receipt_date': instance.plannedRecieptDate,
-      'vendor_id': instance.vendorId,
-      'inventory_id': instance.inventoryId,
-      'vendor_trn_number': instance.vendorTrnNumber,
-      'vendor_mail_id': instance.vendorMailId,
-      'vendor_address': instance.vendorAddress,
       'receiving_id': instance.receivingId,
       'created_by': instance.createdBy,
       'purchase_order_id': instance.purchaseOrderId,

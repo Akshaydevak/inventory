@@ -84,18 +84,12 @@ class RecievingLines with _$RecievingLines {
 @freezed
 class AdditionalGenerateModel with _$AdditionalGenerateModel {
   const factory AdditionalGenerateModel({
-    final String? remarks,
-    final String? note,
-    final int? id,
+    // final String? remarks,
+    // final String? note,
+    // final int? id,
 
 
-    @JsonKey(name:"promised_receipt_date") final String? promisedRecieptDate,
-    @JsonKey(name:"planned_receipt_date") final String? plannedRecieptDate,
-    @JsonKey(name:"vendor_id") final String? vendorId,
-    @JsonKey(name:"inventory_id") final String? inventoryId,
-    @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
-    @JsonKey(name:"vendor_mail_id") final String? vendorMailId,
-    @JsonKey(name:"vendor_address") final String? vendorAddress,
+
 
 
     @JsonKey(name:"receiving_id") final int? receivingId,

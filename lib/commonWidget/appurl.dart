@@ -13,3 +13,9 @@ const purchaseRecievingRead=stagingUrl+"purchase-order/read-receiving-by-purchas
 const purchaseRecievingPatch=stagingUrl+"purchase-order/patch-receiving/";
 const generatedPo=stagingUrl+"purchase-order/create-missing-system-generated-lpo";
 const additionalGeneratedPo=stagingUrl+"purchase-order/create-additional-system-generated-lpo ";
+
+//***********request form tab****************
+const requestFormRead=stagingUrl+"purchase-order/patch-request-form/";
+const requestFormCreate=stagingUrl+"purchase-order/create-request-form";
+const requestFormOrderType=stagingUrl+"purchase-order/create-request-form";
+const requestFormPatch=stagingUrl+"purchase-order/patch-request-form/";

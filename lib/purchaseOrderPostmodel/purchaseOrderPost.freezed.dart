@@ -23,6 +23,7 @@ class _$PurchaseOrderPostTearOff {
 
   _PurchaseOrderPost call(
       {@JsonKey(name: "purchase_order_type") String? purchaseOrderType,
+      @JsonKey(name: "ordered_person") String? orderedPerson,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -43,9 +44,11 @@ class _$PurchaseOrderPostTearOff {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
+      @JsonKey(name: "edited_by") String? edited_by,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines}) {
     return _PurchaseOrderPost(
       purchaseOrderType: purchaseOrderType,
+      orderedPerson: orderedPerson,
       iventoryId: iventoryId,
       vendorId: vendorId,
       vendorTrnNumber: vendorTrnNumber,
@@ -66,6 +69,7 @@ class _$PurchaseOrderPostTearOff {
       grandTotal: grandTotal,
       variableAmount: variableAmount,
       createdBy: createdBy,
+      edited_by: edited_by,
       orderLines: orderLines,
     );
   }
@@ -82,6 +86,8 @@ const $PurchaseOrderPost = _$PurchaseOrderPostTearOff();
 mixin _$PurchaseOrderPost {
   @JsonKey(name: "purchase_order_type")
   String? get purchaseOrderType => throw _privateConstructorUsedError;
+  @JsonKey(name: "ordered_person")
+  String? get orderedPerson => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get iventoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_id")
@@ -122,6 +128,8 @@ mixin _$PurchaseOrderPost {
   double? get variableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
+  @JsonKey(name: "edited_by")
+  String? get edited_by => throw _privateConstructorUsedError;
   @JsonKey(name: "order_lines")
   List<OrderLines>? get orderLines => throw _privateConstructorUsedError;
 
@@ -138,6 +146,7 @@ abstract class $PurchaseOrderPostCopyWith<$Res> {
       _$PurchaseOrderPostCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: "purchase_order_type") String? purchaseOrderType,
+      @JsonKey(name: "ordered_person") String? orderedPerson,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -158,6 +167,7 @@ abstract class $PurchaseOrderPostCopyWith<$Res> {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
+      @JsonKey(name: "edited_by") String? edited_by,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines});
 }
 
@@ -173,6 +183,7 @@ class _$PurchaseOrderPostCopyWithImpl<$Res>
   @override
   $Res call({
     Object? purchaseOrderType = freezed,
+    Object? orderedPerson = freezed,
     Object? iventoryId = freezed,
     Object? vendorId = freezed,
     Object? vendorTrnNumber = freezed,
@@ -193,12 +204,17 @@ class _$PurchaseOrderPostCopyWithImpl<$Res>
     Object? grandTotal = freezed,
     Object? variableAmount = freezed,
     Object? createdBy = freezed,
+    Object? edited_by = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_value.copyWith(
       purchaseOrderType: purchaseOrderType == freezed
           ? _value.purchaseOrderType
           : purchaseOrderType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedPerson: orderedPerson == freezed
+          ? _value.orderedPerson
+          : orderedPerson // ignore: cast_nullable_to_non_nullable
               as String?,
       iventoryId: iventoryId == freezed
           ? _value.iventoryId
@@ -279,6 +295,10 @@ class _$PurchaseOrderPostCopyWithImpl<$Res>
       createdBy: createdBy == freezed
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      edited_by: edited_by == freezed
+          ? _value.edited_by
+          : edited_by // ignore: cast_nullable_to_non_nullable
               as String?,
       orderLines: orderLines == freezed
           ? _value.orderLines
@@ -297,6 +317,7 @@ abstract class _$PurchaseOrderPostCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(name: "purchase_order_type") String? purchaseOrderType,
+      @JsonKey(name: "ordered_person") String? orderedPerson,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -317,6 +338,7 @@ abstract class _$PurchaseOrderPostCopyWith<$Res>
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "created_by") String? createdBy,
+      @JsonKey(name: "edited_by") String? edited_by,
       @JsonKey(name: "order_lines") List<OrderLines>? orderLines});
 }
 
@@ -334,6 +356,7 @@ class __$PurchaseOrderPostCopyWithImpl<$Res>
   @override
   $Res call({
     Object? purchaseOrderType = freezed,
+    Object? orderedPerson = freezed,
     Object? iventoryId = freezed,
     Object? vendorId = freezed,
     Object? vendorTrnNumber = freezed,
@@ -354,12 +377,17 @@ class __$PurchaseOrderPostCopyWithImpl<$Res>
     Object? grandTotal = freezed,
     Object? variableAmount = freezed,
     Object? createdBy = freezed,
+    Object? edited_by = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_PurchaseOrderPost(
       purchaseOrderType: purchaseOrderType == freezed
           ? _value.purchaseOrderType
           : purchaseOrderType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedPerson: orderedPerson == freezed
+          ? _value.orderedPerson
+          : orderedPerson // ignore: cast_nullable_to_non_nullable
               as String?,
       iventoryId: iventoryId == freezed
           ? _value.iventoryId
@@ -441,6 +469,10 @@ class __$PurchaseOrderPostCopyWithImpl<$Res>
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      edited_by: edited_by == freezed
+          ? _value.edited_by
+          : edited_by // ignore: cast_nullable_to_non_nullable
+              as String?,
       orderLines: orderLines == freezed
           ? _value.orderLines
           : orderLines // ignore: cast_nullable_to_non_nullable
@@ -454,6 +486,7 @@ class __$PurchaseOrderPostCopyWithImpl<$Res>
 class _$_PurchaseOrderPost implements _PurchaseOrderPost {
   const _$_PurchaseOrderPost(
       {@JsonKey(name: "purchase_order_type") this.purchaseOrderType,
+      @JsonKey(name: "ordered_person") this.orderedPerson,
       @JsonKey(name: "inventory_id") this.iventoryId,
       @JsonKey(name: "vendor_id") this.vendorId,
       @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
@@ -474,6 +507,7 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
       @JsonKey(name: "grand_total") this.grandTotal,
       @JsonKey(name: "vatable_amount") this.variableAmount,
       @JsonKey(name: "created_by") this.createdBy,
+      @JsonKey(name: "edited_by") this.edited_by,
       @JsonKey(name: "order_lines") this.orderLines});
 
   factory _$_PurchaseOrderPost.fromJson(Map<String, dynamic> json) =>
@@ -482,6 +516,9 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
   @override
   @JsonKey(name: "purchase_order_type")
   final String? purchaseOrderType;
+  @override
+  @JsonKey(name: "ordered_person")
+  final String? orderedPerson;
   @override
   @JsonKey(name: "inventory_id")
   final String? iventoryId;
@@ -543,12 +580,15 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
   @JsonKey(name: "created_by")
   final String? createdBy;
   @override
+  @JsonKey(name: "edited_by")
+  final String? edited_by;
+  @override
   @JsonKey(name: "order_lines")
   final List<OrderLines>? orderLines;
 
   @override
   String toString() {
-    return 'PurchaseOrderPost(purchaseOrderType: $purchaseOrderType, iventoryId: $iventoryId, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, address1: $address1, address2: $address2, promisedReceiptdate: $promisedReceiptdate, plannedRecieptDate: $plannedRecieptDate, note: $note, remarks: $remarks, discount: $discount, foc: $foc, unitcost: $unitcost, excessTax: $excessTax, actualCost: $actualCost, vat: $vat, grandTotal: $grandTotal, variableAmount: $variableAmount, createdBy: $createdBy, orderLines: $orderLines)';
+    return 'PurchaseOrderPost(purchaseOrderType: $purchaseOrderType, orderedPerson: $orderedPerson, iventoryId: $iventoryId, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, address1: $address1, address2: $address2, promisedReceiptdate: $promisedReceiptdate, plannedRecieptDate: $plannedRecieptDate, note: $note, remarks: $remarks, discount: $discount, foc: $foc, unitcost: $unitcost, excessTax: $excessTax, actualCost: $actualCost, vat: $vat, grandTotal: $grandTotal, variableAmount: $variableAmount, createdBy: $createdBy, edited_by: $edited_by, orderLines: $orderLines)';
   }
 
   @override
@@ -558,6 +598,9 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
             (identical(other.purchaseOrderType, purchaseOrderType) ||
                 const DeepCollectionEquality()
                     .equals(other.purchaseOrderType, purchaseOrderType)) &&
+            (identical(other.orderedPerson, orderedPerson) ||
+                const DeepCollectionEquality()
+                    .equals(other.orderedPerson, orderedPerson)) &&
             (identical(other.iventoryId, iventoryId) ||
                 const DeepCollectionEquality()
                     .equals(other.iventoryId, iventoryId)) &&
@@ -615,15 +658,17 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
             (identical(other.createdBy, createdBy) ||
                 const DeepCollectionEquality()
                     .equals(other.createdBy, createdBy)) &&
-            (identical(other.orderLines, orderLines) ||
+            (identical(other.edited_by, edited_by) ||
                 const DeepCollectionEquality()
-                    .equals(other.orderLines, orderLines)));
+                    .equals(other.edited_by, edited_by)) &&
+            (identical(other.orderLines, orderLines) || const DeepCollectionEquality().equals(other.orderLines, orderLines)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(purchaseOrderType) ^
+      const DeepCollectionEquality().hash(orderedPerson) ^
       const DeepCollectionEquality().hash(iventoryId) ^
       const DeepCollectionEquality().hash(vendorId) ^
       const DeepCollectionEquality().hash(vendorTrnNumber) ^
@@ -644,6 +689,7 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
       const DeepCollectionEquality().hash(grandTotal) ^
       const DeepCollectionEquality().hash(variableAmount) ^
       const DeepCollectionEquality().hash(createdBy) ^
+      const DeepCollectionEquality().hash(edited_by) ^
       const DeepCollectionEquality().hash(orderLines);
 
   @JsonKey(ignore: true)
@@ -660,6 +706,7 @@ class _$_PurchaseOrderPost implements _PurchaseOrderPost {
 abstract class _PurchaseOrderPost implements PurchaseOrderPost {
   const factory _PurchaseOrderPost(
           {@JsonKey(name: "purchase_order_type") String? purchaseOrderType,
+          @JsonKey(name: "ordered_person") String? orderedPerson,
           @JsonKey(name: "inventory_id") String? iventoryId,
           @JsonKey(name: "vendor_id") String? vendorId,
           @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
@@ -680,6 +727,7 @@ abstract class _PurchaseOrderPost implements PurchaseOrderPost {
           @JsonKey(name: "grand_total") double? grandTotal,
           @JsonKey(name: "vatable_amount") double? variableAmount,
           @JsonKey(name: "created_by") String? createdBy,
+          @JsonKey(name: "edited_by") String? edited_by,
           @JsonKey(name: "order_lines") List<OrderLines>? orderLines}) =
       _$_PurchaseOrderPost;
 
@@ -689,6 +737,9 @@ abstract class _PurchaseOrderPost implements PurchaseOrderPost {
   @override
   @JsonKey(name: "purchase_order_type")
   String? get purchaseOrderType => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "ordered_person")
+  String? get orderedPerson => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "inventory_id")
   String? get iventoryId => throw _privateConstructorUsedError;
@@ -750,6 +801,9 @@ abstract class _PurchaseOrderPost implements PurchaseOrderPost {
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "edited_by")
+  String? get edited_by => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "order_lines")
   List<OrderLines>? get orderLines => throw _privateConstructorUsedError;
   @override
@@ -770,8 +824,11 @@ class _$OrderLinesTearOff {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
+      int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
+      @JsonKey(name: "is_free") bool? isFree,
+      @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
@@ -792,8 +849,11 @@ class _$OrderLinesTearOff {
       vat: vat,
       isRecieved: isRecieved,
       currentQty: currentQty,
+      id: id,
       isActive: isActive,
       supplierCode: supplierCode,
+      isFree: isFree,
+      isInvoiced: isInvoiced,
       variantId: variantId,
       vendorRefCode: vendorRefCode,
       variantName: variantName,
@@ -826,10 +886,15 @@ mixin _$OrderLines {
   double? get vat => throw _privateConstructorUsedError;
   bool? get isRecieved => throw _privateConstructorUsedError;
   int? get currentQty => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_free")
+  bool? get isFree => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_invoiced")
+  bool? get isInvoiced => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_reference_code")
@@ -878,8 +943,11 @@ abstract class $OrderLinesCopyWith<$Res> {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
+      int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
+      @JsonKey(name: "is_free") bool? isFree,
+      @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
@@ -911,8 +979,11 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
     Object? vat = freezed,
     Object? isRecieved = freezed,
     Object? currentQty = freezed,
+    Object? id = freezed,
     Object? isActive = freezed,
     Object? supplierCode = freezed,
+    Object? isFree = freezed,
+    Object? isInvoiced = freezed,
     Object? variantId = freezed,
     Object? vendorRefCode = freezed,
     Object? variantName = freezed,
@@ -943,6 +1014,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
           ? _value.currentQty
           : currentQty // ignore: cast_nullable_to_non_nullable
               as int?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -951,6 +1026,14 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
           ? _value.supplierCode
           : supplierCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFree: isFree == freezed
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isInvoiced: isInvoiced == freezed
+          ? _value.isInvoiced
+          : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -1029,8 +1112,11 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
+      int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
+      @JsonKey(name: "is_free") bool? isFree,
+      @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
@@ -1064,8 +1150,11 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
     Object? vat = freezed,
     Object? isRecieved = freezed,
     Object? currentQty = freezed,
+    Object? id = freezed,
     Object? isActive = freezed,
     Object? supplierCode = freezed,
+    Object? isFree = freezed,
+    Object? isInvoiced = freezed,
     Object? variantId = freezed,
     Object? vendorRefCode = freezed,
     Object? variantName = freezed,
@@ -1096,6 +1185,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
           ? _value.currentQty
           : currentQty // ignore: cast_nullable_to_non_nullable
               as int?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -1104,6 +1197,14 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
           ? _value.supplierCode
           : supplierCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      isFree: isFree == freezed
+          ? _value.isFree
+          : isFree // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isInvoiced: isInvoiced == freezed
+          ? _value.isInvoiced
+          : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -1179,8 +1280,11 @@ class _$_OrderLines implements _OrderLines {
       {this.vat,
       this.isRecieved,
       this.currentQty,
+      this.id,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "supplier_code") this.supplierCode,
+      @JsonKey(name: "is_free") this.isFree,
+      @JsonKey(name: "is_invoiced") this.isInvoiced,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "vendor_reference_code") this.vendorRefCode,
       @JsonKey(name: "variant_name") this.variantName,
@@ -1208,11 +1312,19 @@ class _$_OrderLines implements _OrderLines {
   @override
   final int? currentQty;
   @override
+  final int? id;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
   @override
   @JsonKey(name: "supplier_code")
   final String? supplierCode;
+  @override
+  @JsonKey(name: "is_free")
+  final bool? isFree;
+  @override
+  @JsonKey(name: "is_invoiced")
+  final bool? isInvoiced;
   @override
   @JsonKey(name: "variant_id")
   final String? variantId;
@@ -1264,7 +1376,7 @@ class _$_OrderLines implements _OrderLines {
 
   @override
   String toString() {
-    return 'OrderLines(vat: $vat, isRecieved: $isRecieved, currentQty: $currentQty, isActive: $isActive, supplierCode: $supplierCode, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
+    return 'OrderLines(vat: $vat, isRecieved: $isRecieved, currentQty: $currentQty, id: $id, isActive: $isActive, supplierCode: $supplierCode, isFree: $isFree, isInvoiced: $isInvoiced, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
   }
 
   @override
@@ -1279,12 +1391,19 @@ class _$_OrderLines implements _OrderLines {
             (identical(other.currentQty, currentQty) ||
                 const DeepCollectionEquality()
                     .equals(other.currentQty, currentQty)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.isActive, isActive) ||
                 const DeepCollectionEquality()
                     .equals(other.isActive, isActive)) &&
             (identical(other.supplierCode, supplierCode) ||
                 const DeepCollectionEquality()
                     .equals(other.supplierCode, supplierCode)) &&
+            (identical(other.isFree, isFree) ||
+                const DeepCollectionEquality().equals(other.isFree, isFree)) &&
+            (identical(other.isInvoiced, isInvoiced) ||
+                const DeepCollectionEquality()
+                    .equals(other.isInvoiced, isInvoiced)) &&
             (identical(other.variantId, variantId) ||
                 const DeepCollectionEquality()
                     .equals(other.variantId, variantId)) &&
@@ -1339,8 +1458,11 @@ class _$_OrderLines implements _OrderLines {
       const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(isRecieved) ^
       const DeepCollectionEquality().hash(currentQty) ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(isActive) ^
       const DeepCollectionEquality().hash(supplierCode) ^
+      const DeepCollectionEquality().hash(isFree) ^
+      const DeepCollectionEquality().hash(isInvoiced) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(vendorRefCode) ^
       const DeepCollectionEquality().hash(variantName) ^
@@ -1374,8 +1496,11 @@ abstract class _OrderLines implements OrderLines {
       {double? vat,
       bool? isRecieved,
       int? currentQty,
+      int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "supplier_code") String? supplierCode,
+      @JsonKey(name: "is_free") bool? isFree,
+      @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
       @JsonKey(name: "variant_name") String? variantName,
@@ -1403,11 +1528,19 @@ abstract class _OrderLines implements OrderLines {
   @override
   int? get currentQty => throw _privateConstructorUsedError;
   @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_free")
+  bool? get isFree => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_invoiced")
+  bool? get isInvoiced => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;

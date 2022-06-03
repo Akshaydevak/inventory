@@ -1821,31 +1821,11 @@ class _$AdditionalGenerateModelTearOff {
   const _$AdditionalGenerateModelTearOff();
 
   _AdditionalGenerateModel call(
-      {String? remarks,
-      String? note,
-      int? id,
-      @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-      @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-      @JsonKey(name: "vendor_id") String? vendorId,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-      @JsonKey(name: "vendor_address") String? vendorAddress,
-      @JsonKey(name: "receiving_id") int? receivingId,
+      {@JsonKey(name: "receiving_id") int? receivingId,
       @JsonKey(name: "created_by") int? createdBy,
       @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
       @JsonKey(name: "order_lines") List<RecievingLines>? orderLines}) {
     return _AdditionalGenerateModel(
-      remarks: remarks,
-      note: note,
-      id: id,
-      promisedRecieptDate: promisedRecieptDate,
-      plannedRecieptDate: plannedRecieptDate,
-      vendorId: vendorId,
-      inventoryId: inventoryId,
-      vendorTrnNumber: vendorTrnNumber,
-      vendorMailId: vendorMailId,
-      vendorAddress: vendorAddress,
       receivingId: receivingId,
       createdBy: createdBy,
       purchaseOrderId: purchaseOrderId,
@@ -1863,23 +1843,9 @@ const $AdditionalGenerateModel = _$AdditionalGenerateModelTearOff();
 
 /// @nodoc
 mixin _$AdditionalGenerateModel {
-  String? get remarks => throw _privateConstructorUsedError;
-  String? get note => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: "promised_receipt_date")
-  String? get promisedRecieptDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "planned_receipt_date")
-  String? get plannedRecieptDate => throw _privateConstructorUsedError;
-  @JsonKey(name: "vendor_id")
-  String? get vendorId => throw _privateConstructorUsedError;
-  @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
-  @JsonKey(name: "vendor_trn_number")
-  String? get vendorTrnNumber => throw _privateConstructorUsedError;
-  @JsonKey(name: "vendor_mail_id")
-  String? get vendorMailId => throw _privateConstructorUsedError;
-  @JsonKey(name: "vendor_address")
-  String? get vendorAddress => throw _privateConstructorUsedError;
+// final String? remarks,
+// final String? note,
+// final int? id,
   @JsonKey(name: "receiving_id")
   int? get receivingId => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
@@ -1901,17 +1867,7 @@ abstract class $AdditionalGenerateModelCopyWith<$Res> {
           $Res Function(AdditionalGenerateModel) then) =
       _$AdditionalGenerateModelCopyWithImpl<$Res>;
   $Res call(
-      {String? remarks,
-      String? note,
-      int? id,
-      @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-      @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-      @JsonKey(name: "vendor_id") String? vendorId,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-      @JsonKey(name: "vendor_address") String? vendorAddress,
-      @JsonKey(name: "receiving_id") int? receivingId,
+      {@JsonKey(name: "receiving_id") int? receivingId,
       @JsonKey(name: "created_by") int? createdBy,
       @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
       @JsonKey(name: "order_lines") List<RecievingLines>? orderLines});
@@ -1928,62 +1884,12 @@ class _$AdditionalGenerateModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? remarks = freezed,
-    Object? note = freezed,
-    Object? id = freezed,
-    Object? promisedRecieptDate = freezed,
-    Object? plannedRecieptDate = freezed,
-    Object? vendorId = freezed,
-    Object? inventoryId = freezed,
-    Object? vendorTrnNumber = freezed,
-    Object? vendorMailId = freezed,
-    Object? vendorAddress = freezed,
     Object? receivingId = freezed,
     Object? createdBy = freezed,
     Object? purchaseOrderId = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_value.copyWith(
-      remarks: remarks == freezed
-          ? _value.remarks
-          : remarks // ignore: cast_nullable_to_non_nullable
-              as String?,
-      note: note == freezed
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      promisedRecieptDate: promisedRecieptDate == freezed
-          ? _value.promisedRecieptDate
-          : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      plannedRecieptDate: plannedRecieptDate == freezed
-          ? _value.plannedRecieptDate
-          : plannedRecieptDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorId: vendorId == freezed
-          ? _value.vendorId
-          : vendorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      inventoryId: inventoryId == freezed
-          ? _value.inventoryId
-          : inventoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorTrnNumber: vendorTrnNumber == freezed
-          ? _value.vendorTrnNumber
-          : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorMailId: vendorMailId == freezed
-          ? _value.vendorMailId
-          : vendorMailId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorAddress: vendorAddress == freezed
-          ? _value.vendorAddress
-          : vendorAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
       receivingId: receivingId == freezed
           ? _value.receivingId
           : receivingId // ignore: cast_nullable_to_non_nullable
@@ -2012,17 +1918,7 @@ abstract class _$AdditionalGenerateModelCopyWith<$Res>
       __$AdditionalGenerateModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? remarks,
-      String? note,
-      int? id,
-      @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-      @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-      @JsonKey(name: "vendor_id") String? vendorId,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-      @JsonKey(name: "vendor_address") String? vendorAddress,
-      @JsonKey(name: "receiving_id") int? receivingId,
+      {@JsonKey(name: "receiving_id") int? receivingId,
       @JsonKey(name: "created_by") int? createdBy,
       @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
       @JsonKey(name: "order_lines") List<RecievingLines>? orderLines});
@@ -2042,62 +1938,12 @@ class __$AdditionalGenerateModelCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? remarks = freezed,
-    Object? note = freezed,
-    Object? id = freezed,
-    Object? promisedRecieptDate = freezed,
-    Object? plannedRecieptDate = freezed,
-    Object? vendorId = freezed,
-    Object? inventoryId = freezed,
-    Object? vendorTrnNumber = freezed,
-    Object? vendorMailId = freezed,
-    Object? vendorAddress = freezed,
     Object? receivingId = freezed,
     Object? createdBy = freezed,
     Object? purchaseOrderId = freezed,
     Object? orderLines = freezed,
   }) {
     return _then(_AdditionalGenerateModel(
-      remarks: remarks == freezed
-          ? _value.remarks
-          : remarks // ignore: cast_nullable_to_non_nullable
-              as String?,
-      note: note == freezed
-          ? _value.note
-          : note // ignore: cast_nullable_to_non_nullable
-              as String?,
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      promisedRecieptDate: promisedRecieptDate == freezed
-          ? _value.promisedRecieptDate
-          : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      plannedRecieptDate: plannedRecieptDate == freezed
-          ? _value.plannedRecieptDate
-          : plannedRecieptDate // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorId: vendorId == freezed
-          ? _value.vendorId
-          : vendorId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      inventoryId: inventoryId == freezed
-          ? _value.inventoryId
-          : inventoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorTrnNumber: vendorTrnNumber == freezed
-          ? _value.vendorTrnNumber
-          : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorMailId: vendorMailId == freezed
-          ? _value.vendorMailId
-          : vendorMailId // ignore: cast_nullable_to_non_nullable
-              as String?,
-      vendorAddress: vendorAddress == freezed
-          ? _value.vendorAddress
-          : vendorAddress // ignore: cast_nullable_to_non_nullable
-              as String?,
       receivingId: receivingId == freezed
           ? _value.receivingId
           : receivingId // ignore: cast_nullable_to_non_nullable
@@ -2122,17 +1968,7 @@ class __$AdditionalGenerateModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
   const _$_AdditionalGenerateModel(
-      {this.remarks,
-      this.note,
-      this.id,
-      @JsonKey(name: "promised_receipt_date") this.promisedRecieptDate,
-      @JsonKey(name: "planned_receipt_date") this.plannedRecieptDate,
-      @JsonKey(name: "vendor_id") this.vendorId,
-      @JsonKey(name: "inventory_id") this.inventoryId,
-      @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") this.vendorMailId,
-      @JsonKey(name: "vendor_address") this.vendorAddress,
-      @JsonKey(name: "receiving_id") this.receivingId,
+      {@JsonKey(name: "receiving_id") this.receivingId,
       @JsonKey(name: "created_by") this.createdBy,
       @JsonKey(name: "purchase_order_id") this.purchaseOrderId,
       @JsonKey(name: "order_lines") this.orderLines});
@@ -2140,34 +1976,9 @@ class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
   factory _$_AdditionalGenerateModel.fromJson(Map<String, dynamic> json) =>
       _$$_AdditionalGenerateModelFromJson(json);
 
-  @override
-  final String? remarks;
-  @override
-  final String? note;
-  @override
-  final int? id;
-  @override
-  @JsonKey(name: "promised_receipt_date")
-  final String? promisedRecieptDate;
-  @override
-  @JsonKey(name: "planned_receipt_date")
-  final String? plannedRecieptDate;
-  @override
-  @JsonKey(name: "vendor_id")
-  final String? vendorId;
-  @override
-  @JsonKey(name: "inventory_id")
-  final String? inventoryId;
-  @override
-  @JsonKey(name: "vendor_trn_number")
-  final String? vendorTrnNumber;
-  @override
-  @JsonKey(name: "vendor_mail_id")
-  final String? vendorMailId;
-  @override
-  @JsonKey(name: "vendor_address")
-  final String? vendorAddress;
-  @override
+  @override // final String? remarks,
+// final String? note,
+// final int? id,
   @JsonKey(name: "receiving_id")
   final int? receivingId;
   @override
@@ -2182,41 +1993,13 @@ class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
 
   @override
   String toString() {
-    return 'AdditionalGenerateModel(remarks: $remarks, note: $note, id: $id, promisedRecieptDate: $promisedRecieptDate, plannedRecieptDate: $plannedRecieptDate, vendorId: $vendorId, inventoryId: $inventoryId, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, receivingId: $receivingId, createdBy: $createdBy, purchaseOrderId: $purchaseOrderId, orderLines: $orderLines)';
+    return 'AdditionalGenerateModel(receivingId: $receivingId, createdBy: $createdBy, purchaseOrderId: $purchaseOrderId, orderLines: $orderLines)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _AdditionalGenerateModel &&
-            (identical(other.remarks, remarks) ||
-                const DeepCollectionEquality()
-                    .equals(other.remarks, remarks)) &&
-            (identical(other.note, note) ||
-                const DeepCollectionEquality().equals(other.note, note)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.promisedRecieptDate, promisedRecieptDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.promisedRecieptDate, promisedRecieptDate)) &&
-            (identical(other.plannedRecieptDate, plannedRecieptDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.plannedRecieptDate, plannedRecieptDate)) &&
-            (identical(other.vendorId, vendorId) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorId, vendorId)) &&
-            (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
-            (identical(other.vendorTrnNumber, vendorTrnNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorTrnNumber, vendorTrnNumber)) &&
-            (identical(other.vendorMailId, vendorMailId) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorMailId, vendorMailId)) &&
-            (identical(other.vendorAddress, vendorAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorAddress, vendorAddress)) &&
             (identical(other.receivingId, receivingId) ||
                 const DeepCollectionEquality()
                     .equals(other.receivingId, receivingId)) &&
@@ -2234,16 +2017,6 @@ class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(remarks) ^
-      const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(promisedRecieptDate) ^
-      const DeepCollectionEquality().hash(plannedRecieptDate) ^
-      const DeepCollectionEquality().hash(vendorId) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(vendorTrnNumber) ^
-      const DeepCollectionEquality().hash(vendorMailId) ^
-      const DeepCollectionEquality().hash(vendorAddress) ^
       const DeepCollectionEquality().hash(receivingId) ^
       const DeepCollectionEquality().hash(createdBy) ^
       const DeepCollectionEquality().hash(purchaseOrderId) ^
@@ -2263,17 +2036,7 @@ class _$_AdditionalGenerateModel implements _AdditionalGenerateModel {
 
 abstract class _AdditionalGenerateModel implements AdditionalGenerateModel {
   const factory _AdditionalGenerateModel(
-          {String? remarks,
-          String? note,
-          int? id,
-          @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-          @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-          @JsonKey(name: "vendor_id") String? vendorId,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-          @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-          @JsonKey(name: "vendor_address") String? vendorAddress,
-          @JsonKey(name: "receiving_id") int? receivingId,
+          {@JsonKey(name: "receiving_id") int? receivingId,
           @JsonKey(name: "created_by") int? createdBy,
           @JsonKey(name: "purchase_order_id") int? purchaseOrderId,
           @JsonKey(name: "order_lines") List<RecievingLines>? orderLines}) =
@@ -2282,34 +2045,9 @@ abstract class _AdditionalGenerateModel implements AdditionalGenerateModel {
   factory _AdditionalGenerateModel.fromJson(Map<String, dynamic> json) =
       _$_AdditionalGenerateModel.fromJson;
 
-  @override
-  String? get remarks => throw _privateConstructorUsedError;
-  @override
-  String? get note => throw _privateConstructorUsedError;
-  @override
-  int? get id => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "promised_receipt_date")
-  String? get promisedRecieptDate => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "planned_receipt_date")
-  String? get plannedRecieptDate => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "vendor_id")
-  String? get vendorId => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "vendor_trn_number")
-  String? get vendorTrnNumber => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "vendor_mail_id")
-  String? get vendorMailId => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "vendor_address")
-  String? get vendorAddress => throw _privateConstructorUsedError;
-  @override
+  @override // final String? remarks,
+// final String? note,
+// final int? id,
   @JsonKey(name: "receiving_id")
   int? get receivingId => throw _privateConstructorUsedError;
   @override

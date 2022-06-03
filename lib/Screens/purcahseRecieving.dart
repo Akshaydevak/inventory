@@ -142,9 +142,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
             create: (context) => PurchaserecievigReadCubit()
               ..getGeneralPurchaseRecievingRead(Variable.verticalid),
           ),
-          // BlocProvider(
-          //   create: (context) => AdditionalgenerateCubit(),
-          // ),
+          BlocProvider(
+            create: (context) => AdditionalgenerateCubit(),
+          ),
           BlocProvider(
             create: (context) => PurchaserecievingpatchCubit(),
           ),
@@ -174,11 +174,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                           // setState(() {
                           print("dataSSSSSSSSSSSSSS" + data.toString());
-                          data?.receivingLines != null
-                              ? recievingLisnes = data?.receivingLines ?? []
+                          data.receivingLines != null
+                              ? recievingLisnes = data.receivingLines ?? []
                               : recievingLisnes = [];
-                          data?.receivingLines != null
-                              ? vm.recievingLisnes = data?.receivingLines ?? []
+                          data.receivingLines != null
+                              ? vm.recievingLisnes = data.receivingLines ?? []
                               : vm.recievingLisnes = [];
                           print("recievelines" + recievingLisnes.toString());
                           print("recievelines" +
@@ -252,25 +252,25 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                     });
                   },
                 ),
-                // BlocListener<AdditionalgenerateCubit, AdditionalgenerateState>(
-                //   listener: (context, state) {
-                //     print("postssssssss" + state.toString());
-                //     state.maybeWhen(orElse: () {
-                //       // context.
-                //       context.showSnackBarError("Loadingggg");
-                //     }, error: () {
-                //       context.showSnackBarError(Variable.errorMessege);
-                //     }, success: (data) {
-                //       if (data.data1)
-                //         context.showSnackBarSuccess(data.data2);
-                //       else {
-                //         context.showSnackBarError(data.data2);
-                //         print(data.data1);
-                //       }
-                //       ;
-                //     });
-                //   },
-                // ),
+                BlocListener<AdditionalgenerateCubit, AdditionalgenerateState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1)
+                        context.showSnackBarSuccess(data.data2);
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
 
 
                 BlocListener<PurchaseStockCubit, PurchaseStockState>(
@@ -1933,7 +1933,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                             additionalVariants.add(RecievingLines(
                                                                                 variantId: variantId??"",
                                                                                 currentStock: stock,
-                                                                                vendorRefCode: supplierRefCode,
+                                                                                supplierCode: supplierRefCode,
                                                                                 variantName: varinatname??"",
                                                                                 barcode: barcode??"",
                                                                                 purchaseUom: purchaseUomName??"",
@@ -2263,7 +2263,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: textPadding(additionalVariants[i].vendorRefCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                          child: textPadding(additionalVariants[i].supplierCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2838,10 +2838,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       shape: BoxShape.rectangle,
                                                                                       border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
                                                                                   children: [
-                                                                                    textPadding((1).toString(),
-                                                                                        fontSize: 12,
-                                                                                        padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                                                        fontWeight: FontWeight.w500),
+                                                                                    TableCell(
+                                                                                      verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                      child: textPadding((1).toString(),
+                                                                                          fontSize: 12,
+                                                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                          fontWeight: FontWeight.w500),
+                                                                                    ),
                                                                                     PopUpCall(
                                                                                       // label: "purchase UOM",
                                                                                       type:
@@ -3473,29 +3476,29 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             onApply: () {
                                                               AdditionalGenerateModel model=AdditionalGenerateModel(
                                                                 receivingId: receivingId,
-                                                                note: noteController.text??"",
+
+                                                                createdBy: 12,
 
 
-                                                                vendorId: "1",
-                                                                inventoryId:inventoryId ??"",
-                                                                vendorMailId: "akshay@gmail.com",
-                                                                vendorAddress: "perincheeri",
-                                                                purchaseOrderId: 1,
+
+
+                                                                purchaseOrderId:Variable.verticalid,
                                                                 orderLines: additionalVariants,
 
 
                                                               );
+                                                              print("avan"+model.toString());
 
 
-                                                              //  context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
-                                                              showDailogPopUp(
-                                                                  context,  AdditionalPopUp(
-                                                                model: model,
-                                                                plannded:plannedRecieptDate ,
-                                                                promised: promisedRecieptDate,
-                                                                remarks: remarksController,
-
-                                                              ));
+                                                               context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
+                                                              // showDailogPopUp(
+                                                              //     context,  AdditionalPopUp(
+                                                              //   model: model,
+                                                              //   plannded:plannedRecieptDate ,
+                                                              //   promised: promisedRecieptDate,
+                                                              //   remarks: remarksController,
+                                                              //
+                                                              // ));
 
 
 
@@ -3828,234 +3831,234 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   }
 }
 
-
-class AdditionalPopUp extends StatefulWidget {
-  // final int? stckQty;
-  final TextEditingController? remarks;
-  final TextEditingController? promised;
-  final TextEditingController? plannded;
-  final AdditionalGenerateModel? model;
-  // final List<ReadWarranty>? warranty;
-  // final Function(bool) changeActive;
-  // final Function(bool) changeAdditionalWarranty;
-  // final Function(bool) changeExtendedWarranty;
-  const AdditionalPopUp({
-    Key? key,
-    // this.stckQty = 0,
-    required this.remarks,
-    required this.promised,
-    required this.plannded,
-    required this.model
-    // this.warranty,
-    // this.indexValue
-  }) : super(key: key);
-
-  @override
-  _AdditionalPopUpState createState() => _AdditionalPopUpState();
-}
-
-class _AdditionalPopUpState extends State<AdditionalPopUp> {
-
-  bool active = false;
-  bool additionalWarranty = false;
-  bool extendedWarranty = false;
-  bool onChange = false;
-  bool onChangeWarranty = false;
-  bool onChangeExtWarranty = false;
-  TextEditingController stckQty = TextEditingController();
-  TextEditingController qtyChange = TextEditingController();
-  TextEditingController reason = TextEditingController();
-  int? newQty = 0;
-  @override
-  Widget build(BuildContext context) {
-    print("widget.model"+widget.model.toString());
-    // stckQty.text = widget.stckQty.toString();
-    // descriptionController = TextEditingController(
-    //     text: widget.warranty?[widget.indexValue!].description == null
-    //         ? ""
-    //         : widget.warranty?[widget.indexValue!].description);
-    // durationController = TextEditingController(
-    //     text: widget.warranty?[widget.indexValue!].duration == null
-    //         ? ""
-    //         : widget.warranty?[widget.indexValue!].duration.toString());
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => AdditionalgenerateCubit(),
-        ),
-
-
-      ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<AdditionalgenerateCubit, AdditionalgenerateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1)
-                        context.showSnackBarSuccess(data.data2);
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-              ],
-              child: AlertDialog(
-                content: PopUpHeader(
-                  label: "Create system generated Po",
-                  onApply: () {
-
-                  },
-                  onEdit: () {
-                    print( "aaa"+widget.model.toString());
-                    AdditionalGenerateModel? model=widget.model;
-
-                    model = model?.copyWith(remarks: widget.remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text);
-                    print( "asap"+model.toString());
-                    context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
-
-                  },
-                  dataField: SizedBox(
-                    height: MediaQuery.of(context).size.height * .6,
-
-                    child: SingleChildScrollView(
-                      child:
-                      Container(
-                        height: 300,
-                        // width: MediaQuery.of(context).size.width-20,
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "purchase order",
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 4.0,
-                            ),
-                            SizedBox(height: 15,),
-                            Row(
-                              children: [
-                                Expanded(child: Container(
-                                  child: Column(
-                                    children: [
-                                      PopUpInputField(
-                                          controller: reason, label: "vendor id"),
-                                      PopUpDateFormField(
-                                          row: true,
-
-                                          format:DateFormat('yyyy-MM-dd'),
-                                          controller:  widget.promised,
-                                          // initialValue:
-                                          //     DateTime.parse(fromDate!),
-                                          label: "Promised reciept date",
-                                          onSaved: (newValue) {
-                                            widget.promised?.text = newValue
-                                                ?.toIso8601String()
-                                                .split("T")[0] ??
-                                                "";
-                                            print("promised_receipt_date.text"+ widget.promised!.text.toString());
-                                          },
-                                          enable: true),
-                                      // PopUpInputField(
-                                      //     controller: widget.promised, label: "promisdedRecieptdate"),
-
-                                    ],
-                                  ),
-                                )),
-                                SizedBox(width: 10,),
-                                Expanded(child: Container(
-                                  child: Column(
-                                    children: [
-                                      PopUpDateFormField(
-                                          row: true,
-
-                                          format:DateFormat('yyyy-MM-dd'),
-                                          controller:  widget.plannded,
-                                          // initialValue:
-                                          //     DateTime.parse(fromDate!),
-                                          label: "planned reciept date",
-                                          onSaved: (newValue) {
-                                            widget.plannded?.text = newValue
-                                                ?.toIso8601String()
-                                                .split("T")[0] ??
-                                                "";
-                                            print("promised_receipt_date.text"+  widget.plannded!.text.toString());
-                                          },
-                                          enable: true),
-                                      // PopUpInputField(
-                                      //     controller: widget.plannded, label: "planned reciept date"),
-                                      PopUpInputField(
-                                          controller: widget.remarks, label: "remarks"),
-
-                                    ],
-                                  ),
-                                ))
-                              ],
-                            )
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     PopUpInputField(
-                            //         controller: promisedRecieptDate, label: "vendor id"),
-                            //     gapWidthColumn(),
-                            //     PopUpInputField(
-                            //       controller: plannedRecieptDate,
-                            //       label: "planned reciept date",
-                            //     ),
-                            //   ],
-                            // ),
-                            // Row(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     PopUpInputField(
-                            //       boarType: "int",
-                            //       //  controller: newQuantity,
-                            //       label: "new quantity",
-                            //       onChanged: (v) {
-                            //         setState(() {
-                            //           // newQty = int.tryParse(v);
-                            //           // int? stck = int.tryParse(stckQty.text);
-                            //           // qtyChange.text = ((stck!) - (newQty!)).toString();
-                            //           // print("newQty" + newQty.toString());
-                            //         });
-                            //       },
-                            //     ),
-                            //     gapWidthColumn(),
-                            //     PopUpInputField(
-                            //       controller: reason,
-                            //       label: "reason",
-                            //     ),
-                            //   ],
-                            // ),
-
-                          ],
-                        ) ,
-
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
-      ),
-    );
-
-  }
-}
+//
+// class AdditionalPopUp extends StatefulWidget {
+//   // final int? stckQty;
+//   final TextEditingController? remarks;
+//   final TextEditingController? promised;
+//   final TextEditingController? plannded;
+//   final AdditionalGenerateModel? model;
+//   // final List<ReadWarranty>? warranty;
+//   // final Function(bool) changeActive;
+//   // final Function(bool) changeAdditionalWarranty;
+//   // final Function(bool) changeExtendedWarranty;
+//   const AdditionalPopUp({
+//     Key? key,
+//     // this.stckQty = 0,
+//     required this.remarks,
+//     required this.promised,
+//     required this.plannded,
+//     required this.model
+//     // this.warranty,
+//     // this.indexValue
+//   }) : super(key: key);
+//
+//   @override
+//   _AdditionalPopUpState createState() => _AdditionalPopUpState();
+// }
+//
+// class _AdditionalPopUpState extends State<AdditionalPopUp> {
+//
+//   bool active = false;
+//   bool additionalWarranty = false;
+//   bool extendedWarranty = false;
+//   bool onChange = false;
+//   bool onChangeWarranty = false;
+//   bool onChangeExtWarranty = false;
+//   TextEditingController stckQty = TextEditingController();
+//   TextEditingController qtyChange = TextEditingController();
+//   TextEditingController reason = TextEditingController();
+//   int? newQty = 0;
+//   @override
+//   Widget build(BuildContext context) {
+//     print("widget.model"+widget.model.toString());
+//     // stckQty.text = widget.stckQty.toString();
+//     // descriptionController = TextEditingController(
+//     //     text: widget.warranty?[widget.indexValue!].description == null
+//     //         ? ""
+//     //         : widget.warranty?[widget.indexValue!].description);
+//     // durationController = TextEditingController(
+//     //     text: widget.warranty?[widget.indexValue!].duration == null
+//     //         ? ""
+//     //         : widget.warranty?[widget.indexValue!].duration.toString());
+//
+//     return MultiBlocProvider(
+//       providers: [
+//         BlocProvider(
+//           create: (context) => AdditionalgenerateCubit(),
+//         ),
+//
+//
+//       ],
+//       child: Builder(
+//           builder: (context) {
+//             return MultiBlocListener(
+//               listeners: [
+//                 BlocListener<AdditionalgenerateCubit, AdditionalgenerateState>(
+//                   listener: (context, state) {
+//                     print("postssssssss" + state.toString());
+//                     state.maybeWhen(orElse: () {
+//                       // context.
+//                       context.showSnackBarError("Loadingggg");
+//                     }, error: () {
+//                       context.showSnackBarError(Variable.errorMessege);
+//                     }, success: (data) {
+//                       if (data.data1)
+//                         context.showSnackBarSuccess(data.data2);
+//                       else {
+//                         context.showSnackBarError(data.data2);
+//                         print(data.data1);
+//                       }
+//                       ;
+//                     });
+//                   },
+//                 ),
+//
+//               ],
+//               child: AlertDialog(
+//                 content: PopUpHeader(
+//                   label: "Create system generated Po",
+//                   onApply: () {
+//
+//                   },
+//                   onEdit: () {
+//                     print( "aaa"+widget.model.toString());
+//                     AdditionalGenerateModel? model=widget.model;
+//
+//                     model = model?.copyWith(remarks: widget.remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text);
+//                     print( "asap"+model.toString());
+//                     context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
+//
+//                   },
+//                   dataField: SizedBox(
+//                     height: MediaQuery.of(context).size.height * .6,
+//
+//                     child: SingleChildScrollView(
+//                       child:
+//                       Container(
+//                         height: 300,
+//                         // width: MediaQuery.of(context).size.width-20,
+//                         child:Column(
+//                           crossAxisAlignment: CrossAxisAlignment.start,
+//                           children: [
+//                             Text(
+//                               "purchase order",
+//                             ),
+//                             Divider(
+//                               color: Colors.grey,
+//                               height: 4.0,
+//                             ),
+//                             SizedBox(height: 15,),
+//                             Row(
+//                               children: [
+//                                 Expanded(child: Container(
+//                                   child: Column(
+//                                     children: [
+//                                       PopUpInputField(
+//                                           controller: reason, label: "vendor id"),
+//                                       PopUpDateFormField(
+//                                           row: true,
+//
+//                                           format:DateFormat('yyyy-MM-dd'),
+//                                           controller:  widget.promised,
+//                                           // initialValue:
+//                                           //     DateTime.parse(fromDate!),
+//                                           label: "Promised reciept date",
+//                                           onSaved: (newValue) {
+//                                             widget.promised?.text = newValue
+//                                                 ?.toIso8601String()
+//                                                 .split("T")[0] ??
+//                                                 "";
+//                                             print("promised_receipt_date.text"+ widget.promised!.text.toString());
+//                                           },
+//                                           enable: true),
+//                                       // PopUpInputField(
+//                                       //     controller: widget.promised, label: "promisdedRecieptdate"),
+//
+//                                     ],
+//                                   ),
+//                                 )),
+//                                 SizedBox(width: 10,),
+//                                 Expanded(child: Container(
+//                                   child: Column(
+//                                     children: [
+//                                       PopUpDateFormField(
+//                                           row: true,
+//
+//                                           format:DateFormat('yyyy-MM-dd'),
+//                                           controller:  widget.plannded,
+//                                           // initialValue:
+//                                           //     DateTime.parse(fromDate!),
+//                                           label: "planned reciept date",
+//                                           onSaved: (newValue) {
+//                                             widget.plannded?.text = newValue
+//                                                 ?.toIso8601String()
+//                                                 .split("T")[0] ??
+//                                                 "";
+//                                             print("promised_receipt_date.text"+  widget.plannded!.text.toString());
+//                                           },
+//                                           enable: true),
+//                                       // PopUpInputField(
+//                                       //     controller: widget.plannded, label: "planned reciept date"),
+//                                       PopUpInputField(
+//                                           controller: widget.remarks, label: "remarks"),
+//
+//                                     ],
+//                                   ),
+//                                 ))
+//                               ],
+//                             )
+//                             // Row(
+//                             //   crossAxisAlignment: CrossAxisAlignment.start,
+//                             //   children: [
+//                             //     PopUpInputField(
+//                             //         controller: promisedRecieptDate, label: "vendor id"),
+//                             //     gapWidthColumn(),
+//                             //     PopUpInputField(
+//                             //       controller: plannedRecieptDate,
+//                             //       label: "planned reciept date",
+//                             //     ),
+//                             //   ],
+//                             // ),
+//                             // Row(
+//                             //   crossAxisAlignment: CrossAxisAlignment.start,
+//                             //   children: [
+//                             //     PopUpInputField(
+//                             //       boarType: "int",
+//                             //       //  controller: newQuantity,
+//                             //       label: "new quantity",
+//                             //       onChanged: (v) {
+//                             //         setState(() {
+//                             //           // newQty = int.tryParse(v);
+//                             //           // int? stck = int.tryParse(stckQty.text);
+//                             //           // qtyChange.text = ((stck!) - (newQty!)).toString();
+//                             //           // print("newQty" + newQty.toString());
+//                             //         });
+//                             //       },
+//                             //     ),
+//                             //     gapWidthColumn(),
+//                             //     PopUpInputField(
+//                             //       controller: reason,
+//                             //       label: "reason",
+//                             //     ),
+//                             //   ],
+//                             // ),
+//
+//                           ],
+//                         ) ,
+//
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             );
+//           }
+//       ),
+//     );
+//
+//   }
+// }
 class PopUpHeader extends StatefulWidget {
   final String label;
   final Widget? dataField;

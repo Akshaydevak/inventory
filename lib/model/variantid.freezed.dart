@@ -21,10 +21,19 @@ VariantId _$VariantIdFromJson(Map<String, dynamic> json) {
 class _$VariantIdTearOff {
   const _$VariantIdTearOff();
 
-  _VariantId call({int? id, String? code, String? name}) {
+  _VariantId call(
+      {int? id,
+      String? code,
+      String? category,
+      String? uom,
+      double? unit_cost,
+      String? name}) {
     return _VariantId(
       id: id,
       code: code,
+      category: category,
+      uom: uom,
+      unit_cost: unit_cost,
       name: name,
     );
   }
@@ -41,6 +50,9 @@ const $VariantId = _$VariantIdTearOff();
 mixin _$VariantId {
   int? get id => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  String? get uom => throw _privateConstructorUsedError;
+  double? get unit_cost => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +65,13 @@ mixin _$VariantId {
 abstract class $VariantIdCopyWith<$Res> {
   factory $VariantIdCopyWith(VariantId value, $Res Function(VariantId) then) =
       _$VariantIdCopyWithImpl<$Res>;
-  $Res call({int? id, String? code, String? name});
+  $Res call(
+      {int? id,
+      String? code,
+      String? category,
+      String? uom,
+      double? unit_cost,
+      String? name});
 }
 
 /// @nodoc
@@ -68,6 +86,9 @@ class _$VariantIdCopyWithImpl<$Res> implements $VariantIdCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
+    Object? category = freezed,
+    Object? uom = freezed,
+    Object? unit_cost = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
@@ -79,6 +100,18 @@ class _$VariantIdCopyWithImpl<$Res> implements $VariantIdCopyWith<$Res> {
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uom: uom == freezed
+          ? _value.uom
+          : uom // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit_cost: unit_cost == freezed
+          ? _value.unit_cost
+          : unit_cost // ignore: cast_nullable_to_non_nullable
+              as double?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -93,7 +126,13 @@ abstract class _$VariantIdCopyWith<$Res> implements $VariantIdCopyWith<$Res> {
           _VariantId value, $Res Function(_VariantId) then) =
       __$VariantIdCopyWithImpl<$Res>;
   @override
-  $Res call({int? id, String? code, String? name});
+  $Res call(
+      {int? id,
+      String? code,
+      String? category,
+      String? uom,
+      double? unit_cost,
+      String? name});
 }
 
 /// @nodoc
@@ -109,6 +148,9 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
+    Object? category = freezed,
+    Object? uom = freezed,
+    Object? unit_cost = freezed,
     Object? name = freezed,
   }) {
     return _then(_VariantId(
@@ -120,6 +162,18 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uom: uom == freezed
+          ? _value.uom
+          : uom // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit_cost: unit_cost == freezed
+          ? _value.unit_cost
+          : unit_cost // ignore: cast_nullable_to_non_nullable
+              as double?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -131,7 +185,8 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_VariantId implements _VariantId {
-  const _$_VariantId({this.id, this.code, this.name});
+  const _$_VariantId(
+      {this.id, this.code, this.category, this.uom, this.unit_cost, this.name});
 
   factory _$_VariantId.fromJson(Map<String, dynamic> json) =>
       _$$_VariantIdFromJson(json);
@@ -141,11 +196,17 @@ class _$_VariantId implements _VariantId {
   @override
   final String? code;
   @override
+  final String? category;
+  @override
+  final String? uom;
+  @override
+  final double? unit_cost;
+  @override
   final String? name;
 
   @override
   String toString() {
-    return 'VariantId(id: $id, code: $code, name: $name)';
+    return 'VariantId(id: $id, code: $code, category: $category, uom: $uom, unit_cost: $unit_cost, name: $name)';
   }
 
   @override
@@ -156,6 +217,14 @@ class _$_VariantId implements _VariantId {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.code, code) ||
                 const DeepCollectionEquality().equals(other.code, code)) &&
+            (identical(other.category, category) ||
+                const DeepCollectionEquality()
+                    .equals(other.category, category)) &&
+            (identical(other.uom, uom) ||
+                const DeepCollectionEquality().equals(other.uom, uom)) &&
+            (identical(other.unit_cost, unit_cost) ||
+                const DeepCollectionEquality()
+                    .equals(other.unit_cost, unit_cost)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -165,6 +234,9 @@ class _$_VariantId implements _VariantId {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(code) ^
+      const DeepCollectionEquality().hash(category) ^
+      const DeepCollectionEquality().hash(uom) ^
+      const DeepCollectionEquality().hash(unit_cost) ^
       const DeepCollectionEquality().hash(name);
 
   @JsonKey(ignore: true)
@@ -179,8 +251,13 @@ class _$_VariantId implements _VariantId {
 }
 
 abstract class _VariantId implements VariantId {
-  const factory _VariantId({int? id, String? code, String? name}) =
-      _$_VariantId;
+  const factory _VariantId(
+      {int? id,
+      String? code,
+      String? category,
+      String? uom,
+      double? unit_cost,
+      String? name}) = _$_VariantId;
 
   factory _VariantId.fromJson(Map<String, dynamic> json) =
       _$_VariantId.fromJson;
@@ -189,6 +266,12 @@ abstract class _VariantId implements VariantId {
   int? get id => throw _privateConstructorUsedError;
   @override
   String? get code => throw _privateConstructorUsedError;
+  @override
+  String? get category => throw _privateConstructorUsedError;
+  @override
+  String? get uom => throw _privateConstructorUsedError;
+  @override
+  double? get unit_cost => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
   @override

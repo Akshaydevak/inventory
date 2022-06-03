@@ -44,3 +44,18 @@ class OrderLiness with _$OrderLiness {
   factory OrderLiness.fromJson(Map<String, dynamic> json) =>
       _$OrderLinessFromJson(json);
 }
+@freezed
+class OrderedPersonModel with _$OrderedPersonModel {
+  const factory OrderedPersonModel({
+    final int? id,
+    final String? fname,
+    final String? lname,
+    @JsonKey(name:"user_login_id") final int? userLoginId,
+    @JsonKey(name:"employee_usercode") final String? employeeUserCode,
+    @JsonKey(name:"organization_code") final String? organisationCode,
+    @JsonKey(name:"designation_id") final int? designationId,
+    @JsonKey(name:"is_active") final bool? isActive,
+  }) = _OrderedPersonModel;
+  factory OrderedPersonModel.fromJson(Map<String, dynamic> json) =>
+      _$OrderedPersonModelFromJson(json);
+}

@@ -232,6 +232,10 @@ class _$DataTearOff {
       @JsonKey(name: "purchase_order_type") String? purchaseOrderType,
       @JsonKey(name: "recieving_status") String? recievingStatus,
       @JsonKey(name: "payment_code") String? paymentcode,
+      @JsonKey(name: "ordered_date") String? orderDate,
+      @JsonKey(name: "order_status") String? orderStatus,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
+      @JsonKey(name: "ordered_person") String? orderedPereson,
       @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
@@ -260,6 +264,10 @@ class _$DataTearOff {
       purchaseOrderType: purchaseOrderType,
       recievingStatus: recievingStatus,
       paymentcode: paymentcode,
+      orderDate: orderDate,
+      orderStatus: orderStatus,
+      invoiceStatus: invoiceStatus,
+      orderedPereson: orderedPereson,
       paymentStatus: paymentStatus,
       iventoryId: iventoryId,
       vendorId: vendorId,
@@ -305,6 +313,14 @@ mixin _$Data {
   String? get recievingStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "payment_code")
   String? get paymentcode => throw _privateConstructorUsedError;
+  @JsonKey(name: "ordered_date")
+  String? get orderDate => throw _privateConstructorUsedError;
+  @JsonKey(name: "order_status")
+  String? get orderStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: "invoice_status")
+  String? get invoiceStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: "ordered_person")
+  String? get orderedPereson => throw _privateConstructorUsedError;
   @JsonKey(name: "payment_status")
   String? get paymentStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
@@ -364,6 +380,10 @@ abstract class $DataCopyWith<$Res> {
       @JsonKey(name: "purchase_order_type") String? purchaseOrderType,
       @JsonKey(name: "recieving_status") String? recievingStatus,
       @JsonKey(name: "payment_code") String? paymentcode,
+      @JsonKey(name: "ordered_date") String? orderDate,
+      @JsonKey(name: "order_status") String? orderStatus,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
+      @JsonKey(name: "ordered_person") String? orderedPereson,
       @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
@@ -403,6 +423,10 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
     Object? purchaseOrderType = freezed,
     Object? recievingStatus = freezed,
     Object? paymentcode = freezed,
+    Object? orderDate = freezed,
+    Object? orderStatus = freezed,
+    Object? invoiceStatus = freezed,
+    Object? orderedPereson = freezed,
     Object? paymentStatus = freezed,
     Object? iventoryId = freezed,
     Object? vendorId = freezed,
@@ -449,6 +473,22 @@ class _$DataCopyWithImpl<$Res> implements $DataCopyWith<$Res> {
       paymentcode: paymentcode == freezed
           ? _value.paymentcode
           : paymentcode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderDate: orderDate == freezed
+          ? _value.orderDate
+          : orderDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderStatus: orderStatus == freezed
+          ? _value.orderStatus
+          : orderStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      invoiceStatus: invoiceStatus == freezed
+          ? _value.invoiceStatus
+          : invoiceStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedPereson: orderedPereson == freezed
+          ? _value.orderedPereson
+          : orderedPereson // ignore: cast_nullable_to_non_nullable
               as String?,
       paymentStatus: paymentStatus == freezed
           ? _value.paymentStatus
@@ -550,6 +590,10 @@ abstract class _$DataCopyWith<$Res> implements $DataCopyWith<$Res> {
       @JsonKey(name: "purchase_order_type") String? purchaseOrderType,
       @JsonKey(name: "recieving_status") String? recievingStatus,
       @JsonKey(name: "payment_code") String? paymentcode,
+      @JsonKey(name: "ordered_date") String? orderDate,
+      @JsonKey(name: "order_status") String? orderStatus,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
+      @JsonKey(name: "ordered_person") String? orderedPereson,
       @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
@@ -590,6 +634,10 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
     Object? purchaseOrderType = freezed,
     Object? recievingStatus = freezed,
     Object? paymentcode = freezed,
+    Object? orderDate = freezed,
+    Object? orderStatus = freezed,
+    Object? invoiceStatus = freezed,
+    Object? orderedPereson = freezed,
     Object? paymentStatus = freezed,
     Object? iventoryId = freezed,
     Object? vendorId = freezed,
@@ -636,6 +684,22 @@ class __$DataCopyWithImpl<$Res> extends _$DataCopyWithImpl<$Res>
       paymentcode: paymentcode == freezed
           ? _value.paymentcode
           : paymentcode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderDate: orderDate == freezed
+          ? _value.orderDate
+          : orderDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderStatus: orderStatus == freezed
+          ? _value.orderStatus
+          : orderStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      invoiceStatus: invoiceStatus == freezed
+          ? _value.invoiceStatus
+          : invoiceStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      orderedPereson: orderedPereson == freezed
+          ? _value.orderedPereson
+          : orderedPereson // ignore: cast_nullable_to_non_nullable
               as String?,
       paymentStatus: paymentStatus == freezed
           ? _value.paymentStatus
@@ -735,6 +799,10 @@ class _$_Data implements _Data {
       @JsonKey(name: "purchase_order_type") this.purchaseOrderType,
       @JsonKey(name: "recieving_status") this.recievingStatus,
       @JsonKey(name: "payment_code") this.paymentcode,
+      @JsonKey(name: "ordered_date") this.orderDate,
+      @JsonKey(name: "order_status") this.orderStatus,
+      @JsonKey(name: "invoice_status") this.invoiceStatus,
+      @JsonKey(name: "ordered_person") this.orderedPereson,
       @JsonKey(name: "payment_status") this.paymentStatus,
       @JsonKey(name: "inventory_id") this.iventoryId,
       @JsonKey(name: "vendor_id") this.vendorId,
@@ -776,6 +844,18 @@ class _$_Data implements _Data {
   @override
   @JsonKey(name: "payment_code")
   final String? paymentcode;
+  @override
+  @JsonKey(name: "ordered_date")
+  final String? orderDate;
+  @override
+  @JsonKey(name: "order_status")
+  final String? orderStatus;
+  @override
+  @JsonKey(name: "invoice_status")
+  final String? invoiceStatus;
+  @override
+  @JsonKey(name: "ordered_person")
+  final String? orderedPereson;
   @override
   @JsonKey(name: "payment_status")
   final String? paymentStatus;
@@ -842,7 +922,7 @@ class _$_Data implements _Data {
 
   @override
   String toString() {
-    return 'Data(id: $id, orderLines: $orderLines, orderCode: $orderCode, purchaseOrderType: $purchaseOrderType, recievingStatus: $recievingStatus, paymentcode: $paymentcode, paymentStatus: $paymentStatus, iventoryId: $iventoryId, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, address1: $address1, address2: $address2, promisedReceiptdate: $promisedReceiptdate, plannedRecieptDate: $plannedRecieptDate, note: $note, remarks: $remarks, discount: $discount, foc: $foc, unitcost: $unitcost, excessTax: $excessTax, actualCost: $actualCost, vat: $vat, grandTotal: $grandTotal, variableAmount: $variableAmount, createdBy: $createdBy)';
+    return 'Data(id: $id, orderLines: $orderLines, orderCode: $orderCode, purchaseOrderType: $purchaseOrderType, recievingStatus: $recievingStatus, paymentcode: $paymentcode, orderDate: $orderDate, orderStatus: $orderStatus, invoiceStatus: $invoiceStatus, orderedPereson: $orderedPereson, paymentStatus: $paymentStatus, iventoryId: $iventoryId, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, vendorAddress: $vendorAddress, address1: $address1, address2: $address2, promisedReceiptdate: $promisedReceiptdate, plannedRecieptDate: $plannedRecieptDate, note: $note, remarks: $remarks, discount: $discount, foc: $foc, unitcost: $unitcost, excessTax: $excessTax, actualCost: $actualCost, vat: $vat, grandTotal: $grandTotal, variableAmount: $variableAmount, createdBy: $createdBy)';
   }
 
   @override
@@ -866,6 +946,18 @@ class _$_Data implements _Data {
             (identical(other.paymentcode, paymentcode) ||
                 const DeepCollectionEquality()
                     .equals(other.paymentcode, paymentcode)) &&
+            (identical(other.orderDate, orderDate) ||
+                const DeepCollectionEquality()
+                    .equals(other.orderDate, orderDate)) &&
+            (identical(other.orderStatus, orderStatus) ||
+                const DeepCollectionEquality()
+                    .equals(other.orderStatus, orderStatus)) &&
+            (identical(other.invoiceStatus, invoiceStatus) ||
+                const DeepCollectionEquality()
+                    .equals(other.invoiceStatus, invoiceStatus)) &&
+            (identical(other.orderedPereson, orderedPereson) ||
+                const DeepCollectionEquality()
+                    .equals(other.orderedPereson, orderedPereson)) &&
             (identical(other.paymentStatus, paymentStatus) ||
                 const DeepCollectionEquality()
                     .equals(other.paymentStatus, paymentStatus)) &&
@@ -902,19 +994,11 @@ class _$_Data implements _Data {
                 const DeepCollectionEquality()
                     .equals(other.remarks, remarks)) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.foc, foc) ||
-                const DeepCollectionEquality().equals(other.foc, foc)) &&
-            (identical(other.unitcost, unitcost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitcost, unitcost)) &&
-            (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
-            (identical(other.actualCost, actualCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.actualCost, actualCost)) &&
+                const DeepCollectionEquality().equals(other.discount, discount)) &&
+            (identical(other.foc, foc) || const DeepCollectionEquality().equals(other.foc, foc)) &&
+            (identical(other.unitcost, unitcost) || const DeepCollectionEquality().equals(other.unitcost, unitcost)) &&
+            (identical(other.excessTax, excessTax) || const DeepCollectionEquality().equals(other.excessTax, excessTax)) &&
+            (identical(other.actualCost, actualCost) || const DeepCollectionEquality().equals(other.actualCost, actualCost)) &&
             (identical(other.vat, vat) || const DeepCollectionEquality().equals(other.vat, vat)) &&
             (identical(other.grandTotal, grandTotal) || const DeepCollectionEquality().equals(other.grandTotal, grandTotal)) &&
             (identical(other.variableAmount, variableAmount) || const DeepCollectionEquality().equals(other.variableAmount, variableAmount)) &&
@@ -930,6 +1014,10 @@ class _$_Data implements _Data {
       const DeepCollectionEquality().hash(purchaseOrderType) ^
       const DeepCollectionEquality().hash(recievingStatus) ^
       const DeepCollectionEquality().hash(paymentcode) ^
+      const DeepCollectionEquality().hash(orderDate) ^
+      const DeepCollectionEquality().hash(orderStatus) ^
+      const DeepCollectionEquality().hash(invoiceStatus) ^
+      const DeepCollectionEquality().hash(orderedPereson) ^
       const DeepCollectionEquality().hash(paymentStatus) ^
       const DeepCollectionEquality().hash(iventoryId) ^
       const DeepCollectionEquality().hash(vendorId) ^
@@ -971,6 +1059,10 @@ abstract class _Data implements Data {
       @JsonKey(name: "purchase_order_type") String? purchaseOrderType,
       @JsonKey(name: "recieving_status") String? recievingStatus,
       @JsonKey(name: "payment_code") String? paymentcode,
+      @JsonKey(name: "ordered_date") String? orderDate,
+      @JsonKey(name: "order_status") String? orderStatus,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
+      @JsonKey(name: "ordered_person") String? orderedPereson,
       @JsonKey(name: "payment_status") String? paymentStatus,
       @JsonKey(name: "inventory_id") String? iventoryId,
       @JsonKey(name: "vendor_id") String? vendorId,
@@ -1012,6 +1104,18 @@ abstract class _Data implements Data {
   @override
   @JsonKey(name: "payment_code")
   String? get paymentcode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "ordered_date")
+  String? get orderDate => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "order_status")
+  String? get orderStatus => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "invoice_status")
+  String? get invoiceStatus => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "ordered_person")
+  String? get orderedPereson => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "payment_status")
   String? get paymentStatus => throw _privateConstructorUsedError;

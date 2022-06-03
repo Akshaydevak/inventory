@@ -7,12 +7,16 @@ import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/cubits/cubit/variant_id_cubit_dart_cubit.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
+import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
+import 'package:inventory/requestformcubit/cubit/orderedperson_cubit.dart';
+import 'package:inventory/requestformcubit/cubit/ordertype_cubit.dart';
 
 class PopUpCall extends StatefulWidget {
   final String? value;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
+  final String? inventory;
 
   final bool enable;
   final List<String>? list;
@@ -21,6 +25,7 @@ class PopUpCall extends StatefulWidget {
       this.value,
       this.enable = false,
       this.onAddNew,
+        this.inventory="",
       required this.onSelection,
       required this.type,
       this.list})
@@ -56,9 +61,33 @@ class _PopUpCallState extends State<PopUpCall> {
               type: widget.type);
         }
         break;
+      case "RequestFormType":
+        {
+          data = RequestFoemOrder(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
       case "cost-method-list":
         {
           data = CostMethodPopUpCall(
+
+            inventory: widget.inventory,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "RequestFormOrderPerson":
+        {
+          data = OrderedPersonRequest(
+
+              inventory: widget.inventory,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -203,6 +232,7 @@ class _SellingPriceBasedPopUpCallState
 }
 
 class CostMethodPopUpCall extends StatefulWidget {
+  final String? inventory;
   final String? value;
   final VoidCallback? onAddNew;
   final Function onSelection;
@@ -213,6 +243,7 @@ class CostMethodPopUpCall extends StatefulWidget {
       {Key? key,
       this.value,
       this.onAddNew,
+        this.inventory="",
       required this.onSelection,
       required this.type,
       required this.enable,
@@ -239,7 +270,8 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
   create: (context) => VariantIdCubitDartCubit(),
   child: Builder(
             builder: (context) {
-              context.read<VariantIdCubitDartCubit>().getVariantId();
+              print("widget.inventory"+widget.inventory.toString());
+            widget.inventory==""?  context.read<VariantIdCubitDartCubit>().getVariantId(): context.read<VariantIdCubitDartCubit>().getVariantId(widget.inventory);
               return BlocBuilder<VariantIdCubitDartCubit,
                   VariantIdCubitDartState>(builder: (context, state) {
                 print(state);
@@ -330,6 +362,278 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
             },
           ),
 );
+  }
+
+  List<String> search(String value, List<String?> list, VoidCallback? onAddNew) {
+    print("value"+value.toString());
+    List<String> newList = [];
+    // list.forEach((element) {
+    //   if (element.toLowerCase().contains(value.toLowerCase()))
+    //     newList.add(element);
+    // });
+    // onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+class RequestFoemOrder extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const RequestFoemOrder(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _RequestFoemOrderState createState() =>
+      _RequestFoemOrderState();
+}
+
+class _RequestFoemOrderState
+    extends State<RequestFoemOrder> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<OrdertypeCubit>(
+        create: (context) => OrdertypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<OrdertypeCubit>().getRequestFormOrdertype();
+            return BlocBuilder<OrdertypeCubit,
+                OrdertypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.orderTypes?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.orderTypes![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    PurchaseOrdertype? newData;
+                    list.forEach((element) {
+                      newData?.orderTypes?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.orderTypes!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+class OrderedPersonRequest extends StatefulWidget {
+  final String? inventory;
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const OrderedPersonRequest(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        this.inventory="",
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _OrderedPersonRequestState createState() => _OrderedPersonRequestState();
+}
+
+class _OrderedPersonRequestState extends State<OrderedPersonRequest> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider(
+      create: (context) => OrderedpersonCubit(),
+      child: Builder(
+        builder: (context) {
+          print("widget.inventory"+widget.inventory.toString());
+           context.read<OrderedpersonCubit>().getOrderedPerson();
+          return BlocBuilder<OrderedpersonCubit,
+              OrderedpersonState>(builder: (context, state) {
+            print(state);
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              // error: () => {errorLoader(widget.onAddNew)},
+              success: (data) {
+                print("data===" + data.toString());
+                List<String?> list = [];
+                int? length=data.length;
+                // list=data.orderTypes;
+                for(var i=0;i<length;i++){
+                  list.add(data[i].organisationCode);
+
+                }
+
+                OrderedPersonModel? onSellingBasedSelect(var value, List<OrderedPersonModel> list) {
+                  OrderedPersonModel ? newData;
+                  list.forEach((element) {
+                    if (element.organisationCode != null &&
+                        element.organisationCode?.toLowerCase() == (value.toLowerCase())) newData = element;
+                    if (element.id != null &&
+                        element.id == (value.toLowerCase())) newData = element;
+
+
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
+
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
+
+                if (widget.onAddNew != null) list.add("");
+                _controller = TextEditingController(text: label);
+                return TypeAheadFormField(
+                  enabled: widget.enable,
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "required";
+                    }
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                      controller: _controller,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          isDense: true,
+                          // border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                  onSuggestionSelected: (suggestion) {
+                    print("suggestion"+suggestion.toString());
+                    if (suggestion == "Add new")
+                      widget.onAddNew!();
+                    else {
+                      widget.onSelection(onSellingBasedSelect(
+                          suggestion.toString(), data));
+                      // data.sellingPercntageBasedOn?.forEach((element) {
+                      //   if (element == suggestion)
+                      //     Variable.methodId = element.id;
+                      // });
+                    }
+                  },
+                  itemBuilder: (context, suggestion) {
+                    // if (suggestion == "Add new")
+                    //   return ListTile(
+                    //     leading: Icon(Icons.add_circle_outline_outlined),
+                    //     title: Text(suggestion.toString()),
+                    //   );
+                    return ListTile(
+                      ////leading: Icon(Icons.shopping_cart_outlined),
+                      title: Text(suggestion.toString()),
+                    );
+                  },
+                  suggestionsCallback: (String value) async {
+                    return value == null || value.isEmpty
+                        ? list
+                        : search(value, list, widget.onAddNew);
+                  },
+                );
+              },
+            );
+          });
+        },
+      ),
+    );
   }
 
   List<String> search(String value, List<String?> list, VoidCallback? onAddNew) {

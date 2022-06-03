@@ -34,8 +34,7 @@ import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
+
 import 'package:inventory/models/purchaseordertype/purchaseordertype.dart';
 
 import 'Dashboard.dart';
@@ -690,8 +689,7 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                                     SelectableDropDownpopUp(
                                                       label: "Order type",
-                                                      type:
-                                                          "sellingngPrice-basedOn",
+                                                      type:"sellingngPrice-basedOn",
                                                       value: purchaseUom,
                                                       onSelection: (String? va) {
                                                         print(
@@ -825,6 +823,9 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                     SizedBox(
                                                       height: height * .020,
                                                     ),
+                                                    SizedBox(
+                                                      height: height * .010,
+                                                    ),
                                                     PopUpDateFormField(
 
                                                         format:DateFormat('yyyy-MM-dd'),
@@ -924,6 +925,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                 Expanded(
                                                     child: Column(
                                                   children: [
+
                                                     NewInputCard(
                                                       controller: discount,
                                                       title: "Discount",
@@ -1008,7 +1010,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                   child: Container(
                                     color: Colors.white,
                                     alignment: Alignment.topRight,
-                                   height: 300,
+                                 height: 300,
                                     // height: MediaQuery.of(context).size.height,
                                     child: ListView(
                                       controller: _scrollController,
@@ -1407,7 +1409,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                             children: [
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                
+
                                                                 child: textPadding(
                                                                     (i + 1)
                                                                         .toString(),
@@ -1510,7 +1512,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         FontWeight
                                                                             .w500),
                                                               ),
-                                                              
+
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(
@@ -2723,56 +2725,42 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                           isRecieved ??
                                                                               false,
                                                                       isActive:
-                                                                          _value ??
-                                                                              false,
+                                                                          _value,
                                                                       supplierCode:
-                                                                          vid.toString() ??
-                                                                              "",
+                                                                          vid.toString() ,
                                                                       variantId:
-                                                                          variantId ??
-                                                                              "",
+                                                                          variantId ,
                                                                       variantName:
-                                                                          varinatname ??
-                                                                              "",
+                                                                          varinatname,
                                                                       barcode:
-                                                                          Vbarcode ??
-                                                                              "",
+                                                                          Vbarcode ,
                                                                       cvd: "sss",
                                                                       foc:
-                                                                          vfoc ?? 0,
+                                                                          vfoc ,
                                                                       maximumQty:
-                                                                          vmaxnqty ??
-                                                                              0,
+                                                                          vmaxnqty ,
                                                                       minimumQty:
-                                                                          vminqty ??
-                                                                              0,
+                                                                          vminqty ,
                                                                       excessTax:
-                                                                          eTax ?? 0,
+                                                                          eTax ,
                                                                       vat:
-                                                                          vvat ?? 0,
+                                                                          vvat ,
                                                                       actualCost:
-                                                                          vactualCost ??
-                                                                              0,
+                                                                          vactualCost,
                                                                       purchaseuom:
-                                                                          check1 ??
-                                                                              "",
+                                                                          check1 ,
                                                                       discount:
-                                                                          Vdiscount ??
-                                                                              0,
+                                                                          Vdiscount ,
                                                                       requestedQty:
-                                                                          Qty ?? 0,
+                                                                          Qty ,
                                                                       unitCost:
-                                                                          check!??
-                                                                              0,
+                                                                          check,
                                                                       grandTotal:
-                                                                          Vgrnadtotal ??
-                                                                              0,
+                                                                          Vgrnadtotal ,
                                                                       variableAmount:
-                                                                          Vamount! ??
-                                                                              0,
+                                                                          Vamount! ,
                                                                       currentQty:
-                                                                          stockQty ??
-                                                                              0,
+                                                                          stockQty,
                                                                     ));
                                                                     print("gtable" +
                                                                         table

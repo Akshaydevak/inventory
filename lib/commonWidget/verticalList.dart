@@ -10,10 +10,11 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
 class VerticalList extends StatefulWidget {
-  // final TextEditingController itemsearch;
-  // final   List<PurchaseOrder> result ;
-  //  int selectedVertical;
-  // VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical});
+  final TextEditingController itemsearch;
+  final   List<PurchaseOrder> result ;
+   int selectedVertical;
+   final Function(int) ontap;
+  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap});
   @override
   _VerticalListState createState() => _VerticalListState();
 }
@@ -45,8 +46,8 @@ class _VerticalListState extends State<VerticalList> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
-      child: BlocProvider(
-  create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+  //     child: BlocProvider(
+  // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
   child: Builder(
     builder: (context) {
       return BlocConsumer<InventorysearchCubit, InventorysearchState>(
@@ -68,7 +69,7 @@ class _VerticalListState extends State<VerticalList> {
   },
   builder: (context, state) {
     return Container(
-      height: 400,
+      height: double.infinity,
             margin: EdgeInsets.all(10),
             child:
             Visibility(
@@ -177,24 +178,14 @@ class _VerticalListState extends State<VerticalList> {
                                     index: index,
                                     child: ItemCard(
                                       index: index,
-                                      selectedVertical: selectedVertical,
-                                      item: result[index].orderCode,
-                                      id: result[index]
+                                      selectedVertical:widget. selectedVertical,
+                                      item: widget.result[index].orderCode,
+                                      id:widget. result[index]
                                           .id
                                           .toString(),
                                       onClick: () {
-                                        setState(() {
-                                          select=false;
-                                        selectedVertical=index;
+                                        widget.ontap( index);
 
-                                          veritiaclid =
-                                         result[index].id;
-                                          context
-                                              .read<
-                                              GeneralPurchaseReadCubit>()
-                                              .getGeneralPurchaseRead(
-                                              veritiaclid!);
-                                        });
                                       },
                                     ));
                               },
@@ -212,7 +203,7 @@ class _VerticalListState extends State<VerticalList> {
 );
     }
   ),
-),
+
     );
 
   }

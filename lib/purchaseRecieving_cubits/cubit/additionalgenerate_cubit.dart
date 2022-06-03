@@ -11,6 +11,7 @@ class AdditionalgenerateCubit extends Cubit<AdditionalgenerateState> {
   final InventoryRepository repo = InventoryRepositoryImpl();
   AdditionalgenerateCubit() : super(AdditionalgenerateState.initial());
   Future additionlGeneratePost(AdditionalGenerateModel model) async {
+    print("welcome");
     emit(_Loading());
 
     final result = await repo.additionlGeneratePost(model);

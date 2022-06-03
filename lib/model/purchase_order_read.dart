@@ -22,6 +22,10 @@ class Data with _$Data {
     @JsonKey(name: "purchase_order_type") final String? purchaseOrderType,
     @JsonKey(name: "recieving_status") final String? recievingStatus,
     @JsonKey(name: "payment_code") final String? paymentcode,
+    @JsonKey(name: "ordered_date") final String? orderDate,
+    @JsonKey(name: "order_status") final String? orderStatus,
+    @JsonKey(name: "invoice_status") final String? invoiceStatus,
+    @JsonKey(name: "ordered_person") final String? orderedPereson,
 
 
     @JsonKey(name: "payment_status") final String? paymentStatus,
