@@ -26,7 +26,7 @@ class NewInputCard extends StatefulWidget {
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 36,
+    this.height = 38,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -64,6 +64,7 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: widget.colors,
             // color: Colors.grey.shade200,
             child: TextFormField(
+              textAlignVertical: TextAlignVertical.center,
 
               readOnly: widget.readOnly,
               maxLines: widget.maxLines,
@@ -126,6 +127,7 @@ class _NewInputCardState extends State<NewInputCard> {
     // color: widget.colors,
     // color: Colors.grey.shade200,
     child: TextFormField(
+      textAlignVertical: TextAlignVertical.center,
     maxLines: widget.maxLines,
     controller: widget.controller,
     obscureText: show,
@@ -276,6 +278,7 @@ class UnderLinedInput extends StatefulWidget {
   // final bool required;
   final VoidCallback? onClick;
   final bool enable;
+  final bool  initialCheck;
   final  String  initial;
   final String ? last;
   final bool restricted;
@@ -286,7 +289,8 @@ class UnderLinedInput extends StatefulWidget {
   final Function(String)? onChanged;
   final VoidCallback? onComplete;
   // final List<String>? items;
-  const UnderLinedInput(
+  const
+  UnderLinedInput(
       {Key? key,
         this.last="",
         this.enable = true,
@@ -296,6 +300,8 @@ class UnderLinedInput extends StatefulWidget {
         this.controller,
         this.onChanged,
         this.onComplete,
+        this.initialCheck=false,
+
         this.restricted = false,
         this.onClick})
       : super(key: key);
@@ -305,22 +311,51 @@ class UnderLinedInput extends StatefulWidget {
 }
 
 class _UnderLinedInputState extends State<UnderLinedInput> {
+
   @override
   Widget build(BuildContext context) {
-    print("widget.akshay"+widget.last.toString());
+    widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
+
 
     return Column(
       children: [
         Container(
           color: Colors.grey.shade200,
-          child: TextFormField(
-            initialValue:widget.last=="0"?"":widget.last,
+          child:widget.initialCheck?
+          TextFormField(
+
+           initialValue:widget.last=="0"?"":widget.last,
             onTap: () {
               if (widget.onClick != null) widget.onClick!();
             },
             maxLines: widget.maxLines,
 
-            controller: widget.controller,
+            //controller: widget.controller,
+            enabled: widget.enable,
+            keyboardType: TextInputType.number,
+            inputFormatters: <TextInputFormatter>[
+              FilteringTextInputFormatter.digitsOnly
+            ],
+            onEditingComplete: widget.onComplete,
+            onChanged: widget.onChanged,
+            decoration: InputDecoration(
+
+              contentPadding: EdgeInsets.all(10),
+              isDense: true,
+              hintText: widget.hintText,
+              hintStyle: TextStyle(fontSize: 10),
+              border:InputBorder.none,
+            ),
+          ):
+          TextFormField(
+
+           // initialValue:widget.last=="0"?"":widget.last,
+            onTap: () {
+              if (widget.onClick != null) widget.onClick!();
+            },
+            maxLines: widget.maxLines,
+
+         controller: widget.controller,
             enabled: widget.enable,
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[

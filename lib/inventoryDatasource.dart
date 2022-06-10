@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventoryPostModel.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
 import 'package:inventory/model/purchase_order_read.dart';
@@ -11,6 +12,7 @@ import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/purchaserecievingmodel/purchaserecieving_read.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
+import 'Screens/inventory_creation_tab/inventory_read_model.dart';
 import 'core/uttils/variable.dart';
 
 abstract class LogisticDataSource {
@@ -26,7 +28,7 @@ abstract class LogisticDataSource {
   Future<List<VariantId>> getVariantId([String inventory]);
   Future<PurchaseOrderTableModel> getTableDetails(int id);
   Future<PurchaseCureentStockQty> getCurrentStock(
-      int? id, String? invdendotyId);
+      String? id, String? invdendotyId);
   Future<PurchaseOrderRead> getGeneralPurchaseRead(int id);
   Future<DoubleResponse> getGeneralPurchasePatch(
       PurchaseOrderPost model, int? id);
@@ -42,9 +44,18 @@ abstract class LogisticDataSource {
   Future<DoubleResponse> postRequest(PurchaseOrderPost model);
   Future<PurchaseOrdertype> getRequestFormOrdertype();
   Future<List<OrderedPersonModel>> getOrderedPerson();
-  Future<DoubleResponse> getRequestFormPatch(
-      PurchaseOrderPost model, int? id);
+  Future<DoubleResponse> getRequestFormPatch(PurchaseOrderPost model, int? id);
   Future<DoubleResponse> requestFormDelete(int id);
+  //************requestFormreceiving********************
+  Future<PurchaseRecievingRead> getRequestFormReceivingRead(int? id);
+  Future<DoubleResponse> requestFormReceivingPatch(
+      int? id, RequestReceivingPatch model);
+  Future<DoubleResponse> additionlGenerateRequest(AdditionalGenerateModel model);
+  //inventory**************************************inventorygetInventoryRead
+
+
+  Future<InventoryRead> getInventoryRead(int id);
+  Future<DoubleResponse> postInventory(InventoryPostModel model);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -55,9 +66,24 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? next,
       {String tab = ""}) async {
     print("aaaaaa");
-    String path = tab == "RF"
-        ? "http://65.1.61.201:8111/purchase-order/list-request-form/test"
-        : "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
+    String path = "";
+    if (tab == "RF") {
+      path = "http://65.1.61.201:8111/purchase-order/list-request-form/test";
+    } else if (tab == "RFR") {
+      path =
+          "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/1";
+    }
+    else if(tab == "II"){
+      path =
+      "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/1";
+
+    }
+    else {
+      path = "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
+    }
+    // path = tab == "RF"
+    //    ? "http://65.1.61.201:8111/purchase-order/list-request-form/test"
+    //    : "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -81,6 +107,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("code1" + next.toString());
     String path =
         "http://65.1.61.201:8111/purchase-order/list-purchase-order/test?code=$next";
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -91,7 +118,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     (response.data['data']['results'] as List).forEach((element) {
       items.add(PurchaseOrder.fromJson(element));
     });
-    print("items" + items.toString());
+    print("dataitemss" + items.toString());
     return PaginatedResponse<List<PurchaseOrder>>(
         items,
         response.data['data']['next'],
@@ -231,9 +258,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseCureentStockQty> getCurrentStock(
-      int? id, String? invdendotyId) async {
+      String? id, String? invdendotyId) async {
     String path =
-        "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/test";
+        "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
     try {
       final response = await client.get(
         path,
@@ -432,7 +459,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     PurchaseRecievingRead model,
   ) async {
     print("sunithi2" + id.toString());
-    String path = purchaseRecievingPatch + id.toString();
+    String path = rqstReceivingPatch + id.toString();
     print(path);
     final response = await client.patch(path,
         data: model.toJson(),
@@ -639,61 +666,61 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<List<OrderedPersonModel>> getOrderedPerson() async {
-    print("orderedPerson3" );
+    print("orderedPerson3");
 
- String path="https://api-user-uat.ahlancart.com/user-employee_employeeuser";
- print(path);
+    String path =
+        "https://api-user-uat.ahlancart.com/user-employee_employeeuser";
+    print(path);
 
-  // String path = inventory == "" || inventory == null
-  //     ? "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test"
-  //     : "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory/$inventory";
-  print(path);
-  final response = await client.get(
-    path,
-    // data:
-    // // {"payment_status": "completed", "order_status": "completed"},
-    // {
-    //
-    // },
-    options: Options(
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-    ),
-  );
-  print("response" + response.toString());
-  //print(response.data['results']);
-  List<OrderedPersonModel> items = [];
+    // String path = inventory == "" || inventory == null
+    //     ? "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test"
+    //     : "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory/$inventory";
+    print(path);
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("response" + response.toString());
+    //print(response.data['results']);
+    List<OrderedPersonModel> items = [];
 
-  (response.data['data']['results'] as List).forEach((element) {
-    // print("data");
+    (response.data['data']['results'] as List).forEach((element) {
+      // print("data");
 
-    items.add(OrderedPersonModel.fromJson(element));
-  });
-  return items;
-
+      items.add(OrderedPersonModel.fromJson(element));
+    });
+    return items;
   }
 
   @override
-  Future<DoubleResponse> getRequestFormPatch(PurchaseOrderPost model, int? id) async {
+  Future<DoubleResponse> getRequestFormPatch(
+      PurchaseOrderPost model, int? id) async {
     String path = requestFormPatch + id.toString();
-  print(path);
-  final response = await client.patch(path,
-      data: model.toJson(),
-      options: Options(headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }));
-  print("+++++++++++");
-  print(response);
-  print(response.data['message']);
-  if (response.data['status'] == 'failed') {
-    Variable.errorMessege = response.data['message'];
-  }
-  return DoubleResponse(
-      response.data['status'] == 'success', response.data['message']);
-
+    print(path);
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
   }
 
   @override
@@ -714,6 +741,196 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PurchaseRecievingRead> getRequestFormReceivingRead(int? id) async {
+    try {
+      print("akakakka");
+      String path = rqstReceivingRead + id.toString();
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseRecievingRead dataa =
+          PurchaseRecievingRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("errorr" + e.toString());
+      print("akakakka");
+      String path = purchaseRecievingRead + id.toString();
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseRecievingRead dataa =
+          PurchaseRecievingRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    }
+  }
+
+  @override
+  Future<DoubleResponse> requestFormReceivingPatch(
+      int? id, RequestReceivingPatch model) async {
+    print("sunithi2" + id.toString());
+    String path = purchaseRecievingPatch + id.toString();
+    print(path);
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> additionlGenerateRequest(AdditionalGenerateModel model) async {    print("welcome");
+  print(
+    additionalGeneratedRequest,
+  );
+  try {
+    final response = await client.post(
+        additionalGeneratedRequest,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  } catch (e) {
+    print("error is here" + e.toString());
+  }
+  final response = await client.post(
+      additionalGeneratedRequest,
+      data: model.toJson(),
+      options: Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }));
+  print("");
+  print(response);
+  print(response.data['message']);
+  if (response.data['status'] == 'failed') {
+    Variable.errorMessege = response.data['message'];
+  }
+  return DoubleResponse(
+      response.data['status'] == 'success', response.data['message']);
+
+  }
+
+  @override
+  Future <InventoryRead>getInventoryRead(int id) async {
+
+    try {
+      String path = invoiceRead + id.toString();
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      InventoryRead dataa =
+      InventoryRead.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("error" + e.toString());
+    }
+    String path = invoiceRead + id.toString();
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    InventoryRead dataa = InventoryRead.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+
+  }
+
+  @override
+  Future<DoubleResponse> postInventory(model) async {   print(
+     invoicePost.toString(),
+  );
+
+  final response = await client.post(invoicePost,
+      data: model.toJson(),
+      options: Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }));
+  print("");
+  print(response);
+  print(response.data['message']);
+  if (response.data['status'] == 'failed') {
+    Variable.errorMessege = response.data['message'];
+  }
+  return DoubleResponse(
+      response.data['status'] == 'success', response.data['message']);
 
   }
 }

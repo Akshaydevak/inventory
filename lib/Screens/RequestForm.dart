@@ -61,6 +61,14 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController orderType = TextEditingController();
   late AutoScrollController scontroller;
+  var requestedListControllers = <TextEditingController>[];
+  var minListControllers = <TextEditingController>[];
+  var maxListControllers = <TextEditingController>[];
+  var unitcostListControllers = <TextEditingController>[];
+  var excesstListControllers = <TextEditingController>[];
+  var discounttListControllers = <TextEditingController>[];
+  var focListControllers = <TextEditingController>[];
+  var vatListControllers = <TextEditingController>[];
 
   int? veritiaclid=0;
   List<OrderLines> table = [];
@@ -133,7 +141,37 @@ bool  stockCheck=false;
     vatableAmountController.text = VatableValue.toString();
     // _value=false;
   }
-
+  // valueAddingTextEdingController(){
+  //   if(table.isNotEmpty){
+  //     print("checking case");
+  //     for(var i=0;i<table.length;i++){
+  //       var requsted = new TextEditingController(text: table[i].requestedQty.toString()??"");
+  //       requestedListControllers.add(requsted);
+  //       print(requestedListControllers.length);
+  //       var min = new TextEditingController(text: table[i].minimumQty.toString()??"");
+  //       minListControllers.add(min);
+  //       print("mazzzzz"+table[i].maximumQty.toString());
+  //       var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
+  //       print("max"+max.toString());
+  //       maxListControllers.add(max);
+  //       print("maxlength"+maxListControllers.toString());
+  //       var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
+  //       unitcostListControllers.add(unitcost);
+  //       var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
+  //       excesstListControllers.add(excess);
+  //       var disc = new TextEditingController(text: table[i].discount.toString()??"");
+  //       discounttListControllers.add(disc);
+  //       var foc = new TextEditingController(text: table[i].foc.toString()??"");
+  //       focListControllers.add(foc);
+  //       var vat = new TextEditingController(text: table[i].vat.toString()??"");
+  //       vatListControllers.add(vat);
+  //       setState(() {
+  //
+  //       });
+  //
+  //     }
+  //   }
+  // }
   PurchaseOrderTableModel? purchaseTable;
   TextEditingController itemsearch=TextEditingController();
   @override
@@ -230,10 +268,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             data.data?.orderLines != null
                 ? table = data.data?.orderLines ?? []
                 : table = [];
+
             print("tablsssssssssssssssssse"+table.toString());
             setState(() {
 
             });
+
             //
             // inventoryId.text=data.data?.iventoryId??"";
 
@@ -260,6 +300,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             vatController.text=data.data?.vat.toString()??"";
             actualCostController.text=data.data?.actualCost.toString()??"";
             grandTotalController.text=data.data?.grandTotal.toString()??"";
+           // valueAddingTextEdingController();
 
 
           });
@@ -554,7 +595,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                           Expanded(child: Column(
                                                           children: [
                                                             SizedBox(height: height*.030,),
-                                                            SizedBox(height: height*.030,),
+
                                                             SelectableDropDownpopUp(
                                                               label: "Order type",
                                                               type:"RequestFormType",
@@ -581,11 +622,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             PopUpDateFormField(
 
                                                                 format:DateFormat('yyyy-MM-dd'),
-                                                                controller: orderDateController,
-                                                                // initialValue:
-                                                                //     DateTime.parse(fromDate!),
+                                                                //controller: orderDateController,
+                                                                initialValue:orderDateController.text!=""?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26 00:00:00.000"),
                                                                 label: "Promised Reciept Date",
                                                                 onSaved: (newValue) {
+                                                                  print("new value"+newValue.toString());
                                                                   orderDateController.text = newValue
                                                                       ?.toIso8601String()
                                                                       .split("T")[0] ??
@@ -619,9 +660,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             PopUpDateFormField(
 
                                                                 format:DateFormat('yyyy-MM-dd'),
-                                                                controller: promisedRecieptDate,
-                                                                // initialValue:
-                                                                //     DateTime.parse(fromDate!),
+                                                                //controller: promisedRecieptDate,
+                                                                initialValue:promisedRecieptDate.text!=null?
+                                                                    DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26 00:00:00.000"),
                                                                 label: "Promised Reciept Date",
                                                                 onSaved: (newValue) {
                                                                   promisedRecieptDate.text = newValue
@@ -690,13 +731,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
                                                             SizedBox(height: height*.030,),
                                                             SizedBox(height: height*.030,),
-                                                            SizedBox(height: height*.030,),
+
                                                           ],
                                                         ),),
                                                         Expanded(child: Column(
                                                           children: [
                                                             SizedBox(height: height*.030,),
-                                                            SizedBox(height: height*.030,),
+
                                                             NewInputCard(
                                                               readOnly: true,
                                                                 controller: discountController, title: "Discount"),
@@ -1246,7 +1287,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
-                                                                    last: table[i].requestedQty.toString() ?? "",
+                                                             // controller: requestedListControllers[i],
+                                                              last: table[i].requestedQty.toString() ?? "",
                                                                     onChanged: (va) {
                                                                       print(va);
                                                                       if (va == "") {
@@ -1306,7 +1348,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
-                                                                    last:table[i].minimumQty.toString(),
+                                                                   last:table[i].minimumQty.toString(),
+                                                                   // controller: minListControllers[i],
 
                                                                     onChanged: (p0) {
 
@@ -1341,6 +1384,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                    //controller: maxListControllers[i],
                                                                     last:table[i].maximumQty.toString(),
                                                                     onChanged: (p0) {
 
@@ -1399,6 +1443,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                    //controller: unitcostListControllers[i],
                                                                     last: table[i].unitCost.toString() ?? "",
                                                                     onChanged: (va) {
                                                                       double? unitcost;
@@ -1466,6 +1511,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                     // controller: excesstListControllers[i],
+
+
+
                                                                     last: table[i].excessTax.toString() ?? "",
                                                                     onChanged: (va) {
                                                                       double? excess;
@@ -1632,6 +1681,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
                                                                     last: table[i].foc.toString(),
+                                                                   // controller: focListControllers[i],
 
                                                                     onChanged: (p0) {
 
@@ -1684,6 +1734,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                   // controller: vatListControllers[i],
                                                                     last: table[i].vat.toString() ?? "",
                                                                     onChanged: (va) {
                                                                       if (va == "") {
@@ -1866,7 +1917,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   });
                                                                   context
                                                                       .read<PurchaseStockCubit>()
-                                                                      .getCurrentStock(1, variantId);
+                                                                      .getCurrentStock(inventoryIdController.text, variantId);
 
                                                                   // orderType = va!;
                                                                 });

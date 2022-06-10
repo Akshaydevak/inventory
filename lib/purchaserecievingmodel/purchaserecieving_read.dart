@@ -12,6 +12,7 @@ class PurchaseRecievingRead with _$PurchaseRecievingRead {
     final String? remarks,
     final String? note,
     @JsonKey(name:"order_code") final String? orderCode,
+
     @JsonKey(name:"promised_receipt_date") final String? promisedRecieptDate,
     @JsonKey(name:"planned_receipt_date") final String? plannedRecieptDate,
     @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
@@ -67,6 +68,9 @@ class RecievingLines with _$RecievingLines {
     @JsonKey(name:"grand_total") final double? grandTotal,
     @JsonKey(name:"received_qty") final int? receivedQty,
     @JsonKey(name:"expiry_date") final String? expiryDate,
+    @JsonKey(name:"vendor_id") final String? vendorId,
+    @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
+    @JsonKey(name:"vendor_address") final String? vendorAddress,
 
     @JsonKey(name:"vatable_amount") final double? vatableAmount,
     @JsonKey(name:"excess_tax") final double? excessTax,
@@ -106,4 +110,38 @@ class AdditionalGenerateModel with _$AdditionalGenerateModel {
   }) = _AdditionalGenerateModel;
   factory AdditionalGenerateModel.fromJson(Map<String, dynamic> json) =>
       _$AdditionalGenerateModelFromJson(json);
+}
+@freezed
+class RequestReceivingPatch with _$RequestReceivingPatch {
+  const factory RequestReceivingPatch({
+    final int? id,
+    final double? foc,
+    final double? discount,
+    final double? vat,
+    final String? remarks,
+    final String? note,
+    @JsonKey(name:"received_by") final String? receivedBy,
+
+
+
+
+
+
+
+
+
+
+
+    @JsonKey(name:"unit_cost") final double? unitCost,
+    @JsonKey(name:"grand_total") final double? grandTotal,
+    @JsonKey(name:"vatable_amount") final double? vatableAmount,
+    @JsonKey(name:"excess_tax") final double? excessTax,
+    @JsonKey(name:"actual_cost") final double? actualCost,
+
+
+    @JsonKey(name: "receiving_lines") final List<RecievingLines>? receivingLines,
+
+  }) = _RequestReceivingPatch;
+  factory RequestReceivingPatch.fromJson(Map<String, dynamic> json) =>
+      _$RequestReceivingPatchFromJson(json);
 }

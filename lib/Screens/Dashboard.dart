@@ -348,6 +348,7 @@ class _TitleScreenState extends State<TitleScreen> {
                 height: size.height * .0455,
                 child: TabBar(
                     isScrollable: true,
+                    indicatorSize: TabBarIndicatorSize.tab,
                     // labelPadding: EdgeInsets.only(left:size.width * .024,),
                     // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
                     padding: EdgeInsets.zero,
@@ -365,10 +366,10 @@ class _TitleScreenState extends State<TitleScreen> {
                         width: height * .008,
                         color: Colors.white,
                       ),
-                      insets: EdgeInsets.only(
-                          left: size.width * .015,
-                          top: size.width * .023,
-                          right: size.width * .03),
+                      // insets: EdgeInsets.only(
+                      //     left: size.width * .015,
+                      //     top: size.width * .023,
+                      //     right: size.width * .03),
                     ),
                     indicatorColor: Colors.white,
                     indicatorWeight: height * .001,

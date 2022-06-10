@@ -87,11 +87,12 @@ class _VerticalListState extends State<VerticalList> {
                         child: SearchTextfiled(
                           color: Color(0xffFAFAFA),
                           hintText: "Search...",
-                          ctrlr: itemsearch,
+                          ctrlr:widget. itemsearch,
                           onChanged: (va) {
+                            print("searching case"+va.toString());
                             context
                                 .read<InventorysearchCubit>()
-                                .getSearch(itemsearch.text);
+                                .getSearch(widget.itemsearch.text);
                           },
                         )),
                     SizedBox(

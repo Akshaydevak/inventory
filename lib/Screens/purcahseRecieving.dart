@@ -9,6 +9,7 @@ import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/pellete.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
@@ -68,6 +69,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController expiryDate = TextEditingController(text: "0");
 
   int? recievedQty=0;
+  bool select=false;
 
   ScrollController? _scrollController = ScrollController();
   TextEditingController itemsearch = TextEditingController();
@@ -213,7 +215,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                             print("variantaaaaaa"+recievingLisnes[i].variantId.toString());
                             context
                                 .read<PurchaseStockCubit>()
-                                .getCurrentStock(1, recievingLisnes[i].variantId);
+                                .getCurrentStock("1", recievingLisnes[i].variantId);
                           }
                           // if (currentStock.isNotEmpty) {
                           //   print("recievingLisnessssssss" +
@@ -392,151 +394,169 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Container(
-                              margin: EdgeInsets.all(10),
-                              child: Visibility(
-                                visible: true,
-                                child: Container(
-                                  height: height,
-                                  // height: double.minPositive,
-                                  width: width * .172,
-                                  //width: 232,
-                                  color: Color(0xffEDF1F2),
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          margin: EdgeInsets.all(5),
-                                          child: SearchTextfiled(
-                                            color: Color(0xffFAFAFA),
-                                            hintText: "Search...",
-                                            ctrlr: itemsearch,
-                                            onChanged: (va) {
-                                              context
-                                                  .read<InventorysearchCubit>()
-                                                  .getSearch(itemsearch.text);
-                                            },
-                                          )),
-                                      SizedBox(
-                                        height:
-                                        MediaQuery.of(context).size.height *
-                                            .008,
-                                      ),
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                          left: width * 0.009,
-                                          right: width * 0.007,
-                                        ),
-                                        child: Row(
-                                          //mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            RectangleContainer(
-                                                "asset/rect1.png", context),
-                                            SizedBox(
-                                              width: width * .003,
-                                            ),
-                                            Container(
-                                              color: Color(0xffFFFFFF),
-                                              height: width * .0197,
-                                              width: width * .111,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                                children: [
-                                                  SizedBox(
-                                                    width: width * .001,
-                                                  ),
-                                                  Icon(
-                                                    Icons.add,
-                                                    color: Colors.black,
-                                                    size: 14,
-                                                  ),
-                                                  SizedBox(
-                                                    width: width * .007,
-                                                  ),
-                                                  Container(
-                                                    child: Text(
-                                                      "Add a Varient",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize:
-                                                          width * .010,
-                                                          overflow: TextOverflow
-                                                              .ellipsis),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: width * .003,
-                                            ),
-                                            RectangleContainer(
-                                                "asset/rect2.png", context),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: height * .015,
-                                      ),
-                                      Expanded(
-                                          child: Container(
-                                              height: 0,
-                                              child: ListView.separated(
-                                                separatorBuilder:
-                                                    (context, index) {
-                                                  return Divider(
-                                                    height: 0,
-                                                    color: Color(0xff2B3944)
-                                                        .withOpacity(0.3),
-                                                    // thickness: 1,
-                                                  );
-                                                },
-                                                physics: ScrollPhysics(),
-                                                controller: verticalController,
-                                                itemBuilder: (context, index) {
-                                                  return AutoScrollTag(
-                                                      highlightColor:
-                                                      Colors.red,
-                                                      controller:
-                                                      verticalController,
-                                                      key: ValueKey(index),
-                                                      index: index,
-                                                      child: ItemCard(
-                                                        index: index,
-                                                        selectedVertical:
-                                                        selectedVertical,
-                                                        item: result[index]
-                                                            .orderCode,
-                                                        id: result[index]
-                                                            .id
-                                                            .toString(),
-                                                        onClick: () {
-                                                          setState(() {
-                                                            // select=false;
-                                                            selectedVertical =
-                                                                index;
-                                                            Variable.verticalid= result[index]
-                                                                .id;
+                            // Container(
+                            //   margin: EdgeInsets.all(10),
+                            //   child: Visibility(
+                            //     visible: true,
+                            //     child: Container(
+                            //       height: height,
+                            //       // height: double.minPositive,
+                            //       width: width * .172,
+                            //       //width: 232,
+                            //       color: Color(0xffEDF1F2),
+                            //       child: Column(
+                            //         children: [
+                            //           Container(
+                            //               margin: EdgeInsets.all(5),
+                            //               child: SearchTextfiled(
+                            //                 color: Color(0xffFAFAFA),
+                            //                 hintText: "Search...",
+                            //                 ctrlr: itemsearch,
+                            //                 onChanged: (va) {
+                            //                   context
+                            //                       .read<InventorysearchCubit>()
+                            //                       .getSearch(itemsearch.text);
+                            //                 },
+                            //               )),
+                            //           SizedBox(
+                            //             height:
+                            //             MediaQuery.of(context).size.height *
+                            //                 .008,
+                            //           ),
+                            //           Container(
+                            //             margin: EdgeInsets.only(
+                            //               left: width * 0.009,
+                            //               right: width * 0.007,
+                            //             ),
+                            //             child: Row(
+                            //               //mainAxisAlignment: MainAxisAlignment.center,
+                            //               children: [
+                            //                 RectangleContainer(
+                            //                     "asset/rect1.png", context),
+                            //                 SizedBox(
+                            //                   width: width * .003,
+                            //                 ),
+                            //                 Container(
+                            //                   color: Color(0xffFFFFFF),
+                            //                   height: width * .0197,
+                            //                   width: width * .111,
+                            //                   child: Row(
+                            //                     mainAxisAlignment:
+                            //                     MainAxisAlignment.center,
+                            //                     children: [
+                            //                       SizedBox(
+                            //                         width: width * .001,
+                            //                       ),
+                            //                       Icon(
+                            //                         Icons.add,
+                            //                         color: Colors.black,
+                            //                         size: 14,
+                            //                       ),
+                            //                       SizedBox(
+                            //                         width: width * .007,
+                            //                       ),
+                            //                       Container(
+                            //                         child: Text(
+                            //                           "Add a Varient",
+                            //                           style: TextStyle(
+                            //                               color: Colors.black,
+                            //                               fontSize:
+                            //                               width * .010,
+                            //                               overflow: TextOverflow
+                            //                                   .ellipsis),
+                            //                         ),
+                            //                       )
+                            //                     ],
+                            //                   ),
+                            //                 ),
+                            //                 SizedBox(
+                            //                   width: width * .003,
+                            //                 ),
+                            //                 RectangleContainer(
+                            //                     "asset/rect2.png", context),
+                            //               ],
+                            //             ),
+                            //           ),
+                            //           SizedBox(
+                            //             height: height * .015,
+                            //           ),
+                            //           Expanded(
+                            //               child: Container(
+                            //                   height: 0,
+                            //                   child: ListView.separated(
+                            //                     separatorBuilder:
+                            //                         (context, index) {
+                            //                       return Divider(
+                            //                         height: 0,
+                            //                         color: Color(0xff2B3944)
+                            //                             .withOpacity(0.3),
+                            //                         // thickness: 1,
+                            //                       );
+                            //                     },
+                            //                     physics: ScrollPhysics(),
+                            //                     controller: verticalController,
+                            //                     itemBuilder: (context, index) {
+                            //                       return AutoScrollTag(
+                            //                           highlightColor:
+                            //                           Colors.red,
+                            //                           controller:
+                            //                           verticalController,
+                            //                           key: ValueKey(index),
+                            //                           index: index,
+                            //                           child: ItemCard(
+                            //                             index: index,
+                            //                             selectedVertical:
+                            //                             selectedVertical,
+                            //                             item: result[index]
+                            //                                 .orderCode,
+                            //                             id: result[index]
+                            //                                 .id
+                            //                                 .toString(),
+                            //                             onClick: () {
+                            //                               setState(() {
+                            //                                 // select=false;
+                            //                                 selectedVertical =
+                            //                                     index;
+                            //                                 Variable.verticalid= result[index]
+                            //                                     .id;
+                            //
+                            //                                 veritiaclid =
+                            //                                     result[index]
+                            //                                         .id;
+                            //                                 context
+                            //                                     .read<
+                            //                                     PurchaserecievigReadCubit>()
+                            //                                     .getGeneralPurchaseRecievingRead(
+                            //                                     veritiaclid!);
+                            //                               });
+                            //                             },
+                            //                           ));
+                            //                     },
+                            //                     itemCount: result.length,
+                            //                   )))
+                            //         ],
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
+                            VerticalList(selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,ontap: (int index){
+                                setState(() {
+                                  print("taped");
+                                  select=false;
+                                  selectedVertical=index;
 
-                                                            veritiaclid =
-                                                                result[index]
-                                                                    .id;
-                                                            context
-                                                                .read<
-                                                                PurchaserecievigReadCubit>()
-                                                                .getGeneralPurchaseRecievingRead(
-                                                                veritiaclid!);
-                                                          });
-                                                        },
-                                                      ));
-                                                },
-                                                itemCount: result.length,
-                                              )))
-                                    ],
-                                  ),
-                                ),
-                              ),
+                                  veritiaclid =
+                                      result[index].id;
+                                  context
+                                                                      .read<
+                                                                      PurchaserecievigReadCubit>()
+                                                                      .getGeneralPurchaseRecievingRead(
+                                                                      veritiaclid!);;
+                                });
+                              },result: result,
                             ),
+
                             Expanded(
                               child: Container(
                                 color: Colors.white,
@@ -1202,17 +1222,29 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         //     fontWeight: FontWeight.w500),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: Checkbox(
-                                                                                            value: recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
-                                                                                            onChanged: (bool? value) {
-                                                                                              bool? isRecieved = recievingLisnes[i].isReceived;
-                                                                                              setState(() {
-                                                                                                isRecieved = !isRecieved!;
-                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(isReceived: isRecieved);
-                                                                                                print(recievingLisnes);
-                                                                                              });
-                                                                                            },
-                                                                                          ),
+                                                                                          child: CheckedBoxs(
+                                                                                              valueChanger:recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
+                                                                                              onSelection:(bool ? value){
+                                                                                                    bool? isRecieved = recievingLisnes[i].isReceived;
+                                                                                                setState(() {
+                                                                                                  isRecieved = !isRecieved!;
+                                                                                                        recievingLisnes[i] = recievingLisnes[i].copyWith(isReceived: isRecieved);
+                                                                                                        print(recievingLisnes);
+                                                                                                  
+                                                                                                });
+
+                                                                                              }),
+                                                                                          // Checkbox(
+                                                                                          //   value: recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
+                                                                                          //   onChanged: (bool? value) {
+                                                                                          //     bool? isRecieved = recievingLisnes[i].isReceived;
+                                                                                          //     setState(() {
+                                                                                          //       isRecieved = !isRecieved!;
+                                                                                          //       recievingLisnes[i] = recievingLisnes[i].copyWith(isReceived: isRecieved);
+                                                                                          //       print(recievingLisnes);
+                                                                                          //     });
+                                                                                          //   },
+                                                                                          // ),
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1643,29 +1675,59 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(recievingLisnes[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
-                                                                                        Checkbox(
-                                                                                          value: recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
-                                                                                          onChanged: (bool? value) {
-                                                                                            setState(() {});
-                                                                                          },
+                                                                                        TableCell(
+                                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                          child: CheckedBoxs(
+                                                                                              valueChanger:recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
+                                                                                              onSelection:(bool ? value){
+                                                                                                bool? isInvoiced = recievingLisnes[i].isInvoiced;
+                                                                                                setState(() {
+                                                                                                  // isInvoiced = !isInvoiced!;
+                                                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(isInvoiced: isInvoiced);
+                                                                                                  // print(isInvoiced);
+
+                                                                                                });
+
+                                                                                              }),
                                                                                         ),
+                                                                                        
+                                                                                        
+                                                                                        // Checkbox(
+                                                                                        //   value: recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
+                                                                                        //   onChanged: (bool? value) {
+                                                                                        //     setState(() {});
+                                                                                        //   },
+                                                                                        // ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(recievingLisnes[i].expiryDate.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
 
                                                                                         TableCell(
-                                                                                          child: Checkbox(
-                                                                                            value: recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
-                                                                                            onChanged: (bool? value) {
-                                                                                              setState(() {});
-                                                                                            },
-                                                                                          ),
+                                                                                          child:CheckedBoxs(
+                                                                                              valueChanger:recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
+                                                                                              onSelection:(bool ? value){
+                                                                                                bool? isInvoiced = recievingLisnes[i].isFree;
+                                                                                                setState(() {
+                                                                                                  // isInvoiced = !isInvoiced!;
+                                                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(isFree: isInvoiced);
+                                                                                                  // print(isInvoiced);
+
+                                                                                                });
+
+                                                                                              }),
+                                                                                          // Checkbox(
+                                                                                          //   value: recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
+                                                                                          //   onChanged: (bool? value) {
+                                                                                          //     setState(() {});
+                                                                                          //   },
+                                                                                          // ),
                                                                                         ),
 
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: Checkbox(
+                                                                                          child:
+                                                                                           Checkbox(
                                                                                             value: recievingLisnes[i].isActive == null ? false : recievingLisnes[i].isActive,
                                                                                             onChanged: (bool? value) {
                                                                                               setState(() {});
@@ -2248,7 +2310,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     id);
                                                                                                 context
                                                                                                     .read<PurchaseStockCubit>()
-                                                                                                    .getCurrentStock(1, variant);
+                                                                                                    .getCurrentStock("", variant);
 
                                                                                                 // orderType = va!;
                                                                                               });
@@ -2877,7 +2939,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           });
                                                                                           context
                                                                                               .read<PurchaseStockCubit>()
-                                                                                              .getCurrentStock(1, variantId);
+                                                                                              .getCurrentStock("1", variantId);
 
                                                                                           // orderType = va!;
                                                                                         });

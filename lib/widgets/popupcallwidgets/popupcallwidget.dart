@@ -320,12 +320,15 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                         }
                       },
                       textFieldConfiguration: TextFieldConfiguration(
+                          style: TextStyle(fontSize: 13, ),
                           controller: _controller,
                           decoration: InputDecoration(
+
                               border: InputBorder.none,
                               isDense: true,
                               // border: OutlineInputBorder(),
-                              suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                             suffixIcon: Icon(Icons.arrow_downward_outlined)
+                          )),
                       onSuggestionSelected: (suggestion) {
                         print("suggestion"+suggestion.toString());
                         if (suggestion == "Add new")

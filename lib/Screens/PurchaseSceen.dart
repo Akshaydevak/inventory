@@ -96,18 +96,19 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
 
                         Container(
-                          width:MediaQuery.of(context).size.width*.48,
+                          width:MediaQuery.of(context).size.width*.52,
                           height: width*.052,
-                          margin: EdgeInsets.only(top:22),
+                          margin: EdgeInsets.only(top:width*.012),
 
                           child: TabBar(
 
 
                             labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
                               unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
-                              padding: EdgeInsets.only(left: 13),
+                              padding: EdgeInsets.only(left: 13,),
                               isScrollable: false,
                               physics: NeverScrollableScrollPhysics(),
+                              indicatorSize: TabBarIndicatorSize.label,
 
                               //indicatorSize:TabBarIndicatorSize.tab ,
 
@@ -118,17 +119,18 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                                     width: 4.0,
                                     color: Color(0xff3E4F5B),
                                   ),
-                                  insets: EdgeInsets.only(left: width*.014, right: width*.017)),
+                                 // insets: EdgeInsets.only(left: width*.014, right: width*.017)
+                              ),
 
                               // padding: EdgeInsets.only(bottom: 10),
 
                               controller: _tabController,
-                              tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                Text("Purchase Recieving",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                Text("Request Form",style: TextStyle(color:Colors.black,fontSize: 13),),
-                                Text("Request form Recieving",style: TextStyle(color: Colors.black,fontSize: 13),),
+                              tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: height*.023),),
+                                Text("Purchase Recieving",style: TextStyle(color: Colors.black,fontSize: height*.023),),
+                                Text("Request Form",style: TextStyle(color:Colors.black,fontSize: height*.023),),
+                                Text("Request form Recieving",style: TextStyle(color: Colors.black,fontSize: height*.023),),
 
-                                Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: 13),)]),
+                                Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: height*.023),)]),
                         ),
                         Container(
                           child: Row(

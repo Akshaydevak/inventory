@@ -53,3 +53,44 @@ class Data with _$Data {
   factory Data.fromJson(Map<String, dynamic> json) =>
       _$DataFromJson(json);
 }
+
+// class RequestFormReceivingModels with _$RequestFormReceivingModels{
+//   const factory RequestFormReceivingModels({
+//     final  int? id,
+//     @JsonKey(name: "receiving_lines") final List<OrderLines>? receiveLines,
+//     @JsonKey(name: "order_code") final String? orderCode,
+//     @JsonKey(name: "receiving_code") final String? receivingCode,
+//     @JsonKey(name: "inventory_id") final String? iventoryId,
+//     @JsonKey(name: "payment_status") final String? paymentStatus,
+//     @JsonKey(name: "note") final String? note,
+//     @JsonKey(name: "remarks") final String? remarks,
+//     @JsonKey(name: "order_status") final String? orderStatus,
+//     @JsonKey(name: "recieving_status") final String? recievingStatus,
+//     @JsonKey(name: "invoice_status") final String? invoiceStatus,
+//     @JsonKey(name: "received_by") final String? receivedBy,
+//     @JsonKey(name: "order_created_date") final String? orderCreateddate,
+//     @JsonKey(name: "discount") final int? discount,
+//     @JsonKey(name: "foc") final int? foc,
+//     @JsonKey(name: "unit_cost") final int? unitcost,
+//     @JsonKey(name: "excess_tax") final int? excessTax,
+//     @JsonKey(name: "actual_cost") final double? actualCost,
+//     @JsonKey(name: "vat") final int? vat,
+//     @JsonKey(name: "grand_total") final double? grandTotal,
+//     @JsonKey(name: "vatable_amount") final int? variableAmount,
+//     @JsonKey(name: "invoice_id") final int? invoiceId,
+//     @JsonKey(name: "purchase_order_id") final int? purchaseOederId,
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//   }) = _RequestFormReceivingModels;
+//   factory RequestFormReceivingModels.fromJson(Map<String, dynamic> json) =>
+//       _$RequestFormReceivingModelsFromJson(json);
+// }

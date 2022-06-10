@@ -1031,6 +1031,9 @@ class _$RecievingLinesTearOff {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "expiry_date") String? expiryDate,
+      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+      @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
@@ -1057,6 +1060,9 @@ class _$RecievingLinesTearOff {
       grandTotal: grandTotal,
       receivedQty: receivedQty,
       expiryDate: expiryDate,
+      vendorId: vendorId,
+      vendorTrnNumber: vendorTrnNumber,
+      vendorAddress: vendorAddress,
       vatableAmount: vatableAmount,
       excessTax: excessTax,
       actualCost: actualCost,
@@ -1107,6 +1113,12 @@ mixin _$RecievingLines {
   int? get receivedQty => throw _privateConstructorUsedError;
   @JsonKey(name: "expiry_date")
   String? get expiryDate => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_id")
+  String? get vendorId => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_trn_number")
+  String? get vendorTrnNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_address")
+  String? get vendorAddress => throw _privateConstructorUsedError;
   @JsonKey(name: "vatable_amount")
   double? get vatableAmount => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
@@ -1152,6 +1164,9 @@ abstract class $RecievingLinesCopyWith<$Res> {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "expiry_date") String? expiryDate,
+      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+      @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
@@ -1190,6 +1205,9 @@ class _$RecievingLinesCopyWithImpl<$Res>
     Object? grandTotal = freezed,
     Object? receivedQty = freezed,
     Object? expiryDate = freezed,
+    Object? vendorId = freezed,
+    Object? vendorTrnNumber = freezed,
+    Object? vendorAddress = freezed,
     Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
@@ -1271,6 +1289,18 @@ class _$RecievingLinesCopyWithImpl<$Res>
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      vendorId: vendorId == freezed
+          ? _value.vendorId
+          : vendorId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorTrnNumber: vendorTrnNumber == freezed
+          ? _value.vendorTrnNumber
+          : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorAddress: vendorAddress == freezed
+          ? _value.vendorAddress
+          : vendorAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       vatableAmount: vatableAmount == freezed
           ? _value.vatableAmount
           : vatableAmount // ignore: cast_nullable_to_non_nullable
@@ -1329,6 +1359,9 @@ abstract class _$RecievingLinesCopyWith<$Res>
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "expiry_date") String? expiryDate,
+      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+      @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "actual_cost") double? actualCost,
@@ -1369,6 +1402,9 @@ class __$RecievingLinesCopyWithImpl<$Res>
     Object? grandTotal = freezed,
     Object? receivedQty = freezed,
     Object? expiryDate = freezed,
+    Object? vendorId = freezed,
+    Object? vendorTrnNumber = freezed,
+    Object? vendorAddress = freezed,
     Object? vatableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
@@ -1450,6 +1486,18 @@ class __$RecievingLinesCopyWithImpl<$Res>
           ? _value.expiryDate
           : expiryDate // ignore: cast_nullable_to_non_nullable
               as String?,
+      vendorId: vendorId == freezed
+          ? _value.vendorId
+          : vendorId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorTrnNumber: vendorTrnNumber == freezed
+          ? _value.vendorTrnNumber
+          : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorAddress: vendorAddress == freezed
+          ? _value.vendorAddress
+          : vendorAddress // ignore: cast_nullable_to_non_nullable
+              as String?,
       vatableAmount: vatableAmount == freezed
           ? _value.vatableAmount
           : vatableAmount // ignore: cast_nullable_to_non_nullable
@@ -1504,6 +1552,9 @@ class _$_RecievingLines implements _RecievingLines {
       @JsonKey(name: "grand_total") this.grandTotal,
       @JsonKey(name: "received_qty") this.receivedQty,
       @JsonKey(name: "expiry_date") this.expiryDate,
+      @JsonKey(name: "vendor_id") this.vendorId,
+      @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
+      @JsonKey(name: "vendor_address") this.vendorAddress,
       @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "actual_cost") this.actualCost,
@@ -1564,6 +1615,15 @@ class _$_RecievingLines implements _RecievingLines {
   @JsonKey(name: "expiry_date")
   final String? expiryDate;
   @override
+  @JsonKey(name: "vendor_id")
+  final String? vendorId;
+  @override
+  @JsonKey(name: "vendor_trn_number")
+  final String? vendorTrnNumber;
+  @override
+  @JsonKey(name: "vendor_address")
+  final String? vendorAddress;
+  @override
   @JsonKey(name: "vatable_amount")
   final double? vatableAmount;
   @override
@@ -1587,7 +1647,7 @@ class _$_RecievingLines implements _RecievingLines {
 
   @override
   String toString() {
-    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId)';
+    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorAddress: $vendorAddress, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId)';
   }
 
   @override
@@ -1645,21 +1705,24 @@ class _$_RecievingLines implements _RecievingLines {
             (identical(other.expiryDate, expiryDate) ||
                 const DeepCollectionEquality()
                     .equals(other.expiryDate, expiryDate)) &&
+            (identical(other.vendorId, vendorId) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorId, vendorId)) &&
+            (identical(other.vendorTrnNumber, vendorTrnNumber) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorTrnNumber, vendorTrnNumber)) &&
+            (identical(other.vendorAddress, vendorAddress) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorAddress, vendorAddress)) &&
             (identical(other.vatableAmount, vatableAmount) ||
                 const DeepCollectionEquality()
                     .equals(other.vatableAmount, vatableAmount)) &&
             (identical(other.excessTax, excessTax) ||
                 const DeepCollectionEquality()
                     .equals(other.excessTax, excessTax)) &&
-            (identical(other.actualCost, actualCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.actualCost, actualCost)) &&
-            (identical(other.isInvoiced, isInvoiced) ||
-                const DeepCollectionEquality()
-                    .equals(other.isInvoiced, isInvoiced)) &&
-            (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)) &&
+            (identical(other.actualCost, actualCost) || const DeepCollectionEquality().equals(other.actualCost, actualCost)) &&
+            (identical(other.isInvoiced, isInvoiced) || const DeepCollectionEquality().equals(other.isInvoiced, isInvoiced)) &&
+            (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
             (identical(other.isFree, isFree) || const DeepCollectionEquality().equals(other.isFree, isFree)) &&
             (identical(other.purchaseOrderLineId, purchaseOrderLineId) || const DeepCollectionEquality().equals(other.purchaseOrderLineId, purchaseOrderLineId)));
   }
@@ -1685,6 +1748,9 @@ class _$_RecievingLines implements _RecievingLines {
       const DeepCollectionEquality().hash(grandTotal) ^
       const DeepCollectionEquality().hash(receivedQty) ^
       const DeepCollectionEquality().hash(expiryDate) ^
+      const DeepCollectionEquality().hash(vendorId) ^
+      const DeepCollectionEquality().hash(vendorTrnNumber) ^
+      const DeepCollectionEquality().hash(vendorAddress) ^
       const DeepCollectionEquality().hash(vatableAmount) ^
       const DeepCollectionEquality().hash(excessTax) ^
       const DeepCollectionEquality().hash(actualCost) ^
@@ -1724,6 +1790,9 @@ abstract class _RecievingLines implements RecievingLines {
           @JsonKey(name: "grand_total") double? grandTotal,
           @JsonKey(name: "received_qty") int? receivedQty,
           @JsonKey(name: "expiry_date") String? expiryDate,
+          @JsonKey(name: "vendor_id") String? vendorId,
+          @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
+          @JsonKey(name: "vendor_address") String? vendorAddress,
           @JsonKey(name: "vatable_amount") double? vatableAmount,
           @JsonKey(name: "excess_tax") double? excessTax,
           @JsonKey(name: "actual_cost") double? actualCost,
@@ -1784,6 +1853,15 @@ abstract class _RecievingLines implements RecievingLines {
   @override
   @JsonKey(name: "expiry_date")
   String? get expiryDate => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vendor_id")
+  String? get vendorId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vendor_trn_number")
+  String? get vendorTrnNumber => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vendor_address")
+  String? get vendorAddress => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vatable_amount")
   double? get vatableAmount => throw _privateConstructorUsedError;
@@ -2062,5 +2140,489 @@ abstract class _AdditionalGenerateModel implements AdditionalGenerateModel {
   @override
   @JsonKey(ignore: true)
   _$AdditionalGenerateModelCopyWith<_AdditionalGenerateModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+RequestReceivingPatch _$RequestReceivingPatchFromJson(
+    Map<String, dynamic> json) {
+  return _RequestReceivingPatch.fromJson(json);
+}
+
+/// @nodoc
+class _$RequestReceivingPatchTearOff {
+  const _$RequestReceivingPatchTearOff();
+
+  _RequestReceivingPatch call(
+      {int? id,
+      double? foc,
+      double? discount,
+      double? vat,
+      String? remarks,
+      String? note,
+      @JsonKey(name: "received_by") String? receivedBy,
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "receiving_lines") List<RecievingLines>? receivingLines}) {
+    return _RequestReceivingPatch(
+      id: id,
+      foc: foc,
+      discount: discount,
+      vat: vat,
+      remarks: remarks,
+      note: note,
+      receivedBy: receivedBy,
+      unitCost: unitCost,
+      grandTotal: grandTotal,
+      vatableAmount: vatableAmount,
+      excessTax: excessTax,
+      actualCost: actualCost,
+      receivingLines: receivingLines,
+    );
+  }
+
+  RequestReceivingPatch fromJson(Map<String, Object> json) {
+    return RequestReceivingPatch.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $RequestReceivingPatch = _$RequestReceivingPatchTearOff();
+
+/// @nodoc
+mixin _$RequestReceivingPatch {
+  int? get id => throw _privateConstructorUsedError;
+  double? get foc => throw _privateConstructorUsedError;
+  double? get discount => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError;
+  String? get remarks => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
+  @JsonKey(name: "received_by")
+  String? get receivedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: "unit_cost")
+  double? get unitCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "grand_total")
+  double? get grandTotal => throw _privateConstructorUsedError;
+  @JsonKey(name: "vatable_amount")
+  double? get vatableAmount => throw _privateConstructorUsedError;
+  @JsonKey(name: "excess_tax")
+  double? get excessTax => throw _privateConstructorUsedError;
+  @JsonKey(name: "actual_cost")
+  double? get actualCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "receiving_lines")
+  List<RecievingLines>? get receivingLines =>
+      throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $RequestReceivingPatchCopyWith<RequestReceivingPatch> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $RequestReceivingPatchCopyWith<$Res> {
+  factory $RequestReceivingPatchCopyWith(RequestReceivingPatch value,
+          $Res Function(RequestReceivingPatch) then) =
+      _$RequestReceivingPatchCopyWithImpl<$Res>;
+  $Res call(
+      {int? id,
+      double? foc,
+      double? discount,
+      double? vat,
+      String? remarks,
+      String? note,
+      @JsonKey(name: "received_by") String? receivedBy,
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "receiving_lines") List<RecievingLines>? receivingLines});
+}
+
+/// @nodoc
+class _$RequestReceivingPatchCopyWithImpl<$Res>
+    implements $RequestReceivingPatchCopyWith<$Res> {
+  _$RequestReceivingPatchCopyWithImpl(this._value, this._then);
+
+  final RequestReceivingPatch _value;
+  // ignore: unused_field
+  final $Res Function(RequestReceivingPatch) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? foc = freezed,
+    Object? discount = freezed,
+    Object? vat = freezed,
+    Object? remarks = freezed,
+    Object? note = freezed,
+    Object? receivedBy = freezed,
+    Object? unitCost = freezed,
+    Object? grandTotal = freezed,
+    Object? vatableAmount = freezed,
+    Object? excessTax = freezed,
+    Object? actualCost = freezed,
+    Object? receivingLines = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      foc: foc == freezed
+          ? _value.foc
+          : foc // ignore: cast_nullable_to_non_nullable
+              as double?,
+      discount: discount == freezed
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      remarks: remarks == freezed
+          ? _value.remarks
+          : remarks // ignore: cast_nullable_to_non_nullable
+              as String?,
+      note: note == freezed
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedBy: receivedBy == freezed
+          ? _value.receivedBy
+          : receivedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitCost: unitCost == freezed
+          ? _value.unitCost
+          : unitCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      grandTotal: grandTotal == freezed
+          ? _value.grandTotal
+          : grandTotal // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vatableAmount: vatableAmount == freezed
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      excessTax: excessTax == freezed
+          ? _value.excessTax
+          : excessTax // ignore: cast_nullable_to_non_nullable
+              as double?,
+      actualCost: actualCost == freezed
+          ? _value.actualCost
+          : actualCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receivingLines: receivingLines == freezed
+          ? _value.receivingLines
+          : receivingLines // ignore: cast_nullable_to_non_nullable
+              as List<RecievingLines>?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$RequestReceivingPatchCopyWith<$Res>
+    implements $RequestReceivingPatchCopyWith<$Res> {
+  factory _$RequestReceivingPatchCopyWith(_RequestReceivingPatch value,
+          $Res Function(_RequestReceivingPatch) then) =
+      __$RequestReceivingPatchCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? id,
+      double? foc,
+      double? discount,
+      double? vat,
+      String? remarks,
+      String? note,
+      @JsonKey(name: "received_by") String? receivedBy,
+      @JsonKey(name: "unit_cost") double? unitCost,
+      @JsonKey(name: "grand_total") double? grandTotal,
+      @JsonKey(name: "vatable_amount") double? vatableAmount,
+      @JsonKey(name: "excess_tax") double? excessTax,
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "receiving_lines") List<RecievingLines>? receivingLines});
+}
+
+/// @nodoc
+class __$RequestReceivingPatchCopyWithImpl<$Res>
+    extends _$RequestReceivingPatchCopyWithImpl<$Res>
+    implements _$RequestReceivingPatchCopyWith<$Res> {
+  __$RequestReceivingPatchCopyWithImpl(_RequestReceivingPatch _value,
+      $Res Function(_RequestReceivingPatch) _then)
+      : super(_value, (v) => _then(v as _RequestReceivingPatch));
+
+  @override
+  _RequestReceivingPatch get _value => super._value as _RequestReceivingPatch;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? foc = freezed,
+    Object? discount = freezed,
+    Object? vat = freezed,
+    Object? remarks = freezed,
+    Object? note = freezed,
+    Object? receivedBy = freezed,
+    Object? unitCost = freezed,
+    Object? grandTotal = freezed,
+    Object? vatableAmount = freezed,
+    Object? excessTax = freezed,
+    Object? actualCost = freezed,
+    Object? receivingLines = freezed,
+  }) {
+    return _then(_RequestReceivingPatch(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      foc: foc == freezed
+          ? _value.foc
+          : foc // ignore: cast_nullable_to_non_nullable
+              as double?,
+      discount: discount == freezed
+          ? _value.discount
+          : discount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
+      remarks: remarks == freezed
+          ? _value.remarks
+          : remarks // ignore: cast_nullable_to_non_nullable
+              as String?,
+      note: note == freezed
+          ? _value.note
+          : note // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedBy: receivedBy == freezed
+          ? _value.receivedBy
+          : receivedBy // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitCost: unitCost == freezed
+          ? _value.unitCost
+          : unitCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      grandTotal: grandTotal == freezed
+          ? _value.grandTotal
+          : grandTotal // ignore: cast_nullable_to_non_nullable
+              as double?,
+      vatableAmount: vatableAmount == freezed
+          ? _value.vatableAmount
+          : vatableAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      excessTax: excessTax == freezed
+          ? _value.excessTax
+          : excessTax // ignore: cast_nullable_to_non_nullable
+              as double?,
+      actualCost: actualCost == freezed
+          ? _value.actualCost
+          : actualCost // ignore: cast_nullable_to_non_nullable
+              as double?,
+      receivingLines: receivingLines == freezed
+          ? _value.receivingLines
+          : receivingLines // ignore: cast_nullable_to_non_nullable
+              as List<RecievingLines>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_RequestReceivingPatch implements _RequestReceivingPatch {
+  const _$_RequestReceivingPatch(
+      {this.id,
+      this.foc,
+      this.discount,
+      this.vat,
+      this.remarks,
+      this.note,
+      @JsonKey(name: "received_by") this.receivedBy,
+      @JsonKey(name: "unit_cost") this.unitCost,
+      @JsonKey(name: "grand_total") this.grandTotal,
+      @JsonKey(name: "vatable_amount") this.vatableAmount,
+      @JsonKey(name: "excess_tax") this.excessTax,
+      @JsonKey(name: "actual_cost") this.actualCost,
+      @JsonKey(name: "receiving_lines") this.receivingLines});
+
+  factory _$_RequestReceivingPatch.fromJson(Map<String, dynamic> json) =>
+      _$$_RequestReceivingPatchFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final double? foc;
+  @override
+  final double? discount;
+  @override
+  final double? vat;
+  @override
+  final String? remarks;
+  @override
+  final String? note;
+  @override
+  @JsonKey(name: "received_by")
+  final String? receivedBy;
+  @override
+  @JsonKey(name: "unit_cost")
+  final double? unitCost;
+  @override
+  @JsonKey(name: "grand_total")
+  final double? grandTotal;
+  @override
+  @JsonKey(name: "vatable_amount")
+  final double? vatableAmount;
+  @override
+  @JsonKey(name: "excess_tax")
+  final double? excessTax;
+  @override
+  @JsonKey(name: "actual_cost")
+  final double? actualCost;
+  @override
+  @JsonKey(name: "receiving_lines")
+  final List<RecievingLines>? receivingLines;
+
+  @override
+  String toString() {
+    return 'RequestReceivingPatch(id: $id, foc: $foc, discount: $discount, vat: $vat, remarks: $remarks, note: $note, receivedBy: $receivedBy, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, receivingLines: $receivingLines)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _RequestReceivingPatch &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.foc, foc) ||
+                const DeepCollectionEquality().equals(other.foc, foc)) &&
+            (identical(other.discount, discount) ||
+                const DeepCollectionEquality()
+                    .equals(other.discount, discount)) &&
+            (identical(other.vat, vat) ||
+                const DeepCollectionEquality().equals(other.vat, vat)) &&
+            (identical(other.remarks, remarks) ||
+                const DeepCollectionEquality()
+                    .equals(other.remarks, remarks)) &&
+            (identical(other.note, note) ||
+                const DeepCollectionEquality().equals(other.note, note)) &&
+            (identical(other.receivedBy, receivedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.receivedBy, receivedBy)) &&
+            (identical(other.unitCost, unitCost) ||
+                const DeepCollectionEquality()
+                    .equals(other.unitCost, unitCost)) &&
+            (identical(other.grandTotal, grandTotal) ||
+                const DeepCollectionEquality()
+                    .equals(other.grandTotal, grandTotal)) &&
+            (identical(other.vatableAmount, vatableAmount) ||
+                const DeepCollectionEquality()
+                    .equals(other.vatableAmount, vatableAmount)) &&
+            (identical(other.excessTax, excessTax) ||
+                const DeepCollectionEquality()
+                    .equals(other.excessTax, excessTax)) &&
+            (identical(other.actualCost, actualCost) ||
+                const DeepCollectionEquality()
+                    .equals(other.actualCost, actualCost)) &&
+            (identical(other.receivingLines, receivingLines) ||
+                const DeepCollectionEquality()
+                    .equals(other.receivingLines, receivingLines)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(foc) ^
+      const DeepCollectionEquality().hash(discount) ^
+      const DeepCollectionEquality().hash(vat) ^
+      const DeepCollectionEquality().hash(remarks) ^
+      const DeepCollectionEquality().hash(note) ^
+      const DeepCollectionEquality().hash(receivedBy) ^
+      const DeepCollectionEquality().hash(unitCost) ^
+      const DeepCollectionEquality().hash(grandTotal) ^
+      const DeepCollectionEquality().hash(vatableAmount) ^
+      const DeepCollectionEquality().hash(excessTax) ^
+      const DeepCollectionEquality().hash(actualCost) ^
+      const DeepCollectionEquality().hash(receivingLines);
+
+  @JsonKey(ignore: true)
+  @override
+  _$RequestReceivingPatchCopyWith<_RequestReceivingPatch> get copyWith =>
+      __$RequestReceivingPatchCopyWithImpl<_RequestReceivingPatch>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_RequestReceivingPatchToJson(this);
+  }
+}
+
+abstract class _RequestReceivingPatch implements RequestReceivingPatch {
+  const factory _RequestReceivingPatch(
+      {int? id,
+      double? foc,
+      double? discount,
+      double? vat,
+      String? remarks,
+      String? note,
+      @JsonKey(name: "received_by")
+          String? receivedBy,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "receiving_lines")
+          List<RecievingLines>? receivingLines}) = _$_RequestReceivingPatch;
+
+  factory _RequestReceivingPatch.fromJson(Map<String, dynamic> json) =
+      _$_RequestReceivingPatch.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  double? get foc => throw _privateConstructorUsedError;
+  @override
+  double? get discount => throw _privateConstructorUsedError;
+  @override
+  double? get vat => throw _privateConstructorUsedError;
+  @override
+  String? get remarks => throw _privateConstructorUsedError;
+  @override
+  String? get note => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "received_by")
+  String? get receivedBy => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "unit_cost")
+  double? get unitCost => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "grand_total")
+  double? get grandTotal => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "vatable_amount")
+  double? get vatableAmount => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "excess_tax")
+  double? get excessTax => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "actual_cost")
+  double? get actualCost => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "receiving_lines")
+  List<RecievingLines>? get receivingLines =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$RequestReceivingPatchCopyWith<_RequestReceivingPatch> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -100,6 +100,9 @@ _$_RecievingLines _$$_RecievingLinesFromJson(Map<String, dynamic> json) =>
       grandTotal: (json['grand_total'] as num?)?.toDouble(),
       receivedQty: json['received_qty'] as int?,
       expiryDate: json['expiry_date'] as String?,
+      vendorId: json['vendor_id'] as String?,
+      vendorTrnNumber: json['vendor_trn_number'] as String?,
+      vendorAddress: json['vendor_address'] as String?,
       vatableAmount: (json['vatable_amount'] as num?)?.toDouble(),
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       actualCost: (json['actual_cost'] as num?)?.toDouble(),
@@ -129,6 +132,9 @@ Map<String, dynamic> _$$_RecievingLinesToJson(_$_RecievingLines instance) =>
       'grand_total': instance.grandTotal,
       'received_qty': instance.receivedQty,
       'expiry_date': instance.expiryDate,
+      'vendor_id': instance.vendorId,
+      'vendor_trn_number': instance.vendorTrnNumber,
+      'vendor_address': instance.vendorAddress,
       'vatable_amount': instance.vatableAmount,
       'excess_tax': instance.excessTax,
       'actual_cost': instance.actualCost,
@@ -156,4 +162,42 @@ Map<String, dynamic> _$$_AdditionalGenerateModelToJson(
       'created_by': instance.createdBy,
       'purchase_order_id': instance.purchaseOrderId,
       'order_lines': instance.orderLines,
+    };
+
+_$_RequestReceivingPatch _$$_RequestReceivingPatchFromJson(
+        Map<String, dynamic> json) =>
+    _$_RequestReceivingPatch(
+      id: json['id'] as int?,
+      foc: (json['foc'] as num?)?.toDouble(),
+      discount: (json['discount'] as num?)?.toDouble(),
+      vat: (json['vat'] as num?)?.toDouble(),
+      remarks: json['remarks'] as String?,
+      note: json['note'] as String?,
+      receivedBy: json['received_by'] as String?,
+      unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      grandTotal: (json['grand_total'] as num?)?.toDouble(),
+      vatableAmount: (json['vatable_amount'] as num?)?.toDouble(),
+      excessTax: (json['excess_tax'] as num?)?.toDouble(),
+      actualCost: (json['actual_cost'] as num?)?.toDouble(),
+      receivingLines: (json['receiving_lines'] as List<dynamic>?)
+          ?.map((e) => RecievingLines.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_RequestReceivingPatchToJson(
+        _$_RequestReceivingPatch instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'foc': instance.foc,
+      'discount': instance.discount,
+      'vat': instance.vat,
+      'remarks': instance.remarks,
+      'note': instance.note,
+      'received_by': instance.receivedBy,
+      'unit_cost': instance.unitCost,
+      'grand_total': instance.grandTotal,
+      'vatable_amount': instance.vatableAmount,
+      'excess_tax': instance.excessTax,
+      'actual_cost': instance.actualCost,
+      'receiving_lines': instance.receivingLines,
     };
