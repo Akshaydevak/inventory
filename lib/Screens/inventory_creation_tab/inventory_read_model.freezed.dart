@@ -2095,11 +2095,11 @@ class _$LinesTearOff {
       double? vat,
       String? barcode,
       @JsonKey(name: "receiving_line_code") String? receiveLineCode,
+      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "receiving_line_id") int? receiveLineId,
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "total_qty") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
@@ -2119,11 +2119,11 @@ class _$LinesTearOff {
       vat: vat,
       barcode: barcode,
       receiveLineCode: receiveLineCode,
+      variantId: variantId,
       receivedQty: receivedQty,
       receiveLineId: receiveLineId,
       purchaseOrderLineid: purchaseOrderLineid,
       invoiceLineCode: invoiceLineCode,
-      variantId: variantId,
       variantName: variantName,
       totalQty: totalQty,
       unitCost: unitCost,
@@ -2156,6 +2156,8 @@ mixin _$Lines {
   String? get barcode => throw _privateConstructorUsedError;
   @JsonKey(name: "receiving_line_code")
   String? get receiveLineCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_id")
+  String? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "received_qty")
   int? get receivedQty =>
       throw _privateConstructorUsedError; // @JsonKey(name: "invoice_id") final int? invoiceId,
@@ -2165,8 +2167,6 @@ mixin _$Lines {
   int? get purchaseOrderLineid => throw _privateConstructorUsedError;
   @JsonKey(name: "invoice_line_code")
   String? get invoiceLineCode => throw _privateConstructorUsedError;
-  @JsonKey(name: "variant_id")
-  String? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "total_qty")
@@ -2208,11 +2208,11 @@ abstract class $LinesCopyWith<$Res> {
       double? vat,
       String? barcode,
       @JsonKey(name: "receiving_line_code") String? receiveLineCode,
+      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "receiving_line_id") int? receiveLineId,
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "total_qty") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
@@ -2243,11 +2243,11 @@ class _$LinesCopyWithImpl<$Res> implements $LinesCopyWith<$Res> {
     Object? vat = freezed,
     Object? barcode = freezed,
     Object? receiveLineCode = freezed,
+    Object? variantId = freezed,
     Object? receivedQty = freezed,
     Object? receiveLineId = freezed,
     Object? purchaseOrderLineid = freezed,
     Object? invoiceLineCode = freezed,
-    Object? variantId = freezed,
     Object? variantName = freezed,
     Object? totalQty = freezed,
     Object? unitCost = freezed,
@@ -2286,6 +2286,10 @@ class _$LinesCopyWithImpl<$Res> implements $LinesCopyWith<$Res> {
           ? _value.receiveLineCode
           : receiveLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      variantId: variantId == freezed
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as String?,
       receivedQty: receivedQty == freezed
           ? _value.receivedQty
           : receivedQty // ignore: cast_nullable_to_non_nullable
@@ -2301,10 +2305,6 @@ class _$LinesCopyWithImpl<$Res> implements $LinesCopyWith<$Res> {
       invoiceLineCode: invoiceLineCode == freezed
           ? _value.invoiceLineCode
           : invoiceLineCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      variantId: variantId == freezed
-          ? _value.variantId
-          : variantId // ignore: cast_nullable_to_non_nullable
               as String?,
       variantName: variantName == freezed
           ? _value.variantName
@@ -2370,11 +2370,11 @@ abstract class _$LinesCopyWith<$Res> implements $LinesCopyWith<$Res> {
       double? vat,
       String? barcode,
       @JsonKey(name: "receiving_line_code") String? receiveLineCode,
+      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "receiving_line_id") int? receiveLineId,
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "total_qty") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
@@ -2406,11 +2406,11 @@ class __$LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res>
     Object? vat = freezed,
     Object? barcode = freezed,
     Object? receiveLineCode = freezed,
+    Object? variantId = freezed,
     Object? receivedQty = freezed,
     Object? receiveLineId = freezed,
     Object? purchaseOrderLineid = freezed,
     Object? invoiceLineCode = freezed,
-    Object? variantId = freezed,
     Object? variantName = freezed,
     Object? totalQty = freezed,
     Object? unitCost = freezed,
@@ -2449,6 +2449,10 @@ class __$LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res>
           ? _value.receiveLineCode
           : receiveLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      variantId: variantId == freezed
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as String?,
       receivedQty: receivedQty == freezed
           ? _value.receivedQty
           : receivedQty // ignore: cast_nullable_to_non_nullable
@@ -2464,10 +2468,6 @@ class __$LinesCopyWithImpl<$Res> extends _$LinesCopyWithImpl<$Res>
       invoiceLineCode: invoiceLineCode == freezed
           ? _value.invoiceLineCode
           : invoiceLineCode // ignore: cast_nullable_to_non_nullable
-              as String?,
-      variantId: variantId == freezed
-          ? _value.variantId
-          : variantId // ignore: cast_nullable_to_non_nullable
               as String?,
       variantName: variantName == freezed
           ? _value.variantName
@@ -2531,11 +2531,11 @@ class _$_Lines implements _Lines {
       this.vat,
       this.barcode,
       @JsonKey(name: "receiving_line_code") this.receiveLineCode,
+      @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "received_qty") this.receivedQty,
       @JsonKey(name: "receiving_line_id") this.receiveLineId,
       @JsonKey(name: "purchase_order_line_id") this.purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") this.invoiceLineCode,
-      @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "total_qty") this.totalQty,
       @JsonKey(name: "unit_cost") this.unitCost,
@@ -2566,6 +2566,9 @@ class _$_Lines implements _Lines {
   @JsonKey(name: "receiving_line_code")
   final String? receiveLineCode;
   @override
+  @JsonKey(name: "variant_id")
+  final String? variantId;
+  @override
   @JsonKey(name: "received_qty")
   final int? receivedQty;
   @override // @JsonKey(name: "invoice_id") final int? invoiceId,
@@ -2577,9 +2580,6 @@ class _$_Lines implements _Lines {
   @override
   @JsonKey(name: "invoice_line_code")
   final String? invoiceLineCode;
-  @override
-  @JsonKey(name: "variant_id")
-  final String? variantId;
   @override
   @JsonKey(name: "variant_name")
   final String? variantName;
@@ -2619,7 +2619,7 @@ class _$_Lines implements _Lines {
 
   @override
   String toString() {
-    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantId: $variantId, variantName: $variantName, totalQty: $totalQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
+    return 'Lines(id: $id, foc: $foc, discount: $discount, vat: $vat, barcode: $barcode, receiveLineCode: $receiveLineCode, variantId: $variantId, receivedQty: $receivedQty, receiveLineId: $receiveLineId, purchaseOrderLineid: $purchaseOrderLineid, invoiceLineCode: $invoiceLineCode, variantName: $variantName, totalQty: $totalQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isReceived: $isReceived)';
   }
 
   @override
@@ -2641,6 +2641,9 @@ class _$_Lines implements _Lines {
             (identical(other.receiveLineCode, receiveLineCode) ||
                 const DeepCollectionEquality()
                     .equals(other.receiveLineCode, receiveLineCode)) &&
+            (identical(other.variantId, variantId) ||
+                const DeepCollectionEquality()
+                    .equals(other.variantId, variantId)) &&
             (identical(other.receivedQty, receivedQty) ||
                 const DeepCollectionEquality()
                     .equals(other.receivedQty, receivedQty)) &&
@@ -2653,9 +2656,6 @@ class _$_Lines implements _Lines {
             (identical(other.invoiceLineCode, invoiceLineCode) ||
                 const DeepCollectionEquality()
                     .equals(other.invoiceLineCode, invoiceLineCode)) &&
-            (identical(other.variantId, variantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantId, variantId)) &&
             (identical(other.variantName, variantName) ||
                 const DeepCollectionEquality()
                     .equals(other.variantName, variantName)) &&
@@ -2702,11 +2702,11 @@ class _$_Lines implements _Lines {
       const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(receiveLineCode) ^
+      const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(receivedQty) ^
       const DeepCollectionEquality().hash(receiveLineId) ^
       const DeepCollectionEquality().hash(purchaseOrderLineid) ^
       const DeepCollectionEquality().hash(invoiceLineCode) ^
-      const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantName) ^
       const DeepCollectionEquality().hash(totalQty) ^
       const DeepCollectionEquality().hash(unitCost) ^
@@ -2739,11 +2739,11 @@ abstract class _Lines implements Lines {
       double? vat,
       String? barcode,
       @JsonKey(name: "receiving_line_code") String? receiveLineCode,
+      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "received_qty") int? receivedQty,
       @JsonKey(name: "receiving_line_id") int? receiveLineId,
       @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineid,
       @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "total_qty") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
@@ -2773,6 +2773,9 @@ abstract class _Lines implements Lines {
   @JsonKey(name: "receiving_line_code")
   String? get receiveLineCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "variant_id")
+  String? get variantId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "received_qty")
   int? get receivedQty => throw _privateConstructorUsedError;
   @override // @JsonKey(name: "invoice_id") final int? invoiceId,
@@ -2784,9 +2787,6 @@ abstract class _Lines implements Lines {
   @override
   @JsonKey(name: "invoice_line_code")
   String? get invoiceLineCode => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "variant_id")
-  String? get variantId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;

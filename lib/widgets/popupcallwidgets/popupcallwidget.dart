@@ -600,7 +600,8 @@ class _OrderedPersonRequestState extends State<OrderedPersonRequest> {
                           border: InputBorder.none,
                           isDense: true,
                           // border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                         // suffixIcon: Icon(Icons.arrow_downward_outlined)
+                      )),
                   onSuggestionSelected: (suggestion) {
                     print("suggestion"+suggestion.toString());
                     if (suggestion == "Add new")

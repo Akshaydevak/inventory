@@ -75,7 +75,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     }
     else if(tab == "II"){
       path =
-      "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/1";
+      "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/test";
 
     }
     else {

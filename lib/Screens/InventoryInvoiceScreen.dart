@@ -86,6 +86,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     vatController.text = vatValue.toString();
 
     actualCostController.text = actualValue.toString();
+    print("foc value"+focValue.toString());
 
     focController.text = focValue.toString();
     discountController.text = discountValue.toString();
@@ -511,6 +512,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                      // textColor: Palette.white
                                                    ),
 
+
                                                    tableHeadtext(
                                                      'Is Recieved',
                                                      padding:
@@ -669,6 +671,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                    ),
                                                    TableCell(
                                                      verticalAlignment: TableCellVerticalAlignment.middle,
+                                                     child: textPadding(additionalVariants[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                   ),
+                                                   TableCell(
+                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                      child: textPadding(additionalVariants[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                    ),
 
@@ -723,12 +729,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                    TableCell(
                                                      verticalAlignment: TableCellVerticalAlignment.middle,
-                                                     child: textPadding(additionalVariants[i].variableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                     child: textPadding(additionalVariants[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                    ),
-                                                   TableCell(
-                                                     verticalAlignment: TableCellVerticalAlignment.middle,
-                                                     child: textPadding(additionalVariants[i].vat .toString()?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
-                                                   ),
+                                              
 
 
                                                    TableCell(

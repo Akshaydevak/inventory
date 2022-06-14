@@ -22,12 +22,12 @@ Widget tableHeadtext(
     String label, {
       double height = 10,
       double? size,
-      Color? textColor = Colors.black,
-       Color? color =  Pellet.tableHeader,
+      Color? textColor = Colors.white,
+       Color? color =  Pellet.tableHeaderPrint,
       EdgeInsets? padding,
     }) =>
     Container(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.center,
       height: height,
       padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
       color: color,

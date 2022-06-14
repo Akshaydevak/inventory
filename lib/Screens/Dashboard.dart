@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import '../printScreen.dart';
 import 'PurchaseSceen.dart';
 import 'RightMenuscreen.dart';
 
@@ -147,7 +148,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                     physics: NeverScrollableScrollPhysics(),
                                     controller: _tabController,
                                     children: [
-                                      Text("Akshay"),
+                                      PrintScreen(),
                                       PurchaseScreen(isCollapsed),
                                       SalesScreen(isCollapsed),
                                     ],

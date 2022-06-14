@@ -185,8 +185,9 @@ class _GeneralScreenState extends State<GeneralScreen> {
         unitcostListControllers.add(unitcost);
         var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
         excesstListControllers.add(excess);
-        var disc = new TextEditingController(text: table[i].discount.toString()??"");
-        discounttListControllers.add(disc);
+        var disc = new TextEditingController(text:  table[i].discount.toString());
+
+         discounttListControllers.add(disc);
         var foc = new TextEditingController(text: table[i].foc.toString()??"");
         focListControllers.add(foc);
         var vat = new TextEditingController(text: table[i].vat.toString()??"");
@@ -198,6 +199,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
       }
     }
   }
+
 
 
   addition() {
@@ -238,6 +240,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
     print(widget.purchaseTable);
     print(widget.unitcost);
     print("+++++++++++++++");
+    // valueAddingTextEdingController();
 
     Size size = MediaQuery.of(context).size;
     vm = Provider.of<NavigationProvider>(context);
@@ -404,7 +407,9 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           print("data.data?.promisedReceiptdate${ planned_receipt_date.text}");
                           address1=data.data?.address1??"";
                           address2=data.data?.address2??"";
-                          valueAddingTextEdingController();
+
+                            valueAddingTextEdingController();
+
 
 
                         });
@@ -664,7 +669,8 @@ print("Variable.ak"+Variable.verticalid.toString());
 
 
 
-                                        child: TextButton(
+                                        child:
+                                        TextButton(
                                             style: TextButton.styleFrom(
                                                 primary: Colors.blue,
                                                 elevation: 2,
@@ -700,6 +706,21 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                 address2="";
                                                 address1="";
                                                 purchaseUom="";
+                                              requestedListControllers.clear();
+                                              minListControllers.clear() ;
+                                              maxListControllers .clear();
+                                              unitcostListControllers.clear();
+                                              excesstListControllers.clear();
+                                              discounttListControllers.clear();
+                                              print("discount"+discounttListControllers.length.toString());
+                                              focListControllers.clear();
+                                              print("foccc"+focListControllers.length.toString());
+                                              vatListControllers.clear();
+                                              print("vattt"+vatListControllers.length.toString());
+                                              print("appuzz"+table.length.toString());
+                                              setState(() {
+
+                                              });
 
                                               // else{
                                               //   context
@@ -1099,7 +1120,8 @@ print("Variable.ak"+Variable.verticalid.toString());
                                             children: [
                                               Container(
                                                 padding: EdgeInsets.only(left: width*.02,top: height*0.02),
-                                                child: TextButton(
+                                                child:
+                                                TextButton(
                                                   style: TextButton.styleFrom(
                                                       primary: Colors.blue,
                                                       elevation: 2,
@@ -1236,7 +1258,8 @@ print("Variable.ak"+Variable.verticalid.toString());
                                               ),
                                               SingleChildScrollView(
                                                  
-                                                child: Container(
+                                                child:
+                                                Container(
                                                   // height: 500,
                                                   width: MediaQuery.of(context)
                                                       .size
@@ -1458,6 +1481,15 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                               'Is Active',
                                                               padding:
                                                                   EdgeInsets.all(7),
+                                                              height: 46,
+                                                              size: 13,
+                                                              // color: Palette.containerDarknew,
+                                                              // textColor: Palette.white
+                                                            ),
+                                                            tableHeadtext(
+                                                              '',
+                                                              padding:
+                                                              EdgeInsets.all(7),
                                                               height: 46,
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
@@ -2223,6 +2255,21 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   //   },
                                                                   // ),
                                                                 ),
+                                                                TextButton(
+                                                                    style: TextButton.styleFrom(
+                                                                        primary: Colors.blue,
+                                                                        elevation: 2,
+                                                                        backgroundColor: Colors.white24),
+                                                                    onPressed: () {
+
+
+
+
+                                                                    },
+                                                                    child:Text("Add New ")
+
+                                                                ),
+
                                                               ]),],
 
 
@@ -2267,7 +2314,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                               child: PopUpCall(
                                                                 // label: "purchase UOM",
                                                                 type:
-                                                                    "c",
+                                                                    "cost-method-list",
                                                                 value: variantId,
                                                                 onSelection:
                                                                     (VariantId? va) {
@@ -2486,7 +2533,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                             //                 .w500)
                                                             check==0?
                                                             TextFormField(
-                                                              //initialValue:check.toString(),
+                                                              initialValue:check.toString(),
                                                                 keyboardType: TextInputType.number,
                                                               inputFormatters: <TextInputFormatter>[
                                                                 FilteringTextInputFormatter.digitsOnly
@@ -2538,8 +2585,7 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                                                   child: UnderLinedInput(
                                                                     initialCheck: true,
-
-                                                                      last:check.toString(),
+                                                                     // last:check.toString(),
 
                                                                       onChanged:
                                                                           (p0) {
@@ -2583,7 +2629,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                 ? TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
-                                                              last:"",
+
                                                                       onChanged:
                                                                           (p0) {
                                                                         if (p0 ==
@@ -2626,8 +2672,8 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                                                   child: UnderLinedInput(
                                                               last:"",
-                                                                      initial: eTax
-                                                                          .toString(),
+                                                                      // initial: eTax
+                                                                      //     .toString(),
                                                                       onChanged:
                                                                           (p0) {
                                                                         if (p0 ==
@@ -2980,8 +3026,8 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                           ]),
                                                     ],
                                                     widths: {
-                                                      0: FractionColumnWidth(.033),
-                                                       1: FractionColumnWidth(.06),
+                                                      0: FractionColumnWidth(.032),
+                                                       1: FractionColumnWidth(.054),
                                                       //  2: FractionColumnWidth(.05),
                                                       //  3: FractionColumnWidth(.06),
                                                       //  4: FractionColumnWidth(.05),
@@ -2996,11 +3042,11 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                       13: FractionColumnWidth(.035),
                                                        14: FractionColumnWidth(.035),
                                                       //  15: FractionColumnWidth(.05),
-                                                      //  16: FractionColumnWidth(.03),
+                                                      16: FractionColumnWidth(.045),
                                                       // 17: FractionColumnWidth(.05),
                                                       //  18: FractionColumnWidth(.05),
-                                                      //  19: FractionColumnWidth(.05),
-                                                      //  20: FractionColumnWidth(.05),
+                                                       19: FractionColumnWidth(.046),
+                                                       20: FractionColumnWidth(.042),
                                                     },
                                                   ),
                                                 ),
