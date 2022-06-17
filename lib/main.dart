@@ -1,9 +1,11 @@
 import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import 'Screens/Dashboard.dart';
 import 'commonWidget/Navigationprovider.dart';
+import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 
 void main() {
   // await WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +23,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => NavigationProvider(),
+        ),
+        BlocProvider(
+          create: (context) => VendordetailsCubit(),
         ),
       ],
       child: MaterialApp(

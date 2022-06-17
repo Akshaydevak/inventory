@@ -622,8 +622,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             PopUpDateFormField(
 
                                                                 format:DateFormat('yyyy-MM-dd'),
-                                                                //controller: orderDateController,
-                                                                initialValue:orderDateController.text!=""?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26 00:00:00.000"),
+                                                                controller: orderDateController,
+                                                                //initialValue:orderDateController.text!=null||orderDateController.text!=""||orderDateController.text!="null"?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26"),
                                                                 label: "Promised Reciept Date",
                                                                 onSaved: (newValue) {
                                                                   print("new value"+newValue.toString());
@@ -660,9 +660,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             PopUpDateFormField(
 
                                                                 format:DateFormat('yyyy-MM-dd'),
-                                                                //controller: promisedRecieptDate,
-                                                                initialValue:promisedRecieptDate.text!=null?
-                                                                    DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26 00:00:00.000"),
+                                                                controller: promisedRecieptDate,
+                                                                // initialValue:promisedRecieptDate.text!=null||promisedRecieptDate.text!=""||promisedRecieptDate.text!="null"?
+                                                                //     DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26"),
                                                                 label: "Promised Reciept Date",
                                                                 onSaved: (newValue) {
                                                                   promisedRecieptDate.text = newValue

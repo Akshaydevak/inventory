@@ -224,7 +224,8 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
           SizedBox(height: 3,),
 
           DateTimeField(
-            initialValue: widget.initialValue,
+            controller: widget.controller,
+            // initialValue: widget.initialValue,
             enabled: widget.enable,
             validator: (value) => value == null ? "* required" : null,
             decoration: InputDecoration(

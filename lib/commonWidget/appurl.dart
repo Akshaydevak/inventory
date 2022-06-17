@@ -7,7 +7,8 @@ const purchaseCurrentStockqty =
     stagingUrl + "inventory-stock/get-stock-quantity-by-variant/testing002/aa";
 const generalPurchaseRead = stagingUrl + "purchase-order/read-purchase-order/";
 const generalPurchasePatch = baseUrl + "purchase-order/read-purchase-order/";
-
+const vendorCodeUrl =
+    "https://api-newpartner-uat.ahlancart.com/new_partner/vendor-partner/list";
 //*************purchaseRecievingTAb screen
 const purchaseRecievingRead =
     stagingUrl + "purchase-order/read-receiving-by-purchase-order/";
@@ -27,7 +28,9 @@ const rqstReceivingRead =
     stagingUrl + "purchase-order/read-receiving-by-request-form/";
 const rqstReceivingPatch =
     stagingUrl + "purchase-order/patch-request-form-receiving/";
-const additionalGeneratedRequest = stagingUrl + "purchase-order/create-additional-system-generated-request-form";
+const additionalGeneratedRequest = stagingUrl +
+    "purchase-order/create-additional-system-generated-request-form";
 //inventory invoice**************************//****************
-const invoiceRead = stagingUrl + "purchase-order/read-purchase-order-for-invoice-posting/";
+const invoiceRead =
+    stagingUrl + "purchase-order/read-purchase-order-for-invoice-posting/";
 const invoicePost = stagingUrl + "purchase-order/create-purchase-invoice";

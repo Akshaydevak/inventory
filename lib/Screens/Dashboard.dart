@@ -7,6 +7,7 @@ import 'package:inventory/Screens/sidemenuScreen.dart';
 import 'package:inventory/Screens/titleScreen.dart';
 import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
@@ -75,6 +76,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     BlocProvider(
       create: (context) => TableDetailsCubitDartCubit(),
     ),
+
   ],
   child: Builder(
     builder: (context) {
@@ -263,9 +265,20 @@ class _TitleScreenState extends State<TitleScreen> {
               SizedBox(
                 width: size.width * .023,
               ),
-              TitleIcon(
-                image: "asset/setting.png",
+              CommonIcon(
+                toolTip: "settings",
+                size: 20,
+                iconData: Icons.settings_outlined,
+                onTap: () {
+                  showDailogPopUp(
+                      context,
+                      OpenSettings());
+
+                },
               ),
+              // TitleIcon(
+              //   image: "asset/setting.png",
+              // ),
               SizedBox(
                 width: size.width * .03,
               ),
