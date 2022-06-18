@@ -39,6 +39,7 @@ dependencies:
   dio: 4.0.0
   intl: ^0.17.0
   flutter_bloc: 7.0.1
+  sticky_headers:
   flutter_typeahead: ^3.2.1
   flutter_svg: ^0.20.0-nullsafety.3
 

@@ -26,13 +26,22 @@ class OpenSettings extends StatefulWidget {
 }
 
 class _OpenSettingsState extends State<OpenSettings> {
-  List<String>? inventoryList = [];
+  List<String>? inventoryList = [
+    "test",
+    "test",
+    "test",
+    "test"
+  ];
   bool _value = false;
   int selected = 0;
   int grpValue = 0;
+
+
+
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
+    Variable.inventory_ID=inventoryList![0];
     return
       AlertDialog(
       content:SizedBox(
@@ -44,7 +53,7 @@ class _OpenSettingsState extends State<OpenSettings> {
                                                         physics: NeverScrollableScrollPhysics(),
                                 itemBuilder:  (context, index) =>Container(
                                   child: ListTile(
-                                    title:Text("akshay") ,
+                                    title:Text(inventoryList?[0]??"") ,
                                     leading:  Radio(
                                     value: index,
                                     groupValue: grpValue,
@@ -54,11 +63,9 @@ class _OpenSettingsState extends State<OpenSettings> {
                                         print("inventory");
                                         // print(inventoryList?[index]
                                         //     .inventoryCode);
-                                        // Variable.inventory_ID =
-                                        // inventoryIdList[index];
-                                        // inventoryList?[index]
-                                        //     .inventoryCode ??
-                                        //     "";
+                                        Variable.inventory_ID =
+                                        inventoryList![index];
+
                                         // print("Value");
                                         // print(value);
                                         // print("grpvalue");

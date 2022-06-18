@@ -23,7 +23,7 @@ Widget tableHeadtext(
       double height = 10,
       double? size,
       Color? textColor = Colors.white,
-       Color? color =  Pellet.tableHeaderPrint,
+       Color? color =  Pellet.tableBlueHeaderPrint,
       EdgeInsets? padding,
     }) =>
     Container(
