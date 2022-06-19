@@ -3,6 +3,7 @@ class Variable{
   static String  email="";
   static String  trn="";
   static String  address="";
+  static String  vendorAddress="";
   static String  inventory_ID="";
 
   static int  tableindex=0;

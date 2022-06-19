@@ -150,7 +150,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                     physics: NeverScrollableScrollPhysics(),
                                     controller: _tabController,
                                     children: [
-                                      PrintScreen(),
+                                      Text("akshay"),
+                                      // PrintScreen(),
                                       PurchaseScreen(isCollapsed),
                                       SalesScreen(isCollapsed),
                                     ],

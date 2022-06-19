@@ -21,6 +21,8 @@ class Buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: (){
         onApply();
@@ -47,5 +49,36 @@ class Buttons extends StatelessWidget {
       ),
     );
 
+  }
+}
+class TextButtonLarge extends StatelessWidget {
+  final String? images;
+  final String text;
+  final IconData? icon;
+  const TextButtonLarge({Key? key,  this.images, required this.text,this.icon}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 150,
+      height: 50,
+      child: TextButton(onPressed: (){},
+          style: ButtonStyle(
+              shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                      borderRadius: BorderRadius.zero,
+                      side: BorderSide(color: Color(0XFF24203F))
+                  )
+              ),backgroundColor: MaterialStateProperty.all(Color(0XFF24203F))
+          ), child: Row(mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon),
+              // Image(image: AssetImage(images),height: 5,
+              //   // width: context.blockSizeHorizontal*1.5,
+              // ),
+              SizedBox(width: 3,),
+              Text(text,style: TextStyle(color: Colors.white,fontSize: 9),),
+            ],
+          )),
+    );
   }
 }

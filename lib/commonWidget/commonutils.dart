@@ -198,7 +198,9 @@ class _OpenSettingsState extends State<OpenSettings> {
 }
 
 class VendorPopup extends StatefulWidget {
-  const VendorPopup({Key? key}) : super(key: key);
+ final Function? assign;
+ VendorPopup({this.assign});
+
 
   @override
   State<VendorPopup> createState() => _VendorPopupState();
@@ -206,6 +208,7 @@ class VendorPopup extends StatefulWidget {
 
 class _VendorPopupState extends State<VendorPopup> {
   List<PartnerOrganizationData>? inventoryList = [];
+  VariantDetailsModel? wholeList ;
   bool _value = false;
   int selected = 0;
   int? grpValue ;
@@ -220,9 +223,15 @@ class _VendorPopupState extends State<VendorPopup> {
               state.maybeWhen(
                   orElse: () {},
                   success: (data) {
-                    print("inventory list");
+                    print("inventory list"+data.toString());
                     print(data.partnerOrganizationdata);
+                    wholeList=data;
                     inventoryList = data.partnerOrganizationdata;
+                    if(inventoryList!=null){
+                      widget.assign!(wholeList?.partnerAddressdata?[0].addressType??"",inventoryList?[0].trnNumber??"");
+
+
+                    }
 
                   });
             },
@@ -285,11 +294,13 @@ class _VendorPopupState extends State<VendorPopup> {
                                             setState(() {
 
                                               grpValue = value!;
-                                              print("inventory");
+                                              print("inventory"+grpValue.toString());
                                               print(inventoryList?[index]
                                                   .displayName);
                                               Variable.trn=inventoryList?[index].trnNumber??"";
                                               Variable.email=inventoryList?[index].email??"";
+                                              Variable.vendorAddress=wholeList?.partnerAddressdata?[index].addressType??"";
+                                              widget.assign!(wholeList?.partnerAddressdata?[index].addressType??"",inventoryList?[index].trnNumber??"");
 
 
                                               // Variable.inventory_ID =
