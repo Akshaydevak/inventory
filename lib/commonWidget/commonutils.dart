@@ -28,9 +28,9 @@ class OpenSettings extends StatefulWidget {
 class _OpenSettingsState extends State<OpenSettings> {
   List<String>? inventoryList = [
     "test",
-    "test",
-    "test",
-    "test"
+    "test1",
+    "test2",
+    "test3"
   ];
   bool _value = false;
   int selected = 0;
@@ -53,18 +53,21 @@ class _OpenSettingsState extends State<OpenSettings> {
                                                         physics: NeverScrollableScrollPhysics(),
                                 itemBuilder:  (context, index) =>Container(
                                   child: ListTile(
-                                    title:Text(inventoryList?[0]??"") ,
+                                    title:Text(inventoryList?[index]??"") ,
                                     leading:  Radio(
                                     value: index,
                                     groupValue: grpValue,
                                     onChanged: (int? value) {
                                       setState(() {
                                         grpValue = value!;
-                                        print("inventory");
+                                        print("inventory"+Variable.inventory_ID.toString());
                                         // print(inventoryList?[index]
                                         //     .inventoryCode);
                                         Variable.inventory_ID =
                                         inventoryList![index];
+                                        setState(() {
+
+                                        });
 
                                         // print("Value");
                                         // print(value);
@@ -218,6 +221,12 @@ class _VendorPopupState extends State<VendorPopup> {
     return Builder(
       builder: (context) {
         return AlertDialog(
+          actions: [
+        TextButton(
+        child: Text("OK"),
+        onPressed: () { },
+        )
+          ],
           content: BlocConsumer<VendordetailsCubit, VendordetailsState>(
             listener: (context, state) {
               state.maybeWhen(
@@ -229,6 +238,8 @@ class _VendorPopupState extends State<VendorPopup> {
                     inventoryList = data.partnerOrganizationdata;
                     if(inventoryList!=null){
                       widget.assign!(wholeList?.partnerAddressdata?[0].addressType??"",inventoryList?[0].trnNumber??"");
+                      Variable.vendorAddress=wholeList?.partnerAddressdata?[0].addressType??"";
+                      Variable.email=wholeList?.partnerOrganizationdata?[0].email??"";
 
 
                     }

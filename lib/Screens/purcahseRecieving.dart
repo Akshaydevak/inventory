@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
@@ -11,6 +12,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
@@ -28,6 +30,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
 import 'package:inventory/widgets/custom_inputdecoration.dart';
 import 'package:inventory/widgets/customtable.dart';
+import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:inventory/widgets/inputfield.dart';
 import 'package:inventory/widgets/itemmenu.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
@@ -36,6 +39,7 @@ import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import '../printScreen.dart';
 import 'Dashboard.dart';
 
 class PurchaseRecievinScreen extends StatefulWidget {
@@ -64,6 +68,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController discController = TextEditingController();
   TextEditingController promisedRecieptDate = TextEditingController();
   TextEditingController plannedRecieptDate = TextEditingController();
+  TextEditingController receivedController = TextEditingController();
   TextEditingController reason = TextEditingController();
   TextEditingController unitcost1 = TextEditingController(text: "0");
   TextEditingController expiryDate = TextEditingController(text: "0");
@@ -98,6 +103,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   double?discount=0;
   int?stock=0;
   bool  onChange=false;
+  bool hasData=false;
 
 
 
@@ -113,6 +119,59 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   List<RecievingLines> additionalVariants = [];
   NavigationProvider vm = NavigationProvider();
   bool stockCheck=false;
+  double grands = 0;
+  double focValue = 0;
+  double VatableValue = 0;
+  double excessTax = 0;
+  double vatValue = 0;
+  double actualValue = 0;
+  double excessTAxValue = 0;
+  double vatableValue = 0;
+  double unitcost2 = 0;
+  String? purchaseUom;
+  double discountValue = 0;
+  addition() {
+    print("enterd");
+    print("+==" + recievingLisnes.toString());
+    for (var i = 0; i < recievingLisnes.length; i++) {
+      if (recievingLisnes[i].isActive == true) {
+        unitcost = unitcost!+ recievingLisnes[i].unitCost!;
+
+        grands = grands + recievingLisnes[i].grandTotal!;
+        actualValue = actualValue + recievingLisnes[i].actualCost!;
+        vatValue = vatValue + recievingLisnes[i].vat!;
+        discountValue = discountValue + recievingLisnes[i].discount!;
+        focValue = focValue + recievingLisnes[i].foc!;
+
+        VatableValue = VatableValue + recievingLisnes[i].vatableAmount!;
+        print("excessTaxvalue"+recievingLisnes.toString());
+        excessTAxValue = excessTAxValue + recievingLisnes[i].excessTax!;
+      }
+    }
+    unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
+    grandTotalController.text = grands.toString();
+    vatController.text = vatValue.toString();
+
+    actualCostController.text = actualValue.toString();
+
+    focController.text = focValue.toString();
+    discountController.text = discountValue.toString();
+    excessTaxController.text = excessTAxValue.toString();
+    vatableAmountController.text = VatableValue.toString();
+
+  }
+  Future _getCurrentUser() async {
+    for (var i = 0; i < recievingLisnes.length; i++) {
+      print("variantaaaaaa"+recievingLisnes[i].variantId.toString());
+ var b=  await   context
+          .read<PurchaseStockCubit>()
+          .getCurrentStock(Variable.inventory_ID, recievingLisnes[i].variantId);
+ print("b"+b.toString());
+    }
+    setState(() {
+      hasData = true;
+    });
+  }
 
   @override
   void initState() {
@@ -209,14 +268,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           discountController.text =
                               data.discount.toString() ?? "";
                           inventoryId = data.inventoryId ?? "";
+                          remarksController.text=data.remarks ?? "";
+                          noteController.text=data.note ?? "";
                           print("inventoryId44" + inventoryId.toString());
                           print("length" + recievingLisnes.length.toString());
-                          for (var i = 0; i < recievingLisnes.length; i++) {
-                            print("variantaaaaaa"+recievingLisnes[i].variantId.toString());
-                            context
-                                .read<PurchaseStockCubit>()
-                                .getCurrentStock("1", recievingLisnes[i].variantId);
-                          }
+                          _getCurrentUser();
+                          // for (var i = 0; i < recievingLisnes.length; i++) {
+                          //   print("variantaaaaaa"+recievingLisnes[i].variantId.toString());
+                          //   context
+                          //       .read<PurchaseStockCubit>()
+                          //       .getCurrentStock(Variable.inventory_ID, recievingLisnes[i].variantId);
+                          // }
                           // if (currentStock.isNotEmpty) {
                           //   print("recievingLisnessssssss" +
                           //       currentStock.length.toString());
@@ -291,16 +353,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           print("stockqty" + stockQty.toString());
                           print("stockCheck"+stockCheck.toString());
                           if(stockCheck==false){
-                            // currentStock.add(stockQty);
-                            setState(() {
-
-                            });
+                            currentStock.add(stockQty);
+                        
                           }
 
                           else{
                             if(Variable.tableedit==false){
                               print("findinf");
                               stock=stockQty;
+                              setState(() {
+
+                              });
                             }
                             else{
                               additionalVariants[Variable.tableindex] =         additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
@@ -394,157 +457,35 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            // Container(
-                            //   margin: EdgeInsets.all(10),
-                            //   child: Visibility(
-                            //     visible: true,
-                            //     child: Container(
-                            //       height: height,
-                            //       // height: double.minPositive,
-                            //       width: width * .172,
-                            //       //width: 232,
-                            //       color: Color(0xffEDF1F2),
-                            //       child: Column(
-                            //         children: [
-                            //           Container(
-                            //               margin: EdgeInsets.all(5),
-                            //               child: SearchTextfiled(
-                            //                 color: Color(0xffFAFAFA),
-                            //                 hintText: "Search...",
-                            //                 ctrlr: itemsearch,
-                            //                 onChanged: (va) {
-                            //                   context
-                            //                       .read<InventorysearchCubit>()
-                            //                       .getSearch(itemsearch.text);
-                            //                 },
-                            //               )),
-                            //           SizedBox(
-                            //             height:
-                            //             MediaQuery.of(context).size.height *
-                            //                 .008,
-                            //           ),
-                            //           Container(
-                            //             margin: EdgeInsets.only(
-                            //               left: width * 0.009,
-                            //               right: width * 0.007,
-                            //             ),
-                            //             child: Row(
-                            //               //mainAxisAlignment: MainAxisAlignment.center,
-                            //               children: [
-                            //                 RectangleContainer(
-                            //                     "asset/rect1.png", context),
-                            //                 SizedBox(
-                            //                   width: width * .003,
-                            //                 ),
-                            //                 Container(
-                            //                   color: Color(0xffFFFFFF),
-                            //                   height: width * .0197,
-                            //                   width: width * .111,
-                            //                   child: Row(
-                            //                     mainAxisAlignment:
-                            //                     MainAxisAlignment.center,
-                            //                     children: [
-                            //                       SizedBox(
-                            //                         width: width * .001,
-                            //                       ),
-                            //                       Icon(
-                            //                         Icons.add,
-                            //                         color: Colors.black,
-                            //                         size: 14,
-                            //                       ),
-                            //                       SizedBox(
-                            //                         width: width * .007,
-                            //                       ),
-                            //                       Container(
-                            //                         child: Text(
-                            //                           "Add a Varient",
-                            //                           style: TextStyle(
-                            //                               color: Colors.black,
-                            //                               fontSize:
-                            //                               width * .010,
-                            //                               overflow: TextOverflow
-                            //                                   .ellipsis),
-                            //                         ),
-                            //                       )
-                            //                     ],
-                            //                   ),
-                            //                 ),
-                            //                 SizedBox(
-                            //                   width: width * .003,
-                            //                 ),
-                            //                 RectangleContainer(
-                            //                     "asset/rect2.png", context),
-                            //               ],
-                            //             ),
-                            //           ),
-                            //           SizedBox(
-                            //             height: height * .015,
-                            //           ),
-                            //           Expanded(
-                            //               child: Container(
-                            //                   height: 0,
-                            //                   child: ListView.separated(
-                            //                     separatorBuilder:
-                            //                         (context, index) {
-                            //                       return Divider(
-                            //                         height: 0,
-                            //                         color: Color(0xff2B3944)
-                            //                             .withOpacity(0.3),
-                            //                         // thickness: 1,
-                            //                       );
-                            //                     },
-                            //                     physics: ScrollPhysics(),
-                            //                     controller: verticalController,
-                            //                     itemBuilder: (context, index) {
-                            //                       return AutoScrollTag(
-                            //                           highlightColor:
-                            //                           Colors.red,
-                            //                           controller:
-                            //                           verticalController,
-                            //                           key: ValueKey(index),
-                            //                           index: index,
-                            //                           child: ItemCard(
-                            //                             index: index,
-                            //                             selectedVertical:
-                            //                             selectedVertical,
-                            //                             item: result[index]
-                            //                                 .orderCode,
-                            //                             id: result[index]
-                            //                                 .id
-                            //                                 .toString(),
-                            //                             onClick: () {
-                            //                               setState(() {
-                            //                                 // select=false;
-                            //                                 selectedVertical =
-                            //                                     index;
-                            //                                 Variable.verticalid= result[index]
-                            //                                     .id;
-                            //
-                            //                                 veritiaclid =
-                            //                                     result[index]
-                            //                                         .id;
-                            //                                 context
-                            //                                     .read<
-                            //                                     PurchaserecievigReadCubit>()
-                            //                                     .getGeneralPurchaseRecievingRead(
-                            //                                     veritiaclid!);
-                            //                               });
-                            //                             },
-                            //                           ));
-                            //                     },
-                            //                     itemCount: result.length,
-                            //                   )))
-                            //         ],
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+
                             VerticalList(selectedVertical: selectedVertical,
                               itemsearch: itemsearch,ontap: (int index){
                                 setState(() {
                                   print("taped");
+
                                   select=false;
                                   selectedVertical=index;
+                                  variantId="";
+                                  varinatname="";
+                                  barcode="";
+                                  purchaseUomName="";
+                                  recievedQty=0;
+                                  excess1=0;
+                                  isReceived1=false;
+                                  discount=0;
+                                  foc1=0;
+                                  orderLinses.clear();
+                                  unitcost=0;
+                                  vatableAmount1=0;
+                                  vat1=0;
+                                  grandTotal1=0;
+                                  actualCost1=0;
+                                  isActive1=false;
+                                  isFree1=false;
+                                  isInvoiced1=false;
+                                  stock=0;
+                                  supplierRefCode="";
+                                  currentStock.clear();
 
                                   veritiaclid =
                                       result[index].id;
@@ -552,7 +493,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       .read<
                                                                       PurchaserecievigReadCubit>()
                                                                       .getGeneralPurchaseRecievingRead(
-                                                                      veritiaclid!);;
+                                                                      veritiaclid!);
                                 });
                               },result: result,
                             ),
@@ -571,64 +512,49 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                     crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                     children: [
-                                                      // InkWell(
-                                                      //   onTap: () {
-                                                      //     setState(() {
-                                                      //       orderCodeController.text =
-                                                      //           "";
-                                                      //       recievingCodeController
-                                                      //           .text = "";
-                                                      //       orederDateController.text =
-                                                      //           "";
-                                                      //       orderStatusController.text =
-                                                      //           "";
-                                                      //       paymentStatusController
-                                                      //           .text = "";
-                                                      //       invoiceStausController
-                                                      //           .text = "";
-                                                      //       focController.text = "";
-                                                      //       discountController.text =
-                                                      //           "";
-                                                      //       unitCostController.text =
-                                                      //           "";
-                                                      //       vatableAmountController
-                                                      //           .text = "";
-                                                      //       excessTaxController.text =
-                                                      //           "";
-                                                      //       vatController.text = "";
-                                                      //       actualCostController.text =
-                                                      //           "";
-                                                      //       grandTotalController.text =
-                                                      //           "";
-                                                      //       noteController.text = "";
-                                                      //       remarksController.text = "";
-                                                      //     });
-                                                      //   },
-                                                      //   child: Container(
-                                                      //     margin: EdgeInsets.only(
-                                                      //         bottom:
-                                                      //             size.height * .008),
-                                                      //     alignment: Alignment.center,
-                                                      //     height: size.width * .016,
-                                                      //     width: size.width * .016,
-                                                      //     decoration: BoxDecoration(
-                                                      //       color: Colors.transparent,
-                                                      //       borderRadius:
-                                                      //           BorderRadius.circular(
-                                                      //               100),
-                                                      //       border: Border.all(
-                                                      //         color: Colors.black,
-                                                      //       ),
-                                                      //
-                                                      //       //more than 50% of width makes circle
-                                                      //     ),
-                                                      //     child: Icon(
-                                                      //       Icons.remove,
-                                                      //       color: Colors.black,
-                                                      //       size: size.width * .010,
-                                                      //     ),
-                                                      //   ),
-                                                      // ),
+                                                      Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment.end,
+                                                        children: [
+                                                          TextButtonLarge(
+                                                            text: "PREVIEW",
+                                                            onPress: (){
+                                                              print("Akshay");
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(builder: (context) =>
+                                                                    PurchaseReceivingPrintScreen(table:recievingLisnes,
+                                                                      note: noteController.text,
+                                                                      // select: select,
+                                                                      // vendorCode:vendorCode.text,
+                                                                      orderCode:orderCodeController.text ,
+                                                                      orderDate:orederDateController .text,
+                                                                      // table:table,
+                                                                      vat: double.tryParse( vatController.text),
+                                                                      actualCost:double.tryParse( actualCostController.text),
+                                                                      variableAmount:double.tryParse( vatableAmountController.text) ,
+                                                                      discount:double.tryParse( discountController.text) ,
+                                                                      unitCost:double.tryParse( unitCostController.text) ,
+                                                                      excisetax:double.tryParse( excessTaxController.text) ,
+                                                                      remarks: remarksController.text ,
+
+
+
+
+
+                                                                    )),
+                                                              );
+
+
+                                                            },
+                                                          ),
+
+                                                        ]
+
+
+
+                                                      ),
+
                                                       Row(
                                                         children: [
                                                           Expanded(
@@ -638,10 +564,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   Expanded(
                                                                       child: Column(
                                                                         children: [
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+                                                                        
                                                                           SizedBox(
                                                                             height: height *
                                                                                 .030,
@@ -710,20 +633,31 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               invoiceStausController,
                                                                               title:
                                                                               "Invoice Status"),
+                                                                          SizedBox(
+                                                                            height: height *
+                                                                                .030,
+                                                                          ),
+
                                                                         ],
                                                                       )),
                                                                   Expanded(
                                                                       child: Column(
                                                                         children: [
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+                                                                       
                                                                           SizedBox(
                                                                             height: height *
                                                                                 .030,
                                                                           ),
                                                                           //  SizedBox(height: height*.030,),
+
+                                                                          NewInputCard(
+                                                                              controller:
+                                                                              receivedController,
+                                                                              title: "Receiving Status"),
+                                                                          SizedBox(
+                                                                            height: height *
+                                                                                .030,
+                                                                          ),
                                                                           NewInputCard(
                                                                               controller:
                                                                               focController,
@@ -768,19 +702,21 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                             height: height *
                                                                                 .030,
                                                                           ),
-                                                                          NewInputCard(
-                                                                              controller:
-                                                                              vatController,
-                                                                              title: "Vat"),
+
                                                                         ],
                                                                       )),
                                                                   Expanded(
                                                                       child: Column(
                                                                         children: [
+
                                                                           SizedBox(
                                                                             height: height *
-                                                                                .030,
+                                                                                .090,
                                                                           ),
+                                                                          NewInputCard(
+                                                                              controller:
+                                                                              vatController,
+                                                                              title: "Vat"),
                                                                           SizedBox(
                                                                             height: height *
                                                                                 .030,
@@ -808,7 +744,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
-                                                                            readOnly: true,
+                                                                           
                                                                             controller:
                                                                             noteController,
                                                                             title: "Note",
@@ -820,7 +756,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
-                                                                            readOnly: true,
+
                                                                             controller:
                                                                             remarksController,
                                                                             title:
@@ -884,10 +820,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       SingleChildScrollView(
                                                                         child:
                                                                         Container(
-                                                                          width: MediaQuery.of(
-                                                                              context)
-                                                                              .size
-                                                                              .width,
+                                                                          width: 2200,
                                                                           padding:
                                                                           EdgeInsets
                                                                               .all(
@@ -928,7 +861,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     tableHeadtext(
                                                                                       'Orderline id',
                                                                                       padding: EdgeInsets.all(7),
-                                                                                      height: 50,
+                                                                                      height: 46,
                                                                                       size: 12,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -1095,9 +1028,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       padding: EdgeInsets.all(7),
                                                                                       height: 46,
                                                                                       size: 13,
-                                                                                      // color: Palette.containerDarknew,
-                                                                                      // textColor: Palette.white
+
                                                                                     ),
+                                                                                    tableHeadtext(
+                                                                                      '',
+                                                                                      padding: EdgeInsets.all(7),
+                                                                                      height: 46,
+                                                                                      size: 13,
+
+                                                                                    ),
+
                                                                                     // if (widget.onAddNew) textPadding(''),
                                                                                   ]),
                                                                               if (recievingLisnes !=
@@ -1147,6 +1087,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].receivedQty.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               print(va);
@@ -1249,6 +1190,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].unitCost.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? unitcost;
@@ -1328,6 +1270,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].excessTax.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? excess;
@@ -1389,6 +1332,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].discount.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? disc;
@@ -1519,6 +1463,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].foc.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? foc;
@@ -1594,6 +1539,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: recievingLisnes[i].vat.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               if (va == "") {
@@ -1692,46 +1638,79 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         
                                                                                         
-                                                                                        // Checkbox(
-                                                                                        //   value: recievingLisnes[i].isInvoiced == null ? false : recievingLisnes[i].isInvoiced,
-                                                                                        //   onChanged: (bool? value) {
-                                                                                        //     setState(() {});
-                                                                                        //   },
-                                                                                        // ),
+
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(recievingLisnes[i].expiryDate.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
 
                                                                                         TableCell(
+                                                                                            verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child:CheckedBoxs(
                                                                                               valueChanger:recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
                                                                                               onSelection:(bool ? value){
-                                                                                                bool? isInvoiced = recievingLisnes[i].isFree;
+                                                                                                bool? isFree = recievingLisnes[i].isFree;
                                                                                                 setState(() {
-                                                                                                  // isInvoiced = !isInvoiced!;
-                                                                                                  // recievingLisnes[i] = recievingLisnes[i].copyWith(isFree: isInvoiced);
-                                                                                                  // print(isInvoiced);
+                                                                                                  isFree = !isFree!;
+                                                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(isFree: isFree);
+                                                                                                  print(isFree);
 
                                                                                                 });
 
                                                                                               }),
-                                                                                          // Checkbox(
-                                                                                          //   value: recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
-                                                                                          //   onChanged: (bool? value) {
-                                                                                          //     setState(() {});
-                                                                                          //   },
-                                                                                          // ),
+
                                                                                         ),
 
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child:
-                                                                                           Checkbox(
-                                                                                            value: recievingLisnes[i].isActive == null ? false : recievingLisnes[i].isActive,
-                                                                                            onChanged: (bool? value) {
-                                                                                              setState(() {});
+                                                                                          CheckedBoxs(
+                                                                                            valueChanger: recievingLisnes[i].isActive == null ? false : recievingLisnes[i].isActive,
+                                                                                            onSelection
+                                                                                                : (bool? value) {
+                                                                                              bool? isActive = recievingLisnes[i].isActive;
+                                                                                              setState(() {
+                                                                                                isActive = !isActive!;
+                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(isActive: isActive);
+
+
+                                                                                              });
                                                                                             },
+                                                                                          ),
+                                                                                        ),
+                                                                                        Container(
+                                                                                          height:50,
+
+
+                                                                                          child: TextButton(
+                                                                                              style: TextButton.styleFrom(
+                                                                                                  primary: Colors.white,
+                                                                                                  elevation: 2,
+                                                                                                  backgroundColor: Colors
+                                                                                                      .grey.shade200
+                                                                                              ),
+                                                                                              onPressed: () {
+                                                                                                addition();
+                                                                                                grands = 0;
+                                                                                                 focValue = 0;
+                                                                                                 VatableValue = 0;
+                                                                                                 excessTax = 0;
+                                                                                                 vatValue = 0;
+                                                                                                 actualValue = 0;
+                                                                                                 excessTAxValue = 0;
+                                                                                                 vatableValue = 0;
+                                                                                                 unitcost2 = 0;
+
+                                                                                                 discountValue = 0;
+
+
+
+
+
+
+                                                                                              },
+                                                                                              child:Text("update",style:TextStyle(color: Colors.black))
+
                                                                                           ),
                                                                                         ),
 
@@ -1740,33 +1719,30 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               ]
                                                                             ],
                                                                             widths: {
-                                                                              0: FractionColumnWidth(
-                                                                                  .035),
-                                                                              //  1: FractionColumnWidth(.05),
-                                                                              //  2: FractionColumnWidth(.05),
-                                                                              //  3: FractionColumnWidth(.06),
-                                                                              //  4: FractionColumnWidth(.05),
-                                                                              //  5: FractionColumnWidth(.05),
-                                                                              //  6: FractionColumnWidth(.05),
-                                                                              //  7: FractionColumnWidth(.05),
-                                                                              //  8: FractionColumnWidth(.05,),
-                                                                              //  9: FractionColumnWidth(.05),
-                                                                              //  10: FractionColumnWidth(.05),
-                                                                              11: FractionColumnWidth(
-                                                                                  .035),
-                                                                              //  12: FractionColumnWidth(.035),
-                                                                              // 13: FractionColumnWidth(.03),
-                                                                              14: FractionColumnWidth(
-                                                                                  .03),
-                                                                              //  15: FractionColumnWidth(.05),
-                                                                              //  16: FractionColumnWidth(.03),
-                                                                              // 17: FractionColumnWidth(.05),
-                                                                              //  18: FractionColumnWidth(.05),
-                                                                              //  19: FractionColumnWidth(.05),
-                                                                              20: FractionColumnWidth(
-                                                                                  .04),
-                                                                              21: FractionColumnWidth(
-                                                                                  .05),
+                                                                              0: FlexColumnWidth(2),
+                                                                              1: FlexColumnWidth(4),
+                                                                              2: FlexColumnWidth(4),
+                                                                              3: FlexColumnWidth(3),
+                                                                              4: FlexColumnWidth(3),
+                                                                              5: FlexColumnWidth(3),
+                                                                              6: FlexColumnWidth(3),
+                                                                              7: FlexColumnWidth(3),
+                                                                              8: FlexColumnWidth(3),
+                                                                              9: FlexColumnWidth(3),
+                                                                              10: FlexColumnWidth(3),
+                                                                              11: FlexColumnWidth(3),
+                                                                              12: FlexColumnWidth(3),
+                                                                              13: FlexColumnWidth(3),
+                                                                              14: FlexColumnWidth(3),
+                                                                              15: FlexColumnWidth(3),
+                                                                              16: FlexColumnWidth(3),
+                                                                              17: FlexColumnWidth(3),
+                                                                              18: FlexColumnWidth(3),
+                                                                              19: FlexColumnWidth(3),
+                                                                              20: FlexColumnWidth(3),
+                                                                              21: FlexColumnWidth(3),
+                                                                              22: FlexColumnWidth(2),
+
                                                                             },
                                                                           ),
                                                                         ),
@@ -1791,121 +1767,24 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               for(var i=0;i<recievingLisnes.length;i++){
                                                                 if(recievingLisnes[i].isReceived==false){
                                                                   orderLinses.add(OrderLiness(orderLineId:recievingLisnes[i]?.purchaseOrderLineId,receivinglineId:recievingLisnes[i].id));
+                                                                  setState(() {
+
+                                                                  });
                                                                 }
                                                               }
                                                               print("visss"+orderLinses.toString());
 
 
 
-                                                              // showDialog(
-                                                              //     context: context,
-                                                              //     builder: (BuildContext context) {
-                                                              //       return AlertDialog(
-                                                              //
-                                                              //         title: Text(('Login with user...')),
-                                                              //         content:
-                                                              //         Container(
-                                                              //           height: 300,
-                                                              //           width: MediaQuery.of(context).size.width-20,
-                                                              //           child:Column(
-                                                              //             children: [
-                                                              //               Text(
-                                                              //                 "adjustment lines",
-                                                              //               ),
-                                                              //               Divider(
-                                                              //                 color: Colors.grey,
-                                                              //                 height: 4.0,
-                                                              //               ),
-                                                              //               Expanded(
-                                                              //                 child: Row(
-                                                              //                   children: [
-                                                              //                     Expanded(child: Container(color: Colors.red,
-                                                              //                       child: Column(
-                                                              //                         children: [
-                                                              //                         PopUpInputField(
-                                                              //                                 controller: promisedRecieptDate, label: "vendor id"),
-                                                              //
-                                                              //                         ],
-                                                              //                       ),
-                                                              //                     )),
-                                                              //                     Expanded(child: Container(color: Colors.white,))
-                                                              //                   ],
-                                                              //                 ),
-                                                              //               )
-                                                              //               // Row(
-                                                              //               //   crossAxisAlignment: CrossAxisAlignment.start,
-                                                              //               //   children: [
-                                                              //               //     PopUpInputField(
-                                                              //               //         controller: promisedRecieptDate, label: "vendor id"),
-                                                              //               //     gapWidthColumn(),
-                                                              //               //     PopUpInputField(
-                                                              //               //       controller: plannedRecieptDate,
-                                                              //               //       label: "planned reciept date",
-                                                              //               //     ),
-                                                              //               //   ],
-                                                              //               // ),
-                                                              //               // Row(
-                                                              //               //   crossAxisAlignment: CrossAxisAlignment.start,
-                                                              //               //   children: [
-                                                              //               //     PopUpInputField(
-                                                              //               //       boarType: "int",
-                                                              //               //       //  controller: newQuantity,
-                                                              //               //       label: "new quantity",
-                                                              //               //       onChanged: (v) {
-                                                              //               //         setState(() {
-                                                              //               //           // newQty = int.tryParse(v);
-                                                              //               //           // int? stck = int.tryParse(stckQty.text);
-                                                              //               //           // qtyChange.text = ((stck!) - (newQty!)).toString();
-                                                              //               //           // print("newQty" + newQty.toString());
-                                                              //               //         });
-                                                              //               //       },
-                                                              //               //     ),
-                                                              //               //     gapWidthColumn(),
-                                                              //               //     PopUpInputField(
-                                                              //               //       controller: reason,
-                                                              //               //       label: "reason",
-                                                              //               //     ),
-                                                              //               //   ],
-                                                              //               // ),
-                                                              //
-                                                              //             ],
-                                                              //           ) ,
-                                                              //
-                                                              //         ),
-                                                              //         actions: [
-                                                              //
-                                                              //           TextButton(
-                                                              //             child: Text(
-                                                              //               ("akk"),
-                                                              //               style: TextStyle(
-                                                              //                   color: Palette.DANGER),
-                                                              //             ),
-                                                              //             onPressed: () {
-                                                              //               // Variables.customerCode = null;
-                                                              //               // Variables.customerName = "";
-                                                              //               // authentication
-                                                              //               //     .clearAuthenticatedUser();
-                                                              //               // BlocProvider.of<SigninBloc>(
-                                                              //               //     context)
-                                                              //               //     .add(SignOut());
-                                                              //               // Navigator.of(context)
-                                                              //               //     .pushAndRemoveUntil(
-                                                              //               //     MaterialPageRoute(
-                                                              //               //         builder: (context) =>
-                                                              //               //             LoginPage()),
-                                                              //               //         (Route<dynamic> route) =>
-                                                              //               //     false);
-                                                              //             },
-                                                              //           ),
-                                                              //         ],
-                                                              //       );});
+
+
                                                               GenerateMissing model=GenerateMissing(
                                                                   receivinglineId: receivingId,
                                                                   note: noteController.text??"",
-                                                                  vendorId: "1",
+
                                                                   inventoryId:inventoryId ??"",
-                                                                  vendorMailId: "akshay@gmail.com",
-                                                                  vendorAddress: "perincheeri",
+                                                                  vendorMailId: Variable.email,
+                                                                  vendorAddress: Variable.vendorAddress,
                                                                   createdBy: "12",
                                                                   orderLinses: orderLinses
 
@@ -1983,92 +1862,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   CrossAxisAlignment
                                                                       .start,
                                                                   children: [
-                                                                    Container(
-                                                                      padding: EdgeInsets.only(left: width*.02,top: height*0.02),
-                                                                      child: TextButton(
-                                                                        style: TextButton.styleFrom(
-                                                                            primary: Colors.blue,
-                                                                            elevation: 2,
-                                                                            backgroundColor: Colors.white24),
-                                                                        onPressed: () {
-                                                                          setState(() {
-                                                                            additionalVariants.add(RecievingLines(
-                                                                                variantId: variantId??"",
-                                                                                currentStock: stock,
-                                                                                supplierCode: supplierRefCode,
-                                                                                variantName: varinatname??"",
-                                                                                barcode: barcode??"",
-                                                                                purchaseUom: purchaseUomName??"",
-                                                                                receivedQty: recievedQty,
-                                                                                isReceived: isReceived1,
-                                                                                discount: discount,
-                                                                                foc: foc1,
-                                                                                unitCost: unitcost,
-                                                                                vatableAmount: vatableAmount1,vat: vat1,
-                                                                                excessTax: excess1,
-                                                                                actualCost: actualCost1,
-                                                                                grandTotal: grandTotal1,
-                                                                                isInvoiced: isInvoiced1,
-                                                                                isFree: isFree1,
-                                                                                isActive:isActive1,
-                                                                                expiryDate: expiryDate.text
 
-
-
-                                                                            ));
-
-                                                                          });
-
-
-
-                                                                          print("additionalVariants"+additionalVariants.toString());
-                                                                          variantId="";
-                                                                          varinatname="";
-                                                                          barcode="";
-                                                                          purchaseUomName="";
-                                                                          recievedQty=0;
-                                                                          excess1=0;
-                                                                          isReceived1=false;
-                                                                          discount=0;
-                                                                          foc1=0;
-                                                                          unitcost=0;
-                                                                          vatableAmount1=0;
-                                                                          vat1=0;
-                                                                          grandTotal1=0;
-                                                                          actualCost1=0;
-                                                                          isActive1=false;
-                                                                          isFree1=false;
-                                                                          isInvoiced1=false;
-                                                                          stock=0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                                                        },
-
-
-                                                                        child:Text("Add New")
-                                                                        ,
-                                                                      ),
-                                                                    ),
                                                                     SingleChildScrollView(
                                                                       child: Container(
-                                                                        width: MediaQuery.of(
-                                                                            context)
-                                                                            .size
-                                                                            .width,
+                                                                        width:2200,
                                                                         padding:
                                                                         EdgeInsets
                                                                             .all(
@@ -2268,6 +2065,14 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
+                                                                                    tableHeadtext(
+                                                                                      '',
+                                                                                      padding: EdgeInsets.all(7),
+                                                                                      height: 46,
+                                                                                      size: 13,
+                                                                                      // color: Palette.containerDarknew,
+                                                                                      // textColor: Palette.white
+                                                                                    ),
                                                                                     // if (widget.onAddNew) textPadding(''),
                                                                                   ]),
                                                                               if (additionalVariants != null)...[
@@ -2342,6 +2147,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].receivedQty.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               print(va);
@@ -2427,6 +2233,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].unitCost.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? unitcost;
@@ -2506,6 +2313,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].excessTax.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? excess;
@@ -2567,6 +2375,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].discount.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? disc;
@@ -2685,6 +2494,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].foc.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               double? foc;
@@ -2756,6 +2566,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: UnderLinedInput(
+                                                                                            initialCheck:true,
                                                                                             last: additionalVariants[i].vat.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               if (va == "") {
@@ -2866,6 +2677,12 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             },
                                                                                           ),
                                                                                         ),
+                                                                                        TableCell(
+                                                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                          child: Text(
+                                                                                            ""
+                                                                                          ),
+                                                                                        ),
 
 
 
@@ -2939,7 +2756,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           });
                                                                                           context
                                                                                               .read<PurchaseStockCubit>()
-                                                                                              .getCurrentStock("1", variantId);
+                                                                                              .getCurrentStock(Variable.inventory_ID, variantId);
 
                                                                                           // orderType = va!;
                                                                                         });
@@ -3069,12 +2886,85 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         },
                                                                                       ),
                                                                                     ),
-                                                                                    unitcost==0?Text(""):
+                                                                                    unitcost==0?
+                                                                                    TableCell(
+                                                                                      verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                      child: TextFormField(
+                                                                                        keyboardType: TextInputType.number,
+                                                                                        inputFormatters: <TextInputFormatter>[
+                                                                                          FilteringTextInputFormatter.digitsOnly
+                                                                                        ],
+                                                                                        decoration:  InputDecoration(
+                                                                                          border: InputBorder.none,
+
+                                                                                        ),
+
+
+                                                                                        initialValue:unitcost.toString(),
+                                                                                        onChanged: (p0) {
+                                                                                          if (p0 == '')
+                                                                                            setState(() {
+                                                                                              unitcost = 0;
+                                                                                            });
+                                                                                          else {
+                                                                                            setState(() {
+                                                                                              unitcost = double
+                                                                                                  .tryParse(
+                                                                                                  p0);
+                                                                                            });
+                                                                                          }
+
+                                                                                          if(unitcost==0 ||recievedQty==0){
+                                                                                            actualCost1=0;
+                                                                                            vatableAmount1=0;
+                                                                                            grandTotal1=0;
+                                                                                          }
+                                                                                          else{
+                                                                                            if(foc1==0 ||foc1==""){
+                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                                  recievedQty!) +
+                                                                                                  excess1!) -
+                                                                                                  discount!)
+                                                                                                  .toDouble();
+                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  ((vatableAmount1! *
+                                                                                                      vat1!) /
+                                                                                                      100));
+                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                  ((vatableAmount1! *
+                                                                                                      vat1!) /
+                                                                                                      100));
+
+
+
+                                                                                            }
+                                                                                            else{
+                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
+                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  ((vatableAmount1! *
+                                                                                                      vat1!) /
+                                                                                                      100));
+                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                  ((vatableAmount1! *
+                                                                                                      vat1!) /
+                                                                                                      100));
+
+                                                                                            }
+
+                                                                                          }
+
+
+                                                                                          setState(() {});
+                                                                                          // print(Qty);
+                                                                                        },
+
+                                                                                      ),
+                                                                                    ):
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
-                                                                                        // controller:unitcost1,
-                                                                                        //
+                                                                                          initialCheck:true,
+
 
 
                                                                                         last:unitcost.toString(),
@@ -3507,20 +3397,115 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         },
 
                                                                                       ),
-                                                                                    )
-                                                                                    // Checkbox(
-                                                                                    //   activeColor: Color(0xff3E4F5B),
-                                                                                    //   value: isActive1,
-                                                                                    //   onChanged: (bool? value) {
-                                                                                    //
-                                                                                    //     setState(() {
-                                                                                    //       isActive1 = !isActive1!;
-                                                                                    //
-                                                                                    //     });
-                                                                                    //   },
-                                                                                    // ),
-                                                                                  ])
-                                                                            ]),
+                                                                                    ),
+                                                                                    TableCell(
+                                                                                      verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                      child:
+                                                                                      Container(
+                                                                                          height:50,
+
+                                                                                        child: TextButton(
+                                                                                          style: TextButton.styleFrom(
+                                                                                              primary: Colors.white,
+                                                                                              elevation: 2,
+                                                                                              backgroundColor: Colors
+                                                                                                  .grey.shade200
+                                                                                          ),
+                                                                                          onPressed: () {
+                                                                                            setState(() {
+                                                                                              additionalVariants.add(RecievingLines(
+                                                                                                  variantId: variantId??"",
+                                                                                                  currentStock: stock,
+                                                                                                  supplierCode: supplierRefCode,
+                                                                                                  variantName: varinatname??"",
+                                                                                                  barcode: barcode??"",
+                                                                                                  purchaseUom: purchaseUomName??"",
+                                                                                                  receivedQty: recievedQty,
+                                                                                                  isReceived: isReceived1,
+                                                                                                  discount: discount,
+                                                                                                  foc: foc1,
+                                                                                                  unitCost: unitcost,
+                                                                                                  vatableAmount: vatableAmount1,vat: vat1,
+                                                                                                  excessTax: excess1,
+                                                                                                  actualCost: actualCost1,
+                                                                                                  grandTotal: grandTotal1,
+                                                                                                  isInvoiced: isInvoiced1,
+                                                                                                  isFree: isFree1,
+                                                                                                  isActive:isActive1,
+                                                                                                  expiryDate: expiryDate.text
+
+
+
+                                                                                              ));
+
+                                                                                            });
+
+
+
+                                                                                            print("additionalVariants"+additionalVariants.toString());
+                                                                                            variantId="";
+                                                                                            varinatname="";
+                                                                                            barcode="";
+                                                                                            purchaseUomName="";
+                                                                                            recievedQty=0;
+                                                                                            excess1=0;
+                                                                                            isReceived1=false;
+                                                                                            discount=0;
+                                                                                            foc1=0;
+                                                                                            unitcost=0;
+                                                                                            vatableAmount1=0;
+                                                                                            vat1=0;
+                                                                                            grandTotal1=0;
+                                                                                            actualCost1=0;
+                                                                                            isActive1=false;
+                                                                                            isFree1=false;
+                                                                                            isInvoiced1=false;
+                                                                                            stock=0;
+
+
+
+                                                                                          },
+
+
+                                                                                          child:Text("set",style:TextStyle(color:Colors.blue ))
+                                                                                          ,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+
+
+                                                                                  ],
+
+                                                                                  ),
+
+                                                                            ]
+                                                                          , widths: {
+                                                                          0: FlexColumnWidth(2),
+                                                                          1: FlexColumnWidth(4),
+                                                                          2: FlexColumnWidth(4),
+                                                                          3: FlexColumnWidth(3),
+                                                                          4: FlexColumnWidth(3),
+                                                                          5: FlexColumnWidth(3),
+                                                                          6: FlexColumnWidth(3),
+                                                                          7: FlexColumnWidth(3),
+                                                                          8: FlexColumnWidth(3),
+                                                                          9: FlexColumnWidth(3),
+                                                                          10: FlexColumnWidth(3),
+                                                                          11: FlexColumnWidth(3),
+                                                                          12: FlexColumnWidth(3),
+                                                                          13: FlexColumnWidth(4),
+                                                                          14: FlexColumnWidth(3),
+                                                                          15: FlexColumnWidth(3),
+                                                                          16: FlexColumnWidth(3),
+                                                                          17: FlexColumnWidth(3),
+                                                                          18: FlexColumnWidth(4),
+                                                                          19: FlexColumnWidth(3),
+                                                                          20: FlexColumnWidth(3),
+                                                                          21: FlexColumnWidth(2),
+
+
+
+                                                                        },),
                                                                       ),
                                                                     ),
 
@@ -3536,6 +3521,14 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                         children: [
                                                           Buttons(
                                                             onApply: () {
+                                                              List<RecievingLines>additionalVariants1=[];
+                                                              for(var i=0;i<additionalVariants.length;i++){
+                                                                if(additionalVariants[i].isReceived==true){
+                                                                  additionalVariants1.add(additionalVariants[i]);
+                                                                }
+                                                              }
+                                                              print("rohit"+additionalVariants1.toString());
+                                                              print("rohit2"+additionalVariants1.length.toString());
                                                               AdditionalGenerateModel model=AdditionalGenerateModel(
                                                                 receivingId: receivingId,
 
@@ -3545,7 +3538,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                 purchaseOrderId:Variable.verticalid,
-                                                                orderLines: additionalVariants,
+                                                                orderLines: additionalVariants1,
 
 
                                                               );
@@ -3696,7 +3689,10 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   bool onChangeExtWarranty = false;
   TextEditingController stckQty = TextEditingController();
   TextEditingController qtyChange = TextEditingController();
+  TextEditingController remarks = TextEditingController();
   TextEditingController reason = TextEditingController();
+  TextEditingController vendorCode = TextEditingController();
+  TextEditingController note = TextEditingController();
   int? newQty = 0;
   @override
   Widget build(BuildContext context) {
@@ -3758,7 +3754,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                     print( "aaa"+widget.model.toString());
                     GenerateMissing? model=widget.model;
 
-                    model = model?.copyWith(remarks: widget.remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text);
+                    model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text,note: note.text,vendorId: vendorCode.text);
                     print( "asap"+model.toString());
                     context.read<PurchasegeneratingCubit>().generatePost(model!);
 
@@ -3787,8 +3783,46 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                 Expanded(child: Container(
                                   child: Column(
                                     children: [
-                                      PopUpInputField(
-                                          controller: reason, label: "vendor id"),
+                                      // PopUpInputField(
+                                      //     controller: reason, label: "vendor id"),
+                                      SelectableDropDownpopUp(
+                                        row: true,
+                                        label: "Vendor Code",
+                                        type:"VendorCodeGeneral",
+                                        value: vendorCode.text,
+                                        onSelection: (Result? va) {
+
+                                          print(
+                                              "+++++++++++++++++++++++"+va.toString());
+                                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                          // setState(() {
+                                          vendorCode.text=va?.partnerCode??"";
+                                          var id=va?.partnerCode;
+                                          print(vendorCode.text);
+                                          setState(() {
+                                            context
+                                                .read<
+                                                VendordetailsCubit>()
+                                                .getVendorDetails(
+                                                id);
+
+                                          });
+                                          // showDailogPopUp(
+                                          //     context,
+                                          //     VendorPopup(
+                                          //
+                                          //
+                                          //     ));
+
+
+
+
+
+
+                                        },
+                                        onAddNew: () {},
+                                        restricted: true,
+                                      ),
                                       PopUpDateFormField(
                                           row: true,
 
@@ -3798,6 +3832,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                           //     DateTime.parse(fromDate!),
                                           label: "Promised reciept date",
                                           onSaved: (newValue) {
+                                            print("newValue"+newValue.toString());
                                             widget.promised?.text = newValue
                                                 ?.toIso8601String()
                                                 .split("T")[0] ??
@@ -3805,6 +3840,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                             print("promised_receipt_date.text"+ widget.promised!.text.toString());
                                           },
                                           enable: true),
+                                      SizedBox(height: 40,)
                                       // PopUpInputField(
                                       //     controller: widget.promised, label: "promisdedRecieptdate"),
 
@@ -3834,7 +3870,9 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                       // PopUpInputField(
                                       //     controller: widget.plannded, label: "planned reciept date"),
                                       PopUpInputField(
-                                          controller: widget.remarks, label: "remarks"),
+                                          controller: remarks, label: "remarks"),
+                                      PopUpInputField(
+                                          controller: note, label: "note"),
 
                                     ],
                                   ),
@@ -3893,234 +3931,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   }
 }
 
-//
-// class AdditionalPopUp extends StatefulWidget {
-//   // final int? stckQty;
-//   final TextEditingController? remarks;
-//   final TextEditingController? promised;
-//   final TextEditingController? plannded;
-//   final AdditionalGenerateModel? model;
-//   // final List<ReadWarranty>? warranty;
-//   // final Function(bool) changeActive;
-//   // final Function(bool) changeAdditionalWarranty;
-//   // final Function(bool) changeExtendedWarranty;
-//   const AdditionalPopUp({
-//     Key? key,
-//     // this.stckQty = 0,
-//     required this.remarks,
-//     required this.promised,
-//     required this.plannded,
-//     required this.model
-//     // this.warranty,
-//     // this.indexValue
-//   }) : super(key: key);
-//
-//   @override
-//   _AdditionalPopUpState createState() => _AdditionalPopUpState();
-// }
-//
-// class _AdditionalPopUpState extends State<AdditionalPopUp> {
-//
-//   bool active = false;
-//   bool additionalWarranty = false;
-//   bool extendedWarranty = false;
-//   bool onChange = false;
-//   bool onChangeWarranty = false;
-//   bool onChangeExtWarranty = false;
-//   TextEditingController stckQty = TextEditingController();
-//   TextEditingController qtyChange = TextEditingController();
-//   TextEditingController reason = TextEditingController();
-//   int? newQty = 0;
-//   @override
-//   Widget build(BuildContext context) {
-//     print("widget.model"+widget.model.toString());
-//     // stckQty.text = widget.stckQty.toString();
-//     // descriptionController = TextEditingController(
-//     //     text: widget.warranty?[widget.indexValue!].description == null
-//     //         ? ""
-//     //         : widget.warranty?[widget.indexValue!].description);
-//     // durationController = TextEditingController(
-//     //     text: widget.warranty?[widget.indexValue!].duration == null
-//     //         ? ""
-//     //         : widget.warranty?[widget.indexValue!].duration.toString());
-//
-//     return MultiBlocProvider(
-//       providers: [
-//         BlocProvider(
-//           create: (context) => AdditionalgenerateCubit(),
-//         ),
-//
-//
-//       ],
-//       child: Builder(
-//           builder: (context) {
-//             return MultiBlocListener(
-//               listeners: [
-//                 BlocListener<AdditionalgenerateCubit, AdditionalgenerateState>(
-//                   listener: (context, state) {
-//                     print("postssssssss" + state.toString());
-//                     state.maybeWhen(orElse: () {
-//                       // context.
-//                       context.showSnackBarError("Loadingggg");
-//                     }, error: () {
-//                       context.showSnackBarError(Variable.errorMessege);
-//                     }, success: (data) {
-//                       if (data.data1)
-//                         context.showSnackBarSuccess(data.data2);
-//                       else {
-//                         context.showSnackBarError(data.data2);
-//                         print(data.data1);
-//                       }
-//                       ;
-//                     });
-//                   },
-//                 ),
-//
-//               ],
-//               child: AlertDialog(
-//                 content: PopUpHeader(
-//                   label: "Create system generated Po",
-//                   onApply: () {
-//
-//                   },
-//                   onEdit: () {
-//                     print( "aaa"+widget.model.toString());
-//                     AdditionalGenerateModel? model=widget.model;
-//
-//                     model = model?.copyWith(remarks: widget.remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text);
-//                     print( "asap"+model.toString());
-//                     context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
-//
-//                   },
-//                   dataField: SizedBox(
-//                     height: MediaQuery.of(context).size.height * .6,
-//
-//                     child: SingleChildScrollView(
-//                       child:
-//                       Container(
-//                         height: 300,
-//                         // width: MediaQuery.of(context).size.width-20,
-//                         child:Column(
-//                           crossAxisAlignment: CrossAxisAlignment.start,
-//                           children: [
-//                             Text(
-//                               "purchase order",
-//                             ),
-//                             Divider(
-//                               color: Colors.grey,
-//                               height: 4.0,
-//                             ),
-//                             SizedBox(height: 15,),
-//                             Row(
-//                               children: [
-//                                 Expanded(child: Container(
-//                                   child: Column(
-//                                     children: [
-//                                       PopUpInputField(
-//                                           controller: reason, label: "vendor id"),
-//                                       PopUpDateFormField(
-//                                           row: true,
-//
-//                                           format:DateFormat('yyyy-MM-dd'),
-//                                           controller:  widget.promised,
-//                                           // initialValue:
-//                                           //     DateTime.parse(fromDate!),
-//                                           label: "Promised reciept date",
-//                                           onSaved: (newValue) {
-//                                             widget.promised?.text = newValue
-//                                                 ?.toIso8601String()
-//                                                 .split("T")[0] ??
-//                                                 "";
-//                                             print("promised_receipt_date.text"+ widget.promised!.text.toString());
-//                                           },
-//                                           enable: true),
-//                                       // PopUpInputField(
-//                                       //     controller: widget.promised, label: "promisdedRecieptdate"),
-//
-//                                     ],
-//                                   ),
-//                                 )),
-//                                 SizedBox(width: 10,),
-//                                 Expanded(child: Container(
-//                                   child: Column(
-//                                     children: [
-//                                       PopUpDateFormField(
-//                                           row: true,
-//
-//                                           format:DateFormat('yyyy-MM-dd'),
-//                                           controller:  widget.plannded,
-//                                           // initialValue:
-//                                           //     DateTime.parse(fromDate!),
-//                                           label: "planned reciept date",
-//                                           onSaved: (newValue) {
-//                                             widget.plannded?.text = newValue
-//                                                 ?.toIso8601String()
-//                                                 .split("T")[0] ??
-//                                                 "";
-//                                             print("promised_receipt_date.text"+  widget.plannded!.text.toString());
-//                                           },
-//                                           enable: true),
-//                                       // PopUpInputField(
-//                                       //     controller: widget.plannded, label: "planned reciept date"),
-//                                       PopUpInputField(
-//                                           controller: widget.remarks, label: "remarks"),
-//
-//                                     ],
-//                                   ),
-//                                 ))
-//                               ],
-//                             )
-//                             // Row(
-//                             //   crossAxisAlignment: CrossAxisAlignment.start,
-//                             //   children: [
-//                             //     PopUpInputField(
-//                             //         controller: promisedRecieptDate, label: "vendor id"),
-//                             //     gapWidthColumn(),
-//                             //     PopUpInputField(
-//                             //       controller: plannedRecieptDate,
-//                             //       label: "planned reciept date",
-//                             //     ),
-//                             //   ],
-//                             // ),
-//                             // Row(
-//                             //   crossAxisAlignment: CrossAxisAlignment.start,
-//                             //   children: [
-//                             //     PopUpInputField(
-//                             //       boarType: "int",
-//                             //       //  controller: newQuantity,
-//                             //       label: "new quantity",
-//                             //       onChanged: (v) {
-//                             //         setState(() {
-//                             //           // newQty = int.tryParse(v);
-//                             //           // int? stck = int.tryParse(stckQty.text);
-//                             //           // qtyChange.text = ((stck!) - (newQty!)).toString();
-//                             //           // print("newQty" + newQty.toString());
-//                             //         });
-//                             //       },
-//                             //     ),
-//                             //     gapWidthColumn(),
-//                             //     PopUpInputField(
-//                             //       controller: reason,
-//                             //       label: "reason",
-//                             //     ),
-//                             //   ],
-//                             // ),
-//
-//                           ],
-//                         ) ,
-//
-//                       ),
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             );
-//           }
-//       ),
-//     );
-//
-//   }
-// }
+
 class PopUpHeader extends StatefulWidget {
   final String label;
   final Widget? dataField;
@@ -4529,6 +4340,731 @@ class CommonButtonCustom extends StatelessWidget {
       style: _buttonStyle,
       onPressed: onPressed,
       child: FittedBox(child: child),
+    );
+  }
+}
+class PurchaseReceivingPrintScreen extends StatefulWidget {
+  final String vendorCode;
+  final String note;
+  final bool select;
+  final String orderCode;
+  final String orderDate;
+  final String remarks;
+  final double? discount;
+  final double? vat;
+  final double? variableAmount;
+  final double? actualCost;
+  final double? unitCost;
+  final double? excisetax;
+  final  List<RecievingLines> table;
+
+  PurchaseReceivingPrintScreen({
+    this.vendorCode="",
+    this.orderCode="",
+    this.note="",
+    this.remarks="",
+    this.orderDate="",
+    required this.table,
+    this.actualCost=0.00,
+    this.variableAmount=0.00,
+    this.select=false,
+    this.discount=0.00,
+    this.vat=0.00,
+    this.unitCost=0.00,
+    this.excisetax=0.00,
+
+
+
+
+  });
+
+  @override
+  _PurchaseReceivingPrintScreenState createState() => _PurchaseReceivingPrintScreenState();
+}
+
+class _PurchaseReceivingPrintScreenState extends State<PurchaseReceivingPrintScreen> {
+  late AutoScrollController _scrollController;
+  @override
+  void initState() {
+
+    _scrollController = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    return Scaffold(
+
+      body:
+      SingleChildScrollView(
+        child: Column(
+          children: [
+            PrintTitleScreen(),
+
+
+            Container(
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: height*.06,),
+                  Container(
+                    margin: EdgeInsets.symmetric(horizontal: width*.02),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          height: 70,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Ahlan cart company Limed",
+                                style: TextStyle(color:Color(0xff565555) ,fontSize:21,fontWeight: FontWeight.w800 ),),
+                              Text("Shop no. 514 5th floor aditya arcademall",
+                                style: TextStyle(color:Color(0xff565555) ,fontSize:12 ),),
+                              Text("road mumai MUMBAI,400004",
+                                style: TextStyle(color:Colors.black ,fontSize:12),)
+
+                            ],
+                          ),
+                        ),
+                        Spacer(),
+
+                        Container(
+                          height: 70,
+                          child: Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.only(top: 9),
+
+                                      child: Text("Date :")),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 9),
+
+                                      child: Text("purchase order code :")),
+
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.only(top: 9),
+                                      decoration: BoxDecoration(
+                                          border:Border(
+                                            bottom: BorderSide(width: .5, color: Color(0xffACACAC66).withOpacity(.4)),
+                                          )
+                                      ),
+                                      width: 120,
+                                      child:Text(widget.orderDate==""?DateTime.now()
+                                          ?.toIso8601String()
+                                          .split("T")[0] ??
+                                          "".toString():widget.orderDate.toString())
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.only(top: 9),
+                                      decoration: BoxDecoration(
+                                          border:Border(
+                                            bottom: BorderSide(width: .5, color: Color(0xffACACAC66).withOpacity(.4)),
+                                          )
+                                      ),
+                                      width: 120,
+                                      child:Text(widget.orderCode.toString()??"")
+                                  ),
+
+                                ],
+                              )
+                            ],
+                          ),
+                        )
+
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 30,),
+                  Container(
+                    width: width,
+                    height: height*.2,
+                    margin: EdgeInsets.symmetric(horizontal: 17),
+                    decoration: BoxDecoration(
+
+                      // Red border with the width is equal to 5
+                        border: Border.all(
+                            width: 1,
+                            color: Color(0xffACACAC)
+                        )
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          height:height*.06,
+                          width: width,
+                          color: Color(0xff1F6BA9),
+                          child: Center(
+                            child: Container(
+                                alignment: Alignment.topLeft,
+
+
+                                margin: EdgeInsets.only(left: width*.03,top: 5),
+                                child: Text("Basic Details",style: TextStyle(color: Colors.white),)),
+                          ),
+
+                        ),
+                        Expanded(child: Container(
+                          //color: Colors.red,
+                          child:Center(
+                            child: Row(
+
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Supplier",style: TextStyle(color:Color(0xff565555),)),
+
+                                    SizedBox(height: 2,),
+                                    Text(widget.vendorCode,style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
+                                  ],
+                                ),
+                                SizedBox(width: 12,),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("ORDER CODE",style: TextStyle(color:Color(0xff565555),)),
+                                    SizedBox(height: 2,),
+                                    Text(widget.orderCode??"",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
+                                  ],
+                                ),
+                                SizedBox(width: 12,),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("ORDER DATE",style: TextStyle(color:Color(0xff565555),),),
+                                    SizedBox(height: 2,),
+                                    Text(widget.orderDate??"",style: TextStyle(color: Colors.black,fontWeight: FontWeight.w600),),
+                                  ],
+                                ),
+                                SizedBox(width: 12,)
+                              ],
+                            ),
+                          ) ,
+                        ))
+                      ],
+                    ),
+                  ),
+                  Container(
+                    color: Colors.white,
+                    alignment: Alignment.topRight,
+                    height: 150,
+                    // height: 51,
+                    child: ListView(
+                        controller: _scrollController,
+                        physics: ScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(width: 5,),
+                              SingleChildScrollView(
+                                  child: Container(
+                                    width: width,
+                                    padding: EdgeInsets.all(10),
+                                    child: customTable(
+                                      border: const TableBorder(
+                                          verticalInside: BorderSide(
+                                              width: 1,
+                                              color: Colors.black45,
+                                              style:
+                                              BorderStyle.solid),
+                                          horizontalInside:
+                                          BorderSide(width: 1,color: Colors.black45,
+                                              style:
+                                              BorderStyle.solid)),
+                                      tableWidth: .5,
+                                      widths: {
+
+                                        0: FlexColumnWidth(2),
+                                        1: FlexColumnWidth(3),
+                                        2: FlexColumnWidth(4),
+                                        3: FlexColumnWidth(4),
+                                        4: FlexColumnWidth(4),
+                                        5: FlexColumnWidth(4),
+                                        6: FlexColumnWidth(4),
+                                        7: FlexColumnWidth(4),
+                                        8: FlexColumnWidth(4),
+                                        9: FlexColumnWidth(4),
+                                        10: FlexColumnWidth(4),
+                                        11: FlexColumnWidth(4),
+                                        12: FlexColumnWidth(4),
+                                        13: FlexColumnWidth(4),
+                                        14: FlexColumnWidth(4),
+                                        15: FlexColumnWidth(4),
+                                        16: FlexColumnWidth(4),
+                                        17: FlexColumnWidth(4),
+
+
+                                      },
+                                      childrens: [
+                                        TableRow(
+
+                                            children: [
+                                              tableHeadtext(
+                                                  'Sl.No',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color: Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Variant Id ',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color: Color(0xff1F6BA9)
+                                              ),
+
+
+                                              tableHeadtext(
+                                                  'Barcode',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+
+                                              tableHeadtext(
+                                                  'Purchase UOM',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Requested Qty',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+
+
+
+                                              tableHeadtext(
+                                                  'Unit cost',
+                                                  //padding:
+                                                  //EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Exsise tax',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Discount',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+
+                                              tableHeadtext(
+                                                  'Vatable amount',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Vat',
+                                                  padding:
+                                                  EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+                                              tableHeadtext(
+                                                  'Actual cost',
+                                                  // padding:
+                                                  // EdgeInsets.all(15),
+                                                  height: 60,
+                                                  size: 13,
+                                                  color:  Color(0xff1F6BA9)
+                                              ),
+
+
+                                              // tableHeadtext(
+                                              //   'Is free',
+                                              //   padding:
+                                              //   EdgeInsets.all(15),
+                                              //   height: 80,
+                                              //   size: 13,
+                                              //     color:  Color(0xff1F6BA9)
+                                              // ),
+
+
+                                            ]),
+                                        if (widget.table != null)...[
+                                          for (var i = 0;
+                                          i <widget. table.length;
+                                          i++)
+                                            TableRow(
+                                                children: [
+
+                                                  textPadding(
+                                                      (i + 1)
+                                                          .toString(),
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+
+                                                  textPadding(
+                                                      widget.table[i].variantId??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].barcode??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].supplierCode??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].receivedQty.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+
+                                                  textPadding(
+                                                      widget.table[i].unitCost.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].excessTax.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].discount.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+
+                                                  textPadding(
+                                                      widget.table[i].vatableAmount.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].vat.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+                                                  textPadding(
+                                                      widget.table[i].actualCost.toString()??"",
+                                                      fontSize: 12,
+                                                      padding: EdgeInsets
+                                                          .only(
+                                                          left:
+                                                          11.5,
+                                                          top:
+                                                          1.5),
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500),
+
+
+
+
+
+
+                                                ]
+                                            )
+                                        ]
+
+                                      ],
+                                    ),
+                                  )
+                              ),
+                            ],
+
+                          ),
+
+                        ]
+                    ),
+                  ),
+
+
+
+                  Container(
+                      width: width,
+                      height: 30,
+                      margin: EdgeInsets.symmetric(horizontal: 17),
+                      decoration: BoxDecoration(
+                          color: Color(0xffF7F7F7)
+
+
+                      ),
+                      child:Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Discount:"),
+                                Text(widget.discount.toString())
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("UnitCost:"),
+                                Text(widget.unitCost.toString())
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Excise Tax:"),
+                                Text(widget.excisetax.toString())
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("VAT Amount:"),
+                                Text(widget.vat.toString())
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Vatable Amount:"),
+                                Text(widget.variableAmount.toString())
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Row(
+                              children: [
+                                Text("Actual cost:"),
+                                Text(widget.actualCost.toString())
+                              ],
+                            ),
+                          )
+
+                        ],
+                      )
+                  ),
+                  SizedBox(height: height*0.15,),
+
+                  Row(
+                    children: [
+
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: width*.02),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Remarks:",style: TextStyle(fontWeight: FontWeight.bold),),
+                            SizedBox(height: height*0.01,),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+
+                                      SizedBox(width: width*.009,),
+                                      Text(widget.remarks??"",style: TextStyle(color: Color(0xff252525),fontSize: 14),),
+
+                                    ],
+                                  ),
+                                  SizedBox(width: width*.009,),
+
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: height*.009,),
+                            Text("Note:",style: TextStyle(fontWeight: FontWeight.bold),),
+                            SizedBox(height: height*0.01,),
+                            Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+
+                                      SizedBox(width: width*.009,),
+                                      Text(widget.note??"",style: TextStyle(color: Color(0xff252525),fontSize: 14),),
+
+                                    ],
+                                  ),
+                                  SizedBox(width: width*.009,),
+
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      Container(
+                        height: height*.16,
+                        width:width*.18,
+                        decoration: BoxDecoration(
+
+                          // Red border with the width is equal to 5
+                            border: Border.all(
+                                width: 1,
+                                color: Color(0xffACACAC)
+                            )
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                                margin: EdgeInsets.only(
+                                  top:height*.012,
+                                  left:height*.012,
+                                ),
+                                child: Text("Authorized by:",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,),)),
+                            //
+                            // Row(
+                            //   children: [
+                            //     Text("Aftabu rahman",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,height: 19),),
+                            //
+                            //   ],
+                            // )
+
+                          ],
+                        ),
+
+                      )
+
+                    ],
+                  ),
+                  SizedBox(height: height*.003,)
+
+
+
+                ],
+              ),
+
+            ),
+
+          ],
+        ),
+      ),
     );
   }
 }

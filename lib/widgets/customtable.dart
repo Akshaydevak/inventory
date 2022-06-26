@@ -33,7 +33,7 @@ Widget tableHeadtext(
       color: color,
       child: Text(
         label,
-        textAlign: TextAlign.left,
+        textAlign: TextAlign.center,
         style: TextStyle(fontSize: size, color: textColor),
       ),
     );
@@ -41,8 +41,10 @@ Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
       FontWeight fontWeight = FontWeight.w100}) =>
-    Padding(
-      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
+    Container(
+      alignment: Alignment.center,
+      // color: Colors.green,
+      // padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),

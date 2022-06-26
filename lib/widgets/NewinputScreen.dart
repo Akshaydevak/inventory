@@ -26,7 +26,7 @@ class NewInputCard extends StatefulWidget {
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 38,
+    this.height = 40,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -45,6 +45,7 @@ class _NewInputCardState extends State<NewInputCard> {
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
       child:widget.direction==false? Column(
@@ -320,56 +321,70 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
     return Column(
       children: [
         Container(
-          color: Colors.grey.shade200,
+
+          alignment: Alignment.center,
+          // color: Colors.grey.shade200,
           child:widget.initialCheck?
-          TextFormField(
+          Center(
+            child: TextFormField(
 
-           initialValue:widget.last=="0"?"":widget.last,
-            onTap: () {
-              if (widget.onClick != null) widget.onClick!();
-            },
-            maxLines: widget.maxLines,
+             initialValue:widget.last=="0"?"":widget.last,
+              onTap: () {
+                if (widget.onClick != null) widget.onClick!();
+              },
+              maxLines: widget.maxLines,
 
-            //controller: widget.controller,
-            enabled: widget.enable,
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            onEditingComplete: widget.onComplete,
-            onChanged: widget.onChanged,
-            decoration: InputDecoration(
+              //controller: widget.controller,
+              enabled: widget.enable,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ],
+              onEditingComplete: widget.onComplete,
+              onChanged: widget.onChanged,
+              decoration: InputDecoration(
+                isCollapsed: true,
 
-              contentPadding: EdgeInsets.all(10),
-              isDense: true,
-              hintText: widget.hintText,
-              hintStyle: TextStyle(fontSize: 10),
-              border:InputBorder.none,
+
+                contentPadding: EdgeInsets.all(20),
+                isDense: true,
+                hintText: widget.hintText,
+                hintStyle: TextStyle(fontSize: 10),
+                border:InputBorder.none,
+              ).copyWith(isDense: true),
             ),
           ):
-          TextFormField(
+          Container(
 
-           // initialValue:widget.last=="0"?"":widget.last,
-            onTap: () {
-              if (widget.onClick != null) widget.onClick!();
-            },
-            maxLines: widget.maxLines,
+            alignment: Alignment.center,
+            child: Center(
+              child: TextFormField(
+
+               // initialValue:widget.last=="0"?"":widget.last,
+                onTap: () {
+                  if (widget.onClick != null) widget.onClick!();
+                },
+                maxLines: widget.maxLines,
 
          controller: widget.controller,
-            enabled: widget.enable,
-            keyboardType: TextInputType.number,
-            inputFormatters: <TextInputFormatter>[
-              FilteringTextInputFormatter.digitsOnly
-            ],
-            onEditingComplete: widget.onComplete,
-            onChanged: widget.onChanged,
-            decoration: InputDecoration(
+                enabled: widget.enable,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                onEditingComplete: widget.onComplete,
+                onChanged: widget.onChanged,
+                decoration: InputDecoration(
+                  isCollapsed: true,
 
-              contentPadding: EdgeInsets.all(10),
-              isDense: true,
-              hintText: widget.hintText,
-              hintStyle: TextStyle(fontSize: 10),
-              border:InputBorder.none,
+
+                  contentPadding: EdgeInsets.all(20),
+                  isDense: true,
+                  hintText: widget.hintText,
+                  hintStyle: TextStyle(fontSize: 10),
+                  border:InputBorder.none,
+                ).copyWith(isDense: true),
+              ),
             ),
           ),
         ),

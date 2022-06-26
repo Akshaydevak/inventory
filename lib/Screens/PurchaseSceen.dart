@@ -83,11 +83,13 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
               width: double.infinity,
              color: Colors.white,
               child: Column(
+               // mainAxisAlignment: MainAxisAlignment.end,
                 children: [
 
                   Container(
-                    height: width*.045,
-                    decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
+
+                    height: height/10,
+                     decoration:BoxDecoration(     border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
 
                     width: double.infinity,
                     child: Row(
@@ -96,23 +98,26 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
 
                         Container(
-                          width:MediaQuery.of(context).size.width*.52,
-                          height: width*.052,
-                          margin: EdgeInsets.only(top:width*.012),
+                           width:MediaQuery.of(context).size.width/1.8,
+                           padding: EdgeInsets.only(top: 3),
+                           height: height*.18,
+                         // margin: EdgeInsets.only(top:width*.012),
 
                           child: TabBar(
-
+// labelPadding: EdgeInsets.all(8),
 
                             labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
-                              unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
-                              padding: EdgeInsets.only(left: 13,),
-                              isScrollable: false,
+                              unselectedLabelStyle: TextStyle(color: Color(0xff000000,),fontSize: width/22,fontWeight: FontWeight.w400),
+                              // padding: EdgeInsets.only(left: 13,),
+                              isScrollable: true,
                               physics: NeverScrollableScrollPhysics(),
                               indicatorSize: TabBarIndicatorSize.label,
+
 
                               //indicatorSize:TabBarIndicatorSize.tab ,
 
                               indicatorColor: Color(0xff3E4F5B),
+
                               indicatorWeight: 5,
                               indicator: UnderlineTabIndicator(
                                   borderSide: BorderSide(
@@ -122,7 +127,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                                  // insets: EdgeInsets.only(left: width*.014, right: width*.017)
                               ),
 
-                              // padding: EdgeInsets.only(bottom: 10),
+
 
                               controller: _tabController,
                               tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: height*.023),),
@@ -132,7 +137,12 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
                                 Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: height*.023),)]),
                         ),
+                        // Divider(
+                        //   color: Colors.red,
+                        //   thickness: 2,
+                        // ),
                         Container(
+
                           child: Row(
                             children: [
                               TitleIcon( image:"asset/purchase.png",color: Colors.black54,top:0,size: 0.010,),

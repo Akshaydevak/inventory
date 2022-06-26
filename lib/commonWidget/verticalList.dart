@@ -93,6 +93,13 @@ class _VerticalListState extends State<VerticalList> {
                             context
                                 .read<InventorysearchCubit>()
                                 .getSearch(widget.itemsearch.text);
+                            if(va==""){
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .getInventorySearch("code");
+
+                            }
+
                           },
                         )),
                     SizedBox(

@@ -21,8 +21,7 @@ class Buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+
     return GestureDetector(
       onTap: (){
         onApply();
@@ -55,13 +54,14 @@ class TextButtonLarge extends StatelessWidget {
   final String? images;
   final String text;
   final IconData? icon;
-  const TextButtonLarge({Key? key,  this.images, required this.text,this.icon}) : super(key: key);
+  final Function  onPress;
+  const TextButtonLarge({Key? key,  this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
       width: 150,
       height: 50,
-      child: TextButton(onPressed: (){},
+      child: TextButton(onPressed:(){onPress(); },
           style: ButtonStyle(
               shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(

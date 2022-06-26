@@ -144,7 +144,8 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
   Widget build(BuildContext context) {
     print("avalvaruvo"+widget.initialValue.toString());
     final mFormat = widget.format ?? DateFormat.yMd();
-    return widget.row?SizedBox(
+    return widget.row?
+    SizedBox(
 
         child: ListTile(
           contentPadding: EdgeInsets.symmetric(

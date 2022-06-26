@@ -487,7 +487,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                   setState(() {
 
                                     select=!select;
-                                    if(select==true){
+
 
                                       table.clear();
                                       print("shammmma"+table.toString());
@@ -534,18 +534,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       isActive1=false;
 
 
-                                    }
-                                    else{
-                                      context
-                                          .read<
-                                          RequestformreadCubit>()
-                                          .getRequestFormRead(
-                                          veritiaclid!);
-                                      setState(() {
 
-                                      });
 
-                                    }
 
 
 
@@ -2197,9 +2187,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           ((vatableAmount1! *
                                                                               vat1!) /
                                                                               100));
-
-
-
 
 
 
