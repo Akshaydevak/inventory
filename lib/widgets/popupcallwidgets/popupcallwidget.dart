@@ -18,12 +18,14 @@ class PopUpCall extends StatefulWidget {
   final Function onSelection;
   final String type;
   final String? inventory;
+  final String? vendorId;
 
   final bool enable;
   final List<String>? list;
   const PopUpCall(
       {Key? key,
       this.value,
+        this.vendorId,
       this.enable = false,
       this.onAddNew,
         this.inventory="",
@@ -75,6 +77,7 @@ class _PopUpCallState extends State<PopUpCall> {
       case "cost-method-list":
         {
           data = CostMethodPopUpCall(
+              vendorId:widget.vendorId,
 
             inventory: widget.inventory,
               onSelection: widget.onSelection,
@@ -246,6 +249,7 @@ class _SellingPriceBasedPopUpCallState
 
 class CostMethodPopUpCall extends StatefulWidget {
   final String? inventory;
+  final String? vendorId;
   final String? value;
   final VoidCallback? onAddNew;
   final Function onSelection;
@@ -257,6 +261,7 @@ class CostMethodPopUpCall extends StatefulWidget {
       this.value,
       this.onAddNew,
         this.inventory="",
+        this.vendorId,
       required this.onSelection,
       required this.type,
       required this.enable,
@@ -284,7 +289,7 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
   child: Builder(
             builder: (context) {
               print("widget.inventory"+widget.inventory.toString());
-            widget.inventory==""?  context.read<VariantIdCubitDartCubit>().getVariantId(): context.read<VariantIdCubitDartCubit>().getVariantId(widget.inventory);
+            widget.inventory==""?  context.read<VariantIdCubitDartCubit>().getVariantId(vendorId: widget.vendorId): context.read<VariantIdCubitDartCubit>().getVariantId(inventory:widget.inventory);
               return BlocBuilder<VariantIdCubitDartCubit,
                   VariantIdCubitDartState>(builder: (context, state) {
                 print(state);
@@ -325,52 +330,55 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
 
                     if (widget.onAddNew != null) list.add("");
                     _controller = TextEditingController(text: label);
-                    return TypeAheadFormField(
-                      enabled: widget.enable,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13, ),
-                          controller: _controller,
-                          decoration: InputDecoration(
+                    return Container(
+                      margin: EdgeInsets.only(top: 9,left: 9),
+                      child: TypeAheadFormField(
+                        enabled: widget.enable,
+                        validator: (value) {
+                          if (value != null && value.isEmpty) {
+                            return "required";
+                          }
+                        },
+                        textFieldConfiguration: TextFieldConfiguration(
+                            style: TextStyle(fontSize: 13, ),
+                            controller: _controller,
+                            decoration: InputDecoration(
 
-                              border: InputBorder.none,
-                              isDense: true,
-                              // border: OutlineInputBorder(),
-                             suffixIcon: Icon(Icons.arrow_downward_outlined)
-                          )),
-                      onSuggestionSelected: (suggestion) {
-                        print("suggestion"+suggestion.toString());
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else {
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data));
-                          // data.sellingPercntageBasedOn?.forEach((element) {
-                          //   if (element == suggestion)
-                          //     Variable.methodId = element.id;
-                          // });
-                        }
-                      },
-                      itemBuilder: (context, suggestion) {
-                        // if (suggestion == "Add new")
-                        //   return ListTile(
-                        //     leading: Icon(Icons.add_circle_outline_outlined),
-                        //     title: Text(suggestion.toString()),
-                        //   );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
-                        );
-                      },
-                      suggestionsCallback: (String value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
+                                border: InputBorder.none,
+                                isDense: true,
+                                // border: OutlineInputBorder(),
+                               suffixIcon: Icon(Icons.arrow_downward_outlined)
+                            )),
+                        onSuggestionSelected: (suggestion) {
+                          print("suggestion"+suggestion.toString());
+                          if (suggestion == "Add new")
+                            widget.onAddNew!();
+                          else {
+                            widget.onSelection(onSellingBasedSelect(
+                                suggestion.toString(), data));
+                            // data.sellingPercntageBasedOn?.forEach((element) {
+                            //   if (element == suggestion)
+                            //     Variable.methodId = element.id;
+                            // });
+                          }
+                        },
+                        itemBuilder: (context, suggestion) {
+                          // if (suggestion == "Add new")
+                          //   return ListTile(
+                          //     leading: Icon(Icons.add_circle_outline_outlined),
+                          //     title: Text(suggestion.toString()),
+                          //   );
+                          return ListTile(
+                            ////leading: Icon(Icons.shopping_cart_outlined),
+                            title: Text(suggestion.toString()),
+                          );
+                        },
+                        suggestionsCallback: (String value) async {
+                          return value == null || value.isEmpty
+                              ? list
+                              : search(value, list, widget.onAddNew);
+                        },
+                      ),
                     );
                   },
                 );

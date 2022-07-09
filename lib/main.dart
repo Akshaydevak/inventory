@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
+import 'Invetory/inventorysearch_cubit.dart';
 import 'Screens/Dashboard.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
@@ -26,6 +27,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => VendordetailsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InventorysearchCubit(),
         ),
       ],
       child: MaterialApp(

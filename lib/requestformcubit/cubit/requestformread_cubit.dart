@@ -9,7 +9,7 @@ part 'requestformread_cubit.freezed.dart';
 class RequestformreadCubit extends Cubit<RequestformreadState> {
   RequestformreadCubit() : super(RequestformreadState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
-  Future getRequestFormRead(int id) async {
+  Future getRequestFormRead(int? id) async {
     print("idddidd" + id.toString());
     final result = await _repos.getRequestFormRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

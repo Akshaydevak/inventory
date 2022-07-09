@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:html';
 
 import 'package:flutter/material.dart';
@@ -90,6 +91,14 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController actualcost = TextEditingController();
   TextEditingController grandtotal = TextEditingController();
   TextEditingController discount = TextEditingController();
+  TextEditingController requestedtTestContoller = TextEditingController();
+  TextEditingController minOrderTestContoller = TextEditingController();
+  TextEditingController maxOrderTestContoller = TextEditingController();
+  TextEditingController discountTestContoller = TextEditingController();
+  TextEditingController focTestContoller = TextEditingController();
+  TextEditingController unitCostTestContoller = TextEditingController();
+  TextEditingController excesstaxTestContoller = TextEditingController();
+  TextEditingController vatTestContoller = TextEditingController();
   NavigationProvider vm = NavigationProvider();
   TextEditingController unitcostTestController=TextEditingController();
   var requestedListControllers = <TextEditingController>[];
@@ -149,6 +158,7 @@ List<TextEditingController> vatController =[];
   double excessTAxValue = 0;
   double vatableValue = 0;
   String? variantId;
+  bool updateCheck=false;
   List<OrderLines> orderLisnes = [];
 
   bool onChange = false;
@@ -161,9 +171,9 @@ List<TextEditingController> vatController =[];
     context
         .read<InventorysearchCubit>()
         .getInventorySearch("code");
-    context
-        .read<GeneralPurchaseReadCubit>()
-        .getGeneralPurchaseRead(Variable.verticalid!);
+    // context
+    //     .read<GeneralPurchaseReadCubit>()
+    //     .getGeneralPurchaseRead(Variable.verticalid!);
 
 
     int verticalScrollIndex = 0;
@@ -172,9 +182,88 @@ List<TextEditingController> vatController =[];
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: Axis.vertical);
     super.initState();
-    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
-    //   print("ak test"+value.toString());
-    // });
+
+  }
+  clear(){
+    requestedListControllers.clear();
+    minListControllers.clear() ;
+    maxListControllers .clear();
+    unitcostListControllers.clear();
+    excesstListControllers.clear();
+    discounttListControllers.clear();
+    print("discount"+discounttListControllers.length.toString());
+    focListControllers.clear();
+    print("foccc"+focListControllers.length.toString());
+    vatListControllers.clear();
+    print("vattt"+vatListControllers.length.toString());
+    print("appuzz"+table.length.toString());
+    // currentStock.clear();
+    vendortrnnumber.text="";
+    ordercode.text="";
+    vendoraddress.text="";
+    planned_receipt_date.text="";
+    promised_receipt_date.text="";
+    remarks.text="";
+    orderStatus.text="";
+    orderDate.text="";
+    ordercode.text="";
+    note.text="";
+    discount.text="";
+    foc.text="";
+    unitcourse.text="";
+    vat.text="";
+    Variableamount.text="";
+    excesstax.text="";
+    grandtotal.text="";
+    actualcost.text="";
+    vendorCode.text="";
+    Recievingstatus.text="";
+    variantId = "";
+    varinatname =
+    "";
+    address2="";
+    address1="";
+    purchaseUom="";
+
+    vid = 0;
+    eTax = 0;
+    variantId = "";
+    varinatname =
+    "";
+    vrefcod = "";
+    Vbarcode = "";
+    vendorRefCode="";
+    vvat=0;
+    vfoc=0;
+    focValue=0;
+    excessTAxValue=0;
+
+    check1 = "";
+    check = 0;
+    Qty = 0;
+    Vdiscount = 0;
+    Vamount = 0;
+    vmaxnqty=0;
+    vminqty=0;
+    Vgrnadtotal = 0;
+    vactualCost = 0;
+    unitcost = 0;
+    grands = 0;
+    actualValue = 0;
+    VatableValue = 0;
+    discountValue = 0;
+    vatValue = 0;
+    stockQty = 0;
+    _value = false;
+    isRecieved = false;
+    requestedtTestContoller.clear();
+    minOrderTestContoller.clear();
+    maxOrderTestContoller.clear();
+    discountTestContoller.clear();
+    focTestContoller.clear();
+    excesstaxTestContoller.clear();
+    vatTestContoller.clear();
+    // _value=false;
   }
 
   valueAddingTextEdingController(){
@@ -188,28 +277,20 @@ List<TextEditingController> vatController =[];
         minListControllers.add(min);
         print("probability"+minListControllers[i].text);
         print("mazzzzz"+table[i].maximumQty.toString());
-
         var max = new TextEditingController(text: table[i].maximumQty.toString()??"");
         print("max"+max.toString());
         maxListControllers.add(max);
-
         print("maxlength"+maxListControllers.toString());
         var unitcost = new TextEditingController(text: table[i].unitCost.toString()??"");
         unitcostListControllers.add(unitcost);
-
         var excess = new TextEditingController(text: table[i].excessTax.toString()??"");
         excesstListControllers.add(excess);
-
         var disc = new TextEditingController(text:  table[i].discount.toString());
-
          discounttListControllers.add(disc);
-
         var foc = new TextEditingController(text: table[i].foc.toString()??"");
         focListControllers.add(foc);
-
         var vat = new TextEditingController(text: table[i].vat.toString()??"");
         vatListControllers.add(vat);
-
         setState(() {
 
         });
@@ -219,44 +300,40 @@ List<TextEditingController> vatController =[];
   }
   
   assigniningDetails(String address,String trn){
-   
-
     vendoraddress.text=address;
     vendortrnnumber.text=trn;
-   
-    setState(() {
-
-    });
-
+    setState(() {});
+  }
+  verticalUpdate(List<PurchaseOrder> result,String trn){
+    result=result;
+    context
+        .read<InventorysearchCubit>()
+        .getInventorySearch("code");
+    // vendortrnnumber.text=trn;
+    setState(() {});
   }
   Future _getCurrentUser() async {
-    for (var i = 0; i < table.length; i++) {
-      print("variantaaaaaa"+table[i].variantId.toString());
-      var b=  await   context
-          .read<PurchaseStockCubit>()
-          .getCurrentStock(Variable.inventory_ID, table[i].variantId);
-      print("b"+b.toString());
+
+    if(table.isNotEmpty) {
+
+      for (var i = 0; i < table.length; i++) {
+        print("variantaaaaaa" + table[i].variantId.toString());
+        print("variantaaaaaa" + inventoryId.text.toString());
+        var b = await context.read<PurchaseStockCubit>().getCurrentStock(inventoryId.text, table[i].variantId);
+        print("b" + b.toString());
+      }
+      setState(() {});
     }
-    setState(() {
-
-    });
   }
-
-
-
   addition() {
-    print("enterd");
-    print("+==" + table.toString());
     for (var i = 0; i < table.length; i++) {
       if (table[i].isActive == true) {
         unitcost = unitcost + table[i].unitCost!;
-
         grands = grands + table[i].grandTotal!;
         actualValue = actualValue + table[i].actualCost!;
         vatValue = vatValue + table[i].vat!;
         discountValue = discountValue + table[i].discount!;
         focValue = focValue + table[i].foc!;
-
         VatableValue = VatableValue + table[i].variableAmount!;
 print("excessTaxvalue"+excessTAxValue.toString());
         excessTAxValue = excessTAxValue + table[i].excessTax!;
@@ -265,51 +342,36 @@ print("excessTaxvalue"+excessTAxValue.toString());
     unitcourse.text = unitcost == 0 ? "" : unitcost.toString();
     grandtotal.text = grands.toString();
     vat.text = vatValue.toString();
-
     actualcost.text = actualValue.toString();
     print("actualcost.text" + actualcost.text.toString());
     foc.text = focValue.toString();
     discount.text = discountValue.toString();
     excesstax.text = excessTAxValue.toString();
     Variableamount.text = VatableValue.toString();
-
   }
-
   @override
   Widget build(BuildContext context) {
-    print("+++++++++++++++");
-    print("Lengthdd"+table.length.toString());
-    print(widget.purchaseTable);
-    print(widget.unitcost);
-    print("+++++++++++++++");
-    // valueAddingTextEdingController();
 
     Size size = MediaQuery.of(context).size;
     vm = Provider.of<NavigationProvider>(context);
-
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     // inventoryId.text=Variable.inventory_ID ;
     return Scaffold(
       body: MultiBlocProvider(
         providers: [
-
-
-
-
           BlocProvider(
             create: (context) => PurchaseorderpostCubit(),
           ),
-
           BlocProvider(
             create: (context) => PurchaseOrderPatchCubit(),
           ),
           BlocProvider(
+            create: (context) => GeneralPurchaseReadCubit(),
+          ),
+          BlocProvider(
             create: (context) => PurchaseorderdeleteCubit(),
           ),
-
-
         ],
         child: Builder(builder: (context) {
           return MultiBlocListener(
@@ -323,8 +385,18 @@ print("excessTaxvalue"+excessTAxValue.toString());
                   }, error: () {
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
-                    if (data.data1)
+                    if (data.data1) {
                       context.showSnackBarSuccess(data.data2);
+                      Timer(Duration(seconds: 5), () {
+                        setState(() {
+                          context
+                              .read<InventorysearchCubit>()
+                              .getInventorySearch("code");
+                          context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                        });
+                      });
+
+                    }
                     else {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
@@ -345,9 +417,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                         setState(() {
                           print("Variable.tableedit"+Variable.tableedit.toString());
                           print("Variable.tableedit"+Variable.tableindex.toString());
-
                           if(Variable.tableedit==true){
-
                             table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
                                 variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
                                 unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount,supplierCode: purchaseTable?.vendorDetails?.vendorRefCode??""
@@ -355,25 +425,18 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             print("searching data"+purchaseTable.toString());
-
                             varinatname = purchaseTable?.name;
                            vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
                             print("check"+check.toString());
                             unitcostTestController?.text=purchaseTable?.unitCost.toString()??"";
                             vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                            print(
-                                "vm.totalUnitcost" + vm.totalUnitcost.toString());
-
+                            print("vm.totalUnitcost" + vm.totalUnitcost.toString());
                             check1 = purchaseTable?.purchaseUomName;
                             vrefcod = purchaseTable?.code;
                             vid = purchaseTable?.id;
-                            purchaseTable?.excessTax != null
-                                ? eTax = purchaseTable?.excessTax
-                                : eTax = 0;
-
-                            Vbarcode =
-                                purchaseTable?.barCode?.barcodeNumber.toString();
+                            purchaseTable?.excessTax != null ? eTax = purchaseTable?.excessTax : eTax = 0;
+                            Vbarcode = purchaseTable?.barCode?.barcodeNumber.toString();
                           }
                         });
                       });
@@ -382,88 +445,127 @@ print("excessTaxvalue"+excessTAxValue.toString());
               BlocListener<PurchaseStockCubit, PurchaseStockState>(
                 listener: (context, state) {
                   print("state++++++++++++++++++++++++++++++++");
-
                   state.maybeWhen(
                       orElse: () {},
                       error: () {
                         print("error");
                       },
                       success: (data) {
+                        purchaseCurrentStock = data;
+                        print("Sachin"+stockCheck.toString());
                         if(stockCheck==false){
-                          currentStock.add(stockQty);
-
+                          print("anamikas case");
+                          currentStock.add(data.StockQty??0);
+                          setState(() {
+                          });
+                          print("anamikas case"+currentStock.toString());
                         }
                    else if(Variable.tableedit==false) {
-                      purchaseCurrentStock = data;
+
                       stockQty = purchaseCurrentStock?.StockQty;
                       setState(() {});
                     }
                     else{
-                      table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
-                          variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
-                          ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
-                      )]);
+                      // table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
+                      //     variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
+                      //     ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
+                      // )]);
+                          currentStock.insert(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
                       setState(() {});
-
                     }
                       });
-
                 },
               ),
               BlocListener<GeneralPurchaseReadCubit, GeneralPurchaseReadState>(
                 listener: (context, state) {
                   print("state++++++++++++++++++++++++++++++++");
-
                   state.maybeWhen(
                       orElse: () {},
                       error: () {
                         print("error");
                       },
                       success: (data) {
-
                         setState(() {
                           stockCheck=false;
-                          print("datasssssssssssssss"+data.toString());
-                          data.data?.orderLines != null
-                              ? table = data.data?.orderLines ?? []
-                              : table = [];
-                          print("tablsssssssssssssssssse"+table.toString());
 
+                          print("datasssssssssssssss"+data.toString());
+                          data.data?.orderLines != null ? table = data.data?.orderLines ?? [] : table = [];
+                          print("tablsssssssssssssssssse"+table.toString());
                           Variable.inventory_ID =data.data?.iventoryId??"";
                           vendortrnnumber.text=data.data?.vendorTrnNumber??"";
                           vendoraddress.text=data.data?.vendorAddress??"";
                           note.text=data.data?.note??"";
                           purchaseUom=data.data?.purchaseOrderType??"";
                           orderType=data.data?.purchaseOrderType??"";
+                          inventoryId.text=data.data?.iventoryId??"";
                           orderDate.text=data.data?.orderDate??"";
-
-
                           remarks.text=data.data?.remarks??"";
-                          unitcourse.text=data.data?.unitcost.toString()??"";
-                          excesstax.text=data.data?.excessTax.toString()??"";
-                          actualcost.text=data.data?.actualCost.toString()??"";
-                          vat.text=data.data?.vat.toString()??"";
-                          grandtotal.text=data.data?.grandTotal.toString()??"";
-                          Variableamount.text=data.data?.variableAmount.toString()??"";
-                          foc.text=data.data?.foc.toString()??"";
-
+                          if(data.data?.unitcost==null||data.data?.unitcost=="null"){
+                            unitcourse.text =='';
+                          }
+                          else{
+                            setState(() {
+                              unitcourse.text = data.data?.unitcost.toString()??"";
+                            });
+                          }
+                          if(data.data?.excessTax==null||data.data?.excessTax=="null"){
+                            excesstax.text =='';
+                          }
+                          else{
+                            setState(() {
+                              excesstax.text = data.data?.excessTax.toString()??"";
+                            });
+                          }
+                          if(data.data?.actualCost==null||data.data?.actualCost=="null"){
+                            actualcost.text =='';
+                          }
+                          else{
+                            setState(() {
+                              actualcost.text = data.data?.actualCost.toString()??"";
+                            });
+                          }
+                          if(data.data?.vat==null||data.data?.vat=="null"){
+                            vat.text =='';
+                          }
+                          else{
+                            setState(() {
+                              vat.text = data.data?.vat.toString()??"";
+                            });
+                          }
+                          if(data.data?.grandTotal==null||data.data?.grandTotal=="null"){
+                            grandtotal.text =='';
+                          }
+                          else{
+                            setState(() {
+                              grandtotal.text = data.data?.grandTotal.toString()??"";
+                            });
+                          }
+                          if(data.data?.variableAmount==null||data.data?.variableAmount=="null"){
+                            Variableamount.text =='';
+                          }
+                          else{
+                            setState(() {
+                              Variableamount.text = data.data?.variableAmount.toString()??"";
+                            });
+                          }
+                          if(data.data?.foc ==null||data.data?.foc =="null"){
+                            foc.text =='';
+                          }
+                          else{
+                            setState(() {
+                              foc.text = data.data?.foc.toString()??"";
+                            });
+                          }
                           if(data.data?.discount! ==null||data.data?.discount! =="null"){
-                            print(">>>>>>>>>>>>doubtfull");
                             discount.text =='';
                           }
                           else{
-                            print("doubtfull"+data.data!.discount.toString());
                             setState(() {
                               discount.text = data.data?.discount.toString()??"";
-                              print("doubtfull"+discount.text.toString());
+
                             });
 
                           }
-
-
-                          // discount.text=?=" ":data.data?.discount.toString();
-                          // discount.text=data.data?.discount.toString()??"";
-
                           ordercode.text=data.data?.orderCode.toString()??"";
                           vendorCode.text=data.data?.vendorId.toString()??"";
                           Recievingstatus.text=data.data?.recievingStatus??"";
@@ -478,7 +580,8 @@ print("excessTaxvalue"+excessTAxValue.toString());
 
                               print("entereddddddd");
                               valueAddingTextEdingController();
-                          // _getCurrentUser();
+                          _getCurrentUser();
+
 
 
 
@@ -495,8 +598,10 @@ print("excessTaxvalue"+excessTAxValue.toString());
                   }, error: () {
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
-                    if (data.data1)
+                    if (data.data1) {
                       context.showSnackBarSuccess(data.data2);
+                      context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                    }
                     else {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
@@ -507,15 +612,23 @@ print("excessTaxvalue"+excessTAxValue.toString());
               ),
               BlocListener<PurchaseorderdeleteCubit, PurchaseorderdeleteState>(
                 listener: (context, state) {
-
                   state.maybeWhen(orElse: () {
                     // context.
                     context.showSnackBarError("Loadingggg");
                   }, error: () {
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
-                    if (data.data1)
+                    if (data.data1) {
                       context.showSnackBarSuccess(data.data2);
+                      clear();
+                      table.clear();
+
+                      context
+                          .read<InventorysearchCubit>()
+                          .getInventorySearch("code");
+                      select=true;
+
+                    }
                     else {
                       context.showSnackBarError(data.data2);
                       print(data.data1);
@@ -537,9 +650,6 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           print("vendorDetails"+vendorDetails.toString());
                           partnerOrganizationData=vendorDetails?.partnerOrganizationdata;
                           // email=vendorDetails.partnerOrganizationdata[1].
-
-
-
                         });
                       });
                 },
@@ -553,140 +663,46 @@ print("excessTaxvalue"+excessTAxValue.toString());
                       print("error");
                     },
                     success: (list) {
-                      print("listaaaaaaaaaaaa"+list.data.toString());
+                      print("aaaaayyyiram"+list.data.toString());
 
                       result = list.data;
                       setState(() {
 if(result.isNotEmpty){ veritiaclid=result[0].id;
 Variable.verticalid=result[0].id;
 print("Variable.ak"+Variable.verticalid.toString());
+context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+}
+else{
+  select=true;
 }
 
-                        // context
-                        //     .read<GeneralPurchaseReadCubit>()
-                        //     .getGeneralPurchaseRead(Variable.verticalid!);
-                        setState(() {
 
-                        });
+                        setState(() {});
 
-                        print( Variable.verticalid);
-                        print("idssss"+result[0].id.toString());
                       });
                     });
               },
               builder: (context, state) {
                 return SingleChildScrollView(
-                  // physics: ScrollPhysics(),
-                  child: Container(
-                      height: 5000,
+                  child: IntrinsicHeight(
+
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-
                         VerticalList(selectedVertical: selectedVertical,
                           itemsearch: itemsearch,ontap: (int index){
                             setState(() {
                               print("taped");
                               select=false;
                               selectedVertical=index;
-
-                              requestedListControllers.clear();
-                              minListControllers.clear() ;
-                              maxListControllers .clear();
-                              unitcostListControllers.clear();
-                              excesstListControllers.clear();
-                              discounttListControllers.clear();
-                              print("discount"+discounttListControllers.length.toString());
-                              focListControllers.clear();
-                              print("foccc"+focListControllers.length.toString());
-                              vatListControllers.clear();
-                              print("vattt"+vatListControllers.length.toString());
-                              print("appuzz"+table.length.toString());
-                              // currentStock.clear();
-
-
-                              vendortrnnumber.text="";
-                              ordercode.text="";
-                              vendoraddress.text="";
-                              planned_receipt_date.text="";
-                              promised_receipt_date.text="";
-                              remarks.text="";
-                              orderStatus.text="";
-                              orderDate.text="";
-                              ordercode.text="";
-                              note.text="";
-                              discount.text="";
-                              foc.text="";
-                              unitcourse.text="";
-                              vat.text="";
-                              Variableamount.text="";
-                              excesstax.text="";
-                              grandtotal.text="";
-                              actualcost.text="";
-                              vendorCode.text="";
-                              Recievingstatus.text="";
-                              variantId = "";
-                              varinatname =
-                              "";
-                              address2="";
-                              address1="";
-                              purchaseUom="";
-
-                              vid = 0;
-                              eTax = 0;
-                              variantId = "";
-                              varinatname =
-                              "";
-                              vrefcod = "";
-                              Vbarcode = "";
-                              vendorRefCode="";
-                              vvat=0;
-                              vfoc=0;
-                              focValue=0;
-                              excessTAxValue=0;
-
-                              check1 = "";
-                              check = 0;
-                              Qty = 0;
-                              Vdiscount = 0;
-                              Vamount = 0;
-                              vmaxnqty=0;
-                              vminqty=0;
-                              Vgrnadtotal = 0;
-                              vactualCost = 0;
-                              unitcost = 0;
-                              grands = 0;
-                              actualValue = 0;
-
-                              VatableValue =
-                              0;
-                              discountValue =
-                              0;
-                              vatValue = 0;
-                              stockQty = 0;
-                              _value = false;
-                              isRecieved =
-                              false;
-
-                              // _value=false;
-
-
-
-
-
+                              currentStock.clear();
+                              updateCheck=false;
+                              clear();
                               table.clear();
-                              setState(() {
-
-                              });
-
-                              veritiaclid =
-                                  result[index].id;
-                              context
-                                  .read<
-                                  GeneralPurchaseReadCubit>()
-                                  .getGeneralPurchaseRead(
-                                  veritiaclid!);
+                              setState(() {});
+                              veritiaclid = result[index].id;
+                              context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
                             });
                           },result: result,
                         ),
@@ -694,8 +710,6 @@ print("Variable.ak"+Variable.verticalid.toString());
                           child: Container(
                             child: Column(
                               children: [
-
-
                                 Container(
                                   color: Colors.white,
                                   child: Column(
@@ -708,119 +722,22 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                           Container(
                                               padding: EdgeInsets.only(top: 15,left: 10),
-
-
-
-                                            child:
-                                            TextButton(
+                                            child: TextButton(
                                                 style: TextButton.styleFrom(
                                                     primary: Colors.blue,
                                                     // elevation: 2,
                                                     backgroundColor: Colors.white24),
                                               onPressed: () {
-
-                                                  print("lsg"+table.length.toString());
-
                                                   select=true;
-
-
-                                                   requestedListControllers.clear();
-                                                   minListControllers.clear() ;
-                                                   maxListControllers .clear();
-                                                   unitcostListControllers.clear();
-                                                   excesstListControllers.clear();
-                                                   discounttListControllers.clear();
-                                                   print("discount"+discounttListControllers.length.toString());
-                                                   focListControllers.clear();
-                                                   print("foccc"+focListControllers.length.toString());
-                                                   vatListControllers.clear();
-                                                   print("vattt"+vatListControllers.length.toString());
-                                                   print("appuzz"+table.length.toString());
-
-
-                                                 vendortrnnumber.text="";
-                                                 ordercode.text="";
-                                                 vendoraddress.text="";
-                                                 planned_receipt_date.text="";
-                                                 promised_receipt_date.text="";
-                                                 remarks.text="";
-                                                 orderStatus.text="";
-                                                 orderDate.text="";
-                                                 ordercode.text="";
-                                                 note.text="";
-                                                 discount.text="";
-                                                 foc.text="";
-                                                 unitcourse.text="";
-                                                 vat.text="";
-                                                 Variableamount.text="";
-                                                 excesstax.text="";
-                                                 grandtotal.text="";
-                                                 actualcost.text="";
-                                                 vendorCode.text="";
-                                                 Recievingstatus.text="";
-                                                 variantId = "";
-                                                 varinatname =
-                                                 "";
-                                                 address2="";
-                                                 address1="";
-                                                 purchaseUom="";
-
-                                                 vid = 0;
-                                                 eTax = 0;
-                                                 variantId = "";
-                                                 varinatname =
-                                                 "";
-                                                 vrefcod = "";
-                                                 Vbarcode = "";
-                                                 vendorRefCode="";
-                                                 vvat=0;
-                                                  vfoc=0;
-                                                 focValue=0;
-                                                 excessTAxValue=0;
-
-                                                 check1 = "";
-                                                 check = 0;
-                                                 Qty = 0;
-                                                 Vdiscount = 0;
-                                                 Vamount = 0;
-                                                 vmaxnqty=0;
-                                                 vminqty=0;
-                                                 Vgrnadtotal = 0;
-                                                 vactualCost = 0;
-                                                 unitcost = 0;
-                                                 grands = 0;
-                                                 actualValue = 0;
-
-                                                 VatableValue =
-                                                 0;
-                                                 discountValue =
-                                                 0;
-                                                 vatValue = 0;
-                                                 stockQty = 0;
-                                                 _value = false;
-                                                 isRecieved =
-                                                 false;
-
-                                                 // _value=false;
-
-
-
-
-
+                                                  updateCheck=false;//for table edit check when edtied the editing fields
+                                                  currentStock.clear();
+                                                  clear();
                                                  table.clear();
                                                  setState(() {
-
                                                  });
                                                  print("Variable.inventory_ID"+Variable.inventory_ID.toString());
-
-
-
-
                                               },
-                                              // icon: Icon(Icons.refresh),
-                                              // label: Text("Clear")
                                               child: Text("Create"),
-
                                             ),
                                           ),
                             TextButtonLarge(
@@ -939,7 +856,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                         // setState(() {
                                                         vendorCode.text=va?.partnerCode??"";
                                                         var id=va?.partnerCode;
-                                                        print(vendorCode.text);
+                                                        print("vendorssss"+id.toString());
                                                         setState(() {
                                                           context
                                                               .read<
@@ -961,8 +878,7 @@ print("Variable.ak"+Variable.verticalid.toString());
 
 
                                                       },
-                                                      onAddNew: () {},
-                                                      restricted: true,
+
                                                     ),
 
                                                     SizedBox(
@@ -3048,13 +2964,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                           table.length
                                                                               .toString());
 
-                                                                      // table?.add(oderlines1);
-                                                                      // print("+++++"+oderlines.toString());
 
-                                                                      // widget.onAdd(VendorDetails(id: id, name: name));
-                                                                      // id = "";
-                                                                      // name = "";
-                                                                      // print("oncomplete");
                                                                     },
                                                                   ),
                                                                 ),
@@ -3156,92 +3066,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                           _value =
                                                                           !_value;
                                                                         }
-                                                                        //
-                                                                        //   table.add(
-                                                                        //       OrderLines(
-                                                                        //         vendorRefCode: vendorRefCode??"",
-                                                                        //     isRecieved:
-                                                                        //         isRecieved ??
-                                                                        //             false,
-                                                                        //     isActive:
-                                                                        //         _value,
-                                                                        //     supplierCode:
-                                                                        //         vid.toString() ,
-                                                                        //     variantId:
-                                                                        //         variantId ,
-                                                                        //     variantName:
-                                                                        //         varinatname,
-                                                                        //     barcode:
-                                                                        //         Vbarcode ,
-                                                                        //     cvd: "sss",
-                                                                        //     foc:
-                                                                        //         vfoc ,
-                                                                        //     maximumQty:
-                                                                        //         vmaxnqty ,
-                                                                        //     minimumQty:
-                                                                        //         vminqty ,
-                                                                        //     excessTax:
-                                                                        //         eTax ,
-                                                                        //     vat:
-                                                                        //         vvat ,
-                                                                        //     actualCost:
-                                                                        //         vactualCost,
-                                                                        //     purchaseuom:
-                                                                        //         check1 ,
-                                                                        //     discount:
-                                                                        //         Vdiscount ,
-                                                                        //     requestedQty:
-                                                                        //         Qty ,
-                                                                        //     unitCost:
-                                                                        //         check,
-                                                                        //     grandTotal:
-                                                                        //         Vgrnadtotal ,
-                                                                        //     variableAmount:
-                                                                        //         Vamount! ,
-                                                                        //     currentQty:
-                                                                        //         stockQty,
-                                                                        //   ));
-                                                                        //   print("gtable" +
-                                                                        //       table
-                                                                        //           .toString());
-                                                                        //   addition();
-                                                                        //   vid = 0;
-                                                                        //   eTax = 0;
-                                                                        //   variantId = "";
-                                                                        //   varinatname =
-                                                                        //       "";
-                                                                        //   vrefcod = "";
-                                                                        //   Vbarcode = "";
-                                                                        //   check1 = "";
-                                                                        //   vendorRefCode="";
-                                                                        //   check = 0;
-                                                                        //   Qty = 0;
-                                                                        //   vvat=0;
-                                                                        //   vmaxnqty=0;
-                                                                        //   vmaxnqty=0;
-                                                                        //   Vdiscount = 0;
-                                                                        //   Vamount = 0;
-                                                                        //   Vgrnadtotal = 0;
-                                                                        //   vactualCost = 0;
-                                                                        //   unitcost = 0;
-                                                                        //   grands = 0;
-                                                                        //   focValue=0;
-                                                                        //   actualValue = 0;
-                                                                        //   excessTAxValue=0;
-                                                                        //   VatableValue =
-                                                                        //       0;
-                                                                        //   discountValue =
-                                                                        //       0;
-                                                                        //   vatValue = 0;
-                                                                        //   stockQty = 0;
-                                                                        //   _value = false;
-                                                                        //   isRecieved =
-                                                                        //       false;
-                                                                        //
-                                                                        //   // _value=false;
-                                                                        //
-                                                                        //   setState(() {});
-                                                                        // }
+
                                                                       });
                                                                     },
                                                                   ),
@@ -3393,15 +3218,7 @@ print("Variable.ak"+Variable.verticalid.toString());
 
 
            TableRow(
-                                                        // decoration: BoxDecoration(
-                                                        //     color: Colors.green.shade200,
-                                                        //     shape: BoxShape.rectangle,
-                                                        //     border: const Border(      top: BorderSide(
-                                                        //         width: .5,
-                                                        //         color: Colors.black45,
-                                                        //         // color: Colors.blue,
-                                                        //         style: BorderStyle.solid
-                                                        //     ),)),
+
                                                           children: [
                                                             tableHeadtext(
                                                               'Sno',
@@ -3601,195 +3418,76 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                               EdgeInsets.all(7),
                                                               height: 46,
                                                               size: 13,
-                                                              // color: Palette.containerDarknew,
-                                                              // textColor: Palette.white
                                                             ),
-                                                            // if (widget.onAddNew) textPadding(''),
-                                                          ]),
-                                                        // if (!widget.onAddNew &&
-                                                        //     widget.order?.orderLines != null &&
-                                                        //     widget.order!.orderLines!.isNotEmpty) ...[
-                                                        //   for (var i = 0; i < widget.order!.orderLines!.length; i++)
 
+                                                          ]),
                                                         if (table != null)...[
-                                                          for (var i = 0;
-                                                          i < table.length;
-                                                          i++)
+                                                          for (var i = 0; i < table.length; i++)
                                                             TableRow(
-                                                                decoration: BoxDecoration(
-                                                                    color: Colors.grey
-                                                                        .shade200,
-                                                                    shape: BoxShape
-                                                                        .rectangle,
-                                                                    border:const  Border(
-                                                                        left: BorderSide(
-                                                                            width: .5,
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            style: BorderStyle
-                                                                                .solid),
-                                                                        bottom: BorderSide(
-                                                                            width: .5,
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            style: BorderStyle
-                                                                                .solid),
-                                                                        right: BorderSide(
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            width: .5,
-                                                                            style: BorderStyle
+                                                                decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                                                    border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                        bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                        right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
                                                                                 .solid))),
                                                                 children: [
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                                    child: textPadding(
-                                                                        (i + 1)
-                                                                            .toString(),
-                                                                        fontSize: 12,
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            1.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                    child: textPadding((i + 1).toString(), fontSize: 12,
+                                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                                            1.5), fontWeight: FontWeight.w500),
                                                                   ),
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: PopUpCall(
-
-                                                                      type:
-                                                                      "cost-method-list",
+                                                                      type: "cost-method-list",
                                                                       value: table[i].variantId,
-                                                                      onSelection:
-                                                                          (VariantId? va) {
-
+                                                                      onSelection: (VariantId? va) {
+                                                                        updateCheck=true;
                                                                         table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
                                                                             variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
                                                                             ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
                                                                         )]);
                                                                         setState(() {
-                                                                          var    variantId1 =
-                                                                              va?.code;
+                                                                          var    variantId1 = va?.code;
                                                                           int? id = va!.id;
                                                                           Variable.tableindex =i;
                                                                           Variable.tableedit=true;
-
-
                                                                           onChange = true;
-                                                                          context
-                                                                              .read<
-                                                                              TableDetailsCubitDartCubit>()
-                                                                              .getTableDetails(
-                                                                              id);
-                                                                          context
-                                                                              .read<
-                                                                              PurchaseStockCubit>()
-                                                                              .getCurrentStock(
-                                                                              inventoryId.text,variantId1);
+                                                                          context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                                          context.read<PurchaseStockCubit>().getCurrentStock(inventoryId.text,variantId1);
 
-                                                                          // orderType = va!;
                                                                         });
                                                                       },
-                                                                      onAddNew: () {},
-                                                                      // restricted: true,
                                                                     ),
                                                                   ),
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: textPadding(
-                                                                        table[i]
-                                                                            .variantName??"",
-                                                                        fontSize: 12,
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            1.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                        table[i].variantName??"",
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:1.5), fontWeight: FontWeight.w500),
                                                                   ),
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding(
-                                                                        table[i].supplierCode.toString(),
-                                                                        fontSize: 12,
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].supplierCode.toString(),
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                                   ),
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding(
-                                                                        table[i]
-                                                                            .barcode!,
-                                                                        fontSize: 12,
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].barcode??"",
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                                   ),
 
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding(
-                                                                        table[i].currentQty==null?"": table[i].currentQty.toString(),
-
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
+                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                                   ),
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: textPadding(
-                                                                        table[i]
-                                                                            .purchaseuom!,
-                                                                        padding: EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                            11.5,
-                                                                            top:
-                                                                            11.5),
-                                                                        fontWeight:
-                                                                        FontWeight
-                                                                            .w500),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].purchaseuom??"",
+                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                                   ),
-
-
                                                                   //88888888888888888888                                   //**********************************************
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: UnderLinedInput(
-                                                                      controller:requestedListControllers[i],
-                                                                      //last: table[i].requestedQty.toString() ?? "",
-                                                                      onChanged: (va) {
-                                                                        print(va);
-                                                                        if (va == "") {
-                                                                          print("entered");
-                                                                          table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(controller:requestedListControllers[i],
+                                                                      onChanged: (va) {print(va);
+                                                                      updateCheck=true;
+                                                                        if (va == "") {table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                         } else {
                                                                           var qty = int.tryParse(va);
                                                                           var dis = table[i].discount;
@@ -3799,56 +3497,29 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                           var foc = table[i].foc;
                                                                           if (unitcost == "" || unitcost == 0) {
                                                                             table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                                          }else {
-                                                                            var Vamount;
-                                                                            var vactualCost;
-
-                                                                            Vamount  = (((unitcost! *
-                                                                                qty!) +
-                                                                                excess!) -
-                                                                                dis!)
-                                                                                .toDouble();
+                                                                          }else {var Vamount;
+                                                                          var vactualCost;
+                                                                            Vamount  = double.parse((((unitcost! * qty!) + excess!) - dis!).toDouble().toStringAsFixed(3));
                                                                             if(vat==0 ||vat==""){
                                                                               vactualCost=Vamount;
                                                                             }
                                                                             else{
-
-                                                                              vactualCost  = (Vamount! +
-                                                                                  ((Vamount! *
-                                                                                      vat!) /
-                                                                                      100));
+                                                                              vactualCost  = (Vamount! + ((Vamount! * vat!) / 100));
                                                                             }
-
-
-                                                                            table[i] =
-                                                                                table[i]
-                                                                                    .copyWith(
-                                                                                    variableAmount: Vamount,
-                                                                                    actualCost: vactualCost,
-                                                                                    grandTotal: vactualCost,
-                                                                                    requestedQty: qty);
+                                                                            table[i] = table[i].copyWith(variableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, requestedQty: qty);
                                                                           }
-
-
-
                                                                         }
-
                                                                         setState(() {});
                                                                       },
                                                                     ),
                                                                   ),
-                                                                  //    Text(table[i].requestedQty.toString()),
-
-
-
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: UnderLinedInput(
                                                                       //last:table[i].minimumQty.toString(),
                                                                       controller:minListControllers[i],
-
                                                                       onChanged: (p0) {
-
+                                                                        updateCheck=true;
                                                                         print(p0);
                                                                         if(p0==""){
                                                                           setState(() {
@@ -3859,32 +3530,19 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         else{
                                                                           setState(() {
                                                                             table[i] = table[i].copyWith(minimumQty:int.tryParse(p0));
-
-
                                                                           });
-
                                                                         }
-
-
-
-
                                                                       },
                                                                       enable: true,
                                                                       onComplete: () {
-
                                                                         setState(() {  print("maxxxx"+table.toString());});
                                                                       },
                                                                     ),
                                                                   ),
-
-                                                                  TableCell(
-                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: UnderLinedInput(
-                                                                      controller:maxListControllers[i],
-                                                                      //last:table[i].maximumQty.toString(),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(controller:maxListControllers[i],
                                                                       onChanged: (p0) {
-
-                                                                        print(p0);
+                                                                        updateCheck=true;
                                                                         if(p0==""){
                                                                           table[i] = table[i].copyWith(maximumQty: 0);
                                                                           setState(() {
@@ -3919,35 +3577,20 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                     ),
                                                                   ),
 
-
-                                                                  // Checkbox(
-                                                                  //   value: table[i]
-                                                                  //       .isRecieved==null?false: table[i]
-                                                                  //       .isRecieved,
-                                                                  //   onChanged: (bool?
-                                                                  //       value) {
-                                                                  //     setState(() {
-                                                                  //       this.isRecieved =
-                                                                  //           value;
-                                                                  //     });
-                                                                  //   },
-                                                                  // ),
-
-                                                                  //*************UNITCOST*******************uNIT COST*******************UNITCOST***********UNITCOST************************************************
-                                                                  //
-
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: UnderLinedInput(
                                                                       controller:unitcostListControllers[i],
                                                                       // last: table[i].unitCost.toString() ?? "",
                                                                       onChanged: (va) {
+                                                                        updateCheck=true;
                                                                         double? unitcost;
                                                                         if (va == "") {
                                                                           print("entered");
                                                                           unitcost = 0;
                                                                           print("disc" + unitcost.toString());
                                                                           table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                          setState(() {});
                                                                         }
                                                                         unitcost = double.tryParse(va);
                                                                         print("unitcost" + unitcost.toString());
@@ -3988,8 +3631,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                                   vactualCost
                                                                                       .toString());
                                                                           table[i] =
-                                                                              table[i]
-                                                                                  .copyWith(
+                                                                              table[i].copyWith(
                                                                                   variableAmount: Vamount,
                                                                                   actualCost: vactualCost,
                                                                                   grandTotal: vactualCost,
@@ -4008,9 +3650,11 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: UnderLinedInput(
+
                                                                       controller:excesstListControllers[i],
                                                                       // last: table[i].excessTax.toString() ?? "",
                                                                       onChanged: (va) {
+                                                                        updateCheck=true;
                                                                         double? excess;
                                                                         if (va == "") {
                                                                           excess = 0;
@@ -4068,9 +3712,11 @@ print("Variable.ak"+Variable.verticalid.toString());
 
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: UnderLinedInput(
+
                                                                       // controller:excesstListControllers[i],
                                                                       // last: table[i].excessTax.toString() ?? "",
                                                                       onChanged: (va) {
+                                                                        updateCheck=true;
                                                                         double? excess;
                                                                         if (va == "") {
                                                                           excess = 0;
@@ -4132,6 +3778,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       controller:discounttListControllers[i],
                                                                       // last: table[i].discount.toString() ?? "",
                                                                       onChanged: (va) {
+                                                                        updateCheck=true;
                                                                         int? disc;
                                                                         if (va ==
                                                                             "") {
@@ -4239,6 +3886,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       // last: table[i].foc.toString(),
 
                                                                       onChanged: (p0) {
+                                                                        updateCheck=true;
 
                                                                         print(p0);
                                                                         if(p0==""){
@@ -4292,6 +3940,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       controller: vatListControllers[i],
                                                                       // last: table[i].vat.toString() ?? "",
                                                                       onChanged: (va) {
+                                                                        updateCheck=true;
                                                                         if (va == "") {
                                                                           print("sss");
                                                                           var vatableAmount = table[i].variableAmount;
@@ -4403,87 +4052,60 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         onSelection:(bool ? value){
                                                                           bool? isActive = table[i].isActive;
                                                                           setState(() {
+                                                                            updateCheck=true;
                                                                             isActive = !isActive!;
                                                                             table[i] = table[i].copyWith(isActive: isActive);
                                                                             print(isInvoiced);
-                                                                            setState(() {
-
-                                                                            });
-
+                                                                            setState(() {});
                                                                           });
-
-
                                                                         }),
-                                                                    // Checkbox(
-                                                                    //   value: table[i]
-                                                                    //       .isActive==null?false:table[i]
-                                                                    //       .isActive,
-                                                                    //   onChanged: (bool?
-                                                                    //       value) {
-                                                                    //     setState(() {
-                                                                    //       // this.isRecieved =
-                                                                    //       //     value;
-                                                                    //     });
-                                                                    //   },
-                                                                    // ),
                                                                   ),
                                                                   Container(  height: 50,
                                                                     child: TextButton(
-                                                                        style: TextButton.styleFrom(
-                                                                            primary: Colors.white,
-                                                                            elevation: 2,
-                                                                            backgroundColor: Colors
-                                                                                .green.shade200
-                                                                        ),
+                                                                        style: TextButton.styleFrom(primary: Colors.white, elevation: 2, backgroundColor: Colors.green.shade200),
                                                                         onPressed: () {
-                                                                          addition();
-                                                                          vid = 0;
-                                                                          eTax = 0;
-                                                                          variantId = "";
-                                                                          varinatname =
-                                                                          "";
-                                                                          vrefcod = "";
-                                                                          Vbarcode = "";
-                                                                          vendorRefCode="";
-                                                                          vvat=0;
-                                                                          focValue=0;
-                                                                          excessTAxValue=0;
+                                                                          var Vamount = table[i].variableAmount??0;
+                                                                          var variant = table[i].variantId??0;
+                                                                          var mins = table[i].minimumQty??0;
+                                                                          var maxs = table[i].maximumQty??0;
 
-                                                                          check1 = "";
-                                                                          check = 0;
-                                                                          Qty = 0;
-                                                                          Vdiscount = 0;
-                                                                          Vamount = 0;
-                                                                          vmaxnqty=0;
-                                                                          vminqty=0;
-                                                                          Vgrnadtotal = 0;
-                                                                          vactualCost = 0;
-                                                                          unitcost = 0;
-                                                                          grands = 0;
-                                                                          actualValue = 0;
+                                                                          var excess = table[i].excessTax??0;
+                                                                          print("excess" + excess.toString());
+                                                                          var unitcosts = table[i].unitCost??0;
+                                                                          var qty = table[i].requestedQty??0;
+                                                                          var foc = table[i].foc??0;
+                                                                          var dis = table[i].discount??0;
+                                                                          if(variant=="null"||qty==0||unitcosts==0){
+                                                                            context.showSnackBarError("please fill all the fields");
+                                                                          }else if(qty!<foc!){
+                                                                            context.showSnackBarError("the received qty allways greater than  foc");
 
-                                                                          VatableValue =
-                                                                          0;
-                                                                          discountValue =
-                                                                          0;
-                                                                          vatValue = 0;
-                                                                          stockQty = 0;
-                                                                          _value = false;
-                                                                          isRecieved =
-                                                                          false;
-
-
-
-
+                                                                          }
+                                                                          else if(mins>maxs){
+                                                                            context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                                          }
+                                                                         else{
+                                                                            addition();
+                                                                            updateCheck=false;
+                                                                            focValue=0;
+                                                                            excessTAxValue=0;
+                                                                            Vdiscount = 0;
+                                                                            Vamount = 0;
+                                                                            Vgrnadtotal = 0;
+                                                                            vactualCost = 0;
+                                                                            unitcost = 0;
+                                                                            grands = 0;
+                                                                            actualValue = 0;
+                                                                            VatableValue = 0;
+                                                                            discountValue = 0;
+                                                                            vatValue = 0;
+                                                                            setState(() {});
+                                                                          }
                                                                         },
-                                                                        child:Text("update",style:TextStyle(color: Colors.black))
-
+                                                                        child:Text(updateCheck?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
                                                                     ),
                                                                   ),
-
                                                                 ]),],
-
-
 //********************************************************************************************************************
                                                         TableRow(
                                                             decoration: BoxDecoration(
@@ -4506,141 +4128,53 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         style: BorderStyle
                                                                             .solid))),
                                                             children: [
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    (table.length + 1)
-                                                                        .toString(),
-                                                                    fontSize: 12,
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding((table.length + 1).toString(), fontSize: 12,
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: PopUpCall(
-                                                                  // label: "purchase UOM",
-                                                                  type:
-                                                                  "cost-method-list",
+                                                                  vendorId: vendorCode.text,
+                                                                  type: "cost-method-list",
                                                                   value: variantId,
-                                                                  onSelection:
-                                                                      (VariantId? va) {
-                                                                    print(va!.id
-                                                                        .toString());
-                                                                    print("code" +
-                                                                        va!.code
-                                                                            .toString());
-
+                                                                  onSelection: (VariantId? va) {
                                                                     setState(() {
                                                                       stockCheck=true;
-                                                                      variantId =
-                                                                          va?.code;
+                                                                      variantId = va?.code;
                                                                       int? id = va!.id;
-                                                                      print("is is"+id.toString());
                                                                       Variable.tableedit=false;
-
                                                                       onChange = true;
-                                                                      context
-                                                                          .read<
-                                                                          TableDetailsCubitDartCubit>()
-                                                                          .getTableDetails(
-                                                                          id);
-                                                                      context
-                                                                          .read<
-                                                                          PurchaseStockCubit>()
-                                                                          .getCurrentStock(
-                                                                          inventoryId.text,variantId);
+                                                                      context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                                      context.read<PurchaseStockCubit>().getCurrentStock(inventoryId.text,variantId);
 
-                                                                      // orderType = va!;
                                                                     });
                                                                   },
-                                                                  onAddNew: () {},
-                                                                  // restricted: true,
                                                                 ),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    varinatname!,
-                                                                    fontSize: 12,
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding(varinatname!, fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(vendorRefCode!,
-                                                                    fontSize: 12,
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding(vendorRefCode!, fontSize: 12,
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    Vbarcode.toString(),
-                                                                    fontSize: 12,
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding(Vbarcode.toString(), fontSize: 12,
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    stockQty.toString(),
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding(stockQty.toString(),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(check1!,
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              Qty== 0?
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                    initialValue: "",
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-
-                                                                  ),
-
-
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: UnderLinedInput(controller:requestedtTestContoller ,
                                                                   onChanged: (p0) {
-                                                                    if (p0 == '') {
+                                                                  if (p0 == '') {
                                                                       setState(() {
                                                                         Qty = 0;
                                                                         Vamount = 0;
@@ -4649,120 +4183,21 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       });
                                                                     } else {
                                                                       setState(() {
-                                                                        Qty = int
-                                                                            .tryParse(
-                                                                            p0);
+                                                                        Qty = int.tryParse(p0);
                                                                       });
                                                                     }
-
-                                                                    if(check==0){
-                                                                      Vamount=0;
-                                                                      vactualCost = 0;
-                                                                      Vgrnadtotal = 0;
-                                                                      setState(() {
-
-                                                                      });
-
-
-                                                                    }
-                                                                    else {
-                                                                      Vamount =
-                                                                          (((check! *
-                                                                              Qty!) +
-                                                                              eTax!) -
-                                                                              Vdiscount!)
-                                                                              .toDouble();
-
-                                                                      vactualCost =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-                                                                      Vgrnadtotal =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-
-                                                                      if (Vamount !=
-                                                                          0) {
-                                                                        Vamount =
-                                                                            (((check! *
-                                                                                Qty!) +
-                                                                                eTax!) -
-                                                                                Vdiscount!)
-                                                                                .toDouble();
-                                                                      }
-                                                                    }
-
-                                                                    print(Qty);
-                                                                  },
-
-                                                                ),
-                                                              ):
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                initialCheck: true,
-
-                                                                  last:Qty.toString(),
-
-                                                                  onChanged: (p0) {
-                                                                    if (p0 == '') {
-                                                                      setState(() {
-                                                                        Qty = 0;
-                                                                        Vamount = 0;
-                                                                        Vgrnadtotal = 0;
-                                                                        vactualCost = 0;
-                                                                      });
-                                                                    } else {
-                                                                      setState(() {
-                                                                        Qty = int
-                                                                            .tryParse(
-                                                                            p0);
-                                                                      });
-                                                                    }
-
                                                                     if(check==0||Qty==0){
                                                                       Vamount=0;
                                                                       vactualCost = 0;
                                                                       Vgrnadtotal = 0;
-                                                                      setState(() {
-
-                                                                      });
-
-
+                                                                      setState(() {});
                                                                     }
                                                                     else {
-                                                                      Vamount =
-                                                                          (((check! *
-                                                                              Qty!) +
-                                                                              eTax!) -
-                                                                              Vdiscount!)
-                                                                              .toDouble();
-
-                                                                      vactualCost =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-                                                                      Vgrnadtotal =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-
-                                                                      if (Vamount !=
-                                                                          0) {
-                                                                        Vamount =
-                                                                            (((check! *
-                                                                                Qty!) +
-                                                                                eTax!) -
+                                                                      Vamount =double.parse( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                      vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                      if (Vamount != 0) {
+                                                                        Vamount = (((check! * Qty!) + eTax!) -
                                                                                 Vdiscount!)
                                                                                 .toDouble();
                                                                       }
@@ -4778,38 +4213,9 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   },
                                                                 ),
                                                               ),
-                                                              vminqty==0?  TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                  initialValue:"",
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-                                                                  onChanged: (p0) {
-                                                                    vminqty =
-                                                                        int.tryParse(
-                                                                            p0);
-                                                                    setState(() {
-
-                                                                    });
-                                                                  },
-
-                                                                ),
-                                                              ):
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                    initialCheck: true,
-                                                                  last:vminqty.toString(),
-                                                                  onChanged: (p0) {
-                                                                    vminqty =
-                                                                        int.tryParse(
-                                                                            p0);
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: UnderLinedInput(controller:minOrderTestContoller,
+                                                                  onChanged: (p0) {vminqty = int.tryParse(p0);
                                                                   },
                                                                   enable: true,
                                                                   onComplete: () {
@@ -4817,86 +4223,31 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   },
                                                                 ),
                                                               ),
-                                                              vmaxnqty==0 ?
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                  initialValue:"",
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-
-                                                                  onChanged: (p0) {
-                                                                    vmaxnqty =
-                                                                        int.tryParse(
-                                                                            p0);
-                                                                    setState(() {
-
-                                                                    });
-                                                                  },
-
-                                                                ),
-                                                              ):
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                initialCheck: true,
-                                                                  last:vmaxnqty.toString(),
-                                                                  onChanged: (p0) {
-                                                                    vmaxnqty =
-                                                                        int.tryParse(
-                                                                            p0);
-                                                                  },
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: UnderLinedInput(controller:maxOrderTestContoller,
+                                                                  onChanged: (p0) {vmaxnqty = int.tryParse(p0);},
                                                                   enable: true,
                                                                   onComplete: () {
                                                                     setState(() {});
                                                                   },
                                                                 ),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: Checkbox(
-                                                                  value:
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: Checkbox(value:
                                                                   this.isRecieved,
-                                                                  onChanged:
-                                                                      (bool? value) {
+                                                                  onChanged: (bool? value) {
                                                                     setState(() {
-                                                                      // this.isRecieved =
-                                                                      //     value;
                                                                     });
                                                                   },
                                                                 ),
                                                               ),
-                                                              // check == 0
-                                                              //     ? textPadding(
-                                                              //         check
-                                                              //             .toString(),
-                                                              //         fontSize: 12,
-                                                              //         padding: EdgeInsets
-                                                              //             .only(
-                                                              //                 left:
-                                                              //                     11.5,
-                                                              //                 top:
-                                                              //                     11.5),
-                                                              //         fontWeight:
-                                                              //             FontWeight
-                                                              //
-                                                              //                 .w500)
                                                               check==0?
                                                               TextFormField(
-
                                                                 initialValue:check.toString(),
                                                                 keyboardType: TextInputType.number,
                                                                 inputFormatters: <TextInputFormatter>[
                                                                   FilteringTextInputFormatter.digitsOnly
                                                                 ],
                                                                 decoration: InputDecoration(
-
                                                                   contentPadding: EdgeInsets.all(10),
                                                                   isDense: true,
                                                                   // hintText: widget.hintText,
@@ -4904,18 +4255,13 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   border:InputBorder.none,
                                                                 ),
                                                                 onChanged: (p0){
-                                                                  if (p0 ==
-                                                                      "") {
+                                                                  if (p0 == "") {
                                                                     setState(
-                                                                            () {
-                                                                          check = 0;
-
-                                                                        });
+                                                                            () {check = 0;});
                                                                   }
                                                                   else{
                                                                     setState(() {
                                                                       check =double.tryParse(p0);
-
                                                                     });
                                                                   }
                                                                   if(check==0 ||Qty==0){
@@ -4923,55 +4269,31 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                     vactualCost=0;
                                                                     Vgrnadtotal=0;
                                                                   }
-
                                                                  else {
-                                                                    check =
-                                                                        double
-                                                                            .tryParse(
-                                                                            p0);
-
-                                                                    Vamount =
-                                                                        (((check! *
-                                                                            Qty!) +
-                                                                            eTax!) -
-                                                                            Vdiscount!)
-                                                                            .toDouble();
-                                                                    vactualCost =
-                                                                    (Vamount! +
-                                                                        ((Vamount! *
-                                                                            vvat!) /
-                                                                            100));
+                                                                    check = double.tryParse(p0);
+                                                                    Vamount = (((check! * Qty!) + eTax!) - Vdiscount!).toDouble();
+                                                                    vactualCost = (Vamount! + ((Vamount! * vvat!) / 100));
                                                                     Vgrnadtotal =
-                                                                    (Vamount! +
-                                                                        ((Vamount! *
-                                                                            vvat!) /
-                                                                            100));
+                                                                    (Vamount! + ((Vamount! * vvat!) / 100));
                                                                   }
 
                                                                 },
                                                               )
                                                                   :
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: UnderLinedInput(
                                                                   initialCheck: true,
                                                                   last:check.toString(),
-
                                                                   onChanged:
                                                                       (p0) {
-                                                                        if (p0 ==
-                                                                            "") {
+                                                                        if (p0 == "") {
                                                                           setState(
-                                                                                  () {
-                                                                                check = 0;
-
+                                                                                  () {check = 0;
                                                                               });
                                                                         }
                                                                         else{
                                                                           setState(() {
                                                                             check =double.tryParse(p0);
-
                                                                           });
                                                                         }
                                                                         if(check==0 ||Qty==0){
@@ -4979,29 +4301,11 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                           vactualCost=0;
                                                                           Vgrnadtotal=0;
                                                                         }
-
                                                                         else {
-                                                                          check =
-                                                                              double
-                                                                                  .tryParse(
-                                                                                  p0);
-
-                                                                          Vamount =
-                                                                              (((check! *
-                                                                                  Qty!) +
-                                                                                  eTax!) -
-                                                                                  Vdiscount!)
-                                                                                  .toDouble();
-                                                                          vactualCost =
-                                                                          (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vvat!) /
-                                                                                  100));
-                                                                          Vgrnadtotal =
-                                                                          (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vvat!) /
-                                                                                  100));
+                                                                          check = double.tryParse(p0);
+                                                                          Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                          vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                          Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
                                                                         }
                                                                   },
                                                                   enable: true,
@@ -5009,130 +4313,32 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       () {},
                                                                 ),
                                                               ),
-                                                              eTax == 0
-                                                                  ? TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                  initialValue:"",
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-
-                                                                  onChanged:
-                                                                      (p0) {
-                                                                    if (p0 ==
-                                                                        "") {
-                                                                      setState(
-                                                                              () {
-                                                                            eTax = 0;
-                                                                          });
-                                                                    } else {
-                                                                      setState(
-                                                                              () {
-                                                                            eTax = double
-                                                                                .tryParse(
-                                                                                p0);
-                                                                          });
-                                                                    }
-                                                                    if(check==0 ||Qty==0){
-                                                                      vactualCost=0;
-                                                                      Vamount=0;
-                                                                      Vgrnadtotal=0;
-                                                                      setState(() {
-
-                                                                      });
-                                                                    }
-
-                                                                    else {
-                                                                      if (Vamount !=
-                                                                          0) {
-                                                                        Vamount =
-                                                                            (((check! *
-                                                                                Qty!) +
-                                                                                eTax!) -
-                                                                                Vdiscount!)
-                                                                                .toDouble();
-                                                                        vactualCost =
-                                                                        (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vvat!) /
-                                                                                100))
-                                                                        ;
-                                                                        Vgrnadtotal =
-                                                                        (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vvat!) /
-                                                                                100))
-                                                                        ;
-                                                                      }
-                                                                    }
-
-                                                                  },
-                                                                  // enable: true,
-                                                                  // onComplete:
-                                                                  //     () {},
-                                                                ),
-                                                              )
-                                                                  : TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: UnderLinedInput(
-                                                                  last:eTax.toString(),
-                                                                    initialCheck:true,
-                                                                  // initial: eTax
-                                                                  //     .toString(),
+                                                                    controller: excesstaxTestContoller,
                                                                   onChanged:
                                                                       (p0) {
-                                                                        if (p0 ==
-                                                                            "") {
+                                                                        if (p0 == "") {
                                                                           setState(
                                                                                   () {
                                                                                 eTax = 0;
                                                                               });
                                                                         } else {
                                                                           setState(
-                                                                                  () {
-                                                                                eTax = double
-                                                                                    .tryParse(
-                                                                                    p0);
+                                                                                  () {eTax = double.tryParse(p0);
                                                                               });
                                                                         }
                                                                         if(check==0 ||Qty==0){
                                                                           vactualCost=0;
                                                                           Vamount=0;
                                                                           Vgrnadtotal=0;
-                                                                          setState(() {
-
-                                                                          });
+                                                                          setState(() {});
                                                                         }
-
                                                                         else {
-                                                                          if (Vamount !=
-                                                                              0) {
-                                                                            Vamount =
-                                                                                (((check! *
-                                                                                    Qty!) +
-                                                                                    eTax!) -
-                                                                                    Vdiscount!)
-                                                                                    .toDouble();
-                                                                            vactualCost =
-                                                                            (Vamount! +
-                                                                                ((Vamount! *
-                                                                                    vvat!) /
-                                                                                    100))
-                                                                            ;
-                                                                            Vgrnadtotal =
-                                                                            (Vamount! +
-                                                                                ((Vamount! *
-                                                                                    vvat!) /
-                                                                                    100))
-                                                                            ;
+                                                                          if (Vamount != 0) {
+                                                                            Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                            vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                            Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                                                           }
                                                                         }
                                                                   },
@@ -5141,72 +4347,9 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       () {},
                                                                 ),
                                                               ),
-                                                              Vdiscount==0?
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                  initialValue:"",
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-
-
-                                                                  onChanged: (p0) {
-                                                                    if (p0 == '')
-                                                                      setState(() {
-                                                                        Vdiscount = 0;
-                                                                      });
-                                                                    else {
-                                                                      setState(() {
-                                                                        Vdiscount = int
-                                                                            .tryParse(
-                                                                            p0);
-                                                                      });
-                                                                    }
-                                                                    if(check==0 ||Qty==0){
-                                                                      vactualCost=0;
-                                                                      Vamount=0;
-                                                                      Vgrnadtotal=0;
-                                                                    }
-
-                                                                  else {
-                                                                      Vamount =
-                                                                          (((check! *
-                                                                              Qty!) +
-                                                                              eTax!) -
-                                                                              Vdiscount!)
-                                                                              .toDouble();
-
-                                                                      vactualCost =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-                                                                      Vgrnadtotal =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-
-                                                                      setState(() {});
-                                                                    }
-                                                                  },
-
-                                                                ),
-                                                              ):
-
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: UnderLinedInput(
-                                                                  initialCheck:true ,
-                                                                  last:Vdiscount.toString(),
+                                                                controller: discountTestContoller,
                                                                   onChanged: (p0) {
                                                                     if (p0 == '')
                                                                       setState(() {
@@ -5214,9 +4357,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       });
                                                                     else {
                                                                       setState(() {
-                                                                        Vdiscount = int
-                                                                            .tryParse(
-                                                                            p0);
+                                                                        Vdiscount = int.tryParse(p0);
                                                                       });
                                                                     }
                                                                     if(check==0 ||Qty==0){
@@ -5224,47 +4365,17 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       Vamount=0;
                                                                       Vgrnadtotal=0;
                                                                     }
-
                                                                     else {
-                                                                      Vamount =
-                                                                          (((check! *
-                                                                              Qty!) +
-                                                                              eTax!) -
-                                                                              Vdiscount!)
-                                                                              .toDouble();
-
-                                                                      vactualCost =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-                                                                      Vgrnadtotal =
-                                                                      (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100))
-                                                                      ;
-
+                                                                      Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                      vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                                                       setState(() {});
                                                                     }
                                                                   },
                                                                 ),
                                                               ),
-                                                              vfoc==0?
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                                child: TextFormField(
-                                                                  keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                    decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-                                                                  initialValue:"",
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: UnderLinedInput(controller: focTestContoller,
                                                                   onChanged: (p0) {
                                                                     setState(() {
                                                                       if (p0 == '')
@@ -5273,32 +4384,7 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         });
                                                                       else {
                                                                         setState(() {
-                                                                          vfoc = double
-                                                                              .tryParse(
-                                                                              p0);
-                                                                        });
-                                                                      }
-                                                                    });
-                                                                  },
-
-                                                                ),
-                                                              ):
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                    initialCheck:true,
-                                                                  last:vfoc.toString(),
-                                                                  onChanged: (p0) {
-                                                                    setState(() {
-                                                                      if (p0 == '')
-                                                                        setState(() {
-                                                                          vfoc = 0;
-                                                                        });
-                                                                      else {
-                                                                        setState(() {
-                                                                          vfoc = double
-                                                                              .tryParse(
-                                                                              p0);
+                                                                          vfoc = double.tryParse(p0);
                                                                         });
                                                                       }
                                                                     });
@@ -5307,37 +4393,15 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                   onComplete: () {},
                                                                 ),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    Vamount.toString(),
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: textPadding(Vamount.toString(),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
-                                                              vvat==0?
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: TextFormField(
-                                                                    keyboardType: TextInputType.number,
-                                                                  inputFormatters: <TextInputFormatter>[
-                                                                    FilteringTextInputFormatter.digitsOnly
-                                                                  ],
-                                                                  decoration:  InputDecoration(
-                                                                    border: InputBorder.none,
-
-                                                                  ),
-                                                                  initialValue:"",
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: UnderLinedInput(controller:vatTestContoller,
                                                                   onChanged: (p0) {
                                                                     if (p0 == "") {
-                                                                      print("null");
-                                                                      setState(() {
-                                                                        vvat = 0;
-
+                                                                      setState(() {vvat = 0;
                                                                       });
                                                                     }
                                                                     else{
@@ -5347,80 +4411,13 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       vactualCost=0;
                                                                       Vamount=0;
                                                                       Vgrnadtotal=0;
-                                                                      setState(() {
-
-                                                                      });
-                                                                    }
-
-                                                                   else{
-                                                                      Vamount = (((check! *
-                                                                          Qty!) +
-                                                                          eTax!) -
-                                                                          Vdiscount!)
-                                                                          .toDouble();
-                                                                      vactualCost = (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100));
-                                                                      Vgrnadtotal = (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100));
-                                                                      setState(() {
-
-                                                                      });
-
-                                                                    }
-
-
-
-                                                                  },
-
-                                                                ),
-                                                              )   :
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(
-                                                                   initialCheck: true,
-                                                                  last:vvat.toString(),
-                                                                  onChanged: (p0) {
-                                                                    if (p0 == "") {
-                                                                      print("null");
-                                                                      setState(() {
-                                                                        vvat = 0;
-
-                                                                      });
+                                                                      setState(() {});
                                                                     }
                                                                     else{
-                                                                      vvat =double.tryParse( p0);
-                                                                    }
-                                                                    if(check==0 ||Qty==0){
-                                                                      vactualCost=0;
-                                                                      Vamount=0;
-                                                                      Vgrnadtotal=0;
-                                                                      setState(() {
-
-                                                                      });
-                                                                    }
-
-                                                                    else{
-                                                                      Vamount =( (((check! *
-                                                                          Qty!) +
-                                                                          eTax!) -
-                                                                          Vdiscount!)
-                                                                          .toDouble());
-                                                                      vactualCost = (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100));
-                                                                      Vgrnadtotal = (Vamount! +
-                                                                          ((Vamount! *
-                                                                              vvat!) /
-                                                                              100));
-                                                                      setState(() {
-
-                                                                      });
-
+                                                                      Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
+                                                                      vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                      setState(() {});
                                                                     }
                                                                   },
                                                                   enable: true,
@@ -5432,92 +4429,42 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                     print("+++++" +
                                                                         table.length
                                                                             .toString());
-
-                                                                    // table?.add(oderlines1);
-                                                                    // print("+++++"+oderlines.toString());
-
-                                                                    // widget.onAdd(VendorDetails(id: id, name: name));
-                                                                    // id = "";
-                                                                    // name = "";
-                                                                    // print("oncomplete");
                                                                   },
                                                                 ),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    vactualCost
-                                                                        .toString(),
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                                child: textPadding(vactualCost.toString(),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(
-                                                                    Vgrnadtotal!
-                                                                        .toStringAsFixed(3).toString()??"",
-                                                                    padding:
-                                                                    EdgeInsets.only(
-                                                                        left: 11.5,
-                                                                        top: 11.5),
-                                                                    fontWeight:
-                                                                    FontWeight
-                                                                        .w500),
+                                                                child: textPadding(Vgrnadtotal.toString()??"",
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5),
+                                                                    fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: Checkbox(
                                                                   value: isInvoiced,
-                                                                  onChanged:
-                                                                      (bool? value) {
+                                                                  onChanged: (bool? value) {
                                                                     setState(() {
-                                                                      // this.isRecieved =
-                                                                      //     value;
                                                                     });
                                                                   },
                                                                 ),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: InkWell(
                                                                   child: Center(
                                                                       child: Container(
-                                                                        // margin: EdgeInsets
-                                                                        //     .only(
-                                                                        //         top:
-                                                                        //             11.5),
                                                                           decoration: BoxDecoration(
-                                                                              color: _value
-                                                                                  ? Color(0xff3E4F5B)
-                                                                                  : Colors
-                                                                                  .transparent,
-                                                                              border: Border.all(
-                                                                                  width:
-                                                                                  2,
-                                                                                  color:
-                                                                                  Colors.grey)
+                                                                              color: _value ? Color(0xff3E4F5B) : Colors.transparent,
+                                                                              border: Border.all(width: 2, color: Colors.grey)
                                                                           ),
-                                                                          child: _value
-                                                                              ? Icon(
-                                                                            Icons
-                                                                                .check,color: Colors.white,
-                                                                            size:
-                                                                            15,
-                                                                          )
-                                                                              : SizedBox(
-                                                                            height:
-                                                                            15,
-                                                                            width:
-                                                                            15,
-                                                                          ))),
+                                                                          child: _value ? Icon(Icons.check,color: Colors.white, size: 15,
+                                                                          ) : SizedBox(height: 15, width: 15,))),
                                                                   onTap: () {
                                                                     setState(() {
-
                                                                       if (vminqty! >
                                                                           vmaxnqty!) {
                                                                         print("enterd");
@@ -5528,93 +4475,60 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                       else {
                                                                         _value =
                                                                         !_value;
+                                                                        setState(() {
+
+                                                                        });
                                                                       }
 
                                                                     });
                                                                   },
                                                                 ),
                                                               ),
-                                                              TableCell(
-                                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: Container(
                                                                     height: 50,
                                                                   child: TextButton(
-                                                                      style: TextButton.styleFrom(
-                                                                          primary: Colors.black,
-                                                                          // elevation: 2,
-                                                                          backgroundColor:
-                                                                              Colors
-                                                                              .green.shade200
+                                                                      style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
                                                                       ),
                                                                       onPressed: () {
-                                                                        variantId=="null"||Qty==0||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0?
+                                                                      if(  variantId=="null"||Qty==0||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0)
                                                                         context.showSnackBarError(
-                                                                            "please fill all the fields"):
-
-
+                                                                            "please fill all the fields");
+                                                                      else if(updateCheck==true){
+                                                                        context.showSnackBarError(
+                                                                            "please click the update button");
+                                                                      }
+                                                                      else if(vfoc!>Qty!){
+                                                                        context.showSnackBarError(
+                                                                            "foc is allways less than requested qty");
+                                                                      }
+                                                                      else{
                                                                         table.add(
                                                                             OrderLines(
                                                                               vendorRefCode: vendorRefCode??"",
-
-
-                                                                              isRecieved:
-
-
-                                                                              isRecieved ??
-                                                                                  false,
-                                                                              isActive:
-                                                                              _value ??
-                                                                                  false,
-                                                                              supplierCode:
-                                                                              vendorRefCode??
-                                                                                  "",
-                                                                              variantId:
-                                                                              variantId ??
-                                                                                  "",
-                                                                              variantName:
-                                                                              varinatname ??
-                                                                                  "",
-                                                                              barcode:
-                                                                              Vbarcode ??
-                                                                                  "",
+                                                                              isRecieved: isRecieved ?? false,
+                                                                              isActive: _value ?? false,
+                                                                              supplierCode: vendorRefCode?? "",
+                                                                              variantId: variantId ?? "",
+                                                                              variantName: varinatname ?? "",
+                                                                              barcode: Vbarcode ?? "",
                                                                               cvd: "sss",
-                                                                              foc:
-                                                                              vfoc ?? 0,
-                                                                              maximumQty:
-                                                                              vmaxnqty ??
-                                                                                  0,
-                                                                              minimumQty:
-                                                                              vminqty ??
-                                                                                  0,
-                                                                              excessTax:
-                                                                              eTax ?? 0,
-                                                                              vat:
-                                                                              vvat ?? 0,
-                                                                              actualCost:
-                                                                              vactualCost ??
-                                                                                  0,
-                                                                              purchaseuom:
-                                                                              check1 ??
-                                                                                  "",
-                                                                              discount:
-                                                                              Vdiscount ??
-                                                                                  0,
-                                                                              requestedQty:
-                                                                              Qty ?? 0,
-                                                                              unitCost:
-                                                                              check! ??
-                                                                                  0,
-                                                                              grandTotal:
-                                                                              Vgrnadtotal ??
-                                                                                  0,
-                                                                              variableAmount:
-                                                                              Vamount ??
-                                                                                  0,
-                                                                              currentQty:
-                                                                              stockQty ??
-                                                                                  0,
+                                                                              foc: vfoc ?? 0,
+                                                                              maximumQty: vmaxnqty ?? 0,
+                                                                              minimumQty: vminqty ?? 0,
+                                                                              excessTax: eTax ?? 0,
+                                                                              vat: vvat ?? 0,
+                                                                              actualCost: vactualCost ?? 0,
+                                                                              purchaseuom: check1 ?? "",
+                                                                              discount: Vdiscount ?? 0,
+                                                                              requestedQty: Qty ?? 0,
+                                                                              unitCost: check! ?? 0,
+                                                                              grandTotal: Vgrnadtotal ?? 0,
+                                                                              variableAmount: Vamount ?? 0,
+                                                                              currentQty: stockQty ?? 0,
                                                                             ));
-                                                                        print("aaaatable"+table.toString());
+                                                                        currentStock.add(stockQty);
+                                                                        print("athiraaa"+currentStock.toString());
                                                                         requestedListControllers.clear();
                                                                         minListControllers.clear() ;
                                                                         maxListControllers .clear();
@@ -5623,12 +4537,10 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         discounttListControllers.clear();
                                                                         focListControllers.clear();
                                                                         vatListControllers.clear();
-
                                                                         setState(() {
                                                                           tableClear=false;
                                                                           valueAddingTextEdingController();
                                                                         });
-
                                                                         print("gtable" +
                                                                             table
                                                                                 .toString());
@@ -5636,15 +4548,13 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         vid = 0;
                                                                         eTax = 0;
                                                                         variantId = "";
-                                                                        varinatname =
-                                                                        "";
+                                                                        varinatname = "";
                                                                         vrefcod = "";
                                                                         Vbarcode = "";
                                                                         vendorRefCode="";
                                                                         vvat=0;
                                                                         focValue=0;
                                                                         excessTAxValue=0;
-
                                                                         check1 = "";
                                                                         check = 0;
                                                                         Qty = 0;
@@ -5657,29 +4567,25 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                                         unitcost = 0;
                                                                         grands = 0;
                                                                         actualValue = 0;
-
-                                                                        VatableValue =
-                                                                        0;
-                                                                        discountValue =
-                                                                        0;
+                                                                        VatableValue = 0;
+                                                                        discountValue = 0;
                                                                         vatValue = 0;
                                                                         stockQty = 0;
                                                                         vfoc=0;
                                                                         _value = false;
-                                                                        isRecieved =
-                                                                        false;
-
-                                                                        // _value=false;
-
+                                                                        requestedtTestContoller.clear();
+                                                                        minOrderTestContoller.clear();
+                                                                        maxOrderTestContoller.clear();
+                                                                        discountTestContoller.clear();
+                                                                        focTestContoller.clear();
+                                                                        excesstaxTestContoller.clear();
+                                                                        vatTestContoller.clear();
+                                                                        isRecieved = false;
                                                                         setState(() {});
 
-
-
-
-
+                                                                      }
                                                                       },
                                                                       child:Text("set",style:TextStyle(color: Colors.black))
-
                                                                   ),
                                                                 ),
                                                               ),
@@ -5709,8 +4615,6 @@ print("Variable.ak"+Variable.verticalid.toString());
                                                       19: FlexColumnWidth(3),
                                                       20: FlexColumnWidth(3),
                                                       21: FlexColumnWidth(2),
-
-
                                                     },
                                                   ),
                                                 ),
@@ -5736,102 +4640,23 @@ print("Variable.ak"+Variable.verticalid.toString());
                                       print("aaaaaa");
                                       setState(() {
                                         if(select){
-                                          requestedListControllers.clear();
-                                          minListControllers.clear() ;
-                                          maxListControllers .clear();
-                                          unitcostListControllers.clear();
-                                          excesstListControllers.clear();
-                                          discounttListControllers.clear();
-                                          print("discount"+discounttListControllers.length.toString());
-                                          focListControllers.clear();
-                                          print("foccc"+focListControllers.length.toString());
-                                          vatListControllers.clear();
-                                          print("vattt"+vatListControllers.length.toString());
-                                          print("appuzz"+table.length.toString());
-
-
-                                          vendortrnnumber.text="";
-                                          ordercode.text="";
-                                          vendoraddress.text="";
-                                          planned_receipt_date.text="";
-                                          promised_receipt_date.text="";
-                                          remarks.text="";
-                                          orderStatus.text="";
-                                          orderDate.text="";
-                                          ordercode.text="";
-                                          note.text="";
-                                          discount.text="";
-                                          foc.text="";
-                                          unitcourse.text="";
-                                          vat.text="";
-                                          Variableamount.text="";
-                                          excesstax.text="";
-                                          grandtotal.text="";
-                                          actualcost.text="";
-                                          vendorCode.text="";
-                                          Recievingstatus.text="";
-                                          variantId = "";
-                                          varinatname =
-                                          "";
-                                          address2="";
-                                          address1="";
-                                          purchaseUom="";
-
-                                          vid = 0;
-                                          eTax = 0;
-                                          variantId = "";
-                                          varinatname =
-                                          "";
-                                          vrefcod = "";
-                                          Vbarcode = "";
-                                          vendorRefCode="";
-                                          vvat=0;
-                                          vfoc=0;
-                                          focValue=0;
-                                          excessTAxValue=0;
-
-                                          check1 = "";
-                                          check = 0;
-                                          Qty = 0;
-                                          Vdiscount = 0;
-                                          Vamount = 0;
-                                          vmaxnqty=0;
-                                          vminqty=0;
-                                          Vgrnadtotal = 0;
-                                          vactualCost = 0;
-                                          unitcost = 0;
-                                          grands = 0;
-                                          actualValue = 0;
-
-                                          VatableValue =
-                                          0;
-                                          discountValue =
-                                          0;
-                                          vatValue = 0;
-                                          stockQty = 0;
-                                          _value = false;
-                                          isRecieved =
-                                          false;
-
+                                        clear();
                                           table.clear();
-                                          setState(() {
-
-                                          });
-
+                                          setState(() {});
                                         }
                                         else {
-                                          context.read<
-                                              PurchaseorderdeleteCubit>()
-                                              .generalPurchaseDelet(
-                                              veritiaclid);
+                                          showDailogPopUp(
+                                              context,
+                                              ConfirmationPopup(
+                                                // table:table,
+                                                // clear:clear(),
+                                                verticalId:veritiaclid ,
+                                                verticalUpdate:  verticalUpdate,
+
+                                              ));
+                                          // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
                                         }
-
                                       });
-
-
-
-
-
                                         },
                                         height: 29,
                                         width: 90,
@@ -5843,76 +4668,41 @@ print("Variable.ak"+Variable.verticalid.toString());
                                     ),
                                     InkWell(
                                       onTap: () {
+                                        if(updateCheck==true){
+                                          context.showSnackBarError(
+                                              "please press update");
+                                        }
+                                        else{
+                                          PurchaseOrderPost model = PurchaseOrderPost(
+                                            purchaseOrderType: orderType == "" ? "" : orderType,
+                                            iventoryId: inventoryId.text == "" ? "" : inventoryId.text,
+                                            vendorId: vendorCode.text == "" ? "" : vendorCode.text,
+                                            vendorTrnNumber: vendortrnnumber.text == "" ? "" : vendortrnnumber.text,
+                                            vendorMailId: Variable.email,
+                                            vendorAddress: vendoraddress.text == "" ? "" : vendoraddress.text,
+                                            address1:"akkk",
+                                            address2:"ass",
+                                            promisedReceiptdate: promised_receipt_date.text,
+                                            plannedRecieptDate:planned_receipt_date.text,
+                                            note: note.text == "" ? "" : note.text,
+                                            remarks: remarks.text == "" ? "" : remarks.text,
+                                            discount: discount.text == "" ? 0 : double.parse(discount.text),
+                                            foc: foc.text == "" ? 0 : double.parse(foc.text),
+                                            unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
+                                            excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
+                                            actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
+                                            vat: vat.text == "" ? 0 : double.parse(vat.text),
+                                            grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
+                                            variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
+                                            createdBy: "www",
+                                            orderLines: table,
+                                          );
+                                          print("selecting "+model.toString());
+                                          select? context.read<PurchaseorderpostCubit>().postPurchase(model):
+                                          context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
+                                          ;
+                                        }
 
-
-                                        PurchaseOrderPost model =
-                                            PurchaseOrderPost(
-                                          purchaseOrderType:
-                                              orderType == "" ? "" : orderType,
-                                          iventoryId: inventoryId.text == ""
-                                              ? ""
-                                              : inventoryId.text,
-                                          vendorId: vendorCode.text == ""
-                                              ? ""
-                                              : vendorCode.text,
-                                          vendorTrnNumber:
-                                              vendortrnnumber.text == ""
-                                                  ? ""
-                                                  : vendortrnnumber.text,
-                                          vendorMailId: Variable.email,
-                                          vendorAddress:
-                                              vendoraddress.text == ""
-                                                  ? ""
-                                                  : vendoraddress.text,
-                                          address1:"akkk",
-                                          //address1??"akkk",
-                                          address2:"ass",
-                                              //address2??"appp",
-                                          promisedReceiptdate: promised_receipt_date.text,
-
-                                          //promised_receipt_date.text,
-                                          plannedRecieptDate:planned_receipt_date.text,
-                                              //planned_receipt_date.text,
-
-                                          note:
-                                              note.text == "" ? "" : note.text,
-                                          remarks: remarks.text == ""
-                                              ? ""
-                                              : remarks.text,
-                                          discount: discount.text == ""
-                                              ? 0
-                                              : double.parse(discount.text),
-                                          foc: foc.text == ""
-                                              ? 0
-                                              : double.parse(foc.text),
-                                          unitcost: unitcourse.text == ""
-                                              ? 0
-                                              : double.parse(unitcourse.text),
-                                          excessTax: excesstax.text == ""
-                                              ? 0
-                                              : double.parse(excesstax.text),
-                                          actualCost: actualcost.text == ""
-                                              ? 0
-                                              : double.parse(actualcost.text),
-                                          vat: vat.text == ""
-                                              ? 0
-                                              : double.parse(vat.text),
-                                          grandTotal: grandtotal.text == ""
-                                              ? 0
-                                              : double.parse(grandtotal.text),
-                                          variableAmount: Variableamount.text ==
-                                                  ""
-                                              ? 0
-                                              : double.parse(Variableamount.text),
-                                          createdBy: "www",
-                                          orderLines: table,
-                                        );
-                                        print("selecting "+model.toString());
-                                        //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
-                                        select? context.read<PurchaseorderpostCubit>().postPurchase(model):
-                                        context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
-
-                                       ;
                                       },
                                       child: Container(
                                         color: Color(0xff3E4F5B),
@@ -5961,7 +4751,6 @@ print("Variable.ak"+Variable.verticalid.toString());
     );
   }
 }
-
 Widget Button(IconData icon, Color border,
     {Color Color = Colors.transparent,
     required BuildContext ctx,

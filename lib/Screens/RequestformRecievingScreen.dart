@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/purchase_stock_cubit.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
@@ -50,6 +53,8 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   TextEditingController grandtotalCostController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  var expirydateControllerList = <TextEditingController>[];
+  var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
   int selectedVertical=0;
   bool select=false;
@@ -63,6 +68,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   int? receivingId ;
   String? variantId;
   String? supplierRefCode="";
+  String? vendorCode="";
   String? barcode;
   String? varinatname;
   String? vrefcod;
@@ -81,14 +87,85 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   double?excess1=0;
   double?discount=0;
   int?stock=0;
+  double unitcost1 = 0;
+  double discountValue = 0;
+  double grands = 0;
+  double focValue = 0;
+  double VatableValue = 0;
+  double excessTax = 0;
+ bool  updateCheck=false;
+  double vatValue = 0;
+  double actualValue = 0;
+  double excessTAxValue = 0;
+  double vatableValue = 0;
+  String vendorAddress="";
+  bool? vendorcheck=false;
+  String vendorTrn="";
+  List<int?> currentStock = [];
   PurchaseCureentStockQty? purchaseCurrentStock;
   PurchaseOrderTableModel? purchaseTable;
+  VariantDetailsModel? vendorDetails;
+  List<PartnerOrganizationData>?partnerOrganizationData;
   void initState() {
+    context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
     recieveController = AutoScrollController(
         viewportBoundaryGetter: () =>
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: Axis.vertical);
     super.initState();
+  }
+  Future _getCurrentUser() async {
+
+    if(recievingLisnes.isNotEmpty) {
+
+      for (var i = 0; i < recievingLisnes.length; i++) {
+        print("variantaaaaaa" + recievingLisnes[i].variantId.toString());
+        print("variantaaaaaa" + Variable.inventory_ID);
+        var b = await context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, recievingLisnes[i].variantId);
+        print("b" + b.toString());
+      }
+      setState(() {});
+    }
+  }
+  addition() {
+    for (var i = 0; i < recievingLisnes.length; i++) {
+      if (recievingLisnes[i].isActive == true) {
+        unitcost1 = unitcost1 + recievingLisnes[i].unitCost!;
+        grands = grands + recievingLisnes[i].grandTotal!;
+        actualValue = actualValue + recievingLisnes[i].actualCost!;
+        vatValue = vatValue + recievingLisnes[i].vat!;
+        discountValue = discountValue + recievingLisnes[i].discount!;
+        focValue = focValue + recievingLisnes[i].foc!;
+        VatableValue = VatableValue + recievingLisnes[i].vatableAmount!;
+        print("excessTaxvalue"+excessTAxValue.toString());
+        excessTAxValue = excessTAxValue + recievingLisnes[i].excessTax!;
+      }
+    }
+    unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
+    grandtotalCostController.text = grands.toString();
+    vatController.text = vatValue?.toString()??"";
+    actualCostController.text = actualValue.toString();
+
+    focController.text = focValue.toString();
+    discountController.text = discountValue.toString();
+    excessTaxController.text = excessTAxValue.toString();
+    variableAmountController.text = VatableValue.toString();
+  }
+  assigniningDetails(String address,String trn){
+    if(Variable.tableedit==true && vendorcheck==false){
+      print("this casssss");
+      additionalVariants[Variable.tableindex] = additionalVariants[Variable.tableindex].copyWith(vendorAddress:address,vendorTrnNumber:trn  );
+    }
+    else if(Variable.tableedit==true && vendorcheck==true){
+      print("this casssss for ist table");
+      recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(vendorAddress:address,vendorTrnNumber:trn  );
+    }
+    else{
+      vendorAddress=address;
+      vendorTrn=trn;
+    }
+
+    setState(() {});
   }
   @override
   Widget build(BuildContext context) {
@@ -99,11 +176,10 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
       body: MultiBlocProvider(
   providers: [
     BlocProvider(
-      create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RFR"),
+      create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF"),
     ),
     BlocProvider(
-      create: (context) => ReadrequestrecievingCubit()..getRequestFormReceivingRead(Variable.verticalid!),
-
+      create: (context) => ReadrequestrecievingCubit(),
     ),
     BlocProvider(
       create: (context) => PatchreceiveCubit(),
@@ -111,7 +187,6 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
     BlocProvider(
       create: (context) => GeneraterequestformCubit(),
     ),
-  
   ],
   child: Builder(
     builder: (context) {
@@ -128,40 +203,62 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
           result=list.data;setState(() {
            if(result.isNotEmpty){
              Variable.verticalid=result[0].id;
-             print("Variable.verticalid"+Variable.verticalid.toString());
-             setState(() {
+             veritiaclid=result[0].id;
+             context
+                 .read<
+                 ReadrequestrecievingCubit>()
+                 .getRequestFormReceivingRead(
+                 veritiaclid!);
 
+             setState(() {
              });
            }
           });
-
         }
     );
   },
 ),
-
-    BlocListener<ReadrequestrecievingCubit, ReadrequestrecievingState>(
+    BlocListener<VendordetailsCubit, VendordetailsState>(
       listener: (context, state) {
-
         state.maybeWhen(
             orElse: () {},
             error: () {
               print("error");
             },
             success: (data) {
-
+              vendorDetails = data;
+              setState(() {
+                print("vendorDetails"+vendorDetails.toString());
+                partnerOrganizationData=vendorDetails?.partnerOrganizationdata;
+                // email=vendorDetails.partnerOrganizationdata[1].
+              });
+            });
+      },
+    ),
+    BlocListener<ReadrequestrecievingCubit, ReadrequestrecievingState>(
+      listener: (context, state) {
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              print("error");
+            },
+            success: (data) {
               setState(() {
                 print("searching"+data.toString());
-                data?.receivingLines != null
+                 stockCheck==false;
+
+    data?.receivingLines != null
                     ? recievingLisnes = data?.receivingLines ?? []
                     : recievingLisnes = [];
-
                 print("tablsssssssssssssssssse"+recievingLisnes.toString());
                 setState(() {
+                });  for(var i=0;i<recievingLisnes.length;i++){
+                  var date = new TextEditingController(text:recievingLisnes[i].expiryDate??"");
+                  expirydateControllerList2.add(date);
 
-                });
+                }
+                print("Anvar");
 
-                //
                 orderCodeController.text=data.orderCode??"";
                 orderDateController.text=data.orderCreatedDate??"";
                 orderstatusController.text=data.orderStatus??"";
@@ -178,35 +275,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                 noteController.text=data.note.toString()??"";
                 remarksController.text=data.remarks.toString()??"";
                 receivingId=data.id;
-
-                // receivingcodeController.text=data.re??"";
-
-                // ordereCodeController.text=data.data?.orderCode??"";
-                // orderType.text=data.data?.purchaseOrderType??"";
-                // orderDateController.text=data.data?.orderDate??"";
-                // inventoryIdController.text=data.data?.iventoryId??"";
-                // promisedRecieptDate.text=data.data?.promisedReceiptdate??"";
-                // plannedRecieptDate.text=data.data?.plannedRecieptDate??"";
-                // orderedPersonController.text=data.data?.orderedPereson??"";
-                //
-                // paymentCodeController.text=data.data?.paymentcode??"";
-                // paymentStatusController.text=data.data?.paymentStatus??"";
-                // orderStatusController.text=data.data?.orderStatus??"";
-                // receivingSattusController.text=data.data?.recievingStatus??"";
-                // invoiceStatusController.text=data.data?.invoiceStatus??"";
-                // noteController.text=data.data?.note??"";
-                // remarksController.text=data.data?.remarks??"";
-                // discountController.text=data.data?.discount.toString()??"";
-                // focController.text=data.data?.foc.toString()??"";
-                // unitCostController.text=data.data?.unitcost.toString()??"";
-                // vatableAmountController.text=data.data?.variableAmount.toString()??"";
-                // excessTaxController.text=data.data?.excessTax.toString()??"";
-                // vatController.text=data.data?.vat.toString()??"";
-                // actualCostController.text=data.data?.actualCost.toString()??"";
-                // grandTotalController.text=data.data?.grandTotal.toString()??"";
-                // valueAddingTextEdingController();
-
-
+                _getCurrentUser();
               });
             });
       },
@@ -269,8 +338,12 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
-          if (data.data1)
+          if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
+            context.read<ReadrequestrecievingCubit>().getRequestFormReceivingRead(veritiaclid!);
+          }
+
           else {
             context.showSnackBarError(data.data2);
             print(data.data1);
@@ -295,28 +368,19 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
               print("stockqty" + stockQty.toString());
               print("stockCheck"+stockCheck.toString());
               if(stockCheck==false){
-                // currentStock.add(stockQty);
+                currentStock.add(stockQty??0);
                 setState(() {
-
                 });
               }
-
               else{
                 if(Variable.tableedit==false){
                   print("findinf");
                   stock=stockQty;
                 }
                 else{
-                  additionalVariants[Variable.tableindex] =         additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
-
+                  additionalVariants[Variable.tableindex] = additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
                 }
-
-
-
               }
-              // print("currentStocksss$currentStock");
-              // print("lllll" + currentStock.length.toString());
-
             });
       },
     ),
@@ -342,26 +406,26 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
   ],
   child: SingleChildScrollView(
-child: Container(
-      height: 3000,
+child: IntrinsicHeight(
       child:   Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          VerticalList(selectedVertical: selectedVertical,
+          VerticalList(
+            tab:"RF",
+            selectedVertical: selectedVertical,
             itemsearch: itemsearch,ontap: (int index){
               setState(() {
                 print("taped");
                 select=false;
+                expirydateControllerList2.clear();
                 selectedVertical=index;
+                currentStock.clear();
+                expirydateControllerList.clear();
 
-                veritiaclid =
-                    result[index].id;
-                // context
-                //     .read<
-                //     RequestformreadCubit>()
-                //     .getRequestFormRead(
-                //     veritiaclid!);
+                updateCheck=false;
+                veritiaclid = result[index].id;
+                context.read<ReadrequestrecievingCubit>().getRequestFormReceivingRead(veritiaclid!);
               });
             },result: result,
           ),
@@ -369,63 +433,75 @@ child: Container(
             child: Column(
 
               children: [
-
                 Row(
+                    mainAxisAlignment:
+                    MainAxisAlignment.end,
+                    children: [
+                      TextButtonLarge(
+                        text: "PREVIEW",
+                        onPress: (){
+                          print("Akshay");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                PurchaseReceivingPrintScreen2(table:recievingLisnes,
+                                  note: noteController.text,
+                                  // select: select,
+                                  // vendorCode:vendorCode.text,
+                                  orderCode:orderCodeController.text ,
+                                  orderDate:orderDateController .text,
+                                  // table:table,
+                                  vat: double.tryParse( vatController.text),
+                                  actualCost:double.tryParse( actualCostController.text),
+                                  variableAmount:double.tryParse( variableAmountController.text) ,
+                                  discount:double.tryParse( discountController.text) ,
+                                  unitCost:double.tryParse( unitCostController.text) ,
+                                  excisetax:double.tryParse( excessTaxController.text) ,
+                                  remarks: remarksController.text ,
 
+
+
+
+
+                                )),
+                          );
+
+
+                        },
+                      ),
+                    ]
+                ),
+                Row(
                   children: [
-
                     Expanded(child:
-
                     Column(children: [
-
                       SizedBox(height: height*.030,),
-
                       SizedBox(height: height*.030,),
-
                       SizedBox(height:10,),
-
-                      NewInputCard(
-
-                          controller: orderCodeController, title: "Order code"),
-
+                      NewInputCard(readOnly: true, controller: orderCodeController, title: "Order code"),
                       SizedBox(height: height*.030,),
-
                       NewInputCard(
-
+                          readOnly: true,
                           controller: receivingcodeController, title: "receiving code"),
-
                       SizedBox(height: height*.030,),
-
                       NewInputCard(
-
+                          readOnly: true,
                           controller: orderDateController, title: "Ordered date"),
-
                       SizedBox(height: height*.030,),
-
                       NewInputCard(
-
+                          readOnly: true,
                           controller: orderstatusController, title: "Ordered status"),
-
                       SizedBox(height: height*.030,),
-
                       NewInputCard(
-
+                          readOnly: true,
                           controller: paymentstatusController, title: "payment status"),
-
                       SizedBox(height: height*.030,),
-
                       NewInputCard(
-
+                          readOnly: true,
                           controller: invoiceStatusController, title: "invoice status"),
-
                       SizedBox(height: height*.030,),
-
-
-
                     ],)),
-
                     Expanded(child:
-
                     Column(children: [
 
                       SizedBox(height: height*.030,),
@@ -436,35 +512,41 @@ child: Container(
 
                       NewInputCard(
 
+                          readOnly: true,
                           controller: discountController, title: "discount"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: focController, title: "foc"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: unitCostController, title: "Unit cost"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: variableAmountController, title: "variable amount"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: excessTaxController, title: "excess tax"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: vatController, title: "vat"),
 
@@ -483,18 +565,21 @@ child: Container(
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: actualCostController, title: "actual cost"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+                          readOnly: true,
 
                           controller: grandtotalCostController, title: "grand total"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
+
 
                           controller: noteController, title: "note",height: 90,maxLines: 3,),
 
@@ -504,7 +589,7 @@ child: Container(
 
                           controller: remarksController, title: "remarks",height: 90,maxLines: 3,),
 
-                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.035,),
 
                       SizedBox(height: height*.032,),
 
@@ -565,12 +650,7 @@ child: Container(
                         SingleChildScrollView(
 
                           child:Container(
-
-                               width: MediaQuery.of(context)
-
-                    .size
-
-                    .width,
+                            width:  2200,
 
                   padding: EdgeInsets.all(10),
 
@@ -621,71 +701,31 @@ child: Container(
                                     //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                                       children: [
-
                                         tableHeadtext(
-
                                           'Sno',
-
                                           padding: EdgeInsets.all(7),
-
                                           height: 46,
-
                                           size: 13,
-
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white,
-
                                         ),
-
                                         tableHeadtext(
-
                                           'Orderline id',
-
                                           padding: EdgeInsets.all(7),
-
-                                          height: 50,
-
-                                          size: 12,
-
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
-
-                                        ),
-
-                                        tableHeadtext(
-
-                                          'Variant Id',
-
-                                          padding: EdgeInsets.all(7),
-
                                           height: 46,
-
                                           size: 13,
-
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
-
                                         ),
-
                                         tableHeadtext(
-
+                                          'Variant Id', padding: EdgeInsets.all(7),
+                                          height: 46,
+                                          size: 13,
+                                        ),
+                                        tableHeadtext(
                                           'Variant Name',
-
                                           padding: EdgeInsets.all(7),
-
                                           height: 46,
-
                                           size: 13,
-
                                           // color: Palette.containerDarknew,
-
                                           // textColor: Palette.white
-
                                         ),
-
                                         // tableHeadtext('description', size: 10, color: null),
 
 
@@ -955,48 +995,31 @@ child: Container(
                                         ),
 
                                         tableHeadtext(
-
                                           'Is Free',
-
                                           padding: EdgeInsets.all(7),
-
                                           height: 46,
-
                                           size: 13,
 
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
 
                                         ),
-
                                         tableHeadtext(
-
                                           'Is Active',
-
                                           padding: EdgeInsets.all(7),
-
                                           height: 46,
-
                                           size: 13,
-
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
-
+                                        ),
+                                        tableHeadtext(
+                                          '',
+                                          padding: EdgeInsets.all(7),
+                                          height: 46,
+                                          size: 13,
                                         ),
 
                                         // if (widget.onAddNew) textPadding(''),
 
                                       ]),
-                  if (recievingLisnes !=
-                  null) ...[
-                for (var i =
-                0;
-                i <
-                    recievingLisnes
-                    .length;
-                    i++)
+                  if (recievingLisnes != null) ...[
+                for (var i = 0; i < recievingLisnes.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
                                       children: [
@@ -1023,7 +1046,7 @@ child: Container(
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding("currentStock.length==0?"":currentStock[i].toString()", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                          child: textPadding(currentStock.length!=recievingLisnes.length?"": currentStock[i].toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1031,14 +1054,56 @@ child: Container(
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(recievingLisnes[i].supplierCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                          child: PopUpCall(
+
+                                            type:
+                                            "VendorCodeGeneral",
+                                            value: recievingLisnes[i].vendorId ??"",
+                                            onSelection:
+                                                (Result? va) {
+
+                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:va?.partnerCode??"" );
+                                              setState(() {
+                                                var  variant=
+                                                    va?.partnerCode;
+                                                int? id = va!.id;
+                                                Variable.tableindex =i;
+                                                Variable.tableedit=true;
+                                                vendorcheck=true;
+                                                context.read<
+                                                    VendordetailsCubit>()
+                                                    .getVendorDetails(
+                                                    variant);
+
+
+                                                showDailogPopUp(
+                                                    context,
+                                                    VendorPopup(
+                                                      assign:  assigniningDetails,
+
+                                                    ));
+                                                // context
+                                                //     .read<
+                                                //     TableDetailsCubitDartCubit>()
+                                                //     .getTableDetails(
+                                                //     id);
+                                                // context
+                                                //     .read<PurchaseStockCubit>()
+                                                //     .getCurrentStock(Variable.inventory_ID, variant);
+
+                                                // orderType = va!;
+                                              });
+                                            }, // restricted: true,
+                                          ),
                                         ),
 
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                            initialCheck: true,
                                             last: recievingLisnes[i].receivedQty.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               print(va);
                                               if (va == "") {
                                                 print("entered");
@@ -1115,6 +1180,7 @@ child: Container(
                                           child: CheckedBoxs(
                                               valueChanger:recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
                                               onSelection:(bool ? value){
+
                                                 bool? isRecieved = recievingLisnes[i].isReceived;
                                                 setState(() {
                                                   isRecieved = !isRecieved!;
@@ -1139,8 +1205,10 @@ child: Container(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              initialCheck: true,
                                             last: recievingLisnes[i].unitCost.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               double? unitcost;
                                               if (va == "") {
                                                 print("entered");
@@ -1218,8 +1286,10 @@ child: Container(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              initialCheck: true,
                                             last: recievingLisnes[i].excessTax.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               double? excess;
                                               if (va == "") {
                                                 excess = 0;
@@ -1279,8 +1349,10 @@ child: Container(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              initialCheck: true,
                                             last: recievingLisnes[i].discount.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               double? disc;
                                               if (va ==
                                                   "") {
@@ -1409,8 +1481,10 @@ child: Container(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              initialCheck: true,
                                             last: recievingLisnes[i].foc.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               double? foc;
                                               if (va == "") {
                                                 foc=0;
@@ -1484,8 +1558,10 @@ child: Container(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: UnderLinedInput(
+                                              initialCheck: true,
                                             last: recievingLisnes[i].vat.toString() ?? "",
                                             onChanged: (va) {
+                                              updateCheck=true;
                                               if (va == "") {
                                                 print("sss");
                                                 var vatableAmount = recievingLisnes[i].vatableAmount;
@@ -1580,6 +1656,27 @@ child: Container(
 
                                               }),
                                         ),
+                                        TableCell(
+                                          verticalAlignment: TableCellVerticalAlignment.fill,
+                                          child: Tabledate(
+
+                                              format:DateFormat('yyyy-MM-dd'),
+                                              controller:recievingLisnes.length!=expirydateControllerList2.length?TextEditingController(text:""):expirydateControllerList2[i],
+                                              label: "Promised reciept date",
+                                              onSaved: (newValue) {
+                                                updateCheck=true;
+                                                recievingLisnes[i] =
+                                                    recievingLisnes[i]
+                                                        .copyWith(
+                                                        expiryDate:newValue
+                                                            ?.toIso8601String()
+                                                            .split("T")[0] ??
+                                                            "" );
+                                                setState(() {
+                                                });
+                                              },
+                                              enable: true),
+                                        ),
 
 
                                         // Checkbox(
@@ -1588,10 +1685,7 @@ child: Container(
                                         //     setState(() {});
                                         //   },
                                         // ),
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(recievingLisnes[i].expiryDate.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
-                                        ),
+
 
                                         TableCell(
                                             verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1615,166 +1709,169 @@ child: Container(
                                           // ),
                                         ),
 
+
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child:
-                                          Checkbox(
-                                            value: recievingLisnes[i].isActive == null ? false : recievingLisnes[i].isActive,
-                                            onChanged: (bool? value) {
-                                              setState(() {});
+                                          child: Checkbox(
+                                            value: recievingLisnes[i]
+                                                .isActive==null?false:recievingLisnes[i]
+                                                .isActive,
+                                            onChanged: (bool?
+                                            value) {
+                                              updateCheck=true;
+                                              bool? isActive = recievingLisnes[i].isActive;
+                                              setState(() {
+                                                isActive = !isActive!;
+                                                recievingLisnes[i] = recievingLisnes[i].copyWith(isActive: isActive);
+
+                                                setState(() {
+
+                                                });
+
+                                              });
                                             },
                                           ),
                                         ),
+                                        TableTextButton(label: 'Update',
+
+                                          onPress: (){
+
+                                            var variant = recievingLisnes[i].variantId??0;
 
 
-                                      ]
-                                  )
+                                            var excess = recievingLisnes[i].excessTax??0;
+                                            print("excess" + excess.toString());
+                                            var unitcosts = recievingLisnes[i].unitCost??0;
+                                            var qty = recievingLisnes[i].receivedQty??0;
+                                            var foc = recievingLisnes[i].foc??0;
+                                            var dis = recievingLisnes[i].discount??0;
+                                            if(variant=="null"||qty==0||unitcosts==0){
+                                              context.showSnackBarError("please fill all the fields");
+                                            }else if(qty!<foc!){
+                                              context.showSnackBarError("the received qty allways greater than  foc");
+
+                                            }
+                                            else{
+                                              updateCheck=false;
+                                              addition();
+                                              unitcost1= 0;
+
+                                              grands = 0;
+                                              actualValue = 0;
+                                              vatValue = 0;
+                                              discountValue = 0;
+                                              focValue =0;
+
+                                              VatableValue = 0;
+
+                                              excessTAxValue = 0;
+                                              setState(() {
+
+                                              });
+                                            }
+
+                                          },)
+
+
+                                      ],
+                                  ),
+
     ]
 
 
 
                                 ],
+                              widths: {
+                                0: FlexColumnWidth(2),
+                                1: FlexColumnWidth(4),
+                                2: FlexColumnWidth(6),
+                                3: FlexColumnWidth(3),
+                                4: FlexColumnWidth(3),
+                                5: FlexColumnWidth(3),
+                                6: FlexColumnWidth(3),
+                                7: FlexColumnWidth(3),
+                                8: FlexColumnWidth(3),
+                                9: FlexColumnWidth(3),
+                                10: FlexColumnWidth(3),
+                                11: FlexColumnWidth(3),
+                                12: FlexColumnWidth(3),
+                                13: FlexColumnWidth(3),
+                                14: FlexColumnWidth(3),
+                                15: FlexColumnWidth(3),
+                                16: FlexColumnWidth(3),
+                                17: FlexColumnWidth(3),
+                                18: FlexColumnWidth(2),
+                                19: FlexColumnWidth(4),
+                                20: FlexColumnWidth(2),
+                                21: FlexColumnWidth(2.4),
+                                22: FlexColumnWidth(2.4),
+
+                              },
 
 
 
 
 
-                            ),
-
-
-
-
+                            )
 
                           ) ,
-
                         )
 
-
-
                       ],
-
                     )
-
-
-
                   ],
-
                 ),
-
-
-
               )
-
-
-
             ),
-
-               // ScrollableTable(),
-
                 SizedBox(height: 33,),
-
                 Row(
-
-                  mainAxisAlignment: MainAxisAlignment.start,
-
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
                     TextWidget(text: "additional variants"),
+                    TextButtonLarge(
+                      text: "PREVIEW",
+                      onPress: (){
+                        print("Akshay");
+                        List<RecievingLines> recievingLisnes1=[];
+                        if(recievingLisnes.isNotEmpty){
+                          for(var i=0;i<recievingLisnes.length;i++){
+                            if(recievingLisnes[i].isReceived==false){
+                            recievingLisnes1.add(recievingLisnes[i]);}
+                          }
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              PurchaseReceivingPrintScreen2(table:recievingLisnes1,
+                                note: noteController.text,
+                                // select: select,
+                                // vendorCode:vendorCode.text,
+                                orderCode:orderCodeController.text ,
+                                orderDate:orderDateController .text,
+                                // table:table,
+                                vat: double.tryParse( vatController.text),
+                                actualCost:double.tryParse( actualCostController.text),
+                                variableAmount:double.tryParse( variableAmountController.text) ,
+                                discount:double.tryParse( discountController.text) ,
+                                unitCost:double.tryParse( unitCostController.text) ,
+                                excisetax:double.tryParse( excessTaxController.text) ,
+                                remarks: remarksController.text ,
+
+
+
+
+
+                              )),
+                        );
+
+
+                      },
+                    ),
 
                   ],
-
                 ),
-
                 Divider(color: Colors.grey,thickness: 1,),
-
                 SizedBox(height: 5,),
-                Container(
-                  padding: EdgeInsets.only(left: width*.02,top: height*0.02),
-                  child: TextButton(
-                    style: TextButton.styleFrom(
-                        primary: Colors.blue,
-                        elevation: 2,
-                        backgroundColor: Colors.white24),
-                    onPressed: () {
-                      setState(() {
-                        additionalVariants.add(RecievingLines(
-                            variantId: variantId??"",
-                            currentStock: stock,
-                            supplierCode: supplierRefCode,
-                            variantName: varinatname??"",
-                            barcode: barcode??"",
-                            purchaseUom: purchaseUomName??"",
-                            receivedQty: recievedQty,
-                            isReceived: isReceived1,
-                            discount: discount,
-                            foc: foc1,
-                            unitCost: unitcost,
-                            vatableAmount: vatableAmount1,vat: vat1,
-                            excessTax: excess1,
-                            actualCost: actualCost1,
-                            grandTotal: grandTotal1,
-                            isInvoiced: isInvoiced1,
-                            vendorId: "test",
-                            vendorTrnNumber: "ahh",
-                            vendorAddress: "alsh",
-
-                            isFree: isFree1,
-                            isActive:isActive1,
-                           expiryDate: expirydateController.text,
-
-
-
-
-                        ));
-
-                      });
-
-
-
-                      print("additionalVariants"+additionalVariants.toString());
-                      variantId="";
-                      varinatname="";
-                      barcode="";
-                      purchaseUomName="";
-                      recievedQty=0;
-                      supplierRefCode="";
-                      excess1=0;
-                      isReceived1=false;
-                      discount=0;
-                      foc1=0;
-                      unitcost=0;
-                      vatableAmount1=0;
-                      vat1=0;
-                      grandTotal1=0;
-                      actualCost1=0;
-                      isActive1=false;
-                      isFree1=false;
-                      isInvoiced1=false;
-                     stock=0;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                    },
-
-
-                    child:Text("Add New")
-                    ,
-                  ),
-                ),
-
                 Scrollbar(
 
                     controller: recieveController,
@@ -1809,11 +1906,7 @@ child: Container(
 
                                 child:Container(
 
-                                  width: MediaQuery.of(context)
-
-                                      .size
-
-                                      .width,
+                                  width: 2200,
 
                                   padding: EdgeInsets.all(10),
 
@@ -1822,32 +1915,14 @@ child: Container(
                                       border: const TableBorder(
 
                                         verticalInside: BorderSide(
-
                                             width:.5,
-
                                             color: Colors.black45,
-
-                                            // color: Colors.blue,
-
-                                            style:
-
-                                            BorderStyle.solid),
-
-
-
-                                        horizontalInside:
-
-                                        BorderSide(
-
+                                            style: BorderStyle.solid),
+                                        horizontalInside: BorderSide(
                                             width:.3,
-
                                             color: Colors.black45,
-
                                             // color: Colors.blue,
-
-                                            style:
-
-                                            BorderStyle.solid),),
+                                            style: BorderStyle.solid),),
 
                                       tableWidth: .5,
 
@@ -1922,22 +1997,11 @@ child: Container(
 
 
                                               tableHeadtext(
-
                                                 'Barcode',
-
                                                 padding: EdgeInsets.all(7),
-
                                                 height: 46,
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
-
 
                                               tableHeadtext(
 
@@ -1977,9 +2041,9 @@ child: Container(
 
                                                 padding: EdgeInsets.all(7),
 
-                                                height: 50,
+                                                height: 46,
 
-                                                size: 12,
+                                                size: 13,
 
                                                 // color: Palette.containerDarknew,
 
@@ -2044,31 +2108,15 @@ child: Container(
                                                 height: 46,
 
                                                 size: 13,
-
                                                 // color: Palette.containerDarknew,
-
                                                 // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Discount',
-
                                                 padding: EdgeInsets.all(7),
-
                                                 height: 46,
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
-
-
                                               tableHeadtext(
 
                                                 'FOC',
@@ -2161,58 +2209,37 @@ child: Container(
 
                                                 size: 13,
 
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
 
                                               ),
 
                                               tableHeadtext(
-
                                                 'Expiry Date',
-
                                                 padding: EdgeInsets.all(7),
-
                                                 height: 46,
-
                                                 size: 13,
-
                                                 // color: Palette.containerDarknew,
-
                                                 // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Is Free',
-
                                                 padding: EdgeInsets.all(7),
-
                                                 height: 46,
-
                                                 size: 13,
-
                                                 // color: Palette.containerDarknew,
-
                                                 // textColor: Palette.white
+                                              ),
+                                              tableHeadtext(
+                                                'Is Active',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
 
                                               ),
-
                                               tableHeadtext(
-
-                                                'Is Active',
-
+                                                '',
                                                 padding: EdgeInsets.all(7),
-
                                                 height: 46,
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
 
                                               // if (widget.onAddNew) textPadding(''),
@@ -2250,21 +2277,19 @@ child: Container(
                                                       Variable.tableedit=true;
 
 
-                                                      // onChange = true;
-                                                      // context
-                                                      //     .read<
-                                                      //     TableDetailsCubitDartCubit>()
-                                                      //     .getTableDetails(
-                                                      //     id);
-                                                      // context
-                                                      //     .read<PurchaseStockCubit>()
-                                                      //     .getCurrentStock(1, variant);
+
+                                                      context
+                                                          .read<
+                                                          TableDetailsCubitDartCubit>()
+                                                          .getTableDetails(
+                                                          id);
+                                                      context
+                                                          .read<PurchaseStockCubit>()
+                                                          .getCurrentStock(Variable.inventory_ID, variant);
 
                                                       // orderType = va!;
                                                     });
-                                                  },
-                                                  onAddNew: () {},
-                                                  // restricted: true,
+                                                  }, // restricted: true,
                                                 ),
                                               ),
                                               TableCell(
@@ -2286,11 +2311,55 @@ child: Container(
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: textPadding(additionalVariants[i].supplierCode ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                child: PopUpCall(
+
+                                                  type:
+                                                  "VendorCodeGeneral",
+                                                  value: additionalVariants[i].vendorId ??"",
+                                                  onSelection:
+                                                      (Result? va) {
+
+                                                    additionalVariants[i] = additionalVariants[i].copyWith(vendorId:va?.partnerCode??"" );
+                                                    setState(() {
+                                                      var  variant=
+                                                          va?.partnerCode;
+                                                      int? id = va!.id;
+                                                      Variable.tableindex =i;
+                                                      Variable.tableedit=true;
+                                                      vendorcheck=false;
+      context.read<
+      VendordetailsCubit>()
+          .getVendorDetails(
+          variant);
+
+
+      showDailogPopUp(
+      context,
+      VendorPopup(
+      assign:  assigniningDetails,
+
+      ));
+
+                                                      // context
+                                                      //     .read<
+                                                      //     TableDetailsCubitDartCubit>()
+                                                      //     .getTableDetails(
+                                                      //     id);
+                                                      // context
+                                                      //     .read<PurchaseStockCubit>()
+                                                      //     .getCurrentStock(Variable.inventory_ID, variant);
+
+                                                      // orderType = va!;
+                                                    });
+                                                  }, // restricted: true,
+                                                ),
                                               ),
+
+
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    initialCheck: true,
                                                   last: additionalVariants[i].receivedQty.toString() ?? "",
                                                   onChanged: (va) {
                                                     print(va);
@@ -2376,6 +2445,7 @@ child: Container(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    initialCheck: true,
                                                   last: additionalVariants[i].unitCost.toString() ?? "",
                                                   onChanged: (va) {
                                                     double? unitcost;
@@ -2425,11 +2495,7 @@ child: Container(
                                                                     .toString());
                                                         additionalVariants[i] =
                                                             additionalVariants[i]
-                                                                .copyWith(
-                                                                vatableAmount: Vamount,
-                                                                actualCost: vactualCost,
-                                                                grandTotal: vactualCost,
-                                                                unitCost: unitcost);
+                                                                .copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, unitCost: unitcost);
                                                         setState(() {});
                                                       }else{
                                                         var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
@@ -2455,6 +2521,7 @@ child: Container(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    initialCheck: true,
                                                   last: additionalVariants[i].excessTax.toString() ?? "",
                                                   onChanged: (va) {
                                                     double? excess;
@@ -2634,6 +2701,7 @@ child: Container(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    initialCheck: true,
                                                   last: additionalVariants[i].foc.toString() ?? "",
                                                   onChanged: (va) {
                                                     double? foc;
@@ -2705,6 +2773,7 @@ child: Container(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    initialCheck: true,
                                                   last: additionalVariants[i].vat.toString() ?? "",
                                                   onChanged: (va) {
                                                     if (va == "") {
@@ -2793,9 +2862,26 @@ child: Container(
                                                 },
                                               ),
                                               TableCell(
-                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: textPadding(additionalVariants[i].expiryDate.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                verticalAlignment: TableCellVerticalAlignment.fill,
+                                                child: Tabledate(
+
+                                                    format:DateFormat('yyyy-MM-dd'),
+                                                   controller: expirydateControllerList[i],
+                                                    label: "Promised reciept date",
+                                                    onSaved: (newValue) {
+                                                      additionalVariants[i] =
+                                                          additionalVariants[i]
+                                                              .copyWith(
+                                                              expiryDate:newValue
+                                                                  ?.toIso8601String()
+                                                                  .split("T")[0] ??
+                                                                  "" );
+                                                      setState(() {
+                                                      });
+                                                    },
+                                                    enable: true),
                                               ),
+
 
                                               TableCell(
                                                 child: Checkbox(
@@ -2815,6 +2901,10 @@ child: Container(
                                                   },
                                                 ),
                                               ),
+                                              TableTextButton(label: "Update",
+                                              onPress: (){
+
+                                              },)
 
 
 
@@ -2866,7 +2956,6 @@ child: Container(
                                                     int? id = va!.id;
                                                     print("is is"+id.toString());
                                                     Variable.tableedit=false;
-
                                                     // onChange = true;
                                                     context
                                                         .read<
@@ -2874,16 +2963,14 @@ child: Container(
                                                         .getTableDetails(
                                                         id);
                                                     setState(() {
-
                                                     });
                                                     context
                                                         .read<PurchaseStockCubit>()
-                                                        .getCurrentStock("1", variantId);
+                                                        .getCurrentStock(Variable.inventory_ID, variantId);
 
                                                     // orderType = va!;
                                                   });
                                                 },
-                                                onAddNew: () {},
                                                 // restricted: true,
                                               ),
                                               TableCell(
@@ -2914,12 +3001,42 @@ child: Container(
                                                     padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                     fontWeight: FontWeight.w500),
                                               ),
-                                              TableCell(
-                                                verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: textPadding(supplierRefCode.toString()??"",
-                                                    fontSize: 12,
-                                                    padding: EdgeInsets.only(left: 11.5, top: 1.5),
-                                                    fontWeight: FontWeight.w500),
+                                              PopUpCall(
+
+                                                type:"VendorCodeGeneral",
+                                                value: vendorCode,
+                                                onSelection: (Result? va) {
+
+                                                  print(
+                                                      "+++++++++++++++++++++++"+va.toString());
+                                                  //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                  // setState(() {
+                                                  vendorCode=va?.partnerCode??"";
+                                                  var id=va?.partnerCode;
+                                                  print(vendorCode);
+                                                  Variable.tableedit=false;
+                                                  setState(() {
+                                                    context
+                                                        .read<
+                                                        VendordetailsCubit>()
+                                                        .getVendorDetails(
+                                                        id);
+
+                                                  });
+                                                  showDailogPopUp(
+                                                      context,
+                                                      VendorPopup(
+                                                        assign:  assigniningDetails,
+
+                                                      ));
+
+
+
+
+
+
+                                                },
+
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3013,6 +3130,7 @@ child: Container(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                  initialCheck: true,
                                                   // controller:unitcost1,
                                                   //
 
@@ -3283,12 +3401,7 @@ child: Container(
                                                     setState(() {});
                                                     // print(Qty);
                                                   },
-                                                  enable: true,
-                                                  onComplete: () {
-                                                    setState(() {});
 
-                                                    setState(() {});
-                                                  },
                                                 ),
                                               ),
 
@@ -3391,7 +3504,7 @@ child: Container(
                                                   onChanged: (bool? value) {
 
                                                     setState(() {
-                                                      isInvoiced1 = !isInvoiced1!;
+                                                     // isInvoiced1 = !isInvoiced1!;
 
                                                     });
                                                   },
@@ -3442,51 +3555,111 @@ child: Container(
                                                     setState(() {
                                                       isActive1 = !isActive1!;
 
-
                                                     });
                                                   },
 
                                                 ),
-                                              )
-                                              // Checkbox(
-                                              //   activeColor: Color(0xff3E4F5B),
-                                              //   value: isActive1,
-                                              //   onChanged: (bool? value) {
-                                              //
-                                              //     setState(() {
-                                              //       isActive1 = !isActive1!;
-                                              //
-                                              //     });
-                                              //   },
-                                              // ),
+                                              ),
+                                              TableTextButton(label: "Set",
+                                                onPress: (){
+                                               foc1= foc1==null?0:foc1;
+                                               recievedQty= recievedQty==null?0:recievedQty;
+                                                  setState(() {
+                                                    if(variantId=="null"||recievedQty==0||unitcost==0||expirydateController.text==""){
+                                                      context.showSnackBarError("please fill all the fields");
+                                                    }
+                                                    else if( foc1!>recievedQty!){
+                                                         context.showSnackBarError("foc always less than received qty");
+                                                    }
+                                                    else if(isReceived1==false||isActive1==false){
+                                                      context.showSnackBarError(
+                                                          "isreceived and isActive always true in this");
+                                                    }
+                                                    else{
+                                                      var date = new TextEditingController(text:expirydateController.text??"");
+                                                      expirydateControllerList.add(date);
+                                                      additionalVariants.add(RecievingLines(
+                                                        variantId: variantId??"",
+                                                        currentStock: stock,
+                                                        supplierCode: supplierRefCode,
+                                                        variantName: varinatname??"",
+                                                        barcode: barcode??"",
+                                                        purchaseUom: purchaseUomName??"",
+                                                        receivedQty: recievedQty,
+                                                        isReceived: isReceived1,
+                                                        discount: discount,
+                                                        foc: foc1,
+                                                        unitCost: unitcost,
+                                                        vatableAmount: vatableAmount1,vat: vat1,
+                                                        excessTax: excess1,
+                                                        actualCost: actualCost1,
+                                                        grandTotal: grandTotal1,
+                                                        isInvoiced: isInvoiced1,
+                                                        vendorId: vendorCode,
+                                                        vendorTrnNumber: vendorTrn??"",
+                                                        vendorAddress:vendorAddress??"" ,
+                                                        isFree: isFree1,
+                                                        isActive:isActive1,
+                                                        expiryDate: expirydateController.text,
+                                                      ));
+
+                                                      variantId="";
+                                                      varinatname="";
+                                                      vendorCode="";
+                                                      barcode="";
+                                                      purchaseUomName="";
+                                                      recievedQty=0;
+                                                      supplierRefCode="";
+                                                      expirydateController.text="";
+                                                      excess1=0;
+                                                      isReceived1=false;
+                                                      discount=0;
+                                                      foc1=0;
+                                                      unitcost=0;
+                                                      vatableAmount1=0;
+                                                      vat1=0;
+                                                      grandTotal1=0;
+                                                      actualCost1=0;
+                                                      isActive1=false;
+                                                      isFree1=false;
+                                                      isInvoiced1=false;
+                                                      stock=0;
+                                                    }
+                                                  });
+
+
+
+                                                },)
                                             ])
 
 
 
                                       ],
                                     widths: {
-                                  // 0: FractionColumnWidth(.035),
-                                  //  1: FractionColumnWidth(.05),
-                                  //  2: FractionColumnWidth(.05),
-                                  //  3: FractionColumnWidth(.06),
-                                  //  4: FractionColumnWidth(.05),
-                                  //  5: FractionColumnWidth(.05),
-                                  //  6: FractionColumnWidth(.05),
-                                  //  7: FractionColumnWidth(.05),
-                                  //  8: FractionColumnWidth(.05,),
-                                  //  9: FractionColumnWidth(.05),
-                                  //  10: FractionColumnWidth(.05),
-                                  //  11: FractionColumnWidth(.05),
-                                  //  12: FractionColumnWidth(.05),
-                                  // 13: FractionColumnWidth(.035),
-                                  // 14: FractionColumnWidth(.035),
-                                  //  15: FractionColumnWidth(.05),
-                                  //  16: FractionColumnWidth(.03),
-                                  // 17: FractionColumnWidth(.05),
-                                  18: FractionColumnWidth(.08),
-                                  //  19: FractionColumnWidth(.05),
-                                  //  20: FractionColumnWidth(.05),
-                                  },
+                                      0: FlexColumnWidth(2),
+                                      1: FlexColumnWidth(4),
+                                      2: FlexColumnWidth(6),
+                                      3: FlexColumnWidth(3),
+                                      4: FlexColumnWidth(3),
+                                      5: FlexColumnWidth(3),
+                                      6: FlexColumnWidth(3),
+                                      7: FlexColumnWidth(3),
+                                      8: FlexColumnWidth(3),
+                                      9: FlexColumnWidth(3),
+                                      10: FlexColumnWidth(3),
+                                      11: FlexColumnWidth(3),
+                                      12: FlexColumnWidth(3),
+                                      13: FlexColumnWidth(3),
+                                      14: FlexColumnWidth(3),
+                                      15: FlexColumnWidth(3),
+                                      16: FlexColumnWidth(3),
+                                      17: FlexColumnWidth(3),
+                                      18: FlexColumnWidth(4),
+                                      19: FlexColumnWidth(2),
+                                      20: FlexColumnWidth(2),
+                                      21: FlexColumnWidth(2.4),
+
+                                    },
 
 
 
@@ -3495,12 +3668,8 @@ child: Container(
 
 
 
-
                                 ) ,
-
                               )
-
-
 
                             ],
 
@@ -3567,28 +3736,45 @@ child: Container(
 
                     Buttons(
 
-                      onApply: (){
-                        RequestReceivingPatch model = RequestReceivingPatch(
-                          note: noteController.text??"",
-                            receivedBy: "",
-                            unitCost:double.tryParse( unitCostController.text),
-                            foc:double.tryParse( focController.text),
-                            discount:double.tryParse( discountController.text),
-                            grandTotal:double.tryParse( grandtotalCostController.text) ,
-                            vatableAmount: double.tryParse( vatController.text) ,
-                            excessTax:double.tryParse( excessTaxController.text) ,
-                            actualCost:double.tryParse( actualCostController.text) ,
-                            vat:double.tryParse( vatController.text) ,
 
-                            remarks: remarksController.text ?? "",
-                            receivingLines: recievingLisnes);
-                        context
-                            .read<
-                            PatchreceiveCubit>()
-                            .requestFormReceivingPatch(
-                            Variable
-                                .verticalid,
-                            model);
+                      onApply: (){
+                        List<RecievingLines>recieve=[];
+                        if(recievingLisnes.isNotEmpty){           for(var i=0;i<recievingLisnes.length;i++){
+                          if(recievingLisnes[i].isReceived==true){
+                            recieve.add(recievingLisnes[i]);
+                            setState(() {
+
+                            });
+                          }
+                        }}
+                        if(updateCheck==true){
+                          context.showSnackBarError(
+                              "please press update");
+                        }
+                        else{
+
+                          RequestReceivingPatch model = RequestReceivingPatch(
+                              note: noteController.text??"",
+                              id:veritiaclid,
+                              receivedBy: "",
+                              unitCost:double.tryParse( unitCostController.text),
+                              foc:double.tryParse( focController.text),
+                              discount:double.tryParse( discountController.text),
+                              grandTotal:double.tryParse( grandtotalCostController.text) ,
+                              vatableAmount: double.tryParse( vatController.text) ,
+                              excessTax:double.tryParse( excessTaxController.text) ,
+                              actualCost:double.tryParse( actualCostController.text) ,
+                              vat:double.tryParse( vatController.text) ,
+
+                              remarks: remarksController.text ?? "",
+                              receivingLines: recieve??[]);
+                          context
+                              .read<PatchreceiveCubit>()
+                              .requestFormReceivingPatch(
+                              receivingId,
+                              model);
+                        }
+
 
 
 

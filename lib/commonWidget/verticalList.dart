@@ -12,9 +12,10 @@ import 'package:inventory/model/purchaseorder.dart';
 class VerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
   final   List<PurchaseOrder> result ;
+  final String? tab;
    int selectedVertical;
    final Function(int) ontap;
-  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap});
+  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _VerticalListState createState() => _VerticalListState();
 }
@@ -52,6 +53,7 @@ class _VerticalListState extends State<VerticalList> {
     builder: (context) {
       return BlocConsumer<InventorysearchCubit, InventorysearchState>(
   listener: (context, state) {
+    print("this portion is working");
     state.maybeWhen(orElse:(){},
         error: (){
           print("error");
@@ -61,7 +63,7 @@ class _VerticalListState extends State<VerticalList> {
           result=list.data;setState(() {
             print("Here is the result");
             print(result);
-            print(result[0].id);
+
           });
 
         }
@@ -92,11 +94,11 @@ class _VerticalListState extends State<VerticalList> {
                             print("searching case"+va.toString());
                             context
                                 .read<InventorysearchCubit>()
-                                .getSearch(widget.itemsearch.text);
+                                .getSearch(widget.itemsearch.text,tab: widget.tab);
                             if(va==""){
                               context
                                   .read<InventorysearchCubit>()
-                                  .getInventorySearch("code");
+                                  .getInventorySearch("code",tab: widget.tab);
 
                             }
 

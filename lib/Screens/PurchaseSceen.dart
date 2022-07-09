@@ -130,12 +130,12 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
 
 
                               controller: _tabController,
-                              tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: height*.023),),
-                                Text("Purchase Recieving",style: TextStyle(color: Colors.black,fontSize: height*.023),),
-                                Text("Request Form",style: TextStyle(color:Colors.black,fontSize: height*.023),),
-                                Text("Request form Recieving",style: TextStyle(color: Colors.black,fontSize: height*.023),),
+                              tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                Text("Purchase Recieving",style: TextStyle(color: Colors.black,fontSize: width*.011),),
+                                Text("Request Form",style: TextStyle(color:Colors.black,fontSize: width*.011),),
+                                Text("Request form Recieving",style: TextStyle(color: Colors.black,fontSize: width*.011),),
 
-                                Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: height*.023),)]),
+                                Text("Inventory invoice",style: TextStyle(color:Colors.black,fontSize: width*.011),)]),
                         ),
                         // Divider(
                         //   color: Colors.red,

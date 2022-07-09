@@ -18,14 +18,14 @@ import 'core/uttils/variable.dart';
 abstract class LogisticDataSource {
   Future<PaginatedResponse<List<PurchaseOrder>>> getInventorySearch(
       String? next,
-      {String tab = ""});
+      {String? tab = ""});
 
-  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next);
+  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,{String? tab=""});
 
   Future<PurchaseOrdertype> getPurchaseOrdertype();
 
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
-  Future<List<VariantId>> getVariantId([String inventory]);
+  Future<List<VariantId>> getVariantId({String? vendorId,String? inventory=""});
   Future<List<Result>> getVariantCode();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
   Future<VariantDetailsModel> getVendorDetails(String? id);
@@ -42,7 +42,7 @@ abstract class LogisticDataSource {
   Future<DoubleResponse> additionlGeneratePost(AdditionalGenerateModel model);
 
   //requestform**************************************requestform
-  Future<PurchaseOrderRead> getRequestFormRead(int id);
+  Future<PurchaseOrderRead> getRequestFormRead(int? id);
   Future<DoubleResponse> postRequest(PurchaseOrderPost model);
   Future<PurchaseOrdertype> getRequestFormOrdertype();
   Future<List<OrderedPersonModel>> getOrderedPerson();
@@ -66,23 +66,31 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getInventorySearch(
       String? next,
-      {String tab = ""}) async {
+      {String? tab = ""}) async {
     print("aaaaaa");
+    print(tab);
     String path = "";
     if (tab == "RF") {
-      path = "http://65.1.61.201:8111/purchase-order/list-request-form/test";
+     // path = "http://65.1.61.201:8111/purchase-order/list-request-form/${Variable.inventory_ID}";
+
+      path=requestVerticalList+Variable.inventory_ID;
+
+
     } else if (tab == "RFR") {
       path =
-          "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/1";
+          "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
     } else if (tab == "II") {
       path =
-          "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/test";
+          // "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
+          invoiceVerticalList+Variable.inventory_ID;
     } else {
-      path = "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
+      // path = "http://65.1.61.201:8111/purchase-order/list-purchase-order/${Variable.inventory_ID}";
+      path = generalVerticalList+Variable.inventory_ID;
     }
     // path = tab == "RF"
     //    ? "http://65.1.61.201:8111/purchase-order/list-request-form/test"
     //    : "http://65.1.61.201:8111/purchase-order/list-purchase-order/test";
+    print(path);
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -102,10 +110,23 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next) async {
+  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,{String? tab=""}) async {
     print("code1" + next.toString());
-    String path =
-        "http://65.1.61.201:8111/purchase-order/list-purchase-order/test?code=$next";
+    String path ="";
+    if (tab == "RF") {
+      path = stagingUrl+"purchase-order/list-request-form/${Variable.inventory_ID}?code=$next";
+    } else if (tab == "RFR") {
+      path =
+          stagingUrl+"purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
+    } else if (tab == "II") {
+      path =
+          stagingUrl+"purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?code=$next";}
+    else{
+      path= stagingUrl+"purchase-order/list-purchase-order/${Variable.inventory_ID}?code=$next";
+    }
+    print("urlof Search");
+    print(path);
+
     print(path);
     final response = await client.get(path,
         options: Options(headers: {
@@ -127,7 +148,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrdertype> getPurchaseOrdertype() async {
     final response = await client.get(
-      "http://65.1.61.201:8111/purchase-order/create-purchase-order",
+      purchaseOrderType,
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -170,14 +191,14 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<List<VariantId>> getVariantId([String? inventory]) async {
+  Future<List<VariantId>> getVariantId({String? vendorId,String? inventory=""}) async {
     print("repooooosss");
     print("in" + inventory.toString());
 
     String path = inventory == "" || inventory == null
-        ? "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory-and-vendor/test?vcode=test"
+        ? "http://api-purchase-order-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
         : "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory/$inventory";
-    print(path);
+    print("sssssssssssssssAkshay"+path);
     final response = await client.get(
       path,
       // data:
@@ -258,8 +279,11 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseCureentStockQty> getCurrentStock(
       String? id, String? invdendotyId) async {
+    print("Avalkkayi");
     String path =
         "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
+    print(path);
+
     try {
       final response = await client.get(
         path,
@@ -281,9 +305,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       print(dataa);
       return dataa;
     } catch (e) {
-      print("error" + e.toString());
+      print("mistake" + e.toString());
     }
-    print("path" + path.toString());
+    print("corntStock" + path.toString());
     final response = await client.get(
       path,
       // data:
@@ -543,7 +567,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
 // request form screen ####################################request form screeen***************
   @override
-  Future<PurchaseOrderRead> getRequestFormRead(int id) async {
+  Future<PurchaseOrderRead> getRequestFormRead(int? id) async {
     print("idddidd1" + id.toString());
     print("sssshamna" + id.toString());
     try {
@@ -597,10 +621,11 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<DoubleResponse> postRequest(PurchaseOrderPost model) async {
+    print(
+      "post" + requestFormCreate.toString(),
+    );
     try {
-      print(
-        "post" + requestFormCreate.toString(),
-      );
+
 
       final response = await client.post(requestFormCreate,
           data: model.toJson(),
@@ -798,7 +823,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<DoubleResponse> requestFormReceivingPatch(
       int? id, RequestReceivingPatch model) async {
     print("sunithi2" + id.toString());
-    String path = purchaseRecievingPatch + id.toString();
+    String path = rqstReceivingPatch + id.toString();
     print(path);
     final response = await client.patch(path,
         data: model.toJson(),

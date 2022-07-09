@@ -328,7 +328,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           Center(
             child: TextFormField(
 
-             initialValue:widget.last=="0"?"":widget.last,
+             initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
               onTap: () {
                 if (widget.onClick != null) widget.onClick!();
               },

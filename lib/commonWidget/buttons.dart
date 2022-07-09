@@ -58,9 +58,14 @@ class TextButtonLarge extends StatelessWidget {
   const TextButtonLarge({Key? key,  this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 150,
-      height: 50,
+ double h=MediaQuery.of(context).size.height;
+ double w=MediaQuery.of(context).size.width;
+ return Container(
+
+      width: w/10,
+      height:h/15,
+      margin: EdgeInsets.only(right:w *.02,top:h*0.04 ),
+
       child: TextButton(onPressed:(){onPress(); },
           style: ButtonStyle(
               shape: MaterialStateProperty.all(
@@ -79,6 +84,35 @@ class TextButtonLarge extends StatelessWidget {
               Text(text,style: TextStyle(color: Colors.white,fontSize: 9),),
             ],
           )),
+    );
+  }
+}
+class TableTextButton extends StatefulWidget {
+  final String label;
+  final Function onPress;
+  TableTextButton({required this.label,required this.onPress});
+
+  @override
+  _TableTextButtonState createState() => _TableTextButtonState();
+}
+
+class _TableTextButtonState extends State<TableTextButton> {
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      height: 50,
+
+      child: TextButton(
+          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
+          ),
+          onPressed: () {
+            widget.onPress();
+
+
+          },
+          child: Text(widget.label)
+
+      ),
     );
   }
 }

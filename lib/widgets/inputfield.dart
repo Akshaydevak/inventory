@@ -273,6 +273,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
 }
 class Tabledate extends StatefulWidget {
   final String label;
+  final bool initialCheck;
   final DateTime? initialValue;
   final bool enable;
   final bool required;
@@ -286,6 +287,7 @@ class Tabledate extends StatefulWidget {
         required this.label,
         this.controller,
         this.row=false,
+        this.initialCheck=false,
 
         this.enable = true,
         this.required = false,
@@ -301,9 +303,55 @@ class Tabledate extends StatefulWidget {
 class _Tabledate extends State<Tabledate> {
   @override
   Widget build(BuildContext context) {
+    print("wiiiii"+widget.controller!.text);
+    widget.controller?.text= widget.controller!.text==null||widget.controller!.text=="null"?"":widget.controller!.text;
+
     final mFormat = widget.format ?? DateFormat.yMd();
-    return  DateTimeField(
+    return widget.initialCheck?
+    DateTimeField(
       initialValue: widget.initialValue,
+      // controller: widget.controller,
+      enabled: widget.enable,
+
+      validator: (value) => value == null ? "* required" : null,
+      decoration: InputDecoration(
+        //suffixIcon: Icon(Icons.calendar_today_outlined),
+        contentPadding: null,
+        labelStyle: TextStyle(color: Colors.black),
+        // labelText: widget.initialValue?.toString().split(" ")[0],
+        isDense: true,
+        label: null,
+        alignLabelWithHint: true,
+        enabledBorder: OutlineInputBorder(
+            borderRadius:BorderRadius.circular(2),
+
+            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+
+        focusedBorder: OutlineInputBorder(
+            borderRadius:BorderRadius.circular(2),
+
+            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+        border: OutlineInputBorder(
+            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.001))),
+      ),
+      format: mFormat,
+      style: TextStyle(fontSize: 12), onChanged: widget.onSaved,
+      //  onFieldSubmitted: widget.onSaved,
+      onShowPicker: (context, currentValue) async {
+        DateTime? date;
+        if (widget.enable)
+          date = await showDatePicker(
+              context: context,
+              firstDate: DateTime(1900),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2100));
+
+        return date ?? currentValue;
+      },
+    ):
+    DateTimeField(
+     // initialValue: widget.initialValue,
+      controller: widget.controller,
       enabled: widget.enable,
 
       validator: (value) => value == null ? "* required" : null,

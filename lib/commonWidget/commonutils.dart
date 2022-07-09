@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:inventory/cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'package:inventory/model/variantid.dart';
+import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
 
 void showDailogPopUp(BuildContext context, Widget child) {
   showDialog(
@@ -224,7 +228,9 @@ class _VendorPopupState extends State<VendorPopup> {
           actions: [
         TextButton(
         child: Text("OK"),
-        onPressed: () { },
+        onPressed: () {
+          Navigator.pop(context);
+        },
         )
           ],
           content: BlocConsumer<VendordetailsCubit, VendordetailsState>(
@@ -346,6 +352,124 @@ class _VendorPopupState extends State<VendorPopup> {
         );
       }
     );
+  }
+}
+
+class ConfirmationPopup extends StatefulWidget {
+  final Function? verticalUpdate;
+  final Function? clear;
+ final List<OrderLines>? table;
+  final int? verticalId;
+  ConfirmationPopup({this.verticalUpdate,this.verticalId,this.table,this.clear});
+
+
+  @override
+  State<ConfirmationPopup> createState() => _ConfirmationPopupState();
+}
+
+class _ConfirmationPopupState extends State<ConfirmationPopup> {
+  List<PartnerOrganizationData>? inventoryList = [];
+  VariantDetailsModel? wholeList ;
+  bool _value = false;
+  int selected = 0;
+  int? grpValue ;
+  // List inventoryIdList = ["BSNU1000", "BSNU1007"];
+  @override
+  Widget build(BuildContext context) {
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider(
+  create: (context) => PurchaseorderdeleteCubit(),
+),
+BlocProvider(
+create: (context) => InventorysearchCubit(),)
+  ],
+  child: Builder(
+        builder: (context) {
+          return MultiBlocListener(
+  listeners: [
+    BlocListener<PurchaseorderdeleteCubit, PurchaseorderdeleteState>(
+  listener: (context, state) {
+    state.maybeWhen(orElse: () {
+      // context.
+      context.showSnackBarError("Loadingggg");
+    }, error: () {
+      context.showSnackBarError(Variable.errorMessege);
+    }, success: (data) {
+      if (data.data1) {
+        context.showSnackBarSuccess(data.data2);
+      //  widget.clear!();
+      // widget.table?.clear();
+
+        context
+            .read<InventorysearchCubit>()
+            .getInventorySearch("code");
+        setState(() {
+
+        });
+        // select=true;
+
+      }
+      else {
+        context.showSnackBarError(data.data2);
+        print(data.data1);
+      }
+      ;
+    });
+  },
+),
+    BlocListener<InventorysearchCubit, InventorysearchState>(
+    listener: (context, state) {
+      state.maybeWhen(
+          orElse: () {},
+          error: () {
+            print("error");
+          },
+          success: (list) {
+            print("listaaaaaaaaaaaa" + list.data.toString());
+
+            // result = list.data;
+            setState(() {
+              print("Akshay"+list.data.toString());
+              if(list.data.isNotEmpty){
+                widget?.verticalUpdate!(list.data);
+              }
+              // Variable.verticalid=result[0].id;
+              // print("Variable.ak"+Variable.verticalid.toString());
+              // }
+              // else{
+              //   select=true;
+              // }
+
+
+              setState(() {});
+            });
+          });
+    }
+    ),
+  ],
+  child: AlertDialog(
+            actions: [
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
+                },
+              ),
+              TextButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+            content: Text("Do you want to delete the order?")
+
+          ),
+);
+        }
+    ),
+);
   }
 }
 

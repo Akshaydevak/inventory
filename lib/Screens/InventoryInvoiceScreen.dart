@@ -99,7 +99,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
   @override
   void initState() {
-    context.read<InventorysearchCubit>().getInventorySearch("code");
+    context.read<InventorysearchCubit>().getInventorySearch("code",tab:"II");
 
     int verticalScrollIndex = 0;
     recieveController = AutoScrollController(
@@ -122,7 +122,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
       create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"II"),
     ),
     BlocProvider(
-      create: (context) => InventoryReadCubit()..getInventoryRead(Variable.verticalid!),
+      create: (context) => InventoryReadCubit(),
 
     ),
     BlocProvider(
@@ -224,6 +224,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
               result=list.data;setState(() {
                 if(result.isNotEmpty){
                   Variable.verticalid=result[0].id;
+                  veritiaclid=result[0].id;
+                  context.read<InventoryReadCubit>().getInventoryRead(veritiaclid!);
                   print("Variable.verticalid"+Variable.verticalid.toString());
                   setState(() {
 
@@ -244,8 +246,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
-          if (data.data1)
+          if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            context.read<InventorysearchCubit>().getInventorySearch("code",tab:"II");
+          }
           else {
             context.showSnackBarError(data.data2);
             print(data.data1);
@@ -257,13 +261,13 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
    
   ],
   child: SingleChildScrollView(
-            child: Container(
-              height: 3000,
+            child: IntrinsicHeight(
               child:Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   VerticalList(selectedVertical: selectedVertical,
+                    tab:"II",
                           itemsearch: itemsearch,ontap: (int index){
                             setState(() {
                               print("taped");
@@ -274,8 +278,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   result[index].id;
                               context
                                   .read<
-                                  RequestformreadCubit>()
-                                  .getRequestFormRead(
+                                  InventoryReadCubit>()
+                                  .getInventoryRead(
                                   veritiaclid!);
                             });
                           },result: result,
@@ -305,13 +309,10 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                       controller: paymentCodeController, title: "payment code"),
                                   SizedBox(height: height*.035,),
                                   NewInputCard(
-                                    readOnly: true,
-                                      controller: paymentStatusController, title: "payment status"),
+                                    readOnly: true, controller: paymentStatusController, title: "payment status"),
                                   SizedBox(height: height*.035,),
                                   NewInputCard(
-                                    readOnly: true,
-
-                                      controller: paymentMethodController, title: "payment method"),
+                                    readOnly: true, controller: paymentMethodController, title: "payment method"),
                                   SizedBox(height: height*.030,),
                                   SizedBox(height: height*.030,),
                                   SizedBox(height: height*.030,),
@@ -411,9 +412,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                    children: [
                                      SingleChildScrollView(
                                        child: Container(
-                                         width: MediaQuery.of(context)
-                                             .size
-                                             .width,
+                                         width: 2200,
                                          padding: EdgeInsets.all(10),
                                          child:customTable(
                                            border: const TableBorder(
@@ -457,8 +456,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                      'receiving line id',
                                                      padding:
                                                      EdgeInsets.all(7),
-                                                     height: 50,
-                                                     size: 12,
+                                                     height: 46,
+                                                     size: 13,
                                                      // color: Palette.containerDarknew,
                                                      // textColor: Palette.white
                                                    ),
@@ -790,7 +789,32 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                       ]
 
 
-                                           ]
+                                           ],
+                                           widths: {
+                                             0: FlexColumnWidth(2),
+                                             1: FlexColumnWidth(4),
+                                             2: FlexColumnWidth(6),
+                                             3: FlexColumnWidth(3),
+                                             4: FlexColumnWidth(3),
+                                             5: FlexColumnWidth(3),
+                                             6: FlexColumnWidth(3),
+                                             7: FlexColumnWidth(3),
+                                             8: FlexColumnWidth(3),
+                                             9: FlexColumnWidth(3),
+                                             10: FlexColumnWidth(3),
+                                             11: FlexColumnWidth(3),
+                                             12: FlexColumnWidth(3),
+                                             13: FlexColumnWidth(3),
+                                             14: FlexColumnWidth(3),
+                                             15: FlexColumnWidth(3),
+                                             16: FlexColumnWidth(3),
+                                             17: FlexColumnWidth(3),
+                                             18: FlexColumnWidth(2),
+                                             19: FlexColumnWidth(2),
+                                             20: FlexColumnWidth(2),
+                                             21: FlexColumnWidth(2.4),
+
+                                           },
 
                                          ) ,
                                        ),

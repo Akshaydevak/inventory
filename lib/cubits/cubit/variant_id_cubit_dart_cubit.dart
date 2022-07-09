@@ -10,9 +10,9 @@ part 'variant_id_cubit_dart_cubit.freezed.dart';
 class VariantIdCubitDartCubit extends Cubit<VariantIdCubitDartState> {
   VariantIdCubitDartCubit() : super(VariantIdCubitDartState.initial());
   final InventoryRepository repo = InventoryRepositoryImpl();
-  Future getVariantId([String? inventory=""]) async {
+  Future getVariantId({String? vendorId,String? inventory=""}) async {
     print("in"+inventory.toString());
-    final result = await repo.getVariantId(inventory);
+    final result = await repo.getVariantId(vendorId:vendorId,inventory: inventory );
     print(result);
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
   }

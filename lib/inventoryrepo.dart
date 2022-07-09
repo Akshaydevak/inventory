@@ -18,12 +18,12 @@ import 'model/variantid.dart';
 
 abstract class InventoryRepository {
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getInventorySearch(String? next, {String tab});
+      getInventorySearch(String? next, {String? tab});
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
-      String? next);
+      String? next,{String? tab=""});
   Future<Either<Failure, PurchaseOrdertype>> getPurchaseOrdertype();
   Future<Either<Failure, DoubleResponse>> postPurchase(PurchaseOrderPost model);
-  Future<Either<Failure, List<VariantId>>> getVariantId([String? inventory]);
+  Future<Either<Failure, List<VariantId>>> getVariantId({String? vendorId,String? inventory=""});
   Future<Either<Failure, List<Result>>> getVariantCode();
   Future<Either<Failure, PurchaseOrderTableModel>> getTableDetails(int? id);
   Future<Either<Failure, VariantDetailsModel>> getVendorDetails(String? id);
@@ -43,7 +43,7 @@ abstract class InventoryRepository {
   Future<Either<Failure, DoubleResponse>> additionlGeneratePost(
       AdditionalGenerateModel model);
   //requestform******************************************************requestform*********************
-  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int id);
+  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int? id);
   Future<Either<Failure, DoubleResponse>> postRequest(PurchaseOrderPost model);
   Future<Either<Failure, PurchaseOrdertype>> getRequestFormOrdertype();
   Future<Either<Failure, List<OrderedPersonModel>>> getOrderedPerson();
@@ -72,18 +72,19 @@ class InventoryRepositoryImpl extends InventoryRepository {
   InventoryDataSourceImpl remoteDataSource = InventoryDataSourceImpl();
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>>
-      getInventorySearch(String? next, {String tab = ""}) {
+      getInventorySearch(String? next, {String? tab = ""}) {
     print("aaaaaa");
+
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
         () async => remoteDataSource.getInventorySearch(next, tab: tab));
   }
 
   @override
   Future<Either<Failure, PaginatedResponse<List<PurchaseOrder>>>> getSearch(
-      String? next) {
+      String? next,{String? tab=""}) {
     print("code1" + next.toString());
     return repoExecute<PaginatedResponse<List<PurchaseOrder>>>(
-        () async => remoteDataSource.getSearch(next));
+        () async => remoteDataSource.getSearch(next,tab:tab));
   }
 
   @override
@@ -102,11 +103,11 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, List<VariantId>>> getVariantId([String? inventory]) {
+  Future<Either<Failure, List<VariantId>>> getVariantId({String? vendorId,String? inventory=""}) {
     print("repooooo");
     print("in" + inventory.toString());
     return repoExecute<List<VariantId>>(
-        () async => remoteDataSource.getVariantId(inventory));
+        () async => remoteDataSource.getVariantId(vendorId:vendorId,inventory:inventory));
   }
 
   @override
@@ -177,7 +178,7 @@ class InventoryRepositoryImpl extends InventoryRepository {
   }
 
   @override
-  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int id) {
+  Future<Either<Failure, PurchaseOrderRead>> getRequestFormRead(int? id) {
     print("idddidd1" + id.toString());
     return repoExecute<PurchaseOrderRead>(
         () async => remoteDataSource.getRequestFormRead(id));

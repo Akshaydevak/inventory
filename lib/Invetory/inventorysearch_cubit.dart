@@ -10,14 +10,16 @@ part 'inventorysearch_cubit.freezed.dart';
 class InventorysearchCubit extends Cubit<InventorysearchState> {
   final InventoryRepository _repos = InventoryRepositoryImpl();
   InventorysearchCubit() : super(InventorysearchState.initial());
-  Future getInventorySearch(String code,{String tab=""}) async {
-    print("aaaa");
+  Future getInventorySearch(String code,{String? tab=""}) async {
+    print("there is an hope");
+    print("tab"+tab.toString());
     final result = await _repos.getInventorySearch(code,tab:tab);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
-  Future getSearch(String code) async {
+  Future getSearch(String code,{String? tab=""}) async {
     print("solidstate"+code.toString());
-    final result = await _repos.getSearch(code);
+    print("saerchingApi"+tab.toString());
+    final result = await _repos.getSearch(code,tab:tab);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

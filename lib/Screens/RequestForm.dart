@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -28,6 +31,7 @@ import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import '../printScreen.dart';
 import 'GeneralScreen.dart';
 
 class RequestFormScreen extends StatefulWidget {
@@ -60,6 +64,14 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   TextEditingController actualCostController = TextEditingController();
   TextEditingController grandTotalController = TextEditingController();
   TextEditingController orderType = TextEditingController();
+  TextEditingController receivedTestContoller = TextEditingController();
+  TextEditingController minOrderTestContoller = TextEditingController();
+  TextEditingController maxOrderTestContoller = TextEditingController();
+  TextEditingController discountTestContoller = TextEditingController();
+  TextEditingController focTestContoller = TextEditingController();
+  TextEditingController unitCostTestContoller = TextEditingController();
+  TextEditingController excesstaxTestContoller = TextEditingController();
+  TextEditingController vatTestContoller = TextEditingController();
   late AutoScrollController scontroller;
   var requestedListControllers = <TextEditingController>[];
   var minListControllers = <TextEditingController>[];
@@ -72,6 +84,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
 
   int? veritiaclid=0;
   List<OrderLines> table = [];
+  List<int?> currentStock = [];
   List<PurchaseOrder>result=[];
   bool select=false;
   int selectedVertical=0;
@@ -100,6 +113,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   PurchaseCureentStockQty? purchaseCurrentStock;
   int?stock=0;
 bool  stockCheck=false;
+ bool updateCheck=false;
   double grands = 0;
   double focValue = 0;
   double VatableValue = 0;
@@ -172,15 +186,83 @@ bool  stockCheck=false;
   //     }
   //   }
   // }
+  clear(){
+    print("shammmma"+table.toString());
+    orderTypeController.text="";
+    orderType.text="";
+    ordereCodeController.text="";
+    orderDateController.text="";
+    inventoryIdController.text="";
+    orderedPersonController.text="";
+    promisedRecieptDate.text="";
+    plannedRecieptDate.text="";
+    paymentCodeController.text="";
+    paymentStatusController.text="";
+    orderStatusController.text="";
+    receivingSattusController.text="";
+    invoiceStatusController.text="";
+    noteController.text="";
+    remarksController.text="";
+    discountController.text="";
+    focController.text="";
+    unitCostController.text="";
+    vatableAmountController.text="";
+    excessTaxController.text="";
+    vatController.text="";
+    actualCostController.text="";
+    grandTotalController.text="";
+    receivedTestContoller.clear();
+    excesstaxTestContoller.clear();
+    minOrderTestContoller.clear();
+    maxOrderTestContoller.clear();
+    discountTestContoller.clear();
+    vatTestContoller.clear();
+    focTestContoller.clear();
+    variantId="";
+    varinatname="";
+    barcode="";
+    stock=0;
+    purchaseUomName="";
+    recievedQty=0;
+    minQty=0;
+    maxQty=0;
+    isReceived1=false;
+    unitcost=0;
+    excess1=0;
+    discount=0;
+    foc1=0;
+    vatableAmount1=0;
+    vat1=0;
+    actualCost1=0;
+    grandTotal1=0;
+    isInvoiced1=false;
+    isFree1=false;
+    isActive1=false;
+
+  }
   PurchaseOrderTableModel? purchaseTable;
   TextEditingController itemsearch=TextEditingController();
   @override
   void initState() {
+    context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
     scontroller = AutoScrollController(
         viewportBoundaryGetter: () =>
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: Axis.vertical);
     super.initState();
+  }
+  Future _getCurrentUser() async {
+
+    if(table.isNotEmpty) {
+
+      for (var i = 0; i < table.length; i++) {
+        print("variantaaaaaa" + table[i].variantId.toString());
+        print("variantaaaaaa" + inventoryIdController.text.toString());
+        var b = await context.read<PurchaseStockCubit>().getCurrentStock(inventoryIdController.text, table[i].variantId);
+        print("b" + b.toString());
+      }
+      setState(() {});
+    }
   }
   @override
   Widget build(BuildContext context) {
@@ -194,8 +276,7 @@ bool  stockCheck=false;
         MultiBlocProvider(
   providers: [
     BlocProvider(
-  create: (context) => RequestformreadCubit()..getRequestFormRead(Variable.verticalid!),
-
+  create: (context) => RequestformreadCubit(),
 ),
 BlocProvider(
 create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF"),
@@ -224,8 +305,19 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
       }, error: () {
         context.showSnackBarError(Variable.errorMessege);
       }, success: (data) {
-        if (data.data1)
+        if (data.data1) {
           context.showSnackBarSuccess(data.data2);
+          Timer(Duration(seconds: 5), () {
+            setState(() {
+              context
+                  .read<InventorysearchCubit>()
+                  .getInventorySearch("code",tab:"RF");
+              currentStock.clear();
+
+              context.read<RequestformreadCubit>().getRequestFormRead(veritiaclid);
+            });
+          });
+        }
         else {
           context.showSnackBarError(data.data2);
           print(data.data1);
@@ -243,8 +335,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
-          if (data.data1)
+          if (data.data1){
             context.showSnackBarSuccess(data.data2);
+            currentStock.clear();
+            context.read<RequestformreadCubit>().getRequestFormRead(veritiaclid);
+          }
+
           else {
             context.showSnackBarError(data.data2);
             print(data.data1);
@@ -264,6 +360,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         success: (data) {
 
           setState(() {
+           stockCheck=false;
             print("datasssssssssssssss"+data.toString());
             data.data?.orderLines != null
                 ? table = data.data?.orderLines ?? []
@@ -300,6 +397,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             vatController.text=data.data?.vat.toString()??"";
             actualCostController.text=data.data?.actualCost.toString()??"";
             grandTotalController.text=data.data?.grandTotal.toString()??"";
+            _getCurrentUser();
            // valueAddingTextEdingController();
 
 
@@ -321,8 +419,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
 
                 if(Variable.tableedit==true) {
-                  // additionalVariants[Variable.tableindex] =
-                  //     additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                  table[Variable.tableindex] =
+                      table[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseuom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                   setState(() {
 
                   });
@@ -372,7 +470,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
               print("stockqty" + stockQty.toString());
               print("stockCheck"+stockCheck.toString());
               if(stockCheck==false){
-                // currentStock.add(stockQty);
+                currentStock.add(stockQty);
                 setState(() {
 
                 });
@@ -437,7 +535,19 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                 result=list.data;setState(() {
                   print("Here is the result");
                   print(result);
-                  print(result[0].id);
+                  if(result.isNotEmpty){
+                    print(result[0].id);
+                    Variable.verticalid2=result[0].id;
+                    veritiaclid=result[0].id;
+                    context
+                        .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
+
+                  }
+                  else{
+
+                    select=true;
+                  }
+
                 });
 
               }
@@ -445,21 +555,26 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         },
   builder: (context, state) {
     return SingleChildScrollView(
-                child: Container(
-                  height: 5000,
+                child: IntrinsicHeight(
+
                   child:Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      VerticalList(selectedVertical: selectedVertical,
-        itemsearch: itemsearch,ontap: (int index){
+                      VerticalList(
+                        tab:"RF",
+                        selectedVertical: selectedVertical,
+                        itemsearch: itemsearch,ontap: (int index){
                           setState(() {
                             print("taped");
                             select=false;
                             selectedVertical=index;
+                            updateCheck=false;
+                            currentStock.clear();
 
                             veritiaclid =
                                 result[index].id;
+                            Variable.verticalid2=result[index].id;
                             context
                                 .read<
                                 RequestformreadCubit>()
@@ -473,65 +588,29 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              padding: EdgeInsets.only(top: 15,left: 10),
+                            Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(top: 15,left: 10),
 
 
 
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                    primary: Colors.blue,
-                                    elevation: 2,
-                                    backgroundColor: Colors.white24),
-                                onPressed: () {
-                                  setState(() {
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                        primary: Colors.blue,
+                                        elevation: 2,
+                                        backgroundColor: Colors.white24),
+                                    onPressed: () {
+                                      setState(() {
 
-                                    select=!select;
+                                        select=true;
+                                        updateCheck=false;
+                                        currentStock.clear();
 
 
-                                      table.clear();
-                                      print("shammmma"+table.toString());
-                                      orderTypeController.text="";
-                                      ordereCodeController.text="";
-                                      orderDateController.text="";
-                                      inventoryIdController.text="";
-                                      orderedPersonController.text="";
-                                      promisedRecieptDate.text="";
-                                      plannedRecieptDate.text="";
-                                      paymentCodeController.text="";
-                                      paymentStatusController.text="";
-                                      orderStatusController.text="";
-                                      receivingSattusController.text="";
-                                      invoiceStatusController.text="";
-                                      noteController.text="";
-                                      remarksController.text="";
-                                      discountController.text="";
-                                      focController.text="";
-                                      unitCostController.text="";
-                                      vatableAmountController.text="";
-                                      excessTaxController.text="";
-                                      vatController.text="";
-                                      actualCostController.text="";
-                                      grandTotalController.text="";
-                                      variantId="";
-                                      barcode="";
-                                      stock=0;
-                                      purchaseUomName="";
-                                      recievedQty=0;
-                                      minQty=0;
-                                      maxQty=0;
-                                      isReceived1=false;
-                                      unitcost=0;
-                                      excess1=0;
-                                      discount=0;
-                                      foc1=0;
-                                      vatableAmount1=0;
-                                      vat1=0;
-                                      actualCost1=0;
-                                      grandTotal1=0;
-                                      isInvoiced1=false;
-                                      isFree1=false;
-                                      isActive1=false;
+                                          table.clear();
+                                          clear();
 
 
 
@@ -540,37 +619,52 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
 
 
-                                    //discount.text="";
 
 
-                                  });
 
 
-                                },
-                                // icon: Icon(Icons.refresh),
-                                // label: Text("Clear")
-                                child: Text("clear"),
-                                // child: Container(
-                                //   margin: EdgeInsets.only(bottom: size.height * .008),
-                                //   alignment: Alignment.center,
-                                //   height: size.width * .016,
-                                //   width: size.width * .016,
-                                //   decoration: BoxDecoration(
-                                //     color: Colors.transparent,
-                                //     borderRadius: BorderRadius.circular(100),
-                                //     border: Border.all(
-                                //       color: Colors.black,
-                                //     ),
-                                //
-                                //     //more than 50% of width makes circle
-                                //   ),
-                                //   child: Icon(
-                                //     Icons.remove ,
-                                //     color: Colors.black,
-                                //     size: size.width * .010,
-                                //   ),
-                                // ),
-                              ),
+                                      });
+
+
+                                    },
+                                    // icon: Icon(Icons.refresh),
+                                    // label: Text("Clear")
+                                    child: Text("clear"),
+                                  ),
+                                ),
+                                TextButtonLarge(
+                                  text: "PREVIEW",
+                                  onPress: (){
+                                    print("Akshay");
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) =>
+                                          PrintScreen(
+                                            note: noteController.text,
+                                            select: select,
+                                            // vendorCode:vend.text,
+                                            orderCode:ordereCodeController.text ,
+                                            orderDate: orderDateController.text,
+                                            table:table,
+                                            vat: double.tryParse( vatController.text),
+                                            actualCost:double.tryParse( actualCostController.text),
+                                            variableAmount:double.tryParse( vatableAmountController.text) ,
+                                            discount:double.tryParse( discountController.text) ,
+                                            unitCost:double.tryParse( unitCostController.text) ,
+                                            excisetax:double.tryParse( excessTaxController.text) ,
+                                            remarks: remarksController.text ,
+
+
+
+
+
+                                          )),
+                                    );
+
+
+                                  },
+                                ),
+                              ],
                             ),
                             Expanded(child: Container(
                               child: Column(
@@ -601,29 +695,31 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   orderType.text = va!;
                                                                 });
                                                               },
-                                                              onAddNew: () {},
-                                                              restricted: true,
                                                             ),
                                                             SizedBox(height: height*.030,),
                                                             NewInputCard(
                                                               readOnly: true,
                                                                 controller: ordereCodeController, title: "Order code"),
-                                                            SizedBox(height: height*.030,),
-                                                            PopUpDateFormField(
 
-                                                                format:DateFormat('yyyy-MM-dd'),
-                                                                controller: orderDateController,
-                                                                //initialValue:orderDateController.text!=null||orderDateController.text!=""||orderDateController.text!="null"?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26"),
-                                                                label: "Promised Reciept Date",
-                                                                onSaved: (newValue) {
-                                                                  print("new value"+newValue.toString());
-                                                                  orderDateController.text = newValue
-                                                                      ?.toIso8601String()
-                                                                      .split("T")[0] ??
-                                                                      "";
-                                                                  print("promised_receipt_date.text"+orderDateController.text.toString());
-                                                                },
-                                                                enable: true),
+                                                            SizedBox(height: height*.030,),
+                                                            NewInputCard(
+                                                                readOnly: true,
+                                                                controller: orderDateController, title: "Order Date"),
+                                                            // PopUpDateFormField(
+                                                            //
+                                                            //     format:DateFormat('yyyy-MM-dd'),
+                                                            //     controller: orderDateController,
+                                                            //     //initialValue:orderDateController.text!=null||orderDateController.text!=""||orderDateController.text!="null"?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26"),
+                                                            //     label: "Order Date",
+                                                            //     onSaved: (newValue) {
+                                                            //       print("new value"+newValue.toString());
+                                                            //       orderDateController.text = newValue
+                                                            //           ?.toIso8601String()
+                                                            //           .split("T")[0] ??
+                                                            //           "";
+                                                            //       print("promised_receipt_date.text"+orderDateController.text.toString());
+                                                            //     },
+                                                            //     enable: true),
                                                             SizedBox(height: height*.030,),
                                                             NewInputCard(
                                                                 controller: inventoryIdController, title: "Inventory  id"),
@@ -778,6 +874,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       color: Colors.white,
                                       alignment: Alignment.topRight,
                                       height: 300,
+
                                       // height: MediaQuery.of(context).size.height,
                                       child: ListView(
                                         controller: scontroller,
@@ -787,93 +884,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                padding: EdgeInsets.only(left: width*.02,top: height*0.02),
-                                                child: TextButton(
-                                                    style: TextButton.styleFrom(
-                                                        primary: Colors.blue,
-                                                        elevation: 2,
-                                                        backgroundColor: Colors.white24),
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        table.add(OrderLines(
-                                                            variantId: variantId??"",
-                                                            currentQty: stock,
-                                                            supplierCode: supplierRefCode,
-                                                            variantName: varinatname??"",
-                                                            barcode: barcode??"",
-                                                            minimumQty: minQty,
-                                                            maximumQty: maxQty,
-                                                            purchaseuom: purchaseUomName??"",
-                                                            requestedQty: recievedQty,
-                                                            isRecieved: isReceived1,
-                                                            discount:discount,
-                                                            foc: foc1,
-                                                            unitCost: unitcost,
-                                                            variableAmount: vatableAmount1,
-                                                          vat: vat1,
-                                                            excessTax: excess1,
-                                                            actualCost: actualCost1,
-                                                            grandTotal: grandTotal1,
-                                                            isInvoiced: isInvoiced1,
-                                                            isFree: isFree1,
-                                                            isActive:isActive1,
 
-
-
-
-                                                        ));
-
-                                                      });
-                                                      addition();
-                                                      unitcost2= 0;
-
-                                                      grands = 0;
-                                                      actualValue = 0;
-                                                      vatValue = 0;
-                                                      discountValue = 0;
-                                                      focValue =0;
-
-                                                      VatableValue = 0;
-
-                                                      excessTAxValue = 0;
-
-
-
-
-                                                      variantId="";
-                                                      varinatname="";
-                                                      barcode="";
-                                                      purchaseUomName="";
-                                                      recievedQty=0;
-                                                      excess1=0;
-                                                      isReceived1=false;
-                                                      discount=0;
-                                                      foc1=0;
-                                                      unitcost=0;
-                                                      vatableAmount1=0;
-                                                      vat1=0;
-                                                      grandTotal1=0;
-                                                      actualCost1=0;
-                                                      isActive1=false;
-                                                      isFree1=false;
-                                                      isInvoiced1=false;
-                                                      stock=0;
-
-
-
-
-                                                    },
-                                                    child:Text("Add New ")
-
-                                                ),
-                                              ),
                                               SingleChildScrollView(
                                                 child: Container(
                                                   // height: 500,
-                                                  width: MediaQuery.of(context)
-                                                      .size
-                                                      .width,
+                                                  width:  2200,
                                                   padding: EdgeInsets.all(10),
                                                   child: customTable(
                                                     border: const TableBorder(
@@ -917,7 +932,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               'Variant id',
                                                               padding:
                                                               EdgeInsets.all(7),
-                                                              height: 50,
+                                                              height: 46,
                                                               size: 12,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
@@ -1097,6 +1112,14 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
+                                                            tableHeadtext(
+                                                              '',
+                                                              padding:
+                                                              EdgeInsets.all(7),
+                                                              height: 46,
+                                                              size: 13,
+
+                                                            ),
                                                             // if (widget.onAddNew) textPadding(''),
                                                           ]),
 
@@ -1147,64 +1170,49 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       FontWeight
                                                                           .w500),
                                                                 ),
+
+
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: PopUpCall(
 
-                                                                  child: textPadding(
-                                                                      (i + 1)
-                                                                          .toString(),
-                                                                      fontSize: 12,
-                                                                      padding: EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          1.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                    type:"cost-method-list",
+                                                                    value: table[i].variantId,
+                                                                    onSelection:
+                                                                        (VariantId? va) {
+                                                                          updateCheck=true;
+
+                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
+                                                                          variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
+                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
+                                                                      )]);
+                                                                      setState(() {
+                                                                        variantId =
+                                                                        va?.code;
+                                                                        int? id = va!.id;
+                                                                        Variable.tableindex =i;
+                                                                        Variable.tableedit=true;
+
+
+                                                                        // onChange = true;
+                                                                        context
+                                                                            .read<
+                                                                            TableDetailsCubitDartCubit>()
+                                                                            .getTableDetails(
+                                                                            id);
+                                                                        context
+                                                                            .read<
+                                                                            PurchaseStockCubit>()
+                                                                            .getCurrentStock(
+                                                                           inventoryIdController.text, variantId);
+
+                                                                        // orderType = va!;
+                                                                      });
+                                                                    },
+                                                                    onAddNew: () {},
+                                                                    // restricted: true,
+                                                                  ),
                                                                 ),
-                                                                // TableCell(
-                                                                //   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                //   child: PopUpCall(
-                                                                //
-                                                                //     type:
-                                                                //     "cost-method-list",
-                                                                //     value: table[i].variantId,
-                                                                //     onSelection:
-                                                                //         (VariantId? va) {
-                                                                //
-                                                                //       table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                                //           variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                //           ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                                                //       )]);
-                                                                //       setState(() {
-                                                                //         // variantId =
-                                                                //         // va?.code;
-                                                                //         int? id = va!.id;
-                                                                //         Variable.tableindex =i;
-                                                                //         Variable.tableedit=true;
-                                                                //
-                                                                //
-                                                                //         onChange = true;
-                                                                //         context
-                                                                //             .read<
-                                                                //             TableDetailsCubitDartCubit>()
-                                                                //             .getTableDetails(
-                                                                //             id);
-                                                                //         context
-                                                                //             .read<
-                                                                //             PurchaseStockCubit>()
-                                                                //             .getCurrentStock(
-                                                                //             id,inventoryId.text);
-                                                                //
-                                                                //         // orderType = va!;
-                                                                //       });
-                                                                //     },
-                                                                //     onAddNew: () {},
-                                                                //     // restricted: true,
-                                                                //   ),
-                                                                // ),
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(
@@ -1225,42 +1233,22 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(
-                                                                      table[i]
-                                                                          .barcode!,
+                                                                      table[i].barcode??"",
                                                                       fontSize: 12,
                                                                       padding: EdgeInsets
                                                                           .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          11.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                                ),
+                                                                          left: 11.5, top: 11.5),
+                                                                      fontWeight: FontWeight.w500),),
 
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(
-                                                                      table[i]
-                                                                          .currentQty==null?"": table[i]
-                                                                          .currentQty.toString(),
-
-                                                                      padding: EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          11.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
+                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                                 ),
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: textPadding(
                                                                       table[i]
-                                                                          .purchaseuom!,
+                                                                          .purchaseuom??"",
                                                                       padding: EdgeInsets
                                                                           .only(
                                                                           left:
@@ -1277,9 +1265,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                              // controller: requestedListControllers[i],
                                                               last: table[i].requestedQty.toString() ?? "",
                                                                     onChanged: (va) {
+                                                                      updateCheck=true;
                                                                       print(va);
                                                                       if (va == "") {
                                                                         print("entered");
@@ -1306,7 +1296,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                             vactualCost=Vamount;
                                                                           }
                                                                           else{
-
                                                                             vactualCost  = (Vamount! +
                                                                                 ((Vamount! *
                                                                                     vat!) /
@@ -1338,10 +1327,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+
+                                                                      initialCheck:true,
                                                                    last:table[i].minimumQty.toString(),
                                                                    // controller: minListControllers[i],
 
                                                                     onChanged: (p0) {
+                                                                      updateCheck=true;
 
                                                                       print(p0);
                                                                       if(p0==""){
@@ -1374,9 +1366,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                     //controller: maxListControllers[i],
                                                                     last:table[i].maximumQty.toString(),
                                                                     onChanged: (p0) {
+                                                                      updateCheck=true;
 
                                                                       print(p0);
                                                                       if(p0==""){
@@ -1414,28 +1408,16 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 ),
 
 
-                                                                // Checkbox(
-                                                                //   value: table[i]
-                                                                //       .isRecieved==null?false: table[i]
-                                                                //       .isRecieved,
-                                                                //   onChanged: (bool?
-                                                                //       value) {
-                                                                //     setState(() {
-                                                                //       this.isRecieved =
-                                                                //           value;
-                                                                //     });
-                                                                //   },
-                                                                // ),
 
-                                                                //*************UNITCOST*******************uNIT COST*******************UNITCOST***********UNITCOST************************************************
-                                                                //
 
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                     //controller: unitcostListControllers[i],
                                                                     last: table[i].unitCost.toString() ?? "",
                                                                     onChanged: (va) {
+                                                                      updateCheck=true;
                                                                       double? unitcost;
                                                                       if (va == "") {
                                                                         print("entered");
@@ -1494,19 +1476,15 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     },
                                                                   ),
                                                                 ),
-
-
                                                                 //Excess tax***********************************Excesstax***********************************************************************
-
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                      // controller: excesstListControllers[i],
-
-
-
                                                                     last: table[i].excessTax.toString() ?? "",
                                                                     onChanged: (va) {
+                                                                      updateCheck=true;
                                                                       double? excess;
                                                                       if (va == "") {
                                                                         excess = 0;
@@ -1515,11 +1493,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                         excess = double.tryParse(va);
                                                                         setState(() {});
                                                                       }
-
                                                                       var qty = table[i].requestedQty;
                                                                       var vat = table[i].vat;
                                                                       var foc = table[i].foc;
-
                                                                       print("excess" + excess.toString());
                                                                       var unitcost = table[i].unitCost;
                                                                       print("unitcost" + unitcost.toString());
@@ -1565,8 +1541,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                     last: table[i].discount.toString() ?? "",
                                                                     onChanged: (va) {
+                                                                      updateCheck=true;
                                                                       int? disc;
                                                                       if (va ==
                                                                           "") {
@@ -1670,10 +1648,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                     last: table[i].foc.toString(),
                                                                    // controller: focListControllers[i],
 
                                                                     onChanged: (p0) {
+                                                                      updateCheck=true;
 
                                                                       print(p0);
                                                                       if(p0==""){
@@ -1724,9 +1704,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: UnderLinedInput(
+                                                                      initialCheck:true,
                                                                    // controller: vatListControllers[i],
                                                                     last: table[i].vat.toString() ?? "",
                                                                     onChanged: (va) {
+                                                                      updateCheck=true;
                                                                       if (va == "") {
                                                                         print("sss");
                                                                         var vatableAmount = table[i].variableAmount;
@@ -1817,48 +1799,85 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                       }),
                                                                 ),
-                                                                // Checkbox(
-                                                                //   value: table[i]
-                                                                //       .isRecieved==null?false:table[i]
-                                                                //       .isRecieved,
-                                                                //   onChanged: (bool?
-                                                                //       value) {
-                                                                //     setState(() {
-                                                                //       // this.isRecieved =
-                                                                //       //     value;
-                                                                //     });
-                                                                //   },
-                                                                // ),
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: Checkbox(
-                                                                    value: table[i]
-                                                                        .isFree==null?false:table[i]
-                                                                        .isFree,
-                                                                    onChanged: (bool?
-                                                                    value) {
-                                                                      setState(() {
-                                                                        // this.isRecieved =
-                                                                        //     value;
-                                                                      });
-                                                                    },
-                                                                  ),
+                                                                  child: CheckedBoxs(
+                                                                      valueChanger:table[i]
+                                                                          .isFree==null?false:table[i].isFree,
+
+                                                                      onSelection:(bool ? value){
+                                                                        bool? isFree = table[i].isFree;
+                                                                        setState(() {
+                                                                          updateCheck=true;
+                                                                          isFree = !isFree!;
+                                                                          table[i] = table[i].copyWith(isFree: isFree);
+
+
+
+                                                                        });
+
+                                                                      }),
                                                                 ),
+
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: Checkbox(
                                                                     value: table[i]
                                                                         .isActive==null?false:table[i]
                                                                         .isActive,
-                                                                    onChanged: (bool?
-                                                                    value) {
+                                                                    onChanged: (bool?value) {
+                                                                      bool? isActive = table[i].isActive;
                                                                       setState(() {
-                                                                        // this.isRecieved =
-                                                                        //     value;
+                                                                        updateCheck=true;
+                                                                        isActive = !isActive!;
+                                                                        table[i] = table[i].copyWith(isActive: isActive);
+
+
+
                                                                       });
                                                                     },
                                                                   ),
                                                                 ),
+                                                                TableTextButton(label: updateCheck?'Update':"",
+                                                                onPress: (){
+                                                                  var Vamount = table[i].variableAmount??0;
+                                                                  var variant = table[i].variantId??0;
+                                                                  var mins = table[i].minimumQty??0;
+                                                                  var maxs = table[i].maximumQty??0;
+
+                                                                  var excess = table[i].excessTax??0;
+                                                                  print("excess" + excess.toString());
+                                                                  var unitcosts = table[i].unitCost??0;
+                                                                  var qty = table[i].requestedQty??0;
+                                                                  var foc = table[i].foc??0;
+                                                                  var dis = table[i].discount??0;
+                                                                  if(variant=="null"||qty==0||unitcosts==0){
+                                                                    context.showSnackBarError("please fill all the fields");
+                                                                  }else if(qty!<foc!){
+                                                                    context.showSnackBarError("the received qty allways greater than  foc");
+
+                                                                  }
+                                                                  else if(mins>maxs){
+                                                                    context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                                  }
+                                                                  else{
+                                                                    updateCheck=false;
+                                                                    addition();
+                                                                    unitcost2= 0;
+                                                                    grands = 0;
+                                                                    actualValue = 0;
+                                                                    vatValue = 0;
+                                                                    discountValue = 0;
+                                                                    focValue =0;
+                                                                    VatableValue = 0;
+                                                                    excessTAxValue = 0;
+                                                                  }
+
+                                                                setState(() {
+
+                                                                });
+                                                                },)
+
                                                               ]),],
                                                       TableRow(
                                                           decoration: BoxDecoration(
@@ -1897,23 +1916,17 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   stockCheck=true;
 
                                                                   // onChange = true;
-                                                                  context
-                                                                      .read<
-                                                                      TableDetailsCubitDartCubit>()
-                                                                      .getTableDetails(
-                                                                      id);
+                                                                  context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                                   setState(() {
 
                                                                   });
                                                                   context
                                                                       .read<PurchaseStockCubit>()
-                                                                      .getCurrentStock(inventoryIdController.text, variantId);
+                                                                      .getCurrentStock(inventoryIdController.text,variantId);
 
                                                                   // orderType = va!;
                                                                 });
                                                               },
-                                                              onAddNew: () {},
-                                                              // restricted: true,
                                                             ),
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1946,8 +1959,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
+                                                              controller: receivedTestContoller,
 
-                                                                last:"",
                                                                 onChanged: (p0) {
                                                                   if (p0 == '') {
                                                                     setState(() {
@@ -2010,8 +2023,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
+                                                                controller: minOrderTestContoller,
 
-                                                                last:"",
                                                                 onChanged: (p0) {
                                                                   if (p0 == '') {
                                                                     setState(() {
@@ -2037,11 +2050,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 },
                                                               ),
                                                             ),
-                                                            TableCell(
-                                                              verticalAlignment: TableCellVerticalAlignment.middle,
+                                                            TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
-
-                                                                last:"",
+                                                                controller:maxOrderTestContoller,
                                                                 onChanged: (p0) {
                                                                   if (p0 == '') {
                                                                     setState(() {
@@ -2076,7 +2087,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 onSelection: (bool? value ) {
 
                                                                   setState(() {
-                                                                    isReceived1 = !isReceived1!;
+                                                                    // isReceived1 = !isReceived1!;
 
 
                                                                   });
@@ -2088,6 +2099,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
+                                                                  initialCheck:true,
                                                                 // controller:unitcost1,
                                                                 //
 
@@ -2152,8 +2164,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
-
-
+                                                                controller: excesstaxTestContoller,
                                                                 onChanged: (p0) {
                                                                   if (p0 == '')
                                                                     setState(() {
@@ -2187,14 +2198,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           ((vatableAmount1! *
                                                                               vat1!) /
                                                                               100));
-
-
-
                                                                   }
-
-
                                                                   setState(() {});
-                                                                  // print(Qty);
                                                                 },
                                                                 enable: true,
                                                                 onComplete: () {
@@ -2207,8 +2212,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
-
-
+                                                                controller: discountTestContoller,
                                                                 onChanged: (p0) {
                                                                   if (p0 == '')
                                                                     setState(() {
@@ -2265,8 +2269,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
-
-                                                                last:"",
+                                                              controller:focTestContoller,
                                                                 onChanged: (p0) {
                                                                   if (p0 == '') {
                                                                     setState(() {
@@ -2302,8 +2305,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: UnderLinedInput(
-
-
+                                                                  controller:vatTestContoller,
                                                                 onChanged: (p0) {
                                                                   if (p0 == '')
                                                                     setState(() {
@@ -2323,8 +2325,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     grandTotal1=0;
                                                                   }
                                                                   else{
-
-                                                                      vatableAmount1 = (((unitcost! *
+                                                                    vatableAmount1 = (((unitcost! *
                                                                           recievedQty!) +
                                                                           excess1!) -
                                                                           discount!)
@@ -2338,23 +2339,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                               vat1!) /
                                                                               100));
 
-
-
-
-
-
                                                                   }
-
-
                                                                   setState(() {});
                                                                   // print(Qty);
                                                                 },
-                                                                enable: true,
-                                                                onComplete: () {
-                                                                  setState(() {});
 
-                                                                  setState(() {});
-                                                                },
                                                               ),
                                                             ),
                                                             TableCell(
@@ -2377,11 +2366,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                 valueChanger:  isInvoiced1,
                                                                 onSelection: (bool? value ) {
-
-                                                                  setState(() {
-                                                                    isInvoiced1 = !isInvoiced1!;
-
-
+                                                                setState(() {
+                                                                    // isInvoiced1 = !isInvoiced1!;
                                                                   });
                                                                 },
 
@@ -2390,14 +2376,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: CheckedBoxs(color:Color(0xff3E4F5B) ,
-
                                                                 valueChanger:  isFree1,
                                                                 onSelection: (bool? value ) {
-
-                                                                  setState(() {
+                                                                setState(() {
                                                                     isFree1 = !isFree1!;
-
-
                                                                   });
                                                                 },
 
@@ -2406,19 +2388,109 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             TableCell(
                                                               verticalAlignment: TableCellVerticalAlignment.middle,
                                                               child: CheckedBoxs(color:Color(0xff3E4F5B) ,
-
                                                                 valueChanger:  isActive1,
                                                                 onSelection: (bool? value ) {
-
                                                                   setState(() {
-                                                                    isActive1 = !isActive1!;
-
-
+                                                                    if (minQty! >
+                                                                        maxQty!) {
+                                                                      print("enterd");
+                                                                      if(minQty!=0 &&maxQty!=0){
+                                                                        context.showSnackBarError(
+                                                                            "the minimum order is always less than maximum order");}
+                                                                    }
+                                                                    else {
+                                                                      isActive1 = !isActive1!;
+                                                                    }
                                                                   });
                                                                 },
-
                                                               ),
                                                             ),
+                                                            TableTextButton(label: "Set", onPress: (){
+                                                              foc1=foc1??0;
+                                                              recievedQty=recievedQty??0;
+                                                              if(variantId=="null"||recievedQty==0||unitcost==0){
+                                                                context.showSnackBarError("please fill all the fields");
+                                                              }else if(recievedQty!<foc1!){
+                                                                context.showSnackBarError("the received qty allways greater than  foc");
+
+                                                              }
+                                                              else {
+                                                                setState(() {
+                                                                  currentStock.add(stock);
+                                                                  table.add(
+                                                                      OrderLines(
+                                                                        variantId: variantId ?? "",
+                                                                        currentQty: stock,
+                                                                        supplierCode: supplierRefCode,
+                                                                        variantName: varinatname ?? "",
+                                                                        barcode: barcode ?? "",
+                                                                        minimumQty: minQty,
+                                                                        maximumQty: maxQty,
+                                                                        purchaseuom: purchaseUomName ?? "",
+                                                                        requestedQty: recievedQty,
+                                                                        isRecieved: isReceived1,
+                                                                        discount: discount,
+                                                                        foc: foc1,
+                                                                        unitCost: unitcost,
+                                                                        variableAmount: vatableAmount1,
+                                                                        vat: vat1,
+                                                                        excessTax: excess1,
+                                                                        actualCost: actualCost1,
+                                                                        grandTotal: grandTotal1,
+                                                                        isInvoiced: isInvoiced1,
+                                                                        isFree: isFree1,
+                                                                        isActive: isActive1,
+                                                                      ));
+                                                                });
+                                                                addition();
+                                                                unitcost2 = 0;
+                                                                receivedTestContoller.clear();
+                                                                excesstaxTestContoller.clear();
+                                                                minOrderTestContoller.clear();
+                                                                maxOrderTestContoller.clear();
+                                                                discountTestContoller.clear();
+                                                                vatTestContoller.clear();
+                                                                focTestContoller.clear();
+                                                                grands = 0;
+                                                                actualValue = 0;
+                                                                vatValue = 0;
+                                                                discountValue =
+                                                                0;
+                                                                focValue = 0;
+
+                                                                VatableValue =
+                                                                0;
+
+                                                                excessTAxValue =
+                                                                0;
+
+
+                                                                variantId = "";
+                                                                varinatname =
+                                                                "";
+                                                                barcode = "";
+                                                                purchaseUomName =
+                                                                "";
+                                                                recievedQty = 0;
+                                                                excess1 = 0;
+                                                                isReceived1 =
+                                                                false;
+                                                                discount = 0;
+                                                                foc1 = 0;
+                                                                unitcost = 0;
+                                                                vatableAmount1 =
+                                                                0;
+                                                                vat1 = 0;
+                                                                grandTotal1 = 0;
+                                                                actualCost1 = 0;
+                                                                isActive1 =
+                                                                false;
+                                                                isFree1 = false;
+                                                                isInvoiced1 =
+                                                                false;
+                                                                stock = 0;
+                                                              } }),
+
 
 
                                                           ]
@@ -2434,27 +2506,29 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                     ],
                                                     widths: {
-                                                      0: FractionColumnWidth(.035),
-                                                      //  1: FractionColumnWidth(.05),
-                                                      //  2: FractionColumnWidth(.05),
-                                                      //  3: FractionColumnWidth(.06),
-                                                      //  4: FractionColumnWidth(.05),
-                                                      //  5: FractionColumnWidth(.05),
-                                                      //  6: FractionColumnWidth(.05),
-                                                      //  7: FractionColumnWidth(.05),
-                                                      //  8: FractionColumnWidth(.05,),
-                                                      //  9: FractionColumnWidth(.05),
-                                                      //  10: FractionColumnWidth(.05),
-                                                      //  11: FractionColumnWidth(.05),
-                                                      //  12: FractionColumnWidth(.05),
-                                                      13: FractionColumnWidth(.035),
-                                                      14: FractionColumnWidth(.035),
-                                                      //  15: FractionColumnWidth(.05),
-                                                      //  16: FractionColumnWidth(.03),
-                                                      // 17: FractionColumnWidth(.05),
-                                                      //  18: FractionColumnWidth(.05),
-                                                      //  19: FractionColumnWidth(.05),
-                                                      //  20: FractionColumnWidth(.05),
+                                                      0: FlexColumnWidth(2),
+                                                      1: FlexColumnWidth(4),
+                                                      2: FlexColumnWidth(6),
+                                                      3: FlexColumnWidth(3),
+                                                      4: FlexColumnWidth(3),
+                                                      5: FlexColumnWidth(3),
+                                                      6: FlexColumnWidth(3),
+                                                      7: FlexColumnWidth(3),
+                                                      8: FlexColumnWidth(3),
+                                                      9: FlexColumnWidth(3),
+                                                      10: FlexColumnWidth(3),
+                                                      11: FlexColumnWidth(3),
+                                                      12: FlexColumnWidth(3),
+                                                      13: FlexColumnWidth(3),
+                                                      14: FlexColumnWidth(3),
+                                                      15: FlexColumnWidth(3),
+                                                      16: FlexColumnWidth(3),
+                                                      17: FlexColumnWidth(3),
+                                                      18: FlexColumnWidth(2),
+                                                      19: FlexColumnWidth(2),
+                                                      20: FlexColumnWidth(2),
+                                                      21: FlexColumnWidth(2.4),
+
                                                     },
                                                   ),
                                                 ),
@@ -2471,7 +2545,16 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       Spacer(),
                                       Button(Icons.delete, Colors.red,ctx: context,
                                           onApply: (){print("Akkk");
-                                          context.read<DeleterequestformCubit>().requestFormDelete(Variable.verticalid);
+                                          if(select){
+                                            clear();
+                                            updateCheck=false;
+                                            table.clear();
+                                            setState(() {
+
+                                            });
+                                          }
+                                          else{ context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);}
+
                                           },
                                       text: "Discard",height: 29,
                                       width: 90,labelcolor: Colors.red,iconColor: Colors.red),
@@ -2504,11 +2587,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                         orderLines: table
 
                       );
-                       print("model"+model.toString());
+                       print("sPBHSSMODEL"+model.toString());
 
                               // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
                       select? context.read<RequestformpostCubit>().postRequest(model):
-                      context.read<RequestpatchCubit>().getRequestFormPatch(Variable.verticalid,model);
+                      context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
 
 
                     },
