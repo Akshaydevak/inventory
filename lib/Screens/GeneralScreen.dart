@@ -15,6 +15,7 @@ import 'package:inventory/cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cub
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/purchase_order_patch_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
+import 'package:inventory/cubits/cubit/variant_id_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_order_read.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController vatTestContoller = TextEditingController();
   NavigationProvider vm = NavigationProvider();
   TextEditingController unitcostTestController=TextEditingController();
+  TextEditingController unitCostCheck = TextEditingController();
   var requestedListControllers = <TextEditingController>[];
   var minListControllers = <TextEditingController>[];
   var maxListControllers = <TextEditingController>[];
@@ -199,6 +201,7 @@ List<TextEditingController> vatController =[];
     print("appuzz"+table.length.toString());
     // currentStock.clear();
     vendortrnnumber.text="";
+    unitCostCheck.text="";
     ordercode.text="";
     vendoraddress.text="";
     planned_receipt_date.text="";
@@ -372,6 +375,8 @@ print("excessTaxvalue"+excessTAxValue.toString());
           BlocProvider(
             create: (context) => PurchaseorderdeleteCubit(),
           ),
+    BlocProvider(
+    create: (context) => VariantIdCubitDartCubit()),
         ],
         child: Builder(builder: (context) {
           return MultiBlocListener(
@@ -428,6 +433,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                             varinatname = purchaseTable?.name;
                            vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
+                            unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                             print("check"+check.toString());
                             unitcostTestController?.text=purchaseTable?.unitCost.toString()??"";
                             vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
@@ -458,7 +464,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           currentStock.add(data.StockQty??0);
                           setState(() {
                           });
-                          print("anamikas case"+currentStock.toString());
+                          print("anamikas case"+currentStock.length.toString());
                         }
                    else if(Variable.tableedit==false) {
 
@@ -856,8 +862,10 @@ else{
                                                         // setState(() {
                                                         vendorCode.text=va?.partnerCode??"";
                                                         var id=va?.partnerCode;
+
                                                         print("vendorssss"+id.toString());
                                                         setState(() {
+                                                          context.read<VariantIdCubitDartCubit>().getVariantId(vendorId: vendorCode.text);
                                                           context
                                                               .read<
                                                               VendordetailsCubit>()
@@ -1108,14 +1116,14 @@ else{
 
                                     color: Colors.white,
                                     alignment: Alignment.topRight,
-                                 height: 300,
+
                                     // height: MediaQuery.of(context).size.height,
-                                    child: ListView(
+                                    child: SingleChildScrollView(
                                       controller: _scrollController,
                                       physics: ScrollPhysics(),
                                       scrollDirection: Axis.horizontal,
-                                      children: [
-                                        SingleChildScrollView(
+
+                                     child:   SingleChildScrollView(
                                           child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
@@ -1963,20 +1971,12 @@ else{
                                                                                     .toDouble();
 
                                                                             var vactualCost = (Vamount! +
-                                                                                ((Vamount! *
-                                                                                    vat!) /
-                                                                                    100));
+                                                                                ((Vamount! * vat!) / 100));
                                                                             var Vgrnadtotal = (Vamount! +
-                                                                                ((Vamount! *
-                                                                                    vat!) /
-                                                                                    100));
+                                                                                ((Vamount! * vat!) / 100));
                                                                             table[i] =
                                                                                 table[i]
-                                                                                    .copyWith(
-                                                                                    actualCost: vactualCost,
-                                                                                    grandTotal: Vgrnadtotal,
-                                                                                    variableAmount: Vamount,
-                                                                                    excessTax: excess);
+                                                                                    .copyWith(actualCost: vactualCost, grandTotal: Vgrnadtotal, variableAmount: Vamount, excessTax: excess);
                                                                             setState(() {});
                                                                           } },
                                                                       ),
@@ -4240,50 +4240,10 @@ else{
                                                                   },
                                                                 ),
                                                               ),
-                                                              check==0?
-                                                              TextFormField(
-                                                                initialValue:check.toString(),
-                                                                keyboardType: TextInputType.number,
-                                                                inputFormatters: <TextInputFormatter>[
-                                                                  FilteringTextInputFormatter.digitsOnly
-                                                                ],
-                                                                decoration: InputDecoration(
-                                                                  contentPadding: EdgeInsets.all(10),
-                                                                  isDense: true,
-                                                                  // hintText: widget.hintText,
-                                                                  hintStyle: TextStyle(fontSize: 10),
-                                                                  border:InputBorder.none,
-                                                                ),
-                                                                onChanged: (p0){
-                                                                  if (p0 == "") {
-                                                                    setState(
-                                                                            () {check = 0;});
-                                                                  }
-                                                                  else{
-                                                                    setState(() {
-                                                                      check =double.tryParse(p0);
-                                                                    });
-                                                                  }
-                                                                  if(check==0 ||Qty==0){
-                                                                    Vamount=0;
-                                                                    vactualCost=0;
-                                                                    Vgrnadtotal=0;
-                                                                  }
-                                                                 else {
-                                                                    check = double.tryParse(p0);
-                                                                    Vamount = (((check! * Qty!) + eTax!) - Vdiscount!).toDouble();
-                                                                    vactualCost = (Vamount! + ((Vamount! * vvat!) / 100));
-                                                                    Vgrnadtotal =
-                                                                    (Vamount! + ((Vamount! * vvat!) / 100));
-                                                                  }
 
-                                                                },
-                                                              )
-                                                                  :
                                                               TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: UnderLinedInput(
-                                                                  initialCheck: true,
-                                                                  last:check.toString(),
+                                                                 controller: unitCostCheck,
                                                                   onChanged:
                                                                       (p0) {
                                                                         if (p0 == "") {
@@ -4559,6 +4519,7 @@ else{
                                                                         check = 0;
                                                                         Qty = 0;
                                                                         Vdiscount = 0;
+                                                                        unitCostCheck.text="";
                                                                         Vamount = 0;
                                                                         vmaxnqty=0;
                                                                         vminqty=0;
@@ -4623,7 +4584,7 @@ else{
                                             ],
                                           ),
                                         ),
-                                      ],
+
                                     ),
                                   ),
                                 ),

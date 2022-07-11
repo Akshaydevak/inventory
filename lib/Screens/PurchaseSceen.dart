@@ -56,6 +56,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
   },
   child: SingleChildScrollView(
 
+
       child: Container(
         color:Color(0xffF2F3F5),
         child: Column(

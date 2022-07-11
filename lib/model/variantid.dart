@@ -9,7 +9,7 @@ class VariantId with _$VariantId {
         final String? code,
         final String? category,
         final String? uom,
-        final double? unit_cost,
+        // final double? unit_cost,
         final String? name,
 
 

@@ -196,16 +196,17 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("in" + inventory.toString());
 
     String path = inventory == "" || inventory == null
-        ? "http://api-purchase-order-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
-        : "http://65.1.61.201:8112/inventory-product/list-variant-by-inventory/$inventory";
+        ? "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
+        : "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory/$inventory";
     print("sssssssssssssssAkshay"+path);
+  // try{
+  //   print("aaanananana");
+    print(path);
+    print("aaammamam");
+
     final response = await client.get(
       path,
-      // data:
-      // // {"payment_status": "completed", "order_status": "completed"},
-      // {
-      //
-      // },
+
       options: Options(
         headers: {
           'Content-Type': 'application/json',
@@ -213,7 +214,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("response" + response.toString());
+    print("aaammamam");
+    print("responseAkkkkkkkk" + response.toString());
     //print(response.data['results']);
     List<VariantId> items = [];
 
@@ -223,12 +225,37 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       items.add(VariantId.fromJson(element));
     });
     return items;
+  // }catch(e){print("Akshaya2"+e.toString());}
+  //   final response = await client.get(
+  //     path,
+  //     // data:
+  //     // // {"payment_status": "completed", "order_status": "completed"},
+  //     // {
+  //     //
+  //     // },
+  //     options: Options(
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Accept': 'application/json'
+  //       },
+  //     ),
+  //   );
+  //   print("response" + response.toString());
+  //   //print(response.data['results']);
+  //   List<VariantId> items = [];
+  //
+  //   (response.data['data']['results'] as List).forEach((element) {
+  //     // print("data");
+  //
+  //     items.add(VariantId.fromJson(element));
+  //   });
+  //   return items;
   }
 
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        "http://65.1.61.201:8112/inventory-product/read-variant-for-lpo/$id";
+        "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/read-variant-for-lpo/$id";
     print(path);
     try {
       final response = await client.get(
@@ -281,10 +308,11 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? id, String? invdendotyId) async {
     print("Avalkkayi");
     String path =
-        "http://65.1.61.201:8112/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
+        "http://api-inventory-software-staging.rgcdynamics.org/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
     print(path);
 
     try {
+
       final response = await client.get(
         path,
         // data:

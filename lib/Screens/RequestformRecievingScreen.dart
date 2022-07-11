@@ -53,6 +53,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   TextEditingController grandtotalCostController = TextEditingController();
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
+  TextEditingController unitCostCheck = TextEditingController();//
   var expirydateControllerList = <TextEditingController>[];
   var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
@@ -100,6 +101,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   double vatableValue = 0;
   String vendorAddress="";
   bool? vendorcheck=false;
+  bool? variantIdcheck=false;
   String vendorTrn="";
   List<int?> currentStock = [];
   PurchaseCureentStockQty? purchaseCurrentStock;
@@ -300,9 +302,16 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
 
                   });
                 }
+                else if(Variable.tableedit==true && variantIdcheck==true){
+                  recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                  setState(() {
+
+                  });
+                }
                 else{
                   varinatname = purchaseTable?.name??"";
                   unitcost = purchaseTable?.unitCost;
+                  unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                   supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                   print(  supplierRefCode);
                   print("unitttt"+unitcost.toString());
@@ -421,7 +430,9 @@ child: IntrinsicHeight(
                 expirydateControllerList2.clear();
                 selectedVertical=index;
                 currentStock.clear();
+                unitCostCheck.text="";
                 expirydateControllerList.clear();
+                variantIdcheck=false;
 
                 updateCheck=false;
                 veritiaclid = result[index].id;
@@ -602,36 +613,22 @@ child: IntrinsicHeight(
                 ),
 
                 SizedBox(height: 5,),
-
                 Row(mainAxisAlignment: MainAxisAlignment.start,
-
                   children: [
-
                     TextWidget(text: "recieving lines"),
-
                   ],
-
                 ),
-
                 Divider(color: Colors.grey,thickness: 1,),
-
                 SizedBox(height: 5,),
-
                 Scrollbar(
-
                controller: recieveController,
-
               isAlwaysShown: true,
-
               child:Container(
-
                 color: Colors.white,
-
                 alignment: Alignment.topRight,
 
-                height: 300,
 
-                child: ListView(
+                child: SingleChildScrollView(
 
                   controller:recieveController ,
 
@@ -639,9 +636,9 @@ child: IntrinsicHeight(
 
                   scrollDirection: Axis.horizontal,
 
-                  children: [
 
-                    Column(
+
+                 child:   Column(
 
                       crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -1018,6 +1015,38 @@ child: IntrinsicHeight(
                                         // if (widget.onAddNew) textPadding(''),
 
                                       ]),
+                                  if(recievingLisnes.isEmpty)...[
+                                    TableRow(
+                                      decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                      children: [
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        textPadding(""),
+                                        Container(height: 42,),
+                                      ],
+                                    )
+
+
+                                  ],
                   if (recievingLisnes != null) ...[
                 for (var i = 0; i < recievingLisnes.length; i++)
                                   TableRow(
@@ -1033,8 +1062,30 @@ child: IntrinsicHeight(
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                          child: PopUpCall(
+
+                                            type:"cost-method-list",
+                                            value: recievingLisnes[i].variantId,
+                                            onSelection: (VariantId? va) {
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
+                                              setState(() {
+                                                var  variant= va?.code;
+                                                int? id = va!.id;
+                                                Variable.tableindex =i;
+                                                Variable.tableedit=true;
+                                                variantIdcheck=true;
+                                                context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
+
+                                                // orderType = va!;
+                                              });
+                                            }, // restricted: true,
+                                          ),
                                         ),
+                                        // TableCell(
+                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                        //   child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                        // ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: textPadding(recievingLisnes[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
@@ -1819,7 +1870,7 @@ child: IntrinsicHeight(
 
                       ],
                     )
-                  ],
+
                 ),
               )
             ),
@@ -1884,9 +1935,9 @@ child: IntrinsicHeight(
 
                       alignment: Alignment.topRight,
 
-                      height: 300,
 
-                      child: ListView(
+
+                      child: SingleChildScrollView(
 
                         controller:recieveController ,
 
@@ -1894,9 +1945,9 @@ child: IntrinsicHeight(
 
                         scrollDirection: Axis.horizontal,
 
-                        children: [
 
-                          Column(
+
+                         child: Column(
 
                             crossAxisAlignment: CrossAxisAlignment.start,
 
@@ -2262,12 +2313,9 @@ child: IntrinsicHeight(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: PopUpCall(
 
-                                                  type:
-                                                  "cost-method-list",
+                                                  type:"cost-method-list",
                                                   value: additionalVariants[i].variantId,
-                                                  onSelection:
-                                                      (VariantId? va) {
-
+                                                  onSelection: (VariantId? va) {
                                                     additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
                                                     setState(() {
                                                       var  variant=
@@ -2275,6 +2323,7 @@ child: IntrinsicHeight(
                                                       int? id = va!.id;
                                                       Variable.tableindex =i;
                                                       Variable.tableedit=true;
+                                                      variantIdcheck=false;
 
 
 
@@ -2327,18 +2376,8 @@ child: IntrinsicHeight(
                                                       Variable.tableindex =i;
                                                       Variable.tableedit=true;
                                                       vendorcheck=false;
-      context.read<
-      VendordetailsCubit>()
-          .getVendorDetails(
-          variant);
-
-
-      showDailogPopUp(
-      context,
-      VendorPopup(
-      assign:  assigniningDetails,
-
-      ));
+                                                      context.read<VendordetailsCubit>().getVendorDetails(variant);
+                                                      showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
 
                                                       // context
                                                       //     .read<
@@ -2956,6 +2995,7 @@ child: IntrinsicHeight(
                                                     int? id = va!.id;
                                                     print("is is"+id.toString());
                                                     Variable.tableedit=false;
+                                                    variantIdcheck=false;
                                                     // onChange = true;
                                                     context
                                                         .read<
@@ -3126,16 +3166,11 @@ child: IntrinsicHeight(
                                                   },
                                                 ),
                                               ),
-                                              unitcost==0?Text(""):
+
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
-                                                  initialCheck: true,
-                                                  // controller:unitcost1,
-                                                  //
-
-
-                                                  last:unitcost.toString(),
+                                           controller:unitCostCheck,// ,
                                                   onChanged: (p0) {
                                                     if (p0 == '')
                                                       setState(() {
@@ -3607,6 +3642,7 @@ child: IntrinsicHeight(
                                                       varinatname="";
                                                       vendorCode="";
                                                       barcode="";
+                                                      unitCostCheck.text="";
                                                       purchaseUomName="";
                                                       recievedQty=0;
                                                       supplierRefCode="";
@@ -3677,7 +3713,7 @@ child: IntrinsicHeight(
 
 
 
-                        ],
+
 
                       ),
 

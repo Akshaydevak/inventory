@@ -76,6 +76,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController plannedRecieptDate = TextEditingController();
   TextEditingController receivedController = TextEditingController();
   TextEditingController reason = TextEditingController();
+  TextEditingController unitCostCheck = TextEditingController();//
   TextEditingController unitcost1 = TextEditingController(text: "0");
   TextEditingController expiryDate = TextEditingController(text: "0");
   var expiryDate1Controllers = <TextEditingController>[];
@@ -114,6 +115,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   int?stock=0;
   bool  onChange=false;
   bool hasData=false;
+  bool variantIdcheck=false;
 
 
 
@@ -408,8 +410,6 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                             }
 
-
-
                           }
                           print("currentStocksss$currentStock");
                           print("lllll" + currentStock.length.toString());
@@ -437,9 +437,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                               });
                             }
+                            else if(Variable.tableedit==true && variantIdcheck==true){
+                              recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                              setState(() {
+
+                              });
+                            }
                             else{
                               varinatname = purchaseTable?.name??"";
                               unitcost = purchaseTable?.unitCost;
+                              unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                               supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             print(  supplierRefCode);
                               print("unitttt"+unitcost.toString());
@@ -505,11 +512,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                   print("taped");
 
                                   select=false;
+                                  variantIdcheck=false;
                                   expirydateControllerList2.clear();
                                   selectedVertical=index;
                                   variantId="";
                                   varinatname="";
                                   barcode="";
+                                  unitCostCheck.text="";
                                   purchaseUomName="";
                                   recievedQty=0;
                                   excess1=0;
@@ -842,17 +851,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           child: Container(
                                                             alignment:
                                                             Alignment.topRight,
-                                                            height: 300,
-                                                            child: ListView(
+                                                            
+                                                            child:
+                                                            SingleChildScrollView(
                                                               padding: EdgeInsets.only(
                                                                   top: 0),
-                                                              shrinkWrap: true,
+                                                              
                                                               controller: scontroller,
                                                               physics: ScrollPhysics(),
                                                               scrollDirection:
                                                               Axis.horizontal,
-                                                              children: [
-                                                                Container(
+
+                                                             child:   Container(
                                                                   child: Column(
                                                                     crossAxisAlignment:
                                                                     CrossAxisAlignment
@@ -1081,14 +1091,41 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                     // if (widget.onAddNew) textPadding(''),
                                                                                   ]),
-                                                                              if (recievingLisnes !=
-                                                                                  null) ...[
+                                                                              if(recievingLisnes.isEmpty)...[
+                                                                                TableRow(
+                                                            decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                children: [
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                          Container(height: 42,),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                              textPadding(""),
+                                                                ],
+                                                            )
 
-                                                                                for (var i =
-                                                                                0;
-                                                                                i <
-                                                                                    recievingLisnes
-                                                                                        .length;
+
+                                                                              ],
+                                                                              if (recievingLisnes != null) ...[
+
+                                                                                for (var i = 0; i < recievingLisnes.length;
                                                                                 i++)
                                                                                   TableRow(
                                                                                       decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
@@ -1103,8 +1140,30 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                          child: PopUpCall(
+
+                                                                                            type:"cost-method-list",
+                                                                                            value: recievingLisnes[i].variantId,
+                                                                                            onSelection: (VariantId? va) {
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
+                                                                                              setState(() {
+                                                                                                var  variant= va?.code;
+                                                                                                int? id = va!.id;
+                                                                                                Variable.tableindex =i;
+                                                                                                Variable.tableedit=true;
+                                                                                                variantIdcheck=true;
+                                                                                                context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                                                                context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
+
+                                                                                                // orderType = va!;
+                                                                                              });
+                                                                                            }, // restricted: true,
+                                                                                          ),
                                                                                         ),
+                                                                                        // TableCell(
+                                                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                        //   child: textPadding(recievingLisnes[i].variantId ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                                        // ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(recievingLisnes[i].variantName ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
@@ -1840,7 +1899,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                     ],
                                                                   ),
                                                                 )
-                                                              ],
+                                                             ,
                                                             ),
                                                           )),
 
@@ -1938,14 +1997,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           child: Container(
                                                             alignment:
                                                             Alignment.topRight,
-                                                            height: 300,
-                                                            child: ListView(
+                                                           
+                                                            child:
+                                                            SingleChildScrollView(
                                                               controller: scontroller,
                                                               physics: ScrollPhysics(),
                                                               scrollDirection:
                                                               Axis.horizontal,
-                                                              children: [
-                                                                Column(
+
+                                                           child:     Column(
                                                                   crossAxisAlignment:
                                                                   CrossAxisAlignment
                                                                       .start,
@@ -2194,6 +2254,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 int? id = va!.id;
                                                                                                 Variable.tableindex =i;
                                                                                                 Variable.tableedit=true;
+                                                                                                variantIdcheck=false;
 
 
                                                                                                 onChange = true;
@@ -2867,6 +2928,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           int? id = va!.id;
                                                                                           print("is is"+id.toString());
                                                                                           Variable.tableedit=false;
+                                                                                          variantIdcheck=false;
 
                                                                                           // onChange = true;
                                                                                           context
@@ -3009,88 +3071,12 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         },
                                                                                       ),
                                                                                     ),
-                                                                                    unitcost==0?
-                                                                                    TableCell(
-                                                                                      verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: TextFormField(
-                                                                                        keyboardType: TextInputType.number,
-                                                                                        inputFormatters: <TextInputFormatter>[
-                                                                                          FilteringTextInputFormatter.digitsOnly
-                                                                                        ],
-                                                                                        decoration:  InputDecoration(
-                                                                                          border: InputBorder.none,
 
-                                                                                        ),
-
-
-                                                                                        initialValue:unitcost.toString(),
-                                                                                        onChanged: (p0) {
-                                                                                          if (p0 == '')
-                                                                                            setState(() {
-                                                                                              unitcost = 0;
-                                                                                            });
-                                                                                          else {
-                                                                                            setState(() {
-                                                                                              unitcost = double
-                                                                                                  .tryParse(
-                                                                                                  p0);
-                                                                                            });
-                                                                                          }
-
-                                                                                          if(unitcost==0 ||recievedQty==0){
-                                                                                            actualCost1=0;
-                                                                                            vatableAmount1=0;
-                                                                                            grandTotal1=0;
-                                                                                          }
-                                                                                          else{
-                                                                                            if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-
-
-
-                                                                                            }
-                                                                                            else{
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-
-                                                                                            }
-
-                                                                                          }
-
-
-                                                                                          setState(() {});
-                                                                                          // print(Qty);
-                                                                                        },
-
-                                                                                      ),
-                                                                                    ):
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child: UnderLinedInput(
-                                                                                          initialCheck:true,
+                                                                                        controller:unitCostCheck,
 
-
-
-                                                                                        last:unitcost.toString(),
                                                                                         onChanged: (p0) {
                                                                                           if (p0 == '')
                                                                                             setState(() {
@@ -3574,6 +3560,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               print("additionalVariants"+additionalVariants.toString());
                                                                                               variantId="";
                                                                                               varinatname="";
+                                                                                              unitCostCheck.text="";
                                                                                               barcode="";
                                                                                               expiryDate.clear();
                                                                                               purchaseUomName="";
@@ -3650,7 +3637,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                   ],
                                                                 )
-                                                              ],
+
                                                             ),
                                                           )),
 
@@ -3671,16 +3658,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               print("rohit2"+additionalVariants1.length.toString());
                                                               AdditionalGenerateModel model=AdditionalGenerateModel(
                                                                 receivingId: receivingId,
-
                                                                 createdBy: 12,
-
-
-
-
                                                                 purchaseOrderId:Variable.verticalid,
                                                                 orderLines: additionalVariants1,
-
-
                                                               );
                                                               print("avan"+model.toString());
                                                                context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
