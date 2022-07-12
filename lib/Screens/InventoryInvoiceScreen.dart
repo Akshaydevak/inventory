@@ -75,18 +75,26 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     if(additionalVariants.isNotEmpty)
     for (var i = 0; i < additionalVariants.length; i++) {
       if (additionalVariants[i].isInvoiced == true) {
+        var unicost1= additionalVariants[i].unitCost??0;
+        var vatValue1= additionalVariants[i].vat??0;
+        var grands1= additionalVariants[i].grandTotal??0;
+        var actualValue1= additionalVariants[i].actualCost??0;
+        var discountValue1= additionalVariants[i].discount??0;
+        var focValue1= additionalVariants[i].foc??0;
+        var VatableValue1= additionalVariants[i].variableAmount??0;
+        var excessTAxValue1= additionalVariants[i].excessTax??0;
 
-        unitcost = unitcost + additionalVariants[i].unitCost!;
+        unitcost = unitcost +unicost1;
 
-        grands = grands + additionalVariants[i].grandTotal!;
-        actualValue = actualValue + additionalVariants[i].actualCost!;
-        vatValue = vatValue + additionalVariants[i].vat!;
-        discountValue = discountValue + additionalVariants[i].discount!;
-        focValue = focValue + additionalVariants[i].foc!;
+        grands = grands + grands1;
+        actualValue = actualValue + actualValue1;
+        vatValue = vatValue + vatValue1;
+        discountValue = discountValue + discountValue1;
+        focValue = focValue + focValue1;
 
-        VatableValue = VatableValue + additionalVariants[i].variableAmount!;
+        VatableValue = VatableValue + VatableValue1;
         print("excessTaxvalue"+excessTAxValue.toString());
-        excessTAxValue = excessTAxValue + additionalVariants[i].excessTax!;
+        excessTAxValue = excessTAxValue + excessTAxValue1;
       }
     }
     unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
@@ -185,6 +193,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                 else{
                   print("entered 2ndst position");
                   purchaseCodeController.text=data.orderCode??"";
+
 
                   inventoryId=data.inventoryId??"";
                  orderedDateController.text=data.orderDate??"";
@@ -295,7 +304,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                   Expanded(child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment:MainAxisAlignment.end,
                         children: [
 
 
@@ -789,7 +798,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                      child: Checkbox(
                                                        value: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
                                                        onChanged: (bool? value) {
-                                                         bool? isInvoiced = additionalVariants[i].isInvoiced;
+                                                         bool? isInvoiced = additionalVariants[i].isInvoiced??false;
                                                          setState(() {
                                                            isInvoiced = !isInvoiced!;
                                                            additionalVariants[i] = additionalVariants[i].copyWith(isInvoiced: isInvoiced);
@@ -1155,19 +1164,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
   double height = MediaQuery.of(context).size.height;
   double width = MediaQuery.of(context).size.width;
   final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-   final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
-   _printPdfAsHtml() async {
-    print('Print ...');
-    await Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
-      return await Printing.convertHtml(
-          format: format,
-          html:
-          '<html><body><table><tr><td><img src="asset/ahlanpdflogo.png" alt="Avatar"></td><td>Purple</td></tr></table></body></html>');
-    });
-  }
+  // final font = await PdfGoogleFonts.nunitoExtraLight();
+  //  final logo = await networkImage('https://rgcdynamics-logos.s3.ap-south-1.amazonaws.com/Ahlan%20New-03.png');
+  //  _printPdfAsHtml() async {
+  //   print('Print ...');
+  //   await Printing.layoutPdf(onLayout: (PdfPageFormat format) async {
+  //     return await Printing.convertHtml(
+  //         format: format,
+  //         html:
+  //         '<html><body><table><tr><td><img src="asset/ahlanpdflogo.png" alt="Avatar"></td><td>Purple</td></tr></table></body></html>');
+  //   });
+  // }
 
-  final image = await imageFromAssetBundle('assets/image.png');
+  // final image = await imageFromAssetBundle('assets/image.png');
   pdf.addPage(
     pw.Page(
       pageFormat:    format.copyWith(marginLeft: 0, marginTop: 0, marginRight: 0, marginBottom: 0),
@@ -1183,17 +1192,24 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                   child:pw. Row(
                     mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                     children: [
-                      pw.  Container(
-                          height: 16,
-                          width: 16,
-                          // decoration: pw. BoxDecoration(
-                          //     image:pw. DecorationImage(
-                          //         image:pw. Image("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
-                          //     )
-                          // ),
-                          child: pw. Container(
-                              child: pw.Image(image)),
-                        ),
+                      // PDF.assets(
+                      //   "assets/demo.pdf",
+                      //   // height: MediaQuery.of(context).size.height,
+                      //   // width: MediaQuery.of(context).size.width,
+                      //   placeHolder: Image.asset("assets/images/pdf.png",
+                      //       height: 200, width: 100),
+                      // ),
+                      // pw.  Container(
+                      //     height: 16,
+                      //     width: 16,
+                      //     // decoration: pw. BoxDecoration(
+                      //     //     image:pw. DecorationImage(
+                      //     //         image:pw. Image("https://i.pinimg.com/736x/d2/53/fb/d253fbcb29b2c743b57816b23746fe12--portugal-national-team-cristiano-ronaldo-portugal.jpg")
+                      //     //     )
+                      //     // ),
+                      //     child: pw. Container(
+                      //         child: pw.Image(image)),
+                      //   ),
                       // _printPdfAsHtml,
                       pw. Spacer(),
                       pw. Container(
@@ -1308,7 +1324,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                               )
                                           ),
                                           width: 120,
-                                          child: pw.Text(orderCode.toString()??"",style:  pw.TextStyle(fontSize:9))
+                                          child: pw.Text(orderCode==""?" Empty":orderCode,style:  pw.TextStyle(fontSize:9))
                                       ),
 
                                     ],

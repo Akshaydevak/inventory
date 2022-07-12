@@ -219,10 +219,12 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                     ],
                                   ),
                                   pw. Column(
+                                    mainAxisAlignment:pw. MainAxisAlignment.start,
                                     children: [
+
                                       pw. Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
-                                          decoration:  pw.BoxDecoration(
+                                          // padding:  pw.EdgeInsets.only(top: 9),
+                                          decoration:  pw.BoxDecoration(color:PdfColor.fromInt(0xAAACACAC),
                                               border: pw.Border(
                                                 bottom:pw. BorderSide(width: .5,),
                                               )
@@ -234,7 +236,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                               "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
+                                          // padding:  pw.EdgeInsets.only(top: 9),
                                           decoration: pw. BoxDecoration(
                                               border: pw.Border(
                                                 bottom: pw. BorderSide(width: .5,
