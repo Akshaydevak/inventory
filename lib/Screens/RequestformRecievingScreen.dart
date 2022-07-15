@@ -261,21 +261,23 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                 }
                 print("Anvar");
 
-                orderCodeController.text=data.orderCode??"";
-                orderDateController.text=data.orderCreatedDate??"";
-                orderstatusController.text=data.orderStatus??"";
-                paymentstatusController.text=data.paymentStatus??"";
-                invoiceStatusController.text=data.invoiceStatus??"";
-                discountController.text=data.discount.toString()??"";
-                focController.text=data.foc.toString()??"";
-                unitCostController.text=data.unitCost.toString()??"";
-                variableAmountController.text=data.vatableAmount.toString()??"";
-                excessTaxController.text=data.excessTax.toString()??"";
+                orderCodeController.text=data?.orderCode??"";
+                receivingcodeController.text=data?.receivingCode??"";
+                orderDateController.text=data?.orderCreatedDate??"";
+                orderstatusController.text=data?.orderStatus??"";
+                paymentstatusController.text=data?.paymentStatus??"";
+                invoiceStatusController.text=data?.invoiceStatus??"";
+                discountController.text=data?.discount.toString()??"";
+                focController.text=data?.foc.toString()??"";
+                unitCostController.text=data?.unitCost.toString()??"";
+                variableAmountController.text=data?.vatableAmount.toString()??"";
+                excessTaxController.text=data?.excessTax.toString()??"";
                 vatController.text=data.vat.toString()??"";
-                actualCostController.text=data.actualCost.toString()??"";
-                grandtotalCostController.text=data.grandTotal.toString()??"";
-                noteController.text=data.note.toString()??"";
-                remarksController.text=data.remarks.toString()??"";
+                actualCostController.text=data?.actualCost.toString()??"";
+                grandtotalCostController.text=data?.grandTotal.toString()??"";
+                noteController.text=data?.note.toString()??"";
+                remarksController.text=data?.remarks.toString()??"";
+
                 receivingId=data.id;
                 _getCurrentUser();
               });
@@ -1063,6 +1065,7 @@ child: IntrinsicHeight(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: PopUpCall(
+                                            inventory: Variable.inventory_ID,
 
                                             type:"cost-method-list",
                                             value: recievingLisnes[i].variantId,
@@ -2312,6 +2315,8 @@ child: IntrinsicHeight(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: PopUpCall(
+                                                  inventory: Variable.inventory_ID,
+
 
                                                   type:"cost-method-list",
                                                   value: additionalVariants[i].variantId,
@@ -2976,6 +2981,7 @@ child: IntrinsicHeight(
                                                     fontWeight: FontWeight.w500),
                                               ),
                                               PopUpCall(
+                                                inventory: Variable.inventory_ID,
                                                 // label: "purchase UOM",
                                                 type:
                                                 "cost-method-list",

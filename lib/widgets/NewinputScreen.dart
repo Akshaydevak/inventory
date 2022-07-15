@@ -45,6 +45,7 @@ class _NewInputCardState extends State<NewInputCard> {
 
   @override
   Widget build(BuildContext context) {
+    widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
 
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),

@@ -51,6 +51,8 @@ class InvoiceData with _$InvoiceData {
     @JsonKey(name: "order_code") final String? orderCode,
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "invoiced_by") final String? invoicedBy,
+    @JsonKey(name: "invoice_code") final String? invoicedCode,
+    @JsonKey(name: "invoice_status") final String? invoiceStatus,
     @JsonKey(name: "grand_total") final double? grandtotal,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "excess_tax") final double? excessTax,

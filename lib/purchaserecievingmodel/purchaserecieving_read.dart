@@ -14,6 +14,7 @@ class PurchaseRecievingRead with _$PurchaseRecievingRead {
     @JsonKey(name:"order_code") final String? orderCode,
 
     @JsonKey(name:"promised_receipt_date") final String? promisedRecieptDate,
+    @JsonKey(name:"received_by") final String? receivedBy,
     @JsonKey(name:"planned_receipt_date") final String? plannedRecieptDate,
     @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
     @JsonKey(name:"vendor_mail_id") final String? vendorMailId,

@@ -3689,18 +3689,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                               }
                                                               print(recievingLisnes.toString());
                                                               PurchaseRecievingRead model = PurchaseRecievingRead(
-                                                                  orderCode:
-                                                                  orderCodeController
-                                                                      .text ??
-                                                                      "",
-                                                                  receivingCode:
-                                                                  recievingCodeController
-                                                                      .text ??
-                                                                      "",
-                                                                  orderCreatedDate:
-                                                                  orederDateController
-                                                                      .text ??
-                                                                      "",
+                                                                  orderCode: orderCodeController.text ?? "",
+                                                                  receivingCode: recievingCodeController.text ?? "",
+                                                                  orderCreatedDate: orederDateController.text ?? "",
                                                                   orderStatus:
                                                                   orderStatusController
                                                                       .text ??
@@ -3711,6 +3702,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       "",
                                                                   foc: double.tryParse(
                                                                       focController.text ?? ""),
+
                                                                   discount: double.tryParse(discountController.text ?? ""),
                                                                   unitCost: int.tryParse(unitCostController.text ?? ""),
                                                                   vatableAmount: double.tryParse(vatableAmountController.text ?? ""),
@@ -3720,6 +3712,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   grandTotal: double.tryParse(grandTotalController.text ?? ""),
                                                                   inventoryId: inventoryId ?? "",
                                                                   note: noteController.text ?? "",
+                                                                  receivedBy: "akshay",
                                                                   remarks: remarksController.text ?? "",
                                                                   receivingLines: recievingLisnes);
                                                               context
@@ -5080,57 +5073,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                       pw.  Row(
                         children: [
 
-                          pw.  Container(
-                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
 
-
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.009,),
-                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw. Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                    children: [
-                                      pw.  Row(
-                                        children: [
-
-
-                                          pw.  Text(note??"",style: pw.TextStyle(
-                                            // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
                           pw.  Spacer(),
                           pw. Container(
                             margin: pw.EdgeInsets.only(right: width*.02),

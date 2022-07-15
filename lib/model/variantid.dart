@@ -109,3 +109,17 @@ class PartnerAddressdata with _$PartnerAddressdata {
   factory PartnerAddressdata.fromJson(Map<String, dynamic> json) =>
       _$PartnerAddressdataFromJson(json);
 }
+@freezed
+class PurchaseInvoice with _$PurchaseInvoice {
+  const factory PurchaseInvoice(
+      {
+        final int? id,
+        @JsonKey(name: "invoice_code") final String? invoiceCode,
+        @JsonKey(name: "inventory_id") final String? inventoryId,
+
+
+
+      }) = _PurchaseInvoice;
+  factory PurchaseInvoice.fromJson(Map<String, dynamic> json) =>
+      _$PurchaseInvoiceFromJson(json);
+}

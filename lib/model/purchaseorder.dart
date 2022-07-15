@@ -8,6 +8,7 @@ class PurchaseOrder with _$PurchaseOrder {
   const factory PurchaseOrder({
     final int? id,
     @JsonKey(name:"order_code") final String? orderCode,
+    @JsonKey(name:"return_order_code") final String? returnOrderCode,
 
   }) =_PurchaseOrder;
   factory PurchaseOrder.fromJson(Map<String, dynamic> json) =>

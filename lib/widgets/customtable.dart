@@ -40,9 +40,11 @@ Widget tableHeadtext(
 Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
+      double? height,
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
       alignment: Alignment.center,
+
       // color: Colors.green,
       // padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
+import 'package:inventory/Screens/purchasreturn/pages/purchasereturn.dart';
 import 'package:inventory/Screens/salesscreen.dart';
 import 'package:inventory/Screens/sidemenuScreen.dart';
 import 'package:inventory/Screens/titleScreen.dart';
@@ -54,7 +56,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 3, vsync: this,initialIndex: 1);
+    TabController _tabController = TabController(length: 4, vsync: this,initialIndex: 1);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
@@ -75,6 +77,9 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     ),
     BlocProvider(
       create: (context) => TableDetailsCubitDartCubit(),
+    ),
+    BlocProvider(
+      create: (context) => VertiacalCubit(),
     ),
 
   ],
@@ -154,6 +159,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                       // PrintScreen(),
                                       PurchaseScreen(isCollapsed),
                                       SalesScreen(isCollapsed),
+                                      PurchaseReturn(),
                                     ],
                                   ),
                                 ),
@@ -403,6 +409,10 @@ class _TitleScreenState extends State<TitleScreen> {
                       ),
                       Text(
                         "sales",
+                        style: TextStyle(fontSize: height * 00.022),
+                      ),
+                      Text(
+                        "Purchase return",
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                     ]),

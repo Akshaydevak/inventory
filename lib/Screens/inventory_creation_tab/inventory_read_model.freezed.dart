@@ -784,6 +784,8 @@ class _$InvoiceDataTearOff {
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
       @JsonKey(name: "invoiced_by") String? invoicedBy,
+      @JsonKey(name: "invoice_code") String? invoicedCode,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
       @JsonKey(name: "grand_total") double? grandtotal,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -799,6 +801,8 @@ class _$InvoiceDataTearOff {
       orderCode: orderCode,
       inventoryId: inventoryId,
       invoicedBy: invoicedBy,
+      invoicedCode: invoicedCode,
+      invoiceStatus: invoiceStatus,
       grandtotal: grandtotal,
       actualCost: actualCost,
       excessTax: excessTax,
@@ -830,6 +834,10 @@ mixin _$InvoiceData {
   String? get inventoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "invoiced_by")
   String? get invoicedBy => throw _privateConstructorUsedError;
+  @JsonKey(name: "invoice_code")
+  String? get invoicedCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "invoice_status")
+  String? get invoiceStatus => throw _privateConstructorUsedError;
   @JsonKey(name: "grand_total")
   double? get grandtotal => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
@@ -862,6 +870,8 @@ abstract class $InvoiceDataCopyWith<$Res> {
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
       @JsonKey(name: "invoiced_by") String? invoicedBy,
+      @JsonKey(name: "invoice_code") String? invoicedCode,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
       @JsonKey(name: "grand_total") double? grandtotal,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -888,6 +898,8 @@ class _$InvoiceDataCopyWithImpl<$Res> implements $InvoiceDataCopyWith<$Res> {
     Object? orderCode = freezed,
     Object? inventoryId = freezed,
     Object? invoicedBy = freezed,
+    Object? invoicedCode = freezed,
+    Object? invoiceStatus = freezed,
     Object? grandtotal = freezed,
     Object? actualCost = freezed,
     Object? excessTax = freezed,
@@ -931,6 +943,14 @@ class _$InvoiceDataCopyWithImpl<$Res> implements $InvoiceDataCopyWith<$Res> {
           ? _value.invoicedBy
           : invoicedBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      invoicedCode: invoicedCode == freezed
+          ? _value.invoicedCode
+          : invoicedCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      invoiceStatus: invoiceStatus == freezed
+          ? _value.invoiceStatus
+          : invoiceStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       grandtotal: grandtotal == freezed
           ? _value.grandtotal
           : grandtotal // ignore: cast_nullable_to_non_nullable
@@ -972,6 +992,8 @@ abstract class _$InvoiceDataCopyWith<$Res>
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
       @JsonKey(name: "invoiced_by") String? invoicedBy,
+      @JsonKey(name: "invoice_code") String? invoicedCode,
+      @JsonKey(name: "invoice_status") String? invoiceStatus,
       @JsonKey(name: "grand_total") double? grandtotal,
       @JsonKey(name: "actual_cost") double? actualCost,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -1000,6 +1022,8 @@ class __$InvoiceDataCopyWithImpl<$Res> extends _$InvoiceDataCopyWithImpl<$Res>
     Object? orderCode = freezed,
     Object? inventoryId = freezed,
     Object? invoicedBy = freezed,
+    Object? invoicedCode = freezed,
+    Object? invoiceStatus = freezed,
     Object? grandtotal = freezed,
     Object? actualCost = freezed,
     Object? excessTax = freezed,
@@ -1043,6 +1067,14 @@ class __$InvoiceDataCopyWithImpl<$Res> extends _$InvoiceDataCopyWithImpl<$Res>
           ? _value.invoicedBy
           : invoicedBy // ignore: cast_nullable_to_non_nullable
               as String?,
+      invoicedCode: invoicedCode == freezed
+          ? _value.invoicedCode
+          : invoicedCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      invoiceStatus: invoiceStatus == freezed
+          ? _value.invoiceStatus
+          : invoiceStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
       grandtotal: grandtotal == freezed
           ? _value.grandtotal
           : grandtotal // ignore: cast_nullable_to_non_nullable
@@ -1080,6 +1112,8 @@ class _$_InvoiceData implements _InvoiceData {
       @JsonKey(name: "order_code") this.orderCode,
       @JsonKey(name: "inventory_id") this.inventoryId,
       @JsonKey(name: "invoiced_by") this.invoicedBy,
+      @JsonKey(name: "invoice_code") this.invoicedCode,
+      @JsonKey(name: "invoice_status") this.invoiceStatus,
       @JsonKey(name: "grand_total") this.grandtotal,
       @JsonKey(name: "actual_cost") this.actualCost,
       @JsonKey(name: "excess_tax") this.excessTax,
@@ -1112,6 +1146,12 @@ class _$_InvoiceData implements _InvoiceData {
   @JsonKey(name: "invoiced_by")
   final String? invoicedBy;
   @override
+  @JsonKey(name: "invoice_code")
+  final String? invoicedCode;
+  @override
+  @JsonKey(name: "invoice_status")
+  final String? invoiceStatus;
+  @override
   @JsonKey(name: "grand_total")
   final double? grandtotal;
   @override
@@ -1129,7 +1169,7 @@ class _$_InvoiceData implements _InvoiceData {
 
   @override
   String toString() {
-    return 'InvoiceData(discount: $discount, notes: $notes, remarks: $remarks, foc: $foc, vat: $vat, vatableAmount: $vatableAmount, orderCode: $orderCode, inventoryId: $inventoryId, invoicedBy: $invoicedBy, grandtotal: $grandtotal, actualCost: $actualCost, excessTax: $excessTax, unitCost: $unitCost, invoiceLines: $invoiceLines)';
+    return 'InvoiceData(discount: $discount, notes: $notes, remarks: $remarks, foc: $foc, vat: $vat, vatableAmount: $vatableAmount, orderCode: $orderCode, inventoryId: $inventoryId, invoicedBy: $invoicedBy, invoicedCode: $invoicedCode, invoiceStatus: $invoiceStatus, grandtotal: $grandtotal, actualCost: $actualCost, excessTax: $excessTax, unitCost: $unitCost, invoiceLines: $invoiceLines)';
   }
 
   @override
@@ -1160,6 +1200,12 @@ class _$_InvoiceData implements _InvoiceData {
             (identical(other.invoicedBy, invoicedBy) ||
                 const DeepCollectionEquality()
                     .equals(other.invoicedBy, invoicedBy)) &&
+            (identical(other.invoicedCode, invoicedCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.invoicedCode, invoicedCode)) &&
+            (identical(other.invoiceStatus, invoiceStatus) ||
+                const DeepCollectionEquality()
+                    .equals(other.invoiceStatus, invoiceStatus)) &&
             (identical(other.grandtotal, grandtotal) ||
                 const DeepCollectionEquality()
                     .equals(other.grandtotal, grandtotal)) &&
@@ -1189,6 +1235,8 @@ class _$_InvoiceData implements _InvoiceData {
       const DeepCollectionEquality().hash(orderCode) ^
       const DeepCollectionEquality().hash(inventoryId) ^
       const DeepCollectionEquality().hash(invoicedBy) ^
+      const DeepCollectionEquality().hash(invoicedCode) ^
+      const DeepCollectionEquality().hash(invoiceStatus) ^
       const DeepCollectionEquality().hash(grandtotal) ^
       const DeepCollectionEquality().hash(actualCost) ^
       const DeepCollectionEquality().hash(excessTax) ^
@@ -1217,6 +1265,8 @@ abstract class _InvoiceData implements InvoiceData {
           @JsonKey(name: "order_code") String? orderCode,
           @JsonKey(name: "inventory_id") String? inventoryId,
           @JsonKey(name: "invoiced_by") String? invoicedBy,
+          @JsonKey(name: "invoice_code") String? invoicedCode,
+          @JsonKey(name: "invoice_status") String? invoiceStatus,
           @JsonKey(name: "grand_total") double? grandtotal,
           @JsonKey(name: "actual_cost") double? actualCost,
           @JsonKey(name: "excess_tax") double? excessTax,
@@ -1249,6 +1299,12 @@ abstract class _InvoiceData implements InvoiceData {
   @override
   @JsonKey(name: "invoiced_by")
   String? get invoicedBy => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "invoice_code")
+  String? get invoicedCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "invoice_status")
+  String? get invoiceStatus => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "grand_total")
   double? get grandtotal => throw _privateConstructorUsedError;

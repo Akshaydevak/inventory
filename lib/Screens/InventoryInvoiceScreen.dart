@@ -168,6 +168,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                   setState(() {
                     purchaseCodeController.text=data.invoicedata?.orderCode??"";
                     inventoryId=data.invoicedata?.inventoryId??"";
+                    invoiceCodeController.text=data.invoicedata?.invoicedCode??"";
+                    invoiceStatusController.text=data.invoicedata?.invoiceStatus??"";
+
                     noteController.text=data.invoicedata?.notes??"";
                     remarksController.text=data.invoicedata?.remarks??"";
                     unitCostController.text=data.invoicedata?.unitCost.toString()??"";

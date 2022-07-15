@@ -31,6 +31,7 @@ class _$PurchaseRecievingReadTearOff {
       String? note,
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
+      @JsonKey(name: "received_by") String? receivedBy,
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
@@ -63,6 +64,7 @@ class _$PurchaseRecievingReadTearOff {
       note: note,
       orderCode: orderCode,
       promisedRecieptDate: promisedRecieptDate,
+      receivedBy: receivedBy,
       plannedRecieptDate: plannedRecieptDate,
       vendorTrnNumber: vendorTrnNumber,
       vendorMailId: vendorMailId,
@@ -109,6 +111,8 @@ mixin _$PurchaseRecievingRead {
   String? get orderCode => throw _privateConstructorUsedError;
   @JsonKey(name: "promised_receipt_date")
   String? get promisedRecieptDate => throw _privateConstructorUsedError;
+  @JsonKey(name: "received_by")
+  String? get receivedBy => throw _privateConstructorUsedError;
   @JsonKey(name: "planned_receipt_date")
   String? get plannedRecieptDate => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_trn_number")
@@ -177,6 +181,7 @@ abstract class $PurchaseRecievingReadCopyWith<$Res> {
       String? note,
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
+      @JsonKey(name: "received_by") String? receivedBy,
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
@@ -221,6 +226,7 @@ class _$PurchaseRecievingReadCopyWithImpl<$Res>
     Object? note = freezed,
     Object? orderCode = freezed,
     Object? promisedRecieptDate = freezed,
+    Object? receivedBy = freezed,
     Object? plannedRecieptDate = freezed,
     Object? vendorTrnNumber = freezed,
     Object? vendorMailId = freezed,
@@ -277,6 +283,10 @@ class _$PurchaseRecievingReadCopyWithImpl<$Res>
       promisedRecieptDate: promisedRecieptDate == freezed
           ? _value.promisedRecieptDate
           : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedBy: receivedBy == freezed
+          ? _value.receivedBy
+          : receivedBy // ignore: cast_nullable_to_non_nullable
               as String?,
       plannedRecieptDate: plannedRecieptDate == freezed
           ? _value.plannedRecieptDate
@@ -390,6 +400,7 @@ abstract class _$PurchaseRecievingReadCopyWith<$Res>
       String? note,
       @JsonKey(name: "order_code") String? orderCode,
       @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
+      @JsonKey(name: "received_by") String? receivedBy,
       @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
@@ -436,6 +447,7 @@ class __$PurchaseRecievingReadCopyWithImpl<$Res>
     Object? note = freezed,
     Object? orderCode = freezed,
     Object? promisedRecieptDate = freezed,
+    Object? receivedBy = freezed,
     Object? plannedRecieptDate = freezed,
     Object? vendorTrnNumber = freezed,
     Object? vendorMailId = freezed,
@@ -492,6 +504,10 @@ class __$PurchaseRecievingReadCopyWithImpl<$Res>
       promisedRecieptDate: promisedRecieptDate == freezed
           ? _value.promisedRecieptDate
           : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      receivedBy: receivedBy == freezed
+          ? _value.receivedBy
+          : receivedBy // ignore: cast_nullable_to_non_nullable
               as String?,
       plannedRecieptDate: plannedRecieptDate == freezed
           ? _value.plannedRecieptDate
@@ -601,6 +617,7 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
       this.note,
       @JsonKey(name: "order_code") this.orderCode,
       @JsonKey(name: "promised_receipt_date") this.promisedRecieptDate,
+      @JsonKey(name: "received_by") this.receivedBy,
       @JsonKey(name: "planned_receipt_date") this.plannedRecieptDate,
       @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") this.vendorMailId,
@@ -646,6 +663,9 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
   @override
   @JsonKey(name: "promised_receipt_date")
   final String? promisedRecieptDate;
+  @override
+  @JsonKey(name: "received_by")
+  final String? receivedBy;
   @override
   @JsonKey(name: "planned_receipt_date")
   final String? plannedRecieptDate;
@@ -718,7 +738,7 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
 
   @override
   String toString() {
-    return 'PurchaseRecievingRead(id: $id, foc: $foc, discount: $discount, vat: $vat, remarks: $remarks, note: $note, orderCode: $orderCode, promisedRecieptDate: $promisedRecieptDate, plannedRecieptDate: $plannedRecieptDate, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, createdBy: $createdBy, vendorId: $vendorId, vendorAddress: $vendorAddress, receivingCode: $receivingCode, inventoryId: $inventoryId, paymentStatus: $paymentStatus, receivinglineId: $receivinglineId, orderStatus: $orderStatus, receivingStatus: $receivingStatus, invoiceStatus: $invoiceStatus, orderCreatedDate: $orderCreatedDate, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, is_invoiced: $is_invoiced, isActive: $isActive, isFree: $isFree, receivingLines: $receivingLines)';
+    return 'PurchaseRecievingRead(id: $id, foc: $foc, discount: $discount, vat: $vat, remarks: $remarks, note: $note, orderCode: $orderCode, promisedRecieptDate: $promisedRecieptDate, receivedBy: $receivedBy, plannedRecieptDate: $plannedRecieptDate, vendorTrnNumber: $vendorTrnNumber, vendorMailId: $vendorMailId, createdBy: $createdBy, vendorId: $vendorId, vendorAddress: $vendorAddress, receivingCode: $receivingCode, inventoryId: $inventoryId, paymentStatus: $paymentStatus, receivinglineId: $receivinglineId, orderStatus: $orderStatus, receivingStatus: $receivingStatus, invoiceStatus: $invoiceStatus, orderCreatedDate: $orderCreatedDate, unitCost: $unitCost, grandTotal: $grandTotal, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, is_invoiced: $is_invoiced, isActive: $isActive, isFree: $isFree, receivingLines: $receivingLines)';
   }
 
   @override
@@ -745,6 +765,9 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
             (identical(other.promisedRecieptDate, promisedRecieptDate) ||
                 const DeepCollectionEquality()
                     .equals(other.promisedRecieptDate, promisedRecieptDate)) &&
+            (identical(other.receivedBy, receivedBy) ||
+                const DeepCollectionEquality()
+                    .equals(other.receivedBy, receivedBy)) &&
             (identical(other.plannedRecieptDate, plannedRecieptDate) ||
                 const DeepCollectionEquality()
                     .equals(other.plannedRecieptDate, plannedRecieptDate)) &&
@@ -788,10 +811,8 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
                 const DeepCollectionEquality()
                     .equals(other.orderCreatedDate, orderCreatedDate)) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
-            (identical(other.grandTotal, grandTotal) ||
-                const DeepCollectionEquality().equals(other.grandTotal, grandTotal)) &&
+                const DeepCollectionEquality().equals(other.unitCost, unitCost)) &&
+            (identical(other.grandTotal, grandTotal) || const DeepCollectionEquality().equals(other.grandTotal, grandTotal)) &&
             (identical(other.vatableAmount, vatableAmount) || const DeepCollectionEquality().equals(other.vatableAmount, vatableAmount)) &&
             (identical(other.excessTax, excessTax) || const DeepCollectionEquality().equals(other.excessTax, excessTax)) &&
             (identical(other.actualCost, actualCost) || const DeepCollectionEquality().equals(other.actualCost, actualCost)) &&
@@ -812,6 +833,7 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
       const DeepCollectionEquality().hash(note) ^
       const DeepCollectionEquality().hash(orderCode) ^
       const DeepCollectionEquality().hash(promisedRecieptDate) ^
+      const DeepCollectionEquality().hash(receivedBy) ^
       const DeepCollectionEquality().hash(plannedRecieptDate) ^
       const DeepCollectionEquality().hash(vendorTrnNumber) ^
       const DeepCollectionEquality().hash(vendorMailId) ^
@@ -860,6 +882,8 @@ abstract class _PurchaseRecievingRead implements PurchaseRecievingRead {
           String? orderCode,
       @JsonKey(name: "promised_receipt_date")
           String? promisedRecieptDate,
+      @JsonKey(name: "received_by")
+          String? receivedBy,
       @JsonKey(name: "planned_receipt_date")
           String? plannedRecieptDate,
       @JsonKey(name: "vendor_trn_number")
@@ -928,6 +952,9 @@ abstract class _PurchaseRecievingRead implements PurchaseRecievingRead {
   @override
   @JsonKey(name: "promised_receipt_date")
   String? get promisedRecieptDate => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "received_by")
+  String? get receivedBy => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "planned_receipt_date")
   String? get plannedRecieptDate => throw _privateConstructorUsedError;

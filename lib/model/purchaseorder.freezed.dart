@@ -22,10 +22,13 @@ class _$PurchaseOrderTearOff {
   const _$PurchaseOrderTearOff();
 
   _PurchaseOrder call(
-      {int? id, @JsonKey(name: "order_code") String? orderCode}) {
+      {int? id,
+      @JsonKey(name: "order_code") String? orderCode,
+      @JsonKey(name: "return_order_code") String? returnOrderCode}) {
     return _PurchaseOrder(
       id: id,
       orderCode: orderCode,
+      returnOrderCode: returnOrderCode,
     );
   }
 
@@ -42,6 +45,8 @@ mixin _$PurchaseOrder {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "order_code")
   String? get orderCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "return_order_code")
+  String? get returnOrderCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -54,7 +59,10 @@ abstract class $PurchaseOrderCopyWith<$Res> {
   factory $PurchaseOrderCopyWith(
           PurchaseOrder value, $Res Function(PurchaseOrder) then) =
       _$PurchaseOrderCopyWithImpl<$Res>;
-  $Res call({int? id, @JsonKey(name: "order_code") String? orderCode});
+  $Res call(
+      {int? id,
+      @JsonKey(name: "order_code") String? orderCode,
+      @JsonKey(name: "return_order_code") String? returnOrderCode});
 }
 
 /// @nodoc
@@ -70,6 +78,7 @@ class _$PurchaseOrderCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? orderCode = freezed,
+    Object? returnOrderCode = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -79,6 +88,10 @@ class _$PurchaseOrderCopyWithImpl<$Res>
       orderCode: orderCode == freezed
           ? _value.orderCode
           : orderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      returnOrderCode: returnOrderCode == freezed
+          ? _value.returnOrderCode
+          : returnOrderCode // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -91,7 +104,10 @@ abstract class _$PurchaseOrderCopyWith<$Res>
           _PurchaseOrder value, $Res Function(_PurchaseOrder) then) =
       __$PurchaseOrderCopyWithImpl<$Res>;
   @override
-  $Res call({int? id, @JsonKey(name: "order_code") String? orderCode});
+  $Res call(
+      {int? id,
+      @JsonKey(name: "order_code") String? orderCode,
+      @JsonKey(name: "return_order_code") String? returnOrderCode});
 }
 
 /// @nodoc
@@ -109,6 +125,7 @@ class __$PurchaseOrderCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? orderCode = freezed,
+    Object? returnOrderCode = freezed,
   }) {
     return _then(_PurchaseOrder(
       id: id == freezed
@@ -119,6 +136,10 @@ class __$PurchaseOrderCopyWithImpl<$Res>
           ? _value.orderCode
           : orderCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      returnOrderCode: returnOrderCode == freezed
+          ? _value.returnOrderCode
+          : returnOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -127,7 +148,9 @@ class __$PurchaseOrderCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PurchaseOrder implements _PurchaseOrder {
   const _$_PurchaseOrder(
-      {this.id, @JsonKey(name: "order_code") this.orderCode});
+      {this.id,
+      @JsonKey(name: "order_code") this.orderCode,
+      @JsonKey(name: "return_order_code") this.returnOrderCode});
 
   factory _$_PurchaseOrder.fromJson(Map<String, dynamic> json) =>
       _$$_PurchaseOrderFromJson(json);
@@ -137,10 +160,13 @@ class _$_PurchaseOrder implements _PurchaseOrder {
   @override
   @JsonKey(name: "order_code")
   final String? orderCode;
+  @override
+  @JsonKey(name: "return_order_code")
+  final String? returnOrderCode;
 
   @override
   String toString() {
-    return 'PurchaseOrder(id: $id, orderCode: $orderCode)';
+    return 'PurchaseOrder(id: $id, orderCode: $orderCode, returnOrderCode: $returnOrderCode)';
   }
 
   @override
@@ -151,14 +177,18 @@ class _$_PurchaseOrder implements _PurchaseOrder {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.orderCode, orderCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.orderCode, orderCode)));
+                    .equals(other.orderCode, orderCode)) &&
+            (identical(other.returnOrderCode, returnOrderCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.returnOrderCode, returnOrderCode)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(orderCode);
+      const DeepCollectionEquality().hash(orderCode) ^
+      const DeepCollectionEquality().hash(returnOrderCode);
 
   @JsonKey(ignore: true)
   @override
@@ -173,8 +203,10 @@ class _$_PurchaseOrder implements _PurchaseOrder {
 
 abstract class _PurchaseOrder implements PurchaseOrder {
   const factory _PurchaseOrder(
-      {int? id,
-      @JsonKey(name: "order_code") String? orderCode}) = _$_PurchaseOrder;
+          {int? id,
+          @JsonKey(name: "order_code") String? orderCode,
+          @JsonKey(name: "return_order_code") String? returnOrderCode}) =
+      _$_PurchaseOrder;
 
   factory _PurchaseOrder.fromJson(Map<String, dynamic> json) =
       _$_PurchaseOrder.fromJson;
@@ -184,6 +216,9 @@ abstract class _PurchaseOrder implements PurchaseOrder {
   @override
   @JsonKey(name: "order_code")
   String? get orderCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "return_order_code")
+  String? get returnOrderCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$PurchaseOrderCopyWith<_PurchaseOrder> get copyWith =>

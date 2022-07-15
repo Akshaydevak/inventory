@@ -17,7 +17,8 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
-        child: Container(
+        child:
+        Container(
           color:Color(0xffF2F3F5),
           child: Column(
             children: [

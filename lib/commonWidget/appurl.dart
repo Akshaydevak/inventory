@@ -34,8 +34,8 @@ const requestVerticalList = stagingUrl + "purchase-order/list-request-form/";
 //*********************request receiving form*******************
 const rqstReceivingRead =
     stagingUrl + "purchase-order/read-receiving-by-request-form/";
-const rqstReceivingPatch =
-    stagingUrl + "purchase-order/patch-request-form-receiving/";
+const rqstReceivingPatch = stagingUrl + "purchase-order/patch-request-form-receiving/";
+const purchaseRecievingReceivingPatch = stagingUrl + "purchase-order/patch-receiving/";
 const additionalGeneratedRequest = stagingUrl +
     "purchase-order/create-additional-system-generated-request-form";
 //inventory invoice**************************//****************

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:inventory/Screens/purchasreturn/cubits/cubit/purchaseinvoice_cubit.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/vendorcodecubit_cubit.dart';
 
 import 'package:inventory/cubits/cubit/cubit/purchase_order_type_cubit_dart_cubit.dart';
@@ -111,6 +112,19 @@ class _PopUpCallState extends State<PopUpCall> {
               type: widget.type);
         }
         break;
+      case "PurchaseInvoices":
+        {
+          data =   PurchaseInvoices(
+
+              inventory: widget.inventory,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+
 
       default:
     }
@@ -741,6 +755,153 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                         element.partnerCode?.toLowerCase() == (value.toLowerCase())) newData = element;
                     if (element.id != null &&
                         element.id == (value.toLowerCase())) newData = element;
+
+
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
+
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
+
+                if (widget.onAddNew != null) list.add("");
+                _controller = TextEditingController(text: label);
+                return TypeAheadFormField(
+                  enabled: widget.enable,
+                  validator: (value) {
+                    if (value != null && value.isEmpty) {
+                      return "required";
+                    }
+                  },
+                  textFieldConfiguration: TextFieldConfiguration(
+                      style: TextStyle(fontSize: 13, ),
+                      controller: _controller,
+                      decoration: InputDecoration(
+
+                          border: InputBorder.none,
+                          isDense: true,
+                          // border: OutlineInputBorder(),
+                          suffixIcon: Icon(Icons.arrow_downward_outlined)
+                      )),
+                  onSuggestionSelected: (suggestion) {
+                    print("suggestion"+suggestion.toString());
+                    if (suggestion == "Add new")
+                      widget.onAddNew!();
+                    else {
+                      widget.onSelection(onSellingBasedSelect(
+                          suggestion.toString(), data));
+                      // data.sellingPercntageBasedOn?.forEach((element) {
+                      //   if (element == suggestion)
+                      //     Variable.methodId = element.id;
+                      // });
+                    }
+                  },
+                  itemBuilder: (context, suggestion) {
+                    // if (suggestion == "Add new")
+                    //   return ListTile(
+                    //     leading: Icon(Icons.add_circle_outline_outlined),
+                    //     title: Text(suggestion.toString()),
+                    //   );
+                    return ListTile(
+                      ////leading: Icon(Icons.shopping_cart_outlined),
+                      title: Text(suggestion.toString()),
+                    );
+                  },
+                  suggestionsCallback: (String value) async {
+                    return value == null || value.isEmpty
+                        ? list
+                        : search(value, list, widget.onAddNew);
+                  },
+                );
+              },
+            );
+          });
+        },
+      ),
+    );
+  }
+
+  List<String> search(String value, List<String?> list, VoidCallback? onAddNew) {
+    print("value"+value.toString());
+    List<String> newList = [];
+    // list.forEach((element) {
+    //   if (element.toLowerCase().contains(value.toLowerCase()))
+    //     newList.add(element);
+    // });
+    // onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+class PurchaseInvoices extends StatefulWidget {
+  final String? inventory;
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const PurchaseInvoices(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        this.inventory="",
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _PurchaseInvoiceState createState() => _PurchaseInvoiceState();
+}
+
+class _PurchaseInvoiceState extends State<PurchaseInvoices> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider(
+      create: (context) => PurchaseinvoiceCubit(),
+      child: Builder(
+        builder: (context) {
+
+          context.read<PurchaseinvoiceCubit>().getPurchaseInvoice();
+          return BlocBuilder<PurchaseinvoiceCubit,
+              PurchaseinvoiceState>(builder: (context, state) {
+            print(state);
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              // error: () => {errorLoader(widget.onAddNew)},
+              success: (data) {
+                print("data===sssssssss" + data.toString());
+                List<String?> list = [];
+                int length=data.length;
+                // list=data.orderTypes;
+
+                for(var i=0;i<length;i++){
+                  list.add(data[i].invoiceCode);
+
+                }
+
+                PurchaseInvoice? onSellingBasedSelect(var value, List<PurchaseInvoice> list) {
+                  PurchaseInvoice ? newData;
+                  list.forEach((element) {
+                    if (element.invoiceCode != null &&
+                        element.invoiceCode?.toLowerCase() == (value.toLowerCase())) newData = element;
+
 
 
                   });

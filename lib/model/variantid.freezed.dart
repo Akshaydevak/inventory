@@ -22,18 +22,12 @@ class _$VariantIdTearOff {
   const _$VariantIdTearOff();
 
   _VariantId call(
-      {int? id,
-      String? code,
-      String? category,
-      String? uom,
-      double? unit_cost,
-      String? name}) {
+      {int? id, String? code, String? category, String? uom, String? name}) {
     return _VariantId(
       id: id,
       code: code,
       category: category,
       uom: uom,
-      unit_cost: unit_cost,
       name: name,
     );
   }
@@ -51,8 +45,8 @@ mixin _$VariantId {
   int? get id => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
   String? get category => throw _privateConstructorUsedError;
-  String? get uom => throw _privateConstructorUsedError;
-  double? get unit_cost => throw _privateConstructorUsedError;
+  String? get uom =>
+      throw _privateConstructorUsedError; // final double? unit_cost,
   String? get name => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -66,12 +60,7 @@ abstract class $VariantIdCopyWith<$Res> {
   factory $VariantIdCopyWith(VariantId value, $Res Function(VariantId) then) =
       _$VariantIdCopyWithImpl<$Res>;
   $Res call(
-      {int? id,
-      String? code,
-      String? category,
-      String? uom,
-      double? unit_cost,
-      String? name});
+      {int? id, String? code, String? category, String? uom, String? name});
 }
 
 /// @nodoc
@@ -88,7 +77,6 @@ class _$VariantIdCopyWithImpl<$Res> implements $VariantIdCopyWith<$Res> {
     Object? code = freezed,
     Object? category = freezed,
     Object? uom = freezed,
-    Object? unit_cost = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
@@ -108,10 +96,6 @@ class _$VariantIdCopyWithImpl<$Res> implements $VariantIdCopyWith<$Res> {
           ? _value.uom
           : uom // ignore: cast_nullable_to_non_nullable
               as String?,
-      unit_cost: unit_cost == freezed
-          ? _value.unit_cost
-          : unit_cost // ignore: cast_nullable_to_non_nullable
-              as double?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -127,12 +111,7 @@ abstract class _$VariantIdCopyWith<$Res> implements $VariantIdCopyWith<$Res> {
       __$VariantIdCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int? id,
-      String? code,
-      String? category,
-      String? uom,
-      double? unit_cost,
-      String? name});
+      {int? id, String? code, String? category, String? uom, String? name});
 }
 
 /// @nodoc
@@ -150,7 +129,6 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
     Object? code = freezed,
     Object? category = freezed,
     Object? uom = freezed,
-    Object? unit_cost = freezed,
     Object? name = freezed,
   }) {
     return _then(_VariantId(
@@ -170,10 +148,6 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
           ? _value.uom
           : uom // ignore: cast_nullable_to_non_nullable
               as String?,
-      unit_cost: unit_cost == freezed
-          ? _value.unit_cost
-          : unit_cost // ignore: cast_nullable_to_non_nullable
-              as double?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -185,8 +159,7 @@ class __$VariantIdCopyWithImpl<$Res> extends _$VariantIdCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_VariantId implements _VariantId {
-  const _$_VariantId(
-      {this.id, this.code, this.category, this.uom, this.unit_cost, this.name});
+  const _$_VariantId({this.id, this.code, this.category, this.uom, this.name});
 
   factory _$_VariantId.fromJson(Map<String, dynamic> json) =>
       _$$_VariantIdFromJson(json);
@@ -199,14 +172,12 @@ class _$_VariantId implements _VariantId {
   final String? category;
   @override
   final String? uom;
-  @override
-  final double? unit_cost;
-  @override
+  @override // final double? unit_cost,
   final String? name;
 
   @override
   String toString() {
-    return 'VariantId(id: $id, code: $code, category: $category, uom: $uom, unit_cost: $unit_cost, name: $name)';
+    return 'VariantId(id: $id, code: $code, category: $category, uom: $uom, name: $name)';
   }
 
   @override
@@ -222,9 +193,6 @@ class _$_VariantId implements _VariantId {
                     .equals(other.category, category)) &&
             (identical(other.uom, uom) ||
                 const DeepCollectionEquality().equals(other.uom, uom)) &&
-            (identical(other.unit_cost, unit_cost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unit_cost, unit_cost)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)));
   }
@@ -236,7 +204,6 @@ class _$_VariantId implements _VariantId {
       const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(category) ^
       const DeepCollectionEquality().hash(uom) ^
-      const DeepCollectionEquality().hash(unit_cost) ^
       const DeepCollectionEquality().hash(name);
 
   @JsonKey(ignore: true)
@@ -256,7 +223,6 @@ abstract class _VariantId implements VariantId {
       String? code,
       String? category,
       String? uom,
-      double? unit_cost,
       String? name}) = _$_VariantId;
 
   factory _VariantId.fromJson(Map<String, dynamic> json) =
@@ -270,9 +236,7 @@ abstract class _VariantId implements VariantId {
   String? get category => throw _privateConstructorUsedError;
   @override
   String? get uom => throw _privateConstructorUsedError;
-  @override
-  double? get unit_cost => throw _privateConstructorUsedError;
-  @override
+  @override // final double? unit_cost,
   String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
@@ -1590,5 +1554,216 @@ abstract class _PartnerAddressdata implements PartnerAddressdata {
   @override
   @JsonKey(ignore: true)
   _$PartnerAddressdataCopyWith<_PartnerAddressdata> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+PurchaseInvoice _$PurchaseInvoiceFromJson(Map<String, dynamic> json) {
+  return _PurchaseInvoice.fromJson(json);
+}
+
+/// @nodoc
+class _$PurchaseInvoiceTearOff {
+  const _$PurchaseInvoiceTearOff();
+
+  _PurchaseInvoice call(
+      {int? id,
+      @JsonKey(name: "invoice_code") String? invoiceCode,
+      @JsonKey(name: "inventory_id") String? inventoryId}) {
+    return _PurchaseInvoice(
+      id: id,
+      invoiceCode: invoiceCode,
+      inventoryId: inventoryId,
+    );
+  }
+
+  PurchaseInvoice fromJson(Map<String, Object> json) {
+    return PurchaseInvoice.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $PurchaseInvoice = _$PurchaseInvoiceTearOff();
+
+/// @nodoc
+mixin _$PurchaseInvoice {
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "invoice_code")
+  String? get invoiceCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $PurchaseInvoiceCopyWith<PurchaseInvoice> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PurchaseInvoiceCopyWith<$Res> {
+  factory $PurchaseInvoiceCopyWith(
+          PurchaseInvoice value, $Res Function(PurchaseInvoice) then) =
+      _$PurchaseInvoiceCopyWithImpl<$Res>;
+  $Res call(
+      {int? id,
+      @JsonKey(name: "invoice_code") String? invoiceCode,
+      @JsonKey(name: "inventory_id") String? inventoryId});
+}
+
+/// @nodoc
+class _$PurchaseInvoiceCopyWithImpl<$Res>
+    implements $PurchaseInvoiceCopyWith<$Res> {
+  _$PurchaseInvoiceCopyWithImpl(this._value, this._then);
+
+  final PurchaseInvoice _value;
+  // ignore: unused_field
+  final $Res Function(PurchaseInvoice) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? invoiceCode = freezed,
+    Object? inventoryId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      invoiceCode: invoiceCode == freezed
+          ? _value.invoiceCode
+          : invoiceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$PurchaseInvoiceCopyWith<$Res>
+    implements $PurchaseInvoiceCopyWith<$Res> {
+  factory _$PurchaseInvoiceCopyWith(
+          _PurchaseInvoice value, $Res Function(_PurchaseInvoice) then) =
+      __$PurchaseInvoiceCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? id,
+      @JsonKey(name: "invoice_code") String? invoiceCode,
+      @JsonKey(name: "inventory_id") String? inventoryId});
+}
+
+/// @nodoc
+class __$PurchaseInvoiceCopyWithImpl<$Res>
+    extends _$PurchaseInvoiceCopyWithImpl<$Res>
+    implements _$PurchaseInvoiceCopyWith<$Res> {
+  __$PurchaseInvoiceCopyWithImpl(
+      _PurchaseInvoice _value, $Res Function(_PurchaseInvoice) _then)
+      : super(_value, (v) => _then(v as _PurchaseInvoice));
+
+  @override
+  _PurchaseInvoice get _value => super._value as _PurchaseInvoice;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? invoiceCode = freezed,
+    Object? inventoryId = freezed,
+  }) {
+    return _then(_PurchaseInvoice(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      invoiceCode: invoiceCode == freezed
+          ? _value.invoiceCode
+          : invoiceCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_PurchaseInvoice implements _PurchaseInvoice {
+  const _$_PurchaseInvoice(
+      {this.id,
+      @JsonKey(name: "invoice_code") this.invoiceCode,
+      @JsonKey(name: "inventory_id") this.inventoryId});
+
+  factory _$_PurchaseInvoice.fromJson(Map<String, dynamic> json) =>
+      _$$_PurchaseInvoiceFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  @JsonKey(name: "invoice_code")
+  final String? invoiceCode;
+  @override
+  @JsonKey(name: "inventory_id")
+  final String? inventoryId;
+
+  @override
+  String toString() {
+    return 'PurchaseInvoice(id: $id, invoiceCode: $invoiceCode, inventoryId: $inventoryId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _PurchaseInvoice &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.invoiceCode, invoiceCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.invoiceCode, invoiceCode)) &&
+            (identical(other.inventoryId, inventoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.inventoryId, inventoryId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(invoiceCode) ^
+      const DeepCollectionEquality().hash(inventoryId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$PurchaseInvoiceCopyWith<_PurchaseInvoice> get copyWith =>
+      __$PurchaseInvoiceCopyWithImpl<_PurchaseInvoice>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_PurchaseInvoiceToJson(this);
+  }
+}
+
+abstract class _PurchaseInvoice implements PurchaseInvoice {
+  const factory _PurchaseInvoice(
+      {int? id,
+      @JsonKey(name: "invoice_code") String? invoiceCode,
+      @JsonKey(name: "inventory_id") String? inventoryId}) = _$_PurchaseInvoice;
+
+  factory _PurchaseInvoice.fromJson(Map<String, dynamic> json) =
+      _$_PurchaseInvoice.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "invoice_code")
+  String? get invoiceCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$PurchaseInvoiceCopyWith<_PurchaseInvoice> get copyWith =>
       throw _privateConstructorUsedError;
 }

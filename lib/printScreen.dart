@@ -682,57 +682,6 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                       pw.  Row(
                         children: [
 
-                          pw.  Container(
-                            margin: pw.EdgeInsets.symmetric(horizontal: width*.02),
-                            child:pw. Column(
-                              crossAxisAlignment:pw. CrossAxisAlignment.start,
-                              children: [
-                                pw. Text("Remarks:",style: pw.TextStyle(fontWeight:pw. FontWeight.normal, fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw.Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment: pw.CrossAxisAlignment.start,
-                                    children: [
-                                      pw. Row(
-                                        children: [
-
-
-                                          pw.Text(remarks??"",style: pw.TextStyle(
-                                              // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                ),
-                                pw.  SizedBox(height: height*.009,),
-                                pw. Text("Note:",style:pw. TextStyle(fontWeight: pw.FontWeight.normal,fontSize: height*.018,),),
-                                pw. SizedBox(height: height*0.01,),
-                                pw. Container(
-                                  child:pw. Column(
-                                    crossAxisAlignment:pw. CrossAxisAlignment.start,
-                                    children: [
-                                      pw.  Row(
-                                        children: [
-
-
-                                          pw.  Text(note??"",style: pw.TextStyle(
-                                              // color: Color(0xff252525),
-                                              fontSize: height*.015),),
-
-                                        ],
-                                      ),
-                                      pw.  SizedBox(width: width*.009,),
-
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
                           pw.  Spacer(),
                           pw. Container(
                             margin: pw.EdgeInsets.only(right: width*.02),

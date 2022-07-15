@@ -62,9 +62,10 @@ class TextButtonLarge extends StatelessWidget {
  double w=MediaQuery.of(context).size.width;
  return Container(
 
-      width: w/10,
+      width: w/15,
       height:h/15,
       margin: EdgeInsets.only(right:w *.02,top:h*0.04 ),
+      alignment: Alignment.center,
 
       child: TextButton(onPressed:(){onPress(); },
           style: ButtonStyle(
@@ -76,12 +77,12 @@ class TextButtonLarge extends StatelessWidget {
               ),backgroundColor: MaterialStateProperty.all(Color(0XFF24203F))
           ), child: Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon),
+              // Icon(icon),
               // Image(image: AssetImage(images),height: 5,
               //   // width: context.blockSizeHorizontal*1.5,
               // ),
-              SizedBox(width: 3,),
-              Text(text,style: TextStyle(color: Colors.white,fontSize: 9),),
+              // SizedBox(width: 3,),
+              Text(text,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 9),),
             ],
           )),
     );

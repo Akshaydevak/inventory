@@ -951,7 +951,7 @@ else{
                                                         controller: planned_receipt_date,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
-                                                        label: "Promised Reciept Date",
+                                                        label: "Planne_receipt_date",
                                                         onSaved: (newValue) {
                                                           planned_receipt_date.text = newValue
                                                               ?.toIso8601String()

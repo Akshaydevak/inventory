@@ -11,7 +11,6 @@ _$_VariantId _$$_VariantIdFromJson(Map<String, dynamic> json) => _$_VariantId(
       code: json['code'] as String?,
       category: json['category'] as String?,
       uom: json['uom'] as String?,
-      unit_cost: (json['unit_cost'] as num?)?.toDouble(),
       name: json['name'] as String?,
     );
 
@@ -21,7 +20,6 @@ Map<String, dynamic> _$$_VariantIdToJson(_$_VariantId instance) =>
       'code': instance.code,
       'category': instance.category,
       'uom': instance.uom,
-      'unit_cost': instance.unit_cost,
       'name': instance.name,
     };
 
@@ -123,4 +121,18 @@ Map<String, dynamic> _$$_PartnerAddressdataToJson(
     <String, dynamic>{
       'id': instance.id,
       'address_type': instance.addressType,
+    };
+
+_$_PurchaseInvoice _$$_PurchaseInvoiceFromJson(Map<String, dynamic> json) =>
+    _$_PurchaseInvoice(
+      id: json['id'] as int?,
+      invoiceCode: json['invoice_code'] as String?,
+      inventoryId: json['inventory_id'] as String?,
+    );
+
+Map<String, dynamic> _$$_PurchaseInvoiceToJson(_$_PurchaseInvoice instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'invoice_code': instance.invoiceCode,
+      'inventory_id': instance.inventoryId,
     };

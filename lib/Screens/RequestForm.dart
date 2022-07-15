@@ -514,8 +514,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
           print("checkingdata"+data.data1.toString());
-          if (data.data1)
+          if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            clear();
+            table.clear();
+            context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
+            select=true;
+          }
           else {
             context.showSnackBarError(data.data2);
             print(data.data1);
@@ -1182,6 +1187,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: PopUpCall(
+                                                                      inventory: Variable.inventory_ID,
 
                                                                       type:"cost-method-list",
                                                                       value: table[i].variantId,
@@ -1406,7 +1412,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: CheckedBoxs(
 
-                                                                      valueChanger:table[i].isRecieved==null?false: table[i].isRecieved,
+                                                                      valueChanger:table[i].isRecieved==null?false:table[i].isRecieved,
 
 
                                                                       onSelection: (bool? value) {  },

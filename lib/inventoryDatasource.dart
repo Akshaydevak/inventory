@@ -510,7 +510,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     PurchaseRecievingRead model,
   ) async {
     print("sunithi2" + id.toString());
-    String path = rqstReceivingPatch + id.toString();
+    String path = purchaseRecievingReceivingPatch + id.toString();
     print(path);
     final response = await client.patch(path,
         data: model.toJson(),
