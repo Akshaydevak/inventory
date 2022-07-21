@@ -620,6 +620,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                     if (data.data1) {
                       context.showSnackBarSuccess(data.data2);
                       context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                      select=false;
                     }
                     else {
                       context.showSnackBarError(data.data2);
