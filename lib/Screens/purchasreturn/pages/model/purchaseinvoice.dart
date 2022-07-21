@@ -26,7 +26,6 @@ class PurchaseReturnGeneralRead with _$PurchaseReturnGeneralRead {
     @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
     @JsonKey(name:"vendor_mail_id") final String? vendorMailId,
     @JsonKey(name:"vendor_address") final String? vendorAddress,
-
     @JsonKey(name: "lines") final List<Liness>? lines,
 
   }) = _PurchaseReturnGeneralRead;
@@ -42,9 +41,11 @@ class Liness with _$Liness {
     final double? vat,
 
     @JsonKey(name:"invoice_line_code") final String? invoiceLineCode,
+    @JsonKey(name:"purchase_invoice_line_code") final String? purchaseInvoiceLineCode,
     @JsonKey(name:"variant_id") final String? variantId,
     @JsonKey(name:"variant_name") final String? variantName,
-    @JsonKey(name:"total_qty") final int? totalQty,
+    @JsonKey(name:"vendor_reference_code") final String? vendorRefrencecode,
+    @JsonKey(name:"quantity") final int? totalQty,
     @JsonKey(name:"unit_cost") final double? unitCost,
     @JsonKey(name:"vatable_amount") final double? vatableAmount,
     @JsonKey(name:"excess_tax") final double? excessTax,
@@ -53,8 +54,9 @@ class Liness with _$Liness {
     @JsonKey(name:"barcode") final String? barcode,
     @JsonKey(name:"supplier_code") final String? supplierCode,
     @JsonKey(name:"purchase_uom") final String? purchaseUom,
-    @JsonKey(name:"is_free") final bool? isFree,
-    @JsonKey(name:"is_active") final bool? isActive,
+    @JsonKey(name:"is_free",defaultValue: false) final bool? isFree,
+    @JsonKey(name:"is_active",defaultValue: false) final bool? isActive,
+    @JsonKey(name:"is_invoiced",defaultValue: false) final bool? isInvoiced,
 
 
 

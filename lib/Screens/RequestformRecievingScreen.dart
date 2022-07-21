@@ -132,18 +132,29 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   addition() {
     for (var i = 0; i < recievingLisnes.length; i++) {
       if (recievingLisnes[i].isActive == true) {
-        unitcost1 = unitcost1 + recievingLisnes[i].unitCost!;
-        grands = grands + recievingLisnes[i].grandTotal!;
-        actualValue = actualValue + recievingLisnes[i].actualCost!;
-        vatValue = vatValue + recievingLisnes[i].vat!;
-        discountValue = discountValue + recievingLisnes[i].discount!;
-        focValue = focValue + recievingLisnes[i].foc!;
-        VatableValue = VatableValue + recievingLisnes[i].vatableAmount!;
+        var unicosts= recievingLisnes[i].unitCost??0;
+        var vatValue1= recievingLisnes[i].vat??0;
+        var grands1= recievingLisnes[i].grandTotal??0;
+        var actualValue1= recievingLisnes[i].actualCost??0;
+        var discountValue1= recievingLisnes[i].discount??0;
+        var focValue1= recievingLisnes[i].foc??0;
+        var VatableValue1= recievingLisnes[i].vatableAmount??0;
+        var excessTAxValue1= recievingLisnes[i].excessTax??0;
+
+
+
+        unitcost1 = unitcost1 + unicosts;
+        grands = grands + grands1;
+        actualValue = actualValue + actualValue1;
+        vatValue = vatValue + vatValue1;
+        discountValue = discountValue +discountValue1;
+        focValue = focValue + focValue1;
+        VatableValue = VatableValue + VatableValue1;
         print("excessTaxvalue"+excessTAxValue.toString());
-        excessTAxValue = excessTAxValue + recievingLisnes[i].excessTax!;
+        excessTAxValue = excessTAxValue + excessTAxValue1;
       }
     }
-    unitCostController.text = unitcost == 0 ? "" : unitcost.toString();
+    unitCostController.text =  unitcost1.toString();
     grandtotalCostController.text = grands.toString();
     vatController.text = vatValue?.toString()??"";
     actualCostController.text = actualValue.toString();
@@ -592,14 +603,11 @@ child: IntrinsicHeight(
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
-
-
                           controller: noteController, title: "note",height: 90,maxLines: 3,),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
-
                           controller: remarksController, title: "remarks",height: 90,maxLines: 3,),
 
                       SizedBox(height: height*.035,),
@@ -1070,6 +1078,11 @@ child: IntrinsicHeight(
                                             type:"cost-method-list",
                                             value: recievingLisnes[i].variantId,
                                             onSelection: (VariantId? va) {
+                                              updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
                                               setState(() {
                                                 var  variant= va?.code;
@@ -1115,6 +1128,11 @@ child: IntrinsicHeight(
                                             value: recievingLisnes[i].vendorId ??"",
                                             onSelection:
                                                 (Result? va) {
+                                                  updateCheck=true;
+                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                  setState(() {
+
+                                                  });
 
                                                   recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:va?.partnerCode??"" );
                                               setState(() {
@@ -1158,6 +1176,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].receivedQty.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               print(va);
                                               if (va == "") {
                                                 print("entered");
@@ -1169,9 +1191,10 @@ child: IntrinsicHeight(
                                                 var unitcost = recievingLisnes[i].unitCost;
                                                 var vat = recievingLisnes[i].vat;
                                                 var foc = recievingLisnes[i].foc;
-                                                if (unitcost == "" || unitcost == 0) {
+                                                if (qty == 0 || unitcost == 0) {
                                                   recievingLisnes[i] = recievingLisnes[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
-                                                }else {var Vamount;
+                                                }else {
+                                                  var Vamount;
                                                 var vactualCost;
                                                 if(foc==0 || foc==""){
                                                   Vamount  = (((unitcost! *
@@ -1234,6 +1257,11 @@ child: IntrinsicHeight(
                                           child: CheckedBoxs(
                                               valueChanger:recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
                                               onSelection:(bool ? value){
+                                                updateCheck=true;
+                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                setState(() {
+
+                                                });
 
                                                 bool? isRecieved = recievingLisnes[i].isReceived;
                                                 setState(() {
@@ -1263,6 +1291,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].unitCost.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               double? unitcost;
                                               if (va == "") {
                                                 print("entered");
@@ -1344,6 +1376,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].excessTax.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               double? excess;
                                               if (va == "") {
                                                 excess = 0;
@@ -1407,6 +1443,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].discount.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               double? disc;
                                               if (va ==
                                                   "") {
@@ -1539,6 +1579,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].foc.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               double? foc;
                                               if (va == "") {
                                                 foc=0;
@@ -1616,6 +1660,10 @@ child: IntrinsicHeight(
                                             last: recievingLisnes[i].vat.toString() ?? "",
                                             onChanged: (va) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               if (va == "") {
                                                 print("sss");
                                                 var vatableAmount = recievingLisnes[i].vatableAmount;
@@ -1719,6 +1767,10 @@ child: IntrinsicHeight(
                                               label: "Promised reciept date",
                                               onSaved: (newValue) {
                                                 updateCheck=true;
+                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                setState(() {
+
+                                                });
                                                 recievingLisnes[i] =
                                                     recievingLisnes[i]
                                                         .copyWith(
@@ -1773,6 +1825,10 @@ child: IntrinsicHeight(
                                             onChanged: (bool?
                                             value) {
                                               updateCheck=true;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                              setState(() {
+
+                                              });
                                               bool? isActive = recievingLisnes[i].isActive;
                                               setState(() {
                                                 isActive = !isActive!;
@@ -1786,7 +1842,7 @@ child: IntrinsicHeight(
                                             },
                                           ),
                                         ),
-                                        TableTextButton(label: 'Update',
+                                        TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"",
 
                                           onPress: (){
 
@@ -1799,16 +1855,25 @@ child: IntrinsicHeight(
                                             var qty = recievingLisnes[i].receivedQty??0;
                                             var foc = recievingLisnes[i].foc??0;
                                             var dis = recievingLisnes[i].discount??0;
+                                            var exp = recievingLisnes[i].expiryDate??"";
                                             if(variant=="null"||qty==0||unitcosts==0){
                                               context.showSnackBarError("please fill all the fields");
                                             }else if(qty!<foc!){
                                               context.showSnackBarError("the received qty allways greater than  foc");
 
                                             }
+                                            else if(exp==null||exp=="null"||exp=="")
+                                              context.showSnackBarError("please select expiry date");
+
                                             else{
                                               updateCheck=false;
                                               addition();
                                               unitcost1= 0;
+                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
+                                              setState(() {
+
+                                              });
+
 
                                               grands = 0;
                                               actualValue = 0;
@@ -2417,7 +2482,7 @@ child: IntrinsicHeight(
                                                       var unitcost = additionalVariants[i].unitCost;
                                                       var vat = additionalVariants[i].vat;
                                                       var foc = additionalVariants[i].foc;
-                                                      if (unitcost == "" || unitcost == 0) {
+                                                      if (qty == 0 || unitcost == 0) {
                                                         additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                       }else {
                                                         var Vamount;

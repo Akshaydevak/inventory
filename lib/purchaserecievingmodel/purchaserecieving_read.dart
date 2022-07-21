@@ -80,6 +80,7 @@ class RecievingLines with _$RecievingLines {
     @JsonKey(name:"is_active") final bool? isActive,
     @JsonKey(name:"is_free") final bool? isFree,
     @JsonKey(name:"purchase_order_line_id") final int? purchaseOrderLineId,
+    @JsonKey(name:"updateCheck",defaultValue: false) final bool? updateCheck,
 
 
   }) = _RecievingLines;

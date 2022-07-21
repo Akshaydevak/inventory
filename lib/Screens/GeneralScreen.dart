@@ -329,17 +329,29 @@ List<TextEditingController> vatController =[];
     }
   }
   addition() {
+    if(table.isNotEmpty)
     for (var i = 0; i < table.length; i++) {
       if (table[i].isActive == true) {
-        unitcost = unitcost + table[i].unitCost!;
-        grands = grands + table[i].grandTotal!;
-        actualValue = actualValue + table[i].actualCost!;
-        vatValue = vatValue + table[i].vat!;
-        discountValue = discountValue + table[i].discount!;
-        focValue = focValue + table[i].foc!;
-        VatableValue = VatableValue + table[i].variableAmount!;
+        var unicost1= table[i].unitCost??0;
+        var vatValue1= table[i].vat??0;
+        var grands1= table[i].grandTotal??0;
+        var actualValue1= table[i].actualCost??0;
+        var discountValue1= table[i].discount??0;
+        var focValue1= table[i].foc??0;
+        var VatableValue1= table[i].variableAmount??0;
+        var excessTAxValue1= table[i].excessTax??0;
+
+
+
+        unitcost = unitcost + unicost1;
+        grands = grands + grands1;
+        actualValue = actualValue +actualValue1;
+        vatValue = vatValue + vatValue1;
+        discountValue = discountValue + discountValue1;
+        focValue = focValue + focValue1;
+        VatableValue = VatableValue +VatableValue1;
 print("excessTaxvalue"+excessTAxValue.toString());
-        excessTAxValue = excessTAxValue + table[i].excessTax!;
+        excessTAxValue = excessTAxValue + excessTAxValue1;
       }
     }
     unitcourse.text = unitcost == 0 ? "" : unitcost.toString();
@@ -511,7 +523,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              unitcourse.text = data.data?.unitcost.toString()??"";
+                              unitcourse.text = data.data?.unitcost?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.excessTax==null||data.data?.excessTax=="null"){
@@ -519,7 +531,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              excesstax.text = data.data?.excessTax.toString()??"";
+                              excesstax.text = data.data?.excessTax?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.actualCost==null||data.data?.actualCost=="null"){
@@ -527,7 +539,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              actualcost.text = data.data?.actualCost.toString()??"";
+                              actualcost.text = data.data?.actualCost?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.vat==null||data.data?.vat=="null"){
@@ -535,7 +547,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              vat.text = data.data?.vat.toString()??"";
+                              vat.text = data.data?.vat?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.grandTotal==null||data.data?.grandTotal=="null"){
@@ -543,7 +555,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              grandtotal.text = data.data?.grandTotal.toString()??"";
+                              grandtotal.text = data.data?.grandTotal?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.variableAmount==null||data.data?.variableAmount=="null"){
@@ -551,7 +563,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              Variableamount.text = data.data?.variableAmount.toString()??"";
+                              Variableamount.text = data.data?.variableAmount?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.foc ==null||data.data?.foc =="null"){
@@ -559,7 +571,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              foc.text = data.data?.foc.toString()??"";
+                              foc.text = data.data?.foc?.toStringAsFixed(2)??"";
                             });
                           }
                           if(data.data?.discount! ==null||data.data?.discount! =="null"){
@@ -567,7 +579,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              discount.text = data.data?.discount.toString()??"";
+                              discount.text = data.data?.discount?.toStringAsFixed(2)??"";
 
                             });
 
@@ -853,7 +865,7 @@ else{
                                                     SelectableDropDownpopUp(
                                                       label: "Vendor Code",
                                                       type:"VendorCodeGeneral",
-                                                      value: vendorCode.text,
+                                                      value: vendorCode.text==null|| vendorCode.text=="null"?"":vendorCode.text,
                                                       onSelection: (Result? va) {
 
                                                         print(
@@ -3443,6 +3455,8 @@ else{
                                                                       value: table[i].variantId,
                                                                       onSelection: (VariantId? va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+
                                                                         table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
                                                                             variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
                                                                             ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
@@ -3487,6 +3501,10 @@ else{
                                                                     child: UnderLinedInput(controller:requestedListControllers[i],
                                                                       onChanged: (va) {print(va);
                                                                       updateCheck=true;
+                                                                      table[i] = table[i].copyWith(updateCheck: true);
+                                                                      setState(() {
+
+                                                                      });
                                                                         if (va == "") {table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                         } else {
                                                                           var qty = int.tryParse(va);
@@ -3495,16 +3513,16 @@ else{
                                                                           var unitcost = table[i].unitCost;
                                                                           var vat = table[i].vat;
                                                                           var foc = table[i].foc;
-                                                                          if (unitcost == "" || unitcost == 0) {
+                                                                          if (qty == 0 || unitcost == 0) {
                                                                             table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                           }else {var Vamount;
                                                                           var vactualCost;
-                                                                            Vamount  = double.parse((((unitcost! * qty!) + excess!) - dis!).toDouble().toStringAsFixed(3));
+                                                                            Vamount  = double.parse((((unitcost! * qty!) + excess!) - dis!).toDouble().toStringAsFixed(2));
                                                                             if(vat==0 ||vat==""){
-                                                                              vactualCost=Vamount;
+                                                                              vactualCost=double.parse(Vamount).toStringAsFixed(2);
                                                                             }
                                                                             else{
-                                                                              vactualCost  = (Vamount! + ((Vamount! * vat!) / 100));
+                                                                              vactualCost  =double.parse (Vamount! + ((Vamount! * vat!) / 100)).toStringAsFixed(2);
                                                                             }
                                                                             table[i] = table[i].copyWith(variableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, requestedQty: qty);
                                                                           }
@@ -3520,6 +3538,9 @@ else{
                                                                       controller:minListControllers[i],
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+                                                                        });
                                                                         print(p0);
                                                                         if(p0==""){
                                                                           setState(() {
@@ -3543,6 +3564,9 @@ else{
                                                                     child: UnderLinedInput(controller:maxListControllers[i],
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+                                                                        });
                                                                         if(p0==""){
                                                                           table[i] = table[i].copyWith(maximumQty: 0);
                                                                           setState(() {
@@ -3584,6 +3608,10 @@ else{
                                                                       // last: table[i].unitCost.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         double? unitcost;
                                                                         if (va == "") {
                                                                           print("entered");
@@ -3593,7 +3621,7 @@ else{
                                                                           setState(() {});
                                                                         }
                                                                         unitcost = double.tryParse(va);
-                                                                        print("unitcost" + unitcost.toString());
+
 
                                                                         var qty = table[i].requestedQty;
                                                                         print("qty" + qty.toString());
@@ -3611,25 +3639,16 @@ else{
                                                                           table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                           setState(() {});
                                                                         } else {
+                                                                          double Vamount;
+                                                                          Vamount  = double.parse((((unitcost! * qty!) + excess!) - disc!).toDouble().toStringAsFixed(2));
 
-                                                                          var Vamount = (((unitcost! *
-                                                                              qty!) +
-                                                                              excess!) -
-                                                                              disc!)
-                                                                              .toDouble();
-                                                                          print(
-                                                                              "Vamount" +
-                                                                                  Vamount
-                                                                                      .toString());
+
 
                                                                           var vactualCost = (Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
                                                                                   100));
-                                                                          print(
-                                                                              "vactualCost" +
-                                                                                  vactualCost
-                                                                                      .toString());
+
                                                                           table[i] =
                                                                               table[i].copyWith(
                                                                                   variableAmount: Vamount,
@@ -3655,6 +3674,10 @@ else{
                                                                       // last: table[i].excessTax.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         double? excess;
                                                                         if (va == "") {
                                                                           excess = 0;
@@ -3717,6 +3740,10 @@ else{
                                                                       // last: table[i].excessTax.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         double? excess;
                                                                         if (va == "") {
                                                                           excess = 0;
@@ -3779,6 +3806,10 @@ else{
                                                                       // last: table[i].discount.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         int? disc;
                                                                         if (va ==
                                                                             "") {
@@ -3887,6 +3918,10 @@ else{
 
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
 
                                                                         print(p0);
                                                                         if(p0==""){
@@ -3941,6 +3976,10 @@ else{
                                                                       // last: table[i].vat.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         if (va == "") {
                                                                           print("sss");
                                                                           var vatableAmount = table[i].variableAmount;
@@ -4053,6 +4092,10 @@ else{
                                                                           bool? isActive = table[i].isActive;
                                                                           setState(() {
                                                                             updateCheck=true;
+                                                                            table[i] = table[i].copyWith(updateCheck: true);
+                                                                            setState(() {
+
+                                                                            });
                                                                             isActive = !isActive!;
                                                                             table[i] = table[i].copyWith(isActive: isActive);
                                                                             print(isInvoiced);
@@ -4086,6 +4129,10 @@ else{
                                                                           }
                                                                          else{
                                                                             addition();
+                                                                            table[i] = table[i].copyWith(updateCheck: false);
+                                                                            setState(() {
+
+                                                                            });
                                                                             updateCheck=false;
                                                                             focValue=0;
                                                                             excessTAxValue=0;
@@ -4102,7 +4149,7 @@ else{
                                                                             setState(() {});
                                                                           }
                                                                         },
-                                                                        child:Text(updateCheck?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
+                                                                        child:Text(table?[i].updateCheck==true?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
                                                                     ),
                                                                   ),
                                                                 ]),],
@@ -4612,7 +4659,13 @@ else{
                                                 // table:table,
                                                 // clear:clear(),
                                                 verticalId:veritiaclid ,
-                                                verticalUpdate:  verticalUpdate,
+                                                onPressed:(){
+                                                  print("akshay");
+                                                  Navigator.pop(context);
+                                               context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+
+                                                },
+
 
                                               ));
                                           // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);

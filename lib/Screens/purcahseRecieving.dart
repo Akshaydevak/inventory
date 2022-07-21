@@ -1145,6 +1145,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             type:"cost-method-list",
                                                                                             value: recievingLisnes[i].variantId,
                                                                                             onSelection: (VariantId? va) {
+                                                                                              updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               recievingLisnes[i] = recievingLisnes[i].copyWith(variantId:va?.code );
                                                                                               setState(() {
                                                                                                 var  variant= va?.code;
@@ -1192,6 +1197,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].receivedQty.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               print(va);
                                                                                               if (va == "") {
                                                                                                 print("entered");
@@ -1203,7 +1212,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 var unitcost = recievingLisnes[i].unitCost??0;
                                                                                                 var vat = recievingLisnes[i].vat??0;
                                                                                                 var foc = recievingLisnes[i].foc??0;
-                                                                                                if (unitcost == "" || unitcost == 0) {
+                                                                                                if (qty == 0 || unitcost == 0) {
                                                                                                   recievingLisnes[i] = recievingLisnes[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                                 }
 
@@ -1269,6 +1278,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               valueChanger:recievingLisnes[i].isReceived == null ? false : recievingLisnes[i].isReceived,
                                                                                               onSelection:(bool ? value){
                                                                                                 updateCheck=true;
+
+                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                                setState(() {
+
+                                                                                                });
                                                                                                     bool? isRecieved = recievingLisnes[i].isReceived;
                                                                                                 setState(() {
                                                                                                   isRecieved = !isRecieved!;
@@ -1297,6 +1311,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].unitCost.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+                                                                                              });
                                                                                               double? unitcost;
                                                                                               if (va == "") {
                                                                                                 print("entered");
@@ -1378,6 +1395,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].excessTax.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? excess;
                                                                                               if (va == "") {
                                                                                                 excess = 0;
@@ -1441,6 +1462,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].discount.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? disc;
                                                                                               if (va ==
                                                                                                   "") {
@@ -1563,6 +1588,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].foc.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? foc;
                                                                                               if (va == "") {
                                                                                                 foc=0;
@@ -1641,6 +1670,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: recievingLisnes[i].vat.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+                                                                                              });
                                                                                               if (va == "") {
                                                                                                 print("sss");
                                                                                                 var vatableAmount = recievingLisnes[i].vatableAmount;
@@ -1744,6 +1776,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               label: "Promised reciept date",
                                                                                               onSaved: (newValue) {
                                                                                                 updateCheck=true;
+                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                                setState(() {
+
+                                                                                                });
                                                                                                 recievingLisnes[i] =
                                                                                                     recievingLisnes[i]
                                                                                                         .copyWith(
@@ -1770,6 +1806,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               valueChanger:recievingLisnes[i].isFree == null ? false : recievingLisnes[i].isFree,
                                                                                               onSelection:(bool ? value){
                                                                                                 updateCheck=true;
+                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                                setState(() {
+
+                                                                                                });
                                                                                                 bool? isFree = recievingLisnes[i].isFree;
                                                                                                 setState(() {
                                                                                                   isFree = !isFree!;
@@ -1790,6 +1830,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             onSelection
                                                                                                 : (bool? value) {
                                                                                               updateCheck=true;
+                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               bool? isActive = recievingLisnes[i].isActive;
                                                                                               setState(() {
                                                                                                 isActive = !isActive!;
@@ -1814,6 +1858,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               onPressed: () {
 
                                                                                                 var variant = recievingLisnes[i].variantId??0;
+                                                                                                var expirydates = recievingLisnes[i].expiryDate??"";
 
 
                                                                                                 var excess = recievingLisnes[i].excessTax??0;
@@ -1824,13 +1869,19 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 var dis = recievingLisnes[i].discount??0;
                                                                                                 if(variant=="null"||qty==0||unitcosts==0){
                                                                                                   context.showSnackBarError("please fill all the fields");
-                                                                                                }else if(qty!<foc!){
+                                                                                                }
+                                                                                                else if(expirydates=="")    context.showSnackBarError("please select the expiry date");
+                                                                                                else if(qty!<foc!){
                                                                                                   context.showSnackBarError("the received qty allways greater than  foc");
 
                                                                                                 }
                                                                                                 else{
                                                                                                   addition();
                                                                                                   updateCheck=false;
+                                                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
+                                                                                                  setState(() {
+
+                                                                                                  });
                                                                                                   grands = 0;
                                                                                                   focValue = 0;
                                                                                                   VatableValue = 0;
@@ -1853,10 +1904,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
 
-
-
                                                                                               },
-                                                                                              child:Text(  updateCheck?"update":"",style:TextStyle(color: Colors.black))
+                                                                                              child:Text( recievingLisnes[i].updateCheck==true?"update":"",style:TextStyle(color: Colors.black))
 
                                                                                           ),
                                                                                         ),
@@ -2240,13 +2289,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: PopUpCall(
 
-                                                                                            type:
-                                                                                            "cost-method-list",
+                                                                                            type: "cost-method-list",
                                                                                             value: additionalVariants[i].variantId,
                                                                                             onSelection:
                                                                                                 (VariantId? va) {
                                                                                                   updateCheck1=true;
 
+                                                                                                  additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                  setState(() {
+
+                                                                                                  });
                                                                                               additionalVariants[i] = additionalVariants[i].copyWith(variantId:va?.code );
                                                                                               setState(() {
                                                                                                 var  variant=
@@ -2301,6 +2353,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].receivedQty.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+                                                                                              });
                                                                                               print(va);
                                                                                               if (va == "") {
                                                                                                 print("entered");
@@ -2312,7 +2367,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 var unitcost = additionalVariants[i].unitCost;
                                                                                                 var vat = additionalVariants[i].vat;
                                                                                                 var foc = additionalVariants[i].foc;
-                                                                                                if (unitcost == "" || unitcost == 0) {
+                                                                                                if (qty == 0 || unitcost == 0) {
                                                                                                   additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                                 }else {
                                                                                                   var Vamount;
@@ -2375,6 +2430,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               bool? isRecieved = additionalVariants[i].isReceived;
                                                                                               setState(() {
                                                                                                 updateCheck1=true;
+                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                setState(() {
+
+                                                                                                });
                                                                                                 isRecieved = !isRecieved!;
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(isReceived: isRecieved);
                                                                                                 print(additionalVariants);
@@ -2389,6 +2448,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].unitCost.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? unitcost;
                                                                                               if (va == "") {
                                                                                                 print("entered");
@@ -2470,6 +2533,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].excessTax.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? excess;
                                                                                               if (va == "") {
                                                                                                 excess = 0;
@@ -2653,6 +2720,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].foc.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               double? foc;
                                                                                               if (va == "") {
                                                                                                 foc=0;
@@ -2726,6 +2797,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             last: additionalVariants[i].vat.toString() ?? "",
                                                                                             onChanged: (va) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               if (va == "") {
                                                                                                 print("sss");
                                                                                                 var vatableAmount = additionalVariants[i].vatableAmount;
@@ -2820,6 +2895,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               label: "Promised reciept date",
                                                                                               onSaved: (newValue) {
                                                                                                 updateCheck1=true;
+                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                setState(() {
+
+                                                                                                });
                                                                                                 additionalVariants[i] =
                                                                                                     additionalVariants[i]
                                                                                                         .copyWith(
@@ -2839,6 +2918,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             value: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
                                                                                             onChanged: (bool? value) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               bool? isFree = additionalVariants[i].isFree;
                                                                                               setState(() {
                                                                                                 isFree = !isFree!;
@@ -2855,6 +2938,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             value: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
                                                                                             onChanged: (bool? value) {
                                                                                               updateCheck1=true;
+                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                              setState(() {
+
+                                                                                              });
                                                                                               bool? isActive = additionalVariants[i].isActive;
                                                                                               setState(() {
                                                                                                 isActive = !isActive!;
@@ -2877,14 +2964,23 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                         .grey.shade200
                                                                                                 ), onPressed: () {
                                                                                                   print("akshay");
-                                                                                                  if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false){
-                                                                                                    context.showSnackBarError(
+                                                                                                  if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false) {
+                                                                                                    context
+                                                                                                        .showSnackBarError(
                                                                                                         "please check isActive and isRecieved fields");
+                                                                                                  }
+                                                                                                    else{
+                                                                                                    additionalVariants[i]=additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                    setState(() {
+
+                                                                                                    });
 
                                                                                                   }
 
+
+
                                                                                               },
-                                                                                                child: Text("update"),
+                                                                                                child: Text(additionalVariants[i].updateCheck==true?"update":""),
                                                                                         ),
                                                                                           ))
 
@@ -3526,11 +3622,20 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 context.showSnackBarError(
                                                                                                     "isreceived and isActive always true in this");
                                                                                               }
+                                                                                              else if(vat1==0||foc1==0||recievedQty==0||unitcost==0||variantId=="" ){
+                                                                                                context.showSnackBarError(
+                                                                                                    "please fill all the details");
+                                                                                              }
+                                                                                              else if(expiryDate.text==""||expiryDate.text==null){
+                                                                                                context.showSnackBarError(
+                                                                                                    "please select expiry text");
+                                                                                              }
                                                                                               else if( foc1!>recievedQty!){
                                                                                                 context.showSnackBarError("foc always less than received qty");
                                                                                               }
 
-                                                                                              else{                      additionalVariants.add(RecievingLines(
+                                                                                              else{
+                                                                                                additionalVariants.add(RecievingLines(
                                                                                                   variantId: variantId??"",
                                                                                                   currentStock: stock,
                                                                                                   supplierCode: supplierRefCode,
@@ -4723,7 +4828,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                         pw. Text("ORDER DATE",style:pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555)
                                         ),),
-                                        pw.SizedBox(height: 3,),
+                                        pw.SizedBox(height:orderDate==""?9: 3,),
                                         pw.  Text(orderDate??"",style: pw. TextStyle(
                                             fontSize:height*.015,color: PdfColor.fromInt(0xAA565555),
                                             // color: pw.C.black,

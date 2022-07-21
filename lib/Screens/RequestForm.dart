@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -1194,6 +1195,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       onSelection:
                                                                           (VariantId? va) {
                                                                             updateCheck=true;
+                                                                            table[i] = table[i].copyWith(updateCheck: true);
+                                                                            setState(() {
+
+                                                                            });
 
                                                                         table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
                                                                             variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
@@ -1283,6 +1288,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 last: table[i].requestedQty.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         print(va);
                                                                         if (va == "") {
                                                                           print("entered");
@@ -1294,7 +1303,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           var unitcost = table[i].unitCost;
                                                                           var vat = table[i].vat;
                                                                           var foc = table[i].foc;
-                                                                          if (unitcost == "" || unitcost == 0) {
+                                                                          if (qty == 0 || unitcost == 0 ||unitcost=="") {
                                                                             table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                           }else {
                                                                             var Vamount;
@@ -1347,6 +1356,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
 
                                                                         print(p0);
                                                                         if(p0==""){
@@ -1384,6 +1397,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       last:table[i].maximumQty.toString(),
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
 
                                                                         print(p0);
                                                                         if(p0==""){
@@ -1431,6 +1448,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       last: table[i].unitCost.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         double? unitcost;
                                                                         if (va == "") {
                                                                           print("entered");
@@ -1498,6 +1519,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       last: table[i].excessTax.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         double? excess;
                                                                         if (va == "") {
                                                                           excess = 0;
@@ -1558,6 +1583,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       last: table[i].discount.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         int? disc;
                                                                         if (va ==
                                                                             "") {
@@ -1667,6 +1696,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                       onChanged: (p0) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
 
                                                                         print(p0);
                                                                         if(p0==""){
@@ -1722,6 +1755,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       last: table[i].vat.toString() ?? "",
                                                                       onChanged: (va) {
                                                                         updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
                                                                         if (va == "") {
                                                                           print("sss");
                                                                           var vatableAmount = table[i].variableAmount;
@@ -1822,6 +1859,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           bool? isFree = table[i].isFree;
                                                                           setState(() {
                                                                             updateCheck=true;
+                                                                            table[i] = table[i].copyWith(updateCheck: true);
+                                                                            setState(() {
+
+                                                                            });
                                                                             isFree = !isFree!;
                                                                             table[i] = table[i].copyWith(isFree: isFree);
 
@@ -1842,6 +1883,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                         bool? isActive = table[i].isActive;
                                                                         setState(() {
                                                                           updateCheck=true;
+                                                                          table[i] = table[i].copyWith(updateCheck: true);
+                                                                          setState(() {
+
+                                                                          });
                                                                           isActive = !isActive!;
                                                                           table[i] = table[i].copyWith(isActive: isActive);
 
@@ -1851,12 +1896,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       },
                                                                     ),
                                                                   ),
-                                                                  TableTextButton(label: updateCheck?'Update':"",
+                                                                  TableTextButton(label:table[i].updateCheck==true?'Update':"",
                                                                   onPress: (){
                                                                     var Vamount = table[i].variableAmount??0;
                                                                     var variant = table[i].variantId??0;
                                                                     var mins = table[i].minimumQty??0;
                                                                     var maxs = table[i].maximumQty??0;
+                                                                    var vat = table[i].vat??0;
 
                                                                     var excess = table[i].excessTax??0;
                                                                     print("excess" + excess.toString());
@@ -1864,7 +1910,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     var qty = table[i].requestedQty??0;
                                                                     var foc = table[i].foc??0;
                                                                     var dis = table[i].discount??0;
-                                                                    if(variant=="null"||qty==0||unitcosts==0){
+                                                                    if(variant=="null"||qty==0||unitcosts==0||foc==0||vat==0){
                                                                       context.showSnackBarError("please fill all the fields");
                                                                     }else if(qty!<foc!){
                                                                       context.showSnackBarError("the received qty allways greater than  foc");
@@ -1876,6 +1922,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     else{
                                                                       updateCheck=false;
                                                                       addition();
+                                                                      table[i] = table[i].copyWith(updateCheck: false);
+                                                                      setState(() {
+
+                                                                      });
+
                                                                       unitcost2= 0;
                                                                       grands = 0;
                                                                       actualValue = 0;
@@ -2417,7 +2468,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               TableTextButton(label: "Set", onPress: (){
                                                                 foc1=foc1??0;
                                                                 recievedQty=recievedQty??0;
-                                                                if(variantId=="null"||recievedQty==0||unitcost==0){
+                                                                if(variantId=="null"||recievedQty==0||unitcost==0||vat1==0){
                                                                   context.showSnackBarError("please fill all the fields");
                                                                 }else if(recievedQty!<foc1!){
                                                                   context.showSnackBarError("the received qty allways greater than  foc");
@@ -2553,7 +2604,24 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                               });
                                             }
-                                            else{ context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);}
+                                            else{
+                                              showDailogPopUp(
+                                                  context,
+                                                  ConfirmationPopup(
+                                                    // table:table,
+                                                    // clear:clear(),
+                                                    verticalId:veritiaclid ,
+                                                    onPressed:(){
+                                                      print("akshay");
+                                                      Navigator.pop(context);
+                                                     context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
+
+                                                    },
+
+
+                                                  ));
+
+                                            }
 
                                             },
                                         text: "Discard",height: 29,

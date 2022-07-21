@@ -3,6 +3,7 @@ const stagingUrl = "http://api-purchase-order-staging.rgcdynamics.org/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryBaseUrl = "http://65.1.61.201:8112/";
 const inventoryBaseUrl = "http://api-inventory-software-staging.rgcdynamics.org";
+const purchasereturnBaseUrl = "http://invtry-purchase-return.rgcdynamics.org/";
 
 
 const postPurchaseurl = stagingUrl + "purchase-order/create-purchase-order";
@@ -43,3 +44,7 @@ const invoiceRead =
     stagingUrl + "purchase-order/read-purchase-order-for-invoice-posting/";
 const invoicePost = stagingUrl + "purchase-order/create-purchase-invoice";
 const invoiceVerticalList = stagingUrl + "purchase-order/list-purchase-order-for-invoice-posting/";
+
+//purchase return+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+const purchaseReturnGeneralPost = purchasereturnBaseUrl + "purchase-return/create-purchase-return";
+const purchaseReturnInvoicelPost = purchasereturnBaseUrl + "purchase-return-invoice/create-purchase-return-invoice";

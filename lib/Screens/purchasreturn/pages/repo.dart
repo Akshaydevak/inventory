@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/purchasereturninvoicemodel.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/widgets/failiure.dart';
 import 'package:inventory/widgets/repoExecute.dart';
@@ -24,6 +26,10 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> getGeneralFormPatch(
       ReturnGeneralRead model, int? id);
   Future<Either<Failure, DoubleResponse>> returnGeneralDelete(int? id);
+
+  Future<Either<Failure, PurchaseInvoiceReadModel>> getInvoiceRead(int id);
+  Future<Either<Failure, DoubleResponse>> invoicePost(
+      PurchaseReturnInvoicePostModel model);
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -84,5 +90,17 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
     return repoExecute<DoubleResponse>(
         () async => remoteDataSource.returnGeneralDelete(id));
   }
-}
 
+  @override
+  Future<Either<Failure, PurchaseInvoiceReadModel>> getInvoiceRead(int id) {
+    return repoExecute<PurchaseInvoiceReadModel>(
+        () async => remoteDataSource.getInvoiceRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> invoicePost(
+      PurchaseReturnInvoicePostModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.invoicePost(model));
+  }
+}

@@ -68,10 +68,10 @@ Map<String, dynamic> _$$_PurchaseOrderPostToJson(
 _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
     _$_OrderLines(
       vat: (json['vat'] as num?)?.toDouble(),
-      isRecieved: json['isRecieved'] as bool?,
       currentQty: json['currentQty'] as int?,
       id: json['id'] as int?,
       isActive: json['is_active'] as bool? ?? false,
+      isRecieved: json['is_received'] as bool? ?? false,
       supplierCode: json['supplier_code'] as String?,
       isFree: json['is_free'] as bool?,
       isInvoiced: json['is_invoiced'] as bool?,
@@ -91,15 +91,16 @@ _$_OrderLines _$$_OrderLinesFromJson(Map<String, dynamic> json) =>
       variableAmount: (json['vatable_amount'] as num?)?.toDouble(),
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       actualCost: (json['actual_cost'] as num?)?.toDouble(),
+      updateCheck: json['updatecheck'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_OrderLinesToJson(_$_OrderLines instance) =>
     <String, dynamic>{
       'vat': instance.vat,
-      'isRecieved': instance.isRecieved,
       'currentQty': instance.currentQty,
       'id': instance.id,
       'is_active': instance.isActive,
+      'is_received': instance.isRecieved,
       'supplier_code': instance.supplierCode,
       'is_free': instance.isFree,
       'is_invoiced': instance.isInvoiced,
@@ -119,4 +120,5 @@ Map<String, dynamic> _$$_OrderLinesToJson(_$_OrderLines instance) =>
       'vatable_amount': instance.variableAmount,
       'excess_tax': instance.excessTax,
       'actual_cost': instance.actualCost,
+      'updatecheck': instance.updateCheck,
     };

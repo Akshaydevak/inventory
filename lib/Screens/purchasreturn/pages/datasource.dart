@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
+import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
+import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
 import 'model/purchaseinvoice.dart';
 import 'package:inventory/model/purchaseorder.dart';
+
+import 'model/purchasereturninvoicemodel.dart';
 
 abstract class PurchaseSourceAbstract {
   Future<List<PurchaseInvoice>> getPurchaseInvoice();
@@ -18,6 +22,8 @@ abstract class PurchaseSourceAbstract {
   Future<ReturnGeneralRead> getGeneralPurchaseReturnRead(int id);
   Future<DoubleResponse> getGeneralFormPatch(ReturnGeneralRead model, int? id);
   Future<DoubleResponse> returnGeneralDelete(int? id);
+  Future<PurchaseInvoiceReadModel> getInvoiceRead(int id);
+  Future<DoubleResponse> invoicePost(PurchaseReturnInvoicePostModel model);
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -60,7 +66,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id) async {
-    print("sssshamna" + id.toString());
+    print("Akshaytttttttt" + id.toString());
+    print("http://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id");
     try {
       String path =
           "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
@@ -105,10 +112,31 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<DoubleResponse> postGeneral(PurchaseReturnGeneralPost model) async {
+   print( purchaseReturnGeneralPost);
     try {
-      final response = await client.post(
-          "http://invtry-purchase-return.rgcdynamics.org/purchase-return/create-purchase-return",
+      final response = await client.post(purchaseReturnGeneralPost,
           data: model.toJson(),
+          // data: {
+          //   "order_type": model.orderType,
+          //   "inventory_id": model.inventoryId,
+          //   "purchase_invoice_id": model.purchaseInvoiceId,
+          //   "vendor_code": model.vendorCode,
+          //   "vendor_address": model.vendorAddress,
+          //   "vendor_trn_number": model.vendorTrnNumber,
+          //   "vendor_mail_id": model.vendorMailId,
+          //   "note": "test",
+          //   "remarks": "test",
+          //   "unit_cost": 100,
+          //   "excess_tax": 100,
+          //   "actual_cost": 100,
+          //   "vat": 100,
+          //   "grand_total": 100,
+          //   "vatable_amount": 100.0,
+          //   "foc": 100.0,
+          //   "discount": 100,
+          //   "created_by": "test",
+          //   "order_lines":model.lines
+          // },
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -125,9 +153,29 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       print("errrr" + e.toString());
     }
 
-    final response = await client.post(
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/create-purchase-return",
+    final response = await client.post(purchaseReturnGeneralPost,
         data: model.toJson(),
+        // data: {
+        //   "order_type": model.orderType,
+        //   "inventory_id": model.inventoryId,
+        //   "purchase_invoice_id": model.purchaseInvoiceId,
+        //   "vendor_code": model.vendorCode,
+        //   "vendor_address": model.vendorAddress,
+        //   "vendor_trn_number": model.vendorTrnNumber,
+        //   "vendor_mail_id": model.vendorMailId,
+        //   "note": "test",
+        //   "remarks": "test",
+        //   "unit_cost": 100,
+        //   "excess_tax": 100,
+        //   "actual_cost": 100,
+        //   "vat": 100,
+        //   "grand_total": 100,
+        //   "vatable_amount": 100.0,
+        //   "foc": 100.0,
+        //   "discount": 100,
+        //   "created_by": "test",
+        //   "order_lines":model.lines
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -271,6 +319,173 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     print("+++++++++++");
     print(response);
     print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PurchaseInvoiceReadModel> getInvoiceRead(int id) async {
+    String path =
+        "http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/read-purchase-return-order-for-invoice/" +
+            id.toString();
+    print(path);
+
+    try {
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PurchaseInvoiceReadModel dataa =
+          PurchaseInvoiceReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    PurchaseInvoiceReadModel dataa =
+        PurchaseInvoiceReadModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> invoicePost(PurchaseReturnInvoicePostModel model) async {
+    print("akkkaaa"+model.toString());
+    print("http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice");
+    try{
+      final response = await client.post("http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice",
+          data: model.toJson(),
+          // data: {
+          //
+          //   "purchase_invoice_id": "test",
+          //   "return_order_code":"XDGM4BLUCX",
+          //   "inventory_id": "test",
+          //   "invoiced_by": "test",
+          //   "vendor_id": "test",
+          //   "notes": "test",
+          //   "remarks": "test",
+          //   "unit_cost": 100,
+          //   "foc": 100,
+          //   "discount": 100,
+          //   "grand_total": 100,
+          //   "vatable_amount": 100,
+          //   "excess_tax": 100,
+          //   "actual_cost": 100,
+          //   "vat": 100,
+          //   "vendor_trn_number": "100",
+          //   "purchase_return_order_id": 100,
+          //   "invoice_lines":[{
+          //     "return_order_line_code":"SZ6VTDTEOH",
+          //     "is_invoiced":true,
+          //     "purchase_invoice_line_id":"977FWCJCYP",
+          //     "variant_id":"gcvd",
+          //     "variant_name":"test",
+          //     "total_qty":1,
+          //     "unit_cost":100,
+          //     "is_free":true,
+          //     "purchase_uom":"sdmchbd",
+          //     "supplier_code":"djhcb",
+          //     "barcode":"dchjbdhj",
+          //     "grand_total":100,
+          //     "vat":100,
+          //     "actual_cost":100,
+          //     "excess_tax":100,
+          //     "vatable_amount":100,
+          //     "discount":100,
+          //     "foc":100
+          //   }]
+          // },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    }catch(e){
+      print("akshayaaa"+e.toString());
+    }
+    final response = await client.post("http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice",
+        data: model.toJson(),
+    //     data: {
+    //
+    // "purchase_invoice_id": "test",
+    // "return_order_code":"XDGM4BLUCX",
+    // "inventory_id": "test",
+    // "invoiced_by": "test",
+    // "vendor_id": "test",
+    // "notes": "test",
+    // "remarks": "test",
+    // "unit_cost": 100,
+    // "foc": 100,
+    // "discount": 100,
+    // "grand_total": 100,
+    // "vatable_amount": 100,
+    // "excess_tax": 100,
+    // "actual_cost": 100,
+    // "vat": 100,
+    // "vendor_trn_number": "100",
+    // "purchase_return_order_id": 100,
+    // "invoice_lines":[{
+    // "return_order_line_code":"SZ6VTDTEOH",
+    // "is_invoiced":true,
+    // "purchase_invoice_line_id":"977FWCJCYP",
+    // "variant_id":"gcvd",
+    // "variant_name":"test",
+    // "total_qty":1,
+    // "unit_cost":100,
+    // "is_free":true,
+    // "purchase_uom":"sdmchbd",
+    // "supplier_code":"djhcb",
+    // "barcode":"dchjbdhj",
+    // "grand_total":100,
+    // "vat":100,
+    // "actual_cost":100,
+    // "excess_tax":100,
+    // "vatable_amount":100,
+    // "discount":100,
+    // "foc":100
+    // }]
+    // },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }

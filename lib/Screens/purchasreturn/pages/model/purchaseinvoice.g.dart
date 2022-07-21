@@ -58,9 +58,11 @@ _$_Liness _$$_LinessFromJson(Map<String, dynamic> json) => _$_Liness(
       discount: (json['discount'] as num?)?.toDouble(),
       vat: (json['vat'] as num?)?.toDouble(),
       invoiceLineCode: json['invoice_line_code'] as String?,
+      purchaseInvoiceLineCode: json['purchase_invoice_line_code'] as String?,
       variantId: json['variant_id'] as String?,
       variantName: json['variant_name'] as String?,
-      totalQty: json['total_qty'] as int?,
+      vendorRefrencecode: json['vendor_reference_code'] as String?,
+      totalQty: json['quantity'] as int?,
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       vatableAmount: (json['vatable_amount'] as num?)?.toDouble(),
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
@@ -69,8 +71,9 @@ _$_Liness _$$_LinessFromJson(Map<String, dynamic> json) => _$_Liness(
       barcode: json['barcode'] as String?,
       supplierCode: json['supplier_code'] as String?,
       purchaseUom: json['purchase_uom'] as String?,
-      isFree: json['is_free'] as bool?,
-      isActive: json['is_active'] as bool?,
+      isFree: json['is_free'] as bool? ?? false,
+      isActive: json['is_active'] as bool? ?? false,
+      isInvoiced: json['is_invoiced'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_LinessToJson(_$_Liness instance) => <String, dynamic>{
@@ -79,9 +82,11 @@ Map<String, dynamic> _$$_LinessToJson(_$_Liness instance) => <String, dynamic>{
       'discount': instance.discount,
       'vat': instance.vat,
       'invoice_line_code': instance.invoiceLineCode,
+      'purchase_invoice_line_code': instance.purchaseInvoiceLineCode,
       'variant_id': instance.variantId,
       'variant_name': instance.variantName,
-      'total_qty': instance.totalQty,
+      'vendor_reference_code': instance.vendorRefrencecode,
+      'quantity': instance.totalQty,
       'unit_cost': instance.unitCost,
       'vatable_amount': instance.vatableAmount,
       'excess_tax': instance.excessTax,
@@ -92,6 +97,7 @@ Map<String, dynamic> _$$_LinessToJson(_$_Liness instance) => <String, dynamic>{
       'purchase_uom': instance.purchaseUom,
       'is_free': instance.isFree,
       'is_active': instance.isActive,
+      'is_invoiced': instance.isInvoiced,
     };
 
 _$_ReturnGeneralRead _$$_ReturnGeneralReadFromJson(Map<String, dynamic> json) =>

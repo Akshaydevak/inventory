@@ -40,6 +40,7 @@ class PurchaseReturnGeneralPost with _$PurchaseReturnGeneralPost {
   factory PurchaseReturnGeneralPost.fromJson(Map<String, dynamic> json) =>
       _$PurchaseReturnGeneralPostFromJson(json);
 }
+
 // @freezed
 // class Liness with _$Liness {
 //   const factory Liness({

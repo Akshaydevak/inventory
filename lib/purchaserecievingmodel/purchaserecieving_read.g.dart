@@ -112,6 +112,7 @@ _$_RecievingLines _$$_RecievingLinesFromJson(Map<String, dynamic> json) =>
       isActive: json['is_active'] as bool?,
       isFree: json['is_free'] as bool?,
       purchaseOrderLineId: json['purchase_order_line_id'] as int?,
+      updateCheck: json['updateCheck'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_RecievingLinesToJson(_$_RecievingLines instance) =>
@@ -144,6 +145,7 @@ Map<String, dynamic> _$$_RecievingLinesToJson(_$_RecievingLines instance) =>
       'is_active': instance.isActive,
       'is_free': instance.isFree,
       'purchase_order_line_id': instance.purchaseOrderLineId,
+      'updateCheck': instance.updateCheck,
     };
 
 _$_AdditionalGenerateModel _$$_AdditionalGenerateModelFromJson(

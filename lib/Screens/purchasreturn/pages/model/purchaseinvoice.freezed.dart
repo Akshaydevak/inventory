@@ -622,28 +622,50 @@ class _$LinessTearOff {
       double? foc,
       double? discount,
       double? vat,
-      @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
-      @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "vatable_amount") double? vatableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "supplier_code") String? supplierCode,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "is_active") bool? isActive}) {
+      @JsonKey(name: "invoice_line_code")
+          String? invoiceLineCode,
+      @JsonKey(name: "purchase_invoice_line_code")
+          String? purchaseInvoiceLineCode,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefrencecode,
+      @JsonKey(name: "quantity")
+          int? totalQty,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "barcode")
+          String? barcode,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseUom,
+      @JsonKey(name: "is_free", defaultValue: false)
+          bool? isFree,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "is_invoiced", defaultValue: false)
+          bool? isInvoiced}) {
     return _Liness(
       id: id,
       foc: foc,
       discount: discount,
       vat: vat,
       invoiceLineCode: invoiceLineCode,
+      purchaseInvoiceLineCode: purchaseInvoiceLineCode,
       variantId: variantId,
       variantName: variantName,
+      vendorRefrencecode: vendorRefrencecode,
       totalQty: totalQty,
       unitCost: unitCost,
       vatableAmount: vatableAmount,
@@ -655,6 +677,7 @@ class _$LinessTearOff {
       purchaseUom: purchaseUom,
       isFree: isFree,
       isActive: isActive,
+      isInvoiced: isInvoiced,
     );
   }
 
@@ -674,11 +697,15 @@ mixin _$Liness {
   double? get vat => throw _privateConstructorUsedError;
   @JsonKey(name: "invoice_line_code")
   String? get invoiceLineCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "purchase_invoice_line_code")
+  String? get purchaseInvoiceLineCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefrencecode => throw _privateConstructorUsedError;
+  @JsonKey(name: "quantity")
   int? get totalQty => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
@@ -696,10 +723,12 @@ mixin _$Liness {
   String? get supplierCode => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom")
   String? get purchaseUom => throw _privateConstructorUsedError;
-  @JsonKey(name: "is_free")
+  @JsonKey(name: "is_free", defaultValue: false)
   bool? get isFree => throw _privateConstructorUsedError;
-  @JsonKey(name: "is_active")
+  @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_invoiced", defaultValue: false)
+  bool? get isInvoiced => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -715,20 +744,40 @@ abstract class $LinessCopyWith<$Res> {
       double? foc,
       double? discount,
       double? vat,
-      @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
-      @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "vatable_amount") double? vatableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "supplier_code") String? supplierCode,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "is_active") bool? isActive});
+      @JsonKey(name: "invoice_line_code")
+          String? invoiceLineCode,
+      @JsonKey(name: "purchase_invoice_line_code")
+          String? purchaseInvoiceLineCode,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefrencecode,
+      @JsonKey(name: "quantity")
+          int? totalQty,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "barcode")
+          String? barcode,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseUom,
+      @JsonKey(name: "is_free", defaultValue: false)
+          bool? isFree,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "is_invoiced", defaultValue: false)
+          bool? isInvoiced});
 }
 
 /// @nodoc
@@ -746,8 +795,10 @@ class _$LinessCopyWithImpl<$Res> implements $LinessCopyWith<$Res> {
     Object? discount = freezed,
     Object? vat = freezed,
     Object? invoiceLineCode = freezed,
+    Object? purchaseInvoiceLineCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
+    Object? vendorRefrencecode = freezed,
     Object? totalQty = freezed,
     Object? unitCost = freezed,
     Object? vatableAmount = freezed,
@@ -759,6 +810,7 @@ class _$LinessCopyWithImpl<$Res> implements $LinessCopyWith<$Res> {
     Object? purchaseUom = freezed,
     Object? isFree = freezed,
     Object? isActive = freezed,
+    Object? isInvoiced = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -781,6 +833,10 @@ class _$LinessCopyWithImpl<$Res> implements $LinessCopyWith<$Res> {
           ? _value.invoiceLineCode
           : invoiceLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      purchaseInvoiceLineCode: purchaseInvoiceLineCode == freezed
+          ? _value.purchaseInvoiceLineCode
+          : purchaseInvoiceLineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -788,6 +844,10 @@ class _$LinessCopyWithImpl<$Res> implements $LinessCopyWith<$Res> {
       variantName: variantName == freezed
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefrencecode: vendorRefrencecode == freezed
+          ? _value.vendorRefrencecode
+          : vendorRefrencecode // ignore: cast_nullable_to_non_nullable
               as String?,
       totalQty: totalQty == freezed
           ? _value.totalQty
@@ -833,6 +893,10 @@ class _$LinessCopyWithImpl<$Res> implements $LinessCopyWith<$Res> {
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isInvoiced: isInvoiced == freezed
+          ? _value.isInvoiced
+          : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -847,20 +911,40 @@ abstract class _$LinessCopyWith<$Res> implements $LinessCopyWith<$Res> {
       double? foc,
       double? discount,
       double? vat,
-      @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
-      @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "vatable_amount") double? vatableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "supplier_code") String? supplierCode,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "is_active") bool? isActive});
+      @JsonKey(name: "invoice_line_code")
+          String? invoiceLineCode,
+      @JsonKey(name: "purchase_invoice_line_code")
+          String? purchaseInvoiceLineCode,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefrencecode,
+      @JsonKey(name: "quantity")
+          int? totalQty,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "barcode")
+          String? barcode,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseUom,
+      @JsonKey(name: "is_free", defaultValue: false)
+          bool? isFree,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "is_invoiced", defaultValue: false)
+          bool? isInvoiced});
 }
 
 /// @nodoc
@@ -879,8 +963,10 @@ class __$LinessCopyWithImpl<$Res> extends _$LinessCopyWithImpl<$Res>
     Object? discount = freezed,
     Object? vat = freezed,
     Object? invoiceLineCode = freezed,
+    Object? purchaseInvoiceLineCode = freezed,
     Object? variantId = freezed,
     Object? variantName = freezed,
+    Object? vendorRefrencecode = freezed,
     Object? totalQty = freezed,
     Object? unitCost = freezed,
     Object? vatableAmount = freezed,
@@ -892,6 +978,7 @@ class __$LinessCopyWithImpl<$Res> extends _$LinessCopyWithImpl<$Res>
     Object? purchaseUom = freezed,
     Object? isFree = freezed,
     Object? isActive = freezed,
+    Object? isInvoiced = freezed,
   }) {
     return _then(_Liness(
       id: id == freezed
@@ -914,6 +1001,10 @@ class __$LinessCopyWithImpl<$Res> extends _$LinessCopyWithImpl<$Res>
           ? _value.invoiceLineCode
           : invoiceLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      purchaseInvoiceLineCode: purchaseInvoiceLineCode == freezed
+          ? _value.purchaseInvoiceLineCode
+          : purchaseInvoiceLineCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
@@ -921,6 +1012,10 @@ class __$LinessCopyWithImpl<$Res> extends _$LinessCopyWithImpl<$Res>
       variantName: variantName == freezed
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      vendorRefrencecode: vendorRefrencecode == freezed
+          ? _value.vendorRefrencecode
+          : vendorRefrencecode // ignore: cast_nullable_to_non_nullable
               as String?,
       totalQty: totalQty == freezed
           ? _value.totalQty
@@ -966,6 +1061,10 @@ class __$LinessCopyWithImpl<$Res> extends _$LinessCopyWithImpl<$Res>
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
+      isInvoiced: isInvoiced == freezed
+          ? _value.isInvoiced
+          : isInvoiced // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -979,9 +1078,11 @@ class _$_Liness implements _Liness {
       this.discount,
       this.vat,
       @JsonKey(name: "invoice_line_code") this.invoiceLineCode,
+      @JsonKey(name: "purchase_invoice_line_code") this.purchaseInvoiceLineCode,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
-      @JsonKey(name: "total_qty") this.totalQty,
+      @JsonKey(name: "vendor_reference_code") this.vendorRefrencecode,
+      @JsonKey(name: "quantity") this.totalQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
@@ -990,8 +1091,9 @@ class _$_Liness implements _Liness {
       @JsonKey(name: "barcode") this.barcode,
       @JsonKey(name: "supplier_code") this.supplierCode,
       @JsonKey(name: "purchase_uom") this.purchaseUom,
-      @JsonKey(name: "is_free") this.isFree,
-      @JsonKey(name: "is_active") this.isActive});
+      @JsonKey(name: "is_free", defaultValue: false) this.isFree,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive,
+      @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced});
 
   factory _$_Liness.fromJson(Map<String, dynamic> json) =>
       _$$_LinessFromJson(json);
@@ -1008,13 +1110,19 @@ class _$_Liness implements _Liness {
   @JsonKey(name: "invoice_line_code")
   final String? invoiceLineCode;
   @override
+  @JsonKey(name: "purchase_invoice_line_code")
+  final String? purchaseInvoiceLineCode;
+  @override
   @JsonKey(name: "variant_id")
   final String? variantId;
   @override
   @JsonKey(name: "variant_name")
   final String? variantName;
   @override
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "vendor_reference_code")
+  final String? vendorRefrencecode;
+  @override
+  @JsonKey(name: "quantity")
   final int? totalQty;
   @override
   @JsonKey(name: "unit_cost")
@@ -1041,15 +1149,18 @@ class _$_Liness implements _Liness {
   @JsonKey(name: "purchase_uom")
   final String? purchaseUom;
   @override
-  @JsonKey(name: "is_free")
+  @JsonKey(name: "is_free", defaultValue: false)
   final bool? isFree;
   @override
-  @JsonKey(name: "is_active")
+  @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
+  @override
+  @JsonKey(name: "is_invoiced", defaultValue: false)
+  final bool? isInvoiced;
 
   @override
   String toString() {
-    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, variantId: $variantId, variantName: $variantName, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive)';
+    return 'Liness(id: $id, foc: $foc, discount: $discount, vat: $vat, invoiceLineCode: $invoiceLineCode, purchaseInvoiceLineCode: $purchaseInvoiceLineCode, variantId: $variantId, variantName: $variantName, vendorRefrencecode: $vendorRefrencecode, totalQty: $totalQty, unitCost: $unitCost, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, grandTotal: $grandTotal, barcode: $barcode, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isFree: $isFree, isActive: $isActive, isInvoiced: $isInvoiced)';
   }
 
   @override
@@ -1068,12 +1179,18 @@ class _$_Liness implements _Liness {
             (identical(other.invoiceLineCode, invoiceLineCode) ||
                 const DeepCollectionEquality()
                     .equals(other.invoiceLineCode, invoiceLineCode)) &&
+            (identical(other.purchaseInvoiceLineCode, purchaseInvoiceLineCode) ||
+                const DeepCollectionEquality().equals(
+                    other.purchaseInvoiceLineCode, purchaseInvoiceLineCode)) &&
             (identical(other.variantId, variantId) ||
                 const DeepCollectionEquality()
                     .equals(other.variantId, variantId)) &&
             (identical(other.variantName, variantName) ||
                 const DeepCollectionEquality()
                     .equals(other.variantName, variantName)) &&
+            (identical(other.vendorRefrencecode, vendorRefrencecode) ||
+                const DeepCollectionEquality()
+                    .equals(other.vendorRefrencecode, vendorRefrencecode)) &&
             (identical(other.totalQty, totalQty) ||
                 const DeepCollectionEquality()
                     .equals(other.totalQty, totalQty)) &&
@@ -1101,11 +1218,9 @@ class _$_Liness implements _Liness {
             (identical(other.purchaseUom, purchaseUom) ||
                 const DeepCollectionEquality()
                     .equals(other.purchaseUom, purchaseUom)) &&
-            (identical(other.isFree, isFree) ||
-                const DeepCollectionEquality().equals(other.isFree, isFree)) &&
-            (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+            (identical(other.isFree, isFree) || const DeepCollectionEquality().equals(other.isFree, isFree)) &&
+            (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
+            (identical(other.isInvoiced, isInvoiced) || const DeepCollectionEquality().equals(other.isInvoiced, isInvoiced)));
   }
 
   @override
@@ -1116,8 +1231,10 @@ class _$_Liness implements _Liness {
       const DeepCollectionEquality().hash(discount) ^
       const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(invoiceLineCode) ^
+      const DeepCollectionEquality().hash(purchaseInvoiceLineCode) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantName) ^
+      const DeepCollectionEquality().hash(vendorRefrencecode) ^
       const DeepCollectionEquality().hash(totalQty) ^
       const DeepCollectionEquality().hash(unitCost) ^
       const DeepCollectionEquality().hash(vatableAmount) ^
@@ -1128,7 +1245,8 @@ class _$_Liness implements _Liness {
       const DeepCollectionEquality().hash(supplierCode) ^
       const DeepCollectionEquality().hash(purchaseUom) ^
       const DeepCollectionEquality().hash(isFree) ^
-      const DeepCollectionEquality().hash(isActive);
+      const DeepCollectionEquality().hash(isActive) ^
+      const DeepCollectionEquality().hash(isInvoiced);
 
   @JsonKey(ignore: true)
   @override
@@ -1147,20 +1265,40 @@ abstract class _Liness implements Liness {
       double? foc,
       double? discount,
       double? vat,
-      @JsonKey(name: "invoice_line_code") String? invoiceLineCode,
-      @JsonKey(name: "variant_id") String? variantId,
-      @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "total_qty") int? totalQty,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "vatable_amount") double? vatableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "supplier_code") String? supplierCode,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "is_active") bool? isActive}) = _$_Liness;
+      @JsonKey(name: "invoice_line_code")
+          String? invoiceLineCode,
+      @JsonKey(name: "purchase_invoice_line_code")
+          String? purchaseInvoiceLineCode,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefrencecode,
+      @JsonKey(name: "quantity")
+          int? totalQty,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "barcode")
+          String? barcode,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseUom,
+      @JsonKey(name: "is_free", defaultValue: false)
+          bool? isFree,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "is_invoiced", defaultValue: false)
+          bool? isInvoiced}) = _$_Liness;
 
   factory _Liness.fromJson(Map<String, dynamic> json) = _$_Liness.fromJson;
 
@@ -1176,13 +1314,19 @@ abstract class _Liness implements Liness {
   @JsonKey(name: "invoice_line_code")
   String? get invoiceLineCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "purchase_invoice_line_code")
+  String? get purchaseInvoiceLineCode => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "variant_id")
   String? get variantId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "vendor_reference_code")
+  String? get vendorRefrencecode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "quantity")
   int? get totalQty => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "unit_cost")
@@ -1209,11 +1353,14 @@ abstract class _Liness implements Liness {
   @JsonKey(name: "purchase_uom")
   String? get purchaseUom => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "is_free")
+  @JsonKey(name: "is_free", defaultValue: false)
   bool? get isFree => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "is_active")
+  @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_invoiced", defaultValue: false)
+  bool? get isInvoiced => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LinessCopyWith<_Liness> get copyWith => throw _privateConstructorUsedError;

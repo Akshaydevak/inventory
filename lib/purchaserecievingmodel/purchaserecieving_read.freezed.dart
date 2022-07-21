@@ -1067,7 +1067,8 @@ class _$RecievingLinesTearOff {
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "is_active") bool? isActive,
       @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId}) {
+      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck}) {
     return _RecievingLines(
       id: id,
       currentStock: currentStock,
@@ -1097,6 +1098,7 @@ class _$RecievingLinesTearOff {
       isActive: isActive,
       isFree: isFree,
       purchaseOrderLineId: purchaseOrderLineId,
+      updateCheck: updateCheck,
     );
   }
 
@@ -1160,6 +1162,8 @@ mixin _$RecievingLines {
   bool? get isFree => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_order_line_id")
   int? get purchaseOrderLineId => throw _privateConstructorUsedError;
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1200,7 +1204,8 @@ abstract class $RecievingLinesCopyWith<$Res> {
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "is_active") bool? isActive,
       @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId});
+      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck});
 }
 
 /// @nodoc
@@ -1242,6 +1247,7 @@ class _$RecievingLinesCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? isFree = freezed,
     Object? purchaseOrderLineId = freezed,
+    Object? updateCheck = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -1356,6 +1362,10 @@ class _$RecievingLinesCopyWithImpl<$Res>
           ? _value.purchaseOrderLineId
           : purchaseOrderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
+      updateCheck: updateCheck == freezed
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1395,7 +1405,8 @@ abstract class _$RecievingLinesCopyWith<$Res>
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
       @JsonKey(name: "is_active") bool? isActive,
       @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId});
+      @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId,
+      @JsonKey(name: "updateCheck", defaultValue: false) bool? updateCheck});
 }
 
 /// @nodoc
@@ -1439,6 +1450,7 @@ class __$RecievingLinesCopyWithImpl<$Res>
     Object? isActive = freezed,
     Object? isFree = freezed,
     Object? purchaseOrderLineId = freezed,
+    Object? updateCheck = freezed,
   }) {
     return _then(_RecievingLines(
       id: id == freezed
@@ -1553,6 +1565,10 @@ class __$RecievingLinesCopyWithImpl<$Res>
           ? _value.purchaseOrderLineId
           : purchaseOrderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
+      updateCheck: updateCheck == freezed
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1588,7 +1604,8 @@ class _$_RecievingLines implements _RecievingLines {
       @JsonKey(name: "is_invoiced") this.isInvoiced,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "is_free") this.isFree,
-      @JsonKey(name: "purchase_order_line_id") this.purchaseOrderLineId});
+      @JsonKey(name: "purchase_order_line_id") this.purchaseOrderLineId,
+      @JsonKey(name: "updateCheck", defaultValue: false) this.updateCheck});
 
   factory _$_RecievingLines.fromJson(Map<String, dynamic> json) =>
       _$$_RecievingLinesFromJson(json);
@@ -1671,10 +1688,13 @@ class _$_RecievingLines implements _RecievingLines {
   @override
   @JsonKey(name: "purchase_order_line_id")
   final int? purchaseOrderLineId;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  final bool? updateCheck;
 
   @override
   String toString() {
-    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorAddress: $vendorAddress, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId)';
+    return 'RecievingLines(id: $id, currentStock: $currentStock, barcode: $barcode, foc: $foc, discount: $discount, vat: $vat, orderLineCode: $orderLineCode, receivinglineCode: $receivinglineCode, vendorRefCode: $vendorRefCode, variantId: $variantId, variantName: $variantName, supplierCode: $supplierCode, purchaseUom: $purchaseUom, isReceived: $isReceived, unitCost: $unitCost, grandTotal: $grandTotal, receivedQty: $receivedQty, expiryDate: $expiryDate, vendorId: $vendorId, vendorTrnNumber: $vendorTrnNumber, vendorAddress: $vendorAddress, vatableAmount: $vatableAmount, excessTax: $excessTax, actualCost: $actualCost, isInvoiced: $isInvoiced, isActive: $isActive, isFree: $isFree, purchaseOrderLineId: $purchaseOrderLineId, updateCheck: $updateCheck)';
   }
 
   @override
@@ -1751,7 +1771,8 @@ class _$_RecievingLines implements _RecievingLines {
             (identical(other.isInvoiced, isInvoiced) || const DeepCollectionEquality().equals(other.isInvoiced, isInvoiced)) &&
             (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
             (identical(other.isFree, isFree) || const DeepCollectionEquality().equals(other.isFree, isFree)) &&
-            (identical(other.purchaseOrderLineId, purchaseOrderLineId) || const DeepCollectionEquality().equals(other.purchaseOrderLineId, purchaseOrderLineId)));
+            (identical(other.purchaseOrderLineId, purchaseOrderLineId) || const DeepCollectionEquality().equals(other.purchaseOrderLineId, purchaseOrderLineId)) &&
+            (identical(other.updateCheck, updateCheck) || const DeepCollectionEquality().equals(other.updateCheck, updateCheck)));
   }
 
   @override
@@ -1784,7 +1805,8 @@ class _$_RecievingLines implements _RecievingLines {
       const DeepCollectionEquality().hash(isInvoiced) ^
       const DeepCollectionEquality().hash(isActive) ^
       const DeepCollectionEquality().hash(isFree) ^
-      const DeepCollectionEquality().hash(purchaseOrderLineId);
+      const DeepCollectionEquality().hash(purchaseOrderLineId) ^
+      const DeepCollectionEquality().hash(updateCheck);
 
   @JsonKey(ignore: true)
   @override
@@ -1799,35 +1821,58 @@ class _$_RecievingLines implements _RecievingLines {
 
 abstract class _RecievingLines implements RecievingLines {
   const factory _RecievingLines(
-          {int? id,
-          int? currentStock,
-          String? barcode,
-          double? foc,
-          double? discount,
-          double? vat,
-          @JsonKey(name: "order_line_code") String? orderLineCode,
-          @JsonKey(name: "receiving_line_code") String? receivinglineCode,
-          @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
-          @JsonKey(name: "variant_id") String? variantId,
-          @JsonKey(name: "variant_name") String? variantName,
-          @JsonKey(name: "supplier_code") String? supplierCode,
-          @JsonKey(name: "purchase_uom") String? purchaseUom,
-          @JsonKey(name: "is_received") bool? isReceived,
-          @JsonKey(name: "unit_cost") double? unitCost,
-          @JsonKey(name: "grand_total") double? grandTotal,
-          @JsonKey(name: "received_qty") int? receivedQty,
-          @JsonKey(name: "expiry_date") String? expiryDate,
-          @JsonKey(name: "vendor_id") String? vendorId,
-          @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-          @JsonKey(name: "vendor_address") String? vendorAddress,
-          @JsonKey(name: "vatable_amount") double? vatableAmount,
-          @JsonKey(name: "excess_tax") double? excessTax,
-          @JsonKey(name: "actual_cost") double? actualCost,
-          @JsonKey(name: "is_invoiced") bool? isInvoiced,
-          @JsonKey(name: "is_active") bool? isActive,
-          @JsonKey(name: "is_free") bool? isFree,
-          @JsonKey(name: "purchase_order_line_id") int? purchaseOrderLineId}) =
-      _$_RecievingLines;
+      {int? id,
+      int? currentStock,
+      String? barcode,
+      double? foc,
+      double? discount,
+      double? vat,
+      @JsonKey(name: "order_line_code")
+          String? orderLineCode,
+      @JsonKey(name: "receiving_line_code")
+          String? receivinglineCode,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefCode,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseUom,
+      @JsonKey(name: "is_received")
+          bool? isReceived,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "received_qty")
+          int? receivedQty,
+      @JsonKey(name: "expiry_date")
+          String? expiryDate,
+      @JsonKey(name: "vendor_id")
+          String? vendorId,
+      @JsonKey(name: "vendor_trn_number")
+          String? vendorTrnNumber,
+      @JsonKey(name: "vendor_address")
+          String? vendorAddress,
+      @JsonKey(name: "vatable_amount")
+          double? vatableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "is_invoiced")
+          bool? isInvoiced,
+      @JsonKey(name: "is_active")
+          bool? isActive,
+      @JsonKey(name: "is_free")
+          bool? isFree,
+      @JsonKey(name: "purchase_order_line_id")
+          int? purchaseOrderLineId,
+      @JsonKey(name: "updateCheck", defaultValue: false)
+          bool? updateCheck}) = _$_RecievingLines;
 
   factory _RecievingLines.fromJson(Map<String, dynamic> json) =
       _$_RecievingLines.fromJson;
@@ -1910,6 +1955,9 @@ abstract class _RecievingLines implements RecievingLines {
   @override
   @JsonKey(name: "purchase_order_line_id")
   int? get purchaseOrderLineId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "updateCheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$RecievingLinesCopyWith<_RecievingLines> get copyWith =>

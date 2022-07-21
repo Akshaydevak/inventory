@@ -347,6 +347,7 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                     return Container(
                       margin: EdgeInsets.only(top: 9,left: 9),
                       child: TypeAheadFormField(
+                        // hideKeyboard: true,
                         enabled: widget.enable,
                         validator: (value) {
                           if (value != null && value.isEmpty) {
@@ -354,6 +355,7 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                           }
                         },
                         textFieldConfiguration: TextFieldConfiguration(
+
                             style: TextStyle(fontSize: 13, ),
                             controller: _controller,
                             decoration: InputDecoration(

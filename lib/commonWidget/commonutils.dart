@@ -356,11 +356,12 @@ class _VendorPopupState extends State<VendorPopup> {
 }
 
 class ConfirmationPopup extends StatefulWidget {
-  final Function? verticalUpdate;
+
   final Function? clear;
+  final Function? onPressed;
  final List<OrderLines>? table;
   final int? verticalId;
-  ConfirmationPopup({this.verticalUpdate,this.verticalId,this.table,this.clear});
+  ConfirmationPopup({this.verticalId,this.table,this.clear,required this.onPressed});
 
 
   @override
@@ -386,87 +387,26 @@ create: (context) => InventorysearchCubit(),)
   ],
   child: Builder(
         builder: (context) {
-          return MultiBlocListener(
-  listeners: [
-    BlocListener<PurchaseorderdeleteCubit, PurchaseorderdeleteState>(
-  listener: (context, state) {
-    state.maybeWhen(orElse: () {
-      // context.
-      context.showSnackBarError("Loadingggg");
-    }, error: () {
-      context.showSnackBarError(Variable.errorMessege);
-    }, success: (data) {
-      if (data.data1) {
-        context.showSnackBarSuccess(data.data2);
-      //  widget.clear!();
-      // widget.table?.clear();
+          return AlertDialog(
+                    actions: [
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: (){
+                          widget.onPressed!();
+                        }
+                          // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
 
-        context
-            .read<InventorysearchCubit>()
-            .getInventorySearch("code");
-        setState(() {
+                      ),
+                      TextButton(
+                        child: Text("Cancel"),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                    content: Text("Do you want to delete the order?")
 
-        });
-        // select=true;
-
-      }
-      else {
-        context.showSnackBarError(data.data2);
-        print(data.data1);
-      }
-      ;
-    });
-  },
-),
-    BlocListener<InventorysearchCubit, InventorysearchState>(
-    listener: (context, state) {
-      state.maybeWhen(
-          orElse: () {},
-          error: () {
-            print("error");
-          },
-          success: (list) {
-            print("listaaaaaaaaaaaa" + list.data.toString());
-
-            // result = list.data;
-            setState(() {
-              print("Akshay"+list.data.toString());
-              if(list.data.isNotEmpty){
-                widget?.verticalUpdate!(list.data);
-              }
-              // Variable.verticalid=result[0].id;
-              // print("Variable.ak"+Variable.verticalid.toString());
-              // }
-              // else{
-              //   select=true;
-              // }
-
-
-              setState(() {});
-            });
-          });
-    }
-    ),
-  ],
-  child: AlertDialog(
-            actions: [
-              TextButton(
-                child: Text("OK"),
-                onPressed: () {
-                  context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
-                },
-              ),
-              TextButton(
-                child: Text("Cancel"),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              )
-            ],
-            content: Text("Do you want to delete the order?")
-
-          ),
-);
+                  );
         }
     ),
 );

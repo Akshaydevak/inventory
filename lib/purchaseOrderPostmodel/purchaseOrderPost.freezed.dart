@@ -822,10 +822,10 @@ class _$OrderLinesTearOff {
 
   _OrderLines call(
       {double? vat,
-      bool? isRecieved,
       int? currentQty,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_received", defaultValue: false) bool? isRecieved,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "is_free") bool? isFree,
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
@@ -844,13 +844,14 @@ class _$OrderLinesTearOff {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost}) {
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "updatecheck", defaultValue: false) bool? updateCheck}) {
     return _OrderLines(
       vat: vat,
-      isRecieved: isRecieved,
       currentQty: currentQty,
       id: id,
       isActive: isActive,
+      isRecieved: isRecieved,
       supplierCode: supplierCode,
       isFree: isFree,
       isInvoiced: isInvoiced,
@@ -870,6 +871,7 @@ class _$OrderLinesTearOff {
       variableAmount: variableAmount,
       excessTax: excessTax,
       actualCost: actualCost,
+      updateCheck: updateCheck,
     );
   }
 
@@ -884,11 +886,12 @@ const $OrderLines = _$OrderLinesTearOff();
 /// @nodoc
 mixin _$OrderLines {
   double? get vat => throw _privateConstructorUsedError;
-  bool? get isRecieved => throw _privateConstructorUsedError;
   int? get currentQty => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_received", defaultValue: false)
+  bool? get isRecieved => throw _privateConstructorUsedError;
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
   @JsonKey(name: "is_free")
@@ -927,6 +930,8 @@ mixin _$OrderLines {
   double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "updatecheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -941,10 +946,10 @@ abstract class $OrderLinesCopyWith<$Res> {
       _$OrderLinesCopyWithImpl<$Res>;
   $Res call(
       {double? vat,
-      bool? isRecieved,
       int? currentQty,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_received", defaultValue: false) bool? isRecieved,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "is_free") bool? isFree,
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
@@ -963,7 +968,8 @@ abstract class $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost});
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "updatecheck", defaultValue: false) bool? updateCheck});
 }
 
 /// @nodoc
@@ -977,10 +983,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
   @override
   $Res call({
     Object? vat = freezed,
-    Object? isRecieved = freezed,
     Object? currentQty = freezed,
     Object? id = freezed,
     Object? isActive = freezed,
+    Object? isRecieved = freezed,
     Object? supplierCode = freezed,
     Object? isFree = freezed,
     Object? isInvoiced = freezed,
@@ -1000,16 +1006,13 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
     Object? variableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
+    Object? updateCheck = freezed,
   }) {
     return _then(_value.copyWith(
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      isRecieved: isRecieved == freezed
-          ? _value.isRecieved
-          : isRecieved // ignore: cast_nullable_to_non_nullable
-              as bool?,
       currentQty: currentQty == freezed
           ? _value.currentQty
           : currentQty // ignore: cast_nullable_to_non_nullable
@@ -1021,6 +1024,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isRecieved: isRecieved == freezed
+          ? _value.isRecieved
+          : isRecieved // ignore: cast_nullable_to_non_nullable
               as bool?,
       supplierCode: supplierCode == freezed
           ? _value.supplierCode
@@ -1098,6 +1105,10 @@ class _$OrderLinesCopyWithImpl<$Res> implements $OrderLinesCopyWith<$Res> {
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      updateCheck: updateCheck == freezed
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1110,10 +1121,10 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
   @override
   $Res call(
       {double? vat,
-      bool? isRecieved,
       int? currentQty,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
+      @JsonKey(name: "is_received", defaultValue: false) bool? isRecieved,
       @JsonKey(name: "supplier_code") String? supplierCode,
       @JsonKey(name: "is_free") bool? isFree,
       @JsonKey(name: "is_invoiced") bool? isInvoiced,
@@ -1132,7 +1143,8 @@ abstract class _$OrderLinesCopyWith<$Res> implements $OrderLinesCopyWith<$Res> {
       @JsonKey(name: "grand_total") double? grandTotal,
       @JsonKey(name: "vatable_amount") double? variableAmount,
       @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost});
+      @JsonKey(name: "actual_cost") double? actualCost,
+      @JsonKey(name: "updatecheck", defaultValue: false) bool? updateCheck});
 }
 
 /// @nodoc
@@ -1148,10 +1160,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
   @override
   $Res call({
     Object? vat = freezed,
-    Object? isRecieved = freezed,
     Object? currentQty = freezed,
     Object? id = freezed,
     Object? isActive = freezed,
+    Object? isRecieved = freezed,
     Object? supplierCode = freezed,
     Object? isFree = freezed,
     Object? isInvoiced = freezed,
@@ -1171,16 +1183,13 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
     Object? variableAmount = freezed,
     Object? excessTax = freezed,
     Object? actualCost = freezed,
+    Object? updateCheck = freezed,
   }) {
     return _then(_OrderLines(
       vat: vat == freezed
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      isRecieved: isRecieved == freezed
-          ? _value.isRecieved
-          : isRecieved // ignore: cast_nullable_to_non_nullable
-              as bool?,
       currentQty: currentQty == freezed
           ? _value.currentQty
           : currentQty // ignore: cast_nullable_to_non_nullable
@@ -1192,6 +1201,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isRecieved: isRecieved == freezed
+          ? _value.isRecieved
+          : isRecieved // ignore: cast_nullable_to_non_nullable
               as bool?,
       supplierCode: supplierCode == freezed
           ? _value.supplierCode
@@ -1269,6 +1282,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      updateCheck: updateCheck == freezed
+          ? _value.updateCheck
+          : updateCheck // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1278,10 +1295,10 @@ class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinesCopyWithImpl<$Res>
 class _$_OrderLines implements _OrderLines {
   const _$_OrderLines(
       {this.vat,
-      this.isRecieved,
       this.currentQty,
       this.id,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
+      @JsonKey(name: "is_received", defaultValue: false) this.isRecieved,
       @JsonKey(name: "supplier_code") this.supplierCode,
       @JsonKey(name: "is_free") this.isFree,
       @JsonKey(name: "is_invoiced") this.isInvoiced,
@@ -1300,7 +1317,8 @@ class _$_OrderLines implements _OrderLines {
       @JsonKey(name: "grand_total") this.grandTotal,
       @JsonKey(name: "vatable_amount") this.variableAmount,
       @JsonKey(name: "excess_tax") this.excessTax,
-      @JsonKey(name: "actual_cost") this.actualCost});
+      @JsonKey(name: "actual_cost") this.actualCost,
+      @JsonKey(name: "updatecheck", defaultValue: false) this.updateCheck});
 
   factory _$_OrderLines.fromJson(Map<String, dynamic> json) =>
       _$$_OrderLinesFromJson(json);
@@ -1308,14 +1326,15 @@ class _$_OrderLines implements _OrderLines {
   @override
   final double? vat;
   @override
-  final bool? isRecieved;
-  @override
   final int? currentQty;
   @override
   final int? id;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
+  @override
+  @JsonKey(name: "is_received", defaultValue: false)
+  final bool? isRecieved;
   @override
   @JsonKey(name: "supplier_code")
   final String? supplierCode;
@@ -1373,10 +1392,13 @@ class _$_OrderLines implements _OrderLines {
   @override
   @JsonKey(name: "actual_cost")
   final double? actualCost;
+  @override
+  @JsonKey(name: "updatecheck", defaultValue: false)
+  final bool? updateCheck;
 
   @override
   String toString() {
-    return 'OrderLines(vat: $vat, isRecieved: $isRecieved, currentQty: $currentQty, id: $id, isActive: $isActive, supplierCode: $supplierCode, isFree: $isFree, isInvoiced: $isInvoiced, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost)';
+    return 'OrderLines(vat: $vat, currentQty: $currentQty, id: $id, isActive: $isActive, isRecieved: $isRecieved, supplierCode: $supplierCode, isFree: $isFree, isInvoiced: $isInvoiced, variantId: $variantId, vendorRefCode: $vendorRefCode, variantName: $variantName, barcode: $barcode, purchaseuom: $purchaseuom, cvd: $cvd, foc: $foc, discount: $discount, requestedQty: $requestedQty, minimumQty: $minimumQty, maximumQty: $maximumQty, unitCost: $unitCost, grandTotal: $grandTotal, variableAmount: $variableAmount, excessTax: $excessTax, actualCost: $actualCost, updateCheck: $updateCheck)';
   }
 
   @override
@@ -1385,9 +1407,6 @@ class _$_OrderLines implements _OrderLines {
         (other is _OrderLines &&
             (identical(other.vat, vat) ||
                 const DeepCollectionEquality().equals(other.vat, vat)) &&
-            (identical(other.isRecieved, isRecieved) ||
-                const DeepCollectionEquality()
-                    .equals(other.isRecieved, isRecieved)) &&
             (identical(other.currentQty, currentQty) ||
                 const DeepCollectionEquality()
                     .equals(other.currentQty, currentQty)) &&
@@ -1396,6 +1415,9 @@ class _$_OrderLines implements _OrderLines {
             (identical(other.isActive, isActive) ||
                 const DeepCollectionEquality()
                     .equals(other.isActive, isActive)) &&
+            (identical(other.isRecieved, isRecieved) ||
+                const DeepCollectionEquality()
+                    .equals(other.isRecieved, isRecieved)) &&
             (identical(other.supplierCode, supplierCode) ||
                 const DeepCollectionEquality()
                     .equals(other.supplierCode, supplierCode)) &&
@@ -1449,17 +1471,18 @@ class _$_OrderLines implements _OrderLines {
                     .equals(other.excessTax, excessTax)) &&
             (identical(other.actualCost, actualCost) ||
                 const DeepCollectionEquality()
-                    .equals(other.actualCost, actualCost)));
+                    .equals(other.actualCost, actualCost)) &&
+            (identical(other.updateCheck, updateCheck) || const DeepCollectionEquality().equals(other.updateCheck, updateCheck)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(isRecieved) ^
       const DeepCollectionEquality().hash(currentQty) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(isActive) ^
+      const DeepCollectionEquality().hash(isRecieved) ^
       const DeepCollectionEquality().hash(supplierCode) ^
       const DeepCollectionEquality().hash(isFree) ^
       const DeepCollectionEquality().hash(isInvoiced) ^
@@ -1478,7 +1501,8 @@ class _$_OrderLines implements _OrderLines {
       const DeepCollectionEquality().hash(grandTotal) ^
       const DeepCollectionEquality().hash(variableAmount) ^
       const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(actualCost);
+      const DeepCollectionEquality().hash(actualCost) ^
+      const DeepCollectionEquality().hash(updateCheck);
 
   @JsonKey(ignore: true)
   @override
@@ -1494,29 +1518,52 @@ class _$_OrderLines implements _OrderLines {
 abstract class _OrderLines implements OrderLines {
   const factory _OrderLines(
       {double? vat,
-      bool? isRecieved,
       int? currentQty,
       int? id,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-      @JsonKey(name: "supplier_code") String? supplierCode,
-      @JsonKey(name: "is_free") bool? isFree,
-      @JsonKey(name: "is_invoiced") bool? isInvoiced,
-      @JsonKey(name: "variant_id") String? variantId,
-      @JsonKey(name: "vendor_reference_code") String? vendorRefCode,
-      @JsonKey(name: "variant_name") String? variantName,
-      @JsonKey(name: "barcode") String? barcode,
-      @JsonKey(name: "purchase_uom") String? purchaseuom,
-      @JsonKey(name: "cvd") String? cvd,
-      @JsonKey(name: "foc") double? foc,
-      @JsonKey(name: "discount") int? discount,
-      @JsonKey(name: "requested_qty") int? requestedQty,
-      @JsonKey(name: "minimum_qty") int? minimumQty,
-      @JsonKey(name: "maximum_qty") int? maximumQty,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? variableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost}) = _$_OrderLines;
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "is_received", defaultValue: false)
+          bool? isRecieved,
+      @JsonKey(name: "supplier_code")
+          String? supplierCode,
+      @JsonKey(name: "is_free")
+          bool? isFree,
+      @JsonKey(name: "is_invoiced")
+          bool? isInvoiced,
+      @JsonKey(name: "variant_id")
+          String? variantId,
+      @JsonKey(name: "vendor_reference_code")
+          String? vendorRefCode,
+      @JsonKey(name: "variant_name")
+          String? variantName,
+      @JsonKey(name: "barcode")
+          String? barcode,
+      @JsonKey(name: "purchase_uom")
+          String? purchaseuom,
+      @JsonKey(name: "cvd")
+          String? cvd,
+      @JsonKey(name: "foc")
+          double? foc,
+      @JsonKey(name: "discount")
+          int? discount,
+      @JsonKey(name: "requested_qty")
+          int? requestedQty,
+      @JsonKey(name: "minimum_qty")
+          int? minimumQty,
+      @JsonKey(name: "maximum_qty")
+          int? maximumQty,
+      @JsonKey(name: "unit_cost")
+          double? unitCost,
+      @JsonKey(name: "grand_total")
+          double? grandTotal,
+      @JsonKey(name: "vatable_amount")
+          double? variableAmount,
+      @JsonKey(name: "excess_tax")
+          double? excessTax,
+      @JsonKey(name: "actual_cost")
+          double? actualCost,
+      @JsonKey(name: "updatecheck", defaultValue: false)
+          bool? updateCheck}) = _$_OrderLines;
 
   factory _OrderLines.fromJson(Map<String, dynamic> json) =
       _$_OrderLines.fromJson;
@@ -1524,14 +1571,15 @@ abstract class _OrderLines implements OrderLines {
   @override
   double? get vat => throw _privateConstructorUsedError;
   @override
-  bool? get isRecieved => throw _privateConstructorUsedError;
-  @override
   int? get currentQty => throw _privateConstructorUsedError;
   @override
   int? get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_received", defaultValue: false)
+  bool? get isRecieved => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "supplier_code")
   String? get supplierCode => throw _privateConstructorUsedError;
@@ -1589,6 +1637,9 @@ abstract class _OrderLines implements OrderLines {
   @override
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "updatecheck", defaultValue: false)
+  bool? get updateCheck => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$OrderLinesCopyWith<_OrderLines> get copyWith =>
