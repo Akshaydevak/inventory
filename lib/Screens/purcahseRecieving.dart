@@ -1216,23 +1216,23 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   recievingLisnes[i] = recievingLisnes[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
                                                                                                 }
 
-                                                                                                else {var Vamount;
-                                                                                                var vactualCost;
+                                                                                                else {double Vamount;
+                                                                                                double vactualCost;
                                                                                                 if(foc==0 || foc==""){
-                                                                                                  Vamount  = (((unitcost! *
+                                                                                                  Vamount  = double.parse((((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       dis!)
-                                                                                                      .toDouble();
+                                                                                                      .toStringAsFixed(2));
                                                                                                   if(vat==0 ||vat==""){
                                                                                                     vactualCost=Vamount;
                                                                                                   }
                                                                                                   else{
 
-                                                                                                    vactualCost  = (Vamount! +
+                                                                                                    vactualCost  = double.parse((Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
                                                                                                   }
 
 
@@ -1244,11 +1244,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 }
                                                                                                 else{
 
-                                                                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
+                                                                                                  double vactualCost = double.parse((Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
 
                                                                                                   recievingLisnes[i] =
                                                                                                       recievingLisnes[i]
@@ -1341,24 +1341,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 setState(() {});
                                                                                               } else {
                                                                                                 if(foc==0 || foc=="") {
-                                                                                                  var Vamount = (((unitcost! *
+                                                                                                  double Vamount =double.parse( (((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
-                                                                                                      disc!)
-                                                                                                      .toDouble();
-                                                                                                  print(
-                                                                                                      "Vamount" +
-                                                                                                          Vamount
-                                                                                                              .toString());
+                                                                                                      disc!).toStringAsFixed(2));
 
-                                                                                                  var vactualCost = (Vamount! +
+
+                                                                                                  double vactualCost = double.parse((Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
-                                                                                                  print(
-                                                                                                      "vactualCost" +
-                                                                                                          vactualCost
-                                                                                                              .toString());
+                                                                                                          100)).toStringAsFixed(2));
+
                                                                                                   recievingLisnes[i] =
                                                                                                       recievingLisnes[i]
                                                                                                           .copyWith(
@@ -1368,11 +1361,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                           unitCost: unitcost);
                                                                                                   setState(() {});
                                                                                                 }else{
-                                                                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
+                                                                                                  double vactualCost =double.parse( (Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
                                                                                                   recievingLisnes[i] =
                                                                                                       recievingLisnes[i]
                                                                                                           .copyWith(
@@ -1423,27 +1416,27 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 });
 
                                                                                               }else {
-                                                                                                var Vamount;
+                                                                                                double Vamount;
 
                                                                                                 if(foc==0 ||foc=="") {
                                                                                                   Vamount =
-                                                                                                      (((unitcost! *
+                                                                                                     double.parse( (((unitcost! *
                                                                                                           qty!) +
                                                                                                           excess!) -
                                                                                                           Vdiscount!)
-                                                                                                          .toDouble();
+                                                                                                          .toStringAsFixed(2));
                                                                                                 }else{
-                                                                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+                                                                                                  Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!).toStringAsFixed(2));
 
                                                                                                 }
-                                                                                                var vactualCost = (Vamount! +
+                                                                                                double vactualCost =double.parse( (Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
-                                                                                                var Vgrnadtotal = (Vamount! +
+                                                                                                        100)).toStringAsFixed(2));
+                                                                                                double Vgrnadtotal = double.parse((Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
+                                                                                                        100)).toStringAsFixed(2));
                                                                                                 recievingLisnes[i] =
                                                                                                     recievingLisnes[i]
                                                                                                         .copyWith(
@@ -1529,24 +1522,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                               else {
                                                                                                 if(foc==0 ||foc=="") {
-                                                                                                  var Vamount = (((unitcost! *
+                                                                                                  double Vamount =double.parse( (((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       disc!)
-                                                                                                      .toDouble();
-                                                                                                  print(
-                                                                                                      "Vamount" +
-                                                                                                          Vamount
-                                                                                                              .toString());
+                                                                                                      .toStringAsFixed(2));
 
-                                                                                                  var vactualCost = (Vamount! +
+
+                                                                                                  double vactualCost =double.parse( (Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
-                                                                                                  print(
-                                                                                                      "vactualCost" +
-                                                                                                          vactualCost
-                                                                                                              .toString());
+                                                                                                          100)).toStringAsFixed(2));
+
                                                                                                   recievingLisnes[i] =
                                                                                                       recievingLisnes[i]
                                                                                                           .copyWith(
@@ -1557,11 +1544,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   setState(() {});
                                                                                                 }
                                                                                                 else{
-                                                                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
+                                                                                                  double vactualCost = double.parse((Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
                                                                                                   recievingLisnes[i] =
                                                                                                       recievingLisnes[i]
                                                                                                           .copyWith(
@@ -1615,28 +1602,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               }
 
                                                                                               else{
-                                                                                                var Vamount;
+                                                                                                double Vamount;
                                                                                                 if(foc==0 ||foc==""){
-                                                                                                  Vamount = (((unitcost! *
+                                                                                                  Vamount = double.parse((((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       disc!)
-                                                                                                      .toDouble();
+                                                                                                      .toStringAsFixed(2));
                                                                                                   setState(() {
 
                                                                                                   });
 
                                                                                                 }else{
-                                                                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                                                                  Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(3));
                                                                                                   setState(() {
 
                                                                                                   });
 
                                                                                                 }
-                                                                                                var vactualCost = (Vamount! +
+                                                                                                double vactualCost =double.parse( (Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
+                                                                                                        100)).toStringAsFixed(2));
                                                                                                 recievingLisnes[i] =
                                                                                                     recievingLisnes[i]
                                                                                                         .copyWith(
@@ -1694,19 +1681,19 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                                 }else{
                                                                                                   if(foc==0 || foc=="") {
-                                                                                                    var Vamount = (((unitcost! *
+                                                                                                    double Vamount = double.parse((((unitcost! *
                                                                                                         qty!) +
                                                                                                         excess!) -
                                                                                                         dis!)
-                                                                                                        .toDouble();
-                                                                                                    var vactualCost = (Vamount! +
+                                                                                                        .toStringAsFixed(2));
+                                                                                                    double vactualCost = double.parse((Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
-                                                                                                    var Vgrnadtotal = (Vamount! +
+                                                                                                            100)).toStringAsFixed(2));
+                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
                                                                                                     recievingLisnes[i] =
                                                                                                         recievingLisnes[i]
                                                                                                             .copyWith(
@@ -1717,16 +1704,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     setState(() {});
                                                                                                   }
                                                                                                   else{
-                                                                                                    var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
+                                                                                                    double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
 
-                                                                                                    var vactualCost = (Vamount! +
+                                                                                                    double vactualCost =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
-                                                                                                    var Vgrnadtotal = (Vamount! +
+                                                                                                            100)).toStringAsFixed(2));
+                                                                                                    double Vgrnadtotal = double.parse((Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
                                                                                                     recievingLisnes[i] =
                                                                                                         recievingLisnes[i]
                                                                                                             .copyWith(
@@ -2373,20 +2360,20 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   var Vamount;
                                                                                                   var vactualCost;
                                                                                                   if(foc==0 || foc==""){
-                                                                                                    Vamount  = (((unitcost! *
+                                                                                                    Vamount  =double.parse( (((unitcost! *
                                                                                                         qty!) +
                                                                                                         excess!) -
                                                                                                         dis!)
-                                                                                                        .toDouble();
+                                                                                                        .toStringAsFixed(2));
                                                                                                     if(vat==0 ||vat==""){
                                                                                                       vactualCost=Vamount;
                                                                                                     }
                                                                                                     else{
 
-                                                                                                      vactualCost  = (Vamount! +
+                                                                                                      vactualCost  =double.parse( (Vamount! +
                                                                                                           ((Vamount! *
                                                                                                               vat!) /
-                                                                                                              100));
+                                                                                                              100)).toString(2));
                                                                                                     }
 
 
@@ -2400,11 +2387,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   }
                                                                                                   else{
 
-                                                                                                    var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-                                                                                                    var vactualCost = (Vamount! +
+                                                                                                    double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
+                                                                                                    double vactualCost =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
 
                                                                                                     additionalVariants[i] =
                                                                                                         additionalVariants[i]
@@ -2479,20 +2466,20 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 setState(() {});
                                                                                               } else {
                                                                                                 if(foc==0 || foc=="") {
-                                                                                                  var Vamount = (((unitcost! *
+                                                                                                  double Vamount = double.parse((((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       disc!)
-                                                                                                      .toDouble();
+                                                                                                      .toStringAsFixed(2));
                                                                                                   print(
                                                                                                       "Vamount" +
                                                                                                           Vamount
                                                                                                               .toString());
 
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double vactualCost =double.parse( (Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
                                                                                                   print(
                                                                                                       "vactualCost" +
                                                                                                           vactualCost
@@ -2506,11 +2493,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                           unitCost: unitcost);
                                                                                                   setState(() {});
                                                                                                 }else{
-                                                                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
+                                                                                                  double vactualCost =double.parse( (Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
                                                                                                   additionalVariants[i] =
                                                                                                       additionalVariants[i]
                                                                                                           .copyWith(
@@ -2561,27 +2548,27 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 });
 
                                                                                               }else {
-                                                                                                var Vamount;
+                                                                                                double Vamount;
 
                                                                                                 if(foc==0 ||foc=="") {
                                                                                                   Vamount =
-                                                                                                      (((unitcost! *
+                                                                                                     double.parse( (((unitcost! *
                                                                                                           qty!) +
                                                                                                           excess!) -
                                                                                                           Vdiscount!)
-                                                                                                          .toDouble();
+                                                                                                          .toStringAsFixed(2));
                                                                                                 }else{
-                                                                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+                                                                                                  Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!).toStringAsFixed(2));
 
                                                                                                 }
-                                                                                                var vactualCost = (Vamount! +
+                                                                                                double vactualCost = double.parse((Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
-                                                                                                var Vgrnadtotal = (Vamount! +
+                                                                                                        100)).toStringAsFixed(2));
+                                                                                                double Vgrnadtotal =double.parse( (Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
+                                                                                                        100)).toStringAsFixed(2));
                                                                                                 additionalVariants[i] =
                                                                                                     additionalVariants[i]
                                                                                                         .copyWith(
@@ -2663,20 +2650,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                               else {
                                                                                                 if(foc==0 ||foc=="") {
-                                                                                                  var Vamount = (((unitcost! *
+                                                                                                  double Vamount =double.parse( (((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       disc!)
-                                                                                                      .toDouble();
-                                                                                                  print(
-                                                                                                      "Vamount" +
-                                                                                                          Vamount
-                                                                                                              .toString());
+                                                                                                      .toStringAsFixed(2));
 
-                                                                                                  var vactualCost = (Vamount! +
+
+                                                                                                  double vactualCost =double.parse(( (Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2)));
                                                                                                   print(
                                                                                                       "vactualCost" +
                                                                                                           vactualCost
@@ -2691,11 +2675,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   setState(() {});
                                                                                                 }
                                                                                                 else{
-                                                                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                                                                  var vactualCost = (Vamount! +
+                                                                                                  double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
+                                                                                                  double vactualCost = double .parse((Vamount! +
                                                                                                       ((Vamount! *
                                                                                                           vat!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
                                                                                                   additionalVariants[i] =
                                                                                                       additionalVariants[i]
                                                                                                           .copyWith(
@@ -2746,28 +2730,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 setState(() {});
                                                                                               }
                                                                                               else{
-                                                                                                var Vamount;
+                                                                                                double Vamount;
                                                                                                 if(foc==0 ||foc==""){
-                                                                                                  Vamount = (((unitcost! *
+                                                                                                  Vamount = double.parse((((unitcost! *
                                                                                                       qty!) +
                                                                                                       excess!) -
                                                                                                       disc!)
-                                                                                                      .toDouble();
+                                                                                                      .toStringAsFixed(2));
                                                                                                   setState(() {
 
                                                                                                   });
 
                                                                                                 }else{
-                                                                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                                                                  Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
                                                                                                   setState(() {
 
                                                                                                   });
 
                                                                                                 }
-                                                                                                var vactualCost = (Vamount! +
+                                                                                                double vactualCost = double.parse((Vamount! +
                                                                                                     ((Vamount! *
                                                                                                         vat!) /
-                                                                                                        100));
+                                                                                                        100)).toStringAsFixed(2));
                                                                                                 additionalVariants[i] =
                                                                                                     additionalVariants[i]
                                                                                                         .copyWith(
@@ -2822,19 +2806,19 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                                 }else{
                                                                                                   if(foc==0 || foc=="") {
-                                                                                                    var Vamount = (((unitcost! *
+                                                                                                    double Vamount = double.parse((((unitcost! *
                                                                                                         qty!) +
                                                                                                         excess!) -
                                                                                                         dis!)
-                                                                                                        .toDouble();
-                                                                                                    var vactualCost = (Vamount! +
+                                                                                                        .toStringAsFixed(2));
+                                                                                                    double vactualCost =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
-                                                                                                    var Vgrnadtotal = (Vamount! +
+                                                                                                            100)).toStringAsFixed(2));
+                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
                                                                                                     additionalVariants[i] =
                                                                                                         additionalVariants[i]
                                                                                                             .copyWith(
@@ -2845,16 +2829,16 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                     setState(() {});
                                                                                                   }
                                                                                                   else{
-                                                                                                    var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
+                                                                                                    double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
 
-                                                                                                    var vactualCost = (Vamount! +
+                                                                                                    double vactualCost =double.parse ((Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
-                                                                                                    var Vgrnadtotal = (Vamount! +
+                                                                                                            100)).toStringAsFixed(2));
+                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
                                                                                                         ((Vamount! *
                                                                                                             vat!) /
-                                                                                                            100));
+                                                                                                            100)).toStringAsFixed(2));
                                                                                                     additionalVariants[i] =
                                                                                                         additionalVariants[i]
                                                                                                             .copyWith(
@@ -3114,28 +3098,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                       excess1!) -
                                                                                                       discount!)
                                                                                                       .toDouble();
-                                                                                                  actualCost1 = (vatableAmount1! +
+                                                                                                  actualCost1 = double.parse((vatableAmount1! +
                                                                                                       ((vatableAmount1! *
                                                                                                           vat1!) /
-                                                                                                          100));
-                                                                                                  grandTotal1 = (vatableAmount1! +
+                                                                                                          100)).toStringAsFixed(2));
+                                                                                                  grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                       ((vatableAmount1! *
                                                                                                           vat1!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
 
 
 
                                                                                                 }
                                                                                                 else{
-                                                                                                  vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                                  actualCost1 = (vatableAmount1! +
+                                                                                                  vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                                  actualCost1 = double.parse((vatableAmount1! +
                                                                                                       ((vatableAmount1! *
                                                                                                           vat1!) /
-                                                                                                          100));
-                                                                                                  grandTotal1 = (vatableAmount1! +
+                                                                                                          100)).toStringAsFixed(2));
+                                                                                                  grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                       ((vatableAmount1! *
                                                                                                           vat1!) /
-                                                                                                          100));
+                                                                                                          100)).toStringAsFixed(2));
 
                                                                                                 }
 
@@ -3193,33 +3177,33 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                              vatableAmount1 = double.parse((((unitcost! *
                                                                                                   recievedQty!) +
                                                                                                   excess1!) -
                                                                                                   discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  .toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
 
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
                                                                                             }
 
@@ -3262,34 +3246,34 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                              vatableAmount1 =double.parse( (((unitcost! *
                                                                                                   recievedQty!) +
                                                                                                   excess1!) -
                                                                                                   discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  .toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
 
 
                                                                                             }
                                                                                             else{
 
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse(((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2)));
+                                                                                              grandTotal1 =double.parse(( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2)));
 
                                                                                             }
 
@@ -3333,15 +3317,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                              vatableAmount1 =double.parse( (((unitcost! *
                                                                                                   recievedQty!) +
                                                                                                   excess1!) -
                                                                                                   discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  .toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
                                                                                               grandTotal1 = (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
@@ -3351,15 +3335,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                              actualCost1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
                                                                                             }
 
@@ -3402,33 +3386,33 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                              vatableAmount1 =double.parse( (((unitcost! *
                                                                                                   recievedQty!) +
                                                                                                   excess1!) -
                                                                                                   discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  .toStringAsFixed(2));
+                                                                                              actualCost1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
 
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
                                                                                             }
 
@@ -3479,19 +3463,19 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = (((unitcost! *
+                                                                                              vatableAmount1 = double.parse((((unitcost! *
                                                                                                   recievedQty!) +
                                                                                                   excess1!) -
                                                                                                   discount!)
-                                                                                                  .toDouble();
-                                                                                              actualCost1 = (vatableAmount1! +
+                                                                                                  .toStringAsFixed(2));
+                                                                                              actualCost1 = double.parse((vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
+                                                                                                      100)).toStringAsFixed(2));
+                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
                                                                                                   ((vatableAmount1! *
                                                                                                       vat1!) /
-                                                                                                      100));
+                                                                                                      100)).toStringAsFixed(2));
 
 
 

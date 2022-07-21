@@ -523,7 +523,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              unitcourse.text = data.data?.unitcost?.toStringAsFixed(2)??"";
+                              unitcourse.text = data.data?.unitcost?.toString()??"";
                             });
                           }
                           if(data.data?.excessTax==null||data.data?.excessTax=="null"){
@@ -531,7 +531,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              excesstax.text = data.data?.excessTax?.toStringAsFixed(2)??"";
+                              excesstax.text = data.data?.excessTax?.toString()??"";
                             });
                           }
                           if(data.data?.actualCost==null||data.data?.actualCost=="null"){
@@ -539,7 +539,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              actualcost.text = data.data?.actualCost?.toStringAsFixed(2)??"";
+                              actualcost.text = data.data?.actualCost?.toString()??"";
                             });
                           }
                           if(data.data?.vat==null||data.data?.vat=="null"){
@@ -547,7 +547,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              vat.text = data.data?.vat?.toStringAsFixed(2)??"";
+                              vat.text = data.data?.vat?.toString()??"";
                             });
                           }
                           if(data.data?.grandTotal==null||data.data?.grandTotal=="null"){
@@ -555,7 +555,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              grandtotal.text = data.data?.grandTotal?.toStringAsFixed(2)??"";
+                              grandtotal.text = data.data?.grandTotal?.toString()??"";
                             });
                           }
                           if(data.data?.variableAmount==null||data.data?.variableAmount=="null"){
@@ -563,7 +563,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              Variableamount.text = data.data?.variableAmount?.toStringAsFixed(2)??"";
+                              Variableamount.text = data.data?.variableAmount?.toString()??"";
                             });
                           }
                           if(data.data?.foc ==null||data.data?.foc =="null"){
@@ -571,7 +571,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              foc.text = data.data?.foc?.toStringAsFixed(2)??"";
+                              foc.text = data.data?.foc?.toString()??"";
                             });
                           }
                           if(data.data?.discount! ==null||data.data?.discount! =="null"){
@@ -579,7 +579,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                           }
                           else{
                             setState(() {
-                              discount.text = data.data?.discount?.toStringAsFixed(2)??"";
+                              discount.text = data.data?.discount?.toString()??"";
 
                             });
 
@@ -3643,11 +3643,8 @@ else{
                                                                           Vamount  = double.parse((((unitcost! * qty!) + excess!) - disc!).toDouble().toStringAsFixed(2));
 
 
-
-                                                                          var vactualCost = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
+                                                                          var  vactualCost  =double.parse ((Vamount! + ((Vamount! * vat!) / 100)).toStringAsFixed(2));
+                                                                         
 
                                                                           table[i] =
                                                                               table[i].copyWith(
@@ -3702,24 +3699,24 @@ else{
                                                                           });
 
                                                                         }else {
-                                                                          var Vamount;
+                                                                          double Vamount;
 
 
                                                                           Vamount =
-                                                                              (((unitcost! *
+                                                                             double.parse( (((unitcost! *
                                                                                   qty!) +
                                                                                   excess!) -
                                                                                   Vdiscount!)
-                                                                                  .toDouble();
+                                                                                  .toStringAsFixed(2));
 
-                                                                          var vactualCost = (Vamount! +
+                                                                          double vactualCost =double.parse( (Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
-                                                                                  100));
-                                                                          var Vgrnadtotal = (Vamount! +
+                                                                                  100)).toStringAsFixed(2));
+                                                                          double Vgrnadtotal = double.parse((Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
-                                                                                  100));
+                                                                                  100)).toStringAsFixed(2));
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
@@ -3768,24 +3765,25 @@ else{
                                                                           });
 
                                                                         }else {
-                                                                          var Vamount;
+                                                                          double Vamount;
 
 
-                                                                          Vamount =
-                                                                              (((unitcost! *
-                                                                                  qty!) +
-                                                                                  excess!) -
-                                                                                  Vdiscount!)
-                                                                                  .toDouble();
+                                                                          Vamount =double.parse(    (((unitcost! *
+                                                                              qty!) +
+                                                                              excess!) -
+                                                                              Vdiscount!)
+                                                                              .toStringAsFixed(2))
+                                                                          ;
 
-                                                                          var vactualCost = (Vamount! +
+                                                                          double vactualCost =double.parse( (Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
-                                                                                  100));
-                                                                          var Vgrnadtotal = (Vamount! +
+                                                                                  100)).toStringAsFixed(2));
+                                                                          double Vgrnadtotal = double.parse((Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
-                                                                                  100));
+                                                                                  100)).toStringAsFixed(2));
+
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
@@ -4001,25 +3999,22 @@ else{
 
                                                                           }else{
 
-                                                                            var Vamount = (((unitcost! *
+                                                                            double Vamount = double.parse((((unitcost! *
                                                                                 qty!) +
                                                                                 excess!) -
-                                                                                dis!)
-                                                                                .toDouble();
-                                                                            var vactualCost = (Vamount! +
+                                                                                dis!).toStringAsFixed(2))
+                                                                                ;
+                                                                            double vactualCost = double.parse((Vamount! +
                                                                                 ((Vamount! *
                                                                                     vat!) /
-                                                                                    100));
-                                                                            var Vgrnadtotal = (Vamount! +
-                                                                                ((Vamount! *
-                                                                                    vat!) /
-                                                                                    100));
+                                                                                    100)).toStringAsFixed(2));
+
                                                                             table[i] =
                                                                                 table[i]
                                                                                     .copyWith(
                                                                                     variableAmount: Vamount,
                                                                                     actualCost: vactualCost,
-                                                                                    grandTotal: Vgrnadtotal,
+                                                                                    grandTotal: vactualCost,
                                                                                     vat: vat);
                                                                             setState(() {});
 
