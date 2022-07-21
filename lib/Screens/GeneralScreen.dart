@@ -203,6 +203,7 @@ List<TextEditingController> vatController =[];
     vendortrnnumber.text="";
     unitCostCheck.text="";
     ordercode.text="";
+    inventoryId.text="";
     vendoraddress.text="";
     planned_receipt_date.text="";
     promised_receipt_date.text="";

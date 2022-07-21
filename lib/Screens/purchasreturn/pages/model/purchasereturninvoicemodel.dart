@@ -43,7 +43,7 @@ class Order with _$Order {
     @JsonKey(name: "variant_id") final String? variantId,
     @JsonKey(name: "variant_name") final String? variantName,
     @JsonKey(name: "purchase_invoice_line_id") final String? purchaseInvoiceId,
-    @JsonKey(name: "total_qty") final int? totalQty,
+    @JsonKey(name: "quantity") final int? totalQty,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "vatable_amount") final double? vatableAmount,
     @JsonKey(name: "grand_total") final double? grandTotal,

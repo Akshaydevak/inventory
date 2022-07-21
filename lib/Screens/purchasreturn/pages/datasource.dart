@@ -20,7 +20,7 @@ abstract class PurchaseSourceAbstract {
     String? code,
   );
   Future<ReturnGeneralRead> getGeneralPurchaseReturnRead(int id);
-  Future<DoubleResponse> getGeneralFormPatch(ReturnGeneralRead model, int? id);
+  Future<DoubleResponse> getGeneralFormPatch(ReturnGeneralPatchModel model, int? id);
   Future<DoubleResponse> returnGeneralDelete(int? id);
   Future<PurchaseInvoiceReadModel> getInvoiceRead(int id);
   Future<DoubleResponse> invoicePost(PurchaseReturnInvoicePostModel model);
@@ -283,11 +283,17 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<DoubleResponse> getGeneralFormPatch(
-      ReturnGeneralRead model, int? id) async {
+      ReturnGeneralPatchModel model, int? id) async {
+    print("searching"+model.toString());
     String path =
         "http://invtry-purchase-return.rgcdynamics.org/purchase-return/read-purchase-return/" +
             id.toString();
-    print(path);
+    print("asss"+path.toString());
+try{
+
+}catch(e){
+  print("erroe"+e.toString());
+}
     final response = await client.patch(path,
         data: model.toJson(),
         options: Options(headers: {

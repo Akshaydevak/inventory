@@ -15,6 +15,7 @@ import 'package:inventory/Screens/purchasreturn/cubits/cubit/verticallist_cubit.
 import 'package:inventory/Screens/purchasreturn/pages/model/purchaseinvoice.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -133,7 +134,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     double excessTAxValue=0;
     if(lines!.isNotEmpty)
       for (var i = 0; i < lines!.length; i++) {
-        if (lines?[i].isInvoiced == true) {
+        if (lines?[i].isActive == true) {
           var unicost1= lines?[i].unitCost??0;
           var vatValue1= lines?[i].vat??0;
           var grands1= lines?[i].grandTotal??0;
@@ -256,6 +257,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
               setState(() {
           print("taskssss");
           data.lines != null ? lines = data?.lines ?? [] : lines = [];
+          print("lll"+lines.toString());
 
           orderTypeController.text=data.orderType??"";
           inventory.text=data.inventoryId??"";
@@ -889,18 +891,18 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     ),
 
-                                                    // tableHeadtext(
-                                                    //
-                                                    //   'IsActive',
-                                                    //
-                                                    //   padding: EdgeInsets.all(7),
-                                                    //
-                                                    //   height: 46,
-                                                    //
-                                                    //   size: 13,
-                                                    //
-                                                    //
-                                                    // ),
+                                                    tableHeadtext(
+
+                                                      'IsActive',
+
+                                                      padding: EdgeInsets.all(7),
+
+                                                      height: 46,
+
+                                                      size: 13,
+
+
+                                                    ),
 
                                                     tableHeadtext(
                                                       '',
@@ -1078,18 +1080,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                   .isInvoiced,
 
                                                               onSelection:(bool ? value){
-                                                                updateCheck=true;
-                                                                bool? isInvoiced = lines?[i].isInvoiced??false;
-                                                                setState(() {
 
-                                                                  isInvoiced = !isInvoiced!;
-                                                                  print(isInvoiced);
-                                                                  // widget.updation(i,isActive);
-                                                                  lines?[i] = lines![i].copyWith(isInvoiced: isInvoiced);
-                                                                  addition();
-
-                                                                  setState(() {});
-                                                                });
 
                                                               }),
                                                         ),                TableCell(
@@ -1116,24 +1107,25 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                         //       1.5), fontWeight: FontWeight.w500),
                                                         // ),
                                                         //
-                                                        // TableCell(
-                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
-                                                        //   child: CheckedBoxs(
-                                                        //       valueChanger:lines?[i].isActive==null?false:lines?[i].isActive,
-                                                        //
-                                                        //       onSelection:(bool ? value){
-                                                        //         bool? isActive = lines?[i].isActive??false;
-                                                        //         setState(() {
-                                                        //
-                                                        //           isActive = !isActive!;
-                                                        //           print(isActive);
-                                                        //           // widget.updation(i,isActive);
-                                                        //            lines?[i] = lines![i].copyWith(isActive: isActive);
-                                                        //
-                                                        //           setState(() {});
-                                                        //         });
-                                                        //       }),
-                                                        // ),
+                                                        TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: CheckedBoxs(
+                                                              valueChanger:lines?[i].isActive==null?false:lines?[i].isActive,
+
+                                                              onSelection:(bool ? value){
+                                                                updateCheck=true;
+                                                                bool? isActive = lines?[i].isActive??false;
+                                                                setState(() {
+
+                                                                  isActive = !isActive!;
+                                                                  print(isActive);
+                                                                  // widget.updation(i,isActive);
+                                                                  lines?[i] = lines![i].copyWith(isActive: isActive);
+                                                                  addition();
+
+                                                                  setState(() {});
+                                                                });}),
+                                                        ),
                                                         TableTextButton(
                                                           label:updateCheck? "update":"",
                                                           onPress: (){
@@ -1188,7 +1180,22 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                           lines?.clear();
                                         }
                                         else{
-                                          context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
+                                          showDailogPopUp(
+                                              context,
+                                              ConfirmationPopup(
+                                                // table:table,
+                                                // clear:clear(),
+                                                verticalId:veritiaclid ,
+                                                onPressed:(){
+
+                                                  Navigator.pop(context);
+                                            context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
+
+                                                },
+
+
+                                              ));
+
                                         }
                                       },
                                       height: 29,
@@ -1209,15 +1216,56 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                     onApply: (){
                                     if( updateCheck)  context.showSnackBarError("please click the update button");
                             else{
+                              print(lines);
                               if(lines.isNotEmpty){
-                                for(var i=0;i<lines.length;i++)
-                                  lines[i]=lines[i].copyWith(purchaseInvoiceLineCode:lines[i].invoiceLineCode );
+                                for(var i=0;i<lines.length;i++) {
+                                  if(select) {
+                                    lines[i] = lines[i].copyWith(
+                                        purchaseInvoiceLineCode: lines[i]
+                                            .invoiceLineCode ?? "");
+                                    lines[i] = lines[i].copyWith(
+                                        returnOrderLineCode: lines[i]
+                                            .invoiceLineCode ?? "");
+                                    lines[i] = lines[i].copyWith(
+                                        purchaseInvoiceLineId: lines[i]
+                                            .purchaseInvoiceLineCode ?? "");
+                                    setState(() {
+
+                                    });
+                                  }
+                                }
+                              }
+                              print("lines"+noteController.text.toString());
+                              List<PatchLiness>patchLists=[];
+
+                              if(lines.isNotEmpty) {
+                                for (var i = 0; i < lines.length; i++) {
+                                  patchLists.add(PatchLiness(
+                                    foc: lines[i].foc ?? 0,
+                                    totalQty: lines[i].totalQty ?? 0,
+                                    returnOrderLineCode: lines[i]
+                                        .returnOrderLineCode ?? "",
+                                    isActive: lines[i].isActive ?? false,
+                                    purchaseInvoiceLineId: lines[i]
+                                        .purchaseInvoiceLineId ?? "",
+                                    variantId: lines[i].variantId ?? "",
+                                    unitCost: lines[i].unitCost ?? 0,
+                                    discount: lines[i].discount ?? 0,
+                                    vatableAmount: lines[i].vatableAmount ?? 0,
+                                    excessTax: lines[i].excessTax ?? 0,
+                                    vat: lines[i].vat ?? 0,
+                                    actualCost: lines[i].actualCost ?? 0,
+                                    grandTotal: lines[i].grandTotal ?? 0,
+
+                                  ));
+                                }
                                 setState(() {
 
                                 });
-
                               }
-                              ReturnGeneralRead model1 = ReturnGeneralRead(
+                              print("patcghhhhhj"+patchLists.toString());
+
+                              ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
                                       note: noteController.text??"",
                                       remarks: remarksController.text??"",
                                       unitCost: double.tryParse( unitCostController.text),
@@ -1232,7 +1280,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                       foc: double.tryParse(focController.text),
                                       editedBy: "",
-                                      lines: lines??[],
+                                      lines: patchLists??[],
 
 
 

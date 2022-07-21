@@ -671,7 +671,7 @@ class _$OrderTearOff {
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "purchase_invoice_line_id") String? purchaseInvoiceId,
-      @JsonKey(name: "total_qty") int? totalQty,
+      @JsonKey(name: "quantity") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "grand_total") double? grandTotal,
@@ -735,7 +735,7 @@ mixin _$Order {
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_invoice_line_id")
   String? get purchaseInvoiceId => throw _privateConstructorUsedError;
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "quantity")
   int? get totalQty => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
@@ -783,7 +783,7 @@ abstract class $OrderCopyWith<$Res> {
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "purchase_invoice_line_id") String? purchaseInvoiceId,
-      @JsonKey(name: "total_qty") int? totalQty,
+      @JsonKey(name: "quantity") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "grand_total") double? grandTotal,
@@ -945,7 +945,7 @@ abstract class _$OrderCopyWith<$Res> implements $OrderCopyWith<$Res> {
       @JsonKey(name: "variant_id") String? variantId,
       @JsonKey(name: "variant_name") String? variantName,
       @JsonKey(name: "purchase_invoice_line_id") String? purchaseInvoiceId,
-      @JsonKey(name: "total_qty") int? totalQty,
+      @JsonKey(name: "quantity") int? totalQty,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "vatable_amount") double? vatableAmount,
       @JsonKey(name: "grand_total") double? grandTotal,
@@ -1106,7 +1106,7 @@ class _$_Order implements _Order {
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_name") this.variantName,
       @JsonKey(name: "purchase_invoice_line_id") this.purchaseInvoiceId,
-      @JsonKey(name: "total_qty") this.totalQty,
+      @JsonKey(name: "quantity") this.totalQty,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "vatable_amount") this.vatableAmount,
       @JsonKey(name: "grand_total") this.grandTotal,
@@ -1147,7 +1147,7 @@ class _$_Order implements _Order {
   @JsonKey(name: "purchase_invoice_line_id")
   final String? purchaseInvoiceId;
   @override
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "quantity")
   final int? totalQty;
   @override
   @JsonKey(name: "unit_cost")
@@ -1314,7 +1314,7 @@ abstract class _Order implements Order {
           @JsonKey(name: "variant_id") String? variantId,
           @JsonKey(name: "variant_name") String? variantName,
           @JsonKey(name: "purchase_invoice_line_id") String? purchaseInvoiceId,
-          @JsonKey(name: "total_qty") int? totalQty,
+          @JsonKey(name: "quantity") int? totalQty,
           @JsonKey(name: "unit_cost") double? unitCost,
           @JsonKey(name: "vatable_amount") double? vatableAmount,
           @JsonKey(name: "grand_total") double? grandTotal,
@@ -1355,7 +1355,7 @@ abstract class _Order implements Order {
   @JsonKey(name: "purchase_invoice_line_id")
   String? get purchaseInvoiceId => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "total_qty")
+  @JsonKey(name: "quantity")
   int? get totalQty => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "unit_cost")

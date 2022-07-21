@@ -24,7 +24,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, ReturnGeneralRead>> getGeneralPurchaseReturnRead(
       int id);
   Future<Either<Failure, DoubleResponse>> getGeneralFormPatch(
-      ReturnGeneralRead model, int? id);
+      ReturnGeneralPatchModel model, int? id);
   Future<Either<Failure, DoubleResponse>> returnGeneralDelete(int? id);
 
   Future<Either<Failure, PurchaseInvoiceReadModel>> getInvoiceRead(int id);
@@ -80,7 +80,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, DoubleResponse>> getGeneralFormPatch(
-      ReturnGeneralRead model, int? id) {
+      ReturnGeneralPatchModel model, int? id) {
     return repoExecute<DoubleResponse>(() async => remoteDataSource
         .getGeneralFormPatch(model, id)); // TODO: implement getGeneralFormPatch
   }
