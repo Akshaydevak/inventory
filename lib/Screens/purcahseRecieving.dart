@@ -484,7 +484,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                               });
                             }
-                            else if(Variable.tableedit==true && variantIdcheck==true){
+                            else if( variantIdcheck==true){
                               recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                               setState(() {
 
@@ -748,6 +748,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                           //  SizedBox(height: height*.030,),
 
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               receivedController,
                                                                               title: "Receiving Status"),
@@ -756,6 +757,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
+                                                                              readOnly: true,
                                                                               controller:
                                                                               focController,
                                                                               title: "FOC"),
@@ -764,6 +766,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               discountController,
                                                                               title:
@@ -773,6 +776,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               unitCostController,
                                                                               title:
@@ -782,6 +786,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               vatableAmountController,
                                                                               title:
@@ -791,6 +796,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .030,
                                                                           ),
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               excessTaxController,
                                                                               title:
@@ -811,6 +817,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 .090,
                                                                           ),
                                                                           NewInputCard(
+                                                                                  readOnly: true,
                                                                               controller:
                                                                               vatController,
                                                                               title: "Vat"),
@@ -1203,7 +1210,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 var  variant= va?.code;
                                                                                                 int? id = va!.id;
                                                                                                 Variable.tableindex =i;
-                                                                                                Variable.tableedit=true;
+                                                                                                Variable.tableedit=false;
                                                                                                 recievlinequantityCheck=true;
                                                                                                 stockCheck=true;
 

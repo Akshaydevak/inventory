@@ -317,7 +317,7 @@ bool  recievlinequantityCheck=false;
 
                   });
                 }
-                else if(Variable.tableedit==true && variantIdcheck==true){
+                else if( variantIdcheck==true){
                   recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                   setState(() {
 
@@ -1095,6 +1095,7 @@ child: IntrinsicHeight(
                                                 Variable.tableindex =i;
                                                 recievlinequantityCheck=true;
                                                 stockCheck=true;
+                                                Variable.tableedit=false;
 
                                                 variantIdcheck=true;
                                                 context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
@@ -3075,6 +3076,7 @@ child: IntrinsicHeight(
                                                     int? id = va!.id;
                                                     print("is is"+id.toString());
                                                     Variable.tableedit=false;
+
                                                     recievlinequantityCheck=false;
                                                     stockCheck=true;
                                                     variantIdcheck=false;
