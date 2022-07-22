@@ -1,6 +1,7 @@
 import 'package:desktop_window/desktop_window.dart' as window_size;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/purchaseRecieving_cubits/cubit/purchasegenerating_cubit.dart';
 import 'package:provider/provider.dart';
 
 import 'Invetory/inventorysearch_cubit.dart';
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => InventorysearchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PurchasegeneratingCubit(),
         ),
       ],
       child: MaterialApp(

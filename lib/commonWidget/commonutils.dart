@@ -312,8 +312,7 @@ class _VendorPopupState extends State<VendorPopup> {
 
                                               grpValue = value!;
                                               print("inventory"+grpValue.toString());
-                                              print(inventoryList?[index]
-                                                  .displayName);
+
                                               Variable.trn=inventoryList?[index].trnNumber??"";
                                               Variable.email=inventoryList?[index].email??"";
                                               Variable.vendorAddress=wholeList?.partnerAddressdata?[index].addressType??"";

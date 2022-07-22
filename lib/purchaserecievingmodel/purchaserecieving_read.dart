@@ -19,7 +19,7 @@ class PurchaseRecievingRead with _$PurchaseRecievingRead {
     @JsonKey(name:"vendor_trn_number") final String? vendorTrnNumber,
     @JsonKey(name:"vendor_mail_id") final String? vendorMailId,
     @JsonKey(name:"created_by") final String? createdBy,
-    @JsonKey(name:"vendor_id") final String? vendorId,
+    @JsonKey(name:"vendor_code") final String? vendorId,
     @JsonKey(name:"vendor_address") final String? vendorAddress,
     @JsonKey(name:"receiving_code") final String? receivingCode,
     @JsonKey(name:"inventory_id") final String? inventoryId,

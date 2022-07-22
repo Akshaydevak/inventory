@@ -59,6 +59,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   late AutoScrollController recieveController;
   int selectedVertical=0;
   bool select=false;
+bool  recievlinequantityCheck=false;
   int? veritiaclid=0;
   TextEditingController itemsearch=TextEditingController();
   List<PurchaseOrder>result=[];
@@ -84,6 +85,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   bool isInvoiced1=false;
   double?foc1=0;
   double?vat1=0;
+
   int? recievedQty=0;
   double?excess1=0;
   double?discount=0;
@@ -393,6 +395,9 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                 currentStock.add(stockQty??0);
                 setState(() {
                 });
+              }
+              else if(recievlinequantityCheck){
+                currentStock[Variable.tableindex]=stockQty;
               }
               else{
                 if(Variable.tableedit==false){
@@ -1088,7 +1093,9 @@ child: IntrinsicHeight(
                                                 var  variant= va?.code;
                                                 int? id = va!.id;
                                                 Variable.tableindex =i;
-                                                Variable.tableedit=true;
+                                                recievlinequantityCheck=true;
+                                                stockCheck=true;
+
                                                 variantIdcheck=true;
                                                 context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                 context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
@@ -2444,6 +2451,8 @@ child: IntrinsicHeight(
                                                           va?.partnerCode;
                                                       int? id = va!.id;
                                                       Variable.tableindex =i;
+                                                      recievlinequantityCheck=false;
+                                                      stockCheck=true;
                                                       Variable.tableedit=true;
                                                       vendorcheck=false;
                                                       context.read<VendordetailsCubit>().getVendorDetails(variant);
@@ -3066,6 +3075,8 @@ child: IntrinsicHeight(
                                                     int? id = va!.id;
                                                     print("is is"+id.toString());
                                                     Variable.tableedit=false;
+                                                    recievlinequantityCheck=false;
+                                                    stockCheck=true;
                                                     variantIdcheck=false;
                                                     // onChange = true;
                                                     context

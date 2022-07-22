@@ -36,7 +36,7 @@ class _$PurchaseRecievingReadTearOff {
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
       @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_code") String? vendorId,
       @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "receiving_code") String? receivingCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -121,7 +121,7 @@ mixin _$PurchaseRecievingRead {
   String? get vendorMailId => throw _privateConstructorUsedError;
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
-  @JsonKey(name: "vendor_id")
+  @JsonKey(name: "vendor_code")
   String? get vendorId => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_address")
   String? get vendorAddress => throw _privateConstructorUsedError;
@@ -186,7 +186,7 @@ abstract class $PurchaseRecievingReadCopyWith<$Res> {
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
       @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_code") String? vendorId,
       @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "receiving_code") String? receivingCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -405,7 +405,7 @@ abstract class _$PurchaseRecievingReadCopyWith<$Res>
       @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") String? vendorMailId,
       @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "vendor_id") String? vendorId,
+      @JsonKey(name: "vendor_code") String? vendorId,
       @JsonKey(name: "vendor_address") String? vendorAddress,
       @JsonKey(name: "receiving_code") String? receivingCode,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -622,7 +622,7 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
       @JsonKey(name: "vendor_trn_number") this.vendorTrnNumber,
       @JsonKey(name: "vendor_mail_id") this.vendorMailId,
       @JsonKey(name: "created_by") this.createdBy,
-      @JsonKey(name: "vendor_id") this.vendorId,
+      @JsonKey(name: "vendor_code") this.vendorId,
       @JsonKey(name: "vendor_address") this.vendorAddress,
       @JsonKey(name: "receiving_code") this.receivingCode,
       @JsonKey(name: "inventory_id") this.inventoryId,
@@ -679,7 +679,7 @@ class _$_PurchaseRecievingRead implements _PurchaseRecievingRead {
   @JsonKey(name: "created_by")
   final String? createdBy;
   @override
-  @JsonKey(name: "vendor_id")
+  @JsonKey(name: "vendor_code")
   final String? vendorId;
   @override
   @JsonKey(name: "vendor_address")
@@ -892,7 +892,7 @@ abstract class _PurchaseRecievingRead implements PurchaseRecievingRead {
           String? vendorMailId,
       @JsonKey(name: "created_by")
           String? createdBy,
-      @JsonKey(name: "vendor_id")
+      @JsonKey(name: "vendor_code")
           String? vendorId,
       @JsonKey(name: "vendor_address")
           String? vendorAddress,
@@ -968,7 +968,7 @@ abstract class _PurchaseRecievingRead implements PurchaseRecievingRead {
   @JsonKey(name: "created_by")
   String? get createdBy => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "vendor_id")
+  @JsonKey(name: "vendor_code")
   String? get vendorId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vendor_address")

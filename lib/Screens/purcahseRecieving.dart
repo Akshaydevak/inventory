@@ -79,6 +79,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   TextEditingController unitCostCheck = TextEditingController();//
   TextEditingController unitcost1 = TextEditingController(text: "0");
   TextEditingController expiryDate = TextEditingController(text: "0");
+  TextEditingController vendorCodeController = TextEditingController();
   var expiryDate1Controllers = <TextEditingController>[];
   var expiryDate2tControllers = <TextEditingController>[];
   var expirydateControllerList = <TextEditingController>[];
@@ -107,6 +108,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
   bool isReceived1=false;
   bool isActive1=false;
   bool isFree1=false;
+  bool recievlinequantityCheck=false;
   bool isInvoiced1=false;
   double?foc1=0;
   double?vat1=0;
@@ -210,6 +212,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
     super.initState();
   }
+  assignCall(GenerateMissing model){
+    print("aaaaaaaaaaaaaaa");
+    context.read<PurchasegeneratingCubit>().generatePost(model!);
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,6 +237,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
           BlocProvider(
             create: (context) => PurchaserecievingpatchCubit(),
           ),
+
 
         ],
         child: Builder(builder: (context) {
@@ -270,6 +278,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           orederDateController.text = data.orderCreatedDate ?? "";
                           orderStatusController.text = data.orderStatus ?? "";
                           invoiceStausController.text = data.invoiceStatus ?? "";
+                          vendorCodeController.text = data.vendorId ?? "";
                           if(data?.grandTotal==null||data?.grandTotal=="null"){
                             grandTotalController.text =='';
                           }
@@ -337,6 +346,35 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                         });
                   },
                 ),
+                BlocListener<PurchasegeneratingCubit, PurchasegeneratingState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        print("Rijinaaaaaa");
+                        context.showSnackBarSuccess(data.data2);
+                        context.read<InventorysearchCubit>().getInventorySearch("code");
+                        context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
+                        setState(() {
+
+                        });
+
+
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
                 BlocListener<PurchaserecievingpatchCubit,
                     PurchaserecievingpatchState>(
                   listener: (context, state) {
@@ -346,8 +384,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
-                      if (data.data1)
+                      if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
+                        context.read<InventorysearchCubit>().getInventorySearch(
+                            "code");
+                        context.read<PurchaserecievigReadCubit>()
+                            .getGeneralPurchaseRecievingRead(veritiaclid);
+                      }
                       else {
                         context.showSnackBarError(data.data2);
                         print(data.data1);
@@ -394,6 +437,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           print("stockCheck"+stockCheck.toString());
                           if(stockCheck==false){
                             currentStock.add(stockQty??0);
+                          }
+                          else if(recievlinequantityCheck){
+                            currentStock[Variable.tableindex]=stockQty;
+
                           }
 
                           else{
@@ -1141,6 +1188,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: PopUpCall(
+                                                                                            vendorId: vendorCodeController.text,
 
                                                                                             type:"cost-method-list",
                                                                                             value: recievingLisnes[i].variantId,
@@ -1156,6 +1204,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 int? id = va!.id;
                                                                                                 Variable.tableindex =i;
                                                                                                 Variable.tableedit=true;
+                                                                                                recievlinequantityCheck=true;
+                                                                                                stockCheck=true;
+
                                                                                                 variantIdcheck=true;
                                                                                                 context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
                                                                                                 context.read<PurchaseStockCubit>().getCurrentStock(Variable.inventory_ID, variant);
@@ -1987,7 +2038,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       remarks: remarksController,
                                                                       promised:promisedRecieptDate,
                                                                       plannded:plannedRecieptDate,
-                                                                      model:model
+                                                                      model:model,
+                                                                      assign:assignCall
 
 
 
@@ -2275,6 +2327,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: PopUpCall(
+                                                                                              vendorId: vendorCodeController.text,
 
                                                                                             type: "cost-method-list",
                                                                                             value: additionalVariants[i].variantId,
@@ -2294,6 +2347,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 Variable.tableindex =i;
                                                                                                 Variable.tableedit=true;
                                                                                                 variantIdcheck=false;
+                                                                                                recievlinequantityCheck=false;
+                                                                                                stockCheck=true;
 
 
                                                                                                 onChange = true;
@@ -2989,6 +3044,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           fontWeight: FontWeight.w500),
                                                                                     ),
                                                                                     PopUpCall(
+                                                                                        vendorId: vendorCodeController.text,
                                                                                       // label: "purchase UOM",
                                                                                       type:
                                                                                       "cost-method-list",
@@ -3009,6 +3065,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           print("is is"+id.toString());
                                                                                           Variable.tableedit=false;
                                                                                           variantIdcheck=false;
+                                                                                          recievlinequantityCheck=false;
+                                                                                          stockCheck=true;
 
                                                                                           // onChange = true;
                                                                                           context
@@ -3848,6 +3906,7 @@ class WarrantyDetailsPopUp extends StatefulWidget {
   final TextEditingController? promised;
   final TextEditingController? plannded;
   final GenerateMissing? model;
+  final Function assign;
   // final List<ReadWarranty>? warranty;
   // final Function(bool) changeActive;
   // final Function(bool) changeAdditionalWarranty;
@@ -3856,6 +3915,7 @@ class WarrantyDetailsPopUp extends StatefulWidget {
     Key? key,
     // this.stckQty = 0,
     required this.remarks,
+    required this.assign,
     required this.promised,
     required this.plannded,
     required this.model
@@ -3881,7 +3941,16 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   TextEditingController reason = TextEditingController();
   TextEditingController vendorCode = TextEditingController();
   TextEditingController note = TextEditingController();
+  TextEditingController vendoraddress = TextEditingController();
+  TextEditingController vendortrnnumber = TextEditingController();
   int? newQty = 0;
+  assigniningDetails(String address,String trn){
+    print("akshay");
+    vendoraddress.text=address;
+    print(vendoraddress.text);
+    vendortrnnumber.text=trn;
+    setState(() {});
+  }
   @override
   Widget build(BuildContext context) {
     print("widget.model"+widget.model.toString());
@@ -3895,190 +3964,162 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
 
-    return MultiBlocProvider(
-      providers: [
+    return Builder(
+        builder: (context) {
+          return AlertDialog(
+            content: PopUpHeader(
+              label: "Create system generated Po",
+              onApply: () {
 
-        BlocProvider(
-          create: (context) => PurchasegeneratingCubit(),
-        ),
+              },
+              onEdit: () {
+                print( "aaa"+widget.model.toString());
+                GenerateMissing? model=widget.model;
+
+                model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text,note: note.text,vendorId: vendorCode.text,vendorAddress: vendoraddress.text,vendorTrnNumber: vendortrnnumber.text);
+                print( "asap"+model.toString());
+
+                widget.assign(model);
+                Navigator.pop(context);
 
 
 
+              },
+              dataField: SizedBox(
+                height: MediaQuery.of(context).size.height * .6,
 
-      ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-
-                BlocListener<PurchasegeneratingCubit, PurchasegeneratingState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1)
-                        context.showSnackBarSuccess(data.data2);
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-              ],
-              child: AlertDialog(
-                content: PopUpHeader(
-                  label: "Create system generated Po",
-                  onApply: () {
-
-                  },
-                  onEdit: () {
-                    print( "aaa"+widget.model.toString());
-                    GenerateMissing? model=widget.model;
-
-                    model = model?.copyWith(remarks: remarks?.text,plannedRecieptDate: widget.plannded?.text,promisedRecieptDate: widget.promised?.text,note: note.text,vendorId: vendorCode.text);
-                    print( "asap"+model.toString());
-                    context.read<PurchasegeneratingCubit>().generatePost(model!);
-
-                  },
-                  dataField: SizedBox(
-                    height: MediaQuery.of(context).size.height * .6,
-
-                    child: SingleChildScrollView(
-                      child:
-                      Container(
-                        height: 300,
-                        // width: MediaQuery.of(context).size.width-20,
-                        child:Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                child: SingleChildScrollView(
+                  child:
+                  Container(
+                    height: 300,
+                    // width: MediaQuery.of(context).size.width-20,
+                    child:Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "purchase order",
+                        ),
+                        Divider(
+                          color: Colors.grey,
+                          height: 4.0,
+                        ),
+                        SizedBox(height: 15,),
+                        Row(
                           children: [
-                            Text(
-                              "purchase order",
-                            ),
-                            Divider(
-                              color: Colors.grey,
-                              height: 4.0,
-                            ),
-                            SizedBox(height: 15,),
-                            Row(
-                              children: [
-                                Expanded(child: Container(
-                                  child: Column(
-                                    children: [
-                                      // PopUpInputField(
-                                      //     controller: reason, label: "vendor id"),
-                                      SelectableDropDownpopUp(
-                                        row: true,
-                                        label: "Vendor Code",
-                                        type:"VendorCodeGeneral",
-                                        value: vendorCode.text,
-                                        onSelection: (Result? va) {
+                            Expanded(child: Container(
+                              child: Column(
+                                children: [
+                                  // PopUpInputField(
+                                  //     controller: reason, label: "vendor id"),
+                                  SelectableDropDownpopUp(
+                                    row: true,
+                                    label: "Vendor Code",
+                                    type:"VendorCodeGeneral",
+                                    value: vendorCode.text,
+                                    onSelection: (Result? va) {
 
-                                          print(
-                                              "+++++++++++++++++++++++"+va.toString());
-                                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                          // setState(() {
-                                          vendorCode.text=va?.partnerCode??"";
-                                          var id=va?.partnerCode;
-                                          print(vendorCode.text);
-                                          setState(() {
-                                            context
-                                                .read<
-                                                VendordetailsCubit>()
-                                                .getVendorDetails(
-                                                id);
+                                      print(
+                                          "+++++++++++++++++++++++"+va.toString());
+                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      // setState(() {
+                                      vendorCode.text=va?.partnerCode??"";
+                                      var id=va?.partnerCode;
+                                      print(vendorCode.text);
+                                      setState(() {
+                                        context
+                                            .read<
+                                            VendordetailsCubit>()
+                                            .getVendorDetails(
+                                            id);
 
-                                          });
-                                          // showDailogPopUp(
-                                          //     context,
-                                          //     VendorPopup(
-                                          //
-                                          //
-                                          //     ));
+                                      });
+                                      showDailogPopUp(
+                                          context,
+                                          VendorPopup(
+                                          assign: assigniningDetails,
+
+                                          ));
 
 
 
 
 
 
-                                        },
-                                        onAddNew: () {},
-                                        restricted: true,
-                                      ),
-                                      PopUpDateFormField(
-                                          row: true,
-
-                                          format:DateFormat('yyyy-MM-dd'),
-                                          controller:  widget.promised,
-                                          // initialValue:
-                                          //     DateTime.parse(fromDate!),
-                                          label: "Promised reciept date",
-                                          onSaved: (newValue) {
-                                            print("newValue"+newValue.toString());
-                                            widget.promised?.text = newValue
-                                                ?.toIso8601String()
-                                                .split("T")[0] ??
-                                                "";
-                                            print("promised_receipt_date.text"+ widget.promised!.text.toString());
-                                          },
-                                          enable: true),
-                                      SizedBox(height: 40,)
-                                      // PopUpInputField(
-                                      //     controller: widget.promised, label: "promisdedRecieptdate"),
-
-                                    ],
+                                    },
+                                    onAddNew: () {},
+                                    restricted: true,
                                   ),
-                                )),
-                                SizedBox(width: 10,),
-                                Expanded(child: Container(
-                                  child: Column(
-                                    children: [
-                                      PopUpDateFormField(
-                                          row: true,
+                                  PopUpDateFormField(
+                                      row: true,
 
-                                          format:DateFormat('yyyy-MM-dd'),
-                                          controller:  widget.plannded,
-                                          // initialValue:
-                                          //     DateTime.parse(fromDate!),
-                                          label: "planned reciept date",
-                                          onSaved: (newValue) {
-                                            widget.plannded?.text = newValue
-                                                ?.toIso8601String()
-                                                .split("T")[0] ??
-                                                "";
-                                            print("promised_receipt_date.text"+  widget.plannded!.text.toString());
-                                          },
-                                          enable: true),
-                                      // PopUpInputField(
-                                      //     controller: widget.plannded, label: "planned reciept date"),
-                                      PopUpInputField(
-                                          controller: remarks, label: "remarks"),
-                                      PopUpInputField(
-                                          controller: note, label: "note"),
+                                      format:DateFormat('yyyy-MM-dd'),
+                                      controller:  widget.promised,
+                                      // initialValue:
+                                      //     DateTime.parse(fromDate!),
+                                      label: "Promised reciept date",
+                                      onSaved: (newValue) {
+                                        print("newValue"+newValue.toString());
+                                        widget.promised?.text = newValue
+                                            ?.toIso8601String()
+                                            .split("T")[0] ??
+                                            "";
+                                        print("promised_receipt_date.text"+ widget.promised!.text.toString());
+                                      },
+                                      enable: true),
+                                  SizedBox(height: 40,),
+                                  SizedBox(height: 40,)
+                                  // PopUpInputField(
+                                  //     controller: widget.promised, label: "promisdedRecieptdate"),
 
-                                    ],
-                                  ),
-                                ))
-                              ],
-                            )
+                                ],
+                              ),
+                            )),
+                            SizedBox(width: 10,),
+                            Expanded(child: Container(
+                              child: Column(
+                                children: [
+                                  PopUpDateFormField(
+                                      row: true,
 
+                                      format:DateFormat('yyyy-MM-dd'),
+                                      controller:  widget.plannded,
+                                      // initialValue:
+                                      //     DateTime.parse(fromDate!),
+                                      label: "planned reciept date",
+                                      onSaved: (newValue) {
+                                        widget.plannded?.text = newValue
+                                            ?.toIso8601String()
+                                            .split("T")[0] ??
+                                            "";
+                                        print("promised_receipt_date.text"+  widget.plannded!.text.toString());
+                                      },
+                                      enable: true),
+                                  // PopUpInputField(
+                                  //     controller: widget.plannded, label: "planned reciept date"),
+                                  PopUpInputField(
+                                    height: 60,
+                                    maxLines: 3,
+                                      controller: remarks, label: "remarks"),
+                                  PopUpInputField(
+                                      height: 60,
+                                    maxLines: 3,
+                                      controller: note, label: "note"),
+
+                                ],
+                              ),
+                            ))
                           ],
-                        ) ,
+                        )
 
-                      ),
-                    ),
+                      ],
+                    ) ,
+
                   ),
                 ),
               ),
-            );
-          }
-      ),
+            ),
+          );
+        }
     );
 
   }

@@ -82,6 +82,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
       create: (context) => VertiacalCubit(),
     ),
 
+
   ],
   child: Builder(
     builder: (context) {

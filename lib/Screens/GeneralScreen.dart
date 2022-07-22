@@ -330,41 +330,55 @@ List<TextEditingController> vatController =[];
     }
   }
   addition() {
+    print("enterd");
+    print("+==" + table.toString());
+    double  unitcost=0;
+    double grands=0;
+    double actualValue=0;
+    double vatValue=0;
+    double discountValue=0;
+    double focValue=0;
+    double VatableValue=0;
+    double excessTAxValue=0;
     if(table.isNotEmpty)
-    for (var i = 0; i < table.length; i++) {
-      if (table[i].isActive == true) {
-        var unicost1= table[i].unitCost??0;
-        var vatValue1= table[i].vat??0;
-        var grands1= table[i].grandTotal??0;
-        var actualValue1= table[i].actualCost??0;
-        var discountValue1= table[i].discount??0;
-        var focValue1= table[i].foc??0;
-        var VatableValue1= table[i].variableAmount??0;
-        var excessTAxValue1= table[i].excessTax??0;
+      for (var i = 0; i < table.length; i++) {
+        if (table[i].isInvoiced == true) {
+          var unicost1= table[i].unitCost??0;
+          var vatValue1= table[i].vat??0;
+          var grands1= table[i].grandTotal??0;
+          var actualValue1= table[i].actualCost??0;
+          var discountValue1= table[i].discount??0;
+          var focValue1= table[i].foc??0;
+          var VatableValue1= table[i].variableAmount??0;
+          var excessTAxValue1= table[i].excessTax??0;
 
+          unitcost = unitcost +unicost1;
 
+          grands = grands + grands1;
+          actualValue = actualValue + actualValue1;
+          vatValue = vatValue + vatValue1;
+          discountValue = discountValue + discountValue1;
+          focValue = focValue + focValue1;
 
-        unitcost = unitcost + unicost1;
-        grands = grands + grands1;
-        actualValue = actualValue +actualValue1;
-        vatValue = vatValue + vatValue1;
-        discountValue = discountValue + discountValue1;
-        focValue = focValue + focValue1;
-        VatableValue = VatableValue +VatableValue1;
-print("excessTaxvalue"+excessTAxValue.toString());
-        excessTAxValue = excessTAxValue + excessTAxValue1;
+          VatableValue = VatableValue + VatableValue1;
+          print("excessTaxvalue"+excessTAxValue.toString());
+          excessTAxValue = excessTAxValue + excessTAxValue1;
+        }
       }
-    }
     unitcourse.text = unitcost == 0 ? "" : unitcost.toString();
     grandtotal.text = grands.toString();
     vat.text = vatValue.toString();
+
     actualcost.text = actualValue.toString();
-    print("actualcost.text" + actualcost.text.toString());
+    print("foc value"+focValue.toString());
+
     foc.text = focValue.toString();
     discount.text = discountValue.toString();
     excesstax.text = excessTAxValue.toString();
     Variableamount.text = VatableValue.toString();
+    // _value=false;
   }
+
   @override
   Widget build(BuildContext context) {
 
@@ -485,11 +499,15 @@ print("excessTaxvalue"+excessTAxValue.toString());
                       setState(() {});
                     }
                     else{
+                      print("aaaaapuuuuuuuuuuuu");
                       // table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
                       //     variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: purchaseCurrentStock?.StockQty,variantName:  table[Variable.tableindex].variantName,barcode: table[Variable.tableindex].barcode,excessTax: table[Variable.tableindex].excessTax,supplierCode: table[Variable.tableindex].supplierCode
                       //     ,unitCost:table[Variable.tableindex].unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom:table[Variable.tableindex].purchaseuom,discount: table[Variable.tableindex].discount
                       // )]);
-                          currentStock.insert(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                      print("Variable.tableindex"+Variable.tableindex.toString());
+                       currentStock[Variable.tableindex]=purchaseCurrentStock?.StockQty??0;
+                          // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                      print(currentStock.length);
                       setState(() {});
                     }
                       });
@@ -646,7 +664,7 @@ print("excessTaxvalue"+excessTAxValue.toString());
                       context
                           .read<InventorysearchCubit>()
                           .getInventorySearch("code");
-                      select=true;
+                      select=false;
 
                     }
                     else {
@@ -3453,20 +3471,23 @@ else{
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
                                                                     child: PopUpCall(
+                                                                        vendorId: vendorCode.text,
                                                                       type: "cost-method-list",
                                                                       value: table[i].variantId,
                                                                       onSelection: (VariantId? va) {
                                                                         updateCheck=true;
-                                                                        table[i] = table[i].copyWith(updateCheck: true);
 
-                                                                        table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                                            variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                            ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                                                        )]);
+                                                                        setState(() {
+                                                                          table[i] = table[i].copyWith(updateCheck: true);
+
+                                                                        });
+                                                                        table[i] = table[i].copyWith(variantId: va?.code??"");
+
                                                                         setState(() {
                                                                           var    variantId1 = va?.code;
                                                                           int? id = va!.id;
                                                                           Variable.tableindex =i;
+                                                                          stockCheck=true;
                                                                           Variable.tableedit=true;
                                                                           onChange = true;
                                                                           context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
@@ -4131,18 +4152,18 @@ else{
 
                                                                             });
                                                                             updateCheck=false;
-                                                                            focValue=0;
-                                                                            excessTAxValue=0;
-                                                                            Vdiscount = 0;
-                                                                            Vamount = 0;
-                                                                            Vgrnadtotal = 0;
-                                                                            vactualCost = 0;
-                                                                            unitcost = 0;
-                                                                            grands = 0;
-                                                                            actualValue = 0;
-                                                                            VatableValue = 0;
-                                                                            discountValue = 0;
-                                                                            vatValue = 0;
+                                                                            // focValue=0;
+                                                                            // excessTAxValue=0;
+                                                                            // Vdiscount = 0;
+                                                                            // Vamount = 0;
+                                                                            // Vgrnadtotal = 0;
+                                                                            // vactualCost = 0;
+                                                                            // unitcost = 0;
+                                                                            // grands = 0;
+                                                                            // actualValue = 0;
+                                                                            // VatableValue = 0;
+                                                                            // discountValue = 0;
+                                                                            // vatValue = 0;
                                                                             setState(() {});
                                                                           }
                                                                         },

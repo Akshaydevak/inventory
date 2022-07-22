@@ -183,6 +183,21 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
       setState(() {});
     }
   }
+  update(int i,bool b){
+   lines[i]=lines[i].copyWith(isActive: b);
+       setState(() {
+
+       });
+   addition();
+  }
+  double vatCalcutatingMethod(int reqQty,double unitCst,double exTaxx,int disct){
+  double   VatAmounts = (((reqQty*unitCst)+exTaxx)-disct);
+   return VatAmounts;
+  }
+  double ActualGrandTotal(double VatAmounts,double vatt){
+   double ActualGC = (VatAmounts+((VatAmounts*vatt)/100));
+   return ActualGC;
+  }
 
 
   @override
@@ -585,7 +600,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                               ],),
 
                               Divider(color: Colors.grey,thickness: 1,),
-                              // GrowableTable(lines:lines,updation: u,),
+                              // GrowableTable(lines:lines,updation: update,),
                           Scrollbar(
                             controller: recieveController,
                             isAlwaysShown: true,
@@ -1178,6 +1193,9 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                         if(select){
                                           clear();
                                           lines?.clear();
+                                          setState(() {
+
+                                          });
                                         }
                                         else{
                                           showDailogPopUp(
@@ -1894,9 +1912,7 @@ class _GrowableTableState extends State<GrowableTable> {
 
                                 size: 13,
 
-                                // color: Palette.containerDarknew,
 
-                                // textColor: Palette.white
 
                               ),
 
@@ -2176,7 +2192,7 @@ class _GrowableTableState extends State<GrowableTable> {
             TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: CheckedBoxs(
-                  valueChanger:widget?.lines?[i].isActive==null?false:widget?.lines?[i].isActive,
+                  valueChanger:widget?.lines?[i].isActive,
 
                   onSelection:(bool ? value){
                     bool? isActive = widget?.lines?[i].isActive??false;
@@ -2184,7 +2200,7 @@ class _GrowableTableState extends State<GrowableTable> {
 
                       isActive = !isActive!;
                       print(isActive);
-                      // widget.updation(i,isActive);
+                      widget.updation(i,isActive);
                       //  widget?.lines?[i] = widget?.lines![i].copyWith(isActive: isActive);
 
                       setState(() {});

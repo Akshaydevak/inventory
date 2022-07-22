@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class PopUpInputField extends StatefulWidget {
   final bool read;
   final String label;
+  final double height;
   final String boarType;
   final bool required;
   final bool isPrefix;
@@ -25,6 +26,7 @@ class PopUpInputField extends StatefulWidget {
   const PopUpInputField({
     Key? key,
     this.read=false,
+    this.height=40,
     this.isPrefix = false,
     this.boarType="",
     this.prefixLable = "",
@@ -79,7 +81,7 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
             onAddNew: widget.onAddNew,
           )
               : Container(
-            height: 40,
+            height: widget.height,
               color: widget.restricted ? Colors.grey.withOpacity(.2) : null,
               child:
               widget.boarType=="int"?

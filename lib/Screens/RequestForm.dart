@@ -481,23 +481,15 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                 });
               }
 
+              else if(Variable.tableedit==false){
+                stockQty = purchaseCurrentStock?.StockQty;
+                setState(() {});
+              }
               else{
-                if(Variable.tableedit==false){
-                  print("findinf");
-                  stock=stockQty;
-                  print("st"+stock.toString());
-                  setState(() {
-
-                  });
-
-                }
-                else{
-                 // additionalVariants[Variable.tableindex] =         additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
-
-                }
-
-
-
+                currentStock[Variable.tableindex]=purchaseCurrentStock?.StockQty??0;
+                // currentStock.cop(Variable.tableindex,  purchaseCurrentStock?.StockQty??0);
+                print(currentStock.length);
+                setState(() {});
               }
 
 
@@ -520,7 +512,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
             clear();
             table.clear();
             context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
-            select=true;
+
           }
           else {
             context.showSnackBarError(data.data2);
@@ -551,6 +543,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                     veritiaclid=result[0].id;
                     context
                         .read<RequestformreadCubit>().getRequestFormRead(veritiaclid!);
+                    selectedVertical=0;
 
                   }
                   else{
@@ -623,16 +616,6 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                             table.clear();
                                             clear();
-
-
-
-
-
-
-
-
-
-
 
 
                                         });
@@ -1210,6 +1193,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           int? id = va!.id;
                                                                           Variable.tableindex =i;
                                                                           Variable.tableedit=true;
+                                                                          stockCheck==true;
 
 
                                                                           // onChange = true;
@@ -2881,3 +2865,223 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
     ));
   }
 }
+
+
+
+// class Stabletable extends StatefulWidget {
+//   final TextEditingController orderType;
+//   final TextEditingController ordereCodeController;
+//   final TextEditingController orderDateController;
+//   final TextEditingController inventoryIdController;
+//   final TextEditingController orderedPersonController;
+//   final TextEditingController promisedRecieptDate;
+//   final TextEditingController plannedRecieptDate;
+//   final TextEditingController paymentCodeController;
+//   final TextEditingController orderType;
+//   final TextEditingController orderType;
+//   final TextEditingController orderType;
+//   @override
+//   _StabletableState createState() => _StabletableState();
+// }
+//
+// class _StabletableState extends State<Stabletable> {
+//   @override
+//   Widget build(BuildContext context) {
+//     return   Row(
+//       children: [
+//         Expanded(child:Container(
+//           child: Row(
+//             children: [
+//               Expanded(child: Column(
+//                 children: [
+//                   SizedBox(height: height*.030,),
+//
+//                   SelectableDropDownpopUp(
+//                     label: "Order type",
+//                     type:"RequestFormType",
+//                     value: orderType.text,
+//                     onSelection: (String? va) {
+//                       print(
+//                           "+++++++++++++++++++++++");
+//                       //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+//                       setState(() {
+//
+//
+//                         // onChange = true;
+//                         orderType.text = va!;
+//                       });
+//                     },
+//                   ),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: ordereCodeController, title: "Order code"),
+//
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: orderDateController, title: "Order Date"),
+//                   // PopUpDateFormField(
+//                   //
+//                   //     format:DateFormat('yyyy-MM-dd'),
+//                   //     controller: orderDateController,
+//                   //     //initialValue:orderDateController.text!=null||orderDateController.text!=""||orderDateController.text!="null"?DateTime.parse(orderDateController.text):DateTime.parse("2022-05-26"),
+//                   //     label: "Order Date",
+//                   //     onSaved: (newValue) {
+//                   //       print("new value"+newValue.toString());
+//                   //       orderDateController.text = newValue
+//                   //           ?.toIso8601String()
+//                   //           .split("T")[0] ??
+//                   //           "";
+//                   //       print("promised_receipt_date.text"+orderDateController.text.toString());
+//                   //     },
+//                   //     enable: true),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       controller: inventoryIdController, title: "Inventory  id"),
+//                   SizedBox(height: height*.030,),
+//                   SelectableDropDownpopUp(
+//                     label: "Order Person",
+//                     type:"RequestFormOrderPerson",
+//                     value: orderedPersonController.text,
+//                     onSelection: (OrderedPersonModel? va) {
+//                       print(
+//                           "+++++++++++++++++++++++"+va.toString());
+//                       //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+//                       setState(() {
+//                         orderedPersonController.text = va!.organisationCode.toString();
+//
+//                         // onChange = true;
+//
+//                       });
+//                     },
+//                     onAddNew: () {},
+//                     restricted: true,
+//                   ),
+//                   SizedBox(height: height*.030,),
+//                   PopUpDateFormField(
+//
+//                       format:DateFormat('yyyy-MM-dd'),
+//                       controller: promisedRecieptDate,
+//                       // initialValue:promisedRecieptDate.text!=null||promisedRecieptDate.text!=""||promisedRecieptDate.text!="null"?
+//                       //     DateTime.parse(promisedRecieptDate.text):DateTime.parse("2022-05-26"),
+//                       label: "Promised Reciept Date",
+//                       onSaved: (newValue) {
+//                         promisedRecieptDate.text = newValue
+//                             ?.toIso8601String()
+//                             .split("T")[0] ??
+//                             "";
+//                         print("promised_receipt_date.text"+promisedRecieptDate.text.toString());
+//                       },
+//                       enable: true),
+//                   SizedBox(height: height*.030,),
+//                   PopUpDateFormField(
+//
+//                       format:DateFormat('yyyy-MM-dd'),
+//                       controller: plannedRecieptDate,
+//                       // initialValue:
+//                       //     DateTime.parse(fromDate!),
+//                       label: "Planned Reciept Date",
+//                       onSaved: (newValue) {
+//                         plannedRecieptDate.text = newValue
+//                             ?.toIso8601String()
+//                             .split("T")[0] ??
+//                             "";
+//                         print("planned.text"+plannedRecieptDate.text.toString());
+//                       },
+//                       enable: true),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//
+//
+//                 ],
+//               ),),
+//               Expanded(child: Column(
+//                 children: [
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: 10,),
+//
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: paymentCodeController, title: "Payment code"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: paymentStatusController, title: "Payment status"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: orderStatusController, title: "Order status"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: receivingSattusController, title: "Receiving status"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: invoiceStatusController, title: "Invoice status"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                     controller: noteController, title: "Note",height: 90,maxLines: 3,),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                     controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//
+//                 ],
+//               ),),
+//               Expanded(child: Column(
+//                 children: [
+//                   SizedBox(height: height*.030,),
+//
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: discountController, title: "Discount"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: focController, title: "foc"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: unitCostController, title: "Unit cost"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: vatableAmountController, title: "Variable amount"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: excessTaxController, title: "excess tax"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: vatController, title: "vat"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: actualCostController, title: "actual cost"),
+//                   SizedBox(height: height*.030,),
+//                   NewInputCard(
+//                       readOnly: true,
+//                       controller: grandTotalController, title: "grand total"),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                   SizedBox(height: height*.030,),
+//                 ],
+//               ),),
+//
+//
+//             ],
+//           ),
+//         ) )
+//       ],
+//     ),;
+//   }
+// }
