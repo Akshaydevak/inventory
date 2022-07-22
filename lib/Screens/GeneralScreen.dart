@@ -340,13 +340,13 @@ List<TextEditingController> vatController =[];
     double focValue=0;
     double VatableValue=0;
     double excessTAxValue=0;
-    if(table.isNotEmpty)
+    if(table.isNotE
       for (var i = 0; i < table.length; i++) {
-        if (table[i].isInvoiced == true) {
+        if (table[i].isActive == true) {
           var unicost1= table[i].unitCost??0;
           var vatValue1= table[i].vat??0;
           var grands1= table[i].grandTotal??0;
-          var actualValue1= table[i].actualCost??0;
+          var actualValue1= table[i].actualCost?
           var discountValue1= table[i].discount??0;
           var focValue1= table[i].foc??0;
           var VatableValue1= table[i].variableAmount??0;
