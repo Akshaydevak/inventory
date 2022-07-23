@@ -134,6 +134,7 @@ List<TextEditingController> vatController =[];
   String ? address2="";
   String? varinatname = "";
   String? vendorRefCode = "";
+
   double? Vamount = 0;
   String? Vbarcode = "";
   double? vvat = 0;
@@ -241,6 +242,7 @@ List<TextEditingController> vatController =[];
     vfoc=0;
     focValue=0;
     excessTAxValue=0;
+
 
     check1 = "";
     check = 0;
@@ -446,12 +448,14 @@ List<TextEditingController> vatController =[];
                       },
                       success: (data) {
                         purchaseTable = data;
+                        print("purchaseTable"+purchaseTable.toString());
+
                         setState(() {
                           print("Variable.tableedit"+Variable.tableedit.toString());
                           print("Variable.tableedit"+Variable.tableindex.toString());
                           if(Variable.tableedit==true){
                             table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
-                                variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
+                                variableAmount:table[Variable.tableindex].variableAmount,vat: purchaseTable?.vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
                                 unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount,supplierCode: purchaseTable?.vendorDetails?.vendorRefCode??""
                             )]);
                           }
@@ -460,6 +464,7 @@ List<TextEditingController> vatController =[];
                             varinatname = purchaseTable?.name;
                            vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
+                            vvat= purchaseTable?.vat;
                             unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                             print("check"+check.toString());
                             unitcostTestController?.text=purchaseTable?.unitCost.toString()??"";
@@ -3453,765 +3458,764 @@ else{
                                                             ),
 
                                                           ]),
-
-                                                      if (table != null)...[
-                                                        for (var i = 0; i < table.length; i++)
-                                                          TableRow(
-                                                              decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                                  border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                      bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                      right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                                          .solid))),
-                                                              children: [
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding((i + 1).toString(), fontSize: 12,
-                                                                      padding: EdgeInsets.only(left: 11.5, top:
-                                                                      1.5), fontWeight: FontWeight.w500),
-                                                                ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: PopUpCall(
-                                                                    type: "cost-method-list",
-                                                                    value: table[i].variantId,
-                                                                    onSelection: (VariantId? va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-
-                                                                      table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,
-                                                                          variableAmount: table[i].variableAmount,vat: table[i].vat,currentQty: table[i].currentQty,variantName: table[i].variantName,barcode: table[i].barcode,excessTax: table[i].excessTax,supplierCode: table[i].supplierCode
-                                                                          ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
-                                                                      )]);
-                                                                      setState(() {
-                                                                        var    variantId1 = va?.code;
-                                                                        int? id = va!.id;
-                                                                        Variable.tableindex =i;
-                                                                        stockCheck=true;
-                                                                        Variable.tableedit=true;
-                                                                        onChange = true;
-                                                                        context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
-                                                                        context.read<PurchaseStockCubit>().getCurrentStock(inventoryId.text,variantId1);
-
-                                                                      });
-                                                                    },
+                                                        if (table != null)...[
+                                                          for (var i = 0; i < table.length; i++)
+                                                            TableRow(
+                                                                decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                                                    border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                        bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                        right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
+                                                                                .solid))),
+                                                                children: [
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding((i + 1).toString(), fontSize: 12,
+                                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                                            1.5), fontWeight: FontWeight.w500),
                                                                   ),
-                                                                ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(
-                                                                      table[i].variantName??"",
-                                                                      fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:1.5), fontWeight: FontWeight.w500),
-                                                                ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(table[i].supplierCode.toString(),
-                                                                      fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
-                                                                ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(table[i].barcode??"",
-                                                                      fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
-                                                                ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: PopUpCall(
+                                                                        vendorId: vendorCode.text,
+                                                                      type: "cost-method-list",
+                                                                      value: table[i].variantId,
+                                                                      onSelection: (VariantId? va) {
+                                                                        updateCheck=true;
 
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
-                                                                ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(table[i].purchaseuom??"",
-                                                                      padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
-                                                                ),
-                                                                //88888888888888888888                                   //**********************************************
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(controller:requestedListControllers[i],
-                                                                    onChanged: (va) {print(va);
-                                                                    updateCheck=true;
-                                                                    table[i] = table[i].copyWith(updateCheck: true);
-                                                                    setState(() {
-
-                                                                    });
-    if (va == "") {
-    print("entered");
-    table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
-    } else {
-    var qty = int.tryParse(va);
-    var dis = table[i].discount;
-    var excess = table[i].excessTax;
-    var unitcost = table[i].unitCost;
-    var vat = table[i].vat;
-    var foc = table[i].foc;
-    if (qty == 0 || unitcost == 0 ||unitcost=="") {
-    table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
-    }else {
-    var Vamount;
-    var vactualCost;
-
-    Vamount  = (((unitcost! *
-    qty!) +
-    excess!) -
-    dis!)
-        .toDouble();
-    if(vat==0 ||vat==""){
-    vactualCost=Vamount;
-    }
-    else{
-    vactualCost  = (Vamount! +
-    ((Vamount! *
-    vat!) /
-    100));
-    }
-
-
-    table[i] =
-    table[i]
-        .copyWith(
-    variableAmount: Vamount,
-    actualCost: vactualCost,
-    grandTotal: vactualCost,
-    requestedQty: qty);
-    }
-
-
-
-    }
-
-    setState(() {});}
-                                                                  ),
-                                                                ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    //last:table[i].minimumQty.toString(),
-                                                                    controller:minListControllers[i],
-                                                                    onChanged: (p0) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-                                                                      });
-                                                                      print(p0);
-                                                                      if(p0==""||p0=="0"){
                                                                         setState(() {
-                                                                          table[i] = table[i].copyWith(minimumQty: 0);
+                                                                          table[i] = table[i].copyWith(updateCheck: true);
 
                                                                         });
-                                                                      }
-                                                                      else{
+                                                                        table[i] = table[i].copyWith(variantId: va?.code??"");
+
                                                                         setState(() {
-                                                                          table[i] = table[i].copyWith(minimumQty:int.tryParse(p0));
+                                                                          var    variantId1 = va?.code;
+                                                                          int? id = va!.id;
+                                                                          Variable.tableindex =i;
+                                                                          stockCheck=true;
+                                                                          Variable.tableedit=true;
+                                                                          onChange = true;
+                                                                          context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
+                                                                          context.read<PurchaseStockCubit>().getCurrentStock(inventoryId.text,variantId1);
+
                                                                         });
-                                                                      }
-                                                                    },
-                                                                    enable: true,
-                                                                    onComplete: () {
-                                                                      setState(() {  print("maxxxx"+table.toString());});
-                                                                    },
+                                                                      },
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(controller:maxListControllers[i],
-                                                                    onChanged: (p0) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-                                                                      });
-                                                                      if(p0==""){
-                                                                        table[i] = table[i].copyWith(maximumQty: 0);
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(
+                                                                        table[i].variantName??"",
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top:1.5), fontWeight: FontWeight.w500),
+                                                                  ),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].supplierCode.toString(),
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  ),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].barcode??"",
+                                                                        fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  ),
+
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(currentStock.length!=table.length?"": currentStock[i].toString(),
+                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  ),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(table[i].purchaseuom??"",
+                                                                        padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                                                  ),
+                                                                  //88888888888888888888                                   //**********************************************
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(controller:requestedListControllers[i],
+                                                                        onChanged: (va) {print(va);
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
                                                                         setState(() {
 
                                                                         });
+                                                                        if (va == "") {
+                                                                          print("entered");
+                                                                          table[i] = table[i].copyWith(requestedQty: 0, variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                        } else {
+                                                                          var qty = int.tryParse(va);
+                                                                          var dis = table[i].discount;
+                                                                          var excess = table[i].excessTax;
+                                                                          var unitcost = table[i].unitCost;
+                                                                          var vat = table[i].vat;
+                                                                          var foc = table[i].foc;
+                                                                          if (qty == 0 || unitcost == 0 ||unitcost=="") {
+                                                                            table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0);
+                                                                          }else {
+                                                                            var Vamount;
+                                                                            var vactualCost;
 
-                                                                      }
-                                                                      else{
-                                                                        setState(() {
-                                                                          table[i] = table[i].copyWith(maximumQty:int.tryParse(p0));
-
-                                                                        });
-                                                                      }
-
-                                                                    },
-                                                                    enable: true,
-                                                                    onComplete: () {
-
-                                                                      setState(() {  print("maxxxx"+table.toString());});
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: CheckedBoxs(
-
-                                                                    valueChanger:table[i].isRecieved==null?false: table[i].isRecieved,
-
-
-                                                                    onSelection: (bool? value) {  },
-
-                                                                  ),
-                                                                ),
-
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    controller:unitcostListControllers[i],
-                                                                    // last: table[i].unitCost.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-                                                                      double? unitcost;
-                                                                      if (va == "") {
-                                                                        print("entered");
-                                                                        unitcost = 0;
-                                                                        print("disc" + unitcost.toString());
-                                                                        table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-                                                                        setState(() {});
-                                                                      }
-                                                                      unitcost = double.tryParse(va);
-
-
-                                                                      var qty = table[i].requestedQty;
-                                                                      print("qty" + qty.toString());
-                                                                      var excess = table[i].excessTax;
-                                                                      print("excess" + excess.toString());
-                                                                      var disc = table[i].discount;
-                                                                      var foc=table[i].foc;
-
-                                                                      var vat = table[i].vat;
-                                                                      print("vat" + vat.toString());
-                                                                      print("qty" + qty.toString());
-                                                                      if (qty == 0 || qty == null) {
-                                                                        print("checking case");
-
-                                                                        table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
-                                                                        setState(() {});
-                                                                      } else {
-                                                                        double Vamount;
-                                                                        Vamount  = double.parse((((unitcost! * qty!) + excess!) - disc!).toDouble().toStringAsFixed(2));
-
-
-
-                                                                        var vactualCost = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-
-                                                                        table[i] =
-                                                                            table[i].copyWith(
-                                                                                variableAmount: Vamount,
-                                                                                actualCost: vactualCost,
-                                                                                grandTotal: vactualCost,
-                                                                                unitCost: unitcost);
-                                                                        setState(() {});
-
-                                                                      }
-                                                                    },
-                                                                  ),
-                                                                ),
-
-
-
-                                                                //Excess tax***********************************Excesstax***********************************************************************
-                                                                excesstListControllers.isNotEmpty?
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-
-                                                                    controller:excesstListControllers[i],
-                                                                    // last: table[i].excessTax.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-                                                                      double? excess;
-                                                                      if (va == "") {
-                                                                        excess = 0;
-                                                                        setState(() {});
-                                                                      } else {
-                                                                        excess = double.tryParse(va);
-                                                                        setState(() {});
-                                                                      }
-
-                                                                      var qty = table[i].requestedQty;
-                                                                      var vat = table[i].vat;
-                                                                      var foc = table[i].foc;
-
-                                                                      print("excess" + excess.toString());
-                                                                      var unitcost = table[i].unitCost;
-                                                                      print("unitcost" + unitcost.toString());
-                                                                      var Vdiscount = table[i].discount;
-                                                                      if(qty==0 || unitcost==0){
-                                                                        table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
-                                                                        setState(() {
-
-                                                                        });
-
-                                                                      }else {
-                                                                        var Vamount;
-
-
-                                                                        Vamount =
-                                                                            (((unitcost! *
+                                                                            Vamount  = (((unitcost! *
                                                                                 qty!) +
                                                                                 excess!) -
-                                                                                Vdiscount!)
+                                                                                dis!)
                                                                                 .toDouble();
+                                                                            if(vat==0 ||vat==""){
+                                                                              vactualCost=Vamount;
+                                                                            }
+                                                                            else{
+                                                                              vactualCost  = (Vamount! +
+                                                                                  ((Vamount! *
+                                                                                      vat!) /
+                                                                                      100));
+                                                                            }
 
-                                                                        var vactualCost = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-                                                                        var Vgrnadtotal = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-                                                                        table[i] =
-                                                                            table[i]
-                                                                                .copyWith(
-                                                                                actualCost: vactualCost,
-                                                                                grandTotal: Vgrnadtotal,
-                                                                                variableAmount: Vamount,
-                                                                                excessTax: excess);
-                                                                        setState(() {});
-                                                                      } },
+
+                                                                            table[i] =
+                                                                                table[i]
+                                                                                    .copyWith(
+                                                                                    variableAmount: Vamount,
+                                                                                    actualCost: vactualCost,
+                                                                                    grandTotal: vactualCost,
+                                                                                    requestedQty: qty);
+                                                                          }
+
+
+
+                                                                        }
+
+                                                                        setState(() {});}
+                                                                    ),
                                                                   ),
-                                                                ):
-                                                                TableCell(
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
+                                                                      //last:table[i].minimumQty.toString(),
+                                                                      controller:minListControllers[i],
+                                                                      onChanged: (p0) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+                                                                        });
+                                                                        print(p0);
+                                                                        if(p0==""){
+                                                                          setState(() {
+                                                                            table[i] = table[i].copyWith(minimumQty: 0);
 
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
+                                                                          });
+                                                                        }
+                                                                        else{
+                                                                          setState(() {
+                                                                            table[i] = table[i].copyWith(minimumQty:int.tryParse(p0));
+                                                                          });
+                                                                        }
+                                                                      },
+                                                                      enable: true,
+                                                                      onComplete: () {
+                                                                        setState(() {  print("maxxxx"+table.toString());});
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                  TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(controller:maxListControllers[i],
+                                                                      onChanged: (p0) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+                                                                        });
+                                                                        if(p0==""){
+                                                                          table[i] = table[i].copyWith(maximumQty: 0);
+                                                                          setState(() {
 
-                                                                    // controller:excesstListControllers[i],
-                                                                    // last: table[i].excessTax.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
+                                                                          });
 
-                                                                      });
-                                                                      double? excess;
-                                                                      if (va == "") {
-                                                                        excess = 0;
-                                                                        setState(() {});
-                                                                      } else {
-                                                                        excess = double.tryParse(va);
-                                                                        setState(() {});
-                                                                      }
+                                                                        }
+                                                                        else{
+                                                                          setState(() {
+                                                                            table[i] = table[i].copyWith(maximumQty:int.tryParse(p0));
 
-                                                                      var qty = table[i].requestedQty;
-                                                                      var vat = table[i].vat;
-                                                                      var foc = table[i].foc;
+                                                                          });
+                                                                        }
 
-                                                                      print("excess" + excess.toString());
-                                                                      var unitcost = table[i].unitCost;
-                                                                      print("unitcost" + unitcost.toString());
-                                                                      var Vdiscount = table[i].discount;
-                                                                      if(qty==0 || unitcost==0){
-                                                                        table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                      },
+                                                                      enable: true,
+                                                                      onComplete: () {
+
+                                                                        setState(() {  print("maxxxx"+table.toString());});
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: CheckedBoxs(
+
+                                                                      valueChanger:table[i].isRecieved==null?false: table[i].isRecieved,
+
+
+                                                                      onSelection: (bool? value) {  },
+
+                                                                    ),
+                                                                  ),
+
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
+                                                                      controller:unitcostListControllers[i],
+                                                                      // last: table[i].unitCost.toString() ?? "",
+                                                                      onChanged: (va) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
                                                                         setState(() {
 
                                                                         });
+                                                                        double? unitcost;
+                                                                        if (va == "") {
+                                                                          print("entered");
+                                                                          unitcost = 0;
+                                                                          print("disc" + unitcost.toString());
+                                                                          table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                          setState(() {});
+                                                                        }
+                                                                       else{
+                                                                          unitcost = double.tryParse(va);
 
-                                                                      }else {
-                                                                        var Vamount;
+
+                                                                          var qty = table[i].requestedQty;
+                                                                          print("qty" + qty.toString());
+                                                                          var excess = table[i].excessTax;
+                                                                          print("excess" + excess.toString());
+                                                                          var disc = table[i].discount;
+                                                                          var foc=table[i].foc;
+
+                                                                          var vat = table[i].vat;
+                                                                          print("vat" + vat.toString());
+                                                                          print("qty" + qty.toString());
+                                                                          if (qty == 0 || qty == null||unitcost==0) {
+                                                                            print("checking case");
+
+                                                                            table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
+                                                                            setState(() {});
+                                                                          } else {
+                                                                            double Vamount;
+                                                                            Vamount  = double.parse((((unitcost! * qty!) + excess!) - disc!).toDouble().toStringAsFixed(2));
 
 
-                                                                        Vamount =
-                                                                            (((unitcost! *
-                                                                                qty!) +
-                                                                                excess!) -
-                                                                                Vdiscount!)
-                                                                                .toDouble();
+                                                                            var  vactualCost  =double.parse ((Vamount! + ((Vamount! * vat!) / 100)).toStringAsFixed(2));
 
-                                                                        var vactualCost = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-                                                                        var Vgrnadtotal = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-                                                                        table[i] =
-                                                                            table[i]
-                                                                                .copyWith(
-                                                                                actualCost: vactualCost,
-                                                                                grandTotal: Vgrnadtotal,
-                                                                                variableAmount: Vamount,
-                                                                                excessTax: excess);
-                                                                        setState(() {});
-                                                                      } },
+
+                                                                            table[i] =
+                                                                                table[i].copyWith(
+                                                                                    variableAmount: Vamount,
+                                                                                    actualCost: vactualCost,
+                                                                                    grandTotal: vactualCost,
+                                                                                    unitCost: unitcost);
+                                                                            setState(() {});
+
+                                                                          }
+                                                                        }
+                                                                      },
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                                //****************************************DISCOUNT***************************DISCOUNT*********************************
-                                                                // tableEdit==true?
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    controller:discounttListControllers[i],
-                                                                    // last: table[i].discount.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-                                                                      int? disc;
-                                                                      if (va ==
-                                                                          "") {
-                                                                        print(
-                                                                            "entered");
-                                                                        disc =
-                                                                        0;
-                                                                        print(
-                                                                            "disc" +
-                                                                                disc
-                                                                                    .toString());
-                                                                      } else {
-                                                                        disc =
-                                                                            int
-                                                                                .tryParse(
-                                                                                va);
-                                                                        print(
-                                                                            "disc1" +
-                                                                                disc
-                                                                                    .toString());
-                                                                      }
-
-                                                                      var qty = table[i]
-                                                                          .requestedQty;
-                                                                      print(
-                                                                          "qty" +
-                                                                              qty
-                                                                                  .toString());
-                                                                      var excess = table[i]
-                                                                          .excessTax;
-                                                                      print(
-                                                                          "excess" +
-                                                                              excess
-                                                                                  .toString());
-                                                                      var unitcost = table[i]
-                                                                          .unitCost;
-                                                                      print(
-                                                                          "unitcost" +
-                                                                              unitcost
-                                                                                  .toString());
-                                                                      var vat = table[i].vat;
-                                                                      var foc = table[i]
-                                                                          .foc;
-
-                                                                      print(
-                                                                          "vat" +
-                                                                              vat
-                                                                                  .toString());
-                                                                      if (unitcost ==
-                                                                          0 ||
-                                                                          qty ==
-                                                                              0) {
-                                                                        table[i] =
-                                                                            table[i]
-                                                                                .copyWith(
-                                                                                variableAmount: 0,
-                                                                                actualCost: 0,
-                                                                                grandTotal: 0,
-                                                                                discount: disc);
-                                                                      }
-
-                                                                      else {
-
-                                                                        var Vamount = (((unitcost! *
-                                                                            qty!) +
-                                                                            excess!) -
-                                                                            disc!)
-                                                                            .toDouble();
-                                                                        print(
-                                                                            "Vamount" +
-                                                                                Vamount
-                                                                                    .toString());
-
-                                                                        var vactualCost = (Vamount! +
-                                                                            ((Vamount! *
-                                                                                vat!) /
-                                                                                100));
-                                                                        print(
-                                                                            "vactualCost" +
-                                                                                vactualCost
-                                                                                    .toString());
-                                                                        table[i] =
-                                                                            table[i]
-                                                                                .copyWith(
-                                                                                variableAmount: Vamount,
-                                                                                actualCost: vactualCost,
-                                                                                grandTotal: vactualCost,
-                                                                                discount: disc);
-                                                                        setState(() {});
-
-                                                                      }
-
-                                                                    }
-                                                                    ,
-
-                                                                  ),
-                                                                ),
 
 
 
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    controller:focListControllers[i],
-                                                                    // last: table[i].foc.toString(),
+                                                                  //Excess tax***********************************Excesstax***********************************************************************
+                                                                  excesstListControllers.isNotEmpty?
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
 
-                                                                    onChanged: (p0) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-
-                                                                      print(p0);
-                                                                      if(p0==""){
-                                                                        table[i] = table[i].copyWith(foc:0);
+                                                                      controller:excesstListControllers[i],
+                                                                      // last: table[i].excessTax.toString() ?? "",
+                                                                      onChanged: (va) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
                                                                         setState(() {
 
                                                                         });
+                                                                        double? excess;
+                                                                        if (va == "") {
+                                                                          excess = 0;
+                                                                          setState(() {});
+                                                                        } else {
+                                                                          excess = double.tryParse(va);
+                                                                          setState(() {});
+                                                                        }
 
-                                                                      }
-                                                                      else{
-                                                                        table[i] = table[i].copyWith(foc:double.tryParse(p0));
-                                                                        setState(() {
+                                                                        var qty = table[i].requestedQty;
+                                                                        var vat = table[i].vat;
+                                                                        var foc = table[i].foc;
 
-                                                                        });
-                                                                      }
-
-
-
-
-                                                                    },
-                                                                    enable: true,
-                                                                    onComplete: () {
-
-                                                                      setState(() {  print("maxxxx"+table.toString());});
-                                                                    },
-                                                                  ),
-                                                                ),
-
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(
-                                                                      table[i]
-                                                                          .variableAmount
-                                                                          .toString(),
-                                                                      padding: EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          11.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                                ),
-
-                                                                //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
-
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    controller: vatListControllers[i],
-                                                                    // last: table[i].vat.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-                                                                      if (va == "") {
-                                                                        print("sss");
-                                                                        var vatableAmount = table[i].variableAmount;
-                                                                        table[i] = table[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
-                                                                        setState(() {});
-                                                                      } else {
-                                                                        var vat = double.tryParse(va);
-                                                                        var Vamount = table[i].variableAmount;
-                                                                        print("qty" + Vamount.toString());
-                                                                        var excess = table[i].excessTax;
                                                                         print("excess" + excess.toString());
                                                                         var unitcost = table[i].unitCost;
-                                                                        var qty = table[i].requestedQty;
-                                                                        var foc = table[i].foc;
-                                                                        var dis = table[i].discount;
                                                                         print("unitcost" + unitcost.toString());
-                                                                        if(unitcost==0 || qty==0){
-                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                                        var Vdiscount = table[i].discount;
+                                                                        if(qty==0 || unitcost==0){
+                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                          setState(() {
 
-                                                                        }else{
+                                                                          });
+
+                                                                        }else {
+                                                                          double Vamount;
+
+
+                                                                          Vamount =
+                                                                             double.parse( (((unitcost! *
+                                                                                  qty!) +
+                                                                                  excess!) -
+                                                                                  Vdiscount!)
+                                                                                  .toStringAsFixed(2));
+
+                                                                          double vactualCost =double.parse( (Vamount! +
+                                                                              ((Vamount! *
+                                                                                  vat!) /
+                                                                                  100)).toStringAsFixed(2));
+                                                                          double Vgrnadtotal = double.parse((Vamount! +
+                                                                              ((Vamount! *
+                                                                                  vat!) /
+                                                                                  100)).toStringAsFixed(2));
+                                                                          table[i] =
+                                                                              table[i]
+                                                                                  .copyWith(
+                                                                                  actualCost: vactualCost,
+                                                                                  grandTotal: Vgrnadtotal,
+                                                                                  variableAmount: Vamount,
+                                                                                  excessTax: excess);
+                                                                          setState(() {});
+                                                                        } },
+                                                                    ),
+                                                                  ):
+                                                                  TableCell(
+
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
+
+                                                                      // controller:excesstListControllers[i],
+                                                                      // last: table[i].excessTax.toString() ?? "",
+                                                                      onChanged: (va) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
+                                                                        double? excess;
+                                                                        if (va == "") {
+                                                                          excess = 0;
+                                                                          setState(() {});
+                                                                        } else {
+                                                                          excess = double.tryParse(va);
+                                                                          setState(() {});
+                                                                        }
+
+                                                                        var qty = table[i].requestedQty;
+                                                                        var vat = table[i].vat;
+                                                                        var foc = table[i].foc;
+
+                                                                        print("excess" + excess.toString());
+                                                                        var unitcost = table[i].unitCost;
+                                                                        print("unitcost" + unitcost.toString());
+                                                                        var Vdiscount = table[i].discount;
+                                                                        if(qty==0 || unitcost==0){
+                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, variableAmount: 0, excessTax: excess);
+                                                                          setState(() {
+
+                                                                          });
+
+                                                                        }else {
+                                                                          double Vamount;
+
+
+                                                                          Vamount =double.parse(    (((unitcost! *
+                                                                              qty!) +
+                                                                              excess!) -
+                                                                              Vdiscount!)
+                                                                              .toStringAsFixed(2))
+                                                                          ;
+
+                                                                          double vactualCost =double.parse( (Vamount! +
+                                                                              ((Vamount! *
+                                                                                  vat!) /
+                                                                                  100)).toStringAsFixed(2));
+                                                                          double Vgrnadtotal = double.parse((Vamount! +
+                                                                              ((Vamount! *
+                                                                                  vat!) /
+                                                                                  100)).toStringAsFixed(2));
+
+                                                                          table[i] =
+                                                                              table[i]
+                                                                                  .copyWith(
+                                                                                  actualCost: vactualCost,
+                                                                                  grandTotal: Vgrnadtotal,
+                                                                                  variableAmount: Vamount,
+                                                                                  excessTax: excess);
+                                                                          setState(() {});
+                                                                        } },
+                                                                    ),
+                                                                  ),
+                                                                  //****************************************DISCOUNT***************************DISCOUNT*********************************
+                                                                  // tableEdit==true?
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
+                                                                      controller:discounttListControllers[i],
+                                                                      // last: table[i].discount.toString() ?? "",
+                                                                      onChanged: (va) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
+                                                                        setState(() {
+
+                                                                        });
+                                                                        int? disc;
+                                                                        if (va ==
+                                                                            "") {
+                                                                          print(
+                                                                              "entered");
+                                                                          disc =
+                                                                          0;
+                                                                          print(
+                                                                              "disc" +
+                                                                                  disc
+                                                                                      .toString());
+                                                                        } else {
+                                                                          disc =
+                                                                              int
+                                                                                  .tryParse(
+                                                                                  va);
+                                                                          print(
+                                                                              "disc1" +
+                                                                                  disc
+                                                                                      .toString());
+                                                                        }
+
+                                                                        var qty = table[i]
+                                                                            .requestedQty;
+                                                                        print(
+                                                                            "qty" +
+                                                                                qty
+                                                                                    .toString());
+                                                                        var excess = table[i]
+                                                                            .excessTax;
+                                                                        print(
+                                                                            "excess" +
+                                                                                excess
+                                                                                    .toString());
+                                                                        var unitcost = table[i]
+                                                                            .unitCost;
+                                                                        print(
+                                                                            "unitcost" +
+                                                                                unitcost
+                                                                                    .toString());
+                                                                        var vat = table[i].vat;
+                                                                        var foc = table[i]
+                                                                            .foc;
+
+                                                                        print(
+                                                                            "vat" +
+                                                                                vat
+                                                                                    .toString());
+                                                                        if (unitcost ==
+                                                                            0 ||
+                                                                            qty ==
+                                                                                0) {
+                                                                          table[i] =
+                                                                              table[i]
+                                                                                  .copyWith(
+                                                                                  variableAmount: 0,
+                                                                                  actualCost: 0,
+                                                                                  grandTotal: 0,
+                                                                                  discount: disc);
+                                                                        }
+
+                                                                        else {
 
                                                                           var Vamount = (((unitcost! *
                                                                               qty!) +
                                                                               excess!) -
-                                                                              dis!)
+                                                                              disc!)
                                                                               .toDouble();
+                                                                          print(
+                                                                              "Vamount" +
+                                                                                  Vamount
+                                                                                      .toString());
+
                                                                           var vactualCost = (Vamount! +
                                                                               ((Vamount! *
                                                                                   vat!) /
                                                                                   100));
-                                                                          var Vgrnadtotal = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
+                                                                          print(
+                                                                              "vactualCost" +
+                                                                                  vactualCost
+                                                                                      .toString());
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
                                                                                   variableAmount: Vamount,
                                                                                   actualCost: vactualCost,
-                                                                                  grandTotal: Vgrnadtotal,
-                                                                                  vat: vat);
+                                                                                  grandTotal: vactualCost,
+                                                                                  discount: disc);
                                                                           setState(() {});
 
-                                                                        }}
-                                                                    },
+                                                                        }
+
+                                                                      }
+                                                                      ,
+
+                                                                    ),
                                                                   ),
-                                                                ),
 
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(
-                                                                      table[i]
-                                                                          .actualCost
-                                                                          .toString(),
-                                                                      padding: EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          11.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                                ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: textPadding(
-                                                                      table[i]
-                                                                          .grandTotal
-                                                                          .toString(),
-                                                                      padding: EdgeInsets
-                                                                          .only(
-                                                                          left:
-                                                                          11.5,
-                                                                          top:
-                                                                          11.5),
-                                                                      fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
-                                                                ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: CheckedBoxs(
-                                                                      valueChanger:table[i]
-                                                                          .isRecieved==null?false:table[i].isRecieved,
 
-                                                                      onSelection:(bool ? value){
 
-                                                                      }),
-                                                                ),
-                                                                // Checkbox(
-                                                                //   value: table[i]
-                                                                //       .isRecieved==null?false:table[i]
-                                                                //       .isRecieved,
-                                                                //   onChanged: (bool?
-                                                                //       value) {
-                                                                //     setState(() {
-                                                                //       // this.isRecieved =
-                                                                //       //     value;
-                                                                //     });
-                                                                //   },
-                                                                // ),
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: CheckedBoxs(
-                                                                      valueChanger:table[i]
-                                                                          .isActive==null?false:table[i].isActive,
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: UnderLinedInput(
+                                                                      controller:focListControllers[i],
+                                                                      // last: table[i].foc.toString(),
 
-                                                                      onSelection:(bool ? value){
-                                                                        bool? isActive = table[i].isActive;
+                                                                      onChanged: (p0) {
+                                                                        updateCheck=true;
+                                                                        table[i] = table[i].copyWith(updateCheck: true);
                                                                         setState(() {
-                                                                          updateCheck=true;
-                                                                          table[i] = table[i].copyWith(updateCheck: true);
+
+                                                                        });
+
+                                                                        print(p0);
+                                                                        if(p0==""){
+                                                                          table[i] = table[i].copyWith(foc:0);
                                                                           setState(() {
 
                                                                           });
-                                                                          isActive = !isActive!;
-                                                                          table[i] = table[i].copyWith(isActive: isActive);
-                                                                          print(isInvoiced);
-                                                                          setState(() {});
-                                                                        });
-                                                                      }),
-                                                                ),
-                                                                Container(  height: 50,
-                                                                  child: TextButton(
-                                                                      style: TextButton.styleFrom(primary: Colors.white, elevation: 2, backgroundColor: Colors.green.shade200),
-                                                                      onPressed: () {
-                                                                        var Vamount = table[i].variableAmount??0;
-                                                                        var variant = table[i].variantId??0;
-                                                                        var mins = table[i].minimumQty??0;
-                                                                        var maxs = table[i].maximumQty??0;
 
-                                                                        var excess = table[i].excessTax??0;
-                                                                        print("excess" + excess.toString());
-                                                                        var unitcosts = table[i].unitCost??0;
-                                                                        var qty = table[i].requestedQty??0;
-                                                                        var foc = table[i].foc??0;
-                                                                        var dis = table[i].discount??0;
-                                                                        if(variant=="null"||qty==0||unitcosts==0){
-                                                                          context.showSnackBarError("please fill all the fields");
-                                                                        }else if(qty!<foc!){
-                                                                          context.showSnackBarError("the received qty allways greater than  foc");
-
-                                                                        }
-                                                                        else if(mins>maxs){
-                                                                          context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
                                                                         }
                                                                         else{
-                                                                          addition();
-                                                                          table[i] = table[i].copyWith(updateCheck: false);
+                                                                          table[i] = table[i].copyWith(foc:double.tryParse(p0));
                                                                           setState(() {
 
                                                                           });
-                                                                          updateCheck=false;
-                                                                          focValue=0;
-                                                                          excessTAxValue=0;
-                                                                          Vdiscount = 0;
-                                                                          Vamount = 0;
-                                                                          Vgrnadtotal = 0;
-                                                                          vactualCost = 0;
-                                                                          unitcost = 0;
-                                                                          grands = 0;
-                                                                          actualValue = 0;
-                                                                          VatableValue = 0;
-                                                                          discountValue = 0;
-                                                                          vatValue = 0;
-                                                                          setState(() {});
                                                                         }
+
+
+
+
                                                                       },
-                                                                      child:Text(table?[i].updateCheck==true?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
+                                                                      enable: true,
+                                                                      onComplete: () {
+
+                                                                        setState(() {  print("maxxxx"+table.toString());});
+                                                                      },
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ]),],
 
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(
+                                                                        table[i]
+                                                                            .variableAmount
+                                                                            .toString(),
+                                                                        padding: EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                            11.5,
+                                                                            top:
+                                                                            11.5),
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                                  ),
 
+                                                                  //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
 
+                                                                  // TableCell(
+                                                                  //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  //   child: UnderLinedInput(
+                                                                  //     controller: vatListControllers[i],
+                                                                  //     // last: table[i].vat.toString() ?? "",
+                                                                  //     onChanged: (va) {
+                                                                  //       updateCheck=true;
+                                                                  //       table[i] = table[i].copyWith(updateCheck: true);
+                                                                  //       setState(() {
+                                                                  //
+                                                                  //       });
+                                                                  //       if (va == "") {
+                                                                  //         print("sss");
+                                                                  //         var vatableAmount = table[i].variableAmount;
+                                                                  //         table[i] = table[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+                                                                  //         setState(() {});
+                                                                  //       } else {
+                                                                  //         var vat = double.tryParse(va);
+                                                                  //         var Vamount = table[i].variableAmount;
+                                                                  //         print("qty" + Vamount.toString());
+                                                                  //         var excess = table[i].excessTax;
+                                                                  //         print("excess" + excess.toString());
+                                                                  //         var unitcost = table[i].unitCost;
+                                                                  //         var qty = table[i].requestedQty;
+                                                                  //         var foc = table[i].foc;
+                                                                  //         var dis = table[i].discount;
+                                                                  //         print("unitcost" + unitcost.toString());
+                                                                  //         if(unitcost==0 || qty==0){
+                                                                  //           table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                                  //
+                                                                  //         }else{
+                                                                  //
+                                                                  //           double Vamount = double.parse((((unitcost! *
+                                                                  //               qty!) +
+                                                                  //               excess!) -
+                                                                  //               dis!).toStringAsFixed(2))
+                                                                  //               ;
+                                                                  //           double vactualCost = double.parse((Vamount! +
+                                                                  //               ((Vamount! *
+                                                                  //                   vat!) /
+                                                                  //                   100)).toStringAsFixed(2));
+                                                                  //
+                                                                  //           table[i] =
+                                                                  //               table[i]
+                                                                  //                   .copyWith(
+                                                                  //                   variableAmount: Vamount,
+                                                                  //                   actualCost: vactualCost,
+                                                                  //                   grandTotal: vactualCost,
+                                                                  //                   vat: vat);
+                                                                  //           setState(() {});
+                                                                  //
+                                                                  //         }}
+                                                                  //     },
+                                                                  //   ),
+                                                                  // ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(
+                                                                        table[i]
+                                                                            .vat
+                                                                            .toString(),
+                                                                        padding: EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                            11.5,
+                                                                            top:
+                                                                            11.5),
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                                  ),
 
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(
+                                                                        table[i]
+                                                                            .actualCost
+                                                                            .toString(),
+                                                                        padding: EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                            11.5,
+                                                                            top:
+                                                                            11.5),
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                                  ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: textPadding(
+                                                                        table[i]
+                                                                            .grandTotal
+                                                                            .toString(),
+                                                                        padding: EdgeInsets
+                                                                            .only(
+                                                                            left:
+                                                                            11.5,
+                                                                            top:
+                                                                            11.5),
+                                                                        fontWeight:
+                                                                        FontWeight
+                                                                            .w500),
+                                                                  ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: CheckedBoxs(
+                                                                        valueChanger:table[i]
+                                                                            .isRecieved==null?false:table[i].isRecieved,
 
+                                                                        onSelection:(bool ? value){
 
+                                                                        }),
+                                                                  ),
+                                                                  // Checkbox(
+                                                                  //   value: table[i]
+                                                                  //       .isRecieved==null?false:table[i]
+                                                                  //       .isRecieved,
+                                                                  //   onChanged: (bool?
+                                                                  //       value) {
+                                                                  //     setState(() {
+                                                                  //       // this.isRecieved =
+                                                                  //       //     value;
+                                                                  //     });
+                                                                  //   },
+                                                                  // ),
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: CheckedBoxs(
+                                                                        valueChanger:table[i]
+                                                                            .isActive==null?false:table[i].isActive,
 
+                                                                        onSelection:(bool ? value){
+                                                                          bool? isActive = table[i].isActive;
+                                                                          setState(() {
+                                                                            updateCheck=true;
+                                                                            table[i] = table[i].copyWith(updateCheck: true);
+                                                                            setState(() {
 
+                                                                            });
+                                                                            isActive = !isActive!;
+                                                                            table[i] = table[i].copyWith(isActive: isActive);
+                                                                            print(isInvoiced);
+                                                                            setState(() {});
+                                                                          });
+                                                                        }),
+                                                                  ),
+                                                                  Container(  height: 50,
+                                                                    child: TextButton(
+                                                                        style: TextButton.styleFrom(primary: Colors.white, elevation: 2, backgroundColor: Colors.green.shade200),
+                                                                        onPressed: () {
+                                                                          var Vamount = table[i].variableAmount??0;
+                                                                          var variant = table[i].variantId??0;
+                                                                          var mins = table[i].minimumQty??0;
+                                                                          var maxs = table[i].maximumQty??0;
 
+                                                                          var excess = table[i].excessTax??0;
+                                                                          print("excess" + excess.toString());
+                                                                          var unitcosts = table[i].unitCost??0;
+                                                                          var qty = table[i].requestedQty??0;
+                                                                          var foc = table[i].foc??0;
+                                                                          var dis = table[i].discount??0;
+                                                                          if(variant=="null"||qty==0||unitcosts==0){
+                                                                            context.showSnackBarError("please fill all the fields");
+                                                                          }else if(qty!<foc!){
+                                                                            context.showSnackBarError("the received qty allways greater than  foc");
 
+                                                                          }
+                                                                          else if(mins>maxs){
+                                                                            context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                                          }
+                                                                         else{
+                                                                            addition();
+                                                                            table[i] = table[i].copyWith(updateCheck: false);
+                                                                            setState(() {
 
-
-
-
-
+                                                                            });
+                                                                            updateCheck=false;
+                                                                            // focValue=0;
+                                                                            // excessTAxValue=0;
+                                                                            // Vdiscount = 0;
+                                                                            // Vamount = 0;
+                                                                            // Vgrnadtotal = 0;
+                                                                            // vactualCost = 0;
+                                                                            // unitcost = 0;
+                                                                            // grands = 0;
+                                                                            // actualValue = 0;
+                                                                            // VatableValue = 0;
+                                                                            // discountValue = 0;
+                                                                            // vatValue = 0;
+                                                                            setState(() {});
+                                                                          }
+                                                                        },
+                                                                        child:Text(table?[i].updateCheck==true?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
+                                                                    ),
+                                                                  ),
+                                                                ]),],
 //********************************************************************************************************************
                                                         TableRow(
                                                             decoration: BoxDecoration(
@@ -4464,40 +4468,44 @@ else{
                                                                     padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(controller:vatTestContoller,
-                                                                  onChanged: (p0) {
-                                                                    if (p0 == "") {
-                                                                      setState(() {vvat = 0;
-                                                                      });
-                                                                    }
-                                                                    else{
-                                                                      vvat =double.tryParse( p0);
-                                                                    }
-                                                                    if(check==0 ||Qty==0){
-                                                                      vactualCost=0;
-                                                                      Vamount=0;
-                                                                      Vgrnadtotal=0;
-                                                                      setState(() {});
-                                                                    }
-                                                                    else{
-                                                                      Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
-                                                                      vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                      setState(() {});
-                                                                    }
-                                                                  },
-                                                                  enable: true,
-                                                                  onComplete: () {
-                                                                    // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
-                                                                    print("vactualCost" +
-                                                                        vactualCost
-                                                                            .toString());
-                                                                    print("+++++" +
-                                                                        table.length
-                                                                            .toString());
-                                                                  },
-                                                                ),
+                                                                child: textPadding(vvat.toString(),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
+                                                              // TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              //   child: UnderLinedInput(controller:vatTestContoller,
+                                                              //     onChanged: (p0) {
+                                                              //       if (p0 == "") {
+                                                              //         setState(() {vvat = 0;
+                                                              //         });
+                                                              //       }
+                                                              //       else{
+                                                              //         vvat =double.tryParse( p0);
+                                                              //       }
+                                                              //       if(check==0 ||Qty==0){
+                                                              //         vactualCost=0;
+                                                              //         Vamount=0;
+                                                              //         Vgrnadtotal=0;
+                                                              //         setState(() {});
+                                                              //       }
+                                                              //       else{
+                                                              //         Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
+                                                              //         vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                              //         Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                              //         setState(() {});
+                                                              //       }
+                                                              //     },
+                                                              //     enable: true,
+                                                              //     onComplete: () {
+                                                              //       // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
+                                                              //       print("vactualCost" +
+                                                              //           vactualCost
+                                                              //               .toString());
+                                                              //       print("+++++" +
+                                                              //           table.length
+                                                              //               .toString());
+                                                              //     },
+                                                              //   ),
+                                                              // ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(vactualCost.toString(),
@@ -4632,6 +4640,7 @@ else{
                                                                         Vgrnadtotal = 0;
                                                                         vactualCost = 0;
                                                                         unitcost = 0;
+
                                                                         grands = 0;
                                                                         actualValue = 0;
                                                                         VatableValue = 0;

@@ -479,13 +479,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                             if(Variable.tableedit==true) {
                               additionalVariants[Variable.tableindex] =
-                                  additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                                  additionalVariants[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",vat:purchaseTable?.vat,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
                               setState(() {
 
                               });
                             }
                             else if( variantIdcheck==true){
-                              recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",   );
+                              recievingLisnes[Variable.tableindex] = recievingLisnes[Variable.tableindex].copyWith(variantName:purchaseTable?.name??"",unitCost:purchaseTable?.unitCost,purchaseUom: purchaseTable?.purchaseUomName??"",barcode:  purchaseTable?.barCode?.barcodeNumber.toString()??"",vat:purchaseTable?.unitCost??0    );
                               setState(() {
 
                               });
@@ -493,28 +493,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                             else{
                               varinatname = purchaseTable?.name??"";
                               unitcost = purchaseTable?.unitCost;
+                              vat1 = purchaseTable?.vat;
                               unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                               supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             print(  supplierRefCode);
                               print("unitttt"+unitcost.toString());
                               unitcost1.text=purchaseTable?.unitCost.toString()??"";
-                              // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                              // print(
-                              //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
-                              //
                               purchaseUomName = purchaseTable?.purchaseUomName??"";
                               vrefcod = purchaseTable?.code??"";
-                              // vid = purchaseTable?.id;
-                              // purchaseTable?.excessTax != null
-                              //     ? eTax = purchaseTable?.excessTax
-                              //     : eTax = 0;
-                              //
                               barcode =
                                   purchaseTable?.barCode?.barcodeNumber.toString()??"";
                             }
-
-                            //
-
                           }
                           );
                         });
@@ -1392,7 +1381,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               var vat = recievingLisnes[i].vat;
                                                                                               print("vat" + vat.toString());
                                                                                               print("qty" + qty.toString());
-                                                                                              if (qty == 0 || qty == null) {
+                                                                                              if (qty == 0 || qty == null||unitcost==0) {
                                                                                                 print("checking case");
 
                                                                                                 recievingLisnes[i] = recievingLisnes[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
@@ -1710,83 +1699,87 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: UnderLinedInput(
-                                                                                            initialCheck:true,
-                                                                                            last: recievingLisnes[i].vat.toString() ?? "",
-                                                                                            onChanged: (va) {
-                                                                                              updateCheck=true;
-                                                                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-                                                                                              setState(() {
-                                                                                              });
-                                                                                              if (va == "") {
-                                                                                                print("sss");
-                                                                                                var vatableAmount = recievingLisnes[i].vatableAmount;
-                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
-                                                                                                setState(() {});
-                                                                                              } else {
-                                                                                                var vat = double.tryParse(va);
-                                                                                                var Vamount = recievingLisnes[i].vatableAmount;
-                                                                                                print("qty" + Vamount.toString());
-                                                                                                var excess = recievingLisnes[i].excessTax;
-                                                                                                print("excess" + excess.toString());
-                                                                                                var unitcost = recievingLisnes[i].unitCost;
-                                                                                                var qty = recievingLisnes[i].receivedQty;
-                                                                                                var foc = recievingLisnes[i].foc;
-                                                                                                var dis = recievingLisnes[i].discount;
-                                                                                                print("unitcost" + unitcost.toString());
-                                                                                                if(unitcost==0 || qty==0){
-                                                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
-
-                                                                                                }else{
-                                                                                                  if(foc==0 || foc=="") {
-                                                                                                    double Vamount = double.parse((((unitcost! *
-                                                                                                        qty!) +
-                                                                                                        excess!) -
-                                                                                                        dis!)
-                                                                                                        .toStringAsFixed(2));
-                                                                                                    double vactualCost = double.parse((Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    recievingLisnes[i] =
-                                                                                                        recievingLisnes[i]
-                                                                                                            .copyWith(
-                                                                                                            vatableAmount: Vamount,
-                                                                                                            actualCost: vactualCost,
-                                                                                                            grandTotal: Vgrnadtotal,
-                                                                                                            vat: vat);
-                                                                                                    setState(() {});
-                                                                                                  }
-                                                                                                  else{
-                                                                                                    double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
-
-                                                                                                    double vactualCost =double.parse( (Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    double Vgrnadtotal = double.parse((Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    recievingLisnes[i] =
-                                                                                                        recievingLisnes[i]
-                                                                                                            .copyWith(
-                                                                                                            vatableAmount: Vamount,
-                                                                                                            actualCost: vactualCost,
-                                                                                                            grandTotal: Vgrnadtotal,
-                                                                                                            vat: vat);
-                                                                                                    setState(() {
-
-                                                                                                    });
-                                                                                                  }
-                                                                                                }}
-                                                                                            },
-                                                                                          ),
+                                                                                          child: textPadding(recievingLisnes[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
+                                                                                        // TableCell(
+                                                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                        //   child: UnderLinedInput(
+                                                                                        //     initialCheck:true,
+                                                                                        //     last: recievingLisnes[i].vat.toString() ?? "",
+                                                                                        //     onChanged: (va) {
+                                                                                        //       updateCheck=true;
+                                                                                        //       recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                                                        //       setState(() {
+                                                                                        //       });
+                                                                                        //       if (va == "") {
+                                                                                        //         print("sss");
+                                                                                        //         var vatableAmount = recievingLisnes[i].vatableAmount;
+                                                                                        //         recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+                                                                                        //         setState(() {});
+                                                                                        //       } else {
+                                                                                        //         var vat = double.tryParse(va);
+                                                                                        //         var Vamount = recievingLisnes[i].vatableAmount;
+                                                                                        //         print("qty" + Vamount.toString());
+                                                                                        //         var excess = recievingLisnes[i].excessTax;
+                                                                                        //         print("excess" + excess.toString());
+                                                                                        //         var unitcost = recievingLisnes[i].unitCost;
+                                                                                        //         var qty = recievingLisnes[i].receivedQty;
+                                                                                        //         var foc = recievingLisnes[i].foc;
+                                                                                        //         var dis = recievingLisnes[i].discount;
+                                                                                        //         print("unitcost" + unitcost.toString());
+                                                                                        //         if(unitcost==0 || qty==0){
+                                                                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                                                        //
+                                                                                        //         }else{
+                                                                                        //           if(foc==0 || foc=="") {
+                                                                                        //             double Vamount = double.parse((((unitcost! *
+                                                                                        //                 qty!) +
+                                                                                        //                 excess!) -
+                                                                                        //                 dis!)
+                                                                                        //                 .toStringAsFixed(2));
+                                                                                        //             double vactualCost = double.parse((Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             double Vgrnadtotal =double.parse( (Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             recievingLisnes[i] =
+                                                                                        //                 recievingLisnes[i]
+                                                                                        //                     .copyWith(
+                                                                                        //                     vatableAmount: Vamount,
+                                                                                        //                     actualCost: vactualCost,
+                                                                                        //                     grandTotal: Vgrnadtotal,
+                                                                                        //                     vat: vat);
+                                                                                        //             setState(() {});
+                                                                                        //           }
+                                                                                        //           else{
+                                                                                        //             double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
+                                                                                        //
+                                                                                        //             double vactualCost =double.parse( (Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             double Vgrnadtotal = double.parse((Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             recievingLisnes[i] =
+                                                                                        //                 recievingLisnes[i]
+                                                                                        //                     .copyWith(
+                                                                                        //                     vatableAmount: Vamount,
+                                                                                        //                     actualCost: vactualCost,
+                                                                                        //                     grandTotal: Vgrnadtotal,
+                                                                                        //                     vat: vat);
+                                                                                        //             setState(() {
+                                                                                        //
+                                                                                        //             });
+                                                                                        //           }
+                                                                                        //         }}
+                                                                                        //     },
+                                                                                        //   ),
+                                                                                        // ),
 
 
                                                                                         TableCell(
@@ -2511,7 +2504,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               var vat = additionalVariants[i].vat;
                                                                                               print("vat" + vat.toString());
                                                                                               print("qty" + qty.toString());
-                                                                                              if (qty == 0 || qty == null) {
+                                                                                              if (qty == 0 || qty == null||unitcost==0) {
                                                                                                 print("checking case");
 
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
@@ -2826,86 +2819,91 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                           child: textPadding(additionalVariants[i].vatableAmount.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
+
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child: UnderLinedInput(
-                                                                                            initialCheck:true,
-                                                                                            last: additionalVariants[i].vat.toString() ?? "",
-                                                                                            onChanged: (va) {
-                                                                                              updateCheck1=true;
-                                                                                              additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
-                                                                                              setState(() {
-
-                                                                                              });
-                                                                                              if (va == "") {
-                                                                                                print("sss");
-                                                                                                var vatableAmount = additionalVariants[i].vatableAmount;
-                                                                                                additionalVariants[i] = additionalVariants[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
-                                                                                                setState(() {});
-                                                                                              } else {
-                                                                                                var vat = double.tryParse(va);
-                                                                                                var Vamount = additionalVariants[i].vatableAmount;
-                                                                                                print("qty" + Vamount.toString());
-                                                                                                var excess = additionalVariants[i].excessTax;
-                                                                                                print("excess" + excess.toString());
-                                                                                                var unitcost = additionalVariants[i].unitCost;
-                                                                                                var qty = additionalVariants[i].receivedQty;
-                                                                                                var foc = additionalVariants[i].foc;
-                                                                                                var dis = additionalVariants[i].discount;
-                                                                                                print("unitcost" + unitcost.toString());
-                                                                                                if(unitcost==0 || qty==0){
-                                                                                                  additionalVariants[i] = additionalVariants[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
-
-                                                                                                }else{
-                                                                                                  if(foc==0 || foc=="") {
-                                                                                                    double Vamount = double.parse((((unitcost! *
-                                                                                                        qty!) +
-                                                                                                        excess!) -
-                                                                                                        dis!)
-                                                                                                        .toStringAsFixed(2));
-                                                                                                    double vactualCost =double.parse( (Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    additionalVariants[i] =
-                                                                                                        additionalVariants[i]
-                                                                                                            .copyWith(
-                                                                                                            vatableAmount: Vamount,
-                                                                                                            actualCost: vactualCost,
-                                                                                                            grandTotal: Vgrnadtotal,
-                                                                                                            vat: vat);
-                                                                                                    setState(() {});
-                                                                                                  }
-                                                                                                  else{
-                                                                                                    double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
-
-                                                                                                    double vactualCost =double.parse ((Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    double Vgrnadtotal =double.parse( (Vamount! +
-                                                                                                        ((Vamount! *
-                                                                                                            vat!) /
-                                                                                                            100)).toStringAsFixed(2));
-                                                                                                    additionalVariants[i] =
-                                                                                                        additionalVariants[i]
-                                                                                                            .copyWith(
-                                                                                                            vatableAmount: Vamount,
-                                                                                                            actualCost: vactualCost,
-                                                                                                            grandTotal: Vgrnadtotal,
-                                                                                                            vat: vat);
-                                                                                                    setState(() {
-
-                                                                                                    });
-                                                                                                  }
-                                                                                                }}
-                                                                                            },
-                                                                                          ),
+                                                                                          child: textPadding(additionalVariants[i].vat.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                                                         ),
+                                                                                        // TableCell(
+                                                                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                        //   child: UnderLinedInput(
+                                                                                        //     initialCheck:true,
+                                                                                        //     last: additionalVariants[i].vat.toString() ?? "",
+                                                                                        //     onChanged: (va) {
+                                                                                        //       updateCheck1=true;
+                                                                                        //       additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
+                                                                                        //       setState(() {
+                                                                                        //
+                                                                                        //       });
+                                                                                        //       if (va == "") {
+                                                                                        //         print("sss");
+                                                                                        //         var vatableAmount = additionalVariants[i].vatableAmount;
+                                                                                        //         additionalVariants[i] = additionalVariants[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+                                                                                        //         setState(() {});
+                                                                                        //       } else {
+                                                                                        //         var vat = double.tryParse(va);
+                                                                                        //         var Vamount = additionalVariants[i].vatableAmount;
+                                                                                        //         print("qty" + Vamount.toString());
+                                                                                        //         var excess = additionalVariants[i].excessTax;
+                                                                                        //         print("excess" + excess.toString());
+                                                                                        //         var unitcost = additionalVariants[i].unitCost;
+                                                                                        //         var qty = additionalVariants[i].receivedQty;
+                                                                                        //         var foc = additionalVariants[i].foc;
+                                                                                        //         var dis = additionalVariants[i].discount;
+                                                                                        //         print("unitcost" + unitcost.toString());
+                                                                                        //         if(unitcost==0 || qty==0){
+                                                                                        //           additionalVariants[i] = additionalVariants[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                                                        //
+                                                                                        //         }else{
+                                                                                        //           if(foc==0 || foc=="") {
+                                                                                        //             double Vamount = double.parse((((unitcost! *
+                                                                                        //                 qty!) +
+                                                                                        //                 excess!) -
+                                                                                        //                 dis!)
+                                                                                        //                 .toStringAsFixed(2));
+                                                                                        //             double vactualCost =double.parse( (Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             double Vgrnadtotal =double.parse( (Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             additionalVariants[i] =
+                                                                                        //                 additionalVariants[i]
+                                                                                        //                     .copyWith(
+                                                                                        //                     vatableAmount: Vamount,
+                                                                                        //                     actualCost: vactualCost,
+                                                                                        //                     grandTotal: Vgrnadtotal,
+                                                                                        //                     vat: vat);
+                                                                                        //             setState(() {});
+                                                                                        //           }
+                                                                                        //           else{
+                                                                                        //             double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!).toStringAsFixed(2));
+                                                                                        //
+                                                                                        //             double vactualCost =double.parse ((Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             double Vgrnadtotal =double.parse( (Vamount! +
+                                                                                        //                 ((Vamount! *
+                                                                                        //                     vat!) /
+                                                                                        //                     100)).toStringAsFixed(2));
+                                                                                        //             additionalVariants[i] =
+                                                                                        //                 additionalVariants[i]
+                                                                                        //                     .copyWith(
+                                                                                        //                     vatableAmount: Vamount,
+                                                                                        //                     actualCost: vactualCost,
+                                                                                        //                     grandTotal: Vgrnadtotal,
+                                                                                        //                     vat: vat);
+                                                                                        //             setState(() {
+                                                                                        //
+                                                                                        //             });
+                                                                                        //           }
+                                                                                        //         }}
+                                                                                        //     },
+                                                                                        //   ),
+                                                                                        // ),
 
 
                                                                                         TableCell(
@@ -3487,74 +3485,82 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: UnderLinedInput(
-
-
-                                                                                        onChanged: (p0) {
-                                                                                          if (p0 == '')
-                                                                                            setState(() {
-                                                                                              vat1 = 0;
-                                                                                            });
-                                                                                          else {
-                                                                                            setState(() {
-                                                                                              vat1 = double
-                                                                                                  .tryParse(
-                                                                                                  p0);
-                                                                                            });
-                                                                                          }
-
-                                                                                          if(unitcost==0 ||recievedQty==0){
-                                                                                            actualCost1=0;
-                                                                                            vatableAmount1=0;
-                                                                                            grandTotal1=0;
-                                                                                          }
-                                                                                          else{
-                                                                                            if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = double.parse((((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-
-
-
-                                                                                            }
-                                                                                            else{
-
-                                                                                              vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                                                              actualCost1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-                                                                                              grandTotal1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
-
-                                                                                            }
-
-                                                                                          }
-
-
-                                                                                          setState(() {});
-                                                                                          // print(Qty);
-                                                                                        },
-                                                                                        enable: true,
-                                                                                        onComplete: () {
-                                                                                          setState(() {});
-
-                                                                                          setState(() {});
-                                                                                        },
-                                                                                      ),
+                                                                                      child: textPadding(vat1.toString()??"",
+                                                                                          fontSize: 12,
+                                                                                          padding: EdgeInsets.only(left: 11.5, top: 1.5),
+                                                                                          fontWeight: FontWeight.w500),
                                                                                     ),
+
+                                                                                    // TableCell(
+                                                                                    //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                                    //   child: UnderLinedInput(
+                                                                                    //
+                                                                                    //
+                                                                                    //     onChanged: (p0) {
+                                                                                    //       if (p0 == '')
+                                                                                    //         setState(() {
+                                                                                    //           vat1 = 0;
+                                                                                    //         });
+                                                                                    //       else {
+                                                                                    //         setState(() {
+                                                                                    //           vat1 = double
+                                                                                    //               .tryParse(
+                                                                                    //               p0);
+                                                                                    //         });
+                                                                                    //       }
+                                                                                    //
+                                                                                    //       if(unitcost==0 ||recievedQty==0){
+                                                                                    //         actualCost1=0;
+                                                                                    //         vatableAmount1=0;
+                                                                                    //         grandTotal1=0;
+                                                                                    //       }
+                                                                                    //       else{
+                                                                                    //         if(foc1==0 ||foc1==""){
+                                                                                    //           vatableAmount1 = double.parse((((unitcost! *
+                                                                                    //               recievedQty!) +
+                                                                                    //               excess1!) -
+                                                                                    //               discount!)
+                                                                                    //               .toStringAsFixed(2));
+                                                                                    //           actualCost1 = double.parse((vatableAmount1! +
+                                                                                    //               ((vatableAmount1! *
+                                                                                    //                   vat1!) /
+                                                                                    //                   100)).toStringAsFixed(2));
+                                                                                    //           grandTotal1 =double.parse( (vatableAmount1! +
+                                                                                    //               ((vatableAmount1! *
+                                                                                    //                   vat1!) /
+                                                                                    //                   100)).toStringAsFixed(2));
+                                                                                    //
+                                                                                    //
+                                                                                    //
+                                                                                    //         }
+                                                                                    //         else{
+                                                                                    //
+                                                                                    //           vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
+                                                                                    //           actualCost1 = (vatableAmount1! +
+                                                                                    //               ((vatableAmount1! *
+                                                                                    //                   vat1!) /
+                                                                                    //                   100));
+                                                                                    //           grandTotal1 = (vatableAmount1! +
+                                                                                    //               ((vatableAmount1! *
+                                                                                    //                   vat1!) /
+                                                                                    //                   100));
+                                                                                    //
+                                                                                    //         }
+                                                                                    //
+                                                                                    //       }
+                                                                                    //
+                                                                                    //
+                                                                                    //       setState(() {});
+                                                                                    //       // print(Qty);
+                                                                                    //     },
+                                                                                    //     enable: true,
+                                                                                    //     onComplete: () {
+                                                                                    //       setState(() {});
+                                                                                    //
+                                                                                    //       setState(() {});
+                                                                                    //     },
+                                                                                    //   ),
+                                                                                    // ),
 
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,

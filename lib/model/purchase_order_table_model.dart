@@ -8,6 +8,7 @@ class PurchaseOrderTableModel with _$PurchaseOrderTableModel {
     final int? id,
     final String? code,
     final String? name,
+    final double? vat,
     //final String? vat,
     @JsonKey(name: "purchase_uom") final String? purchaseUom,
     @JsonKey(name: "purchase_uom_name") final String? purchaseUomName,

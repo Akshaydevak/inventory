@@ -183,6 +183,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
       setState(() {});
     }
   }
+  assignTable(List<Liness> line){
+    lines=line;
+    print("shjashha"+lines.toString());
+
+  }
   update(int i,bool b){
    lines[i]=lines[i].copyWith(isActive: b);
        setState(() {
@@ -590,6 +595,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 purchaseInvoiceId: purchaseInvoiceIdController,note: noteController,remarks: remarksController,discount: discountController,
                                 foc: focController,unitCost:unitCostController,vatableAmount: vatableAmountController,excessTax: excessTaxController,actualCost: actualCostController,
                                 grandToatl: grandTotalCostController, vat: vatController,liness:lines,assign: tableAssign,currentUser:_getCurrentUser,
+                                  assignTable:assignTable
                               ),
                               Container(
                                 color: Colors.white,
@@ -1387,9 +1393,10 @@ class TopStableTable extends StatefulWidget {
    List<Liness>? liness;
    final Function? assign;
    final Function currentUser;
+   final Function assignTable;
 
 
-  TopStableTable({required this.orderType,required this.orderCode,required this.orderDate,required this.purchaseInvoiceId,this.liness,required this.inventory,
+  TopStableTable({required this.orderType,required this.orderCode,required this.orderDate,required this.purchaseInvoiceId,this.liness,required this.inventory,required this.assignTable,
   required this.vendorCode,required this.vendorAddress,required this.vendorTRNnumber,required this.paymentCode,required this.paymentStatus,required this.vendorMailId,
   required this.returnOrederInvoicetStatus,required this.note,required this.remarks,required this.discount,required this.foc,required this.unitCost,required this.currentUser,
   required this.vatableAmount,this.assign,required this.excessTax,required this.select,required this.vat,required this.actualCost,required this.grandToatl,required this.returnOrderStatus});
@@ -1492,6 +1499,10 @@ class _TopStableTableState extends State<TopStableTable> {
     });
   }
 widget.currentUser();
+  widget.assignTable(widget.liness);
+  setState(() {
+
+  });
 
 
 
@@ -1562,6 +1573,9 @@ widget.currentUser();
                             PurchaseinvoiceReadCubit>()
                             .getGeneralInvoiceRead(
                             va?.id);
+                        setState(() {
+
+                        });
 
                       });
 
@@ -1718,8 +1732,10 @@ class GrowableTable extends StatefulWidget {
 
 class _GrowableTableState extends State<GrowableTable> {
   late AutoScrollController recieveController;
-  void initState() {
+   late List<Liness>?lines=widget.lines;
 
+  void initState() {
+    // table=widget.lines;
     recieveController = AutoScrollController(
         viewportBoundaryGetter: () =>
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
@@ -1728,6 +1744,7 @@ class _GrowableTableState extends State<GrowableTable> {
   }
   @override
   Widget build(BuildContext context) {
+
     return
       Scrollbar(
       controller: recieveController,
@@ -2066,8 +2083,8 @@ class _GrowableTableState extends State<GrowableTable> {
                               // if (widget.onAddNew) textPadding(''),
 
                             ]),
-            if (widget.lines != null)...[
-      for (var i = 0; i < widget.lines!.length; i++)
+            if (lines != null)...[
+      for (var i = 0; i < lines!.length; i++)
         TableRow(
     decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
         border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
@@ -2082,17 +2099,17 @@ class _GrowableTableState extends State<GrowableTable> {
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].variantId??"", fontSize: 12,
+              child: textPadding(lines?[i].variantId??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].variantName??"", fontSize: 12,
+              child: textPadding(lines?[i].variantName??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].barcode??"", fontSize: 12,
+              child: textPadding(lines?[i].barcode??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
@@ -2102,63 +2119,63 @@ class _GrowableTableState extends State<GrowableTable> {
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].purchaseUom??"", fontSize: 12,
+              child: textPadding(lines?[i].purchaseUom??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),
             TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].totalQty.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].totalQty.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].unitCost.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].unitCost.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: textPadding(
 
-                  widget.lines?[i].discount.toString()??"", fontSize: 12,
+                  lines?[i].discount.toString()??"", fontSize: 12,
                   height:42,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].foc.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].foc.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].vatableAmount.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].excessTax.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].excessTax.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].vat.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].vat.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].actualCost.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].actualCost.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),    TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
-              child: textPadding(widget.lines?[i].grandTotal.toString()??"", fontSize: 12,
+              child: textPadding(lines?[i].grandTotal.toString()??"", fontSize: 12,
                   padding: EdgeInsets.only(left: 11.5, top:
                   1.5), fontWeight: FontWeight.w500),
             ),
             TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: CheckedBoxs(
-                  valueChanger:widget?.lines![i]
+                  valueChanger:lines![i]
                       .isFree==null?false:widget?.lines![i]
                       .isFree,
 
@@ -2168,7 +2185,7 @@ class _GrowableTableState extends State<GrowableTable> {
             ),                TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: CheckedBoxs(
-                  valueChanger:widget?.lines![i]
+                  valueChanger:lines![i]
                       .isFree==null?false:widget?.lines![i]
                       .isFree,
 
@@ -2192,10 +2209,10 @@ class _GrowableTableState extends State<GrowableTable> {
             TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
               child: CheckedBoxs(
-                  valueChanger:widget?.lines?[i].isActive,
+                  valueChanger:lines?[i].isActive,
 
                   onSelection:(bool ? value){
-                    bool? isActive = widget?.lines?[i].isActive??false;
+                    bool? isActive = lines?[i].isActive??false;
                     setState(() {
 
                       isActive = !isActive!;

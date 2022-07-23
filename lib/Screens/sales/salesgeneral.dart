@@ -14,6 +14,26 @@ class _SalesGeneralState extends State<SalesGeneral> {
   TextEditingController orderTypeController=TextEditingController();
   TextEditingController orderModeController=TextEditingController();
   TextEditingController orderCodeController=TextEditingController();
+  TextEditingController orderDateController=TextEditingController();
+  TextEditingController invoiceController=TextEditingController();
+  TextEditingController customerController=TextEditingController();
+  TextEditingController trnController=TextEditingController();
+  TextEditingController billinAddressController=TextEditingController();
+  TextEditingController shippingAddressController=TextEditingController();
+  TextEditingController paymentIdController=TextEditingController();
+  TextEditingController paymentAddressController=TextEditingController();
+  TextEditingController paymentStatusController=TextEditingController();
+  TextEditingController orderStatusController=TextEditingController();
+  TextEditingController reasonController=TextEditingController();
+  TextEditingController remarksController=TextEditingController();
+  TextEditingController invoiceStatusController=TextEditingController();
+  TextEditingController unitCostController=TextEditingController();
+  TextEditingController discountController=TextEditingController();
+  TextEditingController exciseTaxController=TextEditingController();
+  TextEditingController taxableAmountController=TextEditingController();
+  TextEditingController vatController=TextEditingController();
+  TextEditingController sellingPriceController=TextEditingController();
+  TextEditingController totalPriceController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -35,158 +55,16 @@ class _SalesGeneralState extends State<SalesGeneral> {
               Expanded(
                 child: Column(
                   children: [
-                    StableTable(),
+                    StableTable(
+                      orderType:orderTypeController,orderMode:orderModeController,returnOrderCode:orderCodeController,
+                      orderDate:orderDateController,salesInvoiceCode:invoiceController,customerId:customerController,
+                      trn:trnController,billingAddress:billinAddressController,shippingAddress:shippingAddressController,
+                      paymentId:paymentIdController,paymentStatus:paymentStatusController,orderStatus:orderStatusController,
+                      reason:reasonController,remarks:remarksController,invoiceStatus:invoiceStatusController,unitcost:unitCostController,
+                      discount:discountController,exciseTax:exciseTaxController,taxabaleAmount:taxableAmountController,vat:vatController,
+                      sellingPrice:sellingPriceController,totalPrice:totalPriceController
+                    ),
 
-
-                    // Container(
-                    //   color: Colors.white,
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.start,
-                    //     children: [
-                    //       Expanded(child: Column(
-                    //         children: [
-                    //           SizedBox(
-                    //             height: height * .042,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller
-                    //               , title: "Order type"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "order mode"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "order code"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "order date"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "Inventory id"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "customer id"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //
-                    //           NewInputCard(
-                    //               controller: controller, title: "TN number"),
-                    //           SizedBox(
-                    //             height: height * .030,
-                    //           ),
-                    //           NewInputCard(
-                    //               controller: controller, title: "shipping address id"),
-                    //
-                    //
-                    //         ],
-                    //       )),
-                    //       Expanded(child: Column(children: [
-                    //         SizedBox(
-                    //           height: height * .045,
-                    //         ),
-                    //
-                    //         NewInputCard(
-                    //             controller: controller, title: "billing address id"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "sales  quotes"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "payment id"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "payment status"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "order status"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //           controller: controller, title: "note",
-                    //           height: 90,
-                    //           maxLines: 3,),
-                    //         SizedBox(
-                    //           height: height * .002,
-                    //         ),
-                    //         NewInputCard(
-                    //           controller: controller, title: "remarks",
-                    //           height: 90,
-                    //           maxLines: 3,),
-                    //
-                    //
-                    //
-                    //
-                    //       ],)),
-                    //       Expanded(child: Column(children: [
-                    //         SizedBox(
-                    //           height: height * .045,
-                    //         ),
-                    //
-                    //         NewInputCard(
-                    //             controller: controller, title: "invoice status"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "unit cost"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "discount"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "excise tax"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "taxable  amount"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "vat"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "selling price total"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //         NewInputCard(
-                    //             controller: controller, title: "total price"),
-                    //         SizedBox(
-                    //           height: height * .030,
-                    //         ),
-                    //       ],))
-                    //
-                    //     ],
-                    //   ),
-                    // ),
                     Container(
                       color: Colors.white,
                       height: 50,
@@ -259,6 +137,33 @@ class _SalesGeneralState extends State<SalesGeneral> {
 }
 
 class StableTable extends StatefulWidget {
+  final TextEditingController orderType;
+  final TextEditingController orderMode;
+  final TextEditingController returnOrderCode;
+  final TextEditingController orderDate;
+  final TextEditingController salesInvoiceCode;
+  final TextEditingController customerId;
+  final TextEditingController trn;
+  final TextEditingController billingAddress;
+  final TextEditingController shippingAddress;
+  final TextEditingController paymentId;
+  final TextEditingController paymentStatus;
+  final TextEditingController orderStatus;
+  final TextEditingController reason;
+  final TextEditingController remarks;
+  final TextEditingController invoiceStatus;
+  final TextEditingController unitcost;
+  final TextEditingController discount;
+  final TextEditingController exciseTax;
+  final TextEditingController taxabaleAmount;
+  final TextEditingController vat;
+  final TextEditingController sellingPrice;
+  final TextEditingController totalPrice;
+  StableTable({required this.orderType,required this.orderMode,required this.returnOrderCode,required this.orderDate,required this.salesInvoiceCode,
+  required this.customerId,required this.trn,required this.vat,required this.discount,required this.remarks,required this.invoiceStatus,required this.paymentStatus,
+  required this.orderStatus,required this.billingAddress,required this.exciseTax,required this.paymentId,required this.reason,required this.sellingPrice,
+  required this.shippingAddress,required this.taxabaleAmount,required this.totalPrice,required this.unitcost});
+
   @override
   _StableTableState createState() => _StableTableState();
 }
@@ -280,44 +185,43 @@ class _StableTableState extends State<StableTable> {
                 height: height * .042,
               ),
               NewInputCard(
-                  controller: controller
-                  , title: "Order type"),
+                  controller: widget.orderType
+                  , title: "Order Type"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: controller, title: "order mode"),
+                  controller: widget.orderMode, title: "Order Mode"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: controller, title: "order code"),
+                  controller: widget.returnOrderCode, title: " Return Order Code"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: controller, title: "order date"),
+                  controller: widget.orderDate, title: "Order Date"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: controller, title: "Inventory id"),
+                  controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: controller, title: "customer id"),
+                  controller: widget.customerId, title: "Customer Id"),
               SizedBox(
                 height: height * .030,
               ),
 
               NewInputCard(
-                  controller: controller, title: "TN number"),
+                  controller: widget.trn, title: "TRN Number"),
               SizedBox(
                 height: height * .030,
               ),
-              NewInputCard(
-                  controller: controller, title: "shipping address id"),
+
 
 
             ],
@@ -328,39 +232,39 @@ class _StableTableState extends State<StableTable> {
             ),
 
             NewInputCard(
-                controller: controller, title: "billing address id"),
+                controller: widget.billingAddress, title: "Billing Address Id"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "sales  quotes"),
+                controller: widget.shippingAddress, title: "Shipping Address Id"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "payment id"),
+                controller: widget.paymentId, title: "Payment Id"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "payment status"),
+                controller: widget.paymentStatus, title: "Payment Status"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "order status"),
+                controller: widget.orderStatus, title: "Order Status"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-              controller: controller, title: "note",
+              controller: widget.reason, title: "Reason",
               height: 90,
               maxLines: 3,),
             SizedBox(
               height: height * .002,
             ),
             NewInputCard(
-              controller: controller, title: "remarks",
+              controller: widget.remarks, title: "remarks",
               height: 90,
               maxLines: 3,),
 
@@ -374,42 +278,42 @@ class _StableTableState extends State<StableTable> {
             ),
 
             NewInputCard(
-                controller: controller, title: "invoice status"),
+                controller: widget.invoiceStatus, title: "Invoice Status"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "unit cost"),
+                controller: widget.unitcost, title: "Unit Cost"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "discount"),
+                controller: widget.discount, title: "Discount"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "excise tax"),
+                controller: widget.exciseTax, title: "Excise Tax"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "taxable  amount"),
+                controller: widget.taxabaleAmount, title: "Taxable  Amount"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "vat"),
+                controller: widget.vat, title: "VAT"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "selling price total"),
+                controller: widget.sellingPrice, title: "Selling Price Total"),
             SizedBox(
               height: height * .030,
             ),
             NewInputCard(
-                controller: controller, title: "total price"),
+                controller: widget.totalPrice, title: "Total Price"),
             SizedBox(
               height: height * .030,
             ),
