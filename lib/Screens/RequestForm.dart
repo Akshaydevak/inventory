@@ -475,6 +475,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
               print("stockqty" + stockQty.toString());
               print("stockCheck"+stockCheck.toString());
               if(stockCheck==false){
+                print("AKSKKSKSKSK");
                 currentStock.add(stockQty);
                 setState(() {
 
@@ -482,8 +483,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
               }
 
               else if(Variable.tableedit==false){
-                stockQty = purchaseCurrentStock?.StockQty;
+                print("AKSKKSKSKSK1");
+                stock = purchaseCurrentStock?.StockQty;
                 setState(() {});
+                print(stockQty);
               }
               else{
                 currentStock[Variable.tableindex]=purchaseCurrentStock?.StockQty??0;

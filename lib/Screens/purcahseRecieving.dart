@@ -1889,70 +1889,60 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             },
                                                                                           ),
                                                                                         ),
-                                                                                        Container(
-                                                                                          height:50,
+                                                                                        TableTextButton(
+
+                                                                                            onPress: () {
+
+                                                                                              var variant = recievingLisnes[i].variantId??0;
+                                                                                              var expirydates = recievingLisnes[i].expiryDate??"";
 
 
-                                                                                          child: TextButton(
-                                                                                              style: TextButton.styleFrom(
-                                                                                                  primary: Colors.white,
-                                                                                                  elevation: 2,
-                                                                                                  backgroundColor: Colors
-                                                                                                      .grey.shade200
-                                                                                              ),
-                                                                                              onPressed: () {
+                                                                                              var excess = recievingLisnes[i].excessTax??0;
+                                                                                              print("excess" + excess.toString());
+                                                                                              var unitcosts = recievingLisnes[i].unitCost??0;
+                                                                                              var qty = recievingLisnes[i].receivedQty??0;
+                                                                                              var foc = recievingLisnes[i].foc??0;
+                                                                                              var dis = recievingLisnes[i].discount??0;
+                                                                                              if(variant=="null"||qty==0||unitcosts==0){
+                                                                                                context.showSnackBarError("please fill all the fields");
+                                                                                              }
+                                                                                              else if(expirydates=="")    context.showSnackBarError("please select the expiry date");
+                                                                                              else if(qty!<foc!){
+                                                                                                context.showSnackBarError("the received qty allways greater than  foc");
 
-                                                                                                var variant = recievingLisnes[i].variantId??0;
-                                                                                                var expirydates = recievingLisnes[i].expiryDate??"";
+                                                                                              }
+                                                                                              else{
+                                                                                                addition();
+                                                                                                updateCheck=false;
+                                                                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
+                                                                                                setState(() {
 
+                                                                                                });
+                                                                                                grands = 0;
+                                                                                                focValue = 0;
+                                                                                                VatableValue = 0;
+                                                                                                excessTax = 0;
+                                                                                                vatValue = 0;
+                                                                                                actualValue = 0;
+                                                                                                excessTAxValue = 0;
+                                                                                                vatableValue = 0;
+                                                                                                unitcost2 = 0;
+                                                                                                unitcost=0;
 
-                                                                                                var excess = recievingLisnes[i].excessTax??0;
-                                                                                                print("excess" + excess.toString());
-                                                                                                var unitcosts = recievingLisnes[i].unitCost??0;
-                                                                                                var qty = recievingLisnes[i].receivedQty??0;
-                                                                                                var foc = recievingLisnes[i].foc??0;
-                                                                                                var dis = recievingLisnes[i].discount??0;
-                                                                                                if(variant=="null"||qty==0||unitcosts==0){
-                                                                                                  context.showSnackBarError("please fill all the fields");
-                                                                                                }
-                                                                                                else if(expirydates=="")    context.showSnackBarError("please select the expiry date");
-                                                                                                else if(qty!<foc!){
-                                                                                                  context.showSnackBarError("the received qty allways greater than  foc");
+                                                                                                discountValue = 0;
+                                                                                                setState(() {
 
-                                                                                                }
-                                                                                                else{
-                                                                                                  addition();
-                                                                                                  updateCheck=false;
-                                                                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
-                                                                                                  setState(() {
-
-                                                                                                  });
-                                                                                                  grands = 0;
-                                                                                                  focValue = 0;
-                                                                                                  VatableValue = 0;
-                                                                                                  excessTax = 0;
-                                                                                                  vatValue = 0;
-                                                                                                  actualValue = 0;
-                                                                                                  excessTAxValue = 0;
-                                                                                                  vatableValue = 0;
-                                                                                                  unitcost2 = 0;
-                                                                                                  unitcost=0;
-
-                                                                                                  discountValue = 0;
-                                                                                                  setState(() {
-
-                                                                                                  });
-                                                                                                }
+                                                                                                });
+                                                                                              }
 
 
 
 
 
 
-                                                                                              },
-                                                                                              child:Text( recievingLisnes[i].updateCheck==true?"update":"",style:TextStyle(color: Colors.black))
+                                                                                            },
+                                                                                            label: recievingLisnes[i].updateCheck==true?"update":"",
 
-                                                                                          ),
                                                                                         ),
 
 
@@ -2999,36 +2989,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         ),
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                          child:          Container(
-                                                                                              height:50,
+                                                                                          child:          TableTextButton(
 
-                                                                                              child: TextButton(
-                                                                                                style: TextButton.styleFrom(
-                                                                                                    primary: Colors.white,
-                                                                                                    elevation: 2,
-                                                                                                    backgroundColor: Colors
-                                                                                                        .grey.shade200
-                                                                                                ), onPressed: () {
-                                                                                                  print("akshay");
-                                                                                                  if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false) {
-                                                                                                    context
-                                                                                                        .showSnackBarError(
-                                                                                                        "please check isActive and isRecieved fields");
-                                                                                                  }
-                                                                                                    else{
-                                                                                                    additionalVariants[i]=additionalVariants[i].copyWith(updateCheck: false);
-                                                                                                    setState(() {
+                                                                                           onPress: () {
+                                                                                              print("akshay");
+                                                                                              if(additionalVariants[i].isActive==false||additionalVariants[i].isReceived==false) {
+                                                                                                context
+                                                                                                    .showSnackBarError(
+                                                                                                    "please check isActive and isRecieved fields");
+                                                                                              }
+                                                                                                else{
+                                                                                                additionalVariants[i]=additionalVariants[i].copyWith(updateCheck: false);
+                                                                                                setState(() {
 
-                                                                                                    });
+                                                                                                });
 
-                                                                                                  }
+                                                                                              }
 
 
 
-                                                                                              },
-                                                                                                child: Text(additionalVariants[i].updateCheck==true?"update":""),
-                                                                                        ),
-                                                                                          ))
+                                                                                          },
+                                                                                            label: updateCheck==true?"update":"",
+                                                                                        ))
 
 
 
@@ -3655,88 +3637,80 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
                                                                                       child:
-                                                                                      Container(
-                                                                                          height:50,
+                                                                                      TableTextButton(
 
-                                                                                        child: TextButton(
-                                                                                          style: TextButton.styleFrom(
-                                                                                              primary: Colors.white,
-                                                                                              elevation: 2,
-                                                                                              backgroundColor: Colors
-                                                                                                  .grey.shade200
-                                                                                          ),
-                                                                                          onPressed: () {
-                                                                                            setState(() {
-                                                                                              if(isReceived1==false||isActive1==false){
-                                                                                                context.showSnackBarError(
-                                                                                                    "isreceived and isActive always true in this");
-                                                                                              }
-                                                                                              else if(vat1==0||foc1==0||recievedQty==0||unitcost==0||variantId=="" ){
-                                                                                                context.showSnackBarError(
-                                                                                                    "please fill all the details");
-                                                                                              }
-                                                                                              else if(expiryDate.text==""||expiryDate.text==null){
-                                                                                                context.showSnackBarError(
-                                                                                                    "please select expiry text");
-                                                                                              }
-                                                                                              else if( foc1!>recievedQty!){
-                                                                                                context.showSnackBarError("foc always less than received qty");
-                                                                                              }
+                                                                                        onPress: () {
+                                                                                          setState(() {
+                                                                                            if(isReceived1==false||isActive1==false){
+                                                                                              context.showSnackBarError(
+                                                                                                  "isreceived and isActive always true in this");
+                                                                                            }
+                                                                                            else if(vat1==0||foc1==0||recievedQty==0||unitcost==0||variantId=="" ){
+                                                                                              context.showSnackBarError(
+                                                                                                  "please fill all the details");
+                                                                                            }
+                                                                                            else if(expiryDate.text==""||expiryDate.text==null){
+                                                                                              context.showSnackBarError(
+                                                                                                  "please select expiry text");
+                                                                                            }
+                                                                                            else if( foc1!>recievedQty!){
+                                                                                              context.showSnackBarError("foc always less than received qty");
+                                                                                            }
 
-                                                                                              else{
-                                                                                                additionalVariants.add(RecievingLines(
-                                                                                                  variantId: variantId??"",
-                                                                                                  currentStock: stock,
-                                                                                                  supplierCode: supplierRefCode,
-                                                                                                  variantName: varinatname??"",
-                                                                                                  barcode: barcode??"",
-                                                                                                  purchaseUom: purchaseUomName??"",
-                                                                                                  receivedQty: recievedQty,
-                                                                                                  isReceived: isReceived1,
-                                                                                                  discount: discount,
-                                                                                                  foc: foc1,
-                                                                                                  unitCost: unitcost,
-                                                                                                  vatableAmount: vatableAmount1,vat: vat1,
-                                                                                                  excessTax: excess1,
-                                                                                                  actualCost: actualCost1,
-                                                                                                  grandTotal: grandTotal1,
-                                                                                                  isInvoiced: isInvoiced1,
-                                                                                                  isFree: isFree1,
-                                                                                                  isActive:isActive1,
-                                                                                                  expiryDate: expiryDate.text
+                                                                                            else{
+                                                                                              additionalVariants.add(RecievingLines(
+                                                                                                variantId: variantId??"",
+                                                                                                currentStock: stock,
+                                                                                                supplierCode: supplierRefCode,
+                                                                                                variantName: varinatname??"",
+                                                                                                barcode: barcode??"",
+                                                                                                purchaseUom: purchaseUomName??"",
+                                                                                                receivedQty: recievedQty,
+                                                                                                isReceived: isReceived1,
+                                                                                                discount: discount,
+                                                                                                foc: foc1,
+                                                                                                unitCost: unitcost,
+                                                                                                vatableAmount: vatableAmount1,vat: vat1,
+                                                                                                excessTax: excess1,
+                                                                                                actualCost: actualCost1,
+                                                                                                grandTotal: grandTotal1,
+                                                                                                isInvoiced: isInvoiced1,
+                                                                                                isFree: isFree1,
+                                                                                                isActive:isActive1,
+                                                                                                expiryDate: expiryDate.text
 
 
 
-                                                                                              ));
-                                                                                              print("expiryDate.text"+expiryDate.text.toString());
-                                                                                              var expirydate1 = new TextEditingController(text: expiryDate.text??"");
-                                                                                              expiryDate2tControllers.add(expirydate1);
-                                                                                              print("additionalVariants"+additionalVariants.toString());
-                                                                                              variantId="";
-                                                                                              varinatname="";
-                                                                                              unitCostCheck.text="";
-                                                                                              barcode="";
-                                                                                              expiryDate.clear();
-                                                                                              purchaseUomName="";
-                                                                                              supplierRefCode="";
-                                                                                              recievedQty=0;
-                                                                                              excess1=0;
-                                                                                              isReceived1=false;
-                                                                                              discount=0;
-                                                                                              foc1=0;
-                                                                                              unitcost=0;
-                                                                                              vatableAmount1=0;
-                                                                                              vat1=0;
-                                                                                              grandTotal1=0;
-                                                                                              actualCost1=0;
-                                                                                              isActive1=false;
-                                                                                              isFree1=false;
-                                                                                              isInvoiced1=false;
-                                                                                              stock=0;
-                                                                                              }
+                                                                                            ));
+                                                                                            print("expiryDate.text"+expiryDate.text.toString());
+                                                                                            var expirydate1 = new TextEditingController(text: expiryDate.text??"");
+                                                                                            expiryDate2tControllers.add(expirydate1);
+                                                                                            print("additionalVariants"+additionalVariants.toString());
+                                                                                            variantId="";
+                                                                                            varinatname="";
+                                                                                            unitCostCheck.text="";
+                                                                                            barcode="";
+                                                                                            expiryDate.clear();
+                                                                                            purchaseUomName="";
+                                                                                            supplierRefCode="";
+                                                                                            recievedQty=0;
+                                                                                            excess1=0;
+                                                                                            isReceived1=false;
+                                                                                            discount=0;
+                                                                                            foc1=0;
+                                                                                            unitcost=0;
+                                                                                            vatableAmount1=0;
+                                                                                            vat1=0;
+                                                                                            grandTotal1=0;
+                                                                                            actualCost1=0;
+                                                                                            isActive1=false;
+                                                                                            isFree1=false;
+                                                                                            isInvoiced1=false;
+                                                                                            stock=0;
+                                                                                            }
 
 
-                                                                                            });
+                                                                                          });
 
 
 
@@ -3744,12 +3718,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
 
-                                                                                          },
+                                                                                        },
 
 
-                                                                                          child:Text("set",style:TextStyle(color:Colors.blue ))
-                                                                                          ,
-                                                                                        ),
+                                                                                        label:"set",
+
                                                                                       ),
                                                                                     ),
 
