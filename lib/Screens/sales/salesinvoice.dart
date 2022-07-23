@@ -166,7 +166,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   ],),
 
                   Divider(color: Colors.grey,thickness: 1,),
-                 // ScrollableTable(),
+                  // ScrollableTable(),
                   Container(
                     color: Colors.white,
                     height: 50,

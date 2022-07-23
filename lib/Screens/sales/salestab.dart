@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/Screens/sales/salesgeneral.dart';
+import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
-import 'package:inventory/sales/general.dart';
-import 'package:inventory/sales/salesInvoiceScreen.dart';
+
 
 class SalesScreen extends StatefulWidget {
   final bool isCollapsed;
@@ -85,7 +86,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                                 controller: _tabController,
                                 tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("Sales Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                 ]),
+                                ]),
                           ),
                           Container(
                             child: Row(

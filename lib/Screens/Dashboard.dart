@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/purchasereturn.dart';
-import 'package:inventory/Screens/salesscreen.dart';
+import 'package:inventory/Screens/sales/salestab.dart';
+
 import 'package:inventory/Screens/sidemenuScreen.dart';
 import 'package:inventory/Screens/titleScreen.dart';
 import 'package:inventory/commonWidget/Navigationprovider.dart';
