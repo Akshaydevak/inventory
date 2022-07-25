@@ -1,7 +1,0 @@
-import 'package:flutter/material.dart';
-
-class Pellet{
-  static const Color tableHeader = Color(0xffF2F3F5);
-  static const Color tableHeaderPrint = Color(0xff1F6BA9);
-  static const Color tableBlueHeaderPrint = Color(0xff3E4F5B);
-}
