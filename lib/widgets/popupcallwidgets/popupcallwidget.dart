@@ -174,7 +174,7 @@ class _SellingPriceBasedPopUpCallState
             context.read<PurchaseOrderTypeCubit>().getPurchaseOrdertype();
             return BlocBuilder<PurchaseOrderTypeCubit,
                 PurchaseOrderTypeCubitDartState>(builder: (context, state) {
-              print(state);
+              print("$state the state is this ongo");
               return state.maybeWhen(
                 orElse: () => Center(
                   child: CircularProgressIndicator(),

@@ -10,7 +10,7 @@ const postPurchaseurl = stagingUrl + "purchase-order/create-purchase-order";
 const generalVerticalList = stagingUrl + "purchase-order/list-purchase-order-for-invoice-posting/";
 const purchaseOrderType = stagingUrl +"purchase-order/create-purchase-order";
 
-const purchaseOrdertype = baseUrl + "purchase-order/create-purchase-order";
+// const purchaseOrdertype = baseUrl + "purchase-order/create-purchase-order";
 const purchaseCurrentStockqty =
     stagingUrl + "inventory-stock/get-stock-quantity-by-variant/testing002/aa";
 const generalPurchaseRead = stagingUrl + "purchase-order/read-purchase-order/";
