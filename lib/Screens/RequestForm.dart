@@ -601,16 +601,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    padding: EdgeInsets.only(top: 15,left: 10),
+                                    padding: EdgeInsets.only(left: width*.02),
 
 
 
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          primary: Colors.blue,
-                                          elevation: 2,
-                                          backgroundColor: Colors.white24),
-                                      onPressed: () {
+                                    child: TextButtonLarge(
+
+                                      onPress: () {
                                         setState(() {
 
                                           select=true;
@@ -628,7 +625,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       },
                                       // icon: Icon(Icons.refresh),
                                       // label: Text("Clear")
-                                      child: Text("clear"),
+                                      text: "CREATE",
                                     ),
                                   ),
                                   TextButtonLarge(

@@ -764,13 +764,10 @@ else{
                                         children: [
 
                                           Container(
-                                              padding: EdgeInsets.only(top: 15,left: 10),
-                                            child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    primary: Colors.blue,
-                                                    // elevation: 2,
-                                                    backgroundColor: Colors.white24),
-                                              onPressed: () {
+                                            margin:EdgeInsets.only(left: width *.02,) ,
+                                            child: TextButtonLarge(
+
+                                              onPress: () {
                                                   select=true;
                                                   updateCheck=false;//for table edit check when edtied the editing fields
                                                   currentStock.clear();
@@ -780,7 +777,7 @@ else{
                                                  });
                                                  print("Variable.inventory_ID"+Variable.inventory_ID.toString());
                                               },
-                                              child: Text("Create"),
+                                              text: "CREATE",
                                             ),
                                           ),
                             TextButtonLarge(

@@ -1576,8 +1576,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                       .toStringAsFixed(2));
 
 
-                                                                                                  double vactualCost =double.parse( (Vamount! +
-                                                                                                      ((Vamount! *
+                                                                                                  double vactualCost =double.parse( (Vamount +
+                                                                                                      ((Vamount *
                                                                                                           vat!) /
                                                                                                           100)).toStringAsFixed(2));
 
@@ -1592,8 +1592,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                 }
                                                                                                 else{
                                                                                                   double   Vamount=double.parse(((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!).toStringAsFixed(2));
-                                                                                                  double vactualCost = double.parse((Vamount! +
-                                                                                                      ((Vamount! *
+                                                                                                  double vactualCost = double.parse((Vamount +
+                                                                                                      ((Vamount *
                                                                                                           vat!) /
                                                                                                           100)).toStringAsFixed(2));
                                                                                                   recievingLisnes[i] =

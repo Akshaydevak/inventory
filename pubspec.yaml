@@ -44,13 +44,13 @@ dependencies:
 
 
   sticky_headers:
-  flutter_typeahead: ^3.2.1
+  flutter_typeahead: ^3.2.7
   flutter_svg: ^0.20.0-nullsafety.3
 
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.5
   dartz: ^0.10.1
   equatable: ^2.0.3
 

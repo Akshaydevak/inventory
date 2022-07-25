@@ -48,7 +48,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
               Container(
                 width: 200,
                 height: double.infinity,
-                color: Colors.red,
+                color: Color(0xffEDF1F2),
               ),
 
 
@@ -181,9 +181,7 @@ class _StableTableState extends State<StableTable> {
         children: [
           Expanded(child: Column(
             children: [
-              SizedBox(
-                height: height * .042,
-              ),
+
               NewInputCard(
                   controller: widget.orderType
                   , title: "Order Type"),
@@ -220,6 +218,9 @@ class _StableTableState extends State<StableTable> {
                   controller: widget.trn, title: "TRN Number"),
               SizedBox(
                 height: height * .030,
+              ),
+              SizedBox(
+                height: height * .040,
               ),
 
 

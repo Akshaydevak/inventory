@@ -55,7 +55,7 @@ class _NewInputCardState extends State<NewInputCard> {
         children: [
           Text(
             widget.title,
-            style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w300),
+            style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w500),
           ),
           SizedBox(height:3),
           Container(

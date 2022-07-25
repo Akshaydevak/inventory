@@ -4,6 +4,8 @@ import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/verticallist_cubit.dart';
+import 'package:inventory/commonWidget/Navigationprovider.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/widgets/itemmenu.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
@@ -48,6 +50,7 @@ class _VerticalListState extends State<VerticalList> {
     Size size = MediaQuery.of(context).size;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final provider = Provider.of<NavigationProvider>(context, listen: false);
     return Container(
   //     child: BlocProvider(
   // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
@@ -77,7 +80,7 @@ class _VerticalListState extends State<VerticalList> {
             margin: EdgeInsets.all(10),
             child:
             Visibility(
-              visible: true,
+              visible: !provider.isCollapsed,
               child: Container(
                 height: height,
                 // height: double.minPositive,
@@ -257,6 +260,7 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
     Size size = MediaQuery.of(context).size;
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    final provider = Provider.of<NavigationProvider>(context, listen: false);
     return Container(
       //     child: BlocProvider(
       // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
@@ -286,7 +290,7 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                   margin: EdgeInsets.all(10),
                   child:
                   Visibility(
-                    visible: true,
+                    visible: !provider.isCollapsed,
                     child: Container(
                       height: height,
                       // height: double.minPositive,
