@@ -828,12 +828,6 @@ else{
                                                   children: [
                                                     //SizedBox(height: height*.030,),
 
-                                                    SizedBox(
-                                                      height: height * .030,
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .035,
-                                                    ),
 
                                                     SelectableDropDownpopUp(
                                                       label: "Order type",
@@ -971,13 +965,7 @@ else{
                                                 Expanded(
                                                     child: Column(
                                                   children: [
-                                                    SizedBox(
-                                                      height: height * .040,
-                                                    ),
 
-                                                    SizedBox(
-                                                      height: height * .020,
-                                                    ),
 
                                                     PopUpDateFormField(
 
@@ -1125,14 +1113,10 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .028,
+                                                      height: height * .094,
                                                     ),
-                                                    SizedBox(
-                                                      height: height * .008,
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .018,
-                                                    ),
+
+
                                                   ],
                                                 )),
                                               ],

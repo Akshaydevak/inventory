@@ -674,7 +674,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                             children: [
                                             Expanded(child: Column(
                                                             children: [
-                                                              SizedBox(height: height*.030,),
+
 
                                                               SelectableDropDownpopUp(
                                                                 label: "Order type",
@@ -754,7 +754,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     print("promised_receipt_date.text"+promisedRecieptDate.text.toString());
                                                                   },
                                                                   enable: true),
-                                                              SizedBox(height: height*.030,),
+                                                              SizedBox(height: height*.055,),
                                                             PopUpDateFormField(
 
                                                                 format:DateFormat('yyyy-MM-dd'),
@@ -782,9 +782,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           ),),
                                                           Expanded(child: Column(
                                                             children: [
-                                                              SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.030,),
-                                                              SizedBox(height: 10,),
+
 
                                                               NewInputCard(
                                                                 readOnly: true,
@@ -818,7 +816,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           ),),
                                                           Expanded(child: Column(
                                                             children: [
-                                                              SizedBox(height: height*.030,),
+
 
                                                               NewInputCard(
                                                                 readOnly: true,

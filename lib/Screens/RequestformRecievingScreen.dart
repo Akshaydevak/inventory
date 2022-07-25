@@ -539,15 +539,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                               Expanded(
                                   child: Column(
                                 children: [
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
+
                                   NewInputCard(
                                       readOnly: true,
                                       controller: orderCodeController,
@@ -595,15 +587,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                               Expanded(
                                   child: Column(
                                 children: [
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
+
                                   NewInputCard(
                                       readOnly: true,
                                       controller: discountController,
@@ -651,12 +635,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                               Expanded(
                                   child: Column(
                                 children: [
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
-                                  SizedBox(
-                                    height: height * .030,
-                                  ),
+
                                   NewInputCard(
                                       readOnly: true,
                                       controller: actualCostController,
@@ -669,7 +648,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                       controller: grandtotalCostController,
                                       title: "grand total"),
                                   SizedBox(
-                                    height: height * .030,
+                                    height: height * .010,
                                   ),
                                   NewInputCard(
                                     controller: noteController,
@@ -678,7 +657,7 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     maxLines: 3,
                                   ),
                                   SizedBox(
-                                    height: height * .030,
+                                    height: height * .010,
                                   ),
                                   NewInputCard(
                                     controller: remarksController,
@@ -687,10 +666,10 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
                                     maxLines: 3,
                                   ),
                                   SizedBox(
-                                    height: height * .035,
+                                    height: height * .080,
                                   ),
                                   SizedBox(
-                                    height: height * .032,
+                                    height: height * .065,
                                   ),
                                 ],
                               )),

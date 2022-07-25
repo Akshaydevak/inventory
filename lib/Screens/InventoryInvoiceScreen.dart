@@ -358,12 +358,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                           Expanded(
                               child: Column(
                             children: [
-                              SizedBox(
-                                height: height * .030,
-                              ),
-                              SizedBox(
-                                height: height * .030,
-                              ),
+
                               NewInputCard(
                                   readOnly: true,
                                   controller: invoiceCodeController,
@@ -420,12 +415,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                           Expanded(
                               child: Column(
                             children: [
-                              SizedBox(
-                                height: height * .030,
-                              ),
-                              SizedBox(
-                                height: height * .030,
-                              ),
+
                               NewInputCard(
                                   readOnly: true,
                                   controller: orderStatusController,
@@ -482,12 +472,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                           Expanded(
                               child: Column(
                             children: [
-                              SizedBox(
-                                height: height * .030,
-                              ),
-                              SizedBox(
-                                height: height * .030,
-                              ),
+
                               NewInputCard(
                                   readOnly: true,
                                   controller: exciseTaxController,
@@ -530,6 +515,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 title: "remarks",
                                 height: 90,
                                 maxLines: 2,
+                              ),
+                              SizedBox(
+                                height: height * .030,
                               ),
                             ],
                           )),

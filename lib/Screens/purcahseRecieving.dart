@@ -650,11 +650,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   Expanded(
                                                                       child: Column(
                                                                         children: [
-                                                                        
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+
                                                                           NewInputCard(
                                                                               readOnly:
                                                                               true,
@@ -730,10 +726,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       child: Column(
                                                                         children: [
                                                                        
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+
                                                                           //  SizedBox(height: height*.030,),
 
                                                                           NewInputCard(
@@ -801,10 +794,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       child: Column(
                                                                         children: [
 
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .090,
-                                                                          ),
+
                                                                           NewInputCard(
                                                                                   readOnly: true,
                                                                               controller:

@@ -4,6 +4,9 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
+
+import '../../widgets/customtable.dart';
 
 class SalesGeneral extends StatefulWidget {
   @override
@@ -74,16 +77,12 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     ],),
 
                     Divider(color: Colors.grey,thickness: 1,),
-                    // ScrollableTable(),
+                    SalesGenneralGrowableTable(),
                     Container(
                       color: Colors.white,
                       height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text("call api to find current qty of variant and check entering  qty is larger than current qty")
-                      ],),
+
                     Container(
                       color: Colors.white,
                       height: 50,
@@ -321,6 +320,591 @@ class _StableTableState extends State<StableTable> {
           ],))
 
         ],
+      ),
+    );
+  }
+}
+class SalesGenneralGrowableTable extends StatefulWidget {
+  // final List<Liness>? lines;
+  // final Function updation;
+  //
+  // GrowableTable({this.lines, required this.updation});
+
+  @override
+  _SalesGenneralGrowableTableState createState() => _SalesGenneralGrowableTableState();
+}
+
+class _SalesGenneralGrowableTableState extends State<SalesGenneralGrowableTable> {
+  late AutoScrollController recieveController;
+  // late List<Liness>? lines = widget.lines;
+  bool tableAdditionCheck = false;
+  double vatableMethod(
+      int reqQty, double unitCst, double exTaxx, double disct) {
+    double VatableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+
+    return VatableAmounts;
+  }
+
+  double actualGrandTotal(double VatAmounts, double vatt) {
+    double ActualGC = (VatAmounts + ((VatAmounts * vatt) / 100));
+
+    return ActualGC;
+  }
+
+  void initState() {
+    // table=widget.lines;
+    recieveController = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // if (tableAdditionCheck == false) lines = widget.lines;
+    // print("ammmm" + lines.toString());
+    return Scrollbar(
+      controller: recieveController,
+      isAlwaysShown: true,
+      child: Container(
+        color: Colors.white,
+        alignment: Alignment.topRight,
+        child: SingleChildScrollView(
+          controller: recieveController,
+          physics: ScrollPhysics(),
+          scrollDirection: Axis.horizontal,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  width: 2200,
+                  padding: EdgeInsets.all(10),
+                  child: customTable(
+                      border: const TableBorder(
+                        verticalInside: BorderSide(
+                            width: .5,
+                            color: Colors.black45,
+                            style: BorderStyle.solid),
+                        horizontalInside: BorderSide(
+                            width: .3,
+                            color: Colors.black45,
+                            // color: Colors.blue,
+                            style: BorderStyle.solid),
+                      ),
+                      tableWidth: .5,
+                      childrens: [
+                        TableRow(
+
+                          // decoration: BoxDecoration(
+
+                          //     color: Colors.green.shade200,
+
+                          //     shape: BoxShape.rectangle,
+
+                          //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                            children: [
+                              tableHeadtext(
+                                'Variant Id',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white,
+                              ),
+
+                              tableHeadtext(
+                                'Barcode',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Is Invoiced',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              // tableHeadtext('description', size: 10, color: null),
+
+                              tableHeadtext(
+                                'Warrenty',
+                                padding: EdgeInsets.all(7),
+                                height: 46,
+                                size: 13,
+                              ),
+
+                              tableHeadtext(
+                                'Return Type',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Return Time',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Sales UOM',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Unitcost',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Discount Type',
+                                padding: EdgeInsets.all(7),
+                                height: 46,
+                                size: 13,
+                              ),
+                              tableHeadtext(
+                                'Discount ',
+                                padding: EdgeInsets.all(7),
+                                height: 46,
+                                size: 13,
+                              ),
+
+                              tableHeadtext(
+                                'Excise Tax',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'taxable Amount',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+                                // color: Palette.containerDarknew,
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'VAT',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+                              tableHeadtext(
+                                'Selling Price',
+                                padding: EdgeInsets.all(7),
+                                height: 46,
+                                size: 13,
+                              ),
+
+                              tableHeadtext(
+                                'Quantity',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Warrenty Price',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+                              tableHeadtext(
+                                'Total Price',
+
+                                padding: EdgeInsets.all(7),
+
+                                height: 46,
+
+                                size: 13,
+
+                                // color: Palette.containerDarknew,
+
+                                // textColor: Palette.white
+                              ),
+
+
+                              // if (widget.onAddNew) textPadding(''),
+                            ]),
+                        // if (lines != null) ...[
+                        // for (var i = 0; i < lines!.length; i++)
+                        //   TableRow(
+                        //       decoration: BoxDecoration(
+                        //           color: Colors.grey.shade200,
+                        //           shape: BoxShape.rectangle,
+                        //           border: const Border(
+                        //               left: BorderSide(
+                        //                   width: .5,
+                        //                   color: Colors.grey,
+                        //                   style: BorderStyle.solid),
+                        //               bottom: BorderSide(
+                        //                   width: .5,
+                        //                   color: Colors.grey,
+                        //                   style: BorderStyle.solid),
+                        //               right: BorderSide(
+                        //                   color: Colors.grey,
+                        //                   width: .5,
+                        //                   style: BorderStyle.solid))),
+                        //       children: [
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding((i + 1).toString(),
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].variantId ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].variantName ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(lines?[i].barcode ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding("",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].purchaseUom ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: UnderLinedInput(
+                        //             initialCheck: true,
+                        //             // controller: requestedListControllers[i],
+                        //             last: lines?[i].totalQty.toString() ?? "",
+                        //             onChanged: (va) {
+                        //               // updateCheck=true;
+                        //               print(va);
+                        //               if (va == "") {
+                        //                 print("entered");
+                        //                 lines?[i] = lines?[i].copyWith(
+                        //                     totalQty: 0,
+                        //                     vatableAmount: 0,
+                        //                     actualCost: 0,
+                        //                     grandTotal: 0);
+                        //               } else {
+                        //                 var qty = int.tryParse(va);
+                        //                 var dis = lines?[i].discount;
+                        //                 var excess = lines?[i].excessTax;
+                        //                 var unitcost = lines?[i].unitCost;
+                        //                 var vat = lines?[i].vat ?? 0;
+                        //                 var foc = lines?[i].foc;
+                        //                 if (qty == 0 ||
+                        //                     unitcost == 0 ||
+                        //                     unitcost == "") {
+                        //                   lines?[i] = lines?[i].copyWith(
+                        //                       vatableAmount: 0,
+                        //                       actualCost: 0,
+                        //                       grandTotal: 0);
+                        //                 } else {
+                        //                   var Vamount;
+                        //                   var vactualCost;
+                        //
+                        //                   // Vamount  = vatableMethod(qty,unitcost,excess,dis);
+                        //                   if (vat == 0 || vat == "") {
+                        //                     vactualCost = Vamount;
+                        //                   } else {
+                        //                     // vactualCost  =actualGrandTotal(Vamount,vat);
+                        //                   }
+                        //
+                        //                   lines?[i] = lines?[i].copyWith(
+                        //                       vatableAmount: Vamount,
+                        //                       actualCost: vactualCost,
+                        //                       grandTotal: vactualCost,
+                        //                       totalQty: qty);
+                        //                 }
+                        //               }
+                        //
+                        //               setState(() {});
+                        //             },
+                        //           ),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].unitCost.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].discount.toString() ?? "",
+                        //               fontSize: 12,
+                        //               height: 42,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].foc.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].vatableAmount.toString() ??
+                        //                   "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].excessTax.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].vat.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].actualCost.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding(
+                        //               lines?[i].grandTotal.toString() ?? "",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: CheckedBoxs(
+                        //               valueChanger: lines![i].isFree == null
+                        //                   ? false
+                        //                   : widget?.lines![i].isFree,
+                        //               onSelection: (bool? value) {}),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: CheckedBoxs(
+                        //               valueChanger: lines![i].isFree == null
+                        //                   ? false
+                        //                   : widget?.lines![i].isFree,
+                        //               onSelection: (bool? value) {}),
+                        //         ),
+                        //         // TableCell(
+                        //         //   verticalAlignment: TableCellVerticalAlignment.middle,
+                        //         //   child: textPadding("", fontSize: 12,
+                        //         //       padding: EdgeInsets.only(left: 11.5, top:
+                        //         //       1.5), fontWeight: FontWeight.w500),
+                        //         // ),
+                        //         // TableCell(
+                        //         //   verticalAlignment: TableCellVerticalAlignment.middle,
+                        //         //   child: textPadding("", fontSize: 12,
+                        //         //       padding: EdgeInsets.only(left: 11.5, top:
+                        //         //       1.5), fontWeight: FontWeight.w500),
+                        //         // ),
+                        //
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: CheckedBoxs(
+                        //               valueChanger: lines?[i].isActive,
+                        //               onSelection: (bool? value) {
+                        //                 bool? isActive =
+                        //                     lines?[i].isActive ?? false;
+                        //                 setState(() {
+                        //                   isActive = !isActive!;
+                        //                   print(isActive);
+                        //                   widget.updation(i, isActive);
+                        //                   //  widget?.lines?[i] = widget?.lines![i].copyWith(isActive: isActive);
+                        //
+                        //                   setState(() {});
+                        //                 });
+                        //               }),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding("",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         TableCell(
+                        //           verticalAlignment:
+                        //               TableCellVerticalAlignment.middle,
+                        //           child: textPadding("",
+                        //               fontSize: 12,
+                        //               padding: EdgeInsets.only(
+                        //                   left: 11.5, top: 1.5),
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //       ])
+                        // ]
+                      ]),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
