@@ -27,13 +27,13 @@ Widget tableHeadtext(
       EdgeInsets? padding,
     }) =>
     Container(
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
       height: height,
-      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
+      padding: padding ?? EdgeInsets.only(left: 3,right: 3),
       color: color,
       child: Text(
         label,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.left,
         style: TextStyle(fontSize: size, color: textColor),
       ),
     );
@@ -43,12 +43,13 @@ Widget textPadding(String label,
       double? height,
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
 
       // color: Colors.green,
-      // padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
+      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,
+        textAlign: TextAlign.left,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
       ),
     );

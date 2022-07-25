@@ -734,6 +734,35 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                   // if (widget.onAddNew) textPadding(''),
                                                 ]),
+                                            if(additionalVariants.isEmpty)...[
+                                              TableRow(
+                                                decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                children: [
+
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  Container(height: 42,),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+                                                  textPadding(""),
+
+                                                ],
+                                              )
+
+
+                                            ],
                                             if (additionalVariants != null) ...[
                                               for (var i = 0;
                                                   i < additionalVariants.length;

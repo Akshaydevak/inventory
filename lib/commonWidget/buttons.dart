@@ -104,14 +104,14 @@ class _TableTextButtonState extends State<TableTextButton> {
       height: 50,
 
       child: TextButton(
-          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
+          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Color(0xff1D2C37)
           ),
           onPressed: () {
             widget.onPress();
 
 
           },
-          child: Text(widget.label)
+          child: Text(widget.label,style: TextStyle(color: Colors.white),)
 
       ),
     );

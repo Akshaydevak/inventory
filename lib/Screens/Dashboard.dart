@@ -369,9 +369,10 @@ class _TitleScreenState extends State<TitleScreen> {
               Container(
                 width: size.width * .298,
                 height: size.height * .0455,
+
                 child: TabBar(
                     isScrollable: true,
-                    indicatorSize: TabBarIndicatorSize.tab,
+                    indicatorSize: TabBarIndicatorSize.label,
                     // labelPadding: EdgeInsets.only(left:size.width * .024,),
                     // indicatorPadding: EdgeInsets.only(left:size.width * .014,),
                     padding: EdgeInsets.zero,
@@ -386,7 +387,7 @@ class _TitleScreenState extends State<TitleScreen> {
                         fontStyle: FontStyle.normal),
                     indicator: UnderlineTabIndicator(
                       borderSide: BorderSide(
-                        width: height * .008,
+                        width: height * .006,
                         color: Colors.white,
                       ),
                       // insets: EdgeInsets.only(

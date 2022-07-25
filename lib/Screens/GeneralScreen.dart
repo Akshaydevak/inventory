@@ -4583,7 +4583,7 @@ else{
                                                                               currentQty: stockQty ?? 0,
                                                                             ));
                                                                         currentStock.add(stockQty);
-                                                                        print("athiraaa"+currentStock.toString());
+
                                                                         requestedListControllers.clear();
                                                                         minListControllers.clear() ;
                                                                         maxListControllers .clear();
