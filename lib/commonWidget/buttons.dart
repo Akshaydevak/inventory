@@ -64,7 +64,7 @@ class TextButtonLarge extends StatelessWidget {
 
       width: w/15,
       height:h/15,
-      margin: EdgeInsets.only(right:w *.02,top:h*0.04 ),
+      margin: EdgeInsets.only(right:w *.02,left: w *.02),
       alignment: Alignment.center,
 
       child: TextButton(onPressed:(){onPress(); },

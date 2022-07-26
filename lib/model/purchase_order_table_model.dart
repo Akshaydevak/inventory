@@ -3,11 +3,13 @@ part 'purchase_order_table_model.freezed.dart';
 part 'purchase_order_table_model.g.dart';
 
 @freezed
-class PurchaseOrderTableModel with _$PurchaseOrderTableModel {
+class
+PurchaseOrderTableModel with _$PurchaseOrderTableModel {
   const factory PurchaseOrderTableModel({
     final int? id,
     final String? code,
     final String? name,
+    final double? vat,
     //final String? vat,
     @JsonKey(name: "purchase_uom") final String? purchaseUom,
     @JsonKey(name: "purchase_uom_name") final String? purchaseUomName,

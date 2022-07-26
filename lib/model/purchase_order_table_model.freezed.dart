@@ -26,6 +26,7 @@ class _$PurchaseOrderTableModelTearOff {
       {int? id,
       String? code,
       String? name,
+      double? vat,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -36,6 +37,7 @@ class _$PurchaseOrderTableModelTearOff {
       id: id,
       code: code,
       name: name,
+      vat: vat,
       purchaseUom: purchaseUom,
       purchaseUomName: purchaseUomName,
       excessTax: excessTax,
@@ -57,7 +59,8 @@ const $PurchaseOrderTableModel = _$PurchaseOrderTableModelTearOff();
 mixin _$PurchaseOrderTableModel {
   int? get id => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError; //final String? vat,
+  String? get name => throw _privateConstructorUsedError;
+  double? get vat => throw _privateConstructorUsedError; //final String? vat,
   @JsonKey(name: "purchase_uom")
   String? get purchaseUom => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom_name")
@@ -88,6 +91,7 @@ abstract class $PurchaseOrderTableModelCopyWith<$Res> {
       {int? id,
       String? code,
       String? name,
+      double? vat,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -113,6 +117,7 @@ class _$PurchaseOrderTableModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? code = freezed,
     Object? name = freezed,
+    Object? vat = freezed,
     Object? purchaseUom = freezed,
     Object? purchaseUomName = freezed,
     Object? excessTax = freezed,
@@ -133,6 +138,10 @@ class _$PurchaseOrderTableModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
       purchaseUom: purchaseUom == freezed
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
@@ -194,6 +203,7 @@ abstract class _$PurchaseOrderTableModelCopyWith<$Res>
       {int? id,
       String? code,
       String? name,
+      double? vat,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -224,6 +234,7 @@ class __$PurchaseOrderTableModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? code = freezed,
     Object? name = freezed,
+    Object? vat = freezed,
     Object? purchaseUom = freezed,
     Object? purchaseUomName = freezed,
     Object? excessTax = freezed,
@@ -244,6 +255,10 @@ class __$PurchaseOrderTableModelCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
+      vat: vat == freezed
+          ? _value.vat
+          : vat // ignore: cast_nullable_to_non_nullable
+              as double?,
       purchaseUom: purchaseUom == freezed
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
@@ -279,6 +294,7 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
       {this.id,
       this.code,
       this.name,
+      this.vat,
       @JsonKey(name: "purchase_uom") this.purchaseUom,
       @JsonKey(name: "purchase_uom_name") this.purchaseUomName,
       @JsonKey(name: "excess_tax") this.excessTax,
@@ -295,6 +311,8 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
   final String? code;
   @override
   final String? name;
+  @override
+  final double? vat;
   @override //final String? vat,
   @JsonKey(name: "purchase_uom")
   final String? purchaseUom;
@@ -317,7 +335,7 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
 
   @override
   String toString() {
-    return 'PurchaseOrderTableModel(id: $id, code: $code, name: $name, purchaseUom: $purchaseUom, purchaseUomName: $purchaseUomName, excessTax: $excessTax, unitCost: $unitCost, vendorDetails: $vendorDetails, barCode: $barCode)';
+    return 'PurchaseOrderTableModel(id: $id, code: $code, name: $name, vat: $vat, purchaseUom: $purchaseUom, purchaseUomName: $purchaseUomName, excessTax: $excessTax, unitCost: $unitCost, vendorDetails: $vendorDetails, barCode: $barCode)';
   }
 
   @override
@@ -330,6 +348,8 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
                 const DeepCollectionEquality().equals(other.code, code)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.vat, vat) ||
+                const DeepCollectionEquality().equals(other.vat, vat)) &&
             (identical(other.purchaseUom, purchaseUom) ||
                 const DeepCollectionEquality()
                     .equals(other.purchaseUom, purchaseUom)) &&
@@ -355,6 +375,7 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(purchaseUom) ^
       const DeepCollectionEquality().hash(purchaseUomName) ^
       const DeepCollectionEquality().hash(excessTax) ^
@@ -379,6 +400,7 @@ abstract class _PurchaseOrderTableModel implements PurchaseOrderTableModel {
       {int? id,
       String? code,
       String? name,
+      double? vat,
       @JsonKey(name: "purchase_uom") String? purchaseUom,
       @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
       @JsonKey(name: "excess_tax") double? excessTax,
@@ -395,6 +417,8 @@ abstract class _PurchaseOrderTableModel implements PurchaseOrderTableModel {
   String? get code => throw _privateConstructorUsedError;
   @override
   String? get name => throw _privateConstructorUsedError;
+  @override
+  double? get vat => throw _privateConstructorUsedError;
   @override //final String? vat,
   @JsonKey(name: "purchase_uom")
   String? get purchaseUom => throw _privateConstructorUsedError;

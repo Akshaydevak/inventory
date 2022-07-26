@@ -424,7 +424,8 @@ List<TextEditingController> vatController =[];
                           context
                               .read<InventorysearchCubit>()
                               .getInventorySearch("code");
-                          context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                          select=false;
+
                         });
                       });
 
@@ -451,7 +452,7 @@ List<TextEditingController> vatController =[];
                           print("Variable.tableedit"+Variable.tableindex.toString());
                           if(Variable.tableedit==true){
                             table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
-                                variableAmount:table[Variable.tableindex].variableAmount,vat: table[Variable.tableindex].vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
+                                variableAmount:table[Variable.tableindex].variableAmount,vat: purchaseTable?.vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
                                 unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount,supplierCode: purchaseTable?.vendorDetails?.vendorRefCode??""
                             )]);
                           }
@@ -460,6 +461,7 @@ List<TextEditingController> vatController =[];
                             varinatname = purchaseTable?.name;
                            vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
+                            vvat = purchaseTable?.vat;
                             unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
                             print("check"+check.toString());
                             unitcostTestController?.text=purchaseTable?.unitCost.toString()??"";
@@ -758,25 +760,19 @@ else{
                                           mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                         children: [
 
-                                          Container(
-                                              padding: EdgeInsets.only(top: 15,left: 10),
-                                            child: TextButton(
-                                                style: TextButton.styleFrom(
-                                                    primary: Colors.blue,
-                                                    // elevation: 2,
-                                                    backgroundColor: Colors.white24),
-                                              onPressed: () {
-                                                  select=true;
-                                                  updateCheck=false;//for table edit check when edtied the editing fields
-                                                  currentStock.clear();
-                                                  clear();
-                                                 table.clear();
-                                                 setState(() {
-                                                 });
-                                                 print("Variable.inventory_ID"+Variable.inventory_ID.toString());
-                                              },
-                                              child: Text("Create"),
-                                            ),
+                                          TextButtonLarge(
+
+                                            onPress: () {
+                                                select=true;
+                                                updateCheck=false;//for table edit check when edtied the editing fields
+                                                currentStock.clear();
+                                                clear();
+                                               table.clear();
+                                               setState(() {
+                                               });
+                                               print("Variable.inventory_ID"+Variable.inventory_ID.toString());
+                                            },
+                                            text: "Create",
                                           ),
                             TextButtonLarge(
                               text: "PREVIEW",
@@ -4010,67 +4006,83 @@ else{
                                                                       FontWeight
                                                                           .w500),
                                                                 ),
+                                                                TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                  child: textPadding(
+                                                                      table[i]
+                                                                          .vat
+                                                                          .toString(),
+                                                                      padding: EdgeInsets
+                                                                          .only(
+                                                                          left:
+                                                                          11.5,
+                                                                          top:
+                                                                          11.5),
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .w500),
+                                                                ),
 
                                                                 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$  vat   **************************
 
-                                                                TableCell(
-                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: UnderLinedInput(
-                                                                    controller: vatListControllers[i],
-                                                                    // last: table[i].vat.toString() ?? "",
-                                                                    onChanged: (va) {
-                                                                      updateCheck=true;
-                                                                      table[i] = table[i].copyWith(updateCheck: true);
-                                                                      setState(() {
-
-                                                                      });
-                                                                      if (va == "") {
-                                                                        print("sss");
-                                                                        var vatableAmount = table[i].variableAmount;
-                                                                        table[i] = table[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
-                                                                        setState(() {});
-                                                                      } else {
-                                                                        var vat = double.tryParse(va);
-                                                                        var Vamount = table[i].variableAmount;
-                                                                        print("qty" + Vamount.toString());
-                                                                        var excess = table[i].excessTax;
-                                                                        print("excess" + excess.toString());
-                                                                        var unitcost = table[i].unitCost;
-                                                                        var qty = table[i].requestedQty;
-                                                                        var foc = table[i].foc;
-                                                                        var dis = table[i].discount;
-                                                                        print("unitcost" + unitcost.toString());
-                                                                        if(unitcost==0 || qty==0){
-                                                                          table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
-
-                                                                        }else{
-
-                                                                          var Vamount = (((unitcost! *
-                                                                              qty!) +
-                                                                              excess!) -
-                                                                              dis!)
-                                                                              .toDouble();
-                                                                          var vactualCost = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                          var Vgrnadtotal = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                          table[i] =
-                                                                              table[i]
-                                                                                  .copyWith(
-                                                                                  variableAmount: Vamount,
-                                                                                  actualCost: vactualCost,
-                                                                                  grandTotal: Vgrnadtotal,
-                                                                                  vat: vat);
-                                                                          setState(() {});
-
-                                                                        }}
-                                                                    },
-                                                                  ),
-                                                                ),
+                                                                // TableCell(
+                                                                //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                //   child: UnderLinedInput(
+                                                                //     controller: vatListControllers[i],
+                                                                //     // last: table[i].vat.toString() ?? "",
+                                                                //     onChanged: (va) {
+                                                                //       updateCheck=true;
+                                                                //       table[i] = table[i].copyWith(updateCheck: true);
+                                                                //       setState(() {
+                                                                //
+                                                                //       });
+                                                                //       if (va == "") {
+                                                                //         print("sss");
+                                                                //         var vatableAmount = table[i].variableAmount;
+                                                                //         table[i] = table[i].copyWith(actualCost: vatableAmount, grandTotal: vatableAmount, vat: 0);
+                                                                //         setState(() {});
+                                                                //       } else {
+                                                                //         var vat = double.tryParse(va);
+                                                                //         var Vamount = table[i].variableAmount;
+                                                                //         print("qty" + Vamount.toString());
+                                                                //         var excess = table[i].excessTax;
+                                                                //         print("excess" + excess.toString());
+                                                                //         var unitcost = table[i].unitCost;
+                                                                //         var qty = table[i].requestedQty;
+                                                                //         var foc = table[i].foc;
+                                                                //         var dis = table[i].discount;
+                                                                //         print("unitcost" + unitcost.toString());
+                                                                //         if(unitcost==0 || qty==0){
+                                                                //           table[i] = table[i].copyWith(actualCost: 0, grandTotal: 0, vat: vat);
+                                                                //
+                                                                //         }else{
+                                                                //
+                                                                //           var Vamount = (((unitcost! *
+                                                                //               qty!) +
+                                                                //               excess!) -
+                                                                //               dis!)
+                                                                //               .toDouble();
+                                                                //           var vactualCost = (Vamount! +
+                                                                //               ((Vamount! *
+                                                                //                   vat!) /
+                                                                //                   100));
+                                                                //           var Vgrnadtotal = (Vamount! +
+                                                                //               ((Vamount! *
+                                                                //                   vat!) /
+                                                                //                   100));
+                                                                //           table[i] =
+                                                                //               table[i]
+                                                                //                   .copyWith(
+                                                                //                   variableAmount: Vamount,
+                                                                //                   actualCost: vactualCost,
+                                                                //                   grandTotal: Vgrnadtotal,
+                                                                //                   vat: vat);
+                                                                //           setState(() {});
+                                                                //
+                                                                //         }}
+                                                                //     },
+                                                                //   ),
+                                                                // ),
 
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -4162,9 +4174,14 @@ else{
                                                                         var qty = table[i].requestedQty??0;
                                                                         var foc = table[i].foc??0;
                                                                         var dis = table[i].discount??0;
-                                                                        if(variant=="null"||qty==0||unitcosts==0){
+                                                                        if(variant=="null"||unitcosts==0){
                                                                           context.showSnackBarError("please fill all the fields");
-                                                                        }else if(qty!<foc!){
+                                                                        }
+                                                                        else if(qty==0||qty==""){
+                                                                          context.showSnackBarError(
+                                                                              "the requested quantity not be 0 or empty");
+                                                                        }
+                                                                        else if(qty!<foc!){
                                                                           context.showSnackBarError("the received qty allways greater than  foc");
 
                                                                         }
@@ -4464,40 +4481,44 @@ else{
                                                                     padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: UnderLinedInput(controller:vatTestContoller,
-                                                                  onChanged: (p0) {
-                                                                    if (p0 == "") {
-                                                                      setState(() {vvat = 0;
-                                                                      });
-                                                                    }
-                                                                    else{
-                                                                      vvat =double.tryParse( p0);
-                                                                    }
-                                                                    if(check==0 ||Qty==0){
-                                                                      vactualCost=0;
-                                                                      Vamount=0;
-                                                                      Vgrnadtotal=0;
-                                                                      setState(() {});
-                                                                    }
-                                                                    else{
-                                                                      Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
-                                                                      vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                      setState(() {});
-                                                                    }
-                                                                  },
-                                                                  enable: true,
-                                                                  onComplete: () {
-                                                                    // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
-                                                                    print("vactualCost" +
-                                                                        vactualCost
-                                                                            .toString());
-                                                                    print("+++++" +
-                                                                        table.length
-                                                                            .toString());
-                                                                  },
-                                                                ),
+                                                                child: textPadding(vvat.toString(),
+                                                                    padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
                                                               ),
+                                                              // TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                                              //   child: UnderLinedInput(controller:vatTestContoller,
+                                                              //     onChanged: (p0) {
+                                                              //       if (p0 == "") {
+                                                              //         setState(() {vvat = 0;
+                                                              //         });
+                                                              //       }
+                                                              //       else{
+                                                              //         vvat =double.tryParse( p0);
+                                                              //       }
+                                                              //       if(check==0 ||Qty==0){
+                                                              //         vactualCost=0;
+                                                              //         Vamount=0;
+                                                              //         Vgrnadtotal=0;
+                                                              //         setState(() {});
+                                                              //       }
+                                                              //       else{
+                                                              //         Vamount =double.parse(( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble()).toStringAsFixed(3));
+                                                              //         vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                              //         Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                              //         setState(() {});
+                                                              //       }
+                                                              //     },
+                                                              //     enable: true,
+                                                              //     onComplete: () {
+                                                              //       // table.add(OrderLines(variableAmount: 10,grandTotal: 20,actualCost: 30,unitCost: 30,foc: 1));
+                                                              //       print("vactualCost" +
+                                                              //           vactualCost
+                                                              //               .toString());
+                                                              //       print("+++++" +
+                                                              //           table.length
+                                                              //               .toString());
+                                                              //     },
+                                                              //   ),
+                                                              // ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding(vactualCost.toString(),
@@ -4557,9 +4578,13 @@ else{
                                                                       style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
                                                                       ),
                                                                       onPressed: () {
-                                                                      if(  variantId=="null"||Qty==0||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0)
+                                                                      if(  variantId=="null"||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0)
                                                                         context.showSnackBarError(
                                                                             "please fill all the fields");
+                                                                      else if(Qty==0||Qty==""){
+                                                                        context.showSnackBarError(
+                                                                            "the requested quantity not be 0 or empty");
+                                                                      }
                                                                       else if(updateCheck==true){
                                                                         context.showSnackBarError(
                                                                             "please click the update button");

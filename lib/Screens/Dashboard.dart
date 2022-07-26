@@ -160,8 +160,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                                       Text("akshay"),
                                       // PrintScreen(),
                                       PurchaseScreen(isCollapsed),
-                                      SalesScreen(isCollapsed),
                                       PurchaseReturn(),
+                                      SalesScreen(isCollapsed),
                                     ],
                                   ),
                                 ),
@@ -410,11 +410,11 @@ class _TitleScreenState extends State<TitleScreen> {
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                       Text(
-                        "sales",
+                        "Purchase return",
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                       Text(
-                        "Purchase return",
+                        "Sales",
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                     ]),
