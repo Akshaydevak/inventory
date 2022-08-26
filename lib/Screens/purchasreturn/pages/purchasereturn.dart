@@ -63,20 +63,25 @@ class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderState
                           child: TabBar(
 
                               labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
-                              unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
-                              padding: EdgeInsets.only(left: 13),
+                              unselectedLabelStyle: TextStyle(color: Color(0xff000000,),fontSize: width/22,fontWeight: FontWeight.w400),
+                              // padding: EdgeInsets.only(left: 13,),
                               isScrollable: true,
+
+                              indicatorSize: TabBarIndicatorSize.label,
+
+
                               //indicatorSize:TabBarIndicatorSize.tab ,
 
                               indicatorColor: Color(0xff3E4F5B),
+
                               indicatorWeight: 5,
                               indicator: UnderlineTabIndicator(
-                                  borderSide: BorderSide(
-                                    width: 4.0,
-                                    color: Color(0xff3E4F5B),
-                                  ),
-                                  insets: EdgeInsets.only(left: width*.014, right: width*.017)),
-
+                                borderSide: BorderSide(
+                                  width: 4.0,
+                                  color: Color(0xff3E4F5B),
+                                ),
+                                // insets: EdgeInsets.only(left: width*.014, right: width*.017)
+                              ),
                               // padding: EdgeInsets.only(bottom: 10),
 
                               controller: _tabController,
@@ -101,6 +106,7 @@ class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderState
                     height: height-100,
 
                     child: TabBarView(
+                      physics: NeverScrollableScrollPhysics(),
                       controller: _tabController,
                       children: [
                         PurchaseReturnGeneral(),

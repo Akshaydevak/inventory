@@ -92,7 +92,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   tableAssign(List<Liness>liness){
     lines=liness;
     setState(() {
-
+      addition();
     });
   }
   clear(){
@@ -183,13 +183,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
       setState(() {});
     }
   }
-  // update(int i,bool b){
-  //  lines[i]=lines[i].copyWith(isActive: b);
-  //      setState(() {
-  //
-  //      });
-  //  addition();
-  // }
+
   // double vatCalcutatingMethod(int reqQty,double unitCst,double exTaxx,int disct){
   // double   VatAmounts = (((reqQty*unitCst)+exTaxx)-disct);
   //  return VatAmounts;
@@ -1707,532 +1701,570 @@ widget.currentUser();
 }
 
 
-// class GrowableTable extends StatefulWidget {
-//   final List<Liness>?lines;
-//   final Function updation;
-//   GrowableTable({ this.lines,required this.updation});
-//
-//   @override
-//   _GrowableTableState createState() => _GrowableTableState();
-// }
-//
-// class _GrowableTableState extends State<GrowableTable> {
-//   late AutoScrollController recieveController;
-//   void initState() {
-//
-//     recieveController = AutoScrollController(
-//         viewportBoundaryGetter: () =>
-//             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
-//         axis: Axis.vertical);
-//     super.initState();
-//   }
-//   @override
-//   Widget build(BuildContext context) {
-//     return
-//       Scrollbar(
-//       controller: recieveController,
-//       isAlwaysShown: true,
-//       child: Container(
-//         color: Colors.white,
-//         alignment: Alignment.topRight,
-//         child: SingleChildScrollView(
-//           controller:recieveController ,
-//           physics: ScrollPhysics(),
-//           scrollDirection: Axis.horizontal,
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               SingleChildScrollView(
-//                 child: Container(
-//                   width: 2200,
-//                   padding: EdgeInsets.all(10),
-//                   child: customTable(
-//
-//                       border: const TableBorder(
-//
-//                         verticalInside: BorderSide(
-//                             width:.5,
-//                             color: Colors.black45,
-//                             style: BorderStyle.solid),
-//                         horizontalInside: BorderSide(
-//                             width:.3,
-//                             color: Colors.black45,
-//                             // color: Colors.blue,
-//                             style: BorderStyle.solid),),
-//
-//                       tableWidth: .5,
-//
-//                       childrens:[
-//                         TableRow(
-//
-//                           // decoration: BoxDecoration(
-//
-//                           //     color: Colors.green.shade200,
-//
-//                           //     shape: BoxShape.rectangle,
-//
-//                           //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-//
-//                             children: [
-//
-//                               tableHeadtext(
-//
-//                                 'Sno',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white,
-//
-//                               ),
-//
-//
-//
-//                               tableHeadtext(
-//
-//                                 'Variant Id',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Variant Name',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               // tableHeadtext('description', size: 10, color: null),
-//
-//
-//
-//
-//
-//                               tableHeadtext(
-//                                 'Barcode',
-//                                 padding: EdgeInsets.all(7),
-//                                 height: 46,
-//                                 size: 13,
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Current qty',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Purchase UOM',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Qty',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Unitcost',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Discount',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'FOC',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Vatable Amount',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//                                 // color: Palette.containerDarknew,
-//                                 // textColor: Palette.white
-//                               ),
-//                               tableHeadtext(
-//                                 'Excise Tax',
-//                                 padding: EdgeInsets.all(7),
-//                                 height: 46,
-//                                 size: 13,
-//                               ),
-//                               tableHeadtext(
-//
-//                                 'VAT',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//
-//
-//                               tableHeadtext(
-//
-//                                 'Actual Cost',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'Grand Total',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'isInvoiced',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'isFree',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//                                 // color: Palette.containerDarknew,
-//
-//                                 // textColor: Palette.white
-//
-//                               ),
-//
-//                               tableHeadtext(
-//
-//                                 'IsActive',
-//
-//                                 padding: EdgeInsets.all(7),
-//
-//                                 height: 46,
-//
-//                                 size: 13,
-//
-//
-//                               ),
-//
-//                               tableHeadtext(
-//                                 '',
-//                                 padding: EdgeInsets.all(7),
-//                                 height: 46,
-//                                 size: 13,
-//                                 // color: Palette.containerDarknew,
-//                                 // textColor: Palette.white
-//                               ),
-//                               tableHeadtext(
-//                                 '',
-//                                 padding: EdgeInsets.all(7),
-//                                 height: 46,
-//                                 size: 13,
-//                                 // color: Palette.containerDarknew,
-//                                 // textColor: Palette.white
-//                               ),
-//
-//
-//                               // if (widget.onAddNew) textPadding(''),
-//
-//                             ]),
-//             if (widget.lines != null)...[
-//       for (var i = 0; i < widget.lines!.length; i++)
-//         TableRow(
-//     decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-//         border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-//             bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-//             right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-//                 .solid))),
-//           children: [
-//             TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding((i + 1).toString(), fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].variantId??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].variantName??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].barcode??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding("", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].purchaseUom??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),
-//             TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].totalQty.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].unitCost.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(
-//
-//                   widget.lines?[i].discount.toString()??"", fontSize: 12,
-//                   height:42,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].foc.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].vatableAmount.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].excessTax.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].vat.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].actualCost.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding(widget.lines?[i].grandTotal.toString()??"", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),
-//             TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: CheckedBoxs(
-//                   valueChanger:widget?.lines![i]
-//                       .isFree==null?false:widget?.lines![i]
-//                       .isFree,
-//
-//                   onSelection:(bool ? value){
-//
-//                   }),
-//             ),                TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: CheckedBoxs(
-//                   valueChanger:widget?.lines![i]
-//                       .isFree==null?false:widget?.lines![i]
-//                       .isFree,
-//
-//                   onSelection:(bool ? value){
-//
-//                   }),
-//             ),
-//             // TableCell(
-//             //   verticalAlignment: TableCellVerticalAlignment.middle,
-//             //   child: textPadding("", fontSize: 12,
-//             //       padding: EdgeInsets.only(left: 11.5, top:
-//             //       1.5), fontWeight: FontWeight.w500),
-//             // ),
-//             // TableCell(
-//             //   verticalAlignment: TableCellVerticalAlignment.middle,
-//             //   child: textPadding("", fontSize: 12,
-//             //       padding: EdgeInsets.only(left: 11.5, top:
-//             //       1.5), fontWeight: FontWeight.w500),
-//             // ),
-//
-//             TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: CheckedBoxs(
-//                   valueChanger:widget?.lines?[i].isActive,
-//
-//                   onSelection:(bool ? value){
-//                     bool? isActive = widget?.lines?[i].isActive??false;
-//                     setState(() {
-//
-//                       isActive = !isActive!;
-//                       print(isActive);
-//                       widget.updation(i,isActive);
-//                       //  widget?.lines?[i] = widget?.lines![i].copyWith(isActive: isActive);
-//
-//                       setState(() {});
-//                     });
-//                   }),
-//             ),
-//     TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding("", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),    TableCell(
-//               verticalAlignment: TableCellVerticalAlignment.middle,
-//               child: textPadding("", fontSize: 12,
-//                   padding: EdgeInsets.only(left: 11.5, top:
-//                   1.5), fontWeight: FontWeight.w500),
-//             ),
-//           ]
-//         )
-//         ]
-//                       ]
-//                   ),
-//                 ),
-//
-//               )
-//
-//             ],
-//           ),
-//
-//         ),
-//       ),
-//     );
-//   }
-// }
+class GrowableTable extends StatefulWidget {
+  final List<Liness>?lines;
+  final Function updation;
+
+  GrowableTable({ this.lines,required this.updation});
+
+  @override
+  _GrowableTableState createState() => _GrowableTableState();
+}
+
+class _GrowableTableState extends State<GrowableTable> {
+  late AutoScrollController recieveController;
+  List<Liness>lines=[];
+
+
+  double taxableUpdateMethod(
+      int reqQty, double unitCst, double exTaxx, double disct) {
+    double taxableAmounts = 0;
+
+      taxableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+
+    return taxableAmounts;
+  }
+
+
+
+  double grandActualtotalUpdation(double taxableAmount, double vatt) {
+    double sellingPrice1 = 0;
+    sellingPrice1 = (taxableAmount + ((taxableAmount * vatt) / 100));
+
+    setState(() {});
+    return sellingPrice1;
+  }
+
+
+
+
+
+  void initState() {
+
+    recieveController = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return
+      MultiBlocListener(
+  listeners: [
+    BlocListener<GeneralreadCubit, GeneralreadState>(
+      listener: (context, state) {
+        print("state++++++++++++++++++++++++++++++++");
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              print("error");
+            },
+            success: (data) {
+              setState(() {
+                print("taskssss");
+                data.lines != null ? lines = data?.lines ?? [] : lines = [];
+                print("lll"+lines.toString());
+
+
+              });
+            });
+      },
+    ),
+    BlocListener<PurchaseinvoiceReadCubit, PurchaseinvoiceReadState>(
+      listener: (context, state) {
+        print("state++++++++++++++++++++++++++++++++");
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              print("error");
+            },
+            success: (data) {
+              setState(() {
+
+                data.lines != null ? lines = data.lines ?? [] :lines  = [];
+
+
+
+              });
+            });
+      },
+    ),
+  ],
+  child: Builder(
+        builder: (context) {
+          return Scrollbar(
+          controller: recieveController,
+          isAlwaysShown: true,
+          child: Container(
+            color: Colors.white,
+            alignment: Alignment.topRight,
+            child: SingleChildScrollView(
+              controller:recieveController ,
+              physics: ScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SingleChildScrollView(
+                    child: Container(
+                      width: 2200,
+                      padding: EdgeInsets.all(10),
+                      child: customTable(
+
+                          border: const TableBorder(
+
+                            verticalInside: BorderSide(
+                                width:.5,
+                                color: Colors.black45,
+                                style: BorderStyle.solid),
+                            horizontalInside: BorderSide(
+                                width:.3,
+                                color: Colors.black45,
+                                // color: Colors.blue,
+                                style: BorderStyle.solid),),
+
+                          tableWidth: .5,
+
+                          childrens:[
+                            TableRow(
+
+
+                                children: [
+
+                                  tableHeadtext('Sno', padding: EdgeInsets.all(7), height: 46, size: 13,),
+                                  tableHeadtext('Variant Id', padding: EdgeInsets.all(7), height: 46, size: 13,),
+
+                                  tableHeadtext('Barcode', padding: EdgeInsets.all(7), height: 46, size: 13,),
+
+                                  tableHeadtext('Current qty', padding: EdgeInsets.all(7), height: 46, size: 13,
+
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Purchase UOM',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Qty',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Unitcost',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Discount',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'FOC',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Vatable Amount',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+                                    // color: Palette.containerDarknew,
+                                    // textColor: Palette.white
+                                  ),
+                                  tableHeadtext(
+                                    'Excise Tax',
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                  ),
+                                  tableHeadtext(
+
+                                    'VAT',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+
+
+                                  tableHeadtext(
+
+                                    'Actual Cost',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'Grand Total',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'isInvoiced',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'isFree',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+                                    // color: Palette.containerDarknew,
+
+                                    // textColor: Palette.white
+
+                                  ),
+
+                                  tableHeadtext(
+
+                                    'IsActive',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+
+                                    size: 13,
+
+
+                                  ),
+
+                                  tableHeadtext(
+                                    '',
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Palette.containerDarknew,
+                                    // textColor: Palette.white
+                                  ),
+                                  tableHeadtext(
+                                    '',
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Palette.containerDarknew,
+                                    // textColor: Palette.white
+                                  ),
+
+
+                                  // if (widget.onAddNew) textPadding(''),
+
+                                ]),
+                            if (lines != null)...[
+                              for (var i = 0; i < lines!.length; i++)
+                                TableRow(
+                                    decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                        border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                            bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                            right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
+                                                .solid))),
+                                    children: [
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding((i + 1).toString(), fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines[i].variantId??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines[i].variantName??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].barcode??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),
+                                      TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding("widget.currentStock.length!=lines.length?"": currentStock[i].toString()",
+                                            padding: EdgeInsets.only(left: 11.5, top: 11.5), fontWeight: FontWeight.w500),
+                                      ),   TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].purchaseUom??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: UnderLinedInput(
+                                          initialCheck:true,
+                                          // controller: requestedListControllers[i],
+                                          last: lines?[i].totalQty.toString()??"",
+                                          onChanged: (va) {
+                                            // updateCheck=true;
+                                            print(va);
+                                            if (va == "") {
+                                              print("entered");
+                                              lines[i] = lines[i].copyWith(totalQty: 0, vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                            } else {
+                                              var qty = int.tryParse(va);
+                                              var dis = lines[i].discount??0;
+                                              var excess = lines[i].excessTax??0;
+                                              var unitcost = lines[i].unitCost??0;
+                                              var vat = lines[i].vat??0;
+                                              var foc = lines[i].foc;
+                                              if (qty == 0 || unitcost == 0 ||unitcost=="") {
+                                                lines[i] = lines[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0);
+                                              }else {
+                                                var Vamount;
+                                                var vactualCost;
+
+                                                Vamount  = taxableUpdateMethod(qty!,unitcost,excess,dis);
+                                                if(vat==0 ||vat==""){
+                                                  vactualCost=Vamount;
+                                                }
+                                                else{
+                                                  vactualCost  =grandActualtotalUpdation(Vamount,vat);
+                                                }
+
+
+                                                lines[i] =
+                                                    lines[i]
+                                                        .copyWith(
+                                                        vatableAmount: Vamount,
+                                                        actualCost: vactualCost,
+                                                        grandTotal: vactualCost,
+                                                        totalQty: qty);
+                                              }
+
+
+
+                                            }
+
+                                            setState(() {});
+                                          },
+                                        ),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].unitCost.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(
+
+                                            lines?[i].discount.toString()??"", fontSize: 12,
+                                            height:42,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].foc.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].vatableAmount.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].excessTax.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].vat.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].actualCost.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),    TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding(lines?[i].grandTotal.toString()??"", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: CheckedBoxs(
+                                            valueChanger:lines![i]
+                                                .isInvoiced==null?false:lines![i]
+                                                .isInvoiced,
+
+                                            onSelection:(bool ? value){
+
+
+                                            }),
+                                      ),                TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: CheckedBoxs(
+                                            valueChanger:lines![i]
+                                                .isFree==null?false:lines![i]
+                                                .isFree,
+
+                                            onSelection:(bool ? value){
+
+                                            }),
+                                      ),
+
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: CheckedBoxs(
+                                            valueChanger:lines?[i].isActive==null?false:lines?[i].isActive,
+
+                                            onSelection:(bool ? value){
+                                              bool? isActive = lines?[i].isActive??false;
+                                              setState(() {
+
+                                                isActive = !isActive!;
+                                                print(isActive);
+                                                // widget.updation(i,isActive);
+                                                lines?[i] = lines![i].copyWith(isActive: isActive);
+
+
+                                                setState(() {});
+                                              });}),
+                                      ),
+                                      TableTextButton(
+                                        label: "update",
+                                        onPress: (){
+                                         widget.updation(lines);
+                                          setState(() {
+
+                                          });
+
+
+                                        },
+                                      ),
+
+                                      TableCell(
+                                        verticalAlignment: TableCellVerticalAlignment.middle,
+                                        child: textPadding("", fontSize: 12,
+                                            padding: EdgeInsets.only(left: 11.5, top:
+                                            1.5), fontWeight: FontWeight.w500),
+                                      ),
+                                    ]
+                                )
+                            ]
+                          ]
+                      ),
+                    ),
+
+                  )
+
+                ],
+              ),
+
+            ),
+          ),
+    );
+        }
+      ),
+);
+  }
+}
 

@@ -17,6 +17,8 @@ _$_PurchaseOrderTableModel _$$_PurchaseOrderTableModelFromJson(
       purchaseUomName: json['purchase_uom_name'] as String?,
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      returnType: json['return_type'] as String?,
+      returnTime: json['return_time'] as String?,
       vendorDetails: json['vendor_details'] == null
           ? null
           : VendorDetails.fromJson(
@@ -37,6 +39,8 @@ Map<String, dynamic> _$$_PurchaseOrderTableModelToJson(
       'purchase_uom_name': instance.purchaseUomName,
       'excess_tax': instance.excessTax,
       'unit_cost': instance.unitCost,
+      'return_type': instance.returnType,
+      'return_time': instance.returnTime,
       'vendor_details': instance.vendorDetails,
       'barcode': instance.barCode,
     };

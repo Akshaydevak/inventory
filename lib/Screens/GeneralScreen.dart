@@ -4,6 +4,8 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/Screens/logi/login.dart';
+import 'package:inventory/Screens/register/screens/registerscreen.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -828,6 +830,7 @@ else{
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
+
 
                                                     SelectableDropDownpopUp(
                                                       label: "Order type",
@@ -3468,10 +3471,12 @@ else{
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
                                                                   child: PopUpCall(
+                                                                    vendorId: vendorCode.text,
                                                                     type: "cost-method-list",
                                                                     value: table[i].variantId,
                                                                     onSelection: (VariantId? va) {
                                                                       updateCheck=true;
+
                                                                       table[i] = table[i].copyWith(updateCheck: true);
 
                                                                       table.replaceRange(i, (i+1), [OrderLines(isRecieved: table[i].isRecieved,isActive:table[i].isActive ,minimumQty:table[i].minimumQty,maximumQty:table[i].minimumQty,requestedQty: 0,

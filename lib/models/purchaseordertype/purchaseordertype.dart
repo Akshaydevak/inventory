@@ -6,6 +6,8 @@ part 'purchaseordertype.g.dart';
 class PurchaseOrdertype with _$PurchaseOrdertype {
   const factory PurchaseOrdertype({
     @JsonKey(name: "order_types") final List<String>? orderTypes,
+    @JsonKey(name: "discount_type") final List<String>? discountType,
+    @JsonKey(name: "order_modes") final List<String>? orderMode,
 
   }) = _PurchaseOrdertype;
   factory PurchaseOrdertype.fromJson(Map<String, dynamic> json) =>

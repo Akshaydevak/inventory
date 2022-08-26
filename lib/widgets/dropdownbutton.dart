@@ -4,26 +4,36 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class SelectableDropDownpopUp extends StatefulWidget {
   final String label;
+  final String? bindType;
   final String? value;
+  final TextEditingController? controller;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final bool required;
   final bool row;
   final List<String>? list;
   final String? type;
+  final String? apiType;
   final bool enable;
   final bool restricted;
+  final Function? onchange;
+  final int? id;
+
   const SelectableDropDownpopUp(
       {Key? key,
         this.value,
+         this.bindType,
         this.type,
+        this.apiType,
+        this.id,
         required this.label,
         this.row=false,
         this.enable = false,
-        this.onAddNew,
+        this.onAddNew, this.controller,
         required this.onSelection,
         this.required = false,
         this.list,
+        this.onchange,
         this.restricted = false})
       : super(key: key);
 
@@ -33,6 +43,8 @@ class SelectableDropDownpopUp extends StatefulWidget {
 }
 
 class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
+
+
   @override
   Widget build(BuildContext context) {
     List<String> list = [];
@@ -74,6 +86,12 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                 child: widget.type != null
                     ? PopUpCall(
+                    apiType:widget.apiType,
+                  id:widget.id,
+                  onchange:widget.onchange,
+                    bindType:widget.bindType,
+
+
                     onSelection: widget.onSelection,
                     onAddNew: widget.onAddNew,
                     value: widget.value,
@@ -82,10 +100,14 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     :TypeAheadFormField(
 
                   textFieldConfiguration: TextFieldConfiguration(
-                      controller:
-                      TextEditingController(text: widget.value),
-                      onTap: () {},
+
+                      controller: widget.controller,
+                      onChanged: (va){
+                        widget?.onchange!(va!);
+                      },
+
                       decoration: InputDecoration(
+
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
@@ -141,6 +163,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                 child: widget.type != null
                     ? PopUpCall(
+                  bindType: widget.bindType,
                     onSelection: widget.onSelection,
                     onAddNew: widget.onAddNew,
                     value: widget.value,
@@ -148,7 +171,9 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     type: widget.type!)
                     :TypeAheadFormField(
 
+
                   textFieldConfiguration: TextFieldConfiguration(
+
                       controller:
                       TextEditingController(text: widget.value),
                       onTap: () {},

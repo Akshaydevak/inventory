@@ -54,7 +54,8 @@ class PopUpInputField extends StatefulWidget {
 class _PopUpInputFieldState extends State<PopUpInputField> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return
+      SizedBox(
 
         child: ListTile(
           contentPadding: EdgeInsets.symmetric(
@@ -263,6 +264,48 @@ class _CheckedBoxState extends State<CheckedBoxs> {
       activeColor: Color(0xff3E4F5B),
       value: widget.valueChanger,
       onChanged: widget.onSelection,
+    );
+  }
+}
+
+class CustomCheckBox extends StatefulWidget {
+  final bool value;
+  final Function(bool)? onChange;
+
+  const CustomCheckBox({Key? key, this.value = false, this.onChange})
+      : super(key: key);
+
+  @override
+  _CustomCheckBoxState createState() => _CustomCheckBoxState();
+}
+
+class _CustomCheckBoxState extends State<CustomCheckBox> {
+  late bool val;
+  bool onChange = false;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!onChange) val = widget.value;
+    onChange = false;
+    return InkWell(
+      onTap: () {
+        val = !val;
+        if (widget.onChange != null) widget.onChange!(val);
+        onChange = true;
+        setState(() {});
+      },
+      child: Container(
+        alignment: Alignment.center,
+        padding: EdgeInsets.only(top: 0),
+        child: Center(
+          child: val
+              ? Icon(
+            Icons.check_box,
+            color: Colors.green,
+          )
+              : Icon(Icons.check_box_outline_blank),
+        ),
+      ),
     );
   }
 }

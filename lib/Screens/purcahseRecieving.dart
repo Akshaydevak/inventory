@@ -3974,6 +3974,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
               onApply: () {
 
               },
+
               onEdit: () {
                 print( "aaa"+widget.model.toString());
                 GenerateMissing? model=widget.model;
@@ -4134,12 +4135,14 @@ class PopUpHeader extends StatefulWidget {
   final double widthPopup;
   final VoidCallback onApply;
   final VoidCallback? onEdit;
+  final VoidCallback? onCancel;
   final Function(bool)? onAddNew;
   final bool isDirectCreate;
   const PopUpHeader({
     Key? key,
     required this.label,this.onEdit,
     this.widthPopup=50,
+    this.onCancel,
     this.dataField,this.onAddNew,
     required this.onApply,  this.isDirectCreate=false,
   }) : super(key: key);
@@ -4149,8 +4152,12 @@ class PopUpHeader extends StatefulWidget {
 }
 
 class _PopUpHeaderState extends State<PopUpHeader> {
+
   @override
   Widget build(BuildContext context) {
+    changer(){
+      widget.isDirectCreate!=false;
+    }
     return Container(
       // height:100,
 
@@ -4161,9 +4168,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
         onPopUp: true,
         onApply: widget.onApply,
         onCreate:widget.isDirectCreate?true: _selections[0],
-        onCancel: () {
-          Navigator.pop(context);
-        },
+        onCancel: widget.onCancel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -4216,13 +4221,13 @@ class GeneralSavePage extends StatelessWidget {
   final bool onCreate;
   final bool onPopUp;
   final Widget child;
-  final VoidCallback onApply;
+  final VoidCallback? onApply;
   final VoidCallback? onEdit;
   final VoidCallback? onCancel;
   const GeneralSavePage(
       {Key? key,
         required this.child,
-        required this.onApply,
+         this.onApply,
         this.onCancel,
         this.onCreate = false,
         this.onPopUp = false,
@@ -4267,19 +4272,41 @@ class GeneralSavePage extends StatelessWidget {
   }
 
   Widget edit() {
-    return SizedBox(
-      height: 30,
-      child: CommonButtonCustom(
-          onPressed: onEdit,
-          child: Row(
-            children: [
-              Icon(Icons.edit),
-              SizedBox(width: 3),
-              Text(
-                "Save changes",
-              )
-            ],
-          )),
+    return Row(
+      children: [
+        SizedBox(
+          height: 30,
+          child: CommonButtonLightCustom(
+              onPressed: onCancel,
+              textColor: Colors.grey,
+              color: Colors.orange,
+              child: Row(
+                children: [
+                  Icon(Icons.delete, color: Colors.grey),
+                  SizedBox( width: 10,),
+                  Text(
+                    "Discard",
+                    style: TextStyle(color: Colors.grey),
+                  )
+                ],
+              )),
+        ),
+        gapWidthColumn(width: 10),
+        SizedBox(
+          height: 30,
+          child: CommonButtonCustom(
+              onPressed: onEdit,
+              child: Row(
+                children: [
+                  Icon(Icons.edit),
+                  SizedBox(width: 3),
+                  Text(
+                    "Save changes",
+                  )
+                ],
+              )),
+        ),
+      ],
     );
   }
 
@@ -4288,23 +4315,7 @@ class GeneralSavePage extends StatelessWidget {
       alignment: Alignment.centerRight,
       child: Row(
         children: [
-          SizedBox(
-            height: 30,
-            child: CommonButtonLightCustom(
-                onPressed: onCancel,
-                textColor: Colors.grey,
-                color: Colors.orange,
-                child: Row(
-                  children: [
-                    Icon(Icons.delete, color: Colors.grey),
-                    SizedBox( width: 10,),
-                    Text(
-                      "Discard",
-                      style: TextStyle(color: Colors.grey),
-                    )
-                  ],
-                )),
-          ),
+
           SizedBox( height: 10,),
           SizedBox(
 
@@ -4935,14 +4946,14 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.013, color: PdfColors.white,)),
+                                    child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
+                                    child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
 
@@ -4950,20 +4961,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw.  Container(
                                     color: PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
+                                    child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
+                                    child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
+                                    child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
 
@@ -4972,19 +4983,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw.   Container(
                                     color: PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
+                                    child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
+                                    child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
                                     color: PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
+                                    child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
@@ -4992,20 +5003,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw.  Container(
                                     color: PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
+                                    child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
+                                    child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
                                     color:  PdfColor.fromInt(0xAA1F6BA9),
                                     alignment:pw. Alignment.center,
-                                    child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
+                                    child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
 

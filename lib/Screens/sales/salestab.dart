@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:inventory/Screens/sales/salesgeneral.dart';
+import 'package:inventory/Screens/sales/general/general.dart';
+
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 
@@ -105,6 +106,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                       height: height-100,
 
                       child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
                         controller: _tabController,
                         children: [
                           SalesGeneral(),

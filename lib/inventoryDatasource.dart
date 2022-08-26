@@ -147,6 +147,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
 
   @override
   Future<PurchaseOrdertype> getPurchaseOrdertype() async {
+    print("purchase");
+    print(purchaseOrderType.toString());
     final response = await client.get(
       purchaseOrderType,
       // data:
@@ -161,9 +163,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("response" + response.toString());
-    PurchaseOrdertype ordertype =
-        PurchaseOrdertype.fromJson(response.data['data']);
+
+    PurchaseOrdertype ordertype = PurchaseOrdertype.fromJson(response.data['data']);
     print(ordertype);
     return ordertype;
   }
@@ -416,8 +417,72 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("sunithi2" + id.toString());
     String path = generalPurchasePatch + id.toString();
     print(path);
+try{
+  final response = await client.patch(path,
+      // data: model.toJson(),
+      data:{
+        "purchase_order_type": model.purchaseOrderType,
+        "promised_receipt_date": model.promisedReceiptdate,
+        "vendor_id": model.vendorId,
+        "vendor_trn_number":model.vendorTrnNumber,
+        "vendor_address":model.vendorAddress,
+        "vendor_mail_id":"",
+        "planned_receipt_date": model.plannedRecieptDate,
+        "address_1": model.address1,
+        "address_2": model.address2,
+        "note": model.note,
+        "remarks": model.remarks,
+        "unit_cost": model.unitcost,
+        "excess_tax": model.excessTax,
+        "actual_cost": model.actualCost,
+        "vat": model.vat,
+        "foc":model.foc,
+        "discount":model.discount,
+        "grand_total": model.grandTotal,
+        "vatable_amount": model.variableAmount,
+        "edited_by":model.edited_by,
+        "order_lines":model.orderLines,
+      },
+      options: Options(headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }));
+  print("+++++++++++");
+  print(response);
+  print(response.data['message']);
+  if (response.data['status'] == 'failed') {
+    Variable.errorMessege = response.data['message'];
+  }
+  return DoubleResponse(
+      response.data['status'] == 'success', response.data['message']);
+}catch(e){
+  print(e.toString());
+}
     final response = await client.patch(path,
-        data: model.toJson(),
+        // data: model.toJson(),
+        data:{
+          "purchase_order_type": model.purchaseOrderType,
+          "promised_receipt_date": model.promisedReceiptdate,
+          "vendor_id": model.vendorId,
+          "vendor_trn_number":model.vendorTrnNumber,
+          "vendor_address":model.vendorAddress,
+          "vendor_mail_id":model.vendorMailId,
+          "planned_receipt_date": model.plannedRecieptDate,
+          "address_1": model.address1,
+          "address_2": model.address2,
+          "note": model.note,
+          "remarks": model.remarks,
+          "unit_cost": model.unitcost,
+          "excess_tax": model.excessTax,
+          "actual_cost": model.actualCost,
+          "vat": model.vat,
+          "foc":model.foc,
+          "discount":model.discount,
+          "grand_total": model.grandTotal,
+          "vatable_amount": model.variableAmount,
+          "edited_by":model.edited_by,
+          "order_lines":model.orderLines,
+        },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

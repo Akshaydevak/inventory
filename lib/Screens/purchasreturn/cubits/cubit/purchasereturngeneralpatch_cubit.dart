@@ -5,13 +5,13 @@ import 'package:inventory/Screens/purchasreturn/pages/repo.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
 part 'purchasereturngeneralpatch_state.dart';
+
 part 'purchasereturngeneralpatch_cubit.freezed.dart';
 
-class PurchasereturngeneralpatchCubit
-    extends Cubit<PurchasereturngeneralpatchState> {
-  PurchasereturngeneralpatchCubit()
-      : super(PurchasereturngeneralpatchState.initial());
+class PurchasereturngeneralpatchCubit extends Cubit<PurchasereturngeneralpatchState> {
+  PurchasereturngeneralpatchCubit() : super(PurchasereturngeneralpatchState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
+
   Future getGeneralFormPatch(int? id, ReturnGeneralPatchModel model) async {
     final result = await repo.getGeneralFormPatch(model, id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

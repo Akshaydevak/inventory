@@ -11,10 +11,18 @@ _$_PurchaseOrdertype _$$_PurchaseOrdertypeFromJson(Map<String, dynamic> json) =>
       orderTypes: (json['order_types'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      discountType: (json['discount_type'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      orderMode: (json['order_modes'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$_PurchaseOrdertypeToJson(
         _$_PurchaseOrdertype instance) =>
     <String, dynamic>{
       'order_types': instance.orderTypes,
+      'discount_type': instance.discountType,
+      'order_modes': instance.orderMode,
     };

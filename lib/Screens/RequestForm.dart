@@ -1183,6 +1183,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       onSelection:
                                                                           (VariantId? va) {
                                                                             updateCheck=true;
+                                                                            stockCheck=true;
                                                                             table[i] = table[i].copyWith(updateCheck: true);
                                                                             setState(() {
 
@@ -1193,8 +1194,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                             ,unitCost: table[i].unitCost,foc: table[i].foc,grandTotal: table[i].grandTotal,actualCost: table[i].actualCost,variantId: va?.code,purchaseuom: table[i].purchaseuom,discount: table[i].discount
                                                                         )]);
                                                                         setState(() {
-                                                                          variantId =
-                                                                          va?.code;
+
+
                                                                           int? id = va!.id;
                                                                           Variable.tableindex =i;
                                                                           Variable.tableedit=true;
@@ -1211,7 +1212,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                               .read<
                                                                               PurchaseStockCubit>()
                                                                               .getCurrentStock(
-                                                                             inventoryIdController.text, variantId);
+                                                                             inventoryIdController.text, va?.code);
 
                                                                           // orderType = va!;
                                                                         });

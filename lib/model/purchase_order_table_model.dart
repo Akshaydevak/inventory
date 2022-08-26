@@ -13,10 +13,10 @@ PurchaseOrderTableModel with _$PurchaseOrderTableModel {
     //final String? vat,
     @JsonKey(name: "purchase_uom") final String? purchaseUom,
     @JsonKey(name: "purchase_uom_name") final String? purchaseUomName,
-   @JsonKey(name: "excess_tax") final double? excessTax,
+    @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "unit_cost") final double? unitCost,
-   // @JsonKey(name: "return_type") final String? returnType,
-   // @JsonKey(name: "return_time") final String? returnTime,
+    @JsonKey(name: "return_type") final String? returnType,
+    @JsonKey(name: "return_time") final String? returnTime,
     @JsonKey(name: "vendor_details") final VendorDetails? vendorDetails,
     @JsonKey(name: "barcode") final Barcode? barCode,
   }) = _PurchaseOrderTableModel;

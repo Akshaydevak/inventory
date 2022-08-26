@@ -224,3 +224,217 @@ abstract class _PurchaseOrder implements PurchaseOrder {
   _$PurchaseOrderCopyWith<_PurchaseOrder> get copyWith =>
       throw _privateConstructorUsedError;
 }
+
+salesOrderTypeModel _$salesOrderTypeModelFromJson(Map<String, dynamic> json) {
+  return _salesOrderTypeModel.fromJson(json);
+}
+
+/// @nodoc
+class _$salesOrderTypeModelTearOff {
+  const _$salesOrderTypeModelTearOff();
+
+  _salesOrderTypeModel call(
+      {int? id,
+      @JsonKey(name: "sales_order_code") String? salesOrderCode,
+      @JsonKey(name: "sales_return_order_code") String? salesReturnOrderCode}) {
+    return _salesOrderTypeModel(
+      id: id,
+      salesOrderCode: salesOrderCode,
+      salesReturnOrderCode: salesReturnOrderCode,
+    );
+  }
+
+  salesOrderTypeModel fromJson(Map<String, Object> json) {
+    return salesOrderTypeModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $salesOrderTypeModel = _$salesOrderTypeModelTearOff();
+
+/// @nodoc
+mixin _$salesOrderTypeModel {
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: "sales_order_code")
+  String? get salesOrderCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "sales_return_order_code")
+  String? get salesReturnOrderCode => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $salesOrderTypeModelCopyWith<salesOrderTypeModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $salesOrderTypeModelCopyWith<$Res> {
+  factory $salesOrderTypeModelCopyWith(
+          salesOrderTypeModel value, $Res Function(salesOrderTypeModel) then) =
+      _$salesOrderTypeModelCopyWithImpl<$Res>;
+  $Res call(
+      {int? id,
+      @JsonKey(name: "sales_order_code") String? salesOrderCode,
+      @JsonKey(name: "sales_return_order_code") String? salesReturnOrderCode});
+}
+
+/// @nodoc
+class _$salesOrderTypeModelCopyWithImpl<$Res>
+    implements $salesOrderTypeModelCopyWith<$Res> {
+  _$salesOrderTypeModelCopyWithImpl(this._value, this._then);
+
+  final salesOrderTypeModel _value;
+  // ignore: unused_field
+  final $Res Function(salesOrderTypeModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? salesOrderCode = freezed,
+    Object? salesReturnOrderCode = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      salesOrderCode: salesOrderCode == freezed
+          ? _value.salesOrderCode
+          : salesOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salesReturnOrderCode: salesReturnOrderCode == freezed
+          ? _value.salesReturnOrderCode
+          : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$salesOrderTypeModelCopyWith<$Res>
+    implements $salesOrderTypeModelCopyWith<$Res> {
+  factory _$salesOrderTypeModelCopyWith(_salesOrderTypeModel value,
+          $Res Function(_salesOrderTypeModel) then) =
+      __$salesOrderTypeModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? id,
+      @JsonKey(name: "sales_order_code") String? salesOrderCode,
+      @JsonKey(name: "sales_return_order_code") String? salesReturnOrderCode});
+}
+
+/// @nodoc
+class __$salesOrderTypeModelCopyWithImpl<$Res>
+    extends _$salesOrderTypeModelCopyWithImpl<$Res>
+    implements _$salesOrderTypeModelCopyWith<$Res> {
+  __$salesOrderTypeModelCopyWithImpl(
+      _salesOrderTypeModel _value, $Res Function(_salesOrderTypeModel) _then)
+      : super(_value, (v) => _then(v as _salesOrderTypeModel));
+
+  @override
+  _salesOrderTypeModel get _value => super._value as _salesOrderTypeModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? salesOrderCode = freezed,
+    Object? salesReturnOrderCode = freezed,
+  }) {
+    return _then(_salesOrderTypeModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      salesOrderCode: salesOrderCode == freezed
+          ? _value.salesOrderCode
+          : salesOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      salesReturnOrderCode: salesReturnOrderCode == freezed
+          ? _value.salesReturnOrderCode
+          : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_salesOrderTypeModel implements _salesOrderTypeModel {
+  const _$_salesOrderTypeModel(
+      {this.id,
+      @JsonKey(name: "sales_order_code") this.salesOrderCode,
+      @JsonKey(name: "sales_return_order_code") this.salesReturnOrderCode});
+
+  factory _$_salesOrderTypeModel.fromJson(Map<String, dynamic> json) =>
+      _$$_salesOrderTypeModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  @JsonKey(name: "sales_order_code")
+  final String? salesOrderCode;
+  @override
+  @JsonKey(name: "sales_return_order_code")
+  final String? salesReturnOrderCode;
+
+  @override
+  String toString() {
+    return 'salesOrderTypeModel(id: $id, salesOrderCode: $salesOrderCode, salesReturnOrderCode: $salesReturnOrderCode)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _salesOrderTypeModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.salesOrderCode, salesOrderCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.salesOrderCode, salesOrderCode)) &&
+            (identical(other.salesReturnOrderCode, salesReturnOrderCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.salesReturnOrderCode, salesReturnOrderCode)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(salesOrderCode) ^
+      const DeepCollectionEquality().hash(salesReturnOrderCode);
+
+  @JsonKey(ignore: true)
+  @override
+  _$salesOrderTypeModelCopyWith<_salesOrderTypeModel> get copyWith =>
+      __$salesOrderTypeModelCopyWithImpl<_salesOrderTypeModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_salesOrderTypeModelToJson(this);
+  }
+}
+
+abstract class _salesOrderTypeModel implements salesOrderTypeModel {
+  const factory _salesOrderTypeModel(
+      {int? id,
+      @JsonKey(name: "sales_order_code")
+          String? salesOrderCode,
+      @JsonKey(name: "sales_return_order_code")
+          String? salesReturnOrderCode}) = _$_salesOrderTypeModel;
+
+  factory _salesOrderTypeModel.fromJson(Map<String, dynamic> json) =
+      _$_salesOrderTypeModel.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "sales_order_code")
+  String? get salesOrderCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "sales_return_order_code")
+  String? get salesReturnOrderCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$salesOrderTypeModelCopyWith<_salesOrderTypeModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
