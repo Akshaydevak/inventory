@@ -431,27 +431,30 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                   });
                 }
                 else{
-                  varinatname = purchaseTable?.name??"";
-                  unitcost = purchaseTable?.unitCost;
-                  vat1 = purchaseTable?.vat;
-                  unitCostCheck.text=purchaseTable?.unitCost.toString()??"";
-                  supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
-                  print(  supplierRefCode);
-                  print("unitttt"+unitcost.toString());
+                  setState(() {
+                    varinatname = purchaseTable?.name??"";
+                    unitcost = purchaseTable?.unitCost;
+                    vat1 = purchaseTable?.vat;
+                    unitCostCheck.text=purchaseTable?.unitCost.toString()??"";
+                    supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                    print(  supplierRefCode);
+                    print("unitttt"+unitcost.toString());
 
-                  // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
-                  // print(
-                  //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
-                  //
-                  purchaseUomName = purchaseTable?.purchaseUomName??"";
-                  vrefcod = purchaseTable?.code??"";
-                  // vid = purchaseTable?.id;
-                  // purchaseTable?.excessTax != null
-                  //     ? eTax = purchaseTable?.excessTax
-                  //     : eTax = 0;
-                  //
-                  barcode =
-                      purchaseTable?.barCode?.barcodeNumber.toString()??"";
+                    // // vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
+                    // print(
+                    //     "vm.totalUnitcost" + vm.totalUnitcost.toString());
+                    //
+                    purchaseUomName = purchaseTable?.purchaseUomName??"";
+                    vrefcod = purchaseTable?.code??"";
+                    // vid = purchaseTable?.id;
+                    // purchaseTable?.excessTax != null
+                    //     ? eTax = purchaseTable?.excessTax
+                    //     : eTax = 0;
+                    //
+                    barcode =
+                        purchaseTable?.barCode?.barcodeNumber.toString()??"";
+                  });
+
                 }
 
                 //

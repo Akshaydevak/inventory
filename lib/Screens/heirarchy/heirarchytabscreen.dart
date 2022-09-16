@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 
+
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
@@ -21,7 +22,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this);
+    TabController _tabController = TabController(length: 1, vsync: this);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -94,7 +95,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
 
                                     controller: _tabController,
                                     tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                      Text("Sales Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
+
                                     ]),
                               ),
 
@@ -119,7 +120,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                             controller: _tabController,
                             children: [
                               HeirarchyGeneralScreen(),
-                              Text("ahshsghgsggsa")
+
 
 
 

@@ -12,13 +12,13 @@ class GrouplistCubit extends Cubit<GrouplistState> {
 
   String? prev;
   String? next;
-  Future getGroupListList() async {
+  Future getGroupListList({String ? type}) async {
     next = null;
     prev = null;
     print("enterd");
     // items = [];
     emit(GrouplistState.initial());
-    final result = await repo.getGroupListList(null);
+    final result = await repo.getGroupListList(null,type:type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class SearchTextfiled extends StatefulWidget {
   final Color color;
   final String hintText;
+  final double h;
+  final double w;
   final Function(String )? onChanged;
+  final VoidCallback? onComplete;
   final TextEditingController ctrlr;
-  SearchTextfiled({required this.color,required this.hintText,required this.ctrlr, this.onChanged,});
+  SearchTextfiled({required this.color,required this.hintText,required this.ctrlr,this.onComplete, this.onChanged,this.h=32,this.w=600});
 
   @override
   State<SearchTextfiled> createState() => _SearchTextfiledState();
@@ -18,15 +21,17 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
   Widget build(BuildContext context) {
     return Container(
        // margin: EdgeInsets.only(top:3,),
-        width: 600,
-        height: 32,
+        width: widget.w,
+        height: widget.h,
         // color: Palette.white,
        // color:Color(0xFF423E3F),
         // padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),
         child: Theme(
           data: Theme.of(context).copyWith(primaryColor: Colors.blue),
           child: TextFormField(
+            onEditingComplete:widget.onComplete,
             onChanged:widget.onChanged,
+
             style: TextStyle(color: Colors.black),
             controller: widget.ctrlr,
             maxLines: 1,

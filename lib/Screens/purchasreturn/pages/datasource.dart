@@ -6,8 +6,12 @@ import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categoryread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/images.dart';
+import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
+import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
 import 'package:inventory/Screens/register/model/register.dart';
@@ -21,6 +25,15 @@ import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicepo
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
+import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
+import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
+import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
+import 'package:inventory/Screens/variant/stock/models/stock_read.dart';
+import 'package:inventory/Screens/variant/stock/models/stocktableread.dart';
+import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/model/variantid.dart';
@@ -94,7 +107,8 @@ abstract class PurchaseSourceAbstract {
   //productmodule****************************
   Future<List<BrandListModel>> getBrandList();
   Future<DoubleResponse> postCreateBrand(BrandCreationtModel model);
-  Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode);
+  Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode,
+      {String type});
   Future<PaginatedResponse<List<BrandListModel>>> getlistBrand(String? code);
   Future<BrandReadModel> getBrandRead(int? id);
   Future<DoubleResponse> brandDelete(int? id);
@@ -133,8 +147,8 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> postCreateGroup(
     MaterialCreationtModel model,
   );
-  Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(
-      String? code);
+  Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
+      {String? type});
   Future<MaterialReadModel> getGroupRead(
     int? id,
   );
@@ -143,12 +157,48 @@ abstract class PurchaseSourceAbstract {
     int? id,
   );
   Future<DoubleResponse> postCreateBaseUom(BaseUomCreationtModel model);
-  Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code);
+  Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
+      {String? type});
   Future<BaseUomCreationtModel> getBaseUomRead(
     int? id,
   );
   Future<DoubleResponse> postUomPatch(BaseUomCreationtModel model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> getItemListList(String? code);
+  Future<DoubleResponse> postCreateItem(ItemCreationModel model);
+  Future<ItemReadModel> getItemRead(
+    int? id,
+  );
+  Future<DoubleResponse> postItemPatch(ItemReadModel model, int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantList(String? code,
+      {String? type});
+  Future<VariantReadModel> getVariantRead(
+    int? id,
+  );
+  Future<PaginatedResponse<List<BrandListModel>>> getSalesList(String? code,
+      {String? type, int? id});
+  Future<PaginatedResponse<List<BrandListModel>>> searchVariantList(
+      String? code,
+      {String? type});
+  Future<DoubleResponse> postVariant(VariantPost model, int? id);
+  Future<DoubleResponse> patchVariant(VariantPatch model, int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
+      String? code);
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
+      String? code, int item);
+  Future<VariantCreationReadModel> getVariantCreationRead(int? id);
+  Future<List<VariantCreationRead2Model>> getVariantCreationRead2(String? id);
+  Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
+      String? code, String type);
+  Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelFilterList(
+      String code, String id, String option);
+  Future<StockReadModel> getStockRead(int? id);
+  Future<List<StockTableReadModel>> getStockTableRead(String? code);
+  Future<PaginatedResponse<List<StockVerticalReadModel>>> getStockList(
+    String? code,
+  );
+  Future<List<Category>> getChannelRead(
+    int? id,
+  );
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -891,6 +941,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       String username, String password, String empCode) async {
     String path =
         "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
+    // String path =
+    //     "https://api-rgc-user.hilalcart.com/user-employee_employeeuserlogin/inventory";
     print(path);
 
     final response = await client.post(path,
@@ -1521,8 +1573,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> postImage(
-      String? imageNmae, String ImageEncode) async {
+  Future<DoubleResponse> postImage(String? imageNmae, String ImageEncode,
+      {String? type}) async {
     String path = imagePostApi;
     print(path);
 
@@ -1534,10 +1586,56 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         }));
     print("+++++++++++");
     print(response);
-    print(response.data['message']);
+    print(response.data["data"]);
 
-    if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];
+    print("ananan" + type.toString());
+    if (type != null || type != "") {
+      switch (type) {
+        case 'image1':
+          print("ist image");
+          Variable.img1 = response.data["data"];
+          //  print(Variable.img1);
+          //   Variable.img?.image1 != response.data["data"];
+
+          break;
+
+        case 'image2':
+          print('2st image');
+          // Variable.img= ImagesModel(image2: response.data);
+          Variable.img2 = response.data["data"];
+          break;
+
+        case 'image3':
+          print('3st image');
+          // Variable.img= ImagesModel(image3: response.data);
+          Variable.img3 = response.data["data"];
+          break;
+        case 'image4':
+          print('4st image');
+          // Variable.img= ImagesModel(itemCatelog1: response.data);
+          Variable.img4 = response.data["data"];
+          break;
+        case 'image5':
+          print('5st image');
+          // Variable.img= ImagesModel(itemCatelog2: response.data);
+          Variable.img5 = response.data["data"];
+          break;
+        case 'image6':
+          print('6st image');
+          // Variable.img= ImagesModel(itemCatelog3: response.data);
+          Variable.img6 = response.data["data"];
+          break;
+        case 'image7':
+          print('7st image');
+          // Variable.img= ImagesModel(itemCatelog4: response.data);
+          Variable.img7 = response.data["data"];
+          break;
+        case 'image8':
+          print('8st image');
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.img8 = response.data["data"];
+          break;
+      }
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['data']);
@@ -1550,11 +1648,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     code = code == null ? "" : code;
     String path;
     if (code == "")
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-brand";
+      path = listBrandApi;
     else
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-brand?name=$code";
+      path = listBrandApi + "?name=$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1665,11 +1761,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     code = code == null ? "" : code;
     String path;
     if (code == "")
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-material";
+      path = listMaterialGroupApi;
     else
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-material?name=$code";
+      path = listMaterialGroupApi + "?name=$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1842,8 +1936,15 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         }
 
         break;
+      case "item_create":
+        {
+          url = readItemApi;
+        }
+
+        break;
     }
     path = url + id.toString();
+    print(path);
     final response = await client.delete(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1862,19 +1963,16 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getDevisionList(
       String? code) async {
-    print("avavava");
+    print("appuram");
     code = code == null ? "" : code;
     String path;
     if (code == "")
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division";
+      path = listDevisionApi;
     else
-      path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
-
-
+      path = listDevisionApi + "?name=$code";
 
     print(path);
+
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1882,10 +1980,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         }));
 
     List<BrandListModel> items = [];
+    print("appuram" + response.data.toString());
+
     (response.data['data']['results'] as List).forEach((element) {
       items.add(BrandListModel.fromJson(element));
-      print("itemsAk" + items.toString());
     });
+    print("apuuram 5" + items.toString());
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
@@ -2060,6 +2160,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       path = listStaticApi;
     else
       path = listStaticApi + "?name=$code";
+
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2128,7 +2230,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getUomGroupist(
       String? code) async {
-    print("filter2"+code.toString());
+    print("filter2" + code.toString());
     String path = "";
 
     code = code == null ? "" : code;
@@ -2137,8 +2239,6 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       path = listUomGroupApi;
     else
       path = listUomGroupApi + "?name=$code";
-
-
 
     print(path);
     final response = await client.get(path,
@@ -2201,11 +2301,13 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
       {String? type}) async {
+    print(code);
+    print("akakka" + type.toString());
     String path = "";
     print("Akshara" + type.toString());
 
     code = code == null ? "" : code;
-    if (type == null||type == "") {
+    if (type == null || type == "") {
       if (code == "")
         path = listCategoryGroupApi + Variable.divisionId.toString();
       else
@@ -2214,13 +2316,13 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
             "?name=$code";
     } else if (type == "all") {
       print("entered to All case");
+      print(code);
       if (code == "")
         path = listCategoryAllGroupApi;
       else
         path = listCategoryAllGroupApi + "?name=$code";
-
     }
-    print("Searching path"+path.toString());
+    print("Searching path" + path.toString());
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2228,6 +2330,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         }));
 
     List<BrandListModel> items = [];
+    print("searching case" + response.data['data']['results'].toString());
     (response.data['data']['results'] as List).forEach((element) {
       items.add(BrandListModel.fromJson(element));
       print("itemsAk" + items.toString());
@@ -2408,14 +2511,28 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(
-      String? code) async {
-    code = code == null ? "" : code;
+  Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
+      {String? type}) async {
     String path;
-    if (code == "")
-      path = listGroupApi + Variable.categoryId.toString();
-    else
-      path = listGroupApi + Variable.categoryId.toString() + "?name=$code";
+    print("ttttppp" + type.toString());
+
+    if (type == "all") {
+      code = code == null ? "" : code;
+
+      if (code == "")
+        path = listAllGroupApi;
+      else
+        path = listAllGroupApi + "?name=$code";
+    } else {
+      code = code == null ? "" : code;
+
+      if (code == "")
+        path = listGroupApi + Variable.categoryId.toString();
+      else
+        path = listGroupApi + Variable.categoryId.toString() + "?name=$code";
+    }
+    print(path);
+
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2553,17 +2670,27 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PaginatedResponse<List<BrandListModel>>> getUomist(
-      String? code) async {
+  Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
+      {String? type}) async {
     String path = "";
+    if (type == "all") {
+      code = code == null ? "" : code;
 
-    code = code == null ? "" : code;
+      if (code == "")
+        path = listBaseAllUomGroupApi;
+      else
+        path = listBaseAllUomGroupApi + "?name=$code";
+    } else {
+      code = code == null ? "" : code;
 
-    if (code == "")
-      path = listBaseUomGroupApi + Variable.uomGroupId.toString();
-    else
-      path =
-          listBaseUomGroupApi + Variable.uomGroupId.toString() + "?name=$code";
+      if (code == "")
+        path = listBaseUomGroupApi + Variable.uomGroupId.toString();
+      else
+        path = listBaseUomGroupApi +
+            Variable.uomGroupId.toString() +
+            "?name=$code";
+    }
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2669,5 +2796,837 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> postCreateItem(ItemCreationModel model) async {
+    print(createItemApi);
+    try {
+      final response = await client.post(createItemApi,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("Seaaaa the error");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(createItemApi,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<ItemReadModel> getItemRead(int? id) async {
+    String path = readItemApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("ansaaaa" + response.toString());
+      ItemReadModel dataa = ItemReadModel.fromJson(response.data['data']);
+      print("ansaaaa" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("AnnnnnnnBelk" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("uomGroup response" + response.toString());
+    ItemReadModel dataa = ItemReadModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<DoubleResponse> postItemPatch(ItemReadModel model, int? id) async {
+    String path = readItemApi + id.toString();
+    print(path);
+    // try {
+    //   final response = await client.patch(path,
+    //       data:{
+    //
+    //         "name":"testingggg_item",
+    //
+    //         "material_code":"RGC1654000865",
+    //
+    //         "static_group_code":"RGC1654074258",
+    //
+    //         "uom_code":"dsw",
+    //
+    //         "brand_code":"RGC1653999834",
+    //
+    //         "variant_framework_code":"",
+    //
+    //         "search_name":"hai",
+    //
+    //         "display_name":"hai",
+    //
+    //         "is_active":true,
+    //
+    //         "description":"hai",
+    //
+    //         "image1":null,
+    //
+    //         "image2":null,
+    //
+    //         "image3":null,
+    //
+    //         "item_cateloge1":null,
+    //
+    //         "item_cateloge2":null,
+    //
+    //         "item_cateloge3":null,
+    //
+    //         "item_cateloge4":null
+    //
+    //       },
+    //
+    //
+    //
+    //       // data: model.toJson(),
+    //       options: Options(headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //       }));
+    //   print("+++++++++++");
+    //   print(response);
+    //   print(response.data['message']);
+    //   if (response.data['status'] == 'failed') {
+    //     Variable.errorMessege = response.data['message'];
+    //   }
+    //   return DoubleResponse(
+    //       response.data['status'] == 'success', response.data['message']);
+    //
+    //
+    // } catch (e) {
+    //   print("erroe" + e.toString());
+    // }
+    final response = await client.patch(path,
+        // data: model.toJson(),
+        data: {
+          "name": model.name,
+          "material_code": model.materialCode,
+          "static_group_code": model.staticGroupCode,
+          "uom_code": model.uomCode,
+          "brand_code": model.brandCode,
+          "variant_framework_code": model.variantFrameWork,
+          "search_name": model.searchName,
+          "display_name": model.displayname,
+          "is_active": model.isActive,
+          "description": model.description,
+          "image1": model.image1,
+          "image2": model.image2,
+          "image3": model.image3,
+          "item_cateloge1": model.itemCatelog1,
+          "item_cateloge2": model.itemCatelog2,
+          "item_cateloge3": model.itemCatelog3,
+          "item_cateloge4": model.itemCatelog4
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantList(String? code,
+      {String? type}) async {
+    print("ethiiiito");
+    String path = "";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = listVariantApi + Variable.inventory_ID.toString();
+    else
+      path = listVariantApi + Variable.inventory_ID.toString() + "?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(response);
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<VariantReadModel> getVariantRead(int? id) async {
+    print("welcome to the world" + id.toString());
+    String path = readVariantApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("anamika" + response.toString());
+      VariantReadModel dataa = VariantReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("uomGroup response" + response.data['data'].toString());
+    VariantReadModel dataa = VariantReadModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getSalesList(String? code,
+      {String? type, int? id}) async {
+    code = code == null ? "" : code;
+    String path = "";
+
+    if (code == "")
+      path = salesListApi + Variable.uomId.toString();
+    else
+      path = salesListApi + Variable.uomId.toString() + "?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> searchVariantList(
+      String? code,
+      {String? type}) async {
+    print(variantSearchListApi);
+    code = code == null ? "" : code;
+    String path = "";
+
+    path = variantSearchListApi + "?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print("reeeet" + response.toString());
+
+    List<BrandListModel> items = [];
+
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("searchController" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> postVariant(VariantPost model, int? id) async {
+    String path = variantCreatetApi + id.toString();
+    print(path);
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("erroe" + e.toString());
+    }
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> patchVariant(VariantPatch model, int? id) async {
+    String path = variantPatchApi + id.toString();
+    print(path);
+    print("variant name${model.variantName}");
+
+    final response = await client.post(path,
+        // data: model.toJson(),
+
+        data: {
+          "variant_name": model.variantName,
+          "sales_uom": model.salesUom,
+          "purchase_uom": model.purchaseUom,
+          "variant_value": null,
+          "barcode": model.barcode,
+          "qrcode": model.qrcode,
+          "alternative_barcode": model.barcode,
+          "alternative_qrcode": model.qrcode,
+          "search_name": model.searchName,
+          "display_name": model.displayName,
+          "description": model.description,
+          "arabic_description": model.arabicDescription,
+          "additional_description": model.additionalDescription,
+          "pos_name": model.posName,
+          "gross_weight": model.grossWeight,
+          "net_weight": model.netWeight,
+          "unit_cost": 100.0,
+          "landing_cost": 50.0,
+          "actual_cost": 60.0,
+          "base_price": 50.0,
+          "produced_country": model.producedCountry,
+          "manufacture_id": 1,
+          "manufacture_name": model.manuFacturedName,
+          "safty_stock": model.safetyStock,
+          "reorder_point": 1,
+          "reorder_quantity": 2,
+          "sales_block": model.salesBolock,
+          "purchase_block": model.purchaseBlock,
+          "ratio_to_eccommerce": model.ratioToEcommerce,
+          "min_max_ratio": model.minMaxRatio,
+          "min_sales_order_limit": 17,
+          "max_sales_order_limit": 29,
+          "whole_sale_stock": 1,
+          "stock_warning": model.stockWarning,
+          "item_catalog": model.itemCatelog,
+          "item_image": model.itemImage,
+          "is_active": model.isActive,
+          "sebling_id": model.sibilingCode,
+          "sibling_code": model.sibilingCode,
+          "related_item": null,
+          "retail_selling_price_percentage": 33,
+          "wholesale_selling_price_percentage": 10.0,
+          "online_selling_price_percentage": 5.5,
+          "image1": 308,
+          "image2":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "image3":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "image4":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "image5":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog1":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog2":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog3":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog4":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog5":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog6":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog7":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "catalog8":
+              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+          "vedio_url": null,
+          "minimum_gp": 12.2,
+          "maximum_gp": 13.2,
+          "average_gp": 14.5,
+          "targeted_gp": 12.6,
+          "min_purchase_order_limit": 23,
+          "max_purchase_order_limit": 8,
+          "vat": 12.0,
+          "excess_tax": 8.0,
+          "return_type": "Day",
+          "return_time": 2,
+          "variant_status": "listed",
+          "status": "in_active",
+          "vendor_details": model.vendorDetails,
+          "Ingrediants": model.Ingrediants,
+          "important_info": model.importantInfo,
+          "Additional_info": model.additionalInfo,
+          "Nutriants_facts": model.nutriantsFacts,
+          "product_details": model.productDetails,
+          "usage_direction": model.usageDirection,
+          "product_features": model.productFeatures,
+          "product_behaviour": model.productBehavior,
+          "about_the_products": model.aboutProducts,
+          "storage": model.storage,
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
+      String? code) async {
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = variantCreationListApi;
+    else
+      path = variantCreationListApi + "?name=$code";
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(path);
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
+      String? code, int item) async {
+    print("avavava");
+    code = code == null ? "" : code;
+    String path;
+    if (code == "")
+      path = variantCreationSearchListApi +
+          Variable.inventory_ID.toString() +
+          "/" +
+          item.toString();
+    else
+      path =
+          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<VariantCreationReadModel> getVariantCreationRead(int? id) async {
+    String path = variantCreationReadApi + id.toString();
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      VariantCreationReadModel dataa =
+          VariantCreationReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    VariantCreationReadModel dataa =
+        VariantCreationReadModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<List<VariantCreationRead2Model>> getVariantCreationRead2(
+      String? id) async {
+    String path = variantCreation2ReadApi + id.toString();
+    print(path);
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("searching dataaaa" + response.toString());
+      List<VariantCreationRead2Model> items = [];
+      (response.data['data'] as List).forEach((element) {
+        items.add(VariantCreationRead2Model.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("searching dataaaa" + response.toString());
+    List<VariantCreationRead2Model> items = [];
+    (response.data['data'] as List).forEach((element) {
+      items.add(VariantCreationRead2Model.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+
+    return items;
+  }
+
+  @override
+  Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
+      String? code, String type) async {
+    String path = channelTypeReadApi + type.toString();
+    print(path);
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<ChannelTypeModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(ChannelTypeModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<ChannelTypeModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelFilterList(
+      String code, String id, String option) async {
+    String path = channelFilterReadApi;
+    print(path);
+
+    final response = await client.post(path,
+        data: {
+          "channel_code": code,
+          "inventory_id": Variable.inventory_ID,
+          "selected_option": option,
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<ChannelTypeModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(ChannelTypeModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<ChannelTypeModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<StockReadModel> getStockRead(int? id) async {
+    String path = stockReadApi + id.toString();
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      StockReadModel dataa = StockReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    StockReadModel dataa = StockReadModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<List<StockTableReadModel>> getStockTableRead(String? code) async {
+    String path = stockTableReadApi;
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.post(
+        path,
+        data: {"code": code, "inventory_id": Variable.inventory_ID},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+
+      List<StockTableReadModel> items = [];
+      (response.data['data'] as List).forEach((element) {
+        items.add(StockTableReadModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.post(
+      path,
+      data: {"code": code, "inventory_id": Variable.inventory_ID},
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    List<StockTableReadModel> items = [];
+    (response.data['data'] as List).forEach((element) {
+      items.add(StockTableReadModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return items;
+  }
+
+  @override
+  Future<PaginatedResponse<List<StockVerticalReadModel>>> getStockList(
+      String? code) async {
+    code = code == null ? "" : code;
+    String path = stockVerticalReadApi + code.toString();
+
+    // if (code == "")
+    //   path = salesListApi + Variable.uomId.toString();
+    // else
+    //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<StockVerticalReadModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(StockVerticalReadModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<StockVerticalReadModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<List<Category>> getChannelRead(int? id) async {
+    String path = stockVerticalListReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<Category> items = [];
+      (response.data['data'] as List).forEach((element) {
+        items.add(Category.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      print("rwead" + items.toString());
+      return items;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    List<Category> items = [];
+    (response.data['data'] as List).forEach((element) {
+      items.add(Category.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    print("rwead" + items.toString());
+    return items;
+    ;
   }
 }

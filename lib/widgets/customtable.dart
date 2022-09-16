@@ -20,6 +20,7 @@ Widget customTable({
 
 Widget tableHeadtext(
     String label, {
+      bool center=false,
       double height = 10,
       double? size,
       Color? textColor = Colors.white,
@@ -27,7 +28,7 @@ Widget tableHeadtext(
       EdgeInsets? padding,
     }) =>
     Container(
-      alignment: Alignment.topLeft,
+      alignment: center?Alignment.topLeft:Alignment.topLeft,
       height: height,
       padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
       color: color,

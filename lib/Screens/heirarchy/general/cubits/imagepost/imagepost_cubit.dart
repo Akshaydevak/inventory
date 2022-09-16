@@ -9,11 +9,12 @@ part 'imagepost_cubit.freezed.dart';
 class ImagepostCubit extends Cubit<ImagepostState> {
   ImagepostCubit() : super(ImagepostState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
-  Future postImage(String? imageNmae, String ImageEncode) async {
+  Future postImage(String? imageNmae, String ImageEncode,{String? type}) async {
     emit(_Loading());
     final result = await repo.postImage(
       imageNmae,
       ImageEncode,
+      type:type,
     );
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

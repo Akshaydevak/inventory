@@ -6,8 +6,11 @@ import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categoryread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
+import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/purchasereturninvoicemodel.dart';
@@ -22,6 +25,15 @@ import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicepo
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
+import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
+import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
+import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
+import 'package:inventory/Screens/variant/stock/models/stock_read.dart';
+import 'package:inventory/Screens/variant/stock/models/stocktableread.dart';
+import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/widgets/failiure.dart';
 import 'package:inventory/widgets/repoExecute.dart';
@@ -114,7 +126,8 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postCreateBrand(
       BrandCreationtModel model);
   Future<Either<Failure, DoubleResponse>> postImage(
-      String? imageNmae, String ImageEncode);
+      String? imageNmae, String ImageEncode,
+      {String? type});
   Future<Either<Failure, BrandReadModel>> getBrandRead(int? id);
   Future<Either<Failure, DoubleResponse>> brandDelete(int? id);
   Future<Either<Failure, DoubleResponse>> postBrandPatch(
@@ -163,9 +176,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postCreateGroup(
       MaterialCreationtModel model);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getGroupListList(
-    String? code,
-  );
+      getGroupListList(String? code, {String? type});
   Future<Either<Failure, MaterialReadModel>> getGroupRead(
     int? id,
   );
@@ -174,7 +185,8 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postCreateBaseUom(
       BaseUomCreationtModel model);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getUomist(
-      String? code);
+      String? code,
+      {String? type});
   Future<Either<Failure, BaseUomCreationtModel>> getBaseUomRead(
     int? id,
   );
@@ -183,6 +195,52 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getItemListList(
     String? code,
+  );
+  Future<Either<Failure, DoubleResponse>> postCreateItem(
+      ItemCreationModel model);
+  Future<Either<Failure, ItemReadModel>> getItemRead(
+    int? id,
+  );
+  Future<Either<Failure, DoubleResponse>> postItemPatch(
+      ItemReadModel model, int? id);
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantList(String? code, {String? type});
+  Future<Either<Failure, VariantReadModel>> getVariantRead(
+    int? id,
+  );
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getSalesList(
+      String? code,
+      {String? type,
+      int? id});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      searchVariantList(String? code, {String? type, int? id});
+  Future<Either<Failure, DoubleResponse>> postVariant(
+      VariantPost model, int? id);
+  Future<Either<Failure, DoubleResponse>> patchVariant(
+      VariantPatch model, int? id);
+  //variantcreation++++++++++++++++++++++++++++++++++++
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantCreationList(
+    String? code,
+  );
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantSelectionList(String? code, int item);
+  Future<Either<Failure, VariantCreationReadModel>> getVariantCreationRead(
+      int? id);
+  Future<Either<Failure, List<VariantCreationRead2Model>>>
+      getVariantCreationRead2(String? id);
+  //channelAllocation
+  Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
+      getChannelTypeList(String? code, String type);
+  Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
+      getChannelFilterList(String code, String id, String option);
+  Future<Either<Failure, StockReadModel>> getStockRead(int? id);
+  Future<Either<Failure, List<StockTableReadModel>>> getStockTableRead(
+      String? code);
+  Future<Either<Failure, PaginatedResponse<List<StockVerticalReadModel>>>>
+      getStockList(String? code);
+  Future<Either<Failure, List<Category>>> getChannelRead(
+    int? id,
   );
 }
 
@@ -456,12 +514,11 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, DoubleResponse>> postImage(
-      String? imageNmae, String ImageEncode) {
+      String? imageNmae, String ImageEncode,
+      {String? type}) {
     return repoExecute<DoubleResponse>(
-      () async => remoteDataSource.postImage(
-        imageNmae,
-        ImageEncode,
-      ),
+      () async =>
+          remoteDataSource.postImage(imageNmae, ImageEncode, type: type),
     );
   }
 
@@ -572,7 +629,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getUomGroupist(String? code) {
-    print("filter2"+code.toString());
+    print("filter2" + code.toString());
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
         () async => remoteDataSource.getUomGroupist(code));
   }
@@ -632,9 +689,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getGroupListList(String? code) {
+      getGroupListList(String? code, {String? type}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getGroupListList(code));
+        () async => remoteDataSource.getGroupListList(code, type: type));
   }
 
   @override
@@ -661,9 +718,10 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getUomist(
-      String? code) {
+      String? code,
+      {String? type}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getUomist(code));
+        () async => remoteDataSource.getUomist(code, type: type));
   }
 
   @override
@@ -689,5 +747,149 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       getItemListList(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
         () async => remoteDataSource.getItemListList(code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreateItem(
+      ItemCreationModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postCreateItem(model));
+  }
+
+  @override
+  Future<Either<Failure, ItemReadModel>> getItemRead(int? id) {
+    return repoExecute<ItemReadModel>(() async => remoteDataSource.getItemRead(
+          id,
+        ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postItemPatch(
+      ItemReadModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postItemPatch(
+              model,
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantList(String? code, {String? type}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getVariantList(code, type: type));
+  }
+
+  @override
+  Future<Either<Failure, VariantReadModel>> getVariantRead(int? id) {
+    return repoExecute<VariantReadModel>(
+        () async => remoteDataSource.getVariantRead(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getSalesList(
+      String? code,
+      {String? type,
+      int? id}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getSalesList(code, type: type, id: id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      searchVariantList(String? code, {String? type, int? id}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.searchVariantList(code, type: type));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postVariant(
+      VariantPost model, int? id) {
+    return repoExecute<DoubleResponse>(() async => remoteDataSource.postVariant(
+          model,
+          id,
+        ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchVariant(
+      VariantPatch model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.patchVariant(
+              model,
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantCreationList(String? code) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getVariantCreationList(code));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getVariantSelectionList(String? code, int item) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getVariantSelectionList(code, item));
+  }
+
+  @override
+  Future<Either<Failure, VariantCreationReadModel>> getVariantCreationRead(
+      int? id) {
+    return repoExecute<VariantCreationReadModel>(
+        () async => remoteDataSource.getVariantCreationRead(id));
+  }
+
+  @override
+  Future<Either<Failure, List<VariantCreationRead2Model>>>
+      getVariantCreationRead2(String? id) {
+    return repoExecute<List<VariantCreationRead2Model>>(
+        () async => remoteDataSource.getVariantCreationRead2(id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
+      getChannelTypeList(String? code, String type) {
+    return repoExecute<PaginatedResponse<List<ChannelTypeModel>>>(
+        () async => remoteDataSource.getChannelTypeList(code, type));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
+      getChannelFilterList(String code, String id, String option) {
+    return repoExecute<PaginatedResponse<List<ChannelTypeModel>>>(
+        () async => remoteDataSource.getChannelFilterList(code, id, option));
+  }
+
+  @override
+  Future<Either<Failure, StockReadModel>> getStockRead(int? id) {
+    return repoExecute<StockReadModel>(
+        () async => remoteDataSource.getStockRead(id));
+  }
+
+  @override
+  Future<Either<Failure, List<StockTableReadModel>>> getStockTableRead(
+      String? code) {
+    return repoExecute<List<StockTableReadModel>>(
+        () async => remoteDataSource.getStockTableRead(code));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<StockVerticalReadModel>>>>
+      getStockList(String? code) {
+    return repoExecute<PaginatedResponse<List<StockVerticalReadModel>>>(
+        () async => remoteDataSource.getStockList(code));
+  }
+
+  @override
+  Future<Either<Failure, List<Category>>> getChannelRead(int? id) {
+    return repoExecute<List<Category>>(
+        () async => remoteDataSource.getChannelRead(
+              id,
+            ));
   }
 }

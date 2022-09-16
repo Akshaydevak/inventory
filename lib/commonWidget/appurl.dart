@@ -3,7 +3,7 @@ const stagingUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryBaseUrl = "http://65.1.61.201:8112/";
 const inventoryBaseUrl =
-    "http://api-inventory-software-staging.rgcdynamics.org/";
+    "https://api-inventory-software-staging.rgcdynamics.org/";
 
 const purchasereturnBaseUrl = "http://invtry-purchase-return.rgcdynamics.org/";
 const salesOrderBaseUrl = "https://invtry-sales-order-staging.rgcdynamics.org/";
@@ -135,6 +135,10 @@ const patchUomGroupApi =
     inventoryBaseUrl + "inventory-product/patch-uom-group/";
 const listCategoryGroupApi =
     inventoryBaseUrl + "inventory-product/list-category-by-division/";
+const listMaterialGroupApi =
+    inventoryBaseUrl + "inventory-product/list-material";
+const listDevisionApi = inventoryBaseUrl + "inventory-product/list-division";
+const listBrandApi = inventoryBaseUrl + "inventory-product/list-brand";
 const listCategoryAllGroupApi =
     inventoryBaseUrl + "inventory-product/list-category";
 const createCategoryGroupApi =
@@ -148,15 +152,51 @@ const listSubCategoryGroupApi =
 const createGroupApi = inventoryBaseUrl + "inventory-product/create-group";
 const listGroupApi =
     inventoryBaseUrl + "inventory-product/list-group-by-category/";
+const listAllGroupApi = inventoryBaseUrl + "inventory-product/list-group";
+
 const readGroupApi = inventoryBaseUrl + "inventory-product/patch-group/";
 const deleteGroupApi = inventoryBaseUrl + "inventory-product/patch-group/";
 const patchGroupApi = inventoryBaseUrl + "inventory-product/patch-group/";
 const createBaseUomGroupApi = inventoryBaseUrl + "inventory-product/create-uom";
 const listBaseUomGroupApi =
     inventoryBaseUrl + "inventory-product/list-uom-by-uom-grp/";
+const listBaseAllUomGroupApi = inventoryBaseUrl + "inventory-product/list-uom";
 const readBaseUomGroupApi = inventoryBaseUrl + "inventory-product/patch-uom/";
 
-
 //item creation
-const listItemVerticalListApi = inventoryBaseUrl + "inventory-product/list-item ";
+const listItemVerticalListApi =
+    inventoryBaseUrl + "inventory-product/list-item";
+const createItemApi = inventoryBaseUrl + "inventory-product/create-item";
+const readItemApi = inventoryBaseUrl + "inventory-product/read-item/";
+//variant detail page
+const listVariantApi =
+    inventoryBaseUrl + "inventory-product/list-variant-by-inventory/";
+const readVariantApi = inventoryBaseUrl + "inventory-product/read-variant/";
+const salesListApi = inventoryBaseUrl +
+    "inventory-product/list-sales-or-purchase-uom-by-base-uom/";
+const variantSearchListApi =
+    inventoryBaseUrl + "inventory-product/list-variants";
+const variantCreatetApi =
+    inventoryBaseUrl + "inventory-product/create-variant-new/";
+const variantPatchApi =
+    "http://192.168.1.5:8000/" + "inventory-product/variant-update/";
+//variant creation Apisssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const variantCreationListApi = inventoryBaseUrl + "inventory-product/list-item";
+const variantCreationSearchListApi =
+    inventoryBaseUrl + "inventory-product/list-variant-by-inventory-by-item/";
 
+const variantCreationReadApi =
+    inventoryBaseUrl + "inventory-product/read-item-for-variant/";
+const variantCreation2ReadApi = inventoryBaseUrl +
+    "inventory-product/read-variant-framework-for-variant-creation/";
+
+//channel Allocation
+const channelTypeReadApi = inventoryBaseUrl +
+    "inventory-product/list-variant-or-group?inventory_id=test&selection_type=";
+const channelFilterReadApi =
+    inventoryBaseUrl + "inventory-stock/filter-in-channel-allocation";
+//stock
+const stockReadApi = inventoryBaseUrl + "inventory-stock/read-variant/";
+const stockTableReadApi = stagingUrl + "purchase-order/get-invoice-lines-by-variant";
+const stockVerticalReadApi ="https://api-rgc-organization.hilalcart.com/channel/list-categories/";
+const stockVerticalListReadApi ="https://api-rgc-organization.hilalcart.com/channel/list-channels-categories/";

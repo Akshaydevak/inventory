@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/purchaseRecieving_cubits/cubit/purchasegenerating_cubit.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +18,12 @@ import 'Screens/heirarchy/general/cubits/listStatic/liststatic_cubit.dart';
 import 'Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import 'Screens/heirarchy/general/cubits/material/material_list_cubit.dart';
 import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
+
 import 'Screens/logi/login.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
+import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
+import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
 import 'cubits/cubit/cubit/cubit/cubit/vendor_details_cubit/vendordetails_cubit.dart';
@@ -98,6 +102,14 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ItemcreationListCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ListvraiantCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ListvariantCubit(),
+        ), BlocProvider(
+          create: (context) => StockverticalCubit(),
         ),
 
 

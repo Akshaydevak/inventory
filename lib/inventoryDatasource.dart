@@ -197,8 +197,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("in" + inventory.toString());
 
     String path = inventory == "" || inventory == null
-        ? "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
-        : "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-variant-by-inventory/$inventory";
+        ? inventoryBaseUrl+"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
+        :inventoryBaseUrl+ "inventory-product/list-variant-by-inventory/$inventory";
     print("sssssssssssssssAkshay"+path);
   // try{
   //   print("aaanananana");
@@ -256,7 +256,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/read-variant-for-lpo/$id";
+        inventoryBaseUrl+"inventory-product/read-variant-for-lpo/$id";
     print(path);
     try {
       final response = await client.get(
@@ -309,7 +309,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? id, String? invdendotyId) async {
     print("Avalkkayi");
     String path =
-        "http://api-inventory-software-staging.rgcdynamics.org/inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
+        inventoryBaseUrl+"inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
     print(path);
 
     try {

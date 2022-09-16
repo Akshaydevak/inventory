@@ -5,7 +5,9 @@ import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/base
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomread/readbaseuom_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/branddelete/branddelete_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/brandread/brandread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/createbrand/createbrand_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/createcategory/createcategory_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/divisioncreate/divisioncreate_cubit.dart';
@@ -21,6 +23,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/materialcreation/mate
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgroupread/uomgroupread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
+import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categoryread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
@@ -521,6 +524,22 @@ class ConfigurePopup extends StatelessWidget {
           );
         }
         break;
+      case "brand-group":
+        {
+          data = CreateBrandPopUp(
+            type: type,
+          );
+        }
+        break;
+      case "patchbrand-group":
+        {
+          data = PatchBrandPopUp(
+            type: type,
+          );
+        }
+        break;
+
+
       case "patchUom-group":
         {
           data = PatchMaterialPopUp(
@@ -545,6 +564,16 @@ class ConfigurePopup extends StatelessWidget {
     );
     }
     break;
+      case "StaticPatch-group":
+        {
+          data = PatchStaticPopUp(
+            type: type,
+          );
+        }
+        break;
+
+
+
       case "uomgroup":
         {
           data = UomGroupCreatePopUp(
@@ -572,6 +601,14 @@ class ConfigurePopup extends StatelessWidget {
       case "Group_PopUp":
         {
           data = GroupPopUp(
+            type: type,
+          );
+        }
+        break;
+      case "GroupPatch_PopUp":
+        {
+          data = GroupPatchPopUp
+            (
             type: type,
           );
         }
@@ -614,6 +651,749 @@ class ConfigurePopup extends StatelessWidget {
 
 
     return data;
+  }
+}
+
+
+//create brand
+class CreateBrandPopUp extends StatefulWidget {
+  final String type;
+  // final Function onTap;
+  // final TextEditingController country;
+  // final TextEditingController gender;
+  // final TextEditingController accesssite;
+  // final TextEditingController buisnessuser;
+  // final TextEditingController taxid;
+  // final TextEditingController buisnessmode;
+  // final TextEditingController buisnessname;
+  // final TextEditingController designation;
+  // final Function ontap;
+
+  CreateBrandPopUp({
+    Key? key,
+    required this.type
+    // required this.onTap,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _CreateBrandPopUpState createState() => _CreateBrandPopUpState();
+}
+
+class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
+  bool active = false;
+  bool additionalWarranty = false;
+  bool extendedWarranty = false;
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  BrandReadModel? group;
+  int? veritiaclid=0;
+  TextEditingController codeController=TextEditingController();
+  TextEditingController nameController=  TextEditingController();
+
+  TextEditingController imageController=TextEditingController();
+  TextEditingController parentIdController=TextEditingController();
+  TextEditingController descriptionController=TextEditingController();
+  TextEditingController brandIdentifierUrl=TextEditingController();
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+
+  TextEditingController controller=TextEditingController();
+  bool addNew = false;
+  void changeAddNew(bool va) => addNew = va;
+
+  void initState() {
+    context
+        .read<Listbrand2Cubit>()
+        .getSlotSectionPage();
+
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+        BlocProvider(
+          create: (context) => CreatebrandCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<CreatebrandCubit, CreatebrandState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+                BlocListener<ImagepostCubit, ImagepostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        print("dataAkshay"+data.data2.toString());
+                        imageController.text=data.data2.toString();
+                        // context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        // context.showSnackBarError(data.data2);
+                        // print(data.data1.toString());
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+              ],
+              child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        setState(() {
+                          if(result.isNotEmpty){
+                            veritiaclid=result[0].id;
+                            Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        addNew: false,
+                        buttonCheck: true,
+                        isDirectCreate: true,
+
+                        // buttonCheck: true,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        label: "Create Brand",
+                        onApply: () {
+                          BrandCreationtModel model=BrandCreationtModel(
+                            name: nameController?.text??"",
+                            description: descriptionController?.text??"",
+                            image:int.tryParse( imageController.text),
+                            brandIdentifierUrl: brandIdentifierUrl?.text??"",
+                            parentCode: parentIdController.text??"",
+                          );
+
+                          context
+                              .read<CreatebrandCubit>()
+                              .postCreateBrand(model);
+                          setState(() {
+
+                          });
+                        },
+                        onEdit: () {
+
+
+                        },
+                        onCancel: (){
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+                                Expanded(child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController, title: "Code"),
+                                  SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:nameController ,
+                                      title: "Name",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    FileUploadField(
+
+                                        fileName: imageName,
+                                        fileUrl:imageName,
+                                        onChangeTap: (p0) {
+                                          // loading = true;
+                                          setState(() {});
+                                        },
+                                        onChange: (myFile) {
+
+                                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                          imageEncode =
+                                              myFile.toBase64();
+                                          // widget.fileMobileNameCtrl.text =
+                                          //     myFile.fileName ?? "";
+                                          // if (Variable.bannerimage!.length <= 240000)
+                                          context
+                                              .read<ImagepostCubit>().postImage(imageName,  imageEncode);
+                                          // else
+                                          //   context.showSnackBarError(
+                                          //       "Please upload Banner of size Lesser than 230kb");
+                                        },
+                                        onImageChange: (newFile) async {
+                                          onChange=true;
+                                          // Variable.popUp = false;
+
+                                          if (newFile.length <= 240000) {
+                                            // loading
+                                            //     ? showDailogPopUp(context, DialoguePopUp())
+                                            //     : Navigator.pop(context);
+                                            // context
+                                            //     .read<CreateWebImageCubit>()
+                                            //     .createMobImage();
+                                          } else
+                                            context.showSnackBarError(
+                                                "Please upload Banner of size Lesser than 230kb");
+                                          setState(() {});
+                                        },
+                                        onCreate: true,
+                                        label: "Image"),
+
+
+
+                                  ],
+                                )),
+
+                                Expanded(child:   Column(
+                                  children: [
+
+                                    SelectableDropDownpopUp(
+                                      label: "Parent Id",
+                                      // row: true,
+
+                                      type:"BrandPopUpCall",
+                                      value:parentName,
+                                      enable: true,
+                                      onSelection: (BrandListModel? va) {
+                                        setState(() {
+                                          onChange=true;
+                                          parentName=va?.name??"";
+                                          parentIdController.text=va?.code??"";
+
+
+
+
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:descriptionController,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:brandIdentifierUrl ,
+                                      title: "Brand identifier URL",
+                                    ),
+
+
+                                  ],
+                                )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+//patch brand
+
+class PatchBrandPopUp extends StatefulWidget {
+  final String type;
+  // final Function onTap;
+  // final TextEditingController country;
+  // final TextEditingController gender;
+  // final TextEditingController accesssite;
+  // final TextEditingController buisnessuser;
+  // final TextEditingController taxid;
+  // final TextEditingController buisnessmode;
+  // final TextEditingController buisnessname;
+  // final TextEditingController designation;
+  // final Function ontap;
+
+  PatchBrandPopUp({
+    Key? key,
+    required this.type
+    // required this.onTap,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _PatchBrandPopUpState createState() => _PatchBrandPopUpState();
+}
+
+class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
+  bool active = false;
+  bool additionalWarranty = false;
+  bool extendedWarranty = false;
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  BrandReadModel? group;
+  int? veritiaclid=0;
+  TextEditingController codeController=TextEditingController();
+  TextEditingController nameController=  TextEditingController();
+
+  TextEditingController imageController=TextEditingController();
+  TextEditingController parentIdController=TextEditingController();
+  TextEditingController descriptionController=TextEditingController();
+  TextEditingController brandIdentifierUrl=TextEditingController();
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+
+  TextEditingController controller=TextEditingController();
+  bool addNew = false;
+  void changeAddNew(bool va) => addNew = va;
+
+  void initState() {
+    context
+        .read<Listbrand2Cubit>()
+        .getSlotSectionPage();
+
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BrandreadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => BranddeleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CreatebrandCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<CreatebrandCubit, CreatebrandState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+                BlocListener<BrandreadCubit, BrandreadState>(
+                  listener: (context, state) {
+                    print("nnnnop"+state.toString());
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            group=data;
+                            codeController.text=data.code??"";
+                            nameController.text=data.name??"";
+
+                            imageController.text=data.image??"";
+                            parentIdController.text=data.parentCode??"";
+                            descriptionController.text=data.description??"";
+                            brandIdentifierUrl.text=data.brandIdentifierUrl??"";
+                            parentName=data.parentCode??"";
+                            active=data.isActive??false;
+
+                          });
+                        });
+
+
+
+                  },
+                ),
+                BlocListener<BranddeleteCubit, BranddeleteState>(
+                  listener: (context, state) {
+
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      print("checkingdata"+data.data1.toString());
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        context
+                            .read<Listbrand2Cubit>()
+                            .getSlotSectionPage();
+
+
+                        // select = true;
+                      }
+
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+                BlocListener<ImagepostCubit, ImagepostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        print("dataAkshay"+data.data2.toString());
+                        imageController.text=data.data2.toString();
+                        // context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        // context.showSnackBarError(data.data2);
+                        // print(data.data1.toString());
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+              ],
+              child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        setState(() {
+                          if(result.isNotEmpty){
+                            veritiaclid=result[0].id;
+                            Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        addNew: false,
+
+                        // buttonCheck: true,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        label: "Create Brand",
+                        onApply: () {
+
+                        },
+                        onEdit: () {
+                          BrandCreationtModel model=BrandCreationtModel(
+                            parentCode: parentIdController?.text??"",
+                            name: nameController.text??"",
+                            brandIdentifierUrl: brandIdentifierUrl.text??"",
+                            image:int.tryParse( imageController.text),
+                            description: descriptionController.text,
+                            isActive: active,
+
+
+                          );
+                          print(model);
+                          context.read<CreatebrandCubit>().postBrandPatch(veritiaclid!,model);
+
+
+                        },
+                        onCancel: (){
+                          context
+                              .read<BranddeleteCubit>()
+                              .brandDelete(veritiaclid);
+
+                        },
+
+                        onAddNew: (v) {
+                          // print("Akshay"+v.toString());
+                          // changeAddNew(v);
+                          // setState(() {});
+                          //
+                          // setState(() {});
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                BrandVerticalList(
+
+                                  selectedVertical: selectedVertical,
+                                  itemsearch: itemsearch,ontap: (int index){
+                                  setState(() {
+                                    selectedVertical=index;
+                                    // select=false;
+                                    // updateCheck=false;
+
+
+                                    veritiaclid = result[index].id;
+                                    context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
+
+
+                                    setState(() {
+
+                                    });
+                                  });
+                                },result: result,
+                                ),
+                                Expanded(child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController, title: "Code"),
+                                    gapWidthColumn(),
+                                    NewInputCard(
+                                      controller:nameController ,
+                                      title: "Name",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    FileUploadField(
+
+                                        fileName: imageName,
+                                        fileUrl:imageName,
+                                        onChangeTap: (p0) {
+                                          // loading = true;
+                                          setState(() {});
+                                        },
+                                        onChange: (myFile) {
+                                          onChange=true;
+                                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                          imageEncode =
+                                              myFile.toBase64();
+                                          // widget.fileMobileNameCtrl.text =
+                                          //     myFile.fileName ?? "";
+                                          // if (Variable.bannerimage!.length <= 240000)
+                                          context
+                                              .read<ImagepostCubit>().postImage(imageName,  imageEncode);
+                                          // else
+                                          //   context.showSnackBarError(
+                                          //       "Please upload Banner of size Lesser than 230kb");
+                                        },
+                                        onImageChange: (newFile) async {
+                                          onChange=true;
+                                          // Variable.popUp = false;
+
+                                          if (newFile.length <= 240000) {
+                                            // loading
+                                            //     ? showDailogPopUp(context, DialoguePopUp())
+                                            //     : Navigator.pop(context);
+                                            // context
+                                            //     .read<CreateWebImageCubit>()
+                                            //     .createMobImage();
+                                          } else
+                                            context.showSnackBarError(
+                                                "Please upload Banner of size Lesser than 230kb");
+                                          setState(() {});
+                                        },
+                                        onCreate: true,
+                                        label: "Image"),
+
+
+
+                                  ],
+                                )),
+
+                                Expanded(child:   Column(
+                                  children: [
+
+                                    SelectableDropDownpopUp(
+                                      label: "Parent Id",
+                                      // row: true,
+
+                                      type:"BrandPopUpCall",
+                                      value:parentName,
+                                      enable: true,
+                                      onSelection: (BrandListModel? va) {
+                                        setState(() {
+                                          parentName=va?.name??"";
+                                          parentIdController.text=va?.code??"";
+
+
+
+
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:descriptionController,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:brandIdentifierUrl ,
+                                      title: "Brand identifier URL",
+                                    ),
+
+
+                                  ],
+                                )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
   }
 }
 
@@ -958,6 +1738,9 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
     );
   }
 }
+
+
+
 
 // patch material
 class PatchMaterialPopUp extends StatefulWidget {
@@ -2704,6 +3487,8 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
 
 
 
+//static creation+++++++++++++++++++++++++++++++++++++
+
 class CreateStaticPopUp extends StatefulWidget {
   final String type;
 
@@ -2721,6 +3506,332 @@ class CreateStaticPopUp extends StatefulWidget {
 }
 
 class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  DevisionReadModel? group;
+  int? veritiaclid=0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+  bool changer=false;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController searchNamecontroller=TextEditingController();
+  TextEditingController imageContollercontroller=TextEditingController();
+  TextEditingController displayContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=false;
+  }
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => DivisioncreateCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+
+                BlocListener<ImagepostCubit, ImagepostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        print("dataAkshay"+data.data2.toString());
+                        imageContollercontroller.text=data.data2.toString();
+
+                        // context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        // context.showSnackBarError(data.data2);
+                        // print(data.data1.toString());
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+                BlocListener<DivisioncreateCubit, DivisioncreateState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                      Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<ListstaticCubit, ListstaticState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+
+                            veritiaclid=result[0].id;
+                            // Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                          buttonCheck: true,
+                        isDirectCreate: true,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Create Static Group",
+                        onApply: () {
+                          print("save");
+                          MaterialCreationtModel model=MaterialCreationtModel(
+
+                            description: descriptionContollercontroller?.text??"",
+                            image:int.tryParse(imageContollercontroller.text),
+                            searchNmae: searchNamecontroller?.text??"",
+                            name: namecontroller?.text??"",
+                          );
+
+                          context.read<DivisioncreateCubit>().postCreateDevision(model,"static");
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+
+                        },
+                        onCancel: (){
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+
+
+
+                                Expanded(child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController, title: "Code"),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:namecontroller ,
+                                      title: "Name",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    NewInputCard(
+                                      controller:searchNamecontroller ,
+                                      title: "Search Name",
+                                    ),
+                                  ],
+                                )),
+
+                                Expanded(child:   Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller:descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(height: 10,),
+                                    FileUploadField(
+
+                                        fileName: imageName,
+                                        fileUrl:imageName,
+                                        onChangeTap: (p0) {
+                                          onChange=true;
+                                          // loading = true;
+                                          setState(() {});
+                                        },
+                                        onChange: (myFile) {
+                                          onChange=true;
+                                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                          imageEncode =
+                                              myFile.toBase64();
+                                          // widget.fileMobileNameCtrl.text =
+                                          //     myFile.fileName ?? "";
+                                          // if (Variable.bannerimage!.length <= 240000)
+                                          print("imabbabba"+Variable.imageName.toString());
+                                          context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
+                                          // else
+                                          //   context.showSnackBarError(
+                                          //       "Please upload Banner of size Lesser than 230kb");
+                                        },
+                                        onImageChange: (newFile) async {
+                                          onChange=true;
+                                          // Variable.popUp = false;
+
+                                          if (newFile.length <= 240000) {
+                                            // loading
+                                            //     ? showDailogPopUp(context, DialoguePopUp())
+                                            //     : Navigator.pop(context);
+                                            // context
+                                            //     .read<CreateWebImageCubit>()
+                                            //     .createMobImage();
+                                          } else
+                                            context.showSnackBarError(
+                                                "Please upload Banner of size Lesser than 230kb");
+                                          setState(() {});
+                                        },
+                                        onCreate: true,
+                                        label: "Image"),
+
+
+                                    SizedBox(height: 10,),
+                                    PopUpSwitchTile(
+                                        value: active??false,
+                                        title: "isActive",
+                                        onClick: (gg) {
+                                          onChange=true;
+                                          if(!addNew)
+                                            active=!active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+
+
+
+
+
+
+                                  ],
+                                )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+class PatchStaticPopUp extends StatefulWidget {
+  final String type;
+
+
+  PatchStaticPopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _PatchStaticPopUpState createState() => _PatchStaticPopUpState();
+}
+
+class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
   bool? active = false;
 
   bool onChange = false;
@@ -2925,6 +4036,8 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                     return AlertDialog(
                       content: PopUpHeader(
                         functionChane: true,
+                        buttonCheck: true,
+
                         onTap: () { addNew=!addNew;
                         setState(() {
 
@@ -2935,18 +4048,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
 
                         label: "Create Static Group",
                         onApply: () {
-                          print("save");
-                          MaterialCreationtModel model=MaterialCreationtModel(
 
-                              description: descriptionContollercontroller?.text??"",
-                              image:int.tryParse(imageContollercontroller.text),
-                              searchNmae: searchNamecontroller?.text??"",
-                              name: namecontroller?.text??"",
-                          );
-
-                          context.read<DivisioncreateCubit>().postCreateDevision(model,"static");
-
-                          // widget.onTap();
 
                         },
                         onEdit: () {
@@ -2969,11 +4071,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                         },
 
                         onAddNew: (v) {
-                          print("Akshay"+v.toString());
-                          changeAddNew(v);
-                          setState(() {});
 
-                          setState(() {});
                         },
                         dataField: Expanded(
                           // height: MediaQuery.of(context).size.height * .6,
@@ -3115,6 +4213,421 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
     );
   }
 }
+
+// class CreateStaticPopUp extends StatefulWidget {
+//   final String type;
+//
+//
+//   CreateStaticPopUp({
+//     Key? key,
+//     required this.type,
+//
+//
+//
+//   }) : super(key: key);
+//
+//   @override
+//   _CreateStaticPopUpState createState() => _CreateStaticPopUpState();
+// }
+//
+// class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
+//   bool? active = false;
+//
+//   bool onChange = false;
+//   bool onChangeWarranty = false;
+//   bool onChangeExtWarranty = false;
+//   String imageName="";
+//   String imageEncode="";
+//   int selectedVertical=0;
+//   DevisionReadModel? group;
+//   int? veritiaclid=0;
+//   List<BrandListModel> result = [];
+//   TextEditingController itemsearch = TextEditingController();
+//   String parentName="";
+//   bool changer=false;
+//
+//   TextEditingController codeController=TextEditingController();
+//   TextEditingController namecontroller=TextEditingController();
+//   TextEditingController searchNamecontroller=TextEditingController();
+//   TextEditingController imageContollercontroller=TextEditingController();
+//   TextEditingController displayContollercontroller=TextEditingController();
+//   TextEditingController descriptionContollercontroller=TextEditingController();
+//   bool addNew = false;
+//
+//   final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+//   void changeAddNew(bool va) { addNew = va;
+//   onChange=false;
+//   }
+//   void initState() {
+//     context.read<ListstaticCubit>().getStaticList();
+//     super.initState();
+//   }
+//   @override
+//   Widget build(BuildContext context) {
+//
+//     // descriptionController = TextEditingController(
+//     //     text: widget.warranty?[widget.indexValue!].description == null
+//     //         ? ""
+//     //         : widget.warranty?[widget.indexValue!].description);
+//     // durationController = TextEditingController(
+//     //     text: widget.warranty?[widget.indexValue!].duration == null
+//     //         ? ""
+//     //         : widget.warranty?[widget.indexValue!].duration.toString());
+//     return MultiBlocProvider(
+//       providers: [
+//         BlocProvider(
+//           create: (context) => DivisionreadCubit(),
+//         ),
+//         BlocProvider(
+//           create: (context) => MaterialdeleteCubit(),
+//         ),
+//         BlocProvider(
+//           create: (context) => DivisioncreateCubit(),
+//         ),
+//
+//       ],
+//       child: Builder(
+//           builder: (context) {
+//             return MultiBlocListener(
+//               listeners: [
+//
+//                 BlocListener<ImagepostCubit, ImagepostState>(
+//                   listener: (context, state) {
+//                     print("postssssssss" + state.toString());
+//                     state.maybeWhen(orElse: () {
+//                       // context.
+//
+//                     }, error: () {
+//                       context.showSnackBarError(Variable.errorMessege);
+//                     }, success: (data) {
+//                       if (data.data1) {
+//                         print("dataAkshay"+data.data2.toString());
+//                         imageContollercontroller.text=data.data2.toString();
+//
+//                         // context.showSnackBarSuccess(data.data2);
+//
+//                       }
+//                       else {
+//                         // context.showSnackBarError(data.data2);
+//                         // print(data.data1.toString());
+//                       }
+//                       ;
+//                     });
+//                   },
+//                 ),
+//                 BlocListener<DivisionreadCubit, DivisionreadState>(
+//                   listener: (context, state) {
+//                     print("nnnnop"+state.toString());
+//                     state.maybeWhen(
+//                         orElse: () {},
+//                         error: () {
+//                           print("error");
+//                         },
+//                         success: (data) {
+//                           setState(() {
+//                             group=data;
+//                             codeController.text=data.code??"";
+//                             namecontroller.text=data.name??"";
+//                             imageContollercontroller.text=data.image??"";
+//                             descriptionContollercontroller.text=data.description??"";
+//                             searchNamecontroller.text=data.searchNmae??"";
+//
+//                             active=data.isActive??false;
+//
+//                           });
+//                         });
+//
+//
+//
+//                   },
+//                 ),
+//                 BlocListener<DivisioncreateCubit, DivisioncreateState>(
+//                   listener: (context, state) {
+//                     print("postssssssss" + state.toString());
+//                     state.maybeWhen(orElse: () {
+//                       // context.
+//                       context.showSnackBarError("Loading");
+//                     }, error: () {
+//                       context.showSnackBarError(Variable.errorMessege);
+//                     }, success: (data) {
+//
+//                       if (data.data1) {
+//                         context.showSnackBarSuccess(data.data2);
+//                         context
+//                             .read<DevisionListCubit>()
+//                             .getDevisionList();
+//                         setState(() {
+//
+//                         });
+//
+//                       }
+//                       else {
+//                         context.showSnackBarError(data.data2);
+//                         print(data.data1);
+//                       }
+//                       ;
+//                     });
+//                   },
+//                 ),
+//                 BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+//                   listener: (context, state) {
+//                     print("delete" + state.toString());
+//                     state.maybeWhen(orElse: () {
+//                       // context.
+//                       context.showSnackBarError("Loading");
+//                     }, error: () {
+//                       context.showSnackBarError(Variable.errorMessege);
+//                     }, success: (data) {
+//                       if (data.data1) {
+//                         context.showSnackBarSuccess(data.data2);
+//
+//                       }
+//                       else {
+//                         context.showSnackBarError(data.data2);
+//                         print(data.data1);
+//                       }
+//                       ;
+//                     });
+//                   },
+//                 ),
+//
+//
+//               ],
+//               child: BlocConsumer<ListstaticCubit, ListstaticState>(
+//                 listener: (context, state) {
+//                   print("state"+state.toString());
+//                   state.maybeWhen(
+//                       orElse: () {},
+//                       error: () {
+//                         print("error");
+//                       },
+//                       success: (list) {
+//                         print("aaaaayyyiram"+list.data.toString());
+//
+//                         result = list.data;
+//                         print("seee"+result.toString());
+//                         setState(() {
+//                           if(result.isNotEmpty){
+//
+//                             veritiaclid=result[0].id;
+//                             // Variable.verticalid=result[0].id;
+//                             print("Variable.ak"+Variable.verticalid.toString());
+//                             context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+//                           }
+//                           else{
+//                             print("common");
+//                             // select=true;
+//                             setState(() {
+//                             });
+//
+//                           }
+//
+//
+//                           setState(() {});
+//
+//                         });
+//                       });
+//                 },
+//                 builder: (context, state) {
+//                   return Builder(builder: (context) {
+//
+//
+//                     return AlertDialog(
+//                       content: PopUpHeader(
+//                         functionChane: true,
+//                         onTap: () { addNew=!addNew;
+//                         setState(() {
+//
+//                         });},
+//                         key: _myWidgetState,
+//                         addNew: addNew,
+//                         // isDirectCreate:changer,
+//
+//                         label: "Create Static Group",
+//                         onApply: () {
+//                           print("save");
+//                           MaterialCreationtModel model=MaterialCreationtModel(
+//
+//                               description: descriptionContollercontroller?.text??"",
+//                               image:int.tryParse(imageContollercontroller.text),
+//                               searchNmae: searchNamecontroller?.text??"",
+//                               name: namecontroller?.text??"",
+//                           );
+//
+//                           context.read<DivisioncreateCubit>().postCreateDevision(model,"static");
+//
+//                           // widget.onTap();
+//
+//                         },
+//                         onEdit: () {
+//                           DevisionReadModel model=DevisionReadModel(
+//                             name: namecontroller?.text??"",
+//                             image:imageContollercontroller?.text??"",
+//
+//                             description: descriptionContollercontroller?.text??"",
+//                             searchNmae: searchNamecontroller?.text??"",
+//                             isActive: active,
+//                           );
+//                           print("Rijina"+model.toString());
+//                           context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"static");
+//                         },
+//                         onCancel: (){
+//                           context
+//                               .read<MaterialdeleteCubit>()
+//                               .materialDelete(veritiaclid,"static");
+//
+//                         },
+//
+//                         onAddNew: (v) {
+//                           print("Akshay"+v.toString());
+//                           changeAddNew(v);
+//                           setState(() {});
+//
+//                           setState(() {});
+//                         },
+//                         dataField: Expanded(
+//                           // height: MediaQuery.of(context).size.height * .6,
+//                           child: IntrinsicHeight(
+//                             child: Row(
+//                               mainAxisAlignment: MainAxisAlignment.start,
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//
+//                                 StaticVerticalList(
+//                                   type: "static",
+//
+//                                   selectedVertical: selectedVertical,
+//                                   itemsearch: itemsearch,ontap: (int index){
+//                                   setState(() {
+//                                     selectedVertical=index;
+//                                     addNew=false;
+//                                     // select=false;
+//                                     // updateCheck=false;
+//
+//
+//                                     veritiaclid = result[index].id;
+//                                     changer=true;
+//
+//                                     context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+//
+//
+//
+//
+//                                     setState(() {
+//
+//                                     });
+//                                   });
+//                                 },result: result,
+//                                 ),
+//
+//                                 Expanded(child: Column(
+//                                   children: [
+//                                     NewInputCard(
+//                                         readOnly: true,
+//                                         controller: codeController, title: "Code"),
+//                                     gapWidthColumn(),
+//                                     NewInputCard(
+//                                       controller:namecontroller ,
+//                                       title: "Name",
+//                                     ),
+//                                     gapWidthColumn(),
+//                                     NewInputCard(
+//                                       controller:searchNamecontroller ,
+//                                       title: "Search Name",
+//                                     ),
+//                                   ],
+//                                 )),
+//
+//                                 Expanded(child:   Column(
+//                                   children: [
+//                                     NewInputCard(
+//                                       controller:descriptionContollercontroller,
+//                                       title: "Description",
+//                                     ),
+//                                     SizedBox(height: 10,),
+//                                     FileUploadField(
+//
+//                                         fileName: imageName,
+//                                         fileUrl:imageName,
+//                                         onChangeTap: (p0) {
+//                                           onChange=true;
+//                                           // loading = true;
+//                                           setState(() {});
+//                                         },
+//                                         onChange: (myFile) {
+//                                           onChange=true;
+//                                           // Variable.mobileBannerImage = myFile.toUint8List();
+//
+//                                           imageEncode =
+//                                               myFile.toBase64();
+//                                           // widget.fileMobileNameCtrl.text =
+//                                           //     myFile.fileName ?? "";
+//                                           // if (Variable.bannerimage!.length <= 240000)
+//                                           print("imabbabba"+Variable.imageName.toString());
+//                                           context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
+//                                           // else
+//                                           //   context.showSnackBarError(
+//                                           //       "Please upload Banner of size Lesser than 230kb");
+//                                         },
+//                                         onImageChange: (newFile) async {
+//                                           onChange=true;
+//                                           // Variable.popUp = false;
+//
+//                                           if (newFile.length <= 240000) {
+//                                             // loading
+//                                             //     ? showDailogPopUp(context, DialoguePopUp())
+//                                             //     : Navigator.pop(context);
+//                                             // context
+//                                             //     .read<CreateWebImageCubit>()
+//                                             //     .createMobImage();
+//                                           } else
+//                                             context.showSnackBarError(
+//                                                 "Please upload Banner of size Lesser than 230kb");
+//                                           setState(() {});
+//                                         },
+//                                         onCreate: true,
+//                                         label: "Image"),
+//
+//
+//                                     SizedBox(height: 10,),
+//                                     PopUpSwitchTile(
+//                                         value: active??false,
+//                                         title: "isActive",
+//                                         onClick: (gg) {
+//                                           onChange=true;
+//                                           if(!addNew)
+//                                             active=!active!;
+//
+//                                           // extendedWarranty = gg;
+//                                           // widget.changeExtendedWarranty(gg);
+//                                           // onChangeExtWarranty = gg;
+//                                           setState(() {});
+//                                         }),
+//
+//
+//
+//
+//
+//                                   ],
+//                                 )),
+//                               ],
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     );
+//                   });
+//                 },
+//               ),
+//             );
+//           }
+//       ),
+//     );
+//   }
+// }
+
+
+
 
 
 
@@ -4102,12 +5615,13 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                                     SizedBox(height: 10,),
 
                                     NewInputCard(
+                                      keyboardType: "int",
                                       controller:conversionfactorcontroller,
                                       title: "Conversion Factor",
                                     ),
                                     SizedBox(height: 10,),
                                     NewInputCard(
-                                      keyboardType: "int",
+
                                       controller:baseEquivalentcontroller,
                                       title: "Base Equivalent",
                                     ),
@@ -4199,7 +5713,7 @@ class _UomPopUpState extends State<UomPopUp> {
   onChange=false;
   }
   void initState() {
-    context.read<BaseuomlistCubit>().getUomist();
+    context.read<BaseuomlistCubit>().getUomist(type: "all");
     super.initState();
   }
   @override
@@ -5733,6 +7247,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                       title: "Name",
                                     ),
                                     SizedBox(height: 10,),
+
                                     FileUploadField(
 
                                         fileName: imageName,
@@ -5911,7 +7426,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
   onChange=false;
   }
   void initState() {
-    context.read<GrouplistCubit>().getGroupListList();
+    context.read<GrouplistCubit>().getGroupListList(type:"all");
     super.initState();
   }
   @override
@@ -6013,7 +7528,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
 
                       if (data.data1) {
                         context.showSnackBarSuccess(data.data2);
-                        context.read<GrouplistCubit>().getGroupListList();
+                        context.read<GrouplistCubit>().getGroupListList(type:"all");
                         setState(() {
 
                         });
@@ -6093,18 +7608,6 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                 builder: (context, state) {
                   return Builder(builder: (context) {
 
-                    if (!onChange) {
-                      print("onchange"+onChange.toString());
-                      namecontroller = TextEditingController(text: addNew ? "" : group?.name);
-                      codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
-                      displayNameContollercontroller = TextEditingController(text: addNew ? "" : group?.displayName.toString());
-                      categoryCodeController = TextEditingController(text: addNew ? "" : group?.categoryCode.toString());
-                      descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
-                      imageCodeController = TextEditingController(text: addNew ? "" : group?.image);
-
-                      active=addNew?true:group?.isActive;
-                    }
-                    onChange = false;
                     return AlertDialog(
                       content: PopUpHeader(
                         functionChane: true,
@@ -6113,6 +7616,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
 
                         });},
                         addNew: addNew,
+                        buttonCheck: true,
                         key: _myWidgetState,
                         // isDirectCreate: changer,
                         changer:changer,
@@ -6123,15 +7627,6 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                           print("save");
 
 
-                          MaterialCreationtModel model=MaterialCreationtModel(
-                              name: namecontroller?.text??"",
-                              searchNmae: searchNameContollercontroller?.text??"",
-                              description: descriptionContollercontroller?.text??"",
-                              image: int.tryParse(imageCodeController.text),
-                              displayName: displayNameContollercontroller?.text??"",
-                              categoryCode: categoryCodeController.text??""
-                          );
-                          context.read<GroupcreationCubit>().postCreateGroup(model!);
 
 
 
@@ -6157,11 +7652,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                         },
 
                         onAddNew: (v) {
-                          print("Akshay"+v.toString());
-                          changeAddNew(v);
-                          setState(() {});
 
-                          setState(() {});
                         },
                         dataField: Expanded(
                           // height: MediaQuery.of(context).size.height * .6,

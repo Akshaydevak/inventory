@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart'as http;
@@ -360,6 +361,48 @@ bool initialdatecheck=false;
    
   }
 }
+class underlineTextForm extends StatefulWidget {
+  final double h;
+  final double w;
+  final TextEditingController controller;
+  final Function onChange;
+  underlineTextForm({this.h=30,this.w=200,required this.controller,required this.onChange});
+
+  @override
+  _underlineTextFormState createState() => _underlineTextFormState();
+}
+
+class _underlineTextFormState extends State<underlineTextForm> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: widget.h,
+      width: widget.w,
+      margin: EdgeInsets.all(10),
+      child:  TextFormField(
+        style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),
+        cursorColor: Colors.black,
+        controller: widget.controller,
+        onChanged: (va){
+          widget.onChange(va);
+        },
+
+        decoration: new InputDecoration(
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            errorBorder: InputBorder.none,
+            disabledBorder: InputBorder.none,
+            contentPadding:
+            EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
+            hintText: ""),
+      ),
+    );
+  }
+}
+
+
+
 class UnderLinedInput extends StatefulWidget {
   //  final String label;
   // final bool required;
@@ -370,6 +413,7 @@ class UnderLinedInput extends StatefulWidget {
   final String ? last;
   final bool restricted;
   final String hintText;
+  final bool formatter;
   // final String? tileName;
   final int maxLines;
   final TextEditingController? controller;
@@ -381,13 +425,14 @@ class UnderLinedInput extends StatefulWidget {
       {Key? key,
         this.last="",
         this.enable = true,
-         this.initial='',
+        this.initial='',
         this.hintText = "",
         this.maxLines = 1,
         this.controller,
         this.onChanged,
         this.onComplete,
         this.initialCheck=false,
+        this.formatter= true,
 
         this.restricted = false,
         this.onClick})
@@ -414,7 +459,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
           Center(
             child: TextFormField(
 
-             initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
+              initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
               onTap: () {
                 if (widget.onClick != null) widget.onClick!();
               },
@@ -422,10 +467,11 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
 
               //controller: widget.controller,
               enabled: widget.enable,
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
+              keyboardType: widget.formatter? TextInputType.number:null ,
+              inputFormatters:widget.formatter?
+              <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
-              ],
+              ]:null,
               onEditingComplete: widget.onComplete,
               onChanged: widget.onChanged,
               decoration: InputDecoration(
@@ -446,18 +492,19 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             child: Center(
               child: TextFormField(
 
-               // initialValue:widget.last=="0"?"":widget.last,
+                // initialValue:widget.last=="0"?"":widget.last,
                 onTap: () {
                   if (widget.onClick != null) widget.onClick!();
                 },
                 maxLines: widget.maxLines,
 
-         controller: widget.controller,
+                controller: widget.controller,
                 enabled: widget.enable,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
+                keyboardType: widget.formatter? TextInputType.number:null ,
+              inputFormatters:widget.formatter?
+              <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ]:null,
                 onEditingComplete: widget.onComplete,
                 onChanged: widget.onChanged,
                 decoration: InputDecoration(
@@ -478,6 +525,129 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
     );
   }
 }
+// class UnderLinedInput extends StatefulWidget {
+//   //  final String label;
+//   // final bool required;
+//   final bool formatter;
+//   final VoidCallback? onClick;
+//   final bool enable;
+//   final TextInputType? type;
+//   final bool  initialCheck;
+//   final  String  initial;
+//   final String ? last;
+//   final bool restricted;
+//   final String hintText;
+//   // final String? tileName;
+//   final List<TextInputFormatter>? textFormat;
+//   final int maxLines;
+//   final TextEditingController? controller;
+//   final Function(String)? onChanged;
+//   final VoidCallback? onComplete;
+//   // final List<String>? items;
+//   const
+//   UnderLinedInput(
+//       {Key? key,
+//         this.last="",
+//         this.enable = true,
+//          this.initial='',
+//         this.hintText = "",
+//         this.maxLines = 1,
+//         this.type,
+//         this.controller,
+//         this.onChanged,
+//         this.onComplete,
+//         this.initialCheck=false,
+//
+//         this.restricted = false,
+//         this.onClick, this.formatter= true, this.textFormat})
+//       : super(key: key);
+//
+//   @override
+//   _UnderLinedInputState createState() => _UnderLinedInputState();
+// }
+//
+// class _UnderLinedInputState extends State<UnderLinedInput> {
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
+//
+//
+//     return Column(
+//       children: [
+//         Container(
+//
+//           alignment: Alignment.center,
+//           // color: Colors.grey.shade200,
+//           child:
+//           Center(
+//             child: TextFormField(
+//
+//              initialValue:widget.last=="0"||widget.last==null||widget.last=="null"?"":widget.last,
+//               onTap: () {
+//                 if (widget.onClick != null) widget.onClick!();
+//               },
+//               maxLines: widget.maxLines,
+//
+//               //controller: widget.controller,
+//               enabled: widget.enable,
+//               keyboardType:widget.formatter? TextInputType.number:null ,
+//               inputFormatters:widget.formatter?
+//               <TextInputFormatter>[
+//                 FilteringTextInputFormatter.digitsOnly
+//               ]:null,
+//               onEditingComplete: widget.onComplete,
+//               onChanged: widget.onChanged,
+//               decoration: InputDecoration(
+//                 isCollapsed: true,
+//
+//
+//                 contentPadding: EdgeInsets.all(20),
+//                 isDense: true,
+//                 hintText: widget.hintText,
+//                 hintStyle: TextStyle(fontSize: 10),
+//                 border:InputBorder.none,
+//               ).copyWith(isDense: true),
+//             ),
+//           )
+//          //  Container(
+//          //
+//          //    alignment: Alignment.center,
+//          //    child: Center(
+//          //      child: TextFormField(
+//          //
+//          //       // initialValue:widget.last=="0"?"":widget.last,
+//          //        onTap: () {
+//          //          if (widget.onClick != null) widget.onClick!();
+//          //        },
+//          //        maxLines: widget.maxLines,
+//          //
+//          // controller: widget.controller,
+//          //        enabled: widget.enable,
+//          //        keyboardType:widget.formatter? TextInputType.number:null,
+//          //        inputFormatters: <TextInputFormatter>[
+//          //          FilteringTextInputFormatter.digitsOnly
+//          //        ],
+//          //        onEditingComplete: widget.onComplete,
+//          //        onChanged: widget.onChanged,
+//          //        decoration: InputDecoration(
+//          //          isCollapsed: true,
+//          //
+//          //
+//          //          contentPadding: EdgeInsets.all(20),
+//          //          isDense: true,
+//          //          hintText: widget.hintText,
+//          //          hintStyle: TextStyle(fontSize: 10),
+//          //          border:InputBorder.none,
+//          //        ).copyWith(isDense: true),
+//          //      ),
+//          //    ),
+//          //  ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 // class CustomCheckBox extends StatefulWidget {
 //   final bool value;
 //   final Function(bool?)? change;
@@ -647,6 +817,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
                       text: "*", style: TextStyle(color: Palette.DANGER))
                 ]
                     : []))),
+          SizedBox(height:3),
      Container(
 
           child: TextFormField(
@@ -688,7 +859,14 @@ class _FileUploadFieldState extends State<FileUploadField> {
               EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               isDense: true,
               hintStyle: TextStyle(fontSize: 10),
-              border: OutlineInputBorder(),
+              enabledBorder:OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+              focusedBorder:   OutlineInputBorder(
+                  borderRadius:BorderRadius.circular(2),
+
+                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
               suffixIcon: IconButton(
                   onPressed: () {
                     filename = "no attachments";
@@ -956,6 +1134,99 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
         //       ),
         //     )),
       ],
+    );
+  }
+}
+
+
+class CustomDropDown extends StatefulWidget {
+   String? choosenValue;
+   final Function onChange;
+   final List <String>items;
+   final bool border;
+   // final Color clr;
+
+  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false});
+
+
+
+  @override
+  _CustomDropDownState createState() => _CustomDropDownState();
+}
+
+class _CustomDropDownState extends State<CustomDropDown> {
+
+  bool value=true;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 28,
+      decoration: BoxDecoration(
+       color:   Pellet.tableBlueHeaderPrint,
+        border: widget.border?Border.all(
+          color: Colors.grey
+        ):null
+      ),
+      child:Center(child:
+   // value?
+   DropdownButtonHideUnderline(
+     child: DropdownButton(
+
+       borderRadius:BorderRadius.zero ,
+
+       focusColor: Pellet.tableBlueHeaderPrint,
+          dropdownColor: Colors.white,
+
+
+
+          // Initial Value
+          // value: "widget.choosenValue"??"",
+
+          // Down Arrow Icon
+          icon: const Icon(Icons.keyboard_arrow_down),
+       hint: Container(
+         child: Text(widget.choosenValue.toString(),style: TextStyle(color: Colors.white), ),
+       ),
+
+          // Array list of items
+          items: widget.items.map((String items) {
+            return DropdownMenuItem(
+
+
+              value: items,
+              child: Text(items),
+            );
+          }).toList(),
+          // After selecting the desired option,it will
+          // change button value to selected value
+          onChanged: (String? newValue) {
+            setState(() {
+              widget.choosenValue = newValue!;
+              widget.onChange(newValue);
+              value=false;
+              setState(() {
+
+              });
+            });
+          },
+        ),
+   ))
+       // :
+
+    //  Container(
+    //    height: 30,
+    //      width: 80,
+    //      padding: EdgeInsets.symmetric(horizontal: 6),
+    //      child:  InkWell(
+    //      onTap: (){
+    //        value=true;
+    //        setState(() {
+    //
+    //        });
+    //      },
+    //      child: Text(widget.choosenValue??""),)
+    // )
     );
   }
 }

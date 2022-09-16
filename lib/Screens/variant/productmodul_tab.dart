@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
+import 'package:inventory/Screens/variant/channel_alloction/variantchannealloctionscreen.dart';
+import 'package:inventory/Screens/variant/stock/screens/stockScreen.dart';
+import 'package:inventory/Screens/variant/variantdetails/variant.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 
 import 'general/productmodulegeneral.dart';
@@ -21,7 +24,7 @@ class ProductModuleTab extends StatefulWidget {
 class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this);
+    TabController _tabController = TabController(length: 4, vsync: this);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -42,7 +45,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                     SizedBox(
                       height: height * 0.02,
                     ),
-                    TextWidget(text: "Sales")
+                    TextWidget(text: "Variant")
                   ],
                 ),
               ),
@@ -93,6 +96,8 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                                 controller: _tabController,
                                 tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("Variantdetail",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("Channel Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                  Text("Stock",style: TextStyle(color: Colors.black,fontSize: 13),),
                                 ]),
                           ),
                           Container(
@@ -115,7 +120,10 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                         controller: _tabController,
                         children: [
                           ProductModulGeneralScreen(),
-                         Text("varient"),
+                        VariantDetailScreen(),
+                          VariantChannelAllocationScreen(),
+                          StockScreen(),
+
 
 
 

@@ -16,7 +16,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
   final String? apiType;
   final bool enable;
   final bool restricted;
-  final Function? onchange;
+  final Function(String)? onchange;
   final int? id;
 
   const SelectableDropDownpopUp(
@@ -167,9 +167,12 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     onSelection: widget.onSelection,
                     onAddNew: widget.onAddNew,
                     value: widget.value,
+                    id:widget.id,
+                    onchange:widget.onchange,
                     enable: widget.enable,
                     type: widget.type!)
-                    :TypeAheadFormField(
+                    :
+                TypeAheadFormField(
 
 
                   textFieldConfiguration: TextFieldConfiguration(

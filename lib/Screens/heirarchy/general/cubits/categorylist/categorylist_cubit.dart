@@ -28,6 +28,7 @@ class CategorylistCubit extends Cubit<CategorylistState> {
   }
 
   Future searchCategoryist(String filter,{String? type}) async {
+    print(filter);
     emit(CategorylistState.initial());
     final result = await repo.getCategoryist( filter,type: type);
     result.fold((l) => emit(_Error()), (r) {

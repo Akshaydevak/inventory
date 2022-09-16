@@ -4854,7 +4854,7 @@ else{
     );
   }
 }
-Widget Button(IconData icon, Color border,
+Widget Button(IconData? icon, Color border,
     {Color Color = Colors.transparent,
     required BuildContext ctx,
     required String text,
@@ -4884,7 +4884,7 @@ Widget Button(IconData icon, Color border,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
+         if(icon!=null) Icon(
             icon,
             color: iconColor,
           ),

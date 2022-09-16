@@ -567,6 +567,20 @@ class _RihtDrawerState extends State<RihtDrawer> {
 
             );
           }, label: "Sub Category"),
+          greyDivider(),
+          DrawerCared(ontap: (){
+
+            showDailogPopUp(
+              context,
+              ConfigurePopup(
+                type: "GroupPatch_PopUp",
+              ),
+
+
+            );
+          }, label: "Group"),
+          greyDivider(),
+
 
           DrawerCared(ontap: (){
 
@@ -579,9 +593,37 @@ class _RihtDrawerState extends State<RihtDrawer> {
 
             );
           }, label: "Create Material"),
+          greyDivider(),
 
 
-        ],
+          DrawerCared(ontap: (){
+
+            showDailogPopUp(
+              context,
+              ConfigurePopup(
+                type: "StaticPatch-group",
+              ),
+
+
+            );
+          }, label: "Create Static"),
+          greyDivider(),
+          DrawerCared(ontap: (){
+
+            showDailogPopUp(
+              context,
+              ConfigurePopup(
+                type: "patchbrand-group",
+              ),
+
+
+            );
+          }, label: "Create Brand"),
+
+
+
+
+                ],
       ),
     );
   }
