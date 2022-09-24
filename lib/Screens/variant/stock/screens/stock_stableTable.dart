@@ -228,19 +228,19 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                         NewInputCard(
 
 
-                            controller: widget.salesBlockQuantity, title: "Maximum Quantity"),
+                            controller: widget.maximumQuantity, title: "Maximum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
 
-                            controller: widget.salesBlockQuantity, title: "Minimum Quantity"),
+                            controller: widget.minimumQuantity, title: "Minimum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
 
-                            controller: widget.salesBlockQuantity, title: "Channel Type Allocation Ratio"),
+                            controller: widget.channelTypeAllocationRatio, title: "Channel Type Allocation Ratio"),
                         SizedBox(
                           height: height * .030,
                         ),

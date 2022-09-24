@@ -6,10 +6,12 @@ import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categoryread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
 
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
@@ -25,7 +27,12 @@ import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicepo
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
+import 'package:inventory/Screens/variant/channel_alloction/model/channelpost.dart';
 import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_allocationlist.dart';
+import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_read.dart';
+import 'package:inventory/Screens/variant/channels2allocation/models/channelsreadmodel.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
 import 'package:inventory/Screens/variant/stock/models/stock_read.dart';
@@ -41,6 +48,7 @@ import 'package:inventory/widgets/responseutils.dart';
 import 'package:inventory/model/purchaseorder.dart';
 import '../../../models/purchaseordertype/purchaseordertype.dart';
 import '../../sales/general/model/sales_general_post.dart';
+import '../../variant/channel_costing_allocation/model/costingpagecreation.dart';
 import 'datasource.dart';
 import 'model/purchaseinvoice.dart';
 
@@ -239,14 +247,102 @@ abstract class PurchaseReturnRepoAbstract {
       String? code);
   Future<Either<Failure, PaginatedResponse<List<StockVerticalReadModel>>>>
       getStockList(String? code);
-  Future<Either<Failure, List<Category>>> getChannelRead(
+  Future<Either<Failure, channelAllocatesRead>> getChannelRead(
     int? id,
+  );
+  Future<Either<Failure, DoubleResponse>> postSChannelPosts(
+      ChannelPostModel model);
+  Future<Either<Failure, PaginatedResponse<List<ChanmneStockListModelModel>>>>
+      getChannelAllocationList(int? code);
+  Future<Either<Failure, ChannelAllocationStockStockReadModel>>
+      getChannelStockAllocationRead(int? id, int? channelId);
+  Future<Either<Failure, DoubleResponse>> channelStockAllocationPatch(
+      ChannelAllocationStockStockReadModel model, int? id);
+  Future<Either<Failure, PaginatedResponse<List<ChannelListModel>>>>
+      getChannelList(
+    String? channelType,
+    int? id,
+  );
+  Future<Either<Failure, ChannelListModel>> getChannelAllocationRead(
+      int? id, int? channelId);
+  Future<Either<Failure, List<FrameWorkListModel>>> getFrameWorklist();
+  Future<Either<Failure, DoubleResponse>> channel2StockAllocationPatch(
+      ChannelListModel model, int? id);
+  Future<Either<Failure, DoubleResponse>> postCreateFrameWork(
+      VariantFrameWorkPostModel model);
+  Future<Either<Failure, DoubleResponse>> postPatchFrameWork(
+      VariantFrameWorkPostModel model, int? id);
+  //costing
+  Future<Either<Failure, DoubleResponse>> postCreateCostingType(
+      String typeName, String description, String createdBy,
+      {int? id});
+  Future<Either<Failure, PaginatedResponse<List<CostingMetodTypePostModel>>>>
+      getCostingTypeList(
+    String? code,
+  );
+  Future<Either<Failure, DoubleResponse>> postPatchCostingType(int? verticalId,
+      String typeName, String description, String createdBy, bool? isActive,
+      {int? id});
+  Future<Either<Failure, DoubleResponse>> CostingDelete(int? id,
+      {String? type});
+  Future<Either<Failure, PaginatedResponse<List<CostingCreatePostModel>>>>
+      getCostingCreateList(
+    String? code,
+  );
+  Future<Either<Failure, DoubleResponse>> postPatchCostingCreate(
+    int? verticalId,
+    String typeName,
+    String description,
+    String createdBy,
+    bool? isActive,
+  );
+  Future<Either<Failure, PaginatedResponse<List<PricingGroupListModel>>>>
+      getPricingGroupList(
+    String? code,
+  );
+  Future<Either<Failure, CostingCreatePostModel>> getCostMethodRead(int? id);
+  Future<Either<Failure, CostingMetodTypePostModel>> getCostMethodTypeRead(
+      int? id);
+  Future<Either<Failure, DoubleResponse>> postPricingGroupType(
+      PricingGroupListModel model,
+      {int? type});
+  Future<Either<Failure, DoubleResponse>> patchPricingGroupType(
+      PricingGroupListModel model, int? id,
+      {int? type});
+  Future<Either<Failure, PricingGroupListModel>> getPricingRead(int? id);
+  Future<Either<Failure, PaginatedResponse<List<PricingTypeListModel>>>>
+      getPricingList(
+    String? code,
+  );
+  Future<Either<Failure, PricingTypeListModel>> getPricingGroupRead(int? id);
+  Future<Either<Failure, DoubleResponse>> patchPricingGroup(
+    PricingTypeListModel model,
+    int? id,
+  );
+  Future<Either<Failure, DoubleResponse>> postPricingGroup(
+    PricingTypeListModel model,
+  );
+  Future<Either<Failure, List<ListingChnanelTableModel>>>
+      getChannelStockTableRead(int? id);
+  Future<Either<Failure, DoubleResponse>> postCosting(
+    CostingPageCreationPostModel model,
+  );
+  Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(int? id);
+  Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype();
+  Future<Either<Failure, ListingChnanelTableModel>> percentageGp(
+      int? id, String? gpType);
+  Future<Either<Failure, DoubleResponse>> patchCosting(
+      CostingPageCreationPostModel model, int? id);
+  Future<Either<Failure, DoubleResponse>> postFrameWorkCreate(
+      VariantFrameworkPostModel model);
+  Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>>
+      getAttributeList(
+    String? code,
   );
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   PurchaseSourceImpl remoteDataSource = PurchaseSourceImpl();
-
   @override
   Future<Either<Failure, List<PurchaseInvoice>>> getPurchaseInvoice() {
     return repoExecute<List<PurchaseInvoice>>(
@@ -886,10 +982,271 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<Category>>> getChannelRead(int? id) {
-    return repoExecute<List<Category>>(
+  Future<Either<Failure, channelAllocatesRead>> getChannelRead(int? id) {
+    return repoExecute<channelAllocatesRead>(
         () async => remoteDataSource.getChannelRead(
               id,
             ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postSChannelPosts(
+      ChannelPostModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postSChannelPosts(model));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<ChanmneStockListModelModel>>>>
+      getChannelAllocationList(int? code) {
+    return repoExecute<PaginatedResponse<List<ChanmneStockListModelModel>>>(
+        () async => remoteDataSource.getChannelAllocationList(code));
+  }
+
+  @override
+  Future<Either<Failure, ChannelAllocationStockStockReadModel>>
+      getChannelStockAllocationRead(int? id, int? channelId) {
+    return repoExecute<ChannelAllocationStockStockReadModel>(() async =>
+        remoteDataSource.getChannelStockAllocationRead(id, channelId));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> channelStockAllocationPatch(
+      ChannelAllocationStockStockReadModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.channelStockAllocationPatch(model, id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<ChannelListModel>>>>
+      getChannelList(
+    String? channelType,
+    int? id,
+  ) {
+    return repoExecute<PaginatedResponse<List<ChannelListModel>>>(
+        () async => remoteDataSource.getChannelList(channelType, id));
+  }
+
+  @override
+  Future<Either<Failure, ChannelListModel>> getChannelAllocationRead(
+      int? id, int? channelId) {
+    return repoExecute<ChannelListModel>(
+        () async => remoteDataSource.getChannelAllocationRead(id, channelId));
+  }
+
+  @override
+  Future<Either<Failure, List<FrameWorkListModel>>> getFrameWorklist() {
+    return repoExecute<List<FrameWorkListModel>>(
+        () async => remoteDataSource.getFrameWorklist());
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> channel2StockAllocationPatch(
+      ChannelListModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.channel2StockAllocationPatch(model, id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreateFrameWork(
+    VariantFrameWorkPostModel model,
+  ) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postCreateFrameWork(model));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreateCostingType(
+      String typeName, String description, String createdBy,
+      {int? id}) {
+    return repoExecute<DoubleResponse>(() async => remoteDataSource
+        .postCreateCostingType(typeName, description, createdBy, id: id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<CostingMetodTypePostModel>>>>
+      getCostingTypeList(String? code) {
+    return repoExecute<PaginatedResponse<List<CostingMetodTypePostModel>>>(
+        () async => remoteDataSource.getCostingTypeList(code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPatchCostingType(int? verticalId,
+      String typeName, String description, String createdBy, bool? isActive,
+      {int? id}) {
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.postPatchCostingType(
+            verticalId, typeName, description, createdBy, isActive,
+            id: id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> CostingDelete(int? id,
+      {String? type}) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.CostingDelete(id, type: type));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<CostingCreatePostModel>>>>
+      getCostingCreateList(String? code) {
+    return repoExecute<PaginatedResponse<List<CostingCreatePostModel>>>(
+        () async => remoteDataSource.getCostingCreateList(code));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPatchCostingCreate(
+      int? verticalId,
+      String typeName,
+      String description,
+      String createdBy,
+      bool? isActive) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postPatchpostPatchCostingCreateCostingType(
+              verticalId,
+              typeName,
+              description,
+              createdBy,
+              isActive,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<PricingGroupListModel>>>>
+      getPricingGroupList(String? code) {
+    return repoExecute<PaginatedResponse<List<PricingGroupListModel>>>(
+        () async => remoteDataSource.getPricingGroupList(code));
+  }
+
+  @override
+  Future<Either<Failure, CostingCreatePostModel>> getCostMethodRead(int? id) {
+    return repoExecute<CostingCreatePostModel>(
+        () async => remoteDataSource.getCostMethodRead(id));
+  }
+
+  @override
+  Future<Either<Failure, CostingMetodTypePostModel>> getCostMethodTypeRead(
+      int? id) {
+    return repoExecute<CostingMetodTypePostModel>(
+        () async => remoteDataSource.getCostMethodTypeRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPricingGroupType(
+      PricingGroupListModel model,
+      {int? type}) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postPricingGroupType(model, type: type));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchPricingGroupType(
+      PricingGroupListModel model, int? id,
+      {int? type}) {
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.patchPricingGroupType(model, id, type: type));
+  }
+
+  @override
+  Future<Either<Failure, PricingGroupListModel>> getPricingRead(int? id) {
+    return repoExecute<PricingGroupListModel>(
+        () async => remoteDataSource.getPricingRead(id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<PricingTypeListModel>>>>
+      getPricingList(String? code) {
+    return repoExecute<PaginatedResponse<List<PricingTypeListModel>>>(
+        () async => remoteDataSource.getPricingList(code));
+  }
+
+  @override
+  Future<Either<Failure, PricingTypeListModel>> getPricingGroupRead(int? id) {
+    return repoExecute<PricingTypeListModel>(
+        () async => remoteDataSource.getPricingGroupRead(id));
+    ;
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchPricingGroup(
+      PricingTypeListModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.patchPricingGroup(
+              model,
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPricingGroup(
+      PricingTypeListModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postPricingGroup(
+              model,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, List<ListingChnanelTableModel>>>
+      getChannelStockTableRead(int? id) {
+    return repoExecute<List<ListingChnanelTableModel>>(
+        () async => remoteDataSource.getChannelStockTableRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCosting(
+      CostingPageCreationPostModel model) {
+    return repoExecute<DoubleResponse>(() async => remoteDataSource.postCosting(
+          model,
+        ));
+  }
+
+  @override
+  Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(
+      int? id) {
+    return repoExecute<CostingPageCreationPostModel>(
+        () async => remoteDataSource.getCostingRead(id));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype() {
+    return repoExecute<PurchaseOrdertype>(
+        () async => remoteDataSource.getPricingPgtype());
+  }
+
+  @override
+  Future<Either<Failure, ListingChnanelTableModel>> percentageGp(
+      int? id, String? gpType) {
+    return repoExecute<ListingChnanelTableModel>(
+        () async => remoteDataSource.percentageGp(id, gpType));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchCosting(
+      CostingPageCreationPostModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.patchCosting(model, id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postFrameWorkCreate(
+      VariantFrameworkPostModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postFrameWorkCreate(model));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>>
+      getAttributeList(String? code) {
+    return repoExecute<PaginatedResponse<List<AttributeListModel>>>(
+        () async => remoteDataSource.getAttributeList(
+              code,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postPatchFrameWork(VariantFrameWorkPostModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.postPatchFrameWork(model,id));
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,16 +7,20 @@ import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_alloction/cubit/channelfiltwer/channelfilter_cubit.dart';
 import 'package:inventory/Screens/variant/channel_alloction/cubit/channeltypelist/channeltypelist_cubit.dart';
+import 'package:inventory/Screens/variant/channel_alloction/model/channelpost.dart';
 import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
 import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allocation_bottomtable.dart';
 import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allocation_topscreen.dart';
 import 'package:inventory/Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
+import '../../GeneralScreen.dart';
+import 'cubit/channelpost/channelpost_cubit.dart';
 import 'cubit/channelread/channelread_cubit.dart';
 
 class VariantChannelAllocationScreen extends StatefulWidget {
@@ -27,8 +33,10 @@ class _VariantChannelAllocationScreenState
     extends State<VariantChannelAllocationScreen> {
   List<String> items = ["variant", "group"];
   List<ChannelTypeModel>table = [];
+  channelAllocatesRead group=channelAllocatesRead();
   String choosenValue = "group";
-  bool apiChecking = true;
+  String choosenValue2 = "";
+  bool apiChecking = false;
   var paginated;
   List<StockVerticalReadModel> result = [];
   List<Category> channels = [];
@@ -36,6 +44,16 @@ class _VariantChannelAllocationScreenState
   int selectedVertical = 0;
   var list;
   int? veritiaclid = 0;
+  filterTable(List<bool?>selections){
+    print(selections);
+    // for(var i=0;i<selections.length;i++){
+    //   if(selections[i]==true){
+    //     print("aksksk");
+    //   }
+    // }
+
+
+  }
 
   listAssign(List<ChannelTypeModel>table1, PaginatedResponse<dynamic> data) {
     setState(() {
@@ -44,11 +62,12 @@ class _VariantChannelAllocationScreenState
     });
   }
 
-  appiCheckingTrue(bool val) {
-    print(val);
+  appiCheckingTrue(bool val,String type) {
+    print("GAssali"+type);
     setState(() {
       apiChecking = val;
-      print(apiChecking);
+      choosenValue2=type;
+      print("GAssali"+apiChecking.toString());
     });
   }
   @override
@@ -79,11 +98,40 @@ class _VariantChannelAllocationScreenState
           create: (context) => ChannelfilterCubit(),
         ), BlocProvider(
           create: (context) => ChannelreadCubit(),
+        ), BlocProvider(
+          create: (context) => ChannelpostCubit(),
         ),
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
+            BlocListener<ChannelpostCubit, ChannelpostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Timer(Duration(seconds: 5), () {
+                      setState(() {
+
+                        context.read<StockverticalCubit>().getStockList("RGC1659608240");
+                        // select=false;
+                      });
+                    }
+                    );
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
             BlocListener<ChanneltypelistCubit, ChanneltypelistState>(
               listener: (context, state) {
                 state.maybeWhen(
@@ -109,7 +157,9 @@ class _VariantChannelAllocationScreenState
                     },
                     success: (data) {
                       setState(() {
-                        channels=data;
+                        print("FArista"+data.toString());
+                        group=data;
+                        channels=data?.results??[];
 
                       });
                     });
@@ -214,7 +264,8 @@ class _VariantChannelAllocationScreenState
                                   ChanneAllocationTopScreen(
                                       listAssign: listAssign,
                                       appiCheckingTrue: appiCheckingTrue,
-                                    channels:channels
+                                    channels:channels,
+                                    filterTable:filterTable,
 
                                   ),
                                   SizedBox(
@@ -284,7 +335,92 @@ class _VariantChannelAllocationScreenState
                                           "ahlan", Variable.inventory_ID,
                                           choosenValue);
                                     },
-                                  )
+                                  ),
+                                  SizedBox(height: h * .13,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Button(Icons.delete, Colors.red,
+                                          ctx: context,
+                                          text: "Discard",
+                                          onApply: () {
+                                            // if(updateCheck){
+                                            //   // clears();
+                                            //
+                                            //
+                                            // }
+
+                                          },
+                                          height: 29,
+                                          width: 90,
+                                          labelcolor: Colors.red,
+                                          iconColor: Colors.red,
+                                          bdr: true),
+                                      SizedBox(
+                                        width: w * .008,
+                                      ),
+                                      Button(Icons.check, Colors.grey,
+                                          ctx: context,
+                                          text:"save",
+                                          height: 29,
+                                          Color: Color(0xff3E4F5B),
+                                          width: 90,
+                                          labelcolor: Colors.white,
+                                          iconColor: Colors.white,
+                                          onApply: () {
+                                            List<ChannelDatas>? channelDatas=[];
+                                            List<SelectedData>? selectedData=[];
+                                            if(channels.isNotEmpty==true){
+
+                                              for(var i=0;i<channels.length;i++) {
+                                                channelDatas.add(ChannelDatas(
+
+                                                  channelId: channels[i].id
+                                                      .toString(),
+                                                  channelName: channels[i].name,
+                                                  priority: 1,
+                                                  channelStockType: channels[i]
+                                                      .channelStockType,
+
+                                                ));
+                                              }
+
+                                            }
+                                            if(table.isNotEmpty==true){
+                                              for(var i=0;i<table.length;i++)
+                                                selectedData.add(SelectedData(
+
+                                                code  : table[i].code.toString(),
+                                                  id:table[i].id
+
+                                                ));
+
+                                            }
+                                            ChannelPostModel model=ChannelPostModel(
+                                              inventoryId: Variable.inventory_ID,
+                                              selectionType:apiChecking?choosenValue2: choosenValue,
+                                              channelTypeCode: group.channelTypeCode,
+                                              channelTypeId: group.channelTypeId.toString(),
+                                              priority: 1,
+                                              channelDatas:channelDatas??[],
+                                              selectedData:selectedData??[]
+
+
+
+                                            );
+                                            print(model);
+                                            context.read<ChannelpostCubit>().postSChannelPosts(model);
+
+
+
+                                            }
+                                           ),
+                                      SizedBox(
+                                        // width: width * .008,
+                                      ),
+                                    ],
+                                  ),
+
                                 ],
                               ))
                         ],

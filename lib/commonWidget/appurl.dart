@@ -1,4 +1,5 @@
 const baseUrl = "http://api-purchase-order-staging.rgcdynamics.org/";
+
 const stagingUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryBaseUrl = "http://65.1.61.201:8112/";
@@ -18,7 +19,7 @@ const purchaseOrdertype = baseUrl + "purchase-order/create-purchase-order";
 const purchaseCurrentStockqty =
     stagingUrl + "inventory-stock/get-stock-quantity-by-variant/testing002/aa";
 const generalPurchaseRead = stagingUrl + "purchase-order/read-purchase-order/";
-const generalPurchasePatch = baseUrl + "purchase-order/read-purchase-order/";
+const generalPurchasePatch = stagingUrl + "purchase-order/read-purchase-order/";
 const vendorCodeUrl =
     "https://api-newpartner-uat.ahlancart.com/new_partner/vendor-partner/list";
 //*************purchaseRecievingTAb screen
@@ -162,6 +163,7 @@ const listBaseUomGroupApi =
     inventoryBaseUrl + "inventory-product/list-uom-by-uom-grp/";
 const listBaseAllUomGroupApi = inventoryBaseUrl + "inventory-product/list-uom";
 const readBaseUomGroupApi = inventoryBaseUrl + "inventory-product/patch-uom/";
+const frameWorkListApi = inventoryBaseUrl + "inventory-product/list-newvariantframework";
 
 //item creation
 const listItemVerticalListApi =
@@ -197,6 +199,68 @@ const channelFilterReadApi =
     inventoryBaseUrl + "inventory-stock/filter-in-channel-allocation";
 //stock
 const stockReadApi = inventoryBaseUrl + "inventory-stock/read-variant/";
-const stockTableReadApi = stagingUrl + "purchase-order/get-invoice-lines-by-variant";
-const stockVerticalReadApi ="https://api-rgc-organization.hilalcart.com/channel/list-categories/";
-const stockVerticalListReadApi ="https://api-rgc-organization.hilalcart.com/channel/list-channels-categories/";
+const stockTableReadApi =
+    stagingUrl + "purchase-order/get-invoice-lines-by-variant";
+const stockVerticalReadApi =
+    "https://api-rgc-organization.hilalcart.com/channel/list-categories/";
+const stockVerticalListReadApi =
+    "https://api-rgc-organization.hilalcart.com/channel/list-channels-categories/";
+const channelPostApi =
+    inventoryBaseUrl + "inventory-stock/product-channel-allocation";
+const channelReadApi =
+    inventoryBaseUrl + "inventory-stock/list-channel-type-by-variant/";
+const channelStockAllocationReadApi =
+    inventoryBaseUrl + "inventory-stock/read-channel-type-stock/";
+const channelStockAllocationPatchApi =
+    inventoryBaseUrl + "inventory-stock/read-channel-type-stock/";
+//channel stock
+const channelAllocationReadApi =
+    inventoryBaseUrl + "inventory-stock/list-channel-by-variant/";
+const channelAssignReadApi =
+    inventoryBaseUrl + "inventory-stock/read-patch-channel-stock/";
+const VariantFrameWorkPost = inventoryBaseUrl + "inventory-product/create-newvariantframework";
+const VariantFrameWorkPatchApi = inventoryBaseUrl + "inventory-product/patch-variantframework/";
+//costing
+const costingTypePostApi =
+    inventoryBaseUrl + "inventory-costing/costing-method-type-create";
+const costingCreateApi =
+    inventoryBaseUrl + "inventory-costing/costing-method-create";
+const listcostingMethodApi =
+    inventoryBaseUrl + "inventory-costing/list-costing-method-type";
+const listcostingCreationMethodApi =
+    inventoryBaseUrl + "inventory-costing/list-costing-method";
+const costingTypePatchApi =
+    inventoryBaseUrl + "inventory-costing/costing-method-type-update/";
+const costingCreateDeleteApi =
+    inventoryBaseUrl + "inventory-costing/costing-method-update/";
+const pricingGroupListApi =
+    inventoryBaseUrl + "inventory-costing/list-pricing-type";
+const costingMethodReadApi =
+    inventoryBaseUrl + "inventory-costing/read-costing-method/";
+const costingTypeMethodReadApi =
+    inventoryBaseUrl + "inventory-costing/read-costing-method-type/";
+const pricingGroupCreateApi =
+    inventoryBaseUrl + "inventory-costing/pricing-type-create";
+const pricingGroupDeleteApi =
+    inventoryBaseUrl + "inventory-costing/pricing-type-update/";
+const pricingDeleteApi =
+    inventoryBaseUrl + "inventory-costing/pricing-group-update/";
+const pricingGroupReadApi =
+    inventoryBaseUrl + "inventory-costing/read-pricing-type/";
+const pricinglistReadApi =
+    inventoryBaseUrl + "inventory-costing/list-pricing-groups";
+const pricingReadApi =
+    inventoryBaseUrl + "inventory-costing/read-pricing-groups/";
+const pricingPostApi =
+    inventoryBaseUrl + "inventory-costing/pricing-group-create";
+const readChannelStockTableApi =
+    inventoryBaseUrl + "inventory-costing/list-costing-by-channel-stock/";
+const creaetCostingApi =
+    inventoryBaseUrl + "inventory-costing/create-costing-pricing";
+const readCostingApi = inventoryBaseUrl + "inventory-costing/read-patch-costing/";
+const pgTypeApi = inventoryBaseUrl + "inventory-costing/create-costing-pricing";
+const pricingPgPercentageApi = inventoryBaseUrl + "inventory-costing/get-gp-percntage";
+const patchCostingApi = inventoryBaseUrl + "inventory-costing/read-patch-costing/";
+const postFrameWorkApi = inventoryBaseUrl + "inventory-product/create-newvariantframework";
+const listAttributeTypeApi = inventoryBaseUrl + "inventory-product/list-attribute";
+const frameworkDeleteApi = inventoryBaseUrl + "inventory-product/patch-variantframework/";

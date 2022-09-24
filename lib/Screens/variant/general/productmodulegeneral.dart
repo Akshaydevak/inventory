@@ -5,7 +5,10 @@ import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'package:inventory/Screens/variant/general/cubits/variantCreatio_read2/variant_creation_read2_cubit.dart';
 import 'package:inventory/Screens/variant/general/cubits/variant_creation_read/variant_creation_read_cubit.dart';
+import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
+import 'package:inventory/Screens/variant/general/screens/attributescreen.dart';
+import 'package:inventory/Screens/variant/general/screens/combinationTable.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -30,7 +33,60 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController variantController = TextEditingController();
   VariantCreationReadModel group=VariantCreationReadModel();
   int selectedVertical = 0;
+ List< VariantCreationRead2Model>attribute=[];
+  List<List<Map<String,dynamic>>> combinationArray=[];
   var lists;
+  List<String>vals=[];
+  combinationList( List<List<Map<String,dynamic>>> combinationArrays){
+  setState(() {
+    vals.clear();
+  });
+    print("arrived");
+    combinationArray=combinationArrays;
+  if(combinationArray.isNotEmpty){
+    if(combinationArray.length==1){
+      print("arrived");
+  var array = combinationArray[0];
+  if(array.isNotEmpty){
+    for(var i=0;i<array.length;i++){
+      if(array[i]["flag"]==true){
+        setState(() {
+
+          vals.add(array[i]["value"]);
+          print(vals.toString());
+        });
+
+
+      }
+
+    }
+  }
+
+    }
+    else if(combinationArray.length==2){
+      var array1= combinationArray[0];
+      var array2= combinationArray[1];
+      if(array1.isNotEmpty){
+        for (var i =0;i<array1.length;i++){
+          if(array2.isNotEmpty){
+            for(var j=0;j<array2.length;i++){
+              if(array1[i]["flag"]==true &&array2[j]["flag"]==true)
+                vals.add(array1[i]["value"]+array2[j]["value"]);
+              else if(array1[i]["flag"]==true)
+                vals.add(array1[i]["value"]);
+              else if(array2[i]["flag"]==true)
+                vals.add(array2[i]["value"]);
+
+
+              
+            }
+          }
+        }
+      }
+    }
+  }
+
+  }
   @override
   void initState() {
     context.read<ListvariantCubit>().getVariantCreationList();
@@ -89,7 +145,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
               print("error");
             },
             success: (data) {
-              print("the entire data"+data.length.toString());
+              print("the entire data"+data.toString());
+              attribute=data;
 
               setState(() {
 
@@ -251,240 +308,123 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                           print('Pressed');
                                         }
                                     ),
-                                    Row(
-                                      mainAxisAlignment:  MainAxisAlignment.start,
-                                      children: [
-                                        Expanded(
-
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: width/4,
-                                                child:Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                  ],
-                                                ),
-
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 25,),
-                                        TextButton.icon(
-                                            label: Text('Add New',style: TextStyle(fontSize: 11),),
-                                            icon: Icon(Icons.add,size: 11,),
-                                            onPressed: () {
-                                              print('Pressed');
-                                            }
-                                        ),
-                                        Expanded(
-
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: width/4,
-                                                child:Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                  ],
-                                                ),
-
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(width: 25,),
-                                        Expanded(
-
-                                          child: Column(
-                                            children: [
-                                              Container(
-                                                width: width/4,
-                                                child:Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                  children: [
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                    NewCheckBoxText(label: "2",onChange: (va){},),
-                                                  ],
-                                                ),
-
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-
-                                      ],
-                                    ),
-                                    SizedBox(height: height/9,),
-                                    Container(
-                                      width: width/4,
-                                      child:Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr:Colors.purple),
-                                        ],
-                                      ),
-
-
-                                    ),
-                                    SizedBox(height: 10,),
-                                    Container(
-                                      width: width/4,
-                                      child:Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-                                          NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-
-                                        ],
-                                      ),
-
-                                    ),
-                                    SizedBox(height: height/10,),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        SizedBox(width: 10,),
-                                        Text("Variant List",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),),
-                                        SizedBox(width: 18,),
-                                        Text("Bulk Action",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                      ],
-                                    ),
-                                    Container(
-                                      width: 2200,
-                                      padding: EdgeInsets.all(10),
-                                      child: customTable(
-
-                                          border: const TableBorder(
-
-                                            verticalInside: BorderSide(
-                                                width:.5,
-                                                color: Colors.black45,
-                                                style: BorderStyle.solid),
-                                            horizontalInside: BorderSide(
-                                                width:.3,
-                                                color: Colors.black45,
-                                                // color: Colors.blue,
-                                                style: BorderStyle.solid),),
-
-                                          tableWidth: .5,
-
-                                          childrens:[
-                                            TableRow(
-
-                                              // decoration: BoxDecoration(
-
-                                              //     color: Colors.green.shade200,
-
-                                              //     shape: BoxShape.rectangle,
-
-                                              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
-                                                children: [
-
-                                                  tableHeadtext(
-
-                                                    'Status',
-
-                                                    padding: EdgeInsets.all(7),
-
-                                                    height: 46,
-                                                    textColor: Colors.black,
-                                                    color: Color(0xffE5E5E5),
-
-                                                    size: 13,
-
-
-                                                  ),
-
-
-                                                  tableHeadtext(
-                                                    'Variant list',
-                                                    textColor: Colors.black,
-                                                    padding: EdgeInsets.all(7),
-                                                    height: 46,
-                                                    size: 13,
-                                                    color: Color(0xffE5E5E5),
-                                                  ),
-
-
-                                                ],
-
-                                            ),
-                                            TableRow(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey
-                                                        .shade200,
-                                                    shape: BoxShape
-                                                        .rectangle,
-                                                    border:const  Border(
-                                                        left: BorderSide(
-                                                            width: .5,
-                                                            color: Colors
-                                                                .grey,
-                                                            style: BorderStyle
-                                                                .solid),
-                                                        bottom: BorderSide(
-                                                            width: .5,
-                                                            color: Colors
-                                                                .grey,
-                                                            style: BorderStyle
-                                                                .solid),
-                                                        right: BorderSide(
-                                                            color: Colors
-                                                                .grey,
-                                                            width: .5,
-                                                            style: BorderStyle
-                                                                .solid))),
-                                                children: [
-                                                  TableCell(
-                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                    child:   CheckedBoxs(
-                                                        valueChanger: true,
-                                                        onSelection:(va){
-
-                                                        }
-
-                                                    ),),
-                                                  TableCell(
-                                                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                    child:   Text("32/Xl"
-
-
-                                                    ),)
-
-                                                ]),
-
-
-                                          ],
-                                        widths: {
-                                      0: FlexColumnWidth(1),
-                                      1: FlexColumnWidth(4),
-
-
-                                      },
-                                      ),
-
-
-                                    ),
+                                    AttributeScreen(attributes: attribute,combination:combinationList),
+                                    // Row(
+                                    //   mainAxisAlignment:  MainAxisAlignment.start,
+                                    //   children: [
+                                    //     Expanded(
+                                    //
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Container(
+                                    //             width: width/4,
+                                    //             child:Row(
+                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    //               children: [
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //               ],
+                                    //             ),
+                                    //
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     SizedBox(width: 25,),
+                                    //     TextButton.icon(
+                                    //         label: Text('Add New',style: TextStyle(fontSize: 11),),
+                                    //         icon: Icon(Icons.add,size: 11,),
+                                    //         onPressed: () {
+                                    //           print('Pressed');
+                                    //         }
+                                    //     ),
+                                    //     Expanded(
+                                    //
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Container(
+                                    //             width: width/4,
+                                    //             child:Row(
+                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    //               children: [
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //               ],
+                                    //             ),
+                                    //
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     SizedBox(width: 25,),
+                                    //     Expanded(
+                                    //
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Container(
+                                    //             width: width/4,
+                                    //             child:Row(
+                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    //               children: [
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
+                                    //               ],
+                                    //             ),
+                                    //
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //
+                                    //   ],
+                                    // ),
+                                    // SizedBox(height: height/9,),
+                                    // Container(
+                                    //   width: width/4,
+                                    //   child:Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    //     children: [
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr:Colors.purple),
+                                    //     ],
+                                    //   ),
+                                    //
+                                    //
+                                    // ),
+                                    // SizedBox(height: 10,),
+                                    // Container(
+                                    //   width: width/4,
+                                    //   child:Row(
+                                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    //     children: [
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
+                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
+                                    //
+                                    //     ],
+                                    //   ),
+                                    //
+                                    // ),
+                                    // SizedBox(height: height/10,),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.start,
+                                    //   children: [
+                                    //     SizedBox(width: 10,),
+                                    //     Text("Variant List",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),),
+                                    //     SizedBox(width: 18,),
+                                    //     Text("Bulk Action",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                    //   ],
+                                    // ),
+                                    CombinationTable(list:vals),
                                     SizedBox(height: height/9,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -572,6 +512,7 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
       if(widget.labelI1st!=true)    CheckedBoxs(
             valueChanger: widget.valueChanger,
             onSelection:(va){
+              widget.onChange(va);
 
             }
 
@@ -587,7 +528,7 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
               valueChanger: widget.valueChanger,
               onSelection:(va){print(va);
 
-                widget.onChange(va);
+              widget.onChange(va);
               }
 
           ),

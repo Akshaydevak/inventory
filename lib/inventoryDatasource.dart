@@ -174,9 +174,135 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print(
       "post" + postPurchaseurl.toString(),
     );
+    try{
+      final response = await client.post(postPurchaseurl,
+          data: model.toJson(),
+          // data:{
+          //
+          //
+          //
+          //     "purchase_order_type": "National purchase",
+          //
+          //     "inventory_id": "test",
+          //
+          //     "vendor_id": "aksk",
+          //
+          //     "vendor_trn_number":"dgcvd",
+          //
+          //     "vendor_mail_id":"dcv@gmail.com",
+          //
+          //     "vendor_address":"gvc",
+          //
+          //     "address_1": "djncdks",
+          //
+          //     "address_2": "dlkncsd",
+          //
+          //     "promised_receipt_date": "2022-09-17",
+          //
+          //     "planned_receipt_date": "2022-02-18",
+          //
+          //     "note": "jhcdh",
+          //
+          //     "remarks": "cbdjcd",
+          //
+          //     "discount":null,
+          //
+          //     "foc":100,
+          //
+          //     "unit_cost": 98,
+          //
+          //     "excess_tax": 90,
+          //
+          //     "actual_cost": 98,
+          //
+          //     "vat": 98,
+          //
+          //     "grand_total": 89,
+          //
+          //     "vatable_amount": 98,
+          //
+          //     "created_by": "cvd",
+          //
+          //     "order_lines":[{"supplier_code":"hvd","variant_id":"gcvd","variant_name":"","barcode":"dcvd","purchase_uom":"cvd", "foc":100,"discount":100,
+          //
+          //       "requested_qty":100,"minimum_qty":100,"maximum_qty":100,"unit_cost":100,"grand_total":100,
+          //
+          //       "vatable_amount":100,"excess_tax":100,"actual_cost":100,"vat":100 }]
+          //
+          //   },
+
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    }catch(e){
+      print(e);
+    }
 
     final response = await client.post(postPurchaseurl,
         data: model.toJson(),
+        // data:{
+        //
+        //
+        //
+        //   "purchase_order_type": "National purchase",
+        //
+        //   "inventory_id": "",
+        //
+        //   "vendor_id": "aksk",
+        //
+        //   "vendor_trn_number":"dgcvd",
+        //
+        //   "vendor_mail_id":"dcv@gmail.com",
+        //
+        //   "vendor_address":"gvc",
+        //
+        //   "address_1": "djncdks",
+        //
+        //   "address_2": "dlkncsd",
+        //
+        //   "promised_receipt_date": "2022-09-17",
+        //
+        //   "planned_receipt_date": "2022-02-18",
+        //
+        //   "note": "jhcdh",
+        //
+        //   "remarks": "cbdjcd",
+        //
+        //   "discount":null,
+        //
+        //   "foc":100,
+        //
+        //   "unit_cost": 98,
+        //
+        //   "excess_tax": 90,
+        //
+        //   "actual_cost": 98,
+        //
+        //   "vat": 98,
+        //
+        //   "grand_total": 89,
+        //
+        //   "vatable_amount": 98,
+        //
+        //   "created_by": "cvd",
+        //
+        //   "order_lines":[{"supplier_code":"hvd","variant_id":"gcvd","variant_name":"","barcode":"dcvd","purchase_uom":"cvd", "foc":100,"discount":100,
+        //
+        //     "requested_qty":100,"minimum_qty":100,"maximum_qty":100,"unit_cost":100,"grand_total":100,
+        //
+        //     "vatable_amount":100,"excess_tax":100,"actual_cost":100,"vat":100 }]
+        //
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/purchaseRecieving_cubits/cubit/purchasegenerating_cubit.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +24,8 @@ import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'Screens/logi/login.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
+import 'Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
+import 'Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
@@ -110,6 +114,14 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ListvariantCubit(),
         ), BlocProvider(
           create: (context) => StockverticalCubit(),
+        ), BlocProvider(
+          create: (context) => CostingtypelistCubit(),
+        ), BlocProvider(
+          create: (context) => CostingcreatelistCubit(),
+        ), BlocProvider(
+          create: (context) => PricingroupcreateCubit(),
+        ), BlocProvider(
+          create: (context) => PricinglistCubit(),
         ),
 
 

@@ -6,11 +6,13 @@ import 'package:inventory/Screens/heirarchy/general/model/categorymodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/categoryread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/images.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
 
 import 'package:inventory/Screens/purchasreturn/pages/model/invoicepost.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/postmodel.dart';
@@ -25,7 +27,13 @@ import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicepo
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturninvoiceread.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
+import 'package:inventory/Screens/variant/channel_alloction/model/channelpost.dart';
 import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingpagecreation.dart';
+import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_allocationlist.dart';
+import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_read.dart';
+import 'package:inventory/Screens/variant/channels2allocation/models/channelsreadmodel.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
 import 'package:inventory/Screens/variant/stock/models/stock_read.dart';
@@ -196,9 +204,76 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<StockVerticalReadModel>>> getStockList(
     String? code,
   );
-  Future<List<Category>> getChannelRead(
+  Future<channelAllocatesRead> getChannelRead(
     int? id,
   );
+  Future<DoubleResponse> postSChannelPosts(ChannelPostModel model);
+  Future<PaginatedResponse<List<ChanmneStockListModelModel>>>
+      getChannelAllocationList(
+    int? code,
+  );
+  Future<ChannelAllocationStockStockReadModel> getChannelStockAllocationRead(
+      int? id, int? channelId);
+  Future<DoubleResponse> channelStockAllocationPatch(
+      ChannelAllocationStockStockReadModel model, int? id);
+  Future<PaginatedResponse<List<ChannelListModel>>> getChannelList(
+    String? channelType,
+    int? id,
+  );
+  Future<ChannelListModel> getChannelAllocationRead(int? id, int? channelId);
+  Future<List<FrameWorkListModel>> getFrameWorklist();
+  Future<DoubleResponse> channel2StockAllocationPatch(
+      ChannelListModel model, int? id);
+  Future<DoubleResponse> postCreateFrameWork(VariantFrameWorkPostModel model);
+  Future<DoubleResponse> postCreateCostingType(
+      String typeName, String description, String createdBy,
+      {int? id});
+  Future<PaginatedResponse<List<CostingMetodTypePostModel>>> getCostingTypeList(
+      String? code);
+  Future<DoubleResponse> postPatchCostingType(int? verticalId, String typeName,
+      String description, String createdBy, bool? isActive,
+      {int? id});
+  Future<DoubleResponse> CostingDelete(int? id, {String? type});
+  Future<PaginatedResponse<List<CostingCreatePostModel>>> getCostingCreateList(
+      String? code);
+  Future<DoubleResponse> postPatchpostPatchCostingCreateCostingType(
+    int? verticalId,
+    String typeName,
+    String description,
+    String createdBy,
+    bool? isActive,
+  );
+  Future<PaginatedResponse<List<PricingGroupListModel>>> getPricingGroupList(
+      String? code);
+  Future<CostingCreatePostModel> getCostMethodRead(int? id);
+  Future<CostingMetodTypePostModel> getCostMethodTypeRead(int? id);
+  Future<DoubleResponse> postPricingGroupType(PricingGroupListModel model,
+      {int? type});
+  Future<DoubleResponse> patchPricingGroupType(
+      PricingGroupListModel model, int? id,
+      {int? type});
+  Future<PricingGroupListModel> getPricingRead(int? id);
+  Future<PaginatedResponse<List<PricingTypeListModel>>> getPricingList(
+      String? code);
+  Future<PricingTypeListModel> getPricingGroupRead(int? id);
+  Future<DoubleResponse> patchPricingGroup(PricingTypeListModel model, int? id,
+      {int? type});
+  Future<DoubleResponse> postPricingGroup(PricingTypeListModel model,
+      {int? type});
+  Future<List<ListingChnanelTableModel>> getChannelStockTableRead(int? id);
+  Future<DoubleResponse> postCosting(
+    CostingPageCreationPostModel model,
+  );
+  Future<CostingPageCreationPostModel> getCostingRead(int? id);
+  Future<PurchaseOrdertype> getPricingPgtype();
+  Future<ListingChnanelTableModel> percentageGp(int? id, String? gpType);
+  Future<DoubleResponse> patchCosting(
+      CostingPageCreationPostModel model, int? id);
+  Future<DoubleResponse> postFrameWorkCreate(VariantFrameworkPostModel model);
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributeList(
+    String? code,
+  );
+  Future<DoubleResponse> postPatchFrameWork(VariantFrameWorkPostModel model,int? id);
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -1942,6 +2017,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         }
 
         break;
+      case "framework_delete":
+        {
+          url = frameworkDeleteApi;
+        }
+
+        break;
     }
     path = url + id.toString();
     print(path);
@@ -3586,10 +3667,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<List<Category>> getChannelRead(int? id) async {
+  Future<channelAllocatesRead> getChannelRead(int? id) async {
     String path = stockVerticalListReadApi + id.toString();
     try {
-      print("ppppath" + path.toString());
+      print("AAAAAAA" + path.toString());
       print(path);
       final response = await client.get(
         path,
@@ -3600,13 +3681,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      List<Category> items = [];
-      (response.data['data'] as List).forEach((element) {
-        items.add(Category.fromJson(element));
-        print("itemsAk" + items.toString());
-      });
-      print("rwead" + items.toString());
-      return items;
+      print("responsesssssd" + response.toString());
+      channelAllocatesRead dataa =
+          channelAllocatesRead.fromJson(response.data['common_attr']);
+      print("rwead" + dataa.toString());
+      return dataa;
     } catch (e) {
       print("the error is" + e.toString());
     }
@@ -3620,13 +3699,1349 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    List<Category> items = [];
-    (response.data['data'] as List).forEach((element) {
-      items.add(Category.fromJson(element));
+    print("responsesssssd" + response.toString());
+    channelAllocatesRead dataa =
+        channelAllocatesRead.fromJson(response.data['common_attr']);
+    print("rwead" + dataa.toString());
+    return dataa;
+
+    ;
+  }
+
+  @override
+  Future<DoubleResponse> postSChannelPosts(ChannelPostModel model) async {
+    print("Salesgeneralpost" + channelPostApi.toString());
+    try {
+      final response = await client.post(channelPostApi,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(channelPostApi,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<ChanmneStockListModelModel>>>
+      getChannelAllocationList(int? code) async {
+    String path =
+        channelReadApi + code.toString() + "/" + Variable.inventory_ID;
+
+    // if (code == "")
+    //   path = salesListApi + Variable.uomId.toString();
+    // else
+    //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<ChanmneStockListModelModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(ChanmneStockListModelModel.fromJson(element));
       print("itemsAk" + items.toString());
     });
-    print("rwead" + items.toString());
+    return PaginatedResponse<List<ChanmneStockListModelModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<ChannelAllocationStockStockReadModel> getChannelStockAllocationRead(
+      int? id, int? channelId) async {
+    String path = channelStockAllocationReadApi + channelId.toString();
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      ChannelAllocationStockStockReadModel dataa =
+          ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    ChannelAllocationStockStockReadModel dataa =
+        ChannelAllocationStockStockReadModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> channelStockAllocationPatch(
+      ChannelAllocationStockStockReadModel model, int? id) async {
+    String path = channelStockAllocationPatchApi + id.toString();
+    print(path);
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          // data: {
+          //
+          //     "virtual_type":"Maximum",
+          //     "safety_stock_qty":100,
+          //     "stock_warning":true,
+          //     "reorder_point":100,
+          //     "reorder_quantity":100,
+          //     "sales_block":true,
+          //     "add_virtual_stock":100,
+          //     "channel_status_crucial_point ":100,
+          //     "channel_status_medium_point ":150
+          //
+          //
+          // },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print(e);
+    }
+    final response = await client.patch(path,
+        data: model.toJson(),
+        // data: {
+        //   "virtual_type":model.virtualStock,
+        //   "safety_stock_qty":model.safetyStock,
+        //   "stock_warning":model.stockWarning,
+        //   "reorder_point":model.reOrderPoint,
+        //   "reorder_quantity":model.reOrderQuantity,
+        //   "sales_block":model.salesblock,
+        //   "add_virtual_stock":model.add,
+        //   "channel_status_crucial_point ":100,
+        //   "channel_status_medium_point ":150
+        //
+        // },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<ChannelListModel>>> getChannelList(
+    String? channelType,
+    int? id,
+  ) async {
+    String path = channelAllocationReadApi +
+        id.toString() +
+        "/" +
+        Variable.inventory_ID.toString() +
+        "/" +
+        channelType.toString();
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(path);
+
+    List<ChannelListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(ChannelListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<ChannelListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<ChannelListModel> getChannelAllocationRead(
+      int? id, int? channelId) async {
+    String path = channelAssignReadApi + id.toString();
+    try {
+      print("AAAAAAA" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      ChannelListModel dataa = ChannelListModel.fromJson(
+          response.data["data"]['channel_stock_data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    ChannelListModel dataa =
+        ChannelListModel.fromJson(response.data['common_attr']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<List<FrameWorkListModel>> getFrameWorklist() async {
+    String path = frameWorkListApi;
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<FrameWorkListModel> items = [];
+      print("rijinasdAY" + response.data["data"]["results"].toString());
+      (response.data["data"]["results"] as List).forEach((element) {
+        items.add(FrameWorkListModel.fromJson(element));
+        print("rijinasdAY2" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("data" + response.data["data"].toString());
+    List<FrameWorkListModel> items = [];
+    (response.data["data"]["results"] as List).forEach((element) {
+      items.add(FrameWorkListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
     return items;
+  }
+
+  @override
+  Future<DoubleResponse> channel2StockAllocationPatch(
+      ChannelListModel model, int? id) async {
+    String path = channelAssignReadApi + id.toString();
+    print(path);
+    print("the error is here" + model.safetyStockQuantity.toString());
+
+    final response = await client.patch(path,
+        // data: model.toJson(),
+        data:
+            // {
+            //   "virtual_type":model.virtualStock??null,
+            //   "safety_stock_qty":model.safetyStockQuantity,
+            //   "stock_warning":model.stockWarning,
+            //   "reorder_point":model.reOrderPoint,
+            //   "reorder_quantity":model.reOrderQuantity,
+            //   "sales_block":model.salesBlock,
+            //   "add_virtual_stock":model.addVirtualStock,
+            //   "channel_status_crucial_point":100,
+            //   "channel_status_medium_point ":150
+            //
+            // },
+            {
+          "virtual_type": model.virtualType,
+          "safety_stock_qty": model.safetyStockQuantity,
+          "stock_warning": model.stockWarning,
+          "reorder_point": model.reOrderPoint,
+          "reorder_quantity": model.reOrderQuantity,
+          "sales_block": model.salesBlock,
+          "add_virtual_stock": model.addVirtualStock,
+          "channel_status_crucial_point": model.channelStatusCrucialPoint,
+          "channel_status_medium_point": model.channelStatusMediumPoint
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
     ;
+  }
+
+  @override
+  Future<DoubleResponse> postCreateFrameWork(
+      VariantFrameWorkPostModel model) async {
+    String path = VariantFrameWorkPost;
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("Seaaaa the error");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postCreateCostingType(
+      String typeName, String description, String createdBy,
+      {int? id}) async {
+    String? path = "";
+    if (id == null)
+      path = costingTypePostApi;
+    else
+      path = costingCreateApi;
+
+    print(path);
+    try {
+      final response = await client.post(costingTypePostApi,
+          data: {
+            "type_name": typeName,
+            "description": description,
+            "created_by": createdBy,
+            "method_type_id": id,
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(costingTypePostApi,
+        data: {
+          "type_name": typeName,
+          "description": description,
+          "created_by": createdBy
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<CostingMetodTypePostModel>>> getCostingTypeList(
+      String? code) async {
+    String path = listcostingMethodApi;
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<CostingMetodTypePostModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(CostingMetodTypePostModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<CostingMetodTypePostModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> postPatchCostingType(int? verticalId, String typeName,
+      String description, String createdBy, bool? isActive,
+      {int? id}) async {
+    String path = costingTypePatchApi + verticalId.toString();
+
+    try {
+      final response = await client.patch(path,
+          data: {
+            "type_name": typeName,
+            "description": description,
+            "created_by": createdBy,
+            "is_active": isActive,
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: {
+          "type_name": typeName,
+          "description": description,
+          "created_by": createdBy
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> CostingDelete(int? id, {String? type}) async {
+    String url = "";
+    String path = "";
+    print("Akkkkkk" + type.toString());
+    print(path);
+
+    switch (type) {
+      case "1":
+        {
+          url = costingTypePatchApi;
+        }
+        break;
+      case "2":
+        {
+          url = costingCreateDeleteApi;
+        }
+        break;
+      case "3":
+        {
+          url = pricingGroupDeleteApi;
+        }
+        break;
+      case "4":
+        {
+          url = pricingDeleteApi;
+        }
+        break;
+    }
+    path = url + id.toString();
+    print(path);
+
+    final response = await client.delete(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<CostingCreatePostModel>>> getCostingCreateList(
+      String? code) async {
+    String path = listcostingCreationMethodApi;
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<CostingCreatePostModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(CostingCreatePostModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<CostingCreatePostModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> postPatchpostPatchCostingCreateCostingType(
+      int? verticalId,
+      String typeName,
+      String description,
+      String createdBy,
+      bool? isActive) async {
+    String path = costingCreateDeleteApi + verticalId.toString();
+
+    try {
+      final response = await client.patch(path,
+          data: {
+            "method_type_id": verticalId,
+            "method_name": typeName,
+            "description": description,
+            "created_by": createdBy,
+            "is_active": isActive
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: {
+          "method_type_id": verticalId,
+          "method_name": typeName,
+          "description": description,
+          "created_by": createdBy,
+          "is_active": isActive
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<PricingGroupListModel>>> getPricingGroupList(
+      String? code) async {
+    String path = pricingGroupListApi;
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<PricingGroupListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(PricingGroupListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<PricingGroupListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<CostingCreatePostModel> getCostMethodRead(int? id) async {
+    String path = costingMethodReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      CostingCreatePostModel dataa =
+          CostingCreatePostModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    CostingCreatePostModel dataa =
+        CostingCreatePostModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<CostingMetodTypePostModel> getCostMethodTypeRead(int? id) async {
+    String path = costingTypeMethodReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      CostingMetodTypePostModel dataa =
+          CostingMetodTypePostModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    CostingMetodTypePostModel dataa =
+        CostingMetodTypePostModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> postPricingGroupType(PricingGroupListModel model,
+      {int? type}) async {
+    String? path = "";
+    if (type == 1)
+      path = pricingGroupCreateApi;
+    else
+      path = costingCreateApi;
+
+    print(path);
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> patchPricingGroupType(
+      PricingGroupListModel model, int? id,
+      {int? type}) async {
+    String? path = "";
+    if (type == 1)
+      path = pricingGroupDeleteApi + id.toString();
+    else
+      path = costingCreateApi;
+
+    print(path);
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PricingGroupListModel> getPricingRead(int? id) async {
+    String path = pricingGroupReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PricingGroupListModel dataa =
+          PricingGroupListModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    PricingGroupListModel dataa =
+        PricingGroupListModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<PaginatedResponse<List<PricingTypeListModel>>> getPricingList(
+      String? code) async {
+    String path = pricinglistReadApi;
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<PricingTypeListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(PricingTypeListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<PricingTypeListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<PricingTypeListModel> getPricingGroupRead(int? id) async {
+    String path = pricingReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      PricingTypeListModel dataa =
+          PricingTypeListModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    PricingTypeListModel dataa =
+        PricingTypeListModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> patchPricingGroup(PricingTypeListModel model, int? id,
+      {int? type}) async {
+    String path = pricingDeleteApi + id.toString();
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postPricingGroup(PricingTypeListModel model,
+      {int? type}) async {
+    String path = pricingPostApi;
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<List<ListingChnanelTableModel>> getChannelStockTableRead(
+      int? id) async {
+    String path = readChannelStockTableApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<ListingChnanelTableModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(ListingChnanelTableModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    List<ListingChnanelTableModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(ListingChnanelTableModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return items;
+  }
+
+  @override
+  Future<DoubleResponse> postCosting(CostingPageCreationPostModel model) async {
+    String path = creaetCostingApi;
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<CostingPageCreationPostModel> getCostingRead(int? id) async {
+    String path = readCostingApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("akshayaaas" + response.data['data']['costing_data'].toString());
+      CostingPageCreationPostModel dataa =
+          CostingPageCreationPostModel.fromJson(
+              response.data['data']['costing_data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    CostingPageCreationPostModel dataa =
+        CostingPageCreationPostModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<PurchaseOrdertype> getPricingPgtype() async {
+    print("purchase");
+    print(pgTypeApi.toString());
+    final response = await client.get(
+      pgTypeApi,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    print("ayalkaran" + response.toString());
+
+    PurchaseOrdertype ordertype =
+        PurchaseOrdertype.fromJson(response.data['data']);
+    print(ordertype);
+    return ordertype;
+  }
+
+  @override
+  Future<ListingChnanelTableModel> percentageGp(int? id, String? gpType) async {
+    String path = pricingPgPercentageApi;
+    print("alallal");
+    try {
+      print(path);
+      final response = await client.post(
+        path,
+        data: {"channel_stock_id": id, "gp_type": gpType},
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      ListingChnanelTableModel dataa =
+          ListingChnanelTableModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the akku is" + e.toString());
+    }
+
+    print(path);
+    print("alallal1");
+    final response = await client.post(
+      path,
+      data: {"channel_stock_id": id, "gp_type": gpType},
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("alallal2");
+    print("brand response" + response.toString());
+    ListingChnanelTableModel dataa =
+        ListingChnanelTableModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> patchCosting(
+      CostingPageCreationPostModel model, int? id) async {
+    String path = patchCostingApi + id.toString();
+    print(path);
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postFrameWorkCreate(
+      VariantFrameworkPostModel model) async {
+    // TODO: implement postmaterialPatch
+    print("searching" + model.toString());
+    String path = postFrameWorkApi;
+    print("asss" + path.toString());
+    try {} catch (e) {
+      print("erroe" + e.toString());
+    }
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributeList(
+      String? code) async {
+    String path=listAttributeTypeApi;
+
+  final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<AttributeListModel> items = [];
+    print("searching case" + response.data['data']['results'].toString());
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(AttributeListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<AttributeListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> postPatchFrameWork(VariantFrameWorkPostModel model, int? id) async {
+    String path = VariantFrameWorkPatchApi+id.toString();
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("Seaaaa the error");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
   }
 }

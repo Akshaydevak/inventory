@@ -1178,7 +1178,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: PopUpCall(
+                                                                    child:
+                                                                    PopUpCall(
                                                                       inventory: Variable.inventory_ID,
 
                                                                       type:"cost-method-list",

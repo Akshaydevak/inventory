@@ -23,10 +23,12 @@ class _$PurchaseOrdertypeTearOff {
 
   _PurchaseOrdertype call(
       {@JsonKey(name: "order_types") List<String>? orderTypes,
+      @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
       @JsonKey(name: "order_modes") List<String>? orderMode}) {
     return _PurchaseOrdertype(
       orderTypes: orderTypes,
+      pricingPgT: pricingPgT,
       discountType: discountType,
       orderMode: orderMode,
     );
@@ -44,6 +46,8 @@ const $PurchaseOrdertype = _$PurchaseOrdertypeTearOff();
 mixin _$PurchaseOrdertype {
   @JsonKey(name: "order_types")
   List<String>? get orderTypes => throw _privateConstructorUsedError;
+  @JsonKey(name: "pricing_pg_type")
+  List<String>? get pricingPgT => throw _privateConstructorUsedError;
   @JsonKey(name: "discount_type")
   List<String>? get discountType => throw _privateConstructorUsedError;
   @JsonKey(name: "order_modes")
@@ -62,6 +66,7 @@ abstract class $PurchaseOrdertypeCopyWith<$Res> {
       _$PurchaseOrdertypeCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: "order_types") List<String>? orderTypes,
+      @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
       @JsonKey(name: "order_modes") List<String>? orderMode});
 }
@@ -78,6 +83,7 @@ class _$PurchaseOrdertypeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? orderTypes = freezed,
+    Object? pricingPgT = freezed,
     Object? discountType = freezed,
     Object? orderMode = freezed,
   }) {
@@ -85,6 +91,10 @@ class _$PurchaseOrdertypeCopyWithImpl<$Res>
       orderTypes: orderTypes == freezed
           ? _value.orderTypes
           : orderTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      pricingPgT: pricingPgT == freezed
+          ? _value.pricingPgT
+          : pricingPgT // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       discountType: discountType == freezed
           ? _value.discountType
@@ -107,6 +117,7 @@ abstract class _$PurchaseOrdertypeCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(name: "order_types") List<String>? orderTypes,
+      @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
       @JsonKey(name: "order_modes") List<String>? orderMode});
 }
@@ -125,6 +136,7 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
   @override
   $Res call({
     Object? orderTypes = freezed,
+    Object? pricingPgT = freezed,
     Object? discountType = freezed,
     Object? orderMode = freezed,
   }) {
@@ -132,6 +144,10 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
       orderTypes: orderTypes == freezed
           ? _value.orderTypes
           : orderTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      pricingPgT: pricingPgT == freezed
+          ? _value.pricingPgT
+          : pricingPgT // ignore: cast_nullable_to_non_nullable
               as List<String>?,
       discountType: discountType == freezed
           ? _value.discountType
@@ -150,6 +166,7 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
 class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   const _$_PurchaseOrdertype(
       {@JsonKey(name: "order_types") this.orderTypes,
+      @JsonKey(name: "pricing_pg_type") this.pricingPgT,
       @JsonKey(name: "discount_type") this.discountType,
       @JsonKey(name: "order_modes") this.orderMode});
 
@@ -160,6 +177,9 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   @JsonKey(name: "order_types")
   final List<String>? orderTypes;
   @override
+  @JsonKey(name: "pricing_pg_type")
+  final List<String>? pricingPgT;
+  @override
   @JsonKey(name: "discount_type")
   final List<String>? discountType;
   @override
@@ -168,7 +188,7 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
 
   @override
   String toString() {
-    return 'PurchaseOrdertype(orderTypes: $orderTypes, discountType: $discountType, orderMode: $orderMode)';
+    return 'PurchaseOrdertype(orderTypes: $orderTypes, pricingPgT: $pricingPgT, discountType: $discountType, orderMode: $orderMode)';
   }
 
   @override
@@ -178,6 +198,9 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
             (identical(other.orderTypes, orderTypes) ||
                 const DeepCollectionEquality()
                     .equals(other.orderTypes, orderTypes)) &&
+            (identical(other.pricingPgT, pricingPgT) ||
+                const DeepCollectionEquality()
+                    .equals(other.pricingPgT, pricingPgT)) &&
             (identical(other.discountType, discountType) ||
                 const DeepCollectionEquality()
                     .equals(other.discountType, discountType)) &&
@@ -190,6 +213,7 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(orderTypes) ^
+      const DeepCollectionEquality().hash(pricingPgT) ^
       const DeepCollectionEquality().hash(discountType) ^
       const DeepCollectionEquality().hash(orderMode);
 
@@ -207,6 +231,7 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
 abstract class _PurchaseOrdertype implements PurchaseOrdertype {
   const factory _PurchaseOrdertype(
           {@JsonKey(name: "order_types") List<String>? orderTypes,
+          @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
           @JsonKey(name: "discount_type") List<String>? discountType,
           @JsonKey(name: "order_modes") List<String>? orderMode}) =
       _$_PurchaseOrdertype;
@@ -217,6 +242,9 @@ abstract class _PurchaseOrdertype implements PurchaseOrdertype {
   @override
   @JsonKey(name: "order_types")
   List<String>? get orderTypes => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "pricing_pg_type")
+  List<String>? get pricingPgT => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "discount_type")
   List<String>? get discountType => throw _privateConstructorUsedError;

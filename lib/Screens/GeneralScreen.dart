@@ -4888,6 +4888,7 @@ Widget Button(IconData? icon, Color border,
             icon,
             color: iconColor,
           ),
+          SizedBox(width: 1,),
           Text(
             text,
             style: TextStyle(color: labelcolor, fontWeight: FontWeight.bold),

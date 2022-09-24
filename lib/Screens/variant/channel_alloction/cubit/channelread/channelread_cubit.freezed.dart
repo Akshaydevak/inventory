@@ -29,7 +29,7 @@ class _$ChannelreadStateTearOff {
     return const _Error();
   }
 
-  _Success success(List<Category> data) {
+  _Success success(channelAllocatesRead data) {
     return _Success(
       data,
     );
@@ -46,7 +46,7 @@ mixin _$ChannelreadState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Category> data) success,
+    required TResult Function(channelAllocatesRead data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$ChannelreadState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$ChannelreadState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -150,7 +150,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Category> data) success,
+    required TResult Function(channelAllocatesRead data) success,
   }) {
     return initial();
   }
@@ -161,7 +161,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
   }) {
     return initial?.call();
   }
@@ -172,7 +172,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -263,7 +263,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Category> data) success,
+    required TResult Function(channelAllocatesRead data) success,
   }) {
     return loading();
   }
@@ -274,7 +274,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
   }) {
     return loading?.call();
   }
@@ -285,7 +285,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -376,7 +376,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Category> data) success,
+    required TResult Function(channelAllocatesRead data) success,
   }) {
     return error();
   }
@@ -387,7 +387,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
   }) {
     return error?.call();
   }
@@ -398,7 +398,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -453,7 +453,9 @@ abstract class _Error implements ChannelreadState {
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({List<Category> data});
+  $Res call({channelAllocatesRead data});
+
+  $channelAllocatesReadCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -473,8 +475,15 @@ class __$SuccessCopyWithImpl<$Res> extends _$ChannelreadStateCopyWithImpl<$Res>
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<Category>,
+              as channelAllocatesRead,
     ));
+  }
+
+  @override
+  $channelAllocatesReadCopyWith<$Res> get data {
+    return $channelAllocatesReadCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
   }
 }
 
@@ -484,7 +493,7 @@ class _$_Success implements _Success {
   const _$_Success(this.data);
 
   @override
-  final List<Category> data;
+  final channelAllocatesRead data;
 
   @override
   String toString() {
@@ -514,7 +523,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<Category> data) success,
+    required TResult Function(channelAllocatesRead data) success,
   }) {
     return success(data);
   }
@@ -525,7 +534,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
   }) {
     return success?.call(data);
   }
@@ -536,7 +545,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<Category> data)? success,
+    TResult Function(channelAllocatesRead data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -584,9 +593,9 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements ChannelreadState {
-  const factory _Success(List<Category> data) = _$_Success;
+  const factory _Success(channelAllocatesRead data) = _$_Success;
 
-  List<Category> get data => throw _privateConstructorUsedError;
+  channelAllocatesRead get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;

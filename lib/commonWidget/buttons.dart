@@ -55,7 +55,9 @@ class TextButtonLarge extends StatelessWidget {
   final String text;
   final IconData? icon;
   final Function  onPress;
-  const TextButtonLarge({Key? key,  this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
+  Color clr;
+
+   TextButtonLarge({Key? key, this.clr=const Color(0XFF24203F), this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
  double h=MediaQuery.of(context).size.height;
@@ -72,9 +74,9 @@ class TextButtonLarge extends StatelessWidget {
               shape: MaterialStateProperty.all(
                   RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
-                      side: BorderSide(color: Color(0XFF24203F))
+                      side: BorderSide(color: clr)
                   )
-              ),backgroundColor: MaterialStateProperty.all(Color(0XFF24203F))
+              ),backgroundColor: MaterialStateProperty.all( clr)
           ), child: Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [
               // Icon(icon),
@@ -91,7 +93,10 @@ class TextButtonLarge extends StatelessWidget {
 class TableTextButton extends StatefulWidget {
   final String label;
   final Function onPress;
-  TableTextButton({required this.label,required this.onPress});
+  final bool actionCheck;
+  final bool designCheck;
+
+  TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.designCheck=false});
 
   @override
   _TableTextButtonState createState() => _TableTextButtonState();
@@ -100,10 +105,17 @@ class TableTextButton extends StatefulWidget {
 class _TableTextButtonState extends State<TableTextButton> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
+    return Container(
       height: 50,
 
-      child: TextButton(
+      child: widget.designCheck?InkWell(
+        onTap: (){ widget.onPress();},
+        child: Center(
+          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: Colors.red,size: 18,),
+        ),
+      ):
+
+      TextButton(
           style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
           ),
           onPressed: () {
@@ -115,5 +127,29 @@ class _TableTextButtonState extends State<TableTextButton> {
 
       ),
     );
+  }
+}
+
+
+class CreateTextButton extends StatefulWidget {
+  final String label;
+  final Function onPress;
+  final bool actionCheck;
+  final bool designCheck;
+
+  CreateTextButton({required this.label,required this.onPress,this.actionCheck=false,this.designCheck=false});
+
+  @override
+  _CreateTextButtonState createState() => _CreateTextButtonState();
+}
+
+class _CreateTextButtonState extends State<CreateTextButton> {
+  @override
+  Widget build(BuildContext context) {
+    return
+      TextButton(onPressed: (){
+        widget.onPress();
+
+      }, child: Text(widget.label));
   }
 }

@@ -25,6 +25,7 @@ class NewInputCard extends StatefulWidget {
   final double fontsize;
   final double height;
   final bool readOnly;
+  final bool formatter;
   final TextEditingController controller;
   final int maxLines;
    final Color colors;
@@ -42,6 +43,7 @@ class NewInputCard extends StatefulWidget {
     this.label,
     this.keyboardType,
     this.hint,
+    this.formatter=false,
     this.readOnly=false,
     this.password = false,
     this.direction=false,
@@ -71,7 +73,8 @@ class _NewInputCardState extends State<NewInputCard> {
 
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
-      child:widget.direction==false? Column(
+      child:widget.direction==false?
+      Column(
 
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -92,14 +95,17 @@ class _NewInputCardState extends State<NewInputCard> {
               textAlignVertical: TextAlignVertical.center,
 
 
+
               readOnly: widget.readOnly,
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show,
-              keyboardType:TextInputType.text ,
-              inputFormatters: <TextInputFormatter>[
+              keyboardType:
+              widget.formatter? TextInputType.number:null ,
+              inputFormatters:widget.formatter?
+              <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly
-              ],
+              ]:null,
               decoration: InputDecoration(
 
                 filled: true,
@@ -155,9 +161,16 @@ class _NewInputCardState extends State<NewInputCard> {
               readOnly: widget.readOnly,
               maxLines: widget.maxLines,
               controller: widget.controller,
-              obscureText: show,
+              obscureText: show, keyboardType:
+            widget.formatter? TextInputType.number:null ,
+              inputFormatters:widget.formatter?
+              <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly
+              ]:null,
+
 
               decoration: InputDecoration(
+
 
                 filled: true,
                 fillColor: widget.readOnly?Color(0xffF2F3F5).withOpacity(.2):Colors.white,
@@ -467,7 +480,8 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
 
               //controller: widget.controller,
               enabled: widget.enable,
-              keyboardType: widget.formatter? TextInputType.number:null ,
+              keyboardType:
+              widget.formatter? TextInputType.number:null ,
               inputFormatters:widget.formatter?
               <TextInputFormatter>[
                 FilteringTextInputFormatter.digitsOnly

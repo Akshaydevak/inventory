@@ -6,6 +6,7 @@ import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 
 
 
@@ -94,7 +95,8 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                                     // padding: EdgeInsets.only(bottom: 10),
 
                                     controller: _tabController,
-                                    tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                    tabs: [
+                                      Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
 
                                     ]),
                               ),
@@ -102,6 +104,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                               Spacer(),
                               TextButton.icon(onPressed: (){
                                 isClossed=!isClossed;
+                                costingTypeMethodeCheck=false;
                                 // print( widget.isClossed);
                                 // widget.changer(widget.isClossed);
                                 setState(() {

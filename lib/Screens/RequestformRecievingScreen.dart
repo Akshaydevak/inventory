@@ -618,7 +618,7 @@ child: IntrinsicHeight(
 
                       SizedBox(height: height*.035,),
 
-                      SizedBox(height: height*.032,),
+                      SizedBox(height: height*.052,),
 
 
 
@@ -1122,7 +1122,9 @@ child: IntrinsicHeight(
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: textPadding(currentStock.length!=recievingLisnes.length?"": currentStock[i].toString(), fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                          child: textPadding(
+                                              currentStock.length!=recievingLisnes.length?"": currentStock[i]?.toString()??"",
+                                              fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2441,7 +2443,7 @@ child: IntrinsicHeight(
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: textPadding(additionalVariants[i].currentStock.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                child: textPadding(additionalVariants[i].currentStock?.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3718,7 +3720,7 @@ child: IntrinsicHeight(
                                                           "isreceived and isActive always true in this");
                                                     }
                                                     else{
-                                                      var date = new TextEditingController(text:expirydateController.text??"");
+                                                      var date = new TextEditingController(text:expirydateController?.text??"");
                                                       expirydateControllerList.add(date);
                                                       additionalVariants.add(RecievingLines(
                                                         variantId: variantId??"",

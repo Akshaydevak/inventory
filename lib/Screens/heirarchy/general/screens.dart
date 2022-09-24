@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 
 import '../../../core/uttils/variable.dart';
 import 'cubits/createbrand/createbrand_cubit.dart';
@@ -950,4 +954,408 @@ class _TableBottomState extends State<TableBottom> {
     )
     ;
   }
+}
+
+
+
+class VariantFrameWorkBottomTable extends StatefulWidget {
+  final  Function listAssign;
+  // final  Function storageTableEdit;
+  // final  bool addNew;
+  // final  Key? key;
+  VariantFrameWorkBottomTable({required this.listAssign});
+  @override
+  VariantFrameWorkBottomTableState createState() => VariantFrameWorkBottomTableState();
+}
+
+class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable> {
+  List<VariantLinesLiostModel>table=[];
+  TextEditingController name=TextEditingController();
+  TextEditingController type=TextEditingController();
+  TextEditingController val=TextEditingController();
+  int ? attributeid;
+
+  List<String>values=[];
+
+  @override
+  Widget build(BuildContext context) {
+    double h=MediaQuery.of(context).size.height;
+    double w=MediaQuery.of(context).size.width;
+    // if(!onChange){
+    //   print("welcome to the entire place");
+    //   setState(() {
+    //     keys=[];
+    //   });
+    //
+    //
+    //   if(widget.aboutProducts?.isNotEmpty==true){
+    //
+    //
+    //     setState(() {
+    //
+    //       headingController.text=widget.addNew?"":widget.aboutProducts?[0].name??"";
+    //     });
+    //     aboutProducts= widget.aboutProducts??[];
+    //     if(aboutProducts?[0].keyValues?.isNotEmpty==true)
+    //       keys=aboutProducts?[0].keyValues??[];
+    //
+    //   }
+    //
+    //
+    //
+    //
+    //
+    // }
+    // onChange=false;
+    return
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          SingleChildScrollView(
+            child: Container(
+              // width: w/5,
+              margin: EdgeInsets.symmetric(horizontal: w*.02),
+              child: customTable(
+
+                border: const TableBorder(
+
+                  verticalInside: BorderSide(
+                      width:.5,
+                      color: Colors.black45,
+                      style: BorderStyle.solid),
+                  horizontalInside: BorderSide(
+                      width:.3,
+                      color: Colors.black45,
+                      // color: Colors.blue,
+                      style: BorderStyle.solid),),
+
+                tableWidth: .5,
+
+                childrens:[
+                  TableRow(
+
+                    // decoration: BoxDecoration(
+
+                    //     color: Colors.green.shade200,
+
+                    //     shape: BoxShape.rectangle,
+
+                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                    children: [
+
+                      tableHeadtext(
+
+                        'Variant Name',
+
+                        padding: EdgeInsets.all(7),
+
+                        height: 46,
+                        textColor: Colors.white,
+
+
+                        size: 13,
+
+
+                      ),
+                      tableHeadtext(
+
+                        'Type',
+
+                        padding: EdgeInsets.all(7),
+
+                        height: 46,
+                        textColor: Colors.white,
+
+
+                        size: 13,
+
+
+                      ),
+                      tableHeadtext(
+
+                        'Values',
+
+                        padding: EdgeInsets.all(7),
+
+                        height: 46,
+                        textColor: Colors.white,
+
+
+                        size: 13,
+
+
+                      ),
+
+
+                      tableHeadtext(
+
+                        'Action',
+
+                        padding: EdgeInsets.all(7),
+
+                        height: 46,
+                        textColor: Colors.white,
+
+
+                        size: 13,
+
+
+                      ),
+
+
+
+
+
+                    ],
+
+                  ),
+                  if (table.isNotEmpty==true ) ...[
+
+
+                    for (var i = 0; i < table.length; i++)
+                      TableRow(
+                          decoration: BoxDecoration(
+                              color: Colors.grey
+                                  .shade200,
+                              shape: BoxShape
+                                  .rectangle,
+                              border:const  Border(
+                                  left: BorderSide(
+                                      width: .5,
+                                      color: Colors
+                                          .grey,
+                                      style: BorderStyle
+                                          .solid),
+                                  bottom: BorderSide(
+                                      width: .5,
+                                      color: Colors
+                                          .grey,
+                                      style: BorderStyle
+                                          .solid),
+                                  right: BorderSide(
+                                      color: Colors
+                                          .grey,
+                                      width: .5,
+                                      style: BorderStyle
+                                          .solid))),
+                          children: [
+
+                            TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                child:textPadding(table[i].name??"")
+
+
+
+                            ),
+                            TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                child:textPadding(table[i].type??"")
+
+
+
+                            ),
+                            TableCell(
+                                verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                child:
+                                Row(
+                                  children: [
+                                    if (table[i]?.values?.isNotEmpty==true ) ...[
+
+
+                                      for (var i = 0; i < table[i].values!.length; i++)
+                                        Expanded(child:textPadding(table[i]?.values?[i].toString()??"")
+                                        ),
+
+                                    ],
+                                    // Expanded(child:UnderLinedInput(
+                                    //   formatter: false,
+                                    //   controller: val,
+                                    //   onComplete: (){
+                                    //     setState(() {
+                                    //       values.add(val.text);
+                                    //     });
+                                    //   },
+                                    // )),
+                                  ],
+                                )
+
+
+
+                            ),
+                            TableTextButton(
+                              label: "",
+                              // actionCheck: true,
+                              designCheck: true,
+                              onPress: (){
+                                setState(() {
+                                // table.remove(value)
+                                });
+
+
+
+
+
+                              },
+
+                            )
+
+
+
+
+                          ]),],
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey
+                              .shade200,
+                          shape: BoxShape
+                              .rectangle,
+                          border:const  Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors
+                                      .grey,
+                                  style: BorderStyle
+                                      .solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors
+                                      .grey,
+                                  style: BorderStyle
+                                      .solid),
+                              right: BorderSide(
+                                  color: Colors
+                                      .grey,
+                                  width: .5,
+                                  style: BorderStyle
+                                      .solid))),
+                      children: [
+
+    PopUpCall(
+
+    // label: "purchase UOM",
+    type:
+    "attribute_list",
+    value: name.text,
+    onSelection:
+    (AttributeListModel? va) {
+
+
+
+    setState(() {
+      name.text=va?.attributeName??"";
+      type.text=va?.attributeType??"";
+      attributeid=va?.id;
+
+
+    // orderType = va!;
+    });
+    },
+    ),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:UnderLinedInput(
+                            controller: type,
+                            formatter: false,
+                            onChanged: (va){
+                              print(va);
+                              // name.text=va;
+                              // setState(() {
+                              //
+                              // });
+
+                            },
+                          ),
+                        ),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:
+
+    Row(
+    children: [
+      if (values.isNotEmpty==true ) ...[
+
+
+        for (var i = 0; i < values.length; i++)
+      Expanded(
+        child: UnderLinedInput(
+        formatter: false,
+        initialCheck: true,
+        last: values[i],
+        onChanged: (va){
+            print(va);
+
+            setState(() {
+        values[i]=va;
+            });
+
+        },
+    ),
+      ),
+
+      ],
+      Expanded(child:UnderLinedInput(
+        formatter: false,
+        controller: val,
+      onComplete: (){
+         setState(() {
+             values.add(val.text);
+             print(values.length);
+             val.text='';
+         });
+      },
+      )),
+    ],
+    )
+
+                        ),
+                        TableTextButton(
+                          label: "",
+                          actionCheck: true,
+                          designCheck: true,
+                          onPress: (){
+                            setState(() {
+                              table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
+                              widget.listAssign(table);
+                              name.text='';
+                              type.text="";
+                              val.text="";
+                              attributeid=null;
+                              values.clear();
+                            });
+
+
+
+
+
+                          },
+
+                        )
+
+
+                      ])
+
+
+                ],
+
+              ),
+
+
+            ),
+          ),
+        ],
+      );
+  }
+}
+class VariantCreationModel{
+  String name;
+  String type;
+  List<String>values;
+  VariantCreationModel({required this.name,required this.type,required this.values});
 }

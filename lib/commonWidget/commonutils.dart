@@ -30,7 +30,18 @@ import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+import 'package:inventory/Screens/heirarchy/general/screens.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtype/costingtype_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/deletion/deletioncosting_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricinggrouppost/pricinggrouppost_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingread/pricingread_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcosting/readcosting_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcostingtype/readcostingtype_cubit.dart';
+
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -48,7 +59,13 @@ import '../Screens/heirarchy/general/cubits/devision_list/materialdelete_cubit.d
 import '../Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
 import '../Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import '../Screens/heirarchy/general/cubits/uomGroupcreation/uomgroup_creation_cubit.dart';
+import '../Screens/heirarchy/general/cubits/variantframeworkpost/variantframeworkpost_cubit.dart';
 import '../Screens/heirarchy/general/model/brandreadmodel.dart';
+import '../Screens/heirarchy/general/model/frameworklistmodel.dart';
+import '../Screens/variant/channel_costing_allocation/cubits/pricinggrouppatch/pricinggrouppatch_cubit.dart';
+import '../Screens/variant/channel_costing_allocation/cubits/pricinggroupread/readpricingroupread_cubit.dart';
+import '../Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
+import '../Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 
 void showDailogPopUp(BuildContext context, Widget child) {
   showDialog(
@@ -644,6 +661,45 @@ class ConfigurePopup extends StatelessWidget {
           );
         }
         break;
+      case "create_framework":
+        {
+          data =CreateFrameWorkPopUp
+            (
+            type: type,
+          );
+        }
+        break;
+      case "create_costingtype":
+        {
+          data =CreateCostingMethodeTypePopUp
+            (
+            type: type,
+          );
+        }
+        break;
+      case "create_costingCreate":
+        {
+          data =CreateCostingMethodeCreatePopUp
+            (
+            type: type,
+          );
+        }
+        break;
+      case "create_pricing":
+        {
+          data =PricingGroupCreatePopUp
+            (
+            type: type,
+          );
+        }
+        break;    case "PricingCreatePopUp":
+        {
+          data =PricingCreatePopUp
+            (
+            type: type,
+          );
+        }
+        break;
 
 
 
@@ -893,6 +949,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                                           setState(() {});
                                         },
                                         onChange: (myFile) {
+                                          imageName=myFile?.fileName??"";
 
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
@@ -1307,6 +1364,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                                           imageEncode =
@@ -1664,6 +1722,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
 
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
@@ -2062,6 +2121,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
 
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
@@ -3001,6 +3061,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                                           imageEncode =
@@ -3429,6 +3490,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                                           imageEncode = myFile.toBase64();
@@ -3743,6 +3805,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                                           imageEncode =
@@ -3798,6 +3861,2055 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
 
                                   ],
                                 )),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+
+class CreateFrameWorkPopUp extends StatefulWidget {
+  final String type;
+
+
+  CreateFrameWorkPopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _CreateFrameWorkPopUpState createState() => _CreateFrameWorkPopUpState();
+}
+
+class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  DevisionReadModel? group;
+  int? veritiaclid=0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+  bool changer=false;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+
+  TextEditingController categoryController=TextEditingController();
+  int? categoryid;
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel>table=[];
+  listAssign(List<VariantLinesLiostModel>tables){
+    onChange=true;
+    setState(() {
+      table=tables;
+
+    });
+  }
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=false;
+  }
+  void initState() {
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => VariantframeworkpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => MaterialdeleteCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+                  listener: (context, state) {
+                    print("delete" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+                BlocListener<VariantframeworkpostCubit, VariantframeworkpostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<ListstaticCubit, ListstaticState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+
+                            veritiaclid=result[0].id;
+                            // Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                        buttonCheck: true,
+                        isDirectCreate:     costingTypeMethodeCheck,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Variant FrameWork Code Details",
+                        onApply: () {
+                          print("save");
+                          VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+
+                            description: descriptionContollercontroller?.text??"",
+                            categoryId:categoryid,
+                            variantListModel:table ,
+                            // image:int.tryParse(imageContollercontroller.text),
+                            // searchNmae: searchNamecontroller?.text??"",
+                            name: namecontroller?.text??"",
+                          );
+                          context.read<VariantframeworkpostCubit>().postCreateFrameWork(model);
+
+
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+                          VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+
+                            description: descriptionContollercontroller?.text??"",
+                            categoryId:categoryid,
+                            variantListModel:table ,isActive: active,
+
+                            // image:int.tryParse(imageContollercontroller.text),
+                            // searchNmae: searchNamecontroller?.text??"",
+                            name: namecontroller?.text??"",
+                          );
+                          context.read<VariantframeworkpostCubit>().postPatchFrameWork(model,veritiaclid);
+
+                        },
+                        onCancel: (){
+                          context
+                              .read<MaterialdeleteCubit>()
+                              .materialDelete(veritiaclid,"framework_delete");
+
+
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+
+
+
+                                    Expanded(child: Column(
+                                      children: [
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: codeController, title: "Code"),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                          controller:namecontroller ,
+                                          title: "Name",
+                                        ),
+
+                                      ],
+                                    )),
+
+                                    Expanded(child:   Column(
+                                      children: [
+                                        NewInputCard(
+                                          controller:descriptionContollercontroller,
+                                          title: "Description",
+                                        ),
+                                        SizedBox(height: 10,),
+
+                                        SelectableDropDownpopUp(
+
+                                          controller:categoryController,
+                                          label: "category",
+                                          type:"Category_PopUpCall",
+                                          value: categoryController.text,
+                                          onchange: (vale){
+                                            // print("searching for search"+vale.toString());
+                                            // context.read<CategorylistCubit>().searchCategoryist(vale);
+                                          },
+                                          enable: true,
+                                          onSelection: (BrandListModel? va) {
+                                            setState(() {
+
+                                              categoryController.text=va?.name??"";
+                                              categoryid=va?.id;
+                                              Variable.categoryId=va?.id;
+                                              setState(() {
+
+                                              });
+
+
+                                              // onChange = true;
+                                              // orderType.text = va!;
+                                            });
+                                          },
+                                          onAddNew: () {
+
+                                            showDailogPopUp(
+                                              context,
+                                              ConfigurePopup(
+                                                type: "category_group",
+                                              ),
+
+
+                                            );
+                                          },
+                                        ),
+
+
+
+                                        SizedBox(height: 10,),
+                                        PopUpSwitchTile(
+                                            value: active??false,
+                                            title: "isActive",
+                                            onClick: (gg) {
+                                              onChange=true;
+                                              if(!addNew)
+                                                active=!active!;
+
+                                              // extendedWarranty = gg;
+                                              // widget.changeExtendedWarranty(gg);
+                                              // onChangeExtWarranty = gg;
+                                              setState(() {});
+                                            }),
+
+
+
+
+
+
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                VariantFrameWorkBottomTable(listAssign:listAssign),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+class CreateCostingMethodeTypePopUp extends StatefulWidget {
+  final String type;
+
+
+  CreateCostingMethodeTypePopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _CreateCostingMethodeTypePopUpState createState() => _CreateCostingMethodeTypePopUpState();
+}
+bool costingTypeMethodeCheck=true;
+class _CreateCostingMethodeTypePopUpState extends State<CreateCostingMethodeTypePopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  int? veritiaclid=0;
+  CostingMetodTypePostModel? group;
+  List<CostingMetodTypePostModel> result = [];
+
+  TextEditingController itemsearch = TextEditingController();
+
+  var list;
+  String parentName="";
+  bool changer=false;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+
+
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel>table=[];
+  listAssign(List<VariantLinesLiostModel>tables){
+    onChange=true;
+    setState(() {
+      table=tables;
+
+    });
+  }
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=true;
+  }
+  void initState() {
+    if(costingTypeMethodeCheck!=true)  context.read<CostingtypelistCubit>().getCostingTypeList();
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),  BlocProvider(
+          create: (context) => DeletioncostingCubit(),
+        ),BlocProvider(
+          create: (context) => ReadcostingtypeCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+
+
+
+                BlocListener<ReadcostingtypeCubit, ReadcostingtypeState>(
+                  listener: (context, state) {
+                    print("nnnnop"+state.toString());
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            group=data;
+                            codeController.text=data.typeCode??"";
+                            namecontroller.text=data.typeName??"";
+
+                            descriptionContollercontroller.text=data.description??"";
+
+
+                            active=data.isActive??false;
+
+                          });
+                        });
+
+
+
+                  },
+                ),
+                BlocListener<DeletioncostingCubit, DeletioncostingState>(
+                  listener: (context, state) {
+                    print("delete" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+                BlocListener<CostingtypeCubit, CostingtypeState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<CostingtypelistCubit, CostingtypelistState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+                            print("the deleting errpr"+result[0].id.toString());
+                            veritiaclid=result[0].id;
+                            // setState(() {
+                            //
+                            // });
+
+
+
+
+                            // // Variable.verticalid=result[0].id;
+                            // print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                        buttonCheck: true,
+                        isDirectCreate: costingTypeMethodeCheck,
+
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Costing Method Type Create",
+                        onApply: () {
+                          print("save");
+                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                          //
+                          //   description: descriptionContollercontroller?.text??"",
+                          //   categoryId:categoryid,
+                          //   variantListModel:table ,
+                          //   // image:int.tryParse(imageContollercontroller.text),
+                          //   // searchNmae: searchNamecontroller?.text??"",
+                          //   name: namecontroller?.text??"",
+                          // );
+                          context.read<CostingtypeCubit>().postCreateCostingType(namecontroller.text,descriptionContollercontroller.text,"afy");
+
+
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+                          context.read<CostingtypeCubit>().postPatchCostingType(veritiaclid,namecontroller.text,descriptionContollercontroller.text,"afy",active);
+
+                        },
+                        onCancel: (){
+                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"1");
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // Container(
+                                    //   color: Colors.red,
+                                    //   width: 300,
+                                    // ),
+
+                                    // if(costingTypeMethodeCheck==true)
+                                    //
+
+                                    if(costingTypeMethodeCheck!=true)     Container(
+                                      // width: width * .112,
+                                      height: 400,
+                                      child: CostingTypeVerticalList(
+                                        list: list,
+
+
+                                        selectedVertical: selectedVertical,
+                                        itemsearch: itemsearch,
+                                        ontap: (int index) {
+                                          setState(() {
+                                            selectedVertical = index;
+
+                                            // select=false;
+                                            // clear();
+                                            // exportCheck=false;
+                                            // addNew=true;
+
+                                            // updateCheck=false;
+                                            // print("rijina" +
+                                            //     // result[index].id.toString());
+
+
+                                            veritiaclid = result[index].id;
+                                            // clear();
+                                            // select=true;
+                                            //
+                                            //
+
+
+                                            setState(() {
+
+                                              context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
+                                            });
+                                          });
+                                        },
+                                        search: (String va) {
+                                          // print(va);
+                                          // context
+                                          //     .read<ListvraiantCubit>()
+                                          //     .getSearchVariantList(va);
+                                          // if (va == "") {
+                                          //   context
+                                          //       .read<ListvraiantCubit>()
+                                          //       .getVariantList();
+                                          // }
+                                        },
+                                        result: result,
+                                      ),
+                                    ),
+
+
+
+                                    Expanded(child: Column(
+                                      children: [
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: codeController, title: "Code"),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                          controller:namecontroller ,
+                                          title: "Name",
+                                        ),
+
+                                      ],
+                                    )),
+
+                                    Expanded(child:   Column(
+                                      children: [
+                                        NewInputCard(
+                                          controller:descriptionContollercontroller,
+                                          title: "Description",
+                                        ),
+                                        SizedBox(height: 10,),
+
+
+
+
+
+                                        SizedBox(height: 10,),
+                                        PopUpSwitchTile(
+                                            value: active??false,
+                                            title: "isActive",
+                                            onClick: (gg) {
+                                              onChange=true;
+                                              if(!addNew)
+                                                active=!active!;
+
+                                              // extendedWarranty = gg;
+                                              // widget.changeExtendedWarranty(gg);
+                                              // onChangeExtWarranty = gg;
+                                              setState(() {});
+                                            }),
+
+
+
+
+
+
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+
+class CreateCostingMethodeCreatePopUp extends StatefulWidget {
+  final String type;
+
+
+  CreateCostingMethodeCreatePopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _CreateCostingMethodeCreatePopUpState createState() => _CreateCostingMethodeCreatePopUpState();
+}
+
+class _CreateCostingMethodeCreatePopUpState extends State<CreateCostingMethodeCreatePopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  CostingCreatePostModel? group;
+  int? veritiaclid=0;
+  int? typeId;
+  List<CostingCreatePostModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+  bool changer=false;
+  var list;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController costingMethodcontroller=TextEditingController();
+
+
+
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel>table=[];
+  listAssign(List<VariantLinesLiostModel>tables){
+    onChange=true;
+    setState(() {
+      table=tables;
+
+    });
+  }
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=false;
+  }
+  void initState() {
+    if(costingTypeMethodeCheck!=true)
+    context.read<CostingcreatelistCubit>().getCostingCreateList();
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),  BlocProvider(
+          create: (context) => ReadcostingCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<ReadcostingCubit, ReadcostingState>(
+                  listener: (context, state) {
+                    print("nnnnop"+state.toString());
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            group=data;
+                            codeController.text=data.methodCode??"";
+                            namecontroller.text=data.methodName??"";
+
+                            descriptionContollercontroller.text=data.description??"";
+
+
+                            active=data.isActive??false;
+
+                          });
+                        });
+
+
+
+                  },
+                ),
+
+
+
+                BlocListener<CostingtypeCubit, CostingtypeState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<CostingcreatelistCubit, CostingcreatelistState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+
+                            veritiaclid=result[0].id;
+                            // Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                        buttonCheck: true,
+                        isDirectCreate: costingTypeMethodeCheck,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Costing Method  Create",
+                        onApply: () {
+                          print("save");
+                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                          //
+                          //   description: descriptionContollercontroller?.text??"",
+                          //   categoryId:categoryid,
+                          //   variantListModel:table ,
+                          //   // image:int.tryParse(imageContollercontroller.text),
+                          //   // searchNmae: searchNamecontroller?.text??"",
+                          //   name: namecontroller?.text??"",
+                          // );
+                          context.read<CostingtypeCubit>().postCreateCostingType(namecontroller.text,descriptionContollercontroller.text,"afy",id: typeId);
+
+
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+                          context.read<CostingtypeCubit>().postPatchCostingCreate(veritiaclid,namecontroller.text,descriptionContollercontroller.text,"afy",active);
+
+                        },
+                        onCancel: (){
+                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"2");
+
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                 if(costingTypeMethodeCheck!=true)   Container(
+                                      // width: width * .112,
+                                      height: 400,
+                                      child: CostingCreateVerticalList(
+                                        list: list,
+
+
+                                        selectedVertical: selectedVertical,
+                                        itemsearch: itemsearch,
+                                        ontap: (int index) {
+                                          setState(() {
+                                            selectedVertical = index;
+
+                                            // select=false;
+                                            // clear();
+                                            // exportCheck=false;
+                                            // addNew=true;
+
+                                            // updateCheck=false;
+                                            // print("rijina" +
+                                            //     // result[index].id.toString());
+
+
+                                            veritiaclid = result[index].id;
+                                            // clear();
+                                            // select=true;
+                                            //
+                                            //
+
+
+                                            setState(() {
+
+                                              context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
+                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+
+                                            });
+                                          });
+                                        },
+                                        search: (String va) {
+                                          // print(va);
+                                          // context
+                                          //     .read<ListvraiantCubit>()
+                                          //     .getSearchVariantList(va);
+                                          // if (va == "") {
+                                          //   context
+                                          //       .read<ListvraiantCubit>()
+                                          //       .getVariantList();
+                                          // }
+                                        },
+                                        result: result,
+                                      ),
+                                    ),
+
+
+
+                                    Expanded(child: Column(
+                                      children: [
+                                        SelectableDropDownpopUp(
+                                          // bindType: "static",
+                                          controller:costingMethodcontroller,
+                                          label: "Costing Method Type Id",
+                                          type:"CostingMethodTypePopUpCall",
+                                          value:  costingMethodcontroller.text,
+                                          onchange: (vale){
+                                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                          },
+                                          enable: true,
+                                          onSelection: (CostingMetodTypePostModel? va) {
+                                            setState(() {
+
+                                             costingMethodcontroller.text=va?.typeName??"";
+                                             typeId=va?.id;
+                                              setState(() {
+
+                                              });
+
+
+                                              // onChange = true;
+                                              // orderType.text = va!;
+                                            });
+                                          },
+                                          onAddNew: () {
+                                            setState(() {
+                                              costingTypeMethodeCheck=true;
+                                            });
+
+                                            showDailogPopUp(
+                                              context,
+                                              ConfigurePopup(
+                                                type: "create_costingtype",
+                                              ),
+
+
+                                            );
+                                          },
+                                        ),
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: codeController, title: "Code"),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                          controller:namecontroller ,
+                                          title: "Name",
+                                        ),
+
+                                      ],
+                                    )),
+
+                                    Expanded(child:   Column(
+                                      children: [
+                                        NewInputCard(
+                                          controller:descriptionContollercontroller,
+                                          title: "Description",
+                                        ),
+                                        SizedBox(height: 10,),
+
+
+
+
+
+                                        SizedBox(height: 10,),
+                                        PopUpSwitchTile(
+                                            value: active??false,
+                                            title: "isActive",
+                                            onClick: (gg) {
+                                              onChange=true;
+                                              if(!addNew)
+                                                active=!active!;
+
+                                              // extendedWarranty = gg;
+                                              // widget.changeExtendedWarranty(gg);
+                                              // onChangeExtWarranty = gg;
+                                              setState(() {});
+                                            }),
+
+
+
+
+
+
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+
+
+
+class PricingGroupCreatePopUp extends StatefulWidget {
+  final String type;
+
+
+  PricingGroupCreatePopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _PricingGroupCreatePopUp createState() => _PricingGroupCreatePopUp();
+}
+
+class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  PricingGroupListModel? group;
+  int? veritiaclid=0;
+  int? typeId;
+  List<PricingGroupListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+  bool changer=false;
+  var list;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController costingMethodcontroller=TextEditingController();
+  TextEditingController customerGroupcontroller=TextEditingController();
+
+
+
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel>table=[];
+  listAssign(List<VariantLinesLiostModel>tables){
+    onChange=true;
+    setState(() {
+      table=tables;
+
+    });
+  }
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=false;
+  }
+  void initState() {
+    if(costingTypeMethodeCheck!=true) context.read<PricingroupcreateCubit>().getPricingGroupList();
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),   BlocProvider(
+          create: (context) => PricinggrouppostCubit(),
+        ),  BlocProvider(
+          create: (context) => PricinggrouppatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ReadpricingroupreadCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<ReadpricingroupreadCubit, ReadpricingroupreadState>(
+                  listener: (context, state) {
+                    print("nnnnop"+state.toString());
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            group=data;
+                            codeController.text=data.pricingTypeCode??"";
+                            namecontroller.text=data.pricingTypeName??"";
+
+                            descriptionContollercontroller.text=data.description??"";
+
+
+                            active=data.isActive??false;
+
+                          });
+                        });
+
+
+
+                  },
+                ),
+
+
+
+                BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+                BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<PricingroupcreateCubit, PricingroupcreateState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+
+                            veritiaclid=result[0].id;
+                            // Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                        buttonCheck: true,
+                        isDirectCreate: costingTypeMethodeCheck,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Costing Method  Create",
+                        onApply: () {
+                          print("save");
+                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                          //
+                          //   description: descriptionContollercontroller?.text??"",
+                          //   categoryId:categoryid,
+                          //   variantListModel:table ,
+                          //   // image:int.tryParse(imageContollercontroller.text),
+                          //   // searchNmae: searchNamecontroller?.text??"",
+                          //   name: namecontroller?.text??"",
+                          // );
+                          PricingGroupListModel model=PricingGroupListModel(
+                              pricingTypeName: namecontroller.text,
+                              description: descriptionContollercontroller.text,
+                              createdBy: "afy"
+
+                          );
+                          context.read<PricinggrouppostCubit>().postPricingGroupType(model,type: 1);
+
+
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+                          PricingGroupListModel model=PricingGroupListModel(
+                              pricingTypeName: namecontroller.text,
+                              description: descriptionContollercontroller.text,
+                              createdBy: "afy",
+                            isActive: active,
+
+                          );
+                          context.read<PricinggrouppatchCubit>().patchPricingGroupType(model,veritiaclid,type: 1);
+
+
+                        },
+                        onCancel: (){
+                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"3");
+
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if(costingTypeMethodeCheck!=true)   Container(
+                                      // width: width * .112,
+                                      height: 400,
+                                      child: PricingGroupVerticalList(
+                                        list: list,
+
+
+                                        selectedVertical: selectedVertical,
+                                        itemsearch: itemsearch,
+                                        ontap: (int index) {
+                                          setState(() {
+                                            selectedVertical = index;
+
+                                            // select=false;
+                                            // clear();
+                                            // exportCheck=false;
+                                            // addNew=true;
+
+                                            // updateCheck=false;
+                                            // print("rijina" +
+                                            //     // result[index].id.toString());
+
+
+                                            veritiaclid = result[index].id;
+                                            // clear();
+                                            // select=true;
+                                            //
+                                            //
+
+
+                                            setState(() {
+
+                                              context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
+                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+
+                                            });
+                                          });
+                                        },
+                                        search: (String va) {
+                                          // print(va);
+                                          // context
+                                          //     .read<ListvraiantCubit>()
+                                          //     .getSearchVariantList(va);
+                                          // if (va == "") {
+                                          //   context
+                                          //       .read<ListvraiantCubit>()
+                                          //       .getVariantList();
+                                          // }
+                                        },
+                                        result: result,
+                                      ),
+                                    ),
+
+
+
+                                    Expanded(child: Column(
+                                      children: [
+
+
+
+
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: codeController, title: "Code"),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                          controller:namecontroller ,
+                                          title: "Name",
+                                        ),
+
+                                      ],
+                                    )),
+
+                                    Expanded(child:   Column(
+                                      children: [
+                                        NewInputCard(
+                                          controller:descriptionContollercontroller,
+                                          title: "Description",
+                                        ),
+                                        SizedBox(height: 10,),
+
+
+
+
+
+                                        SizedBox(height: 10,),
+                                        PopUpSwitchTile(
+                                            value: active??false,
+                                            title: "isActive",
+                                            onClick: (gg) {
+                                              onChange=true;
+                                              if(!addNew)
+                                                active=!active!;
+
+                                              // extendedWarranty = gg;
+                                              // widget.changeExtendedWarranty(gg);
+                                              // onChangeExtWarranty = gg;
+                                              setState(() {});
+                                            }),
+
+
+
+
+
+
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
+              ),
+            );
+          }
+      ),
+    );
+  }
+}
+
+
+
+
+class PricingCreatePopUp extends StatefulWidget {
+  final String type;
+
+
+  PricingCreatePopUp({
+    Key? key,
+    required this.type,
+
+
+
+  }) : super(key: key);
+
+  @override
+  _PricingCreatePopUp createState() => _PricingCreatePopUp();
+}
+
+class _PricingCreatePopUp extends State<PricingCreatePopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName="";
+  String imageEncode="";
+  int selectedVertical=0;
+  PricingTypeListModel? group;
+  int? veritiaclid=0;
+  int? typeId;
+  List<PricingTypeListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName="";
+  bool changer=false;
+  var list;
+
+  TextEditingController codeController=TextEditingController();
+  TextEditingController namecontroller=TextEditingController();
+  TextEditingController customerGroup=TextEditingController();
+  TextEditingController costingMethodcontroller=TextEditingController();
+  TextEditingController customerGroupcontroller=TextEditingController();
+  TextEditingController pricingTypecontroller=TextEditingController();
+
+
+
+  TextEditingController descriptionContollercontroller=TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel>table=[];
+  listAssign(List<VariantLinesLiostModel>tables){
+    onChange=true;
+    setState(() {
+      table=tables;
+
+    });
+  }
+
+  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
+  void changeAddNew(bool va) { addNew = va;
+  onChange=false;
+  }
+  void initState() {
+    if(costingTypeMethodeCheck!=true)  context.read<PricinglistCubit>().getPricingList();
+
+    super.initState();
+  }
+  @override
+  Widget build(BuildContext context) {
+
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+
+
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),   BlocProvider(
+          create: (context) => PricinggrouppostCubit(),
+        ),  BlocProvider(
+          create: (context) => PricinggrouppatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PricingreadCubit(),
+        ),
+
+      ],
+      child: Builder(
+          builder: (context) {
+            return MultiBlocListener(
+              listeners: [
+                BlocListener<PricingreadCubit, PricingreadState>(
+                  listener: (context, state) {
+                    print("nnnnop"+state.toString());
+                    state.maybeWhen(
+                        orElse: () {},
+                        error: () {
+                          print("error");
+                        },
+                        success: (data) {
+                          setState(() {
+                            group=data;
+                            codeController.text=data.pricingCroupCode??"";
+                            namecontroller.text=data.pricingGroupName??"";
+                            pricingTypecontroller.text=data.pricingTypeId.toString()??"";
+
+                            descriptionContollercontroller.text=data.description??"";
+
+
+                            active=data.isActive??false;
+
+                          });
+                        });
+
+
+
+                  },
+                ),
+
+
+
+                BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+                BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loading");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+                        Navigator.pop(context);
+                        setState(() {
+
+                        });
+
+                      }
+                      else {
+                        context.showSnackBarError(data.data2);
+                        Navigator.pop(context);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
+
+              ],
+              child: BlocConsumer<PricinglistCubit, PricinglistState>(
+                listener: (context, state) {
+                  print("state"+state.toString());
+                  state.maybeWhen(
+                      orElse: () {},
+                      error: () {
+                        print("error");
+                      },
+                      success: (list) {
+                        print("aaaaayyyiram"+list.data.toString());
+
+                        result = list.data;
+                        print("seee"+result.toString());
+                        setState(() {
+                          if(result.isNotEmpty){
+
+                            veritiaclid=result[0].pricingTypeId;
+                            // Variable.verticalid=result[0].id;
+                            print("Variable.ak"+Variable.verticalid.toString());
+                            context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
+                          }
+                          else{
+                            print("common");
+                            // select=true;
+                            setState(() {
+                            });
+
+                          }
+
+
+                          setState(() {});
+
+                        });
+                      });
+                },
+                builder: (context, state) {
+                  return Builder(builder: (context) {
+
+
+
+                    return AlertDialog(
+                      content: PopUpHeader(
+                        functionChane: true,
+                        buttonCheck: true,
+                        isDirectCreate: costingTypeMethodeCheck,
+                        onTap: () { addNew=!addNew;
+                        setState(() {
+
+                        });},
+                        key: _myWidgetState,
+                        addNew: addNew,
+                        // isDirectCreate:changer,
+
+                        label: "Costing Method  Create",
+                        onApply: () {
+                          print("save");
+                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                          //
+                          //   description: descriptionContollercontroller?.text??"",
+                          //   categoryId:categoryid,
+                          //   variantListModel:table ,
+                          //   // image:int.tryParse(imageContollercontroller.text),
+                          //   // searchNmae: searchNamecontroller?.text??"",
+                          //   name: namecontroller?.text??"",
+                          // );
+                          PricingTypeListModel model=PricingTypeListModel(
+                            pricingTypeId:int.tryParse(pricingTypecontroller.text),
+                            pricingGroupName: namecontroller.text,
+                            customerGrouCode: customerGroupcontroller.text,
+                            description: descriptionContollercontroller.text,
+                            createdBy: "afy",
+                            isActive: active,
+
+                          );
+                          context.read<PricinggrouppostCubit>().postPricingGroup(model,type: 1);
+
+
+
+                          // widget.onTap();
+
+                        },
+                        onEdit: () {
+                          PricingTypeListModel model=PricingTypeListModel(
+                            pricingTypeId:int.tryParse(pricingTypecontroller.text),
+                            pricingGroupName: namecontroller.text,
+                            customerGrouCode: customerGroupcontroller.text,
+                            description: descriptionContollercontroller.text,
+                            createdBy: "afy",
+                            isActive: active,
+
+                          );
+                          context.read<PricinggrouppatchCubit>().patchPricingGroup(model,veritiaclid);
+
+
+                        },
+                        onCancel: (){
+                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"4");
+
+
+
+
+                        },
+
+                        onAddNew: (v) {
+
+                        },
+                        dataField: Expanded(
+                          // height: MediaQuery.of(context).size.height * .6,
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    if(costingTypeMethodeCheck!=true)   Container(
+                                      // width: width * .112,
+                                      height: 400,
+                                      child: PricingVerticalList(
+                                        list: list,
+
+
+                                        selectedVertical: selectedVertical,
+                                        itemsearch: itemsearch,
+                                        ontap: (int index) {
+                                          setState(() {
+                                            selectedVertical = index;
+
+                                            // select=false;
+                                            // clear();
+                                            // exportCheck=false;
+                                            // addNew=true;
+
+                                            // updateCheck=false;
+                                            // print("rijina" +
+                                            //     // result[index].id.toString());
+
+
+                                            veritiaclid = result[index].pricingTypeId;
+                                            // clear();
+                                            // select=true;
+                                            //
+                                            //
+
+
+                                            setState(() {
+
+                                              context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
+                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+
+                                            });
+                                          });
+                                        },
+                                        search: (String va) {
+                                          // print(va);
+                                          // context
+                                          //     .read<ListvraiantCubit>()
+                                          //     .getSearchVariantList(va);
+                                          // if (va == "") {
+                                          //   context
+                                          //       .read<ListvraiantCubit>()
+                                          //       .getVariantList();
+                                          // }
+                                        },
+                                        result: result,
+                                      ),
+                                    ),
+
+
+
+                                    Expanded(child: Column(
+                                      children: [
+                                        SelectableDropDownpopUp(
+
+                                          controller:pricingTypecontroller,
+                                          label: "Costing Method Id",
+                                          type:"Pricing_GroupPopUpCall",
+                                          value:  pricingTypecontroller.text,
+                                          onchange: (vale){
+                                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                          },
+                                          enable: true,
+                                          onSelection: (PricingGroupListModel? va) {
+                                            setState(() {
+                                              costingTypeMethodeCheck=true;
+                                            });
+                                            setState(() {
+
+                                              pricingTypecontroller.text=va?.pricingTypeName??"";
+                                              setState(() {
+
+                                              });
+
+
+                                              // onChange = true;
+                                              // orderType.text = va!;
+                                            });
+                                          },
+                                          onAddNew: () {
+
+                                            showDailogPopUp(
+                                              context,
+                                              ConfigurePopup(
+                                                type: "create_pricing",
+                                              ),
+
+
+                                            );
+                                          },
+                                        ),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: customerGroup, title: "Customer Group"),
+                                        SizedBox(height: 10,),
+
+
+
+
+                                        NewInputCard(
+                                            readOnly: true,
+                                            controller: codeController, title: "Code"),
+                                        SizedBox(height: 10,),
+                                        NewInputCard(
+                                          controller:namecontroller ,
+                                          title: "Name",
+                                        ),
+
+                                      ],
+                                    )),
+
+                                    Expanded(child:   Column(
+                                      children: [
+                                        NewInputCard(
+                                          controller:descriptionContollercontroller,
+                                          title: "Description",
+                                        ),
+                                        SizedBox(height: 10,),
+
+
+
+
+
+                                        SizedBox(height: 10,),
+                                        PopUpSwitchTile(
+                                            value: active??false,
+                                            title: "isActive",
+                                            onClick: (gg) {
+                                              onChange=true;
+                                              if(!addNew)
+                                                active=!active!;
+
+                                              // extendedWarranty = gg;
+                                              // widget.changeExtendedWarranty(gg);
+                                              // onChangeExtWarranty = gg;
+                                              setState(() {});
+                                            }),
+
+
+
+
+
+
+                                      ],
+                                    )),
+                                  ],
+                                ),
+                                SizedBox(height: 10,),
+                                // VariantFrameWorkBottomTable(listAssign:listAssign),
                               ],
                             ),
                           ),
@@ -6913,6 +9025,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
 
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 
@@ -7259,6 +9372,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                         },
                                         onChange: (myFile) {
                                           onChange=true;
+                                          imageName=myFile?.fileName??"";
 
                                           // Variable.mobileBannerImage = myFile.toUint8List();
 

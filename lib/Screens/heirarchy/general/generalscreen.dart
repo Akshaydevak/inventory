@@ -10,6 +10,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/createbrand/createbra
 import 'package:inventory/Screens/heirarchy/general/cubits/itemcreation/itemcreatin_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/itemread/itemread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandreadmodel.dart';
+import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/images.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/itemread.dart';
@@ -907,8 +908,41 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
             SizedBox(
               height: height * .030,
             ),
-            NewInputCard(
-                controller: widget.variantFramework, title: "Variant Frame work"),
+            SelectableDropDownpopUp(
+
+              controller:widget.variantFramework,
+              label: "Variant Framework",
+              type:"FrameWorkPopUpCall",
+              value:  widget.variantFramework.text,
+              onchange: (vale){
+                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              },
+              enable: true,
+              onSelection: (FrameWorkListModel? va) {
+                setState(() {
+
+                  widget.variantFramework.text=va?.code??"";
+                  setState(() {
+
+                  });
+
+
+                  // onChange = true;
+                  // orderType.text = va!;
+                });
+              },
+              onAddNew: () {
+
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "create_framework",
+                  ),
+
+
+                );
+              },
+            ),
             SizedBox(
               height: height * .030,
             ),
