@@ -23,30 +23,56 @@ class _AttributeScreenState extends State<AttributeScreen> {
   Widget build(BuildContext context) {
     if(!onChange){
       var maps;
+graphArray.clear();
+      for(var i =0;i<widget.attributes.length;i++) {
+        graphArray.add([]);
+      }
       for(var i =0;i<widget.attributes.length;i++){
-        if(widget.attributes[i]?.values?.isNotEmpty==true){
-          widget.attributes[i].values?.forEach((element) {
-            print(element);
-            print(i);
-            maps={
-              "flag":false,
-              "value":element
-            };
+        if(widget.attributes[i]?.values?.isNotEmpty==true) {
+          for (var j = 0; j < widget.attributes[i].values!.length; j++) {
+maps={
+  "flag":false,
+  "value":widget.attributes[i].values?[j]
+};
+attributes.add(maps);
+graphArray[i].add({
+
+  "flag":false,
+  "value":widget.attributes[i].values?[j]
+});
 
 
-            print("rgc"+maps.toString());
 
-            print("rgc"+attributes.toString());
-            attributes.add(maps);
-            graphArray.add(attributes);
+print("grappphAtrray"+graphArray.toString());
 
-          });
+
+          }
+
+          // widget.attributes[i].values?.forEach((element) {
+          //   print(element);
+          //   print(i);
+          //   maps={
+          //     "flag":false,
+          //     "value":element
+          //   };
+          //
+          //
+          //   print("rgc"+maps.toString());
+          //
+          //   print("rgc"+attributes.toString());
+          //   attributes.add(maps);
+          //   graphArray[i].add(attributes);
+          //
+          //   // graphArray.add(attributes);
+          //
+          // }
+          // );
 
 
 
         }
-
-        print("garray"+graphArray.toString());
+        print("garray  0"+graphArray[0].toString());
+        print("garray   1"+graphArray[1].toString());
       }
 //        graphArray = new List.generate(widget.attributes.length, (i) {
 //          print("the i is here"+i.toString());

@@ -43,48 +43,105 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   });
     print("arrived");
     combinationArray=combinationArrays;
-  if(combinationArray.isNotEmpty){
-    if(combinationArray.length==1){
-      print("arrived");
-  var array = combinationArray[0];
-  if(array.isNotEmpty){
-    for(var i=0;i<array.length;i++){
-      if(array[i]["flag"]==true){
-        setState(() {
+    if(combinationArray.isNotEmpty){
+      for(var i=0;i<combinationArray.length-1;i++)
+        {
+          var firstList=combinationArray[i];
+          // firstList.retainWhere((element) {
+          //   return element["flag"]==true;
+          // });
 
-          vals.add(array[i]["value"]);
-          print(vals.toString());
-        });
-
-
-      }
-
-    }
-  }
-
-    }
-    else if(combinationArray.length==2){
-      var array1= combinationArray[0];
-      var array2= combinationArray[1];
-      if(array1.isNotEmpty){
-        for (var i =0;i<array1.length;i++){
-          if(array2.isNotEmpty){
-            for(var j=0;j<array2.length;i++){
-              if(array1[i]["flag"]==true &&array2[j]["flag"]==true)
-                vals.add(array1[i]["value"]+array2[j]["value"]);
-              else if(array1[i]["flag"]==true)
-                vals.add(array1[i]["value"]);
-              else if(array2[i]["flag"]==true)
-                vals.add(array2[i]["value"]);
+          print("the first list===="+firstList.toString());
+          print("the first list===="+firstList.toString());
+          for(var m=i+1;m<combinationArray.length;m++){
+            var secondList=combinationArray[m];
+            print("the first list===="+secondList.toString());
+            if(firstList.isNotEmpty)
+              print("entered2");
+              for(var j=0;j<firstList.length;j++) {
+                print("entered1");
+                if (secondList.isNotEmpty)
+                  for (var k = 0; k < secondList.length; k++) {
+                    if (firstList[j]["flag"] == true &&
+                        secondList[k]["flag"] == true) {
+                      setState(() {
+                        var val= firstList[j]["value"] + secondList[k]["value"];
+                        if(vals.contains(val)==false)
 
 
-              
-            }
+                        vals.add(
+                            firstList[j]["value"] + secondList[k]["value"]);
+                      });
+                    }
+                    else if (firstList[j]["flag"] == true) {
+                      setState(() {
+                        var val= firstList[j]["value"];
+                        if(vals.contains(val)==false)
+                        vals.add(firstList[j]["value"]);
+                      });
+                    }
+                    else if (secondList[k]["flag"] == true) {
+                      setState(() {
+                        var val=secondList[k]["value"];
+                        if(vals.contains(val)==false)
+                        vals.add(secondList[k]["value"]);
+                      });
+                    }
+                  }
+              }
+
           }
         }
-      }
+
     }
-  }
+
+
+
+
+
+
+  // if(combinationArray.isNotEmpty){
+  //   if(combinationArray.length==1){
+  //     print("arrived");
+  // var array = combinationArray[0];
+  // if(array.isNotEmpty){
+  //   for(var i=0;i<array.length;i++){
+  //     if(array[i]["flag"]==true){
+  //       setState(() {
+  //
+  //         vals.add(array[i]["value"]);
+  //         print(vals.toString());
+  //       });
+  //
+  //
+  //     }
+  //
+  //   }
+  // }
+  //
+  //   }
+  //   else if(combinationArray.length==2){
+  //     var array1= combinationArray[0];
+  //     var array2= combinationArray[1];
+  //     if(array1.isNotEmpty){
+  //       for (var i =0;i<array1.length;i++){
+  //         if(array2.isNotEmpty){
+  //           for(var j=0;j<array2.length;j++){
+  //             if(array1[i]["flag"]==true &&array2[j]["flag"]==true)
+  //               vals.add(array1[i]["value"]+array2[j]["value"]);
+  //             else if(array1[i]["flag"]==true)
+  //               vals.add(array1[i]["value"]);
+  //             else if(array2[j]["flag"]==true)
+  //               vals.add(array2[j]["value"]);
+  //
+  //
+  //
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
 
   }
   @override
