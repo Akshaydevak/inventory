@@ -4,15 +4,43 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/widgets/customtable.dart';
 
 class CombinationTable extends StatefulWidget {
-  final List<String>list;
+  List<List<Map<String,dynamic>>>list;
   CombinationTable({required this.list});
   @override
   _CombinationTableState createState() => _CombinationTableState();
 }
 
 class _CombinationTableState extends State<CombinationTable> {
+
+
+  bool onChange=false;
+  List<dynamic>attributeNameList=[];
+
   @override
   Widget build(BuildContext context) {
+    print(widget.list);
+    if(!onChange){
+        if(widget.list.isNotEmpty){}
+        for(var l=0;l<widget.list.length;l++){
+          attributeNameList.add([]);
+          if(widget.list[l].isNotEmpty){
+            for(var i=0;i<widget.list[l].length;i++){
+              var val=widget.list[l][i]["value"];
+              print("the val is"+val.toString());
+              String name="";
+              name=name+val;
+
+              attributeNameList[l];
+              print("attrbuteName"+attributeNameList.toString());
+
+            }
+          }
+
+        }
+    }
+
+
+
     return
       Container(
       width: 2200,
@@ -113,13 +141,17 @@ class _CombinationTableState extends State<CombinationTable> {
                       }
 
                   ),),
+
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
 
-                  child:   Text(widget.list[i]
+
+                  child:Text("")
 
 
-                  ),)
+
+    )
+
 
               ]),
 

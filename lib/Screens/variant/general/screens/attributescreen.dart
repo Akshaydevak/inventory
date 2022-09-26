@@ -37,6 +37,9 @@ maps={
 attributes.add(maps);
 graphArray[i].add({
 
+  "key":widget.attributes[i].attributeName,
+  "attributeId":widget.attributes[i].attributeId,
+  "attributeCode":widget.attributes[i].attributeCode,
   "flag":false,
   "value":widget.attributes[i].values?[j]
 });
@@ -154,6 +157,7 @@ print("grappphAtrray"+graphArray.toString());
                       print("val"+val.toString());
                      graphArray[index][item]["flag"]=val;
                       print(  graphArray[index][item]["flag"]);
+
                       widget.combination(graphArray);
 
 

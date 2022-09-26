@@ -36,13 +36,50 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
  List< VariantCreationRead2Model>attribute=[];
   List<List<Map<String,dynamic>>> combinationArray=[];
   var lists;
-  List<String>vals=[];
+  // List<String>vals=[];
+  List<List<Map<String,dynamic>>>vals=[];
   combinationList( List<List<Map<String,dynamic>>> combinationArrays){
   setState(() {
     vals.clear();
   });
     print("arrived");
+  // List<List<Map<String, dynamic>>> filterArray=[];
+  // if(combinationArray.isNotEmpty){
+  //   for(var m=0;m<combinationArray.length;m++){
+  //     var list=combinationArray[m];
+  //     List<Map<String, dynamic>> list1=[];
+  //
+  //     if(list.isNotEmpty==true){
+  //       for(var p=0;p<list.length;p++){
+  //
+  //         if(list[p]["flag"]==true){
+  //
+  //           list1.add(list[p]);
+  //           print(list1);
+  //           print("thre is the error");
+  //
+  //
+  //
+  //
+  //
+  //
+  //         }
+  //         filterArray.add(list1);
+  //         print("the filterArray"+filterArray.toString());
+  //
+  //       }
+  //     }
+  //   }
+  // }
+
     combinationArray=combinationArrays;
+    if(combinationArray.isNotEmpty==true){
+
+    }
+
+
+
+
     if(combinationArray.isNotEmpty){
       for(var i=0;i<combinationArray.length-1;i++)
         {
@@ -65,26 +102,43 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                     if (firstList[j]["flag"] == true &&
                         secondList[k]["flag"] == true) {
                       setState(() {
-                        var val= firstList[j]["value"] + secondList[k]["value"];
-                        if(vals.contains(val)==false)
-
-
-                        vals.add(
-                            firstList[j]["value"] + secondList[k]["value"]);
+                        List<Map<String,dynamic> >mapList=[];
+                        mapList.add(firstList[j]);
+                        mapList.add(secondList[k]);
+                        vals.add(mapList);
+                        // var val= firstList[j]["value"] + secondList[k]["value"];
+                        // if(vals.contains(val)==false)
+                        //
+                        //
+                        // vals.add(
+                        //     firstList[j]["value"] + secondList[k]["value"]);
                       });
                     }
                     else if (firstList[j]["flag"] == true) {
                       setState(() {
-                        var val= firstList[j]["value"];
-                        if(vals.contains(val)==false)
-                        vals.add(firstList[j]["value"]);
+                        print("enteredist");
+                        print(firstList[j]);
+                        List<Map<String,dynamic> >mapList=[];
+                        mapList.add(firstList[j]);
+                        print(mapList);
+
+                        vals.add(mapList);
+                        // var val= firstList[j]["value"];
+                        // if(vals.contains(val)==false)
+                        // vals.add(firstList[j]["value"]);
                       });
                     }
                     else if (secondList[k]["flag"] == true) {
+                      print("enteredist");
                       setState(() {
-                        var val=secondList[k]["value"];
-                        if(vals.contains(val)==false)
-                        vals.add(secondList[k]["value"]);
+                        print(secondList[k]);
+                        List<Map<String,dynamic> >mapList=[];
+                        mapList.add(secondList[k]);
+
+                        vals.add(mapList);
+                        // var val=secondList[k]["value"];
+                        // if(vals.contains(val)==false)
+                        // vals.add(secondList[k]["value"]);
                       });
                     }
                   }
@@ -97,6 +151,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 
 
 
+//second case ++++++++++++++++++++
 
 
 
