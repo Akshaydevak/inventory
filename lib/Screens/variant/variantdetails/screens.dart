@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -35,9 +37,12 @@ class _IdentificationState extends State<Identification> {
   TextEditingController controller=TextEditingController();
   List<AlternativeBarcode>alternativeBarcode=[];
   TextEditingController barCodeTextEditingController=TextEditingController();
+  TextEditingController barCode2TextEditingController=TextEditingController();
   TextEditingController qrCodeTextEditingController=TextEditingController();
+  List<TextEditingController>bacCodeListTextEditing=[];
   bool barActive=false;
   bool qrActive=false;
+
 
   List<AlternativeBarcode>alterNativeQrCode=[];
   bool onChange=false;
@@ -45,26 +50,56 @@ class _IdentificationState extends State<Identification> {
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    return   Builder(
-      builder: (context) {
-        if(!onChange){
-          if(widget.alternativeBarcode?.isNotEmpty==true){
-            alternativeBarcode= widget?.alternativeBarcode??[];
+    if(!onChange){
 
 
-          }
-          if(widget.alternativeBarcode?.isNotEmpty==true){
-            alterNativeQrCode= widget?.alternativeQrCode??[];
-
-
-          }
+  alternativeBarcode=[];
+  bacCodeListTextEditing=[];
 
 
 
+
+
+
+
+      if(widget.alternativeBarcode?.isNotEmpty==true){
+        for(var i=0;i<widget.alternativeBarcode.length;i++){
+          var value=widget.alternativeBarcode[i].barcode;
+          if(value==null)
+            value="";
+         bacCodeListTextEditing.add(TextEditingController(text: value));
 
 
         }
-        onChange=false;
+
+  alternativeBarcode= widget?.alternativeBarcode??[];
+
+
+
+
+
+
+      }
+      if(widget.alternativeBarcode?.isNotEmpty==true){
+        alterNativeQrCode= widget?.alternativeQrCode??[];
+
+
+      }
+      setState(() {
+
+      });
+
+
+
+
+
+    }
+
+
+    onChange=false;
+    return   Builder(
+      builder: (context) {
+
         return Container(
             color: Colors.white,
             child: Column(
@@ -82,15 +117,15 @@ class _IdentificationState extends State<Identification> {
                       ),
                     ),
 
-                    Expanded(
-
-                      child: Column(
-                        children: [
-                          NewInputCard(
-                              controller: widget.qrCode, title: "Qr code"),
-                        ],
-                      ),
-                    ),
+                    // Expanded(
+                    //
+                    //   child: Column(
+                    //     children: [
+                    //       NewInputCard(
+                    //           controller: widget.qrCode, title: "Qr code"),
+                    //     ],
+                    //   ),
+                    // ),
 
                     Expanded(
                       child: Column(
@@ -217,10 +252,7 @@ class _IdentificationState extends State<Identification> {
             TableCell(
               verticalAlignment: TableCellVerticalAlignment.middle,
 
-              child: UnderLinedInput(
-                initialCheck: true,
-                last:alternativeBarcode?[i].id.toString()??"" ,
-              ),
+              child:textPadding((i+1).toString()),
               // UnderLinedInput(),
 
 
@@ -229,8 +261,9 @@ class _IdentificationState extends State<Identification> {
               verticalAlignment: TableCellVerticalAlignment.middle,
 
               child: UnderLinedInput(
-                  initialCheck: true,
-                  last:        alternativeBarcode?[i].barcode??"",
+                controller: bacCodeListTextEditing[i],
+                  // initialCheck: true,
+                  // last:alternativeBarcode?[i].barcode??"",
                 onChanged: (va){
 
                     alternativeBarcode[i]=alternativeBarcode[i].copyWith(barcode: va.toString());
@@ -349,6 +382,8 @@ class _IdentificationState extends State<Identification> {
                               label: "Save",
                               onPress: (){
                                 setState(() {
+                                  onChange=true;
+                                  bacCodeListTextEditing.add(TextEditingController(text: barCodeTextEditingController?.text??""));
                                   AlternativeBarcode model=AlternativeBarcode(
                                     barcode: barCodeTextEditingController.text??"",
                                     isActive: barActive
@@ -376,287 +411,295 @@ class _IdentificationState extends State<Identification> {
 
 
                     ],
+                    widths: {
+                      0: FlexColumnWidth(5),
+                      1: FlexColumnWidth(5),
+                      2: FlexColumnWidth(5),
+                      3: FlexColumnWidth(2),
+
+
+                    },
 
                   ),
 
 
                 ),
                 SizedBox(height: h*.03,),
-                Container(
-                  width: 2200,
-                  margin: EdgeInsets.symmetric(horizontal: w*.02),
-                  child: customTable(
-
-                    border: const TableBorder(
-
-                      verticalInside: BorderSide(
-                          width:.5,
-                          color: Colors.black45,
-                          style: BorderStyle.solid),
-                      horizontalInside: BorderSide(
-                          width:.3,
-                          color: Colors.black45,
-                          // color: Colors.blue,
-                          style: BorderStyle.solid),),
-
-                    tableWidth: .5,
-
-                    childrens:[
-                      TableRow(
-
-                        // decoration: BoxDecoration(
-
-                        //     color: Colors.green.shade200,
-
-                        //     shape: BoxShape.rectangle,
-
-                        //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
-                        children: [
-
-                          tableHeadtext(
-
-                            'ID',
-
-                            padding: EdgeInsets.all(7),
-
-                            height: 46,
-                            textColor: Colors.white,
-                            // color: Color(0xffE5E5E5),
-
-                            size: 13,
-
-
-                          ),
-
-
-                          tableHeadtext(
-                            'Alternative QR code',
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(7),
-                            height: 46,
-                            size: 13,
-                            // color: Color(0xffE5E5E5),
-                          ),
-
-                          tableHeadtext(
-                            'isActive',
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(7),
-                            height: 46,
-                            size: 13,
-                            // color: Color(0xffE5E5E5),
-                          ),
-                          tableHeadtext(
-                            '',
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(7),
-                            height: 46,
-                            size: 13,
-                            // color: Color(0xffE5E5E5),
-                          ),
-
-
-                        ],
-
-                      ),
-                          if (alterNativeQrCode != null) ...[
-                          for (var i = 0; i < alterNativeQrCode!.length; i++)
-                            TableRow(
-                                decoration: BoxDecoration(
-                                    color: Colors.grey
-                                        .shade200,
-                                    shape: BoxShape
-                                        .rectangle,
-                                    border:const  Border(
-                                        left: BorderSide(
-                                            width: .5,
-                                            color: Colors
-                                                .grey,
-                                            style: BorderStyle
-                                                .solid),
-                                        bottom: BorderSide(
-                                            width: .5,
-                                            color: Colors
-                                                .grey,
-                                            style: BorderStyle
-                                                .solid),
-                                        right: BorderSide(
-                                            color: Colors
-                                                .grey,
-                                            width: .5,
-                                            style: BorderStyle
-                                                .solid))),
-                                children: [
-
-
-
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                    child: UnderLinedInput(
-                                      initialCheck: true,
-                                      last:alterNativeQrCode?[i].id.toString()??"" ,
-                                    ),
-                                    // UnderLinedInput(),
-
-
-                                  ),
-                                  TableCell(
-                                      verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                      child: UnderLinedInput(
-                                        initialCheck: true,
-                                        last:        alterNativeQrCode?[i].qrcode??"",
-                                        onChanged: (va){
-
-                                          alterNativeQrCode[i]=alterNativeQrCode[i].copyWith(qrcode: va.toString());
-                                        },
-
-                                      )),
-                                  TableCell(
-                                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                    child:   CheckedBoxs(
-                                        valueChanger:   alterNativeQrCode[i].isActive??false,
-                                        onSelection:(va){
-
-
-                                          bool? isActive =
-                                              alterNativeQrCode[i].isActive;
-                                          setState(() {
-                                            setState(() {});
-                                            isActive = !isActive!;
-                                            alterNativeQrCode[i] = alterNativeQrCode[i]
-                                                .copyWith(
-                                                isActive: isActive);
-                                          });
-
-                                        }
-
-                                    ),),
-                                  TableTextButton(
-
-                                    label: "upadte",
-                                    onPress: (){
-
-
-                                      widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
-                                    },
-
-
-
-                                  ),
-
-
-
-                                ]),],
-                      TableRow(
-                          decoration: BoxDecoration(
-                              color: Colors.grey
-                                  .shade200,
-                              shape: BoxShape
-                                  .rectangle,
-                              border:const  Border(
-                                  left: BorderSide(
-                                      width: .5,
-                                      color: Colors
-                                          .grey,
-                                      style: BorderStyle
-                                          .solid),
-                                  bottom: BorderSide(
-                                      width: .5,
-                                      color: Colors
-                                          .grey,
-                                      style: BorderStyle
-                                          .solid),
-                                  right: BorderSide(
-                                      color: Colors
-                                          .grey,
-                                      width: .5,
-                                      style: BorderStyle
-                                          .solid))),
-                          children: [
-
-
-
-                            TableCell(
-                              verticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                              child: textPadding(
-                                  (alterNativeQrCode.length+1).toString()?? "",
-                                  fontSize: 12,
-                                  padding: EdgeInsets.only(
-                                      left: 11.5, top: 1.5),
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                child: UnderLinedInput(
-                                  controller: qrCodeTextEditingController,
-
-
-                                  onChanged: (va){
-
-                                  },
-
-                                )),
-                            TableCell(
-                              verticalAlignment: TableCellVerticalAlignment.middle,
-
-                              child:   CheckedBoxs(
-                                  valueChanger: qrActive,
-                                  onSelection:(va){
-
-
-
-                                    setState(() {
-
-                                      qrActive = !qrActive!;
-
-                                    });
-
-                                  }
-
-                              ),),
-                            TableTextButton(
-
-                              label: "Save",
-                              onPress: (){
-                                setState(() {
-                                  AlternativeBarcode model=AlternativeBarcode(
-                                      qrcode: qrCodeTextEditingController.text??"",
-                                      isActive: qrActive
-                                  );
-                                  alternativeBarcode.add(model);
-
-                                  widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
-                                  qrCodeTextEditingController.text="";
-                                  qrActive=false;
-
-
-                                });
-
-
-
-                              },
-
-
-
-                            ),
-
-
-
-                          ]),
-
-
-                    ],
-
-                  ),
-
-
-                ),
+                // Container(
+                //   width: 2200,
+                //   margin: EdgeInsets.symmetric(horizontal: w*.02),
+                //   child: customTable(
+                //
+                //     border: const TableBorder(
+                //
+                //       verticalInside: BorderSide(
+                //           width:.5,
+                //           color: Colors.black45,
+                //           style: BorderStyle.solid),
+                //       horizontalInside: BorderSide(
+                //           width:.3,
+                //           color: Colors.black45,
+                //           // color: Colors.blue,
+                //           style: BorderStyle.solid),),
+                //
+                //     tableWidth: .5,
+                //
+                //     childrens:[
+                //       TableRow(
+                //
+                //         // decoration: BoxDecoration(
+                //
+                //         //     color: Colors.green.shade200,
+                //
+                //         //     shape: BoxShape.rectangle,
+                //
+                //         //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                //
+                //         children: [
+                //
+                //           tableHeadtext(
+                //
+                //             'ID',
+                //
+                //             padding: EdgeInsets.all(7),
+                //
+                //             height: 46,
+                //             textColor: Colors.white,
+                //             // color: Color(0xffE5E5E5),
+                //
+                //             size: 13,
+                //
+                //
+                //           ),
+                //
+                //
+                //           tableHeadtext(
+                //             'Alternative QR code',
+                //             textColor: Colors.white,
+                //             padding: EdgeInsets.all(7),
+                //             height: 46,
+                //             size: 13,
+                //             // color: Color(0xffE5E5E5),
+                //           ),
+                //
+                //           tableHeadtext(
+                //             'isActive',
+                //             textColor: Colors.white,
+                //             padding: EdgeInsets.all(7),
+                //             height: 46,
+                //             size: 13,
+                //             // color: Color(0xffE5E5E5),
+                //           ),
+                //           tableHeadtext(
+                //             '',
+                //             textColor: Colors.white,
+                //             padding: EdgeInsets.all(7),
+                //             height: 46,
+                //             size: 13,
+                //             // color: Color(0xffE5E5E5),
+                //           ),
+                //
+                //
+                //         ],
+                //
+                //       ),
+                //           if (alterNativeQrCode != null) ...[
+                //           for (var i = 0; i < alterNativeQrCode!.length; i++)
+                //             TableRow(
+                //                 decoration: BoxDecoration(
+                //                     color: Colors.grey
+                //                         .shade200,
+                //                     shape: BoxShape
+                //                         .rectangle,
+                //                     border:const  Border(
+                //                         left: BorderSide(
+                //                             width: .5,
+                //                             color: Colors
+                //                                 .grey,
+                //                             style: BorderStyle
+                //                                 .solid),
+                //                         bottom: BorderSide(
+                //                             width: .5,
+                //                             color: Colors
+                //                                 .grey,
+                //                             style: BorderStyle
+                //                                 .solid),
+                //                         right: BorderSide(
+                //                             color: Colors
+                //                                 .grey,
+                //                             width: .5,
+                //                             style: BorderStyle
+                //                                 .solid))),
+                //                 children: [
+                //
+                //
+                //
+                //                   TableCell(
+                //                     verticalAlignment: TableCellVerticalAlignment.middle,
+                //
+                //                     child: UnderLinedInput(
+                //                       initialCheck: true,
+                //                       last:alterNativeQrCode?[i].id.toString()??"" ,
+                //                     ),
+                //                     // UnderLinedInput(),
+                //
+                //
+                //                   ),
+                //                   TableCell(
+                //                       verticalAlignment: TableCellVerticalAlignment.middle,
+                //
+                //                       child: UnderLinedInput(
+                //                         initialCheck: true,
+                //                         last:        alterNativeQrCode?[i].qrcode??"",
+                //                         onChanged: (va){
+                //
+                //                           alterNativeQrCode[i]=alterNativeQrCode[i].copyWith(qrcode: va.toString());
+                //                         },
+                //
+                //                       )),
+                //                   TableCell(
+                //                     verticalAlignment: TableCellVerticalAlignment.middle,
+                //
+                //                     child:   CheckedBoxs(
+                //                         valueChanger:   alterNativeQrCode[i].isActive??false,
+                //                         onSelection:(va){
+                //
+                //
+                //                           bool? isActive =
+                //                               alterNativeQrCode[i].isActive;
+                //                           setState(() {
+                //                             setState(() {});
+                //                             isActive = !isActive!;
+                //                             alterNativeQrCode[i] = alterNativeQrCode[i]
+                //                                 .copyWith(
+                //                                 isActive: isActive);
+                //                           });
+                //
+                //                         }
+                //
+                //                     ),),
+                //                   TableTextButton(
+                //
+                //                     label: "upadte",
+                //                     onPress: (){
+                //
+                //
+                //                       widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
+                //                     },
+                //
+                //
+                //
+                //                   ),
+                //
+                //
+                //
+                //                 ]),],
+                //       TableRow(
+                //           decoration: BoxDecoration(
+                //               color: Colors.grey
+                //                   .shade200,
+                //               shape: BoxShape
+                //                   .rectangle,
+                //               border:const  Border(
+                //                   left: BorderSide(
+                //                       width: .5,
+                //                       color: Colors
+                //                           .grey,
+                //                       style: BorderStyle
+                //                           .solid),
+                //                   bottom: BorderSide(
+                //                       width: .5,
+                //                       color: Colors
+                //                           .grey,
+                //                       style: BorderStyle
+                //                           .solid),
+                //                   right: BorderSide(
+                //                       color: Colors
+                //                           .grey,
+                //                       width: .5,
+                //                       style: BorderStyle
+                //                           .solid))),
+                //           children: [
+                //
+                //
+                //
+                //             TableCell(
+                //               verticalAlignment:
+                //               TableCellVerticalAlignment.middle,
+                //               child: textPadding(
+                //                   (alterNativeQrCode.length+1).toString()?? "",
+                //                   fontSize: 12,
+                //                   padding: EdgeInsets.only(
+                //                       left: 11.5, top: 1.5),
+                //                   fontWeight: FontWeight.w500),
+                //             ),
+                //             TableCell(
+                //                 verticalAlignment: TableCellVerticalAlignment.middle,
+                //
+                //                 child: UnderLinedInput(
+                //                   controller: qrCodeTextEditingController,
+                //
+                //
+                //                   onChanged: (va){
+                //
+                //                   },
+                //
+                //                 )),
+                //             TableCell(
+                //               verticalAlignment: TableCellVerticalAlignment.middle,
+                //
+                //               child:   CheckedBoxs(
+                //                   valueChanger: qrActive,
+                //                   onSelection:(va){
+                //
+                //
+                //
+                //                     setState(() {
+                //
+                //                       qrActive = !qrActive!;
+                //
+                //                     });
+                //
+                //                   }
+                //
+                //               ),),
+                //             TableTextButton(
+                //
+                //               label: "Save",
+                //               onPress: (){
+                //                 setState(() {
+                //                   AlternativeBarcode model=AlternativeBarcode(
+                //                       qrcode: qrCodeTextEditingController.text??"",
+                //                       isActive: qrActive
+                //                   );
+                //                   alternativeBarcode.add(model);
+                //
+                //                   widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
+                //                   qrCodeTextEditingController.text="";
+                //                   qrActive=false;
+                //
+                //
+                //                 });
+                //
+                //
+                //
+                //               },
+                //
+                //
+                //
+                //             ),
+                //
+                //
+                //
+                //           ]),
+                //
+                //
+                //     ],
+                //
+                //   ),
+                //
+                //
+                // ),
               ],
             ),
           );
@@ -676,15 +719,17 @@ class ProductTables extends StatefulWidget {
   List<Storage>? ingredians;
  final  List<Storage>? usageDirection;
  final  List<Storage>?storage;
+ final  List<productBehaviour>?inforMationList;
  final  Function storageTableEdit;
  final  Function productTableEdit;
+ final  Function productFeaturesableAssign;
   // final TextEditingController qrCode;
   // final TextEditingController rfId;
   ProductTables({required this.aboutProducts,
     required this.imPorantInfo,required this.
     ingredians,required this.productDetails,
 
-    required this.productFeatures,required this.additionalInfo,required this.usageDirection,required this.nutriantsFacts,required this.storage, required this.storageTableEdit, required this.productTableEdit, required this.addNew});
+    required this.productFeatures,required this.additionalInfo,required this.usageDirection,required this.nutriantsFacts,required this.storage, required this.storageTableEdit, required this.productTableEdit, required this.addNew, this.inforMationList, required this.productFeaturesableAssign});
 
   @override
   ProductTablesState createState() => ProductTablesState();
@@ -710,22 +755,25 @@ class ProductTablesState extends State<ProductTables> {
         children: [
           Row(
             children: [
-              ProductTable(
-                aboutProducts:widget.aboutProducts,
-                  storageTableEdit:widget.storageTableEdit,
-                key:widget.key,
-                addNew:widget.addNew,
+              Expanded(
+                child: ProductTable(
+                  aboutProducts:widget.aboutProducts,
+                    storageTableEdit:widget.storageTableEdit,
+                  key:widget.key,
+                  addNew:widget.addNew,
 
 
 
 
+                ),
               ),
+              
+              Expanded(
+                child: VariantProductDetails(
+                    productDetails:widget.productDetails,
+                  productTableEdit:widget.productTableEdit,
 
-
-              VariantProductDetails(
-                  productDetails:widget.productDetails,
-                productTableEdit:widget.productTableEdit,
-
+                ),
               )
 
 
@@ -734,38 +782,20 @@ class ProductTablesState extends State<ProductTables> {
           SizedBox(height: h*.02,),
           Row(
             children: [
-              PrtoductFeatures(
-                productFeatures:widget.productFeatures,
-                productTableEdit:widget.productTableEdit,
+              Expanded(
+                child: PrtoductFeatures(
+                  productFeatures:widget.productFeatures,
+                  productTableEdit:widget.productTableEdit,
 
+                ),
               ),
-              AdditionaslInfo(
-                additionalInfo:widget.additionalInfo,
-                productTableEdit:widget.productTableEdit,
+              
+              Expanded(
+                child: AdditionaslInfo(
+                  additionalInfo:widget.additionalInfo,
+                  productTableEdit:widget.productTableEdit,
+                ),
               ),
-              NeutrialFacts(
-                  nutriantsFacts:   widget.nutriantsFacts,
-                productTableEdit:widget.productTableEdit,
-              ),
-
-
-            ],
-          ),
-          SizedBox(height: h*.02,),
-          Row(
-            children: [
-              Ingredians(
-                  ingredians:  widget.ingredians,
-                storageTableEdit:widget.storageTableEdit,
-              ),
-              UsageDirection(
-                  usageDirection:     widget.usageDirection,
-                storageTableEdit:widget.storageTableEdit,
-              ),
-              StoragesWidget(
-               storage: widget.storage,
-                storageTableEdit:widget.storageTableEdit,
-              )
              
 
 
@@ -774,11 +804,60 @@ class ProductTablesState extends State<ProductTables> {
           SizedBox(height: h*.02,),
           Row(
             children: [
-              ImportantInfo(
-                importantInfo:   widget.imPorantInfo,
-                productTableEdit:widget.productTableEdit,
+              
+              Expanded(
+                child: NeutrialFacts(
+                  nutriantsFacts:   widget.nutriantsFacts,
+                  productTableEdit:widget.productTableEdit,
+                ),
               ),
-              ProductBehaviour(),
+              
+              Expanded(
+                child: Ingredians(
+                    ingredians:  widget.ingredians,
+                  storageTableEdit:widget.storageTableEdit,
+                ),
+              ),
+              
+
+            ],
+          ),
+
+
+          SizedBox(height: h*.02,),
+          Row(
+            children: [
+            
+              Expanded(
+                child: UsageDirection(
+                  usageDirection:     widget.usageDirection,
+                  storageTableEdit:widget.storageTableEdit,
+                ),
+              ),
+              
+              Expanded(
+                child: StoragesWidget(
+                  storage: widget.storage,
+                  storageTableEdit:widget.storageTableEdit,
+                ),
+              )
+
+
+
+            ],
+          ),
+          SizedBox(height: h*.02,),
+          Row(
+            children: [
+              
+              Expanded(
+                child: ImportantInfo(
+                  importantInfo:   widget.imPorantInfo,
+                  productTableEdit:widget.productTableEdit,
+                ),
+              ),
+
+
               // Container(
               //   width: w/2.2,
               //   margin: EdgeInsets.symmetric(horizontal: w*.02),
@@ -1187,7 +1266,20 @@ class ProductTablesState extends State<ProductTables> {
           ),
 
 
-          SizedBox(height: h*.02,),
+          SizedBox(height: h*.04,),
+
+          Row(
+            children: [
+              Expanded(
+
+                child: ProductBehaviour(
+                    inforMationList:  widget.inforMationList,
+                    productFeaturesableAssign:widget.productFeaturesableAssign
+
+                ),
+              ),
+            ],
+          ),
 
         ],
       ),
@@ -1217,6 +1309,14 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController image3;
   final TextEditingController image4;
   final TextEditingController image5;
+  final TextEditingController catalog1;
+  final TextEditingController catalog2;
+  final TextEditingController catalog3;
+  final TextEditingController catalog4;
+  final TextEditingController catalog5;
+  final TextEditingController catalog6;
+  final TextEditingController catalog7;
+  final TextEditingController catalog8;
   final TextEditingController description;
   final TextEditingController arabicDescription;
   final TextEditingController additionDescription;
@@ -1254,6 +1354,7 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController returnTime;
   final TextEditingController status;
   final bool purchaseBlock;
+  final int? veritiaclid;
   final bool stockWarning;
   final bool itmCatelog;
   final bool itmImage;
@@ -1322,7 +1423,7 @@ class VariantStabletable extends StatefulWidget {
     required this.exciseTax,
     required this.returnType,
     required this.returnTime,
-    required this.status, required this.trueOrFalseChange,
+    required this.status, required this.trueOrFalseChange, required this.catalog1, required this.catalog2, required this.catalog3, required this.catalog4, required this.catalog5, required this.catalog6, required this.catalog7, required this.catalog8, required this.veritiaclid,
 
 
 
@@ -1377,24 +1478,28 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                            readOnly: true,
                               controller: widget.variantCode, title: "Variant Code"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                            readOnly: true,
                               controller: widget.variantName, title: "Variant Name"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                              readOnly: true,
                               controller: widget.variantValue, title: "Variant value"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                            readOnly: true,
 
                              
-                              controller: widget.variantFrameWork, title: "Vriant freamework"),
+                              controller: widget.variantFrameWork, title: "Variant freamework"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -1573,7 +1678,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
+                          NewInputCard( formatter: true,
+
 
 
                               controller: widget.netWeight, title: "Net Weight"),
@@ -1581,6 +1687,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                              formatter: true,
 
 
                               controller: widget.unitCost, title: "Unit Cost"),
@@ -1588,30 +1695,16 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                            formatter: true,
 
 
                               controller: widget.landingCost, title: "Landing Cost"),
+
                           SizedBox(
-                            height: height * .030,
+                            height: height * .229,
                           ),
-                          NewInputCard(
 
 
-                              controller: widget.actualCost, title: "Actual Cost"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.unitPrize, title: "Unit Prize"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.basePrize, title: "Base Prize"),
 
 
 
@@ -1623,11 +1716,33 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       Expanded(child: Column(children: [
 
                         NewInputCard(
+                            formatter: true,
+
+
+                            controller: widget.actualCost, title: "Actual Cost"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+                        NewInputCard(
+                            formatter: true,
+
+
+                            controller: widget.basePrize, title: "Base Prize"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+                        NewInputCard(
 
 
                             controller: widget.producedCountry, title: "Produced Country"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
 
                         NewInputCard(
+                            formatter: true,
                             controller: widget.manuFactureId, title: "Manufacture Id"),
                         SizedBox(
                           height: height * .030,
@@ -1650,59 +1765,15 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
                             controller: widget.reorderQuantity, title: "Reorder  qty"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        PopUpSwitchTile(
-                            value:widget?.salesBlock??false,
-                            title: "Sales Block",
-                            onClick: (gg) {
-                              bool val=widget.salesBlock;
-                              val=!val;
-                              widget.trueOrFalseChange(type: "Sales",val:val);
 
-                              // widget.activeChange(!widget.active);
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget?.purchaseBlock??false,
-                            title: "Purchase Block",
-                            onClick: (gg) {
-                              bool val=widget.purchaseBlock;
-                              val=!val;
-                              widget.trueOrFalseChange(type:"Purchase",val:val);
-
-
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
-                        SizedBox(
-                          height: height * .030,
-                        ),
                         NewInputCard(
-                            controller: widget.ratioEccomerce, title: "Ratio to Eccommerce"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
+                            controller: widget.ratioEccomerce, title: "Ratio to Ecommerce"),
+
                         SizedBox(
                           height: height * .030,
                         ),
@@ -1717,93 +1788,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
                             controller: widget.reorderQuantity, title: "Min Order Sale Limit"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
                             controller: widget.maxSalesOrderLimit, title: "Max Sales Order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget?.stockWarning??false,
-                            title: "Stock Warning",
-                            onClick: (gg) {
-                              bool val=widget.stockWarning;
-                              val=!val;
-                              widget.trueOrFalseChange(type:"Stock",val:val);
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget?.itmCatelog??false,
-                            title: "itm catelog",
-                            onClick: (gg) {
-                              bool val=widget.itmCatelog;
-                              val=!val;
-                              widget.trueOrFalseChange(type:"Catalog",val:val);
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget?.itmImage??false,
-                            title: "itm Image",
-                            onClick: (gg) {
-                              bool val=widget.itmImage;
-                              val=!val;
-                              widget.trueOrFalseChange(type:"Image",val:val);
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        PopUpSwitchTile(
-                            value:widget.active??false,
-                            title: "Active",
-                            onClick: (gg) {
-                              bool val=widget.active;
-                              val=!val;
-                              widget.trueOrFalseChange(type:"Active",val:val);
-                              // widget.activeChange(!widget.active);
-
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
-                              setState(() {});
-                            }),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -1839,39 +1831,132 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
                           },
                         ),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCreateCard(title:"Linked Item" ,controller: widget.linkedItem,ontap: (){      showDailogPopUp(
+                          context,
+                          ConfigurePopup(
+                            veritiaclid:widget.veritiaclid,
+                            type: "LinkedItemCreatePopUp",
+                          ),
 
 
+                        );},),
+                        // SelectableDropDownpopUp(
+                        //
+                        //   controller: widget.linkedItem,
+                        //   label: "Linked Item",
+                        //   // type: "Pricing_PopUpCall",
+                        //   value: widget.linkedItem.text,
+                        //
+                        //   onchange: (vale) {
+                        //
+                        //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                        //   },
+                        //   enable: true,
+                        //   onSelection: (PricingTypeListModel? va) {
+                        //
+                        //   },
+                        //   onAddNew: () {
+                        //
+                        //   },
+                        // ),
+
+
+                        // NewInputCard(
+                        //     controller: widget.linkedItem, title: "Linked Item"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.minimumGp, title: "Minimum Gp"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.relatedItem, title: "Related Item"),
+                            formatter: true,
+                            controller: widget.maxSalesOrderLimit, title: "Maximum Gp"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.linkedItem, title: "Linked Item"),
-
-
-
-
-
-
-
+                            formatter: true,
+                            controller: widget.averageGp, title: "Average Gp"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.targetedgp, title: "targeted Gp"),
 
                         SizedBox(
-                          height: height * .380,
-
+                          height: height * .205,
                         ),
 
-                        SizedBox(
-                          height:height*.0120,
 
-                        ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                       ],)),
                       Expanded(child: Column(children: [
+
+
+
+
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.minPurchaseOrderLimit, title: "Min purchase  order Limit"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.maxPurchaseOrderLimit, title: "Max Purchase order Limit"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.vat, title: "vat"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.exciseTax, title: "Excise Tax"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            controller: widget.returnType, title: "Return type"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            controller: widget.returnTime, title: "Return time"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
                         FileUploadField(
                             fileName:widget.image1.text,
                             fileUrl:widget.image1.text,
@@ -2135,70 +2220,553 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
-                            controller: widget.minimumGp, title: "Minimum Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.maxSalesOrderLimit, title: "Maximum Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.averageGp, title: "Average Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.targetedgp, title: "targeted Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.minPurchaseOrderLimit, title: "Min purchase  order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.maxPurchaseOrderLimit, title: "Max Purchase order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.vat, title: "vat"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.exciseTax, title: "Excise Tax"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.returnType, title: "Return type"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.returnTime, title: "Return time"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.status, title: "Status"),
-                        SizedBox(
-                          height: height * .35,
-                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog1.text,
+                            fileUrl:widget.catalog1.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "6");
+                              widget.catalog1.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "1");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog1"),
+
+
 
                         SizedBox(
-                          height: height * .2,
+                          height: height * .030,
                         ),
+                        FileUploadField(
+                            fileName:widget.catalog2.text,
+                            fileUrl:widget.catalog2.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "7");
+                              widget.catalog2.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "2");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog2"),
+
+
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog3.text,
+                            fileUrl:widget.catalog3.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "8");
+                              widget.catalog3.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "3");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog3"),
+
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog4.text,
+                            fileUrl:widget.catalog4.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "9");
+                              widget.catalog4.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "4");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog4"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog5.text,
+                            fileUrl:widget.catalog5.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "10");
+                              widget.catalog5.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "5");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog5"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog6.text,
+                            fileUrl:widget.catalog6.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "11");
+                              widget.catalog6.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "6");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog6"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        FileUploadField(
+                            fileName:widget.catalog7.text,
+                            fileUrl:widget.catalog7.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "12");
+                              widget.catalog7.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "7");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog7"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+
+                        FileUploadField(
+                            fileName:widget.catalog8.text,
+                            fileUrl:widget.catalog8.text,
+                            onChangeTap: (p0) {
+                              // loading = true;
+                              setState(() {});
+                            },
+                            onChange: (myFile) {
+                              widget.imagePostCheck(type: "13");
+                              widget.catalog8.text=myFile?.fileName??"";
+                              // Variable.mobileBannerImage = myFile.toUint8List();
+                              var   imageEncode =
+                              myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              context
+                                  .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "8");
+                              // Variable.bannerEncodedMobileBannerImage =
+                              //     myFile.toBase64();
+                              // widget.fileMobileNameCtrl.text =
+                              //     myFile.fileName ?? "";
+                              // if (Variable.bannerimage!.length <= 240000)
+                              //   context
+                              //       .read<CreateWebImageCubit>()
+                              //       .createMobImage();
+                              // else
+                              //   context.showSnackBarError(
+                              //       "Please upload Banner of size Lesser than 230kb");
+                            },
+                            onImageChange: (newFile) async {
+                              // Variable.popUp = false;
+
+                              if (newFile.length <= 240000) {
+                                // loading
+                                //     ? showDailogPopUp(context, DialoguePopUp())
+                                //     : Navigator.pop(context);
+                                // context
+                                //     .read<CreateWebImageCubit>()
+                                //     .createMobImage();
+                              } else
+                                context.showSnackBarError(
+                                    "Please upload Banner of size Lesser than 230kb");
+                              setState(() {});
+                            },
+                            onCreate: true,
+                            label: "catalog8"),
+
+                        SizedBox(
+                          height: height * .12,
+                        ),
+
                       ],))
 
                     ],
                   ),
                 ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                PopUpSwitchTile(
+                value:widget?.salesBlock??false,
+                title: "Sales Block",
+                onClick: (gg) {
+                bool val=widget.salesBlock;
+                val=!val;
+                widget.trueOrFalseChange(type: "Sales",val:val);
+
+                // widget.activeChange(!widget.active);
+
+
+
+
+
+                // extendedWarranty = gg;
+                // widget.changeExtendedWarranty(gg);
+                // onChangeExtWarranty = gg;
+                setState(() {});
+                }),
+
+                PopUpSwitchTile(
+                value:widget?.purchaseBlock??false,
+                title: "Purchase Block",
+                onClick: (gg) {
+                bool val=widget.purchaseBlock;
+                val=!val;
+                widget.trueOrFalseChange(type:"Purchase",val:val);
+
+
+
+
+
+
+
+                // extendedWarranty = gg;
+                // widget.changeExtendedWarranty(gg);
+                // onChangeExtWarranty = gg;
+                setState(() {});
+                }),
+
+                    PopUpSwitchTile(
+                        value:widget?.stockWarning??false,
+                        title: "Stock Warning",
+                        onClick: (gg) {
+                          bool val=widget.stockWarning;
+                          val=!val;
+                          widget.trueOrFalseChange(type:"Stock",val:val);
+
+
+
+
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+                    PopUpSwitchTile(
+                        value:widget?.itmCatelog??false,
+                        title: "itm catelog",
+                        onClick: (gg) {
+                          bool val=widget.itmCatelog;
+                          val=!val;
+                          widget.trueOrFalseChange(type:"Catalog",val:val);
+
+
+
+
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+                    PopUpSwitchTile(
+                        value:widget?.itmImage??false,
+                        title: "itm Image",
+                        onClick: (gg) {
+                          bool val=widget.itmImage;
+                          val=!val;
+                          widget.trueOrFalseChange(type:"Image",val:val);
+
+
+
+
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+                    PopUpSwitchTile(
+                        value:widget.active??false,
+                        title: "Active",
+                        onClick: (gg) {
+                          bool val=widget.active;
+                          val=!val;
+                          widget.trueOrFalseChange(type:"Active",val:val);
+                          // widget.activeChange(!widget.active);
+
+
+
+
+
+                          // extendedWarranty = gg;
+                          // widget.changeExtendedWarranty(gg);
+                          // onChangeExtWarranty = gg;
+                          setState(() {});
+                        }),
+
+                  ],
+                )
 
 
               ],
@@ -2236,7 +2804,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
     if(!onChange){
       print("welcome to the entire place");
       setState(() {
-        vendorDetails=[];
+        vendorDetails.clear();
       });
 
 
@@ -2449,6 +3017,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     vendorCode: code.text??"",
                     vendorReerenceCode: refCode.text??"",
                   );
+                  onChange=true;
                   setState(() {
                     vendorDetails.add(model);
                     widget.vendorTableEdit(list:vendorDetails);

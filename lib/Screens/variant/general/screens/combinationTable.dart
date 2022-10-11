@@ -4,7 +4,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/widgets/customtable.dart';
 
 class CombinationTable extends StatefulWidget {
-  List<List<Map<String,dynamic>>>list;
+  List<String>list;
   CombinationTable({required this.list});
   @override
   _CombinationTableState createState() => _CombinationTableState();
@@ -14,30 +14,12 @@ class _CombinationTableState extends State<CombinationTable> {
 
 
   bool onChange=false;
-  List<dynamic>attributeNameList=[];
+  List<String>attributeNameList=[];
 
   @override
   Widget build(BuildContext context) {
     print(widget.list);
-    if(!onChange){
-        if(widget.list.isNotEmpty){}
-        for(var l=0;l<widget.list.length;l++){
-          attributeNameList.add([]);
-          if(widget.list[l].isNotEmpty){
-            for(var i=0;i<widget.list[l].length;i++){
-              var val=widget.list[l][i]["value"];
-              print("the val is"+val.toString());
-              String name="";
-              name=name+val;
 
-              attributeNameList[l];
-              print("attrbuteName"+attributeNameList.toString());
-
-            }
-          }
-
-        }
-    }
 
 
 
@@ -102,7 +84,7 @@ class _CombinationTableState extends State<CombinationTable> {
 
             ],
 
-          ), if(widget.list.isNotEmpty)
+          ), if(widget.list.isNotEmpty)...[
             for(var i=0;i<widget.list.length;i++)...[
           TableRow(
               decoration: BoxDecoration(
@@ -146,7 +128,7 @@ class _CombinationTableState extends State<CombinationTable> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
 
 
-                  child:Text("")
+                  child:Text(widget.list[i].toString())
 
 
 
@@ -155,7 +137,52 @@ class _CombinationTableState extends State<CombinationTable> {
 
               ]),
 
-]
+
+],]else
+          TableRow(
+              decoration: BoxDecoration(
+                  color: Colors.grey
+                      .shade200,
+                  shape: BoxShape
+                      .rectangle,
+                  border:const  Border(
+                      left: BorderSide(
+                          width: .5,
+                          color: Colors
+                              .grey,
+                          style: BorderStyle
+                              .solid),
+                      bottom: BorderSide(
+                          width: .5,
+                          color: Colors
+                              .grey,
+                          style: BorderStyle
+                              .solid),
+                      right: BorderSide(
+                          color: Colors
+                              .grey,
+                          width: .5,
+                          style: BorderStyle
+                              .solid))),
+              children: [
+
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+
+                  child:  textPadding(""),),
+
+                TableCell(
+                    verticalAlignment: TableCellVerticalAlignment.middle,
+
+
+                    child:Container(height: 45)
+
+
+
+                )
+
+
+              ]),
         ],
         widths: {
           0: FlexColumnWidth(1),

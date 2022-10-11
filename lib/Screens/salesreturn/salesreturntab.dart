@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/core/uttils/variable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'invoice/inoice.dart';
 
@@ -19,7 +23,7 @@ class SalesReturnScreen extends StatefulWidget {
 class _SalesReturnScreenState extends State<SalesReturnScreen>with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this);
+    TabController _tabController = TabController(length: 2, vsync: this,initialIndex: Variable.subIndex[3]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -75,6 +79,20 @@ class _SalesReturnScreenState extends State<SalesReturnScreen>with TickerProvide
                                 unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
                                 padding: EdgeInsets.only(left: 13),
                                 isScrollable: true,
+                                onTap: (val) async {
+                                  final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                                  Variable.subIndex[3]=val;
+                                  final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+                                  prefs.setString('key', jsonEncode(strs)); // Encode the list here
+
+
+
+
+
+
+
+                                },
                                 //indicatorSize:TabBarIndicatorSize.tab ,
 
                                 indicatorColor: Color(0xff3E4F5B),
@@ -110,6 +128,7 @@ class _SalesReturnScreenState extends State<SalesReturnScreen>with TickerProvide
                       height: height-100,
 
                       child: TabBarView(
+                        physics: NeverScrollableScrollPhysics(),
                         controller: _tabController,
                         children: [
                           SalesReturnGeneral(),

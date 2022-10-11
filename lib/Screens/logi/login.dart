@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/Dashboard.dart';
+import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
 import 'package:inventory/Screens/logi/logincubit/logincubit_cubit.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/register/model/register.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
 
@@ -23,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   TextEditingController empCode=TextEditingController();
+List<  InventoryListModel> inventoryList=[];
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,8 @@ class _LoginScreenState extends State<LoginScreen> {
   providers: [
     BlocProvider(
   create: (context) => LogincubitCubit(),
+),    BlocProvider(
+  create: (context) => InventorylistCubit(),
 ),
  
   ],
@@ -63,17 +68,15 @@ class _LoginScreenState extends State<LoginScreen> {
             // sharedPreferences.setString('token',
             //     data.data2["token"] ?? "");
             RegisterModel user = data.data2;
-            UserPreferences().saveUser(user);
-            UserPreferences().getUser().then((user) {
-              Variable.token=user.token??"";
-              if(user.isLoggedIn==true)
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) =>
-                        DashBoard(),));
+            Variable.loginLeage=user.legalEntiry.toString();
+            Variable.username=user.fname.toString();
+            // Variable.inventory_ID=user.fname.toString();
+            context.read<InventorylistCubit>().getInventoryListRead(user.legalEntiry.toString());
 
-              // print("Session Password :" +user.lastname.toString());
-            },);
+
+
+            UserPreferences().saveUser(user);
+
 
             // Variable.isLoggedIn = true;
             // print(state);
@@ -85,6 +88,50 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   },
 ),
+    BlocListener<InventorylistCubit, InventorylistState>(
+      listener: (context, state) {
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              context.showSnackBarError("Login error !");
+            },
+            loading: () {
+              context.showSnackBarNormal("Loading");
+            },
+            success: (data) async {
+              print("welcome ther is something happening ");
+              inventoryList=data.data;
+
+              if(inventoryList.isNotEmpty==true){
+                setState(() {
+                  Variable.inventory_ID=inventoryList[0]?.businessUnitCode??"";
+                  print("ids"+Variable.inventory_ID.toString());
+                });
+
+              }
+
+              print("invennnnn"+Variable.inventory_ID);
+
+
+
+              UserPreferences().getUser().then((user) {
+                Variable.token=user.token??"";
+                if(user.isLoggedIn==true)
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>
+                          DashBoard(),));
+
+                // print("Session Password :" +user.lastname.toString());
+              },);
+              print(data);
+
+
+
+              }
+            );
+      },
+    ),
 
   ],
   child: Scaffold(
@@ -108,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   SizedBox(height: 9,),
                   NewInputCard(controller: empCode, title: "EMP code",password: true),
+                  SizedBox(height: 9,),
                   LoginButton(
                     label: "sign in",
                     onpress: (){

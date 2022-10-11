@@ -18,23 +18,35 @@ class _AttributeScreenState extends State<AttributeScreen> {
   List<Map<String,dynamic>>attributes=[];
   List<List<Map<String,dynamic>>> graphArray=[];
 
+  var maps;
 
   @override
   Widget build(BuildContext context) {
+    print("akkuttan"+widget.attributes.toString());
+    print("akkumon"+attributes.toString());
+
+
+
+
     if(!onChange){
-      var maps;
-graphArray.clear();
+
+      print("hellooooooooo");
+
+      graphArray.clear();
+
       for(var i =0;i<widget.attributes.length;i++) {
         graphArray.add([]);
       }
+      // if
+
       for(var i =0;i<widget.attributes.length;i++){
         if(widget.attributes[i]?.values?.isNotEmpty==true) {
           for (var j = 0; j < widget.attributes[i].values!.length; j++) {
-maps={
-  "flag":false,
-  "value":widget.attributes[i].values?[j]
-};
-attributes.add(maps);
+// maps={
+//   "flag":false,
+//   "value":widget.attributes[i].values?[j]
+// };
+// attributes.add(maps);
 graphArray[i].add({
 
   "key":widget.attributes[i].attributeName,
@@ -104,27 +116,34 @@ print("grappphAtrray"+graphArray.toString());
 
     }
     onChange=false;
+    print("grappphAtrray"+graphArray.toString());
     return Container(
       height:400,
       width: MediaQuery.of(context).size.width-60,
-      child: widget.attributes.isNotEmpty==true?
+      child:
+      widget.attributes.isNotEmpty==true?
       ListView.builder(
-        // scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.horizontal,
         itemCount: widget.attributes.length,
         itemBuilder: (context, index) {
         return
           Container(
+            height:400,
+            width: MediaQuery.of(context).size.width/2,
           child:  Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
                 Text(widget.attributes[index]?.attributeName.toString()??""),
-           if( attributes.isNotEmpty==true)   Container(height: 200,
+           SizedBox(height: 10,),
+           if( graphArray[index].isNotEmpty==true)   Container(height: 150,
               child: ListView.builder(
-                // scrollDirection: Axis.horizontal,
-                itemCount: widget.attributes[index].values!.length,
+                scrollDirection: Axis.horizontal,
+                itemCount: graphArray[index]!.length,
                 itemBuilder: (context, item) {
 
                 return   Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // CustomCheckBox(
                     //
@@ -150,13 +169,15 @@ print("grappphAtrray"+graphArray.toString());
                     NewCheckBoxText(label:graphArray[index][item]["value"],valueChanger:graphArray[index][item]["flag"],onChange: (va){
                     setState(() {
                       onChange=true;
-
+print("grapppppppp${graphArray}");
                       var val=graphArray[index][item]["flag"];
                       print("ch"+val.toString());
                       val=!val;
                       print("val"+val.toString());
                      graphArray[index][item]["flag"]=val;
                       print(  graphArray[index][item]["flag"]);
+                      print("the changing array is"+graphArray.toString());
+
 
                       widget.combination(graphArray);
 

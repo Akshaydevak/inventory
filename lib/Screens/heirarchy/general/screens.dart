@@ -20,7 +20,9 @@ import 'cubits/imagepost/imagepost_cubit.dart';
 
 class HeirarchySalesStableTable extends StatefulWidget {
   final TextEditingController uomGroupController;
+  final TextEditingController uomGroupNameController;
   final TextEditingController uomController;
+  final TextEditingController baseuomNameController;
   final TextEditingController itemCode;
   final TextEditingController itemName;
   final TextEditingController searchName;
@@ -41,6 +43,8 @@ class HeirarchySalesStableTable extends StatefulWidget {
   final Function({String type}) imagePostCheck;
 
   HeirarchySalesStableTable({
+    required this.baseuomNameController,
+    required this.uomGroupNameController,
     required this.uomGroupController,
     required this.uomController,
     required this.itemCode,
@@ -203,10 +207,10 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           ),
                           SelectableDropDownpopUp(
 
-                            controller:widget.uomGroupController,
+                            controller:widget.uomGroupNameController,
                             label: "Uom Group",
                             type:"Uomgroup_PopUpCall",
-                            value:  widget.uomGroupController.text,
+                            value:  widget.uomGroupNameController.text,
                             onchange: (vale){
                               print("Akkk"+vale.toString());
                               context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
@@ -216,6 +220,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               setState(() {
 
                                 widget.uomGroupController.text=va?.code??"";
+                                widget.uomGroupNameController.text=va?.name??"";
                                 Variable.uomGroupId=va?.id;
                                 setState(() {
 
@@ -244,10 +249,10 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           ),
                           SelectableDropDownpopUp(
 
-                            controller:widget.uomController,
+                            controller:widget.baseuomNameController,
                             label: "base uom",
                             type:"Uom_PopUpCall",
-                            value:  widget.uomController.text,
+                            value:  widget.baseuomNameController.text,
                             onchange: (vale){
                               // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
                             },
@@ -256,6 +261,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               setState(() {
 
                                 widget.uomController.text=va?.uomCode??"";
+                                widget.baseuomNameController.text=va?.name??"";
                                 setState(() {
 
                                 });
@@ -797,158 +803,158 @@ class _TableBottomState extends State<TableBottom> {
 
 
           Container(height: h/20,color: Colors.white,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              TextWidget(text: "Alternative list"),
-
-            ],
-          ),
-          Container(height: h/35,color: Colors.white,),
-          Container(
-            width: 2200,
-            margin: EdgeInsets.symmetric(horizontal: w*.02),
-            child: customTable(
-
-              border: const TableBorder(
-
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
-
-              tableWidth: .5,
-
-              childrens:[
-                TableRow(
-
-                  // decoration: BoxDecoration(
-
-                  //     color: Colors.green.shade200,
-
-                  //     shape: BoxShape.rectangle,
-
-                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
-                  children: [
-
-                    tableHeadtext(
-
-                      'ID',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.black,
-                      color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-
-
-                    tableHeadtext(
-                      'Alternative Barcode',
-                      textColor: Colors.black,
-                      padding: EdgeInsets.all(7),
-                      height: 46,
-                      size: 13,
-                      color: Color(0xffE5E5E5),
-                    ),
-                    tableHeadtext(
-                      'Alternative QR code',
-                      textColor: Colors.black,
-                      padding: EdgeInsets.all(7),
-                      height: 46,
-                      size: 13,
-                      color: Color(0xffE5E5E5),
-                    ),
-                    tableHeadtext(
-                      'Alternative RF ID',
-                      textColor: Colors.black,
-                      padding: EdgeInsets.all(7),
-                      height: 46,
-                      size: 13,
-                      color: Color(0xffE5E5E5),
-                    ),
-
-
-                  ],
-
-                ),
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:   CheckedBoxs(
-                            valueChanger: true,
-                            onSelection:(va){
-
-                            }
-
-                        ),),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:   Text("32/Xl"
-
-
-                        ),),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:   Text("32/Xl"
-
-
-                        ),),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:   Text("32/Xl"
-
-
-                        ),),
-
-                    ]),
-
-
-              ],
-
-            ),
-
-
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.start,
+          //   children: [
+          //     TextWidget(text: "Alternative list"),
+          //
+          //   ],
+          // ),
+          // Container(height: h/35,color: Colors.white,),
+          // Container(
+          //   width: 2200,
+          //   margin: EdgeInsets.symmetric(horizontal: w*.02),
+          //   child: customTable(
+          //
+          //     border: const TableBorder(
+          //
+          //       verticalInside: BorderSide(
+          //           width:.5,
+          //           color: Colors.black45,
+          //           style: BorderStyle.solid),
+          //       horizontalInside: BorderSide(
+          //           width:.3,
+          //           color: Colors.black45,
+          //           // color: Colors.blue,
+          //           style: BorderStyle.solid),),
+          //
+          //     tableWidth: .5,
+          //
+          //     childrens:[
+          //       TableRow(
+          //
+          //         // decoration: BoxDecoration(
+          //
+          //         //     color: Colors.green.shade200,
+          //
+          //         //     shape: BoxShape.rectangle,
+          //
+          //         //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+          //
+          //         children: [
+          //
+          //           tableHeadtext(
+          //
+          //             'ID',
+          //
+          //             padding: EdgeInsets.all(7),
+          //
+          //             height: 46,
+          //             textColor: Colors.black,
+          //             color: Color(0xffE5E5E5),
+          //
+          //             size: 13,
+          //
+          //
+          //           ),
+          //
+          //
+          //           tableHeadtext(
+          //             'Alternative Barcode',
+          //             textColor: Colors.black,
+          //             padding: EdgeInsets.all(7),
+          //             height: 46,
+          //             size: 13,
+          //             color: Color(0xffE5E5E5),
+          //           ),
+          //           tableHeadtext(
+          //             'Alternative QR code',
+          //             textColor: Colors.black,
+          //             padding: EdgeInsets.all(7),
+          //             height: 46,
+          //             size: 13,
+          //             color: Color(0xffE5E5E5),
+          //           ),
+          //           tableHeadtext(
+          //             'Alternative RF ID',
+          //             textColor: Colors.black,
+          //             padding: EdgeInsets.all(7),
+          //             height: 46,
+          //             size: 13,
+          //             color: Color(0xffE5E5E5),
+          //           ),
+          //
+          //
+          //         ],
+          //
+          //       ),
+          //       TableRow(
+          //           decoration: BoxDecoration(
+          //               color: Colors.grey
+          //                   .shade200,
+          //               shape: BoxShape
+          //                   .rectangle,
+          //               border:const  Border(
+          //                   left: BorderSide(
+          //                       width: .5,
+          //                       color: Colors
+          //                           .grey,
+          //                       style: BorderStyle
+          //                           .solid),
+          //                   bottom: BorderSide(
+          //                       width: .5,
+          //                       color: Colors
+          //                           .grey,
+          //                       style: BorderStyle
+          //                           .solid),
+          //                   right: BorderSide(
+          //                       color: Colors
+          //                           .grey,
+          //                       width: .5,
+          //                       style: BorderStyle
+          //                           .solid))),
+          //           children: [
+          //             TableCell(
+          //               verticalAlignment: TableCellVerticalAlignment.middle,
+          //
+          //               child:   CheckedBoxs(
+          //                   valueChanger: true,
+          //                   onSelection:(va){
+          //
+          //                   }
+          //
+          //               ),),
+          //             TableCell(
+          //               verticalAlignment: TableCellVerticalAlignment.middle,
+          //
+          //               child:   Text("32/Xl"
+          //
+          //
+          //               ),),
+          //             TableCell(
+          //               verticalAlignment: TableCellVerticalAlignment.middle,
+          //
+          //               child:   Text("32/Xl"
+          //
+          //
+          //               ),),
+          //             TableCell(
+          //               verticalAlignment: TableCellVerticalAlignment.middle,
+          //
+          //               child:   Text("32/Xl"
+          //
+          //
+          //               ),),
+          //
+          //           ]),
+          //
+          //
+          //     ],
+          //
+          //   ),
+          //
+          //
+          // ),
         ],
       ),
     )
@@ -1168,7 +1174,11 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
 
                                       for (var i = 0; i < table[i].values!.length; i++)
-                                        Expanded(child:textPadding(table[i]?.values?[i].toString()??"")
+                                        Container(
+                                          height: 15,
+                                            width: 10,
+                                            color: Colors.red,
+                                            child:textPadding(table[i]?.values?[i].toString()??"")
                                         ),
 
                                     ],
@@ -1234,12 +1244,9 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                                   style: BorderStyle
                                       .solid))),
                       children: [
+                        PopUpCall(
 
-    PopUpCall(
-
-    // label: "purchase UOM",
-    type:
-    "attribute_list",
+    type: "attribute_list",
     value: name.text,
     onSelection:
     (AttributeListModel? va) {
@@ -1282,8 +1289,8 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
       if (values.isNotEmpty==true ) ...[
 
 
-        for (var i = 0; i < values.length; i++)
-      Expanded(
+        for (var i = 0; i < values.length; i++)...[
+      Flexible(
         child: UnderLinedInput(
         formatter: false,
         initialCheck: true,
@@ -1299,7 +1306,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
     ),
       ),
 
-      ],
+     ] ],
       Expanded(child:UnderLinedInput(
         formatter: false,
         controller: val,
@@ -1322,6 +1329,11 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                           onPress: (){
                             setState(() {
                               table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
+                              print(table.length);
+                              print("the table is"+table.toString());
+
+
+
                               widget.listAssign(table);
                               name.text='';
                               type.text="";

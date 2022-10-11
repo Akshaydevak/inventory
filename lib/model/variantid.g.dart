@@ -37,6 +37,7 @@ Map<String, dynamic> _$$_VendorCodeModelToJson(_$_VendorCodeModel instance) =>
 
 _$_Result _$$_ResultFromJson(Map<String, dynamic> json) => _$_Result(
       id: json['id'] as int?,
+      name: json['name'] as String?,
       userLoginId: json['user_login_id'] as int?,
       partnerCode: json['partner_code'] as String?,
       isOrganization: json['is_organization'] as bool?,
@@ -44,6 +45,7 @@ _$_Result _$$_ResultFromJson(Map<String, dynamic> json) => _$_Result(
 
 Map<String, dynamic> _$$_ResultToJson(_$_Result instance) => <String, dynamic>{
       'id': instance.id,
+      'name': instance.name,
       'user_login_id': instance.userLoginId,
       'partner_code': instance.partnerCode,
       'is_organization': instance.isOrganization,

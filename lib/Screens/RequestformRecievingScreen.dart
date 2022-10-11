@@ -110,6 +110,39 @@ bool  recievlinequantityCheck=false;
   PurchaseOrderTableModel? purchaseTable;
   VariantDetailsModel? vendorDetails;
   List<PartnerOrganizationData>?partnerOrganizationData;
+
+  clear(){
+
+  setState(() {
+    variantId="";
+    varinatname="";
+    vendorCode="";
+    barcode="";
+    unitCostCheck.text="";
+    purchaseUomName="";
+    recievedQty=0;
+    supplierRefCode="";
+    expirydateController.text="";
+    excess1=0;
+    isReceived1=false;
+    discount=0;
+    foc1=0;
+    unitcost=0;
+    vatableAmount1=0;
+    vat1=0;
+    grandTotal1=0;
+    actualCost1=0;
+    isActive1=false;
+    isFree1=false;
+    isInvoiced1=false;
+    stock=0;
+  });
+
+
+  }
+
+
+
   void initState() {
     context.read<InventorysearchCubit>().getInventorySearch("code",tab:"RF");
     recieveController = AutoScrollController(
@@ -270,6 +303,11 @@ bool  recievlinequantityCheck=false;
                 });  for(var i=0;i<recievingLisnes.length;i++){
                   var date = new TextEditingController(text:recievingLisnes[i].expiryDate??"");
                   expirydateControllerList2.add(date);
+                  print("expirydate"+expirydateControllerList2.toString());
+                  print("length of  recievingLines"+recievingLisnes.length.toString());
+
+
+
 
                 }
                 print("Anvar");
@@ -328,7 +366,7 @@ bool  recievlinequantityCheck=false;
                   unitcost = purchaseTable?.unitCost;
                   vat1 = purchaseTable?.vat;
                   unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
-                  supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                  // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                   print(  supplierRefCode);
                   print("unitttt"+unitcost.toString());
                  // unitcost1.text=purchaseTable?.unitCost.toString()??"";
@@ -393,19 +431,24 @@ bool  recievlinequantityCheck=false;
               print("stockqty" + stockQty.toString());
               print("stockCheck"+stockCheck.toString());
               if(stockCheck==false){
+                print("Stockcheck==false");
                 currentStock.add(stockQty??0);
                 setState(() {
                 });
               }
               else if(recievlinequantityCheck){
+                print("recievlinequantityCheck==true");
                 currentStock[Variable.tableindex]=stockQty;
               }
               else{
+                print("enterd in this..case ");
                 if(Variable.tableedit==false){
+                  print("Variable==false");
                   print("findinf");
                   stock=stockQty;
                 }
-                else{
+                else if(Variable.tableedit==true){
+                  print("Variable==true");
                   additionalVariants[Variable.tableindex] = additionalVariants[Variable.tableindex].copyWith(currentStock:purchaseCurrentStock?.StockQty   );
                 }
               }
@@ -447,11 +490,15 @@ child: IntrinsicHeight(
                 print("taped");
                 select=false;
                 expirydateControllerList2.clear();
+                additionalVariants.clear();
                 selectedVertical=index;
+                stockCheck=false;
                 currentStock.clear();
                 unitCostCheck.text="";
                 expirydateControllerList.clear();
+                clear();
                 variantIdcheck=false;
+                recievlinequantityCheck=false;
 
                 updateCheck=false;
                 veritiaclid = result[index].id;
@@ -1123,7 +1170,7 @@ child: IntrinsicHeight(
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                           child: textPadding(
-                                              currentStock.length!=recievingLisnes.length?"": currentStock[i]?.toString()??"",
+                                             currentStock.length!=recievingLisnes.length?"": currentStock[i]?.toString()??"",
                                               fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                         ),
                                         TableCell(
@@ -3746,29 +3793,9 @@ child: IntrinsicHeight(
                                                         isActive:isActive1,
                                                         expiryDate: expirydateController.text,
                                                       ));
+                                                      clear();
 
-                                                      variantId="";
-                                                      varinatname="";
-                                                      vendorCode="";
-                                                      barcode="";
-                                                      unitCostCheck.text="";
-                                                      purchaseUomName="";
-                                                      recievedQty=0;
-                                                      supplierRefCode="";
-                                                      expirydateController.text="";
-                                                      excess1=0;
-                                                      isReceived1=false;
-                                                      discount=0;
-                                                      foc1=0;
-                                                      unitcost=0;
-                                                      vatableAmount1=0;
-                                                      vat1=0;
-                                                      grandTotal1=0;
-                                                      actualCost1=0;
-                                                      isActive1=false;
-                                                      isFree1=false;
-                                                      isInvoiced1=false;
-                                                      stock=0;
+
                                                     }
                                                   });
 

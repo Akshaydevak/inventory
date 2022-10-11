@@ -29,7 +29,7 @@ class _$FrameworklistStateTearOff {
     return const _Error();
   }
 
-  _Success success(List<FrameWorkListModel> data) {
+  _Success success(PaginatedResponse<dynamic> data) {
     return _Success(
       data,
     );
@@ -46,7 +46,7 @@ mixin _$FrameworklistState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<FrameWorkListModel> data) success,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$FrameworklistState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$FrameworklistState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -151,7 +151,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<FrameWorkListModel> data) success,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
   }) {
     return initial();
   }
@@ -162,7 +162,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
   }) {
     return initial?.call();
   }
@@ -173,7 +173,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -265,7 +265,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<FrameWorkListModel> data) success,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
   }) {
     return loading();
   }
@@ -276,7 +276,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
   }) {
     return loading?.call();
   }
@@ -287,7 +287,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -378,7 +378,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<FrameWorkListModel> data) success,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
   }) {
     return error();
   }
@@ -389,7 +389,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
   }) {
     return error?.call();
   }
@@ -400,7 +400,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -455,7 +455,7 @@ abstract class _Error implements FrameworklistState {
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({List<FrameWorkListModel> data});
+  $Res call({PaginatedResponse<dynamic> data});
 }
 
 /// @nodoc
@@ -476,7 +476,7 @@ class __$SuccessCopyWithImpl<$Res>
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<FrameWorkListModel>,
+              as PaginatedResponse<dynamic>,
     ));
   }
 }
@@ -487,7 +487,7 @@ class _$_Success implements _Success {
   const _$_Success(this.data);
 
   @override
-  final List<FrameWorkListModel> data;
+  final PaginatedResponse<dynamic> data;
 
   @override
   String toString() {
@@ -517,7 +517,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<FrameWorkListModel> data) success,
+    required TResult Function(PaginatedResponse<dynamic> data) success,
   }) {
     return success(data);
   }
@@ -528,7 +528,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
   }) {
     return success?.call(data);
   }
@@ -539,7 +539,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<FrameWorkListModel> data)? success,
+    TResult Function(PaginatedResponse<dynamic> data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -587,9 +587,9 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements FrameworklistState {
-  const factory _Success(List<FrameWorkListModel> data) = _$_Success;
+  const factory _Success(PaginatedResponse<dynamic> data) = _$_Success;
 
-  List<FrameWorkListModel> get data => throw _privateConstructorUsedError;
+  PaginatedResponse<dynamic> get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;

@@ -46,7 +46,17 @@ class HeirarchyGeneralScreen extends StatefulWidget {
 class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   TextEditingController controller=TextEditingController();
   TextEditingController BrandController=TextEditingController();
+  TextEditingController divisionNameController=TextEditingController();
+  TextEditingController categoryNameController=TextEditingController();
+  TextEditingController subCategoryNameController=TextEditingController();
+  TextEditingController materialNameController=TextEditingController();
+  TextEditingController variantNameController=TextEditingController();
+  TextEditingController staticNameController=TextEditingController();
+  TextEditingController BrandNameController=TextEditingController();
+  TextEditingController uomGroupNameController=TextEditingController();
+  TextEditingController baseUomGroupName=TextEditingController();
   TextEditingController GroupController=TextEditingController();
+  TextEditingController GroupNameController=TextEditingController();
   TextEditingController materialController=TextEditingController();
   TextEditingController devisionController=TextEditingController();
   TextEditingController staticController=TextEditingController();
@@ -247,6 +257,7 @@ active=false;
               group=data;
               uomCategoryController.text=data?.uomCode??'';
               GroupController.text=data?.groupCode??'';
+              // uomGroupNameController.text=data.??'';
               BrandController.text=data?.brandCode??'';
               materialController.text=data?.materialCode??'';
               devisionController.text=data?.divisionCode??'';
@@ -287,6 +298,8 @@ active=false;
         }, success: (data) {
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            context.read<ItemcreationListCubit>().getItemListList();
+
 
           }
           else {
@@ -361,7 +374,7 @@ active=false;
 
                           veritiaclid = result[index].id;
                           clear();
-                          select=true;
+                          select=false;
 
 
                           context.read<ItemreadCubit>().getItemRead(veritiaclid!);
@@ -439,6 +452,7 @@ active=false;
                               ],
                             ),
                             HeirarchySalesStableTable(
+
                               uomGroupController: uomGroupController,
                               uomController: uomCategoryController,
                               displayName: displayNameController,
@@ -458,7 +472,7 @@ active=false;
                               status: statusCodeNameController,
                               active:active,
                               activeChange:activeChange,
-                              imagePostCheck:imagePostCheck,
+                              imagePostCheck:imagePostCheck, baseuomNameController: baseUomGroupName, uomGroupNameController: uomGroupNameController,
                             ),
                             SizedBox(height: 40,),
                             Container(
@@ -472,6 +486,14 @@ active=false;
                               ),
                             ),
                             ItemHeirarchyStableTable(
+                              brandName: BrandNameController,
+                              categoryName: categoryNameController,
+                              divisionName: divisionNameController,
+                              groupName: GroupNameController,
+                              materialName: materialNameController,
+                              staticName: staticNameController,
+                              subCategoryName: subCategoryNameController,
+                              variantFrameworkName: variantNameController,
                               group:GroupController,
                               variantFramework: variantFrameworkController,
                               brand: BrandController,
@@ -642,23 +664,41 @@ active=false;
 class ItemHeirarchyStableTable extends StatefulWidget {
 
   final TextEditingController brand;
+  final TextEditingController brandName;
   final TextEditingController group;
+  final TextEditingController groupName;
   final TextEditingController material;
+  final TextEditingController materialName;
   final TextEditingController division;
+  final TextEditingController divisionName;
   final TextEditingController static;
+  final TextEditingController staticName;
   final TextEditingController category;
+  final TextEditingController categoryName;
   final TextEditingController subCategory;
+  final TextEditingController subCategoryName;
   final TextEditingController variantFramework;
+  final TextEditingController variantFrameworkName;
 
   ItemHeirarchyStableTable({required this.brand,
+    required this.brandName,
 required this.variantFramework,
+    required this.variantFrameworkName,
     required this.material,
+    required this.materialName,
+
     required this.division,
+    required this.divisionName,
+
     required this.static,
+    required this.staticName,
     required this.group,
+    required this.groupName,
 
     required this.category,
+    required this.categoryName,
     required this.subCategory,
+    required this.subCategoryName
 
   });
   @override
@@ -674,6 +714,24 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
   TextEditingController  descriptioncontroller=TextEditingController();
   TextEditingController  brandIdentifiercontroller=TextEditingController();
   TextEditingController  brandcontroller=TextEditingController();
+
+
+
+
+  TextEditingController  divisionNameController=TextEditingController();
+  TextEditingController  categoryNameController=TextEditingController();
+  TextEditingController  subCategoryNameController=TextEditingController();
+  TextEditingController  groupNameController=TextEditingController();
+  TextEditingController  materialNameController=TextEditingController();
+  TextEditingController  variantFrameworkNameController=TextEditingController();
+  TextEditingController  staticNameController=TextEditingController();
+  TextEditingController  brandNameController=TextEditingController();
+
+
+
+
+
+
   int?  divisionid;
 
   @override
@@ -698,10 +756,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
             //   type:"DivisionListPopUpCall",
             // ),
             SelectableDropDownpopUp(
-              controller:widget.division,
+              controller:widget.divisionName,
               label: "Division",
               type:"Division_ListPopUpCall",
-              value:  widget.division.text,
+              value:  widget.divisionName.text,
               onchange: (vale){
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
@@ -714,7 +772,8 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                   divisionid=va?.id;
                   Variable.divisionId=va?.id;
 
-                  widget.division.text=va?.name??"";
+                  widget.division.text=va?.code??"";
+                  widget.divisionName.text=va?.name??"";
                   setState(() {
 
                   });
@@ -743,10 +802,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 
             SelectableDropDownpopUp(
               id:divisionid,
-              controller:widget.category,
+              controller:widget.categoryName,
               label: "category",
               type:"Category_PopUpCall",
-              value:  widget.category.text,
+              value:  widget.categoryName.text,
               onchange: (vale){
                 print("searching for search"+vale.toString());
                 context.read<CategorylistCubit>().searchCategoryist(vale);
@@ -756,6 +815,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 setState(() {
 
                   widget.category.text=va?.code??"";
+                  widget.categoryName.text=va?.name??"";
                   Variable.categoryId=va?.id;
                   setState(() {
 
@@ -788,10 +848,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 
       SelectableDropDownpopUp(
       id:divisionid,
-      controller:widget.subCategory,
+      controller:widget.subCategoryName,
       label: "Sub category",
       type:"SubCategory_PopUpCall",
-      value:  widget.subCategory.text,
+      value:  widget.subCategoryName.text,
       onchange: (vale){
         // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
       },
@@ -800,6 +860,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
         setState(() {
 
           widget.subCategory.text=va?.code??"";
+          widget.subCategoryName.text=va?.name??"";
           setState(() {
 
           });
@@ -833,10 +894,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 
             SelectableDropDownpopUp(
 
-            controller:widget.group,
+            controller:widget.groupName,
             label: "Group",
             type:"Group_PopUpCall",
-            value:  widget.group.text,
+            value:  widget.groupName.text,
             onchange: (vale){
               // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
             },
@@ -845,6 +906,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               setState(() {
 
                 widget.group.text=va?.code??"";
+                widget.groupName.text=va?.name??"";
 
                 setState(() {
 
@@ -871,10 +933,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               height: height * .030,
             ),
             SelectableDropDownpopUp(
-              controller:widget.material,
+              controller:widget.materialName,
               label: "Material",
               type:"MaterialPopUpCall",
-              value:  widget.material.text,
+              value:  widget.materialName.text,
               onchange: (vale){
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
@@ -883,6 +945,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 setState(() {
 
                   widget.material.text=va?.code??"";
+                  widget.materialName.text=va?.name??"";
                   setState(() {
 
                   });
@@ -910,10 +973,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
             ),
             SelectableDropDownpopUp(
 
-              controller:widget.variantFramework,
+              controller:widget.variantFrameworkName,
               label: "Variant Framework",
               type:"FrameWorkPopUpCall",
-              value:  widget.variantFramework.text,
+              value:  widget.variantFrameworkName.text,
               onchange: (vale){
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
@@ -922,6 +985,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 setState(() {
 
                   widget.variantFramework.text=va?.code??"";
+                  widget.variantFrameworkName.text=va?.name??"";
                   setState(() {
 
                   });
@@ -952,10 +1016,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 
             SelectableDropDownpopUp(
               bindType: "static",
-              controller:widget.static,
+              controller:widget.staticName,
               label: "Static Group",
               type:"StaticListPopUpCall",
-              value:  widget.static.text,
+              value:  widget.staticName.text,
               onchange: (vale){
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
@@ -964,6 +1028,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 setState(() {
 
                   widget.static.text=va?.code??"";
+                  widget.staticName.text=va?.name??"";
                   setState(() {
 
                   });
@@ -1002,10 +1067,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
             // ),
 
             SelectableDropDownpopUp(
-              controller:widget.brand,
+              controller:widget.brandName,
               label: "Brand",
               type:"BrandPopUpCall",
-              value:  widget.brand.text,
+              value:  widget.brandName.text,
               onchange: (vale){
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
@@ -1014,6 +1079,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 setState(() {
 
                   widget.brand.text=va?.code??"";
+                  widget.brandName.text=va?.name??"";
                   setState(() {
 
                   });

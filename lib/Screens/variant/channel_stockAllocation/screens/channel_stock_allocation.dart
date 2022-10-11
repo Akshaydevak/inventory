@@ -10,6 +10,7 @@ import 'package:inventory/Screens/variant/channel_stockAllocation/cubit/channels
 import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_allocationlist.dart';
 import 'package:inventory/Screens/variant/channel_stockAllocation/model/channelstock_read.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
@@ -32,6 +33,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   TextEditingController safetyStockController = TextEditingController();
   TextEditingController totalQuantityController = TextEditingController();
   TextEditingController salesStockQuantityController = TextEditingController();
+  TextEditingController addVirtualController = TextEditingController();
   TextEditingController salesBlockQuantityController = TextEditingController();
   TextEditingController purchaseBlockController = TextEditingController();
   TextEditingController reorderPointQuantityController = TextEditingController();
@@ -75,6 +77,28 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
 
 
     }
+  }
+  clear(){
+
+    channelTypeStockcode.text="";
+    channelTypecode.text="";
+    variantCodeController.text="";
+    stockCodeController.text="";
+    safetyStockController.text="";
+    reorderPointQuantityController.text="";
+    reorderQuantityController.text="";
+    reservedQuantityController.text="";
+    reservedQuantityController.text="";
+    damagedQuantityController.text="";
+    returnedQuantityController.text="";
+    replaceMentQuantityController.text="";
+    minimumQuantityController.text="";
+    maximumQuantityController.text="";
+    virtualStockTypeController.text="";
+    channelAllocationRatio.text="";
+    stockwarning==false;
+    salesBlock=false;
+
   }
   List<ChanmneStockListModelModel>group=[];
   @override
@@ -225,7 +249,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
             double height=MediaQuery.of(context).size.height;
             double width=MediaQuery.of(context).size.width;
             return Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor:  Pellet.bagroundColor,
               body: SingleChildScrollView(
                 child: IntrinsicHeight(
                   child: Row(
@@ -241,6 +265,8 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                         ontap: (int index) {
                           setState(() {
                             selectedVertical = index;
+                            clear();
+                            group.clear();
 
                             // select=false;
                             // clear();
@@ -291,6 +317,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                                   child: TextButtonLarge(onPress: () {
 
                                     channelId=group[index].id;
+                                    clear();
                                     context.read<ChannelstockallocationreadCubit>().getChannelStockAllocationRead(veritiaclid,group[index].id);
 
                                   },text: group[index].channeltypeName??""));
@@ -322,7 +349,9 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                           // ),
                           SizedBox(height: 30,),
 
+
                         ChannelStockStableTable(
+                          addVirtualStock: addVirtualController,
                           trueOrFalseChange: trueOrFalseChange,
                           channeTypeStockCode:channelTypeStockcode ,
                         channelTypeCode: channelTypecode,
@@ -335,7 +364,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                         variantCode: variantCodeController,
 
                         cancelledQuantity: cancelledQuantityController,
-                        channelTypeAllocationRatio: channelTypeController,
+                        channelTypeAllocationRatio: channelAllocationRatio,
                         damagedQuantity: damagedQuantityController,
                         maximumQuantity: maximumQuantityController,
                         minimumQuantity: minimumQuantityController,
@@ -357,65 +386,72 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                         virtualStockType: virtualStockTypeController,
 
                       ),
-                          SizedBox(height: height * .13,),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              // Button(Icons.delete, Colors.red,
-                              //     ctx: context,
-                              //     text: "Discard",
-                              //     onApply: () {
-                              //       // if(updateCheck){
-                              //       //   // clears();
-                              //       //
-                              //       //
-                              //       // }
-                              //
-                              //     },
-                              //     height: 29,
-                              //     width: 90,
-                              //     labelcolor: Colors.red,
-                              //     iconColor: Colors.red,
-                              //     bdr: true),
-                              SizedBox(
-                                width: width * .008,
-                              ),
-                              Button(Icons.check, Colors.grey,
-                                  ctx: context,
-                                  text:"Update",
-                                  height: 29,
-                                  Color: Color(0xff3E4F5B),
-                                  width: 90,
-                                  labelcolor: Colors.white,
-                                  iconColor: Colors.white,
-                                  onApply: () {
-                                    ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
-                                      stockWarning: stockwarning,
-                                      salesblock: salesBlock,
-                                      channelAllocationRatio: channelAllocationRatio?.text??"",
-                                      minMaxRatio: maximumQuantityController.text,
-                                      reOrderPoint: int.tryParse(reorderPointQuantityController.text),
-                                      minimumQuantity: int.tryParse(minimumQuantityController.text),
-                                      maximumQuantity: int.tryParse(maximumQuantityController.text),
-                                      addVirtualStock: int.tryParse(virtualStockController.text),
-                                      virtualType: virtualStockTypeController.text,
-
-                                      reOrderQuantity: int.tryParse(returnedQuantityController.text),
-
-
-                                    );
-                                    print("Bad Model$model");
-                                    context.read<ChannelStockAllocationPostCubit>().channelStockAllocationPatch(channelId, model);
+                          SizedBox(height: height * .08,),
+                          Container(
 
 
 
 
-                                  }
-                              ),
-                              SizedBox(
-                                // width: width * .008,
-                              ),
-                            ],
+                  margin: EdgeInsets.only(right:width *.02,left: height *.02),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                // Button(Icons.delete, Colors.red,
+                                //     ctx: context,
+                                //     text: "Discard",
+                                //     onApply: () {
+                                //       // if(updateCheck){
+                                //       //   // clears();
+                                //       //
+                                //       //
+                                //       // }
+                                //
+                                //     },
+                                //     height: 29,
+                                //     width: 90,
+                                //     labelcolor: Colors.red,
+                                //     iconColor: Colors.red,
+                                //     bdr: true),
+                                SizedBox(
+                                  width: width * .008,
+                                ),
+                                Button(Icons.check, Colors.grey,
+                                    ctx: context,
+                                    text:"Update",
+                                    height: 29,
+                                    Color: Color(0xff3E4F5B),
+                                    width: 90,
+                                    labelcolor: Colors.white,
+                                    iconColor: Colors.white,
+                                    onApply: () {
+                                      ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
+                                        stockWarning: stockwarning,
+                                        salesblock: salesBlock,
+                                        channelAllocationRatio: channelAllocationRatio?.text??"",
+                                        minMaxRatio: minMaxRatioController.text,
+                                        reOrderPoint: int.tryParse(reorderPointQuantityController.text),
+                                        minimumQuantity: int.tryParse(minimumQuantityController.text),
+                                        maximumQuantity: int.tryParse(maximumQuantityController.text),
+                                        addVirtualStock: int.tryParse(virtualStockController.text),
+                                        virtualType: virtualStockTypeController.text,
+
+                                        reOrderQuantity: int.tryParse(returnedQuantityController.text),
+
+
+                                      );
+                                      print("Bad Model$model");
+                                      context.read<ChannelStockAllocationPostCubit>().channelStockAllocationPatch(channelId, model);
+
+
+
+
+                                    }
+                                ),
+                                SizedBox(
+                                  // width: width * .008,
+                                ),
+                              ],
+                            ),
                           ),
 
 

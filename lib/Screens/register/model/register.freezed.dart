@@ -30,8 +30,11 @@ class _$RegisterModelTearOff {
       String? country,
       String? gender,
       String? token,
-      @JsonKey(name: "acess_site") String? accesssite,
-      @JsonKey(name: "created_code") int? createdCode,
+      @JsonKey(name: "login_id") int? loginid,
+      @JsonKey(name: "accesssite") String? accesssite,
+      @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "organization_type") String? organizationType,
+      @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) {
     return _RegisterModel(
       email: email,
@@ -42,8 +45,11 @@ class _$RegisterModelTearOff {
       country: country,
       gender: gender,
       token: token,
+      loginid: loginid,
       accesssite: accesssite,
-      createdCode: createdCode,
+      legalEntiry: legalEntiry,
+      organizationType: organizationType,
+      organizationCode: organizationCode,
       isLoggedIn: isLoggedIn,
     );
   }
@@ -66,10 +72,16 @@ mixin _$RegisterModel {
   String? get country => throw _privateConstructorUsedError;
   String? get gender => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
-  @JsonKey(name: "acess_site")
+  @JsonKey(name: "login_id")
+  int? get loginid => throw _privateConstructorUsedError;
+  @JsonKey(name: "accesssite")
   String? get accesssite => throw _privateConstructorUsedError;
-  @JsonKey(name: "created_code")
-  int? get createdCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "legal_entiry")
+  String? get legalEntiry => throw _privateConstructorUsedError;
+  @JsonKey(name: "organization_type")
+  String? get organizationType => throw _privateConstructorUsedError;
+  @JsonKey(name: "organization_code")
+  String? get organizationCode => throw _privateConstructorUsedError;
   @JsonKey(name: "isLoggedIn", defaultValue: false)
   bool? get isLoggedIn => throw _privateConstructorUsedError;
 
@@ -93,8 +105,11 @@ abstract class $RegisterModelCopyWith<$Res> {
       String? country,
       String? gender,
       String? token,
-      @JsonKey(name: "acess_site") String? accesssite,
-      @JsonKey(name: "created_code") int? createdCode,
+      @JsonKey(name: "login_id") int? loginid,
+      @JsonKey(name: "accesssite") String? accesssite,
+      @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "organization_type") String? organizationType,
+      @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn});
 }
 
@@ -117,8 +132,11 @@ class _$RegisterModelCopyWithImpl<$Res>
     Object? country = freezed,
     Object? gender = freezed,
     Object? token = freezed,
+    Object? loginid = freezed,
     Object? accesssite = freezed,
-    Object? createdCode = freezed,
+    Object? legalEntiry = freezed,
+    Object? organizationType = freezed,
+    Object? organizationCode = freezed,
     Object? isLoggedIn = freezed,
   }) {
     return _then(_value.copyWith(
@@ -154,14 +172,26 @@ class _$RegisterModelCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      loginid: loginid == freezed
+          ? _value.loginid
+          : loginid // ignore: cast_nullable_to_non_nullable
+              as int?,
       accesssite: accesssite == freezed
           ? _value.accesssite
           : accesssite // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdCode: createdCode == freezed
-          ? _value.createdCode
-          : createdCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+      legalEntiry: legalEntiry == freezed
+          ? _value.legalEntiry
+          : legalEntiry // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organizationType: organizationType == freezed
+          ? _value.organizationType
+          : organizationType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organizationCode: organizationCode == freezed
+          ? _value.organizationCode
+          : organizationCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       isLoggedIn: isLoggedIn == freezed
           ? _value.isLoggedIn
           : isLoggedIn // ignore: cast_nullable_to_non_nullable
@@ -186,8 +216,11 @@ abstract class _$RegisterModelCopyWith<$Res>
       String? country,
       String? gender,
       String? token,
-      @JsonKey(name: "acess_site") String? accesssite,
-      @JsonKey(name: "created_code") int? createdCode,
+      @JsonKey(name: "login_id") int? loginid,
+      @JsonKey(name: "accesssite") String? accesssite,
+      @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "organization_type") String? organizationType,
+      @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn});
 }
 
@@ -212,8 +245,11 @@ class __$RegisterModelCopyWithImpl<$Res>
     Object? country = freezed,
     Object? gender = freezed,
     Object? token = freezed,
+    Object? loginid = freezed,
     Object? accesssite = freezed,
-    Object? createdCode = freezed,
+    Object? legalEntiry = freezed,
+    Object? organizationType = freezed,
+    Object? organizationCode = freezed,
     Object? isLoggedIn = freezed,
   }) {
     return _then(_RegisterModel(
@@ -249,14 +285,26 @@ class __$RegisterModelCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      loginid: loginid == freezed
+          ? _value.loginid
+          : loginid // ignore: cast_nullable_to_non_nullable
+              as int?,
       accesssite: accesssite == freezed
           ? _value.accesssite
           : accesssite // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdCode: createdCode == freezed
-          ? _value.createdCode
-          : createdCode // ignore: cast_nullable_to_non_nullable
-              as int?,
+      legalEntiry: legalEntiry == freezed
+          ? _value.legalEntiry
+          : legalEntiry // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organizationType: organizationType == freezed
+          ? _value.organizationType
+          : organizationType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      organizationCode: organizationCode == freezed
+          ? _value.organizationCode
+          : organizationCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       isLoggedIn: isLoggedIn == freezed
           ? _value.isLoggedIn
           : isLoggedIn // ignore: cast_nullable_to_non_nullable
@@ -277,8 +325,11 @@ class _$_RegisterModel implements _RegisterModel {
       this.country,
       this.gender,
       this.token,
-      @JsonKey(name: "acess_site") this.accesssite,
-      @JsonKey(name: "created_code") this.createdCode,
+      @JsonKey(name: "login_id") this.loginid,
+      @JsonKey(name: "accesssite") this.accesssite,
+      @JsonKey(name: "legal_entiry") this.legalEntiry,
+      @JsonKey(name: "organization_type") this.organizationType,
+      @JsonKey(name: "organization_code") this.organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) this.isLoggedIn});
 
   factory _$_RegisterModel.fromJson(Map<String, dynamic> json) =>
@@ -301,18 +352,27 @@ class _$_RegisterModel implements _RegisterModel {
   @override
   final String? token;
   @override
-  @JsonKey(name: "acess_site")
+  @JsonKey(name: "login_id")
+  final int? loginid;
+  @override
+  @JsonKey(name: "accesssite")
   final String? accesssite;
   @override
-  @JsonKey(name: "created_code")
-  final int? createdCode;
+  @JsonKey(name: "legal_entiry")
+  final String? legalEntiry;
+  @override
+  @JsonKey(name: "organization_type")
+  final String? organizationType;
+  @override
+  @JsonKey(name: "organization_code")
+  final String? organizationCode;
   @override
   @JsonKey(name: "isLoggedIn", defaultValue: false)
   final bool? isLoggedIn;
 
   @override
   String toString() {
-    return 'RegisterModel(email: $email, password: $password, mobile: $mobile, lname: $lname, fname: $fname, country: $country, gender: $gender, token: $token, accesssite: $accesssite, createdCode: $createdCode, isLoggedIn: $isLoggedIn)';
+    return 'RegisterModel(email: $email, password: $password, mobile: $mobile, lname: $lname, fname: $fname, country: $country, gender: $gender, token: $token, loginid: $loginid, accesssite: $accesssite, legalEntiry: $legalEntiry, organizationType: $organizationType, organizationCode: $organizationCode, isLoggedIn: $isLoggedIn)';
   }
 
   @override
@@ -337,12 +397,21 @@ class _$_RegisterModel implements _RegisterModel {
                 const DeepCollectionEquality().equals(other.gender, gender)) &&
             (identical(other.token, token) ||
                 const DeepCollectionEquality().equals(other.token, token)) &&
+            (identical(other.loginid, loginid) ||
+                const DeepCollectionEquality()
+                    .equals(other.loginid, loginid)) &&
             (identical(other.accesssite, accesssite) ||
                 const DeepCollectionEquality()
                     .equals(other.accesssite, accesssite)) &&
-            (identical(other.createdCode, createdCode) ||
+            (identical(other.legalEntiry, legalEntiry) ||
                 const DeepCollectionEquality()
-                    .equals(other.createdCode, createdCode)) &&
+                    .equals(other.legalEntiry, legalEntiry)) &&
+            (identical(other.organizationType, organizationType) ||
+                const DeepCollectionEquality()
+                    .equals(other.organizationType, organizationType)) &&
+            (identical(other.organizationCode, organizationCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.organizationCode, organizationCode)) &&
             (identical(other.isLoggedIn, isLoggedIn) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoggedIn, isLoggedIn)));
@@ -359,8 +428,11 @@ class _$_RegisterModel implements _RegisterModel {
       const DeepCollectionEquality().hash(country) ^
       const DeepCollectionEquality().hash(gender) ^
       const DeepCollectionEquality().hash(token) ^
+      const DeepCollectionEquality().hash(loginid) ^
       const DeepCollectionEquality().hash(accesssite) ^
-      const DeepCollectionEquality().hash(createdCode) ^
+      const DeepCollectionEquality().hash(legalEntiry) ^
+      const DeepCollectionEquality().hash(organizationType) ^
+      const DeepCollectionEquality().hash(organizationCode) ^
       const DeepCollectionEquality().hash(isLoggedIn);
 
   @JsonKey(ignore: true)
@@ -384,8 +456,11 @@ abstract class _RegisterModel implements RegisterModel {
           String? country,
           String? gender,
           String? token,
-          @JsonKey(name: "acess_site") String? accesssite,
-          @JsonKey(name: "created_code") int? createdCode,
+          @JsonKey(name: "login_id") int? loginid,
+          @JsonKey(name: "accesssite") String? accesssite,
+          @JsonKey(name: "legal_entiry") String? legalEntiry,
+          @JsonKey(name: "organization_type") String? organizationType,
+          @JsonKey(name: "organization_code") String? organizationCode,
           @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) =
       _$_RegisterModel;
 
@@ -409,11 +484,20 @@ abstract class _RegisterModel implements RegisterModel {
   @override
   String? get token => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "acess_site")
+  @JsonKey(name: "login_id")
+  int? get loginid => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "accesssite")
   String? get accesssite => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "created_code")
-  int? get createdCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "legal_entiry")
+  String? get legalEntiry => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "organization_type")
+  String? get organizationType => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "organization_code")
+  String? get organizationCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "isLoggedIn", defaultValue: false)
   bool? get isLoggedIn => throw _privateConstructorUsedError;

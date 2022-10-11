@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
+import 'package:inventory/widgets/dropdownbutton.dart';
 
 class ChannelStockStableTable extends StatefulWidget {
   final TextEditingController variantCode;
   final TextEditingController stockCode;
   final TextEditingController channelTypeCode;
+
   final TextEditingController channeTypeStockCode;
   final TextEditingController purchaseBlockQuantity;
   final TextEditingController salesBlockQuantity;
@@ -20,6 +22,7 @@ class ChannelStockStableTable extends StatefulWidget {
   final TextEditingController replacementQuantity;
   final TextEditingController virtualStockType;
   final TextEditingController virtualStock;
+  final TextEditingController addVirtualStock;
   final TextEditingController minMaxRatio;
   final TextEditingController maximumQuantity;
   final TextEditingController minimumQuantity;
@@ -61,7 +64,7 @@ class ChannelStockStableTable extends StatefulWidget {
     required this.salesBolck,
     required this.stockCode,
     required this.totalQuantity,
-    required this.virtualStock,required this.virtualStockType, required this.channelTypeCode, required this.channeTypeStockCode,
+    required this.virtualStock,required this.virtualStockType, required this.channelTypeCode, required this.channeTypeStockCode, required this.addVirtualStock,
 
 
 
@@ -113,17 +116,19 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                              readOnly: true,
                               controller: widget.stockCode, title: "Stock Code"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                              readOnly: true,
                               controller: widget.channelTypeCode, title: "Channel Type Code"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
-
+                              readOnly: true,
 
                               controller: widget.channeTypeStockCode, title: "Channel Type  Stock Code"),
                           SizedBox(
@@ -131,6 +136,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                           ),
 
                           NewInputCard(
+                            readOnly: true,
 
                               controller: widget.totalQuantity, title: "Total Quantity"),
                           SizedBox(
@@ -143,7 +149,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
+                          NewInputCard(  readOnly: true,
 
 
                               controller: widget.salesBlockQuantity, title: "Sales Block Quantity"),
@@ -151,6 +157,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                              readOnly: true,
 
 
                               controller: widget.purchaseBlockQuantity, title: "Purchase Block Quantity"),
@@ -165,11 +172,13 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                         ),
 
                         NewInputCard(
+                            formatter: true,
                             controller: widget.reOrderPoint, title: "Reorder Point"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
+                          formatter: true,
 
 
                             controller: widget.returnedQuantity, title: "Reorder Quantity"),
@@ -177,13 +186,14 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            readOnly: true,
 
 
                             controller: widget.cancelledQuantity, title: "Cancelled Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
+                        NewInputCard(  readOnly: true,
 
 
                             controller: widget.reservedQuantity, title: "Reserved Quantity"),
@@ -191,24 +201,48 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            readOnly: true,
 
 
                             controller: widget.damagedQuantity, title: "Damaged Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
+                        NewInputCard(  readOnly: true,
+
                             controller: widget.returnedQuantity, title: "Returned Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
+                            readOnly: true,
                             controller: widget.replacementQuantity, title: "Replacement Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
-                            controller: widget.virtualStockType, title: "Virtual Stock Type"),
+                        SelectableDropDownpopUp(
+                          label: "Virtual Stock Type",
+                          type: "VirtualStockTypePopupCall",
+                          value: widget.virtualStockType.text,
+                          onSelection: (String? va) {
+                            print(
+                                "++++se+++++++++++++++++++");
+                            setState(() {
+                              widget.virtualStockType.text = va ?? "";
+                            });
+
+
+
+
+                            // onChange = true;
+                            // orderType = va!;
+
+                          },
+
+                          restricted: true,
+                        ),
+                        // NewInputCard(
+                        //     controller: widget.virtualStockType, title: "Virtual Stock Type"),
 
 
 
@@ -217,10 +251,18 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                       ],)),
                       Expanded(child: Column(children: [
                         NewInputCard(
+                            readOnly: true,
                             controller: widget.virtualStock, title: "Virtual Stock"),
                         SizedBox(
                           height: height * .030,
                         ),
+                        NewInputCard(
+
+                            controller: widget.addVirtualStock, title: " Add Virtual Stock"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
 
                         NewInputCard(
 
@@ -228,14 +270,16 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
+                        NewInputCard(  readOnly: true,
 
 
                             controller: widget.maximumQuantity, title: "Maximum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
+
                         NewInputCard(
+                            readOnly: true,
 
                             controller: widget.minimumQuantity, title: "Minimum Quantity"),
                         SizedBox(
@@ -274,7 +318,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .260,
+                          height: height * .150,
                         ),
 
 

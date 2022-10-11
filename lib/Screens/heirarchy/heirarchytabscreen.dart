@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
@@ -7,6 +9,8 @@ import 'package:inventory/Screens/sales/salesinvoice.dart';
 import 'package:inventory/Screens/salesreturn/salesreturngeneral.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/core/uttils/variable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
@@ -23,7 +27,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 1, vsync: this);
+    TabController _tabController = TabController(length: 1, vsync: this,initialIndex: Variable.subIndex[4]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -81,6 +85,20 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                                     unselectedLabelStyle: TextStyle(color: Color(0xff000000,)),
                                     padding: EdgeInsets.only(left: 13),
                                     isScrollable: true,
+                                    onTap: (val) async {
+                                      final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                      Variable.subIndex[4]=val;
+                                      final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+                                      prefs.setString('key', jsonEncode(strs)); // Encode the list here
+
+
+
+
+
+
+
+                                    },
                                     //indicatorSize:TabBarIndicatorSize.tab ,
 
                                     indicatorColor: Color(0xff3E4F5B),

@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/purchasreturn/pages/general.dart';
 import 'package:inventory/Screens/purchasreturn/pages/purchasereturninvoice.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/core/uttils/variable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PurchaseReturn extends StatefulWidget {
   @override
@@ -11,7 +15,7 @@ class PurchaseReturn extends StatefulWidget {
 class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this);
+    TabController _tabController = TabController(length: 2, vsync: this,initialIndex:  Variable.subIndex[1]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return  SingleChildScrollView(
@@ -66,8 +70,16 @@ class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderState
                               unselectedLabelStyle: TextStyle(color: Color(0xff000000,),fontSize: width/22,fontWeight: FontWeight.w400),
                               // padding: EdgeInsets.only(left: 13,),
                               isScrollable: true,
+                              onTap: (va) async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                Variable.subIndex[1]=va;
+                                final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+                                prefs.setString('key', jsonEncode(strs));
+                              },
 
                               indicatorSize: TabBarIndicatorSize.label,
+
 
 
                               //indicatorSize:TabBarIndicatorSize.tab ,

@@ -19,8 +19,11 @@ final String? token,
 
 
 
-    @JsonKey(name: "acess_site") final String? accesssite,
-    @JsonKey(name: "created_code") final int? createdCode,
+    @JsonKey(name: "login_id") final int? loginid,
+    @JsonKey(name: "accesssite") final String? accesssite,
+    @JsonKey(name: "legal_entiry") final String? legalEntiry,
+    @JsonKey(name: "organization_type") final String? organizationType,
+    @JsonKey(name: "organization_code") final String? organizationCode,
     @JsonKey(name: "isLoggedIn",defaultValue: false) final bool? isLoggedIn,
 
   }) = _RegisterModel;

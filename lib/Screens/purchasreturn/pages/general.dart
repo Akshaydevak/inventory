@@ -229,7 +229,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   listener: (context, state) {
     state.maybeWhen(orElse: () {
       // context.
-      context.showSnackBarError("Loadingggg");
+      context.showSnackBarError("Loading");
     }, error: () {
       context.showSnackBarError(Variable.errorMessege);
     }, success: (data) {
@@ -496,10 +496,12 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                           selectedVertical=index;
                           select=false;
                           updateCheck=false;
+                          lines.clear();
 
 
                           veritiaclid = result[index].id;
                           currentStock.clear();
+
 
                           context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
                           setState(() {
@@ -934,6 +936,40 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                     // if (widget.onAddNew) textPadding(''),
 
                                                   ]),
+                                              if(lines.isEmpty)...[
+                                                TableRow(
+                                                    decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                                        border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                            bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                            right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
+                                                                .solid))),
+                                                    children: [
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding(""),
+                                                      textPadding("",height: 55),
+
+                                                    ]
+                                                )
+
+
+                                              ],
                                               if (lines != null)...[
                                                 for (var i = 0; i < lines.length; i++)
                                                   TableRow(
@@ -1353,6 +1389,11 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 );
   }
 }
+
+
+
+
+
 class TopStableTable extends StatefulWidget {
   final TextEditingController inventory;
   final TextEditingController vendorMailId;

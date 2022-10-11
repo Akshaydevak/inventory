@@ -251,6 +251,83 @@ class StockBottomTableState extends State<StockBottomTable> {
 
 
                         ]),],
+                TableRow(
+                    decoration: BoxDecoration(
+                        color: Colors.grey
+                            .shade200,
+                        shape: BoxShape
+                            .rectangle,
+                        border:const  Border(
+                            left: BorderSide(
+                                width: .5,
+                                color: Colors
+                                    .grey,
+                                style: BorderStyle
+                                    .solid),
+                            bottom: BorderSide(
+                                width: .5,
+                                color: Colors
+                                    .grey,
+                                style: BorderStyle
+                                    .solid),
+                            right: BorderSide(
+                                color: Colors
+                                    .grey,
+                                width: .5,
+                                style: BorderStyle
+                                    .solid))),
+                    children: [
+
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:textPadding("")
+
+
+
+                      ),
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:textPadding("")
+
+
+
+                      ),
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:textPadding("")
+
+
+
+                      ),
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                          child:textPadding("")
+
+
+
+                      ),
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+
+                          child:textPadding("",height: 40)
+
+
+
+                      ),
+                      TableTextButton(label: "",  onPress: (){},)
+
+
+
+
+                    ]),
+
+
+
                 // TableRow(
                 //     decoration: BoxDecoration(
                 //         color: Colors.grey

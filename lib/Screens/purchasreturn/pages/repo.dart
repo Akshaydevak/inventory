@@ -90,7 +90,7 @@ abstract class PurchaseReturnRepoAbstract {
       getSalesSearch(
     String? code,
   );
-  Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype();
+  Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype({String? type});
   Future<Either<Failure, SalesGeneralReadModel>> getSalesGenralRead(int id);
   Future<Either<Failure, DoubleResponse>> salesGeneralDelete(int? id);
   Future<Either<Failure, DoubleResponse>> getSalesGeneralPatch(
@@ -265,7 +265,8 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, ChannelListModel>> getChannelAllocationRead(
       int? id, int? channelId);
-  Future<Either<Failure, List<FrameWorkListModel>>> getFrameWorklist();
+  Future<Either<Failure, PaginatedResponse<List<FrameWorkListModel>>>>
+      getFrameWorklist(String? filter);
   Future<Either<Failure, DoubleResponse>> channel2StockAllocationPatch(
       ChannelListModel model, int? id);
   Future<Either<Failure, DoubleResponse>> postCreateFrameWork(
@@ -329,7 +330,7 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(int? id);
   Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype();
-  Future<Either<Failure, ListingChnanelTableModel>> percentageGp(
+  Future<Either<Failure, DoubleResponse>> percentageGp(
       int? id, String? gpType);
   Future<Either<Failure, DoubleResponse>> patchCosting(
       CostingPageCreationPostModel model, int? id);
@@ -338,6 +339,27 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>>
       getAttributeList(
     String? code,
+  );
+  Future<Either<Failure, DoubleResponse>> postCombinationFrameWork(
+      {String? itemCode,
+      String? variantCode,
+      String? uomCode,
+      List<List<Map<String, dynamic>>>? variantlist});
+  Future<Either<Failure, PurchaseOrdertype>> getVirtualStiocktype();
+  Future<Either<Failure, DoubleResponse>> postStock(StockData model);
+  Future<Either<Failure, List<LinkedItemListReadModel>>> getLinkedItemListRead(
+    String? code,
+  );
+  Future<Either<Failure, DoubleResponse>> postLinkedItem(
+      LinkedItemPostModel model);
+  Future<Either<Failure, DoubleResponse>> patchLinkedItem(
+      LinkedItemPostModel model, int? id);
+  Future<Either<Failure, LinkedItemPostModel>> getLinkedItem(
+    int? id,
+  );
+  Future<Either<Failure, PaginatedResponse<List<LinkedItemListIdModel>>>>
+      getLinkedItemList(
+    String? filter,
   );
 }
 
@@ -436,9 +458,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype() {
+  Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype({String? type}) {
     return repoExecute<PurchaseOrdertype>(
-        () async => remoteDataSource.getSalesOrdertype());
+        () async => remoteDataSource.getSalesOrdertype(type:type));
   }
 
   @override
@@ -1035,9 +1057,10 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<FrameWorkListModel>>> getFrameWorklist() {
-    return repoExecute<List<FrameWorkListModel>>(
-        () async => remoteDataSource.getFrameWorklist());
+  Future<Either<Failure, PaginatedResponse<List<FrameWorkListModel>>>>
+      getFrameWorklist(String? filter) {
+    return repoExecute<PaginatedResponse<List<FrameWorkListModel>>>(
+        () async => remoteDataSource.getFrameWorklist(filter));
   }
 
   @override
@@ -1215,9 +1238,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, ListingChnanelTableModel>> percentageGp(
+  Future<Either<Failure, DoubleResponse>> percentageGp(
       int? id, String? gpType) {
-    return repoExecute<ListingChnanelTableModel>(
+    return repoExecute<DoubleResponse>(
         () async => remoteDataSource.percentageGp(id, gpType));
   }
 
@@ -1245,8 +1268,75 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> postPatchFrameWork(VariantFrameWorkPostModel model, int? id) {
+  Future<Either<Failure, DoubleResponse>> postPatchFrameWork(
+      VariantFrameWorkPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-            () async => remoteDataSource.postPatchFrameWork(model,id));
+        () async => remoteDataSource.postPatchFrameWork(model, id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCombinationFrameWork(
+      {String? itemCode,
+      String? variantCode,
+      String? uomCode,
+      List<List<Map<String, dynamic>>>? variantlist}) {
+    return repoExecute<DoubleResponse>(() async =>
+        remoteDataSource.postCombinationFrameWork(
+            itemCode: itemCode,
+            variantCode: variantCode,
+            uomCode: uomCode,
+            variantlist: variantlist));
+  }
+
+  @override
+  Future<Either<Failure, PurchaseOrdertype>> getVirtualStiocktype() {
+    return repoExecute<PurchaseOrdertype>(
+        () async => remoteDataSource.getVirtualStiocktype());
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postStock(StockData model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postStock(model));
+  }
+
+  @override
+  Future<Either<Failure, List<LinkedItemListReadModel>>> getLinkedItemListRead(
+      String? code) {
+    return repoExecute<List<LinkedItemListReadModel>>(
+        () async => remoteDataSource.getLinkedItemListRead(
+              code,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postLinkedItem(
+      LinkedItemPostModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postLinkedItem(model));
+  }
+
+  @override
+  Future<Either<Failure, LinkedItemPostModel>> getLinkedItem(int? id) {
+    return repoExecute<LinkedItemPostModel>(
+        () async => remoteDataSource.getLinkedItem(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<LinkedItemListIdModel>>>>
+      getLinkedItemList(String? filter) {
+    return repoExecute<PaginatedResponse<List<LinkedItemListIdModel>>>(
+        () async => remoteDataSource.getLinkedItemList(filter));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchLinkedItem(LinkedItemPostModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.patchLinkedItem(
+          model,
+          id,
+        ));
   }
 }

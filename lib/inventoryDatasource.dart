@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventoryPostModel.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
 import 'package:inventory/model/purchase_order_read.dart';
@@ -20,12 +21,14 @@ abstract class LogisticDataSource {
       String? next,
       {String? tab = ""});
 
-  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,{String? tab=""});
+  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,
+      {String? tab = ""});
 
   Future<PurchaseOrdertype> getPurchaseOrdertype();
 
   Future<DoubleResponse> postPurchase(PurchaseOrderPost model);
-  Future<List<VariantId>> getVariantId({String? vendorId,String? inventory=""});
+  Future<List<VariantId>> getVariantId(
+      {String? vendorId, String? inventory = ""});
   Future<List<Result>> getVariantCode();
   Future<PurchaseOrderTableModel> getTableDetails(int id);
   Future<VariantDetailsModel> getVendorDetails(String? id);
@@ -58,6 +61,9 @@ abstract class LogisticDataSource {
 
   Future<InventoryRead> getInventoryRead(int id);
   Future<DoubleResponse> postInventory(InventoryPostModel model);
+  Future<PaginatedResponse<List<InventoryListModel>>> getInventoryListRead(
+    String? code,
+  );
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -71,21 +77,19 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print(tab);
     String path = "";
     if (tab == "RF") {
-     // path = "http://65.1.61.201:8111/purchase-order/list-request-form/${Variable.inventory_ID}";
+      // path = "http://65.1.61.201:8111/purchase-order/list-request-form/${Variable.inventory_ID}";
 
-      path=requestVerticalList+Variable.inventory_ID;
-
-
+      path = requestVerticalList + Variable.inventory_ID;
     } else if (tab == "RFR") {
       path =
           "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
     } else if (tab == "II") {
       path =
           // "http://65.1.61.201:8111/purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
-          invoiceVerticalList+Variable.inventory_ID;
+          invoiceVerticalList + Variable.inventory_ID;
     } else {
       // path = "http://65.1.61.201:8111/purchase-order/list-purchase-order/${Variable.inventory_ID}";
-      path = generalVerticalList+Variable.inventory_ID;
+      path = generalVerticalList + Variable.inventory_ID;
     }
     // path = tab == "RF"
     //    ? "http://65.1.61.201:8111/purchase-order/list-request-form/test"
@@ -110,19 +114,22 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,{String? tab=""}) async {
+  Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? next,
+      {String? tab = ""}) async {
     print("code1" + next.toString());
-    String path ="";
+    String path = "";
     if (tab == "RF") {
-      path = stagingUrl+"purchase-order/list-request-form/${Variable.inventory_ID}?code=$next";
+      path = stagingUrl +
+          "purchase-order/list-request-form/${Variable.inventory_ID}?code=$next";
     } else if (tab == "RFR") {
-      path =
-          stagingUrl+"purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
+      path = stagingUrl +
+          "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
     } else if (tab == "II") {
-      path =
-          stagingUrl+"purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?code=$next";}
-    else{
-      path= stagingUrl+"purchase-order/list-purchase-order/${Variable.inventory_ID}?code=$next";
+      path = stagingUrl +
+          "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?code=$next";
+    } else {
+      path = stagingUrl +
+          "purchase-order/list-purchase-order/${Variable.inventory_ID}?code=$next";
     }
     print("urlof Search");
     print(path);
@@ -164,7 +171,8 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       ),
     );
 
-    PurchaseOrdertype ordertype = PurchaseOrdertype.fromJson(response.data['data']);
+    PurchaseOrdertype ordertype =
+        PurchaseOrdertype.fromJson(response.data['data']);
     print(ordertype);
     return ordertype;
   }
@@ -174,7 +182,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print(
       "post" + postPurchaseurl.toString(),
     );
-    try{
+    try {
       final response = await client.post(postPurchaseurl,
           data: model.toJson(),
           // data:{
@@ -231,7 +239,6 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           //
           //   },
 
-
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -244,7 +251,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       }
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
-    }catch(e){
+    } catch (e) {
       print(e);
     }
 
@@ -318,22 +325,24 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   }
 
   @override
-  Future<List<VariantId>> getVariantId({String? vendorId,String? inventory=""}) async {
+  Future<List<VariantId>> getVariantId(
+      {String? vendorId, String? inventory = ""}) async {
     print("repooooosss");
     print("in" + inventory.toString());
 
     String path = inventory == "" || inventory == null
-        ? inventoryBaseUrl+"inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
-        :inventoryBaseUrl+ "inventory-product/list-variant-by-inventory/$inventory";
-    print("sssssssssssssssAkshay"+path);
-  // try{
-  //   print("aaanananana");
+        ? inventoryBaseUrl +
+            "inventory-product/list-variant-by-inventory-and-vendor/${Variable.inventory_ID}?vcode=$vendorId"
+        : inventoryBaseUrl +
+            "inventory-product/list-variant-by-inventory/$inventory";
+    print("sssssssssssssssAkshay" + path);
+    // try{
+    //   print("aaanananana");
     print(path);
     print("aaammamam");
 
     final response = await client.get(
       path,
-
       options: Options(
         headers: {
           'Content-Type': 'application/json',
@@ -352,37 +361,37 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       items.add(VariantId.fromJson(element));
     });
     return items;
-  // }catch(e){print("Akshaya2"+e.toString());}
-  //   final response = await client.get(
-  //     path,
-  //     // data:
-  //     // // {"payment_status": "completed", "order_status": "completed"},
-  //     // {
-  //     //
-  //     // },
-  //     options: Options(
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Accept': 'application/json'
-  //       },
-  //     ),
-  //   );
-  //   print("response" + response.toString());
-  //   //print(response.data['results']);
-  //   List<VariantId> items = [];
-  //
-  //   (response.data['data']['results'] as List).forEach((element) {
-  //     // print("data");
-  //
-  //     items.add(VariantId.fromJson(element));
-  //   });
-  //   return items;
+    // }catch(e){print("Akshaya2"+e.toString());}
+    //   final response = await client.get(
+    //     path,
+    //     // data:
+    //     // // {"payment_status": "completed", "order_status": "completed"},
+    //     // {
+    //     //
+    //     // },
+    //     options: Options(
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //       },
+    //     ),
+    //   );
+    //   print("response" + response.toString());
+    //   //print(response.data['results']);
+    //   List<VariantId> items = [];
+    //
+    //   (response.data['data']['results'] as List).forEach((element) {
+    //     // print("data");
+    //
+    //     items.add(VariantId.fromJson(element));
+    //   });
+    //   return items;
   }
 
   @override
   Future<PurchaseOrderTableModel> getTableDetails(int? id) async {
     String path =
-        inventoryBaseUrl+"inventory-product/read-variant-for-lpo/$id";
+        inventoryBaseUrl + "inventory-product/read-variant-for-lpo/$id";
     print(path);
     try {
       final response = await client.get(
@@ -399,15 +408,14 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      print("response" + response.toString());
+      print("searching response" + response.toString());
       PurchaseOrderTableModel dataa =
           PurchaseOrderTableModel.fromJson(response.data['data']);
       print(dataa);
       return dataa;
     } catch (e) {
-      print("eee" + e.toString());
+      print("searchinfg error is here" + e.toString());
     }
-    print("ask" + path.toString());
     final response = await client.get(
       path,
 
@@ -423,7 +431,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("responseddddd" + response.toString());
+    print("creationItem" + response.toString());
     PurchaseOrderTableModel dataa =
         PurchaseOrderTableModel.fromJson(response.data['data']);
     print(dataa);
@@ -434,12 +442,11 @@ class InventoryDataSourceImpl extends LogisticDataSource {
   Future<PurchaseCureentStockQty> getCurrentStock(
       String? id, String? invdendotyId) async {
     print("Avalkkayi");
-    String path =
-        inventoryBaseUrl+"inventory-stock/get-stock-quantity-by-variant/$invdendotyId/$id";
+    String path = inventoryBaseUrl +
+        "inventory-stock/get-stock-quantity-by-variant/${Variable.inventory_ID}/$invdendotyId";
     print(path);
 
     try {
-
       final response = await client.get(
         path,
         // data:
@@ -543,56 +550,56 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print("sunithi2" + id.toString());
     String path = generalPurchasePatch + id.toString();
     print(path);
-try{
-  final response = await client.patch(path,
-      // data: model.toJson(),
-      data:{
-        "purchase_order_type": model.purchaseOrderType,
-        "promised_receipt_date": model.promisedReceiptdate,
-        "vendor_id": model.vendorId,
-        "vendor_trn_number":model.vendorTrnNumber,
-        "vendor_address":model.vendorAddress,
-        "vendor_mail_id":"",
-        "planned_receipt_date": model.plannedRecieptDate,
-        "address_1": model.address1,
-        "address_2": model.address2,
-        "note": model.note,
-        "remarks": model.remarks,
-        "unit_cost": model.unitcost,
-        "excess_tax": model.excessTax,
-        "actual_cost": model.actualCost,
-        "vat": model.vat,
-        "foc":model.foc,
-        "discount":model.discount,
-        "grand_total": model.grandTotal,
-        "vatable_amount": model.variableAmount,
-        "edited_by":model.edited_by,
-        "order_lines":model.orderLines,
-      },
-      options: Options(headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }));
-  print("+++++++++++");
-  print(response);
-  print(response.data['message']);
-  if (response.data['status'] == 'failed') {
-    Variable.errorMessege = response.data['message'];
-  }
-  return DoubleResponse(
-      response.data['status'] == 'success', response.data['message']);
-}catch(e){
-  print(e.toString());
-}
+    try {
+      final response = await client.patch(path,
+          // data: model.toJson(),
+          data: {
+            "purchase_order_type": model.purchaseOrderType,
+            "promised_receipt_date": model.promisedReceiptdate,
+            "vendor_id": model.vendorId,
+            "vendor_trn_number": model.vendorTrnNumber,
+            "vendor_address": model.vendorAddress,
+            "vendor_mail_id": "",
+            "planned_receipt_date": model.plannedRecieptDate,
+            "address_1": model.address1,
+            "address_2": model.address2,
+            "note": model.note,
+            "remarks": model.remarks,
+            "unit_cost": model.unitcost,
+            "excess_tax": model.excessTax,
+            "actual_cost": model.actualCost,
+            "vat": model.vat,
+            "foc": model.foc,
+            "discount": model.discount,
+            "grand_total": model.grandTotal,
+            "vatable_amount": model.variableAmount,
+            "edited_by": model.edited_by,
+            "order_lines": model.orderLines,
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print(e.toString());
+    }
     final response = await client.patch(path,
         // data: model.toJson(),
-        data:{
+        data: {
           "purchase_order_type": model.purchaseOrderType,
           "promised_receipt_date": model.promisedReceiptdate,
           "vendor_id": model.vendorId,
-          "vendor_trn_number":model.vendorTrnNumber,
-          "vendor_address":model.vendorAddress,
-          "vendor_mail_id":model.vendorMailId,
+          "vendor_trn_number": model.vendorTrnNumber,
+          "vendor_address": model.vendorAddress,
+          "vendor_mail_id": model.vendorMailId,
           "planned_receipt_date": model.plannedRecieptDate,
           "address_1": model.address1,
           "address_2": model.address2,
@@ -602,12 +609,12 @@ try{
           "excess_tax": model.excessTax,
           "actual_cost": model.actualCost,
           "vat": model.vat,
-          "foc":model.foc,
-          "discount":model.discount,
+          "foc": model.foc,
+          "discount": model.discount,
           "grand_total": model.grandTotal,
           "vatable_amount": model.variableAmount,
-          "edited_by":model.edited_by,
-          "order_lines":model.orderLines,
+          "edited_by": model.edited_by,
+          "order_lines": model.orderLines,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -745,12 +752,12 @@ try{
   Future<DoubleResponse> additionlGeneratePost(
       AdditionalGenerateModel model) async {
     print("welcome");
-    print(
-      additionalGeneratedPo,
-    );
+
+    String path = additionalGeneratedPo;
+    print(path);
+
     try {
-      final response = await client.post(
-          "http://65.1.61.201:8111/purchase-order/create-additional-system-generated-lpo",
+      final response = await client.post(path,
           data: model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -767,8 +774,7 @@ try{
     } catch (e) {
       print("error is here" + e.toString());
     }
-    final response = await client.post(
-        "http://65.1.61.201:8111/purchase-order/create-additional-system-generated-lpo",
+    final response = await client.post(path,
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -844,8 +850,6 @@ try{
       "post" + requestFormCreate.toString(),
     );
     try {
-
-
       final response = await client.post(requestFormCreate,
           data: model.toJson(),
           options: Options(headers: {
@@ -1175,6 +1179,7 @@ try{
 
   @override
   Future<List<Result>> getVariantCode() async {
+    print("vendorcode always");
     try {
       String path = vendorCodeUrl;
 
@@ -1260,7 +1265,7 @@ try{
       );
       print("response" + response.toString());
       VariantDetailsModel dataa =
-      VariantDetailsModel.fromJson(response.data['data']);
+          VariantDetailsModel.fromJson(response.data['data']);
       print(dataa);
       return dataa;
     } catch (e) {
@@ -1284,8 +1289,70 @@ try{
     );
     print("response" + response.toString());
     VariantDetailsModel dataa =
-    VariantDetailsModel.fromJson(response.data['data']);
+        VariantDetailsModel.fromJson(response.data['data']);
     print(dataa);
     return dataa;
+  }
+
+  @override
+  Future<PaginatedResponse<List<InventoryListModel>>> getInventoryListRead(
+      String? code) async {
+    print("here arrived");
+    print(code);
+    String path = inventoryListApi+code.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<InventoryListModel> items = [];
+
+      (response.data['data']['results'] as List).forEach((element) {
+        // print("data");
+
+        items.add(InventoryListModel.fromJson(element));
+      });
+
+      return PaginatedResponse<List<InventoryListModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString());
+    } catch (e) {
+      print("the mistake is+" + e.toString());
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    List<InventoryListModel> items = [];
+
+    (response.data['data']['results'] as List).forEach((element) {
+      // print("data");
+
+      items.add(InventoryListModel.fromJson(element));
+    });
+
+    return PaginatedResponse<List<InventoryListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
   }
 }

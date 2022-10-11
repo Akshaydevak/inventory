@@ -99,7 +99,7 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
           ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
           .toList(),
       productBehavior: (json['product_behaviour'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
       usageDirection: (json['usage_direction'] as List<dynamic>?)
           ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
@@ -115,7 +115,7 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
       inventoryId: json['inventory_id'] as String?,
-      producedCountry: json['produced_countrye'] as String?,
+      producedCountry: json['produced_country'] as String?,
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
       variantStatus: json['variant_status'] as String?,
@@ -203,7 +203,7 @@ Map<String, dynamic> _$$_VariantPatchToJson(_$_VariantPatch instance) =>
       'alternative_barcode': instance.alternativeBarcode,
       'alternative_qrcode': instance.alternativeQrCodeBarcode,
       'inventory_id': instance.inventoryId,
-      'produced_countrye': instance.producedCountry,
+      'produced_country': instance.producedCountry,
       'excess_tax': instance.excessTax,
       'return_type': instance.returnType,
       'variant_status': instance.variantStatus,

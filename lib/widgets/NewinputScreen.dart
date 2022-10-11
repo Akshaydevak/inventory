@@ -31,6 +31,7 @@ class NewInputCard extends StatefulWidget {
    final Color colors;
   final String? label;
   final String? keyboardType;
+  final Function? onChange;
 
   final String title;
   final String? hint;
@@ -39,6 +40,7 @@ class NewInputCard extends StatefulWidget {
   final  bool direction;
   const NewInputCard({
     Key? key,
+    this.onChange,
     required this.controller,
     this.label,
     this.keyboardType,
@@ -80,7 +82,7 @@ class _NewInputCardState extends State<NewInputCard> {
         children: [
           Text(
             widget.title,
-            style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w300),
+            style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
           ),
           SizedBox(height:3),
           widget.keyboardType=="int"?
@@ -93,6 +95,7 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: Colors.grey.shade200,
             child: TextFormField(
               textAlignVertical: TextAlignVertical.center,
+              onChanged:(va){widget?.onChange!(va);} ,
 
 
 
@@ -138,7 +141,7 @@ class _NewInputCardState extends State<NewInputCard> {
                 hintText: widget.label,
                 enabledBorder:OutlineInputBorder(
                   borderRadius:BorderRadius.circular(2),
-                  
+
                     borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                 focusedBorder:   OutlineInputBorder(
                   borderRadius:BorderRadius.circular(2),
@@ -156,6 +159,7 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: Colors.grey.shade200,
             child: TextFormField(
               textAlignVertical: TextAlignVertical.center,
+              onChanged:(va){widget?.onChange!(va);} ,
 
 
               readOnly: widget.readOnly,
@@ -270,6 +274,209 @@ class _NewInputCardState extends State<NewInputCard> {
       ));
   }
 }
+
+
+class NewInputCreateCard extends StatefulWidget {
+  final double fontsize;
+  final double height;
+  final bool readOnly;
+  final bool formatter;
+  final TextEditingController controller;
+  final int maxLines;
+  final Color colors;
+  final String? label;
+  final String? keyboardType;
+  final Function ontap;
+
+  final String title;
+  final String? hint;
+
+  final bool password;
+  final  bool direction;
+  const NewInputCreateCard({
+    Key? key,
+    required this.ontap,
+    required this.controller,
+    this.label,
+    this.keyboardType,
+    this.hint,
+    this.formatter=false,
+    this.readOnly=false,
+    this.password = false,
+    this.direction=false,
+    required this.title,
+    this.colors = const Color(0xffC3C7C9),
+    this.maxLines = 1,
+    this.height = 40,
+    this.fontsize = 13,
+  }) : super(key: key);
+
+  @override
+  State<NewInputCreateCard> createState() => _NewInputCreateCardState();
+}
+
+class _NewInputCreateCardState extends State<NewInputCreateCard> {
+  bool show = false;
+  @override
+  void initState() {
+    super.initState();
+    show = widget.password;
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
+
+    return Padding(
+        padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
+        child:widget.direction==false?
+        Column(
+
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  widget.title,
+                  style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
+                ),
+                TextButton(onPressed: (){
+                  widget.ontap();
+                }, child: Text("create New")),
+              ],
+            ),
+            SizedBox(height:3),
+
+
+            Container(
+              alignment: Alignment.center,
+              height: widget.height,
+
+
+              // color: widget.colors,
+              // color: Colors.grey.shade200,
+              child: TextFormField(
+                textAlignVertical: TextAlignVertical.center,
+
+
+                readOnly: widget.readOnly,
+                maxLines: widget.maxLines,
+                controller: widget.controller,
+                obscureText: show, keyboardType:
+              widget.formatter? TextInputType.number:null ,
+                inputFormatters:widget.formatter?
+                <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ]:null,
+
+
+                decoration: InputDecoration(
+
+
+                  filled: true,
+                  fillColor: widget.readOnly?Color(0xffF2F3F5).withOpacity(.2):Colors.white,
+                  suffixIcon: widget.password
+                      ? IconButton(
+                    icon: show
+                        ? const Icon(
+                      Icons.visibility,
+                      size: 18,
+                    )
+                        : const Icon(
+                      Icons.visibility_off_outlined,
+                      size: 18,
+                    ),
+                    onPressed: () {
+                      show = !show;
+                      setState(() {});
+                    },
+                  )
+                      : null,
+                  labelStyle: const TextStyle(
+                    fontSize: 13,
+                    //fontStyle: FontStyle.italic,
+                  ),
+                  // label: Text(
+                  //   widget.label,
+                  // ),
+                  hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                  hintText: widget.label,
+                  enabledBorder:OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                  focusedBorder:   OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                ),
+              ),
+            ),
+          ],
+        ): Container(
+          height: 300,
+          width: 300,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                widget.title,
+                style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.bold),
+              ),
+              SizedBox(width:MediaQuery.of(context).size.width*.003),
+              Container(
+                height: widget.height,
+                // color: widget.colors,
+                // color: Colors.grey.shade200,
+                child: TextFormField(
+                  textAlignVertical: TextAlignVertical.center,
+                  maxLines: widget.maxLines,
+                  controller: widget.controller,
+                  obscureText: show,
+                  decoration: InputDecoration(
+                    suffixIcon: widget.password
+                        ? IconButton(
+                      icon: show
+                          ? const Icon(
+                        Icons.visibility,
+                        size: 18,
+                      )
+                          : const Icon(
+                        Icons.visibility_off_outlined,
+                        size: 18,
+                      ),
+                      onPressed: () {
+                        show = !show;
+                        setState(() {});
+                      },
+                    )
+                        : null,
+                    labelStyle: const TextStyle(
+                      fontSize: 13,
+                      //fontStyle: FontStyle.italic,
+                    ),
+                    // label: Text(
+                    //   widget.label,
+                    // ),
+                    hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+                    hintText: widget.label,
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(color: widget.colors)),
+                  ),
+                ),
+              ),
+            ],
+
+          ),
+        ));
+  }
+}
+
+
+
+
 class BuildDateFormField extends StatefulWidget {
   final String label;
   final DateTime? initialValue;
@@ -408,7 +615,7 @@ class _underlineTextFormState extends State<underlineTextForm> {
             disabledBorder: InputBorder.none,
             contentPadding:
             EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
-            hintText: ""),
+            hintText: "Heading ",),
       ),
     );
   }
@@ -1175,9 +1382,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 28,
+      height: 30,
+      alignment: Alignment.center,
       decoration: BoxDecoration(
-       color:   Pellet.tableBlueHeaderPrint,
+       // color:   Pellet.tableBlueHeaderPrint,
         border: widget.border?Border.all(
           color: Colors.grey
         ):null
@@ -1186,6 +1394,8 @@ class _CustomDropDownState extends State<CustomDropDown> {
    // value?
    DropdownButtonHideUnderline(
      child: DropdownButton(
+       iconEnabledColor: Colors.black,
+       iconDisabledColor: Colors.black,
 
        borderRadius:BorderRadius.zero ,
 
@@ -1200,7 +1410,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           // Down Arrow Icon
           icon: const Icon(Icons.keyboard_arrow_down),
        hint: Container(
-         child: Text(widget.choosenValue.toString(),style: TextStyle(color: Colors.white), ),
+         child: Text(widget.choosenValue.toString(),style: TextStyle(color: Colors.black), ),
        ),
 
           // Array list of items

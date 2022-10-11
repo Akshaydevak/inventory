@@ -35,6 +35,7 @@ class ChannelCostingMainScreen extends StatefulWidget {
 class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   TextEditingController costingMethodController=TextEditingController();
   TextEditingController pricingGroupIdController=TextEditingController();
+  TextEditingController pricingNameController=TextEditingController();
   TextEditingController channelStockCodeController=TextEditingController();
   TextEditingController costingCodeController=TextEditingController();
   TextEditingController channelNameController=TextEditingController();
@@ -42,6 +43,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   TextEditingController pricingGptypeController=TextEditingController();
   TextEditingController gpPercentegeController=TextEditingController();
   TextEditingController sellingPriceController=TextEditingController();
+  TextEditingController costingnameController=TextEditingController();
   List<BrandListModel> result = [];
   bool onChange=false;
   TextEditingController itemsearch = TextEditingController();
@@ -49,6 +51,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   var list;
   int? veritiaclid = 0;
   int? channelId = 0;
+  int? tableId;
   int? channelTableSelcteddId = 0;
   String? channelCode ;
   String? variantCode ;
@@ -69,13 +72,31 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
       costingCodeController.text="";
 
       channelStockCodeController.text="";
+      costingnameController.text="";
 
 
       costingMethodController.text="";
       gpPercentegeController.text="";
       pricingGptypeController.text="";
       pricingGroupIdController.text="";
+      pricingNameController.text="";
+      table.clear();
     });
+  }
+  sellingPriceCalculation({int ?unitCost=0,int? gp=0}){
+    setState(() {
+      print("arrrrrived");
+    if(unitCost==null){
+      unitCost=0;
+    }
+    if(gp==null){
+      gp=0;
+    }
+      sellingPriceController.text=(unitCost!+gp!).toString();
+
+    });
+
+
   }
 
   @override
@@ -113,6 +134,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
               setState(() {
                 print("welcome");
                 group = data.data;
+                print(group);
                 // print("Akshgayaa" + group.toString());
                 // channels=data?.results??[];
 
@@ -136,6 +158,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
               setState(() {
                 print("arion");
                 checkBoxLis=data.data;
+                print(data.data);
                 // print(checkBoxLis);
                 // group = data.data;
                 // print("Akshgayaa" + group.toString());
@@ -165,9 +188,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 channelStockCodeController.text=data.channelCode.toString();
 
 
+
                 costingMethodController.text=data.costingMethodId.toString();
                  gpPercentegeController.text=data.gpPercentage.toString();
                 pricingGptypeController.text=data.pricingGpType.toString();
+                costingnameController.text=data.costingMethodName.toString();
                 pricingGroupIdController.text=data.pricingGroupId.toString();
                 
                 // print(checkBoxLis);
@@ -213,7 +238,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
         print("postssssssss" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -221,6 +246,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             context.showSnackBarSuccess(data.data2);
             Timer(Duration(seconds: 5), () {
               setState(() {
+                context.read<ListvraiantCubit>().getVariantList();
                 context.read<ChannelsttocktablereadCubit>().getChannelStockTableRead(channelId,);
                 // select=false;
 
@@ -259,6 +285,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                       // Variable.verticalid=result[0].id;
                       // print("Variable.ak"+Variable.verticalid.toString());
                       context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
+                      context.read<ChannelreadCubit>().getCostingRead(tableId);
                       // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                     }
                     else {
@@ -301,6 +328,14 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             selectedVertical = index;
 
                             select=false;
+                            checkBoxLis.clear();
+                            selection.clear();
+                            table.clear();
+                            group.clear();
+                            clear();
+
+
+
                             // clear();
                             // exportCheck=false;
                             // addNew=true;
@@ -343,6 +378,12 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           onPress: (int? index){
                             setState(() {
                               print(index);
+                              print("sssssssssssssssssssssssssssss"+group.toString());
+                              checkBoxLis.clear();
+                              selection.clear();
+                              table.clear();
+                              clear();
+
                               if(index!=null)
                                 context
                                     .read<ChannelListReadCubit>()
@@ -359,6 +400,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             print(index);
                             onChange=true;
                             setState(() {
+                              table.clear();
+                              clear();
                               if(selection.isNotEmpty){
                                 for(var i=0;i<selection.length;i++){
                                   if(i==index)
@@ -397,14 +440,17 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             table:table,
                           ontap:(int? id){
                               print(id);
+                              tableId=id;
                               select=false;
                               channelTableSelcteddId=id;
-                              context.read<ChannelreadCubit>().getCostingRead(id);
+                              context.read<ChannelreadCubit>().getCostingRead(tableId);
 
                           }
                         ),
                         SizedBox(height: height * .1,),
                         CostingStableTable(
+                          costingName: costingnameController,
+                          pricingName: pricingNameController,
                           unitCost: unitCostController,
                           sellingPrice: sellingPriceController,
                           channelName: channelNameController,
@@ -414,6 +460,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           gpPercentage: gpPercentegeController,
                           pricingGptype: pricingGptypeController,
                           pricingGroupId: pricingGroupIdController,
+                            sellingPriceCalculation:sellingPriceCalculation,
+                            channelId:channelId
                         ),
                         SizedBox(height: height * .13,),
                         Row(
@@ -461,10 +509,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                       createdBy: "afy",
                                       pricingGroupId: int.tryParse(pricingGroupIdController.text),
                                       costingMethodId: int.tryParse(costingMethodController.text),
-                                      gpPercentage: double.tryParse(gpPercentegeController.text),
+                                      gpPercentage:
+                                      1,
+                                      // double.tryParse(gpPercentegeController.text),
                                       unitCost:  double.tryParse(unitCostController.text),
                                       sellingPrice:  double.tryParse(sellingPriceController.text),
-
 
                                     );
                                     print(model);

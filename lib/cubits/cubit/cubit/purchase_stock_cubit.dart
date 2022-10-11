@@ -12,6 +12,7 @@ class PurchaseStockCubit extends Cubit<PurchaseStockState> {
   Future getCurrentStock(String? id,String? variantId) async {
     emit(_Loading());
     print("sssssssssssssssssssssssdd");
+    print(variantId);
 
     final result = await repo.getCurrentStock(id,variantId);
     print("result+" + result.toString());

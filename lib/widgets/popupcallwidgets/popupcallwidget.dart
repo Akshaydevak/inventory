@@ -27,6 +27,7 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pric
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
+import 'package:inventory/Screens/variant/stock/cubits/virtualStocktype/virtualstocktype_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_list_cubit.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -192,6 +193,8 @@ class _PopUpCallState extends State<PopUpCall> {
       case "PriceTypePopUpCall":
         {
           data = PriceTypePopUpCall(
+            apiType:widget.apiType,
+
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -202,6 +205,7 @@ class _PopUpCallState extends State<PopUpCall> {
       case "SalesOrderMode":
         {
           data = SalesOrderModePopUpCall(
+            apiType:widget.apiType,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -478,6 +482,19 @@ class _PopUpCallState extends State<PopUpCall> {
 
               type: widget.type);
         }
+        break;case "VirtualStockTypePopupCall":
+
+        {
+          data =  VirtualStockTypePopupCall(
+
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              // id: widget.id,
+              value: widget.value,
+              enable: widget.enable,
+
+              type: widget.type);
+        }
         break;
 
 
@@ -563,6 +580,7 @@ class _SellingPriceBasedPopUpCallState
                   if (widget.onAddNew != null) list.add("");
                   _controller = TextEditingController(text: label);
                   return TypeAheadFormField(
+
                     enabled: widget.enable,
                     validator: (value) {
                       if (value != null && value.isEmpty) {
@@ -711,6 +729,140 @@ class _PgTypePopUpCallState
                         widget.onSelection(onSellingBasedSelect(
                             suggestion.toString(), data!.pricingPgT!));
                         // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+
+
+
+class VirtualStockTypePopupCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const VirtualStockTypePopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _VirtualStockTypePopupCallState createState() =>
+      _VirtualStockTypePopupCallState();
+}
+
+class _VirtualStockTypePopupCallState
+    extends State<VirtualStockTypePopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<VirtualstocktypeCubit>(
+        create: (context) => VirtualstocktypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<VirtualstocktypeCubit>().getVirtualStiocktype();
+            return BlocBuilder<VirtualstocktypeCubit,
+                VirtualstocktypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.virtualStockType?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.virtualStockType![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    PurchaseOrdertype? newData;
+                    list.forEach((element) {
+                      newData?.virtualStockType?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.virtualStockType!));
+                        // data.sellingPercntageBasedOn?.virtualStockType((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;
                         // });
@@ -1768,6 +1920,7 @@ class _SalesOrderTypePopUpCallState
 }
 class SalesOrderModePopUpCall extends StatefulWidget {
   final String? value;
+  final String? apiType;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
@@ -1777,6 +1930,7 @@ class SalesOrderModePopUpCall extends StatefulWidget {
       {Key? key,
         this.value,
         this.onAddNew,
+        this.apiType,
         required this.onSelection,
         required this.type,
         required this.enable,
@@ -1801,11 +1955,12 @@ class _SalesOrderModePopUpCallState
   @override
   Widget build(BuildContext context) {
     label = widget.value;
+    print("wigeeee"+widget.apiType.toString());
     return BlocProvider<SalesCubit>(
         create: (context) => SalesCubit(),
         child: Builder(
           builder: (context) {
-            context.read<SalesCubit>().getSalesOrdertype();
+            context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
             return BlocBuilder<SalesCubit,
                 SalesState>(builder: (context, state) {
               print(state);
@@ -1897,6 +2052,7 @@ class _SalesOrderModePopUpCallState
 
 class PriceTypePopUpCall extends StatefulWidget {
   final String? value;
+  final String? apiType;
   final VoidCallback? onAddNew;
   final Function onSelection;
   final String type;
@@ -1906,6 +2062,7 @@ class PriceTypePopUpCall extends StatefulWidget {
       {Key? key,
         this.value,
         this.onAddNew,
+        this.apiType,
         required this.onSelection,
         required this.type,
         required this.enable,
@@ -1934,7 +2091,7 @@ class _PriceTypePopUpCallState
         create: (context) => SalesCubit(),
         child: Builder(
           builder: (context) {
-            context.read<SalesCubit>().getSalesOrdertype();
+            context.read<SalesCubit>().getSalesOrdertype(type: widget.apiType);
             return BlocBuilder<SalesCubit,
                 SalesState>(builder: (context, state) {
               print(state);
@@ -2941,6 +3098,7 @@ class _MaterialListPopUpCall extends State<MaterialListPopUpCall> {
   @override
   void initState() {
     super.initState();
+    context.read<MaterialListCubit>().getMaterialList();
   }
 
   @override
@@ -3012,7 +3170,7 @@ class _MaterialListPopUpCall extends State<MaterialListPopUpCall> {
 
                         onChanged: (va){
                           print(va);
-                          search3(context, va);
+                          // search3(context, va);
                           // context.read<MaterialListCubit>().searchMaterialList(va);
 
                         },
@@ -3781,7 +3939,7 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
     }
     label = widget.value;
     return Builder(builder: (context) {
-        // context.read<DevisionListCubit>().getDevisionList();
+        context.read<DevisionListCubit>().getDevisionList();
 
         return BlocBuilder<DevisionListCubit, DevisionListState>(
             builder: (context, state) {
@@ -3793,7 +3951,7 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                 error: () => SizedBox(),
                 // errorLoader(widget.onAddNew),
                 success: (data) {
-                  print("appuram3"+data.toString());
+                  print("appuram3"+data.data.toString());
                   List<String> list = [];
                   int length=data.data.length;
                   // list=data.orderTypes;
@@ -3802,13 +3960,15 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
 
                   }
 
-                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                  BrandListModel? onSellingBasedSelect(var value,List<BrandListModel> list) {
                     BrandListModel ? newData;
                     list.forEach((element) {
                       if (element.name != null &&
                           element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
                       if (element.id != null &&
                           element.id == (value.toLowerCase())) newData = element;
+                      if (element.code != null &&
+                          element.code == (value.toLowerCase())) newData = element;
 
 
                     });
@@ -4102,6 +4262,7 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
+    context.read<CategorylistCubit>().getCategoryist(type:widget.apiType??"");
     super.initState();
   }
 
@@ -4113,12 +4274,177 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
 
     }
     label = widget.value;
-    return BlocProvider(
-  create: (context) => CategorylistCubit(),
-  child: Builder(builder: (context) {
-      context.read<CategorylistCubit>().getCategoryist(type:widget.apiType??"");
+    return Builder(builder: (context) {
+        context.read<CategorylistCubit>().getCategoryist(type:widget.apiType??"");
 
-      return BlocBuilder<CategorylistCubit, CategorylistState>(
+        return BlocBuilder<CategorylistCubit, CategorylistState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: () => SizedBox(),
+                // errorLoader(widget.onAddNew),
+                success: (data) {
+                  print("anagha"+data.toString());
+                  List<String> list = [];
+                  int length=data.data.length;
+                  // list=data.orderTypes;
+                  for(var i=0;i<length;i++){
+                    list.add(data?.data[i].name??"" );
+
+                  }
+
+                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                    BrandListModel ? newData;
+                    list.forEach((element) {
+                      if (element.name != null &&
+                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                      if (element.id != null &&
+                          element.id == (value.toLowerCase())) newData = element;
+
+
+                    });
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    // PurchaseOrdertype? newData;
+                    // list.forEach((element) {
+                    //   newData?.orderTypes?.add(element);
+                    // });
+                    return newData;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("Add new");
+                  _controller = TextEditingController(text: label);
+                  // hintText = label;
+
+                  return Container(
+
+                    child: TypeAheadFormField(
+
+                      enabled: widget.enable,
+                      hideSuggestionsOnKeyboardHide: true,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return "required";
+                        }
+                      },
+                      textFieldConfiguration: TextFieldConfiguration(
+                          style: TextStyle(fontSize: 13),
+
+                          onChanged: (va){
+                            print("ui searching value"+va.toString());  widget!.onchange!(va);
+
+                            // context.read<MaterialListCubit>().searchMaterialList(va);
+
+                          },
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            // hintText: hintText,
+                              isDense: true,
+                              // border: OutlineInputBorder(),
+                              enabledBorder:OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
+
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              focusedBorder:   OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
+
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+
+                      onSuggestionSelected: (suggestion) {
+                        if (suggestion == "Add new")
+                          widget.onAddNew!();
+                        else{
+                          widget.onSelection(onSellingBasedSelect(
+                              suggestion.toString(), data.data));
+
+                        }
+                        // widget.onSelection(
+                        //     onSelect(suggestion.toString(), data ?? []));
+                      },
+                      itemBuilder: (context, suggestion) {
+                        if (suggestion == "Add new")
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.add_circle_outline_outlined),
+                                title: Text(suggestion.toString()),
+                              ),
+                            ],
+                          );
+                        return ListTile(
+                          ////leading: Icon(Icons.shopping_cart_outlined),
+                          title: Text(suggestion.toString()),
+                        );
+                      },
+                      suggestionsCallback: (String? value) async {
+                        return value == null || value.isEmpty
+                            ? list
+                            : search(value, list, widget.onAddNew);
+                      },
+                    ),
+                  );
+                },
+              );
+            });
+      });
+  }
+}
+
+
+
+class GroupPopUpCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final Function? onchange;
+  final String type;
+  final bool enable;
+
+  final List<String>? list;
+  const GroupPopUpCall({
+    Key? key,
+    this.value,
+    this.onchange,
+    required this.type,
+    this.onAddNew,
+    this.id,
+    required this.enable,
+    required this.onSelection,
+    this.list,
+  }) : super(key: key);
+
+  @override
+  _GroupPopUpCall createState() => _GroupPopUpCall();
+}
+
+class _GroupPopUpCall extends State<GroupPopUpCall> {
+  String? label;
+  String? hintText;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    context.read<GrouplistCubit>().getGroupListList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    search3(BuildContext ctx,value){
+      print("enterd"+value.toString());
+      context.read<GrouplistCubit>().searchGroupList(value);
+
+    }
+    label = widget.value;
+    return Builder(builder: (context) {
+      context.read<GrouplistCubit>().getGroupListList();
+
+      return BlocBuilder<GrouplistCubit, GrouplistState>(
           builder: (context, state) {
             return state.maybeWhen(
               orElse: () => Center(
@@ -4175,8 +4501,177 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
                         style: TextStyle(fontSize: 13),
 
                         onChanged: (va){
-                          print("ui searching value"+va.toString());  widget!.onchange!(va);
+                          print(va);
+                          search3(context, va);
+                          // context.read<MaterialListCubit>().searchMaterialList(va);
 
+                        },
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          // hintText: hintText,
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            // border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.more_horiz_rounded))),
+
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else{
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data.data));
+
+                      }
+                      // widget.onSelection(
+                      //     onSelect(suggestion.toString(), data ?? []));
+                    },
+                    itemBuilder: (context, suggestion) {
+                      if (suggestion == "Add new")
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_circle_outline_outlined),
+                              title: Text(suggestion.toString()),
+                            ),
+                          ],
+                        );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  ),
+                );
+              },
+            );
+          });
+    });
+  }
+}
+
+
+
+
+
+
+class StaticListPopUpCall extends StatefulWidget {
+  final String? value;
+
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final Function? onchange;
+  final String type;
+  final bool enable;
+
+  final List<String>? list;
+  const StaticListPopUpCall({
+    Key? key,
+    this.value,
+    this.onchange,
+    required this.type,
+    this.onAddNew,
+    required this.enable,
+    required this.onSelection,
+    this.list,
+  }) : super(key: key);
+
+  @override
+  _StaticListPopUpCall createState() => _StaticListPopUpCall();
+}
+
+class _StaticListPopUpCall extends State<StaticListPopUpCall> {
+  String? label;
+  String? hintText;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    context.read<ListstaticCubit>().getStaticList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    search3(BuildContext ctx,value){
+      print("enterd"+value.toString());
+      context.read<ListstaticCubit>().searchStaticPageList(value);
+
+    }
+    label = widget.value;
+    return Builder(builder: (context) {
+      context.read<ListstaticCubit>().getStaticList();
+
+      return BlocBuilder<ListstaticCubit, ListstaticState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: () => SizedBox(),
+              // errorLoader(widget.onAddNew),
+              success: (data) {
+                print("anagha"+data.toString());
+                List<String> list = [];
+                int length=data.data.length;
+                // list=data.orderTypes;
+                for(var i=0;i<length;i++){
+                  list.add(data?.data[i].name??"" );
+
+                }
+
+                BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                  BrandListModel ? newData;
+                  list.forEach((element) {
+                    if (element.name != null &&
+                        element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                    if (element.id != null &&
+                        element.id == (value.toLowerCase())) newData = element;
+
+
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
+
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
+
+                if (widget.onAddNew != null) list.add("Add new");
+                _controller = TextEditingController(text: label);
+                // hintText = label;
+
+                return Container(
+
+                  child: TypeAheadFormField(
+
+
+                    enabled: widget.enable,
+                    hideSuggestionsOnKeyboardHide: true,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        style: TextStyle(fontSize: 13),
+
+                        onChanged: (va){
+                          print(va);
+                          search3(context, va);
                           // context.read<MaterialListCubit>().searchMaterialList(va);
 
                         },
@@ -4231,348 +4726,7 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
               },
             );
           });
-    }),
-);
-  }
-}
-
-
-
-class GroupPopUpCall extends StatefulWidget {
-  final String? value;
-  final int? id;
-
-  final VoidCallback? onAddNew;
-  final Function onSelection;
-  final Function? onchange;
-  final String type;
-  final bool enable;
-
-  final List<String>? list;
-  const GroupPopUpCall({
-    Key? key,
-    this.value,
-    this.onchange,
-    required this.type,
-    this.onAddNew,
-    this.id,
-    required this.enable,
-    required this.onSelection,
-    this.list,
-  }) : super(key: key);
-
-  @override
-  _GroupPopUpCall createState() => _GroupPopUpCall();
-}
-
-class _GroupPopUpCall extends State<GroupPopUpCall> {
-  String? label;
-  String? hintText;
-  TextEditingController _controller = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    search3(BuildContext ctx,value){
-      print("enterd"+value.toString());
-      context.read<GrouplistCubit>().searchGroupList(value);
-
-    }
-    label = widget.value;
-    return BlocProvider(
-      create: (context) => GrouplistCubit(),
-      child: Builder(builder: (context) {
-        context.read<GrouplistCubit>().getGroupListList();
-
-        return BlocBuilder<GrouplistCubit, GrouplistState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: () => SizedBox(),
-                // errorLoader(widget.onAddNew),
-                success: (data) {
-                  print("anagha"+data.toString());
-                  List<String> list = [];
-                  int length=data.data.length;
-                  // list=data.orderTypes;
-                  for(var i=0;i<length;i++){
-                    list.add(data?.data[i].name??"" );
-
-                  }
-
-                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
-                    BrandListModel ? newData;
-                    list.forEach((element) {
-                      if (element.name != null &&
-                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                      if (element.id != null &&
-                          element.id == (value.toLowerCase())) newData = element;
-
-
-                    });
-                    print("value" + value.toString());
-                    // print("value"+list.toString());
-
-                    // PurchaseOrdertype? newData;
-                    // list.forEach((element) {
-                    //   newData?.orderTypes?.add(element);
-                    // });
-                    return newData;
-                  } // });
-
-                  if (widget.onAddNew != null) list.add("Add new");
-                  _controller = TextEditingController(text: label);
-                  // hintText = label;
-
-                  return Container(
-
-                    child: TypeAheadFormField(
-
-                      enabled: widget.enable,
-                      hideSuggestionsOnKeyboardHide: true,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13),
-
-                          onChanged: (va){
-                            print(va);
-                            search3(context, va);
-                            // context.read<MaterialListCubit>().searchMaterialList(va);
-
-                          },
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            // hintText: hintText,
-                              isDense: true,
-                              enabledBorder:OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
-
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              focusedBorder:   OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
-
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              // border: OutlineInputBorder(),
-                              suffixIcon: Icon(Icons.more_horiz_rounded))),
-
-                      onSuggestionSelected: (suggestion) {
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else{
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data.data));
-
-                        }
-                        // widget.onSelection(
-                        //     onSelect(suggestion.toString(), data ?? []));
-                      },
-                      itemBuilder: (context, suggestion) {
-                        if (suggestion == "Add new")
-                          return Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.add_circle_outline_outlined),
-                                title: Text(suggestion.toString()),
-                              ),
-                            ],
-                          );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
-                        );
-                      },
-                      suggestionsCallback: (String? value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
-                    ),
-                  );
-                },
-              );
-            });
-      }),
-    );
-  }
-}
-
-
-
-
-
-
-class StaticListPopUpCall extends StatefulWidget {
-  final String? value;
-
-  final VoidCallback? onAddNew;
-  final Function onSelection;
-  final Function? onchange;
-  final String type;
-  final bool enable;
-
-  final List<String>? list;
-  const StaticListPopUpCall({
-    Key? key,
-    this.value,
-    this.onchange,
-    required this.type,
-    this.onAddNew,
-    required this.enable,
-    required this.onSelection,
-    this.list,
-  }) : super(key: key);
-
-  @override
-  _StaticListPopUpCall createState() => _StaticListPopUpCall();
-}
-
-class _StaticListPopUpCall extends State<StaticListPopUpCall> {
-  String? label;
-  String? hintText;
-  TextEditingController _controller = TextEditingController();
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    search3(BuildContext ctx,value){
-      print("enterd"+value.toString());
-      context.read<ListstaticCubit>().searchStaticPageList(value);
-
-    }
-    label = widget.value;
-    return BlocProvider(
-      create: (context) => ListstaticCubit(),
-      child: Builder(builder: (context) {
-        context.read<ListstaticCubit>().getStaticList();
-
-        return BlocBuilder<ListstaticCubit, ListstaticState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: () => SizedBox(),
-                // errorLoader(widget.onAddNew),
-                success: (data) {
-                  print("anagha"+data.toString());
-                  List<String> list = [];
-                  int length=data.data.length;
-                  // list=data.orderTypes;
-                  for(var i=0;i<length;i++){
-                    list.add(data?.data[i].name??"" );
-
-                  }
-
-                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
-                    BrandListModel ? newData;
-                    list.forEach((element) {
-                      if (element.name != null &&
-                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                      if (element.id != null &&
-                          element.id == (value.toLowerCase())) newData = element;
-
-
-                    });
-                    print("value" + value.toString());
-                    // print("value"+list.toString());
-
-                    // PurchaseOrdertype? newData;
-                    // list.forEach((element) {
-                    //   newData?.orderTypes?.add(element);
-                    // });
-                    return newData;
-                  } // });
-
-                  if (widget.onAddNew != null) list.add("Add new");
-                  _controller = TextEditingController(text: label);
-                  // hintText = label;
-
-                  return Container(
-
-                    child: TypeAheadFormField(
-
-
-                      enabled: widget.enable,
-                      hideSuggestionsOnKeyboardHide: true,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13),
-
-                          onChanged: (va){
-                            print(va);
-                            search3(context, va);
-                            // context.read<MaterialListCubit>().searchMaterialList(va);
-
-                          },
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            // hintText: hintText,
-                              isDense: true,
-                              // border: OutlineInputBorder(),
-                              enabledBorder:OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
-
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              focusedBorder:   OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
-
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              suffixIcon: Icon(Icons.more_horiz_rounded))),
-
-                      onSuggestionSelected: (suggestion) {
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else{
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data.data));
-
-                        }
-                        // widget.onSelection(
-                        //     onSelect(suggestion.toString(), data ?? []));
-                      },
-                      itemBuilder: (context, suggestion) {
-                        if (suggestion == "Add new")
-                          return Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.add_circle_outline_outlined),
-                                title: Text(suggestion.toString()),
-                              ),
-                            ],
-                          );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
-                        );
-                      },
-                      suggestionsCallback: (String? value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
-                    ),
-                  );
-                },
-              );
-            });
-      }),
-    );
+    });
   }
 }
 
@@ -4608,138 +4762,135 @@ class _FrameWorkPopUpCallPopUpCall extends State<FrameWorkPopUpCall> {
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
+    context.read<FrameworklistCubit>().getFrameWorklist();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    search3(BuildContext ctx,value){
-      print("enterd"+value.toString());
-      context.read<ListstaticCubit>().searchStaticPageList(value);
-
-    }
+    // search3(BuildContext ctx,value){
+    //   print("enterd"+value.toString());
+    //   context.read<ListstaticCubit>().searchStaticPageList(value);
+    //
+    // }
     label = widget.value;
-    return BlocProvider(
-      create: (context) => FrameworklistCubit(),
-      child: Builder(builder: (context) {
-        context.read<FrameworklistCubit>().getFrameWorklist();
+    return Builder(builder: (context) {
 
-        return BlocBuilder<FrameworklistCubit, FrameworklistState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: () => SizedBox(),
-                // errorLoader(widget.onAddNew),
-                success: (data) {
-                  print("anagha"+data.toString());
-                  List<String> list = [];
-                  int length=data.length;
-                  // list=data.orderTypes;
-                  for(var i=0;i<length;i++){
-                    list.add(data?[i].name??"" );
+      return BlocBuilder<FrameworklistCubit, FrameworklistState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: () => SizedBox(),
+              // errorLoader(widget.onAddNew),
+              success: (data) {
+                print("anagha"+data.toString());
+                List<String> list = [];
+                int length=data.data.length;
+                // list=data.orderTypes;
+                for(var i=0;i<length;i++){
+                  list.add(data.data?[i].name??"" );
 
-                  }
+                }
 
-                  FrameWorkListModel? onSellingBasedSelect(var value, List<FrameWorkListModel> list) {
-                    FrameWorkListModel ? newData;
-                    list.forEach((element) {
-                      if (element.name != null &&
-                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                      if (element.id != null &&
-                          element.id == (value.toLowerCase())) newData = element;
+                FrameWorkListModel? onSellingBasedSelect(var value, List<FrameWorkListModel> list) {
+                  FrameWorkListModel ? newData;
+                  list.forEach((element) {
+                    if (element.name != null &&
+                        element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                    if (element.id != null &&
+                        element.id == (value.toLowerCase())) newData = element;
 
 
-                    });
-                    print("value" + value.toString());
-                    // print("value"+list.toString());
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
 
-                    // PurchaseOrdertype? newData;
-                    // list.forEach((element) {
-                    //   newData?.orderTypes?.add(element);
-                    // });
-                    return newData;
-                  } // });
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
 
-                  if (widget.onAddNew != null) list.add("Add new");
-                  _controller = TextEditingController(text: label);
-                  // hintText = label;
+                if (widget.onAddNew != null) list.add("Add new");
+                _controller = TextEditingController(text: label);
+                // hintText = label;
 
-                  return Container(
+                return Container(
 
-                    child: TypeAheadFormField(
+                  child: TypeAheadFormField(
 
 
-                      enabled: widget.enable,
-                      hideSuggestionsOnKeyboardHide: true,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13),
+                    enabled: widget.enable,
+                    hideSuggestionsOnKeyboardHide: true,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        style: TextStyle(fontSize: 13),
 
-                          onChanged: (va){
-                            print(va);
-                            search3(context, va);
-                            // context.read<MaterialListCubit>().searchMaterialList(va);
+                        onChanged: (va){
+                          print(va);
+                          // search3(context, va);
+                          // context.read<MaterialListCubit>().searchMaterialList(va);
 
-                          },
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            // hintText: hintText,
-                              isDense: true,
-                              // border: OutlineInputBorder(),
-                              enabledBorder:OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
+                        },
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          // hintText: hintText,
+                            isDense: true,
+                            // border: OutlineInputBorder(),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
 
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              focusedBorder:   OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
 
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.more_horiz_rounded))),
 
-                      onSuggestionSelected: (suggestion) {
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else{
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data));
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else{
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data.data));
 
-                        }
-                        // widget.onSelection(
-                        //     onSelect(suggestion.toString(), data ?? []));
-                      },
-                      itemBuilder: (context, suggestion) {
-                        if (suggestion == "Add new")
-                          return Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.add_circle_outline_outlined),
-                                title: Text(suggestion.toString()),
-                              ),
-                            ],
-                          );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
+                      }
+                      // widget.onSelection(
+                      //     onSelect(suggestion.toString(), data ?? []));
+                    },
+                    itemBuilder: (context, suggestion) {
+                      if (suggestion == "Add new")
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_circle_outline_outlined),
+                              title: Text(suggestion.toString()),
+                            ),
+                          ],
                         );
-                      },
-                      suggestionsCallback: (String? value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
-                    ),
-                  );
-                },
-              );
-            });
-      }),
-    );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  ),
+                );
+              },
+            );
+          });
+    });
   }
 }
 
@@ -4791,126 +4942,123 @@ class _UomgroupPopUpCall extends State<UomgroupPopUpCall> {
 
     }
     label = widget.value;
-    return BlocProvider(
-      create: (context) => UomgruoplistCubit(),
-      child: Builder(builder: (context) {
-        context.read<UomgruoplistCubit>().getUomGroupist();
+    return Builder(builder: (context) {
+      context.read<UomgruoplistCubit>().getUomGroupist();
 
-        return BlocBuilder<UomgruoplistCubit, UomgruoplistState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: () => SizedBox(),
-                // errorLoader(widget.onAddNew),
-                success: (data) {
-                  print("anagha"+data.toString());
-                  List<String> list = [];
-                  int length=data.data.length;
-                  // list=data.orderTypes;
-                  for(var i=0;i<length;i++){
-                    list.add(data?.data[i].name??"" );
+      return BlocBuilder<UomgruoplistCubit, UomgruoplistState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: () => SizedBox(),
+              // errorLoader(widget.onAddNew),
+              success: (data) {
+                print("anagha"+data.toString());
+                List<String> list = [];
+                int length=data.data.length;
+                // list=data.orderTypes;
+                for(var i=0;i<length;i++){
+                  list.add(data?.data[i].name??"" );
 
-                  }
+                }
 
-                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
-                    BrandListModel ? newData;
-                    list.forEach((element) {
-                      if (element.name != null &&
-                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                      if (element.id != null &&
-                          element.id == (value.toLowerCase())) newData = element;
+                BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                  BrandListModel ? newData;
+                  list.forEach((element) {
+                    if (element.name != null &&
+                        element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                    if (element.id != null &&
+                        element.id == (value.toLowerCase())) newData = element;
 
 
-                    });
-                    print("value" + value.toString());
-                    // print("value"+list.toString());
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
 
-                    // PurchaseOrdertype? newData;
-                    // list.forEach((element) {
-                    //   newData?.orderTypes?.add(element);
-                    // });
-                    return newData;
-                  } // });
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
 
-                  if (widget.onAddNew != null) list.add("Add new");
-                  _controller = TextEditingController(text: label);
-                  // hintText = label;
+                if (widget.onAddNew != null) list.add("Add new");
+                _controller = TextEditingController(text: label);
+                // hintText = label;
 
-                  return Container(
+                return Container(
 
-                    child: TypeAheadFormField(
+                  child: TypeAheadFormField(
 
-                      enabled: widget.enable,
-                      hideSuggestionsOnKeyboardHide: true,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13),
+                    enabled: widget.enable,
+                    hideSuggestionsOnKeyboardHide: true,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        style: TextStyle(fontSize: 13),
 
-                          onChanged: (va){
-                            print(va);
-                          if(widget.onchange!=null)  widget.onchange!(va);
-                            // search3(context, va);
-                            // context.read<MaterialListCubit>().searchMaterialList(va);
+                        onChanged: (va){
+                          print(va);
+                        if(widget.onchange!=null)  widget.onchange!(va);
+                          // search3(context, va);
+                          // context.read<MaterialListCubit>().searchMaterialList(va);
 
-                          },
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            // hintText: hintText,
-                              isDense: true,
-                                       enabledBorder:OutlineInputBorder(
-                              borderRadius:BorderRadius.circular(2),
-
-                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                        focusedBorder:   OutlineInputBorder(
+                        },
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          // hintText: hintText,
+                            isDense: true,
+                                     enabledBorder:OutlineInputBorder(
                             borderRadius:BorderRadius.circular(2),
 
-                            borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                      focusedBorder:   OutlineInputBorder(
+                          borderRadius:BorderRadius.circular(2),
 
-                      onSuggestionSelected: (suggestion) {
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else{
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data.data));
+                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.more_horiz_rounded))),
 
-                        }
-                        // widget.onSelection(
-                        //     onSelect(suggestion.toString(), data ?? []));
-                      },
-                      itemBuilder: (context, suggestion) {
-                        if (suggestion == "Add new")
-                          return Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.add_circle_outline_outlined),
-                                title: Text(suggestion.toString()),
-                              ),
-                            ],
-                          );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else{
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data.data));
+
+                      }
+                      // widget.onSelection(
+                      //     onSelect(suggestion.toString(), data ?? []));
+                    },
+                    itemBuilder: (context, suggestion) {
+                      if (suggestion == "Add new")
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_circle_outline_outlined),
+                              title: Text(suggestion.toString()),
+                            ),
+                          ],
                         );
-                      },
-                      suggestionsCallback: (String? value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
-                    ),
-                  );
-                },
-              );
-            });
-      }),
-    );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  ),
+                );
+              },
+            );
+          });
+    });
   }
 }
 
@@ -4961,125 +5109,122 @@ class _UomPopUpCall extends State<UomPopUpCall> {
 
     }
     label = widget.value;
-    return BlocProvider(
-      create: (context) => BaseuomlistCubit(),
-      child: Builder(builder: (context) {
-        context.read<BaseuomlistCubit>().getUomist();
+    return Builder(builder: (context) {
+      context.read<BaseuomlistCubit>().getUomist();
 
-        return BlocBuilder<BaseuomlistCubit, BaseuomlistState>(
-            builder: (context, state) {
-              return state.maybeWhen(
-                orElse: () => Center(
-                  child: CircularProgressIndicator(),
-                ),
-                error: () => SizedBox(),
-                // errorLoader(widget.onAddNew),
-                success: (data) {
-                  print("anagha"+data.toString());
-                  List<String> list = [];
-                  int length=data.data.length;
-                  // list=data.orderTypes;
-                  for(var i=0;i<length;i++){
-                    list.add(data?.data[i].name??"" );
+      return BlocBuilder<BaseuomlistCubit, BaseuomlistState>(
+          builder: (context, state) {
+            return state.maybeWhen(
+              orElse: () => Center(
+                child: CircularProgressIndicator(),
+              ),
+              error: () => SizedBox(),
+              // errorLoader(widget.onAddNew),
+              success: (data) {
+                print("anagha"+data.toString());
+                List<String> list = [];
+                int length=data.data.length;
+                // list=data.orderTypes;
+                for(var i=0;i<length;i++){
+                  list.add(data?.data[i].name??"" );
 
-                  }
+                }
 
-                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
-                    BrandListModel ? newData;
-                    list.forEach((element) {
-                      if (element.name != null &&
-                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                      if (element.id != null &&
-                          element.id == (value.toLowerCase())) newData = element;
+                BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                  BrandListModel ? newData;
+                  list.forEach((element) {
+                    if (element.name != null &&
+                        element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                    if (element.id != null &&
+                        element.id == (value.toLowerCase())) newData = element;
 
 
-                    });
-                    print("value" + value.toString());
-                    // print("value"+list.toString());
+                  });
+                  print("value" + value.toString());
+                  // print("value"+list.toString());
 
-                    // PurchaseOrdertype? newData;
-                    // list.forEach((element) {
-                    //   newData?.orderTypes?.add(element);
-                    // });
-                    return newData;
-                  } // });
+                  // PurchaseOrdertype? newData;
+                  // list.forEach((element) {
+                  //   newData?.orderTypes?.add(element);
+                  // });
+                  return newData;
+                } // });
 
-                  if (widget.onAddNew != null) list.add("Add new");
-                  _controller = TextEditingController(text: label);
-                  // hintText = label;
+                if (widget.onAddNew != null) list.add("Add new");
+                _controller = TextEditingController(text: label);
+                // hintText = label;
 
-                  return Container(
+                return Container(
 
-                    child: TypeAheadFormField(
+                  child: TypeAheadFormField(
 
-                      enabled: widget.enable,
-                      hideSuggestionsOnKeyboardHide: true,
-                      validator: (value) {
-                        if (value != null && value.isEmpty) {
-                          return "required";
-                        }
-                      },
-                      textFieldConfiguration: TextFieldConfiguration(
-                          style: TextStyle(fontSize: 13),
+                    enabled: widget.enable,
+                    hideSuggestionsOnKeyboardHide: true,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        style: TextStyle(fontSize: 13),
 
-                          onChanged: (va){
-                            print(va);
-                            search3(context, va);
-                            // context.read<MaterialListCubit>().searchMaterialList(va);
+                        onChanged: (va){
+                          print(va);
+                          search3(context, va);
+                          // context.read<MaterialListCubit>().searchMaterialList(va);
 
-                          },
-                          controller: _controller,
-                          decoration: InputDecoration(
-                            // hintText: hintText,
-                              isDense: true,
-                              enabledBorder:OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
+                        },
+                        controller: _controller,
+                        decoration: InputDecoration(
+                          // hintText: hintText,
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
 
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              focusedBorder:   OutlineInputBorder(
-                                  borderRadius:BorderRadius.circular(2),
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
 
-                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.more_horiz_rounded))),
 
-                      onSuggestionSelected: (suggestion) {
-                        if (suggestion == "Add new")
-                          widget.onAddNew!();
-                        else{
-                          widget.onSelection(onSellingBasedSelect(
-                              suggestion.toString(), data.data));
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else{
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data.data));
 
-                        }
-                        // widget.onSelection(
-                        //     onSelect(suggestion.toString(), data ?? []));
-                      },
-                      itemBuilder: (context, suggestion) {
-                        if (suggestion == "Add new")
-                          return Column(
-                            children: [
-                              ListTile(
-                                leading: Icon(Icons.add_circle_outline_outlined),
-                                title: Text(suggestion.toString()),
-                              ),
-                            ],
-                          );
-                        return ListTile(
-                          ////leading: Icon(Icons.shopping_cart_outlined),
-                          title: Text(suggestion.toString()),
+                      }
+                      // widget.onSelection(
+                      //     onSelect(suggestion.toString(), data ?? []));
+                    },
+                    itemBuilder: (context, suggestion) {
+                      if (suggestion == "Add new")
+                        return Column(
+                          children: [
+                            ListTile(
+                              leading: Icon(Icons.add_circle_outline_outlined),
+                              title: Text(suggestion.toString()),
+                            ),
+                          ],
                         );
-                      },
-                      suggestionsCallback: (String? value) async {
-                        return value == null || value.isEmpty
-                            ? list
-                            : search(value, list, widget.onAddNew);
-                      },
-                    ),
-                  );
-                },
-              );
-            });
-      }),
-    );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  ),
+                );
+              },
+            );
+          });
+    });
   }
 }
 

@@ -16,8 +16,11 @@ _$_RegisterModel _$$_RegisterModelFromJson(Map<String, dynamic> json) =>
       country: json['country'] as String?,
       gender: json['gender'] as String?,
       token: json['token'] as String?,
-      accesssite: json['acess_site'] as String?,
-      createdCode: json['created_code'] as int?,
+      loginid: json['login_id'] as int?,
+      accesssite: json['accesssite'] as String?,
+      legalEntiry: json['legal_entiry'] as String?,
+      organizationType: json['organization_type'] as String?,
+      organizationCode: json['organization_code'] as String?,
       isLoggedIn: json['isLoggedIn'] as bool? ?? false,
     );
 
@@ -31,7 +34,10 @@ Map<String, dynamic> _$$_RegisterModelToJson(_$_RegisterModel instance) =>
       'country': instance.country,
       'gender': instance.gender,
       'token': instance.token,
-      'acess_site': instance.accesssite,
-      'created_code': instance.createdCode,
+      'login_id': instance.loginid,
+      'accesssite': instance.accesssite,
+      'legal_entiry': instance.legalEntiry,
+      'organization_type': instance.organizationType,
+      'organization_code': instance.organizationCode,
       'isLoggedIn': instance.isLoggedIn,
     };

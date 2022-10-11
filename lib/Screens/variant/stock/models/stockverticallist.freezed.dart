@@ -427,6 +427,7 @@ class _$CategoryTearOff {
   _Category call(
       {String? name,
       String? description,
+      String? code,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "legal_unit_type") String? legalUnitType,
@@ -436,6 +437,7 @@ class _$CategoryTearOff {
     return _Category(
       name: name,
       description: description,
+      code: code,
       id: id,
       isActive: isActive,
       legalUnitType: legalUnitType,
@@ -457,6 +459,7 @@ const $Category = _$CategoryTearOff();
 mixin _$Category {
   String? get name => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
@@ -482,6 +485,7 @@ abstract class $CategoryCopyWith<$Res> {
   $Res call(
       {String? name,
       String? description,
+      String? code,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "legal_unit_type") String? legalUnitType,
@@ -502,6 +506,7 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
   $Res call({
     Object? name = freezed,
     Object? description = freezed,
+    Object? code = freezed,
     Object? id = freezed,
     Object? isActive = freezed,
     Object? legalUnitType = freezed,
@@ -517,6 +522,10 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String?,
       id: id == freezed
           ? _value.id
@@ -554,6 +563,7 @@ abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   $Res call(
       {String? name,
       String? description,
+      String? code,
       int? id,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "legal_unit_type") String? legalUnitType,
@@ -575,6 +585,7 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
   $Res call({
     Object? name = freezed,
     Object? description = freezed,
+    Object? code = freezed,
     Object? id = freezed,
     Object? isActive = freezed,
     Object? legalUnitType = freezed,
@@ -590,6 +601,10 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
       description: description == freezed
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
               as String?,
       id: id == freezed
           ? _value.id
@@ -625,6 +640,7 @@ class _$_Category implements _Category {
   const _$_Category(
       {this.name,
       this.description,
+      this.code,
       this.id,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "legal_unit_type") this.legalUnitType,
@@ -639,6 +655,8 @@ class _$_Category implements _Category {
   final String? name;
   @override
   final String? description;
+  @override
+  final String? code;
   @override
   final int? id;
   @override
@@ -659,7 +677,7 @@ class _$_Category implements _Category {
 
   @override
   String toString() {
-    return 'Category(name: $name, description: $description, id: $id, isActive: $isActive, legalUnitType: $legalUnitType, channelCode: $channelCode, channelStockType: $channelStockType, channelTypeCode: $channelTypeCode)';
+    return 'Category(name: $name, description: $description, code: $code, id: $id, isActive: $isActive, legalUnitType: $legalUnitType, channelCode: $channelCode, channelStockType: $channelStockType, channelTypeCode: $channelTypeCode)';
   }
 
   @override
@@ -671,6 +689,8 @@ class _$_Category implements _Category {
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.isActive, isActive) ||
@@ -695,6 +715,7 @@ class _$_Category implements _Category {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(isActive) ^
       const DeepCollectionEquality().hash(legalUnitType) ^
@@ -717,6 +738,7 @@ abstract class _Category implements Category {
   const factory _Category(
           {String? name,
           String? description,
+          String? code,
           int? id,
           @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
           @JsonKey(name: "legal_unit_type") String? legalUnitType,
@@ -731,6 +753,8 @@ abstract class _Category implements Category {
   String? get name => throw _privateConstructorUsedError;
   @override
   String? get description => throw _privateConstructorUsedError;
+  @override
+  String? get code => throw _privateConstructorUsedError;
   @override
   int? get id => throw _privateConstructorUsedError;
   @override

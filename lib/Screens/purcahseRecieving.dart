@@ -179,6 +179,37 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
     });
 
   }
+
+  clear(){
+    setState(() {
+
+      variantId="";
+      varinatname="";
+      unitCostCheck.text="";
+      barcode="";
+      expiryDate.clear();
+      purchaseUomName="";
+      supplierRefCode="";
+      recievedQty=0;
+      excess1=0;
+      isReceived1=false;
+      discount=0;
+      foc1=0;
+      unitcost=0;
+      vatableAmount1=0;
+      vat1=0;
+      grandTotal1=0;
+      actualCost1=0;
+      isActive1=false;
+      isFree1=false;
+      isInvoiced1=false;
+      stock=0;
+    });
+
+
+
+  }
+
   Future _getCurrentUser() async {
     if(recievingLisnes.isNotEmpty) {
       for (var i = 0; i < recievingLisnes.length; i++) {
@@ -495,7 +526,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                               unitcost = purchaseTable?.unitCost;
                               vat1 = purchaseTable?.vat;
                               unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
-                              supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                              // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             print(  supplierRefCode);
                               print("unitttt"+unitcost.toString());
                               unitcost1.text=purchaseTable?.unitCost.toString()??"";
@@ -563,29 +594,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                   variantIdcheck=false;
                                   expirydateControllerList2.clear();
                                   selectedVertical=index;
-                                  variantId="";
-                                  varinatname="";
-                                  barcode="";
-                                  unitCostCheck.text="";
-                                  purchaseUomName="";
-                                  recievedQty=0;
-                                  excess1=0;
-                                  isReceived1=false;
-                                  discount=0;
-                                  foc1=0;
-                                  orderLinses.clear();
-                                  updateCheck=false;
-                                  unitcost=0;
-                                  vatableAmount1=0;
-                                  vat1=0;
-                                  grandTotal1=0;
-                                  actualCost1=0;
-                                  isActive1=false;
-                                  isFree1=false;
-                                  isInvoiced1=false;
-                                  stock=0;
+                                  clear();
+
                                   supplierRefCode="";
                                   currentStock.clear();
+                                  additionalVariants.clear();
 
                                   // print("expirydateControllerList2"+expirydateControllerList2.toString());
                                   expiryDate2tControllers.clear();
@@ -3708,27 +3721,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                             var expirydate1 = new TextEditingController(text: expiryDate.text??"");
                                                                                             expiryDate2tControllers.add(expirydate1);
                                                                                             print("additionalVariants"+additionalVariants.toString());
-                                                                                            variantId="";
-                                                                                            varinatname="";
-                                                                                            unitCostCheck.text="";
-                                                                                            barcode="";
-                                                                                            expiryDate.clear();
-                                                                                            purchaseUomName="";
-                                                                                            supplierRefCode="";
-                                                                                            recievedQty=0;
-                                                                                            excess1=0;
-                                                                                            isReceived1=false;
-                                                                                            discount=0;
-                                                                                            foc1=0;
-                                                                                            unitcost=0;
-                                                                                            vatableAmount1=0;
-                                                                                            vat1=0;
-                                                                                            grandTotal1=0;
-                                                                                            actualCost1=0;
-                                                                                            isActive1=false;
-                                                                                            isFree1=false;
-                                                                                            isInvoiced1=false;
-                                                                                            stock=0;
+
+
+                                                                                            clear();
+
                                                                                             }
 
 
@@ -3818,12 +3814,13 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             iconColor: Colors.white,
                                                             text: "generator Order",
                                                             clr: Color(0xff53A9F9),
-                                                            height: 27,
+                                                            height: 30,
                                                             width: 152,
                                                             labelcolor: Colors.white,
                                                           ),
                                                         ],
                                                       ),
+                                                      SizedBox(height: height/30,),
                                                       Row(
                                                         mainAxisAlignment:
                                                         MainAxisAlignment.end,
@@ -3861,7 +3858,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                   grandTotal: double.tryParse(grandTotalController.text ?? ""),
                                                                   inventoryId: inventoryId ?? "",
                                                                   note: noteController.text ?? "",
-                                                                  receivedBy: "akshay",
+                                                                  receivedBy: Variable.username,
                                                                   remarks: remarksController.text ?? "",
                                                                   receivingLines: recievingLisnes);
                                                               context
@@ -3874,7 +3871,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             icon: Icons.check,
                                                             iconColor: Colors.white,
                                                             text: "Save",
-                                                            clr: Color(0xff53A9F9),
+                                                            // clr: Color(0xff53A9F9),
                                                             height: 32,
                                                             width: 90,
                                                             labelcolor: Colors.white,

@@ -42,14 +42,18 @@ class _$VariantPostTearOff {
       int? catalog8,
       List<Storage>? Ingrediants,
       List<Storage>? storage,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "var_alternative_rfid")
+          String? varAlternativeRfid,
       @JsonKey(name: "alternative_barcode")
           List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
+      @JsonKey(name: "vendor_details")
+          List<VendorDetails>? vendorDetails,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "search_name")
@@ -94,6 +98,8 @@ class _$VariantPostTearOff {
           int? safetyStock,
       @JsonKey(name: "sales_uom")
           int? salesUom,
+      @JsonKey(name: "sebling_id")
+          int? seblingId,
       @JsonKey(name: "purchase_uom")
           int? purchaseUom,
       @JsonKey(name: "reorder_point")
@@ -118,6 +124,10 @@ class _$VariantPostTearOff {
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "item_catalog", defaultValue: false)
+          bool? itemCatelog,
+      @JsonKey(name: "item_image", defaultValue: false)
+          bool? itemImage,
       @JsonKey(name: "ratio_to_eccommerce")
           String? ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
@@ -145,7 +155,7 @@ class _$VariantPostTearOff {
       @JsonKey(name: "important_info")
           List<ProductFeatures>? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior}) {
+          List<productBehaviour>? productBehavior}) {
     return _VariantPost(
       id: id,
       code: code,
@@ -167,10 +177,12 @@ class _$VariantPostTearOff {
       catalog8: catalog8,
       Ingrediants: Ingrediants,
       storage: storage,
+      inventoryId: inventoryId,
       uomCode: uomCode,
+      varAlternativeRfid: varAlternativeRfid,
       alternativeBarcode: alternativeBarcode,
       alternativeQrCodeBarcode: alternativeQrCodeBarcode,
-      inventoryId: inventoryId,
+      vendorDetails: vendorDetails,
       vedioUrl: vedioUrl,
       searchName: searchName,
       posName: posName,
@@ -193,6 +205,7 @@ class _$VariantPostTearOff {
       onlineSellingPercenage: onlineSellingPercenage,
       safetyStock: safetyStock,
       salesUom: salesUom,
+      seblingId: seblingId,
       purchaseUom: purchaseUom,
       reOrderPoint: reOrderPoint,
       reorderQuantity: reorderQuantity,
@@ -205,6 +218,8 @@ class _$VariantPostTearOff {
       salesBolock: salesBolock,
       stockWarning: stockWarning,
       isActive: isActive,
+      itemCatelog: itemCatelog,
+      itemImage: itemImage,
       ratioToEcommerce: ratioToEcommerce,
       minMaxRatio: minMaxRatio,
       returnType: returnType,
@@ -252,16 +267,20 @@ mixin _$VariantPost {
   int? get catalog8 => throw _privateConstructorUsedError;
   List<Storage>? get Ingrediants => throw _privateConstructorUsedError;
   List<Storage>? get storage => throw _privateConstructorUsedError;
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "var_alternative_rfid")
+  String? get varAlternativeRfid => throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_barcode")
   List<AlternativeBarcode>? get alternativeBarcode =>
       throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_qrcode")
   List<AlternativeBarcode>? get alternativeQrCodeBarcode =>
       throw _privateConstructorUsedError;
-  @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_details")
+  List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
   @JsonKey(name: "vedio_url")
   String? get vedioUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "search_name")
@@ -307,6 +326,8 @@ mixin _$VariantPost {
   int? get safetyStock => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_uom")
   int? get salesUom => throw _privateConstructorUsedError;
+  @JsonKey(name: "sebling_id")
+  int? get seblingId => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom")
   int? get purchaseUom => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_point")
@@ -331,6 +352,10 @@ mixin _$VariantPost {
   bool? get stockWarning => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: "item_catalog", defaultValue: false)
+  bool? get itemCatelog => throw _privateConstructorUsedError;
+  @JsonKey(name: "item_image", defaultValue: false)
+  bool? get itemImage => throw _privateConstructorUsedError;
   @JsonKey(name: "ratio_to_eccommerce")
   String? get ratioToEcommerce => throw _privateConstructorUsedError;
   @JsonKey(name: "min_max_ratio")
@@ -363,7 +388,7 @@ mixin _$VariantPost {
   List<ProductFeatures>? get importantInfo =>
       throw _privateConstructorUsedError;
   @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehavior =>
+  List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -398,14 +423,18 @@ abstract class $VariantPostCopyWith<$Res> {
       int? catalog8,
       List<Storage>? Ingrediants,
       List<Storage>? storage,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "var_alternative_rfid")
+          String? varAlternativeRfid,
       @JsonKey(name: "alternative_barcode")
           List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
+      @JsonKey(name: "vendor_details")
+          List<VendorDetails>? vendorDetails,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "search_name")
@@ -450,6 +479,8 @@ abstract class $VariantPostCopyWith<$Res> {
           int? safetyStock,
       @JsonKey(name: "sales_uom")
           int? salesUom,
+      @JsonKey(name: "sebling_id")
+          int? seblingId,
       @JsonKey(name: "purchase_uom")
           int? purchaseUom,
       @JsonKey(name: "reorder_point")
@@ -474,6 +505,10 @@ abstract class $VariantPostCopyWith<$Res> {
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "item_catalog", defaultValue: false)
+          bool? itemCatelog,
+      @JsonKey(name: "item_image", defaultValue: false)
+          bool? itemImage,
       @JsonKey(name: "ratio_to_eccommerce")
           String? ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
@@ -501,7 +536,7 @@ abstract class $VariantPostCopyWith<$Res> {
       @JsonKey(name: "important_info")
           List<ProductFeatures>? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior});
+          List<productBehaviour>? productBehavior});
 }
 
 /// @nodoc
@@ -534,10 +569,12 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
     Object? catalog8 = freezed,
     Object? Ingrediants = freezed,
     Object? storage = freezed,
+    Object? inventoryId = freezed,
     Object? uomCode = freezed,
+    Object? varAlternativeRfid = freezed,
     Object? alternativeBarcode = freezed,
     Object? alternativeQrCodeBarcode = freezed,
-    Object? inventoryId = freezed,
+    Object? vendorDetails = freezed,
     Object? vedioUrl = freezed,
     Object? searchName = freezed,
     Object? posName = freezed,
@@ -560,6 +597,7 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
     Object? onlineSellingPercenage = freezed,
     Object? safetyStock = freezed,
     Object? salesUom = freezed,
+    Object? seblingId = freezed,
     Object? purchaseUom = freezed,
     Object? reOrderPoint = freezed,
     Object? reorderQuantity = freezed,
@@ -572,6 +610,8 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
     Object? salesBolock = freezed,
     Object? stockWarning = freezed,
     Object? isActive = freezed,
+    Object? itemCatelog = freezed,
+    Object? itemImage = freezed,
     Object? ratioToEcommerce = freezed,
     Object? minMaxRatio = freezed,
     Object? returnType = freezed,
@@ -668,9 +708,17 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
               as List<Storage>?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       uomCode: uomCode == freezed
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      varAlternativeRfid: varAlternativeRfid == freezed
+          ? _value.varAlternativeRfid
+          : varAlternativeRfid // ignore: cast_nullable_to_non_nullable
               as String?,
       alternativeBarcode: alternativeBarcode == freezed
           ? _value.alternativeBarcode
@@ -680,10 +728,10 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
           ? _value.alternativeQrCodeBarcode
           : alternativeQrCodeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      inventoryId: inventoryId == freezed
-          ? _value.inventoryId
-          : inventoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      vendorDetails: vendorDetails == freezed
+          ? _value.vendorDetails
+          : vendorDetails // ignore: cast_nullable_to_non_nullable
+              as List<VendorDetails>?,
       vedioUrl: vedioUrl == freezed
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
@@ -772,6 +820,10 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
               as int?,
+      seblingId: seblingId == freezed
+          ? _value.seblingId
+          : seblingId // ignore: cast_nullable_to_non_nullable
+              as int?,
       purchaseUom: purchaseUom == freezed
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
@@ -819,6 +871,14 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      itemCatelog: itemCatelog == freezed
+          ? _value.itemCatelog
+          : itemCatelog // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      itemImage: itemImage == freezed
+          ? _value.itemImage
+          : itemImage // ignore: cast_nullable_to_non_nullable
               as bool?,
       ratioToEcommerce: ratioToEcommerce == freezed
           ? _value.ratioToEcommerce
@@ -875,7 +935,7 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as List<productBehaviour>?,
     ));
   }
 }
@@ -908,14 +968,18 @@ abstract class _$VariantPostCopyWith<$Res>
       int? catalog8,
       List<Storage>? Ingrediants,
       List<Storage>? storage,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "var_alternative_rfid")
+          String? varAlternativeRfid,
       @JsonKey(name: "alternative_barcode")
           List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
+      @JsonKey(name: "vendor_details")
+          List<VendorDetails>? vendorDetails,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "search_name")
@@ -960,6 +1024,8 @@ abstract class _$VariantPostCopyWith<$Res>
           int? safetyStock,
       @JsonKey(name: "sales_uom")
           int? salesUom,
+      @JsonKey(name: "sebling_id")
+          int? seblingId,
       @JsonKey(name: "purchase_uom")
           int? purchaseUom,
       @JsonKey(name: "reorder_point")
@@ -984,6 +1050,10 @@ abstract class _$VariantPostCopyWith<$Res>
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "item_catalog", defaultValue: false)
+          bool? itemCatelog,
+      @JsonKey(name: "item_image", defaultValue: false)
+          bool? itemImage,
       @JsonKey(name: "ratio_to_eccommerce")
           String? ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
@@ -1011,7 +1081,7 @@ abstract class _$VariantPostCopyWith<$Res>
       @JsonKey(name: "important_info")
           List<ProductFeatures>? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior});
+          List<productBehaviour>? productBehavior});
 }
 
 /// @nodoc
@@ -1046,10 +1116,12 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
     Object? catalog8 = freezed,
     Object? Ingrediants = freezed,
     Object? storage = freezed,
+    Object? inventoryId = freezed,
     Object? uomCode = freezed,
+    Object? varAlternativeRfid = freezed,
     Object? alternativeBarcode = freezed,
     Object? alternativeQrCodeBarcode = freezed,
-    Object? inventoryId = freezed,
+    Object? vendorDetails = freezed,
     Object? vedioUrl = freezed,
     Object? searchName = freezed,
     Object? posName = freezed,
@@ -1072,6 +1144,7 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
     Object? onlineSellingPercenage = freezed,
     Object? safetyStock = freezed,
     Object? salesUom = freezed,
+    Object? seblingId = freezed,
     Object? purchaseUom = freezed,
     Object? reOrderPoint = freezed,
     Object? reorderQuantity = freezed,
@@ -1084,6 +1157,8 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
     Object? salesBolock = freezed,
     Object? stockWarning = freezed,
     Object? isActive = freezed,
+    Object? itemCatelog = freezed,
+    Object? itemImage = freezed,
     Object? ratioToEcommerce = freezed,
     Object? minMaxRatio = freezed,
     Object? returnType = freezed,
@@ -1180,9 +1255,17 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
               as List<Storage>?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
       uomCode: uomCode == freezed
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      varAlternativeRfid: varAlternativeRfid == freezed
+          ? _value.varAlternativeRfid
+          : varAlternativeRfid // ignore: cast_nullable_to_non_nullable
               as String?,
       alternativeBarcode: alternativeBarcode == freezed
           ? _value.alternativeBarcode
@@ -1192,10 +1275,10 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
           ? _value.alternativeQrCodeBarcode
           : alternativeQrCodeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      inventoryId: inventoryId == freezed
-          ? _value.inventoryId
-          : inventoryId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      vendorDetails: vendorDetails == freezed
+          ? _value.vendorDetails
+          : vendorDetails // ignore: cast_nullable_to_non_nullable
+              as List<VendorDetails>?,
       vedioUrl: vedioUrl == freezed
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
@@ -1284,6 +1367,10 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
               as int?,
+      seblingId: seblingId == freezed
+          ? _value.seblingId
+          : seblingId // ignore: cast_nullable_to_non_nullable
+              as int?,
       purchaseUom: purchaseUom == freezed
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
@@ -1331,6 +1418,14 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      itemCatelog: itemCatelog == freezed
+          ? _value.itemCatelog
+          : itemCatelog // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      itemImage: itemImage == freezed
+          ? _value.itemImage
+          : itemImage // ignore: cast_nullable_to_non_nullable
               as bool?,
       ratioToEcommerce: ratioToEcommerce == freezed
           ? _value.ratioToEcommerce
@@ -1387,7 +1482,7 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as List<productBehaviour>?,
     ));
   }
 }
@@ -1416,14 +1511,18 @@ class _$_VariantPost implements _VariantPost {
       this.catalog8,
       this.Ingrediants,
       this.storage,
+      @JsonKey(name: "inventory_id")
+          this.inventoryId,
       @JsonKey(name: "uom_code")
           this.uomCode,
+      @JsonKey(name: "var_alternative_rfid")
+          this.varAlternativeRfid,
       @JsonKey(name: "alternative_barcode")
           this.alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
           this.alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          this.inventoryId,
+      @JsonKey(name: "vendor_details")
+          this.vendorDetails,
       @JsonKey(name: "vedio_url")
           this.vedioUrl,
       @JsonKey(name: "search_name")
@@ -1468,6 +1567,8 @@ class _$_VariantPost implements _VariantPost {
           this.safetyStock,
       @JsonKey(name: "sales_uom")
           this.salesUom,
+      @JsonKey(name: "sebling_id")
+          this.seblingId,
       @JsonKey(name: "purchase_uom")
           this.purchaseUom,
       @JsonKey(name: "reorder_point")
@@ -1492,6 +1593,10 @@ class _$_VariantPost implements _VariantPost {
           this.stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
           this.isActive,
+      @JsonKey(name: "item_catalog", defaultValue: false)
+          this.itemCatelog,
+      @JsonKey(name: "item_image", defaultValue: false)
+          this.itemImage,
       @JsonKey(name: "ratio_to_eccommerce")
           this.ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
@@ -1565,8 +1670,14 @@ class _$_VariantPost implements _VariantPost {
   @override
   final List<Storage>? storage;
   @override
+  @JsonKey(name: "inventory_id")
+  final String? inventoryId;
+  @override
   @JsonKey(name: "uom_code")
   final String? uomCode;
+  @override
+  @JsonKey(name: "var_alternative_rfid")
+  final String? varAlternativeRfid;
   @override
   @JsonKey(name: "alternative_barcode")
   final List<AlternativeBarcode>? alternativeBarcode;
@@ -1574,8 +1685,8 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "alternative_qrcode")
   final List<AlternativeBarcode>? alternativeQrCodeBarcode;
   @override
-  @JsonKey(name: "inventory_id")
-  final String? inventoryId;
+  @JsonKey(name: "vendor_details")
+  final List<VendorDetails>? vendorDetails;
   @override
   @JsonKey(name: "vedio_url")
   final String? vedioUrl;
@@ -1643,6 +1754,9 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "sales_uom")
   final int? salesUom;
   @override
+  @JsonKey(name: "sebling_id")
+  final int? seblingId;
+  @override
   @JsonKey(name: "purchase_uom")
   final int? purchaseUom;
   @override
@@ -1678,6 +1792,12 @@ class _$_VariantPost implements _VariantPost {
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
+  @override
+  @JsonKey(name: "item_catalog", defaultValue: false)
+  final bool? itemCatelog;
+  @override
+  @JsonKey(name: "item_image", defaultValue: false)
+  final bool? itemImage;
   @override
   @JsonKey(name: "ratio_to_eccommerce")
   final String? ratioToEcommerce;
@@ -1719,11 +1839,11 @@ class _$_VariantPost implements _VariantPost {
   final List<ProductFeatures>? importantInfo;
   @override
   @JsonKey(name: "product_behaviour")
-  final List<ProductFeatures>? productBehavior;
+  final List<productBehaviour>? productBehavior;
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, vedioUrl: $vedioUrl, searchName: $searchName, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
   }
 
   @override
@@ -1781,22 +1901,24 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.storage, storage) ||
                 const DeepCollectionEquality()
                     .equals(other.storage, storage)) &&
-            (identical(other.uomCode, uomCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomCode, uomCode)) &&
-            (identical(other.alternativeBarcode, alternativeBarcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.alternativeBarcode, alternativeBarcode)) &&
-            (identical(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode) ||
-                const DeepCollectionEquality().equals(
-                    other.alternativeQrCodeBarcode,
-                    alternativeQrCodeBarcode)) &&
             (identical(other.inventoryId, inventoryId) ||
                 const DeepCollectionEquality()
                     .equals(other.inventoryId, inventoryId)) &&
-            (identical(other.vedioUrl, vedioUrl) ||
+            (identical(other.uomCode, uomCode) ||
                 const DeepCollectionEquality()
-                    .equals(other.vedioUrl, vedioUrl)) &&
+                    .equals(other.uomCode, uomCode)) &&
+            (identical(other.varAlternativeRfid, varAlternativeRfid) ||
+                const DeepCollectionEquality()
+                    .equals(other.varAlternativeRfid, varAlternativeRfid)) &&
+            (identical(other.alternativeBarcode, alternativeBarcode) ||
+                const DeepCollectionEquality()
+                    .equals(other.alternativeBarcode, alternativeBarcode)) &&
+            (identical(
+                    other.alternativeQrCodeBarcode, alternativeQrCodeBarcode) ||
+                const DeepCollectionEquality().equals(
+                    other.alternativeQrCodeBarcode, alternativeQrCodeBarcode)) &&
+            (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
+            (identical(other.vedioUrl, vedioUrl) || const DeepCollectionEquality().equals(other.vedioUrl, vedioUrl)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
             (identical(other.posName, posName) || const DeepCollectionEquality().equals(other.posName, posName)) &&
             (identical(other.displayName, displayName) || const DeepCollectionEquality().equals(other.displayName, displayName)) &&
@@ -1818,6 +1940,7 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.onlineSellingPercenage, onlineSellingPercenage) || const DeepCollectionEquality().equals(other.onlineSellingPercenage, onlineSellingPercenage)) &&
             (identical(other.safetyStock, safetyStock) || const DeepCollectionEquality().equals(other.safetyStock, safetyStock)) &&
             (identical(other.salesUom, salesUom) || const DeepCollectionEquality().equals(other.salesUom, salesUom)) &&
+            (identical(other.seblingId, seblingId) || const DeepCollectionEquality().equals(other.seblingId, seblingId)) &&
             (identical(other.purchaseUom, purchaseUom) || const DeepCollectionEquality().equals(other.purchaseUom, purchaseUom)) &&
             (identical(other.reOrderPoint, reOrderPoint) || const DeepCollectionEquality().equals(other.reOrderPoint, reOrderPoint)) &&
             (identical(other.reorderQuantity, reorderQuantity) || const DeepCollectionEquality().equals(other.reorderQuantity, reorderQuantity)) &&
@@ -1830,6 +1953,8 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.salesBolock, salesBolock) || const DeepCollectionEquality().equals(other.salesBolock, salesBolock)) &&
             (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
             (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
+            (identical(other.itemCatelog, itemCatelog) || const DeepCollectionEquality().equals(other.itemCatelog, itemCatelog)) &&
+            (identical(other.itemImage, itemImage) || const DeepCollectionEquality().equals(other.itemImage, itemImage)) &&
             (identical(other.ratioToEcommerce, ratioToEcommerce) || const DeepCollectionEquality().equals(other.ratioToEcommerce, ratioToEcommerce)) &&
             (identical(other.minMaxRatio, minMaxRatio) || const DeepCollectionEquality().equals(other.minMaxRatio, minMaxRatio)) &&
             (identical(other.returnType, returnType) || const DeepCollectionEquality().equals(other.returnType, returnType)) &&
@@ -1869,10 +1994,12 @@ class _$_VariantPost implements _VariantPost {
       const DeepCollectionEquality().hash(catalog8) ^
       const DeepCollectionEquality().hash(Ingrediants) ^
       const DeepCollectionEquality().hash(storage) ^
+      const DeepCollectionEquality().hash(inventoryId) ^
       const DeepCollectionEquality().hash(uomCode) ^
+      const DeepCollectionEquality().hash(varAlternativeRfid) ^
       const DeepCollectionEquality().hash(alternativeBarcode) ^
       const DeepCollectionEquality().hash(alternativeQrCodeBarcode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
+      const DeepCollectionEquality().hash(vendorDetails) ^
       const DeepCollectionEquality().hash(vedioUrl) ^
       const DeepCollectionEquality().hash(searchName) ^
       const DeepCollectionEquality().hash(posName) ^
@@ -1895,6 +2022,7 @@ class _$_VariantPost implements _VariantPost {
       const DeepCollectionEquality().hash(onlineSellingPercenage) ^
       const DeepCollectionEquality().hash(safetyStock) ^
       const DeepCollectionEquality().hash(salesUom) ^
+      const DeepCollectionEquality().hash(seblingId) ^
       const DeepCollectionEquality().hash(purchaseUom) ^
       const DeepCollectionEquality().hash(reOrderPoint) ^
       const DeepCollectionEquality().hash(reorderQuantity) ^
@@ -1907,6 +2035,8 @@ class _$_VariantPost implements _VariantPost {
       const DeepCollectionEquality().hash(salesBolock) ^
       const DeepCollectionEquality().hash(stockWarning) ^
       const DeepCollectionEquality().hash(isActive) ^
+      const DeepCollectionEquality().hash(itemCatelog) ^
+      const DeepCollectionEquality().hash(itemImage) ^
       const DeepCollectionEquality().hash(ratioToEcommerce) ^
       const DeepCollectionEquality().hash(minMaxRatio) ^
       const DeepCollectionEquality().hash(returnType) ^
@@ -1955,14 +2085,18 @@ abstract class _VariantPost implements VariantPost {
       int? catalog8,
       List<Storage>? Ingrediants,
       List<Storage>? storage,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "var_alternative_rfid")
+          String? varAlternativeRfid,
       @JsonKey(name: "alternative_barcode")
           List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
+      @JsonKey(name: "vendor_details")
+          List<VendorDetails>? vendorDetails,
       @JsonKey(name: "vedio_url")
           String? vedioUrl,
       @JsonKey(name: "search_name")
@@ -2007,6 +2141,8 @@ abstract class _VariantPost implements VariantPost {
           int? safetyStock,
       @JsonKey(name: "sales_uom")
           int? salesUom,
+      @JsonKey(name: "sebling_id")
+          int? seblingId,
       @JsonKey(name: "purchase_uom")
           int? purchaseUom,
       @JsonKey(name: "reorder_point")
@@ -2031,6 +2167,10 @@ abstract class _VariantPost implements VariantPost {
           bool? stockWarning,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "item_catalog", defaultValue: false)
+          bool? itemCatelog,
+      @JsonKey(name: "item_image", defaultValue: false)
+          bool? itemImage,
       @JsonKey(name: "ratio_to_eccommerce")
           String? ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
@@ -2058,7 +2198,7 @@ abstract class _VariantPost implements VariantPost {
       @JsonKey(name: "important_info")
           List<ProductFeatures>? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior}) = _$_VariantPost;
+          List<productBehaviour>? productBehavior}) = _$_VariantPost;
 
   factory _VariantPost.fromJson(Map<String, dynamic> json) =
       _$_VariantPost.fromJson;
@@ -2104,8 +2244,14 @@ abstract class _VariantPost implements VariantPost {
   @override
   List<Storage>? get storage => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "var_alternative_rfid")
+  String? get varAlternativeRfid => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "alternative_barcode")
   List<AlternativeBarcode>? get alternativeBarcode =>
@@ -2115,8 +2261,8 @@ abstract class _VariantPost implements VariantPost {
   List<AlternativeBarcode>? get alternativeQrCodeBarcode =>
       throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "vendor_details")
+  List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vedio_url")
   String? get vedioUrl => throw _privateConstructorUsedError;
@@ -2185,6 +2331,9 @@ abstract class _VariantPost implements VariantPost {
   @JsonKey(name: "sales_uom")
   int? get salesUom => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "sebling_id")
+  int? get seblingId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "purchase_uom")
   int? get purchaseUom => throw _privateConstructorUsedError;
   @override
@@ -2220,6 +2369,12 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "item_catalog", defaultValue: false)
+  bool? get itemCatelog => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "item_image", defaultValue: false)
+  bool? get itemImage => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "ratio_to_eccommerce")
   String? get ratioToEcommerce => throw _privateConstructorUsedError;
@@ -2266,10 +2421,1196 @@ abstract class _VariantPost implements VariantPost {
       throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehavior =>
+  List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$VariantPostCopyWith<_VariantPost> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LinkedItemPostModel _$LinkedItemPostModelFromJson(Map<String, dynamic> json) {
+  return _LinkedItemPostModel.fromJson(json);
+}
+
+/// @nodoc
+class _$LinkedItemPostModelTearOff {
+  const _$LinkedItemPostModelTearOff();
+
+  _LinkedItemPostModel call(
+      {String? title,
+      String? description,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListModel>? linkedItemListModel,
+      @JsonKey(name: "variant_id")
+          int? variantId}) {
+    return _LinkedItemPostModel(
+      title: title,
+      description: description,
+      inventoryId: inventoryId,
+      isActive: isActive,
+      linkedItemListModel: linkedItemListModel,
+      variantId: variantId,
+    );
+  }
+
+  LinkedItemPostModel fromJson(Map<String, Object> json) {
+    return LinkedItemPostModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LinkedItemPostModel = _$LinkedItemPostModelTearOff();
+
+/// @nodoc
+mixin _$LinkedItemPostModel {
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: "linked_item_id")
+  List<LinkedItemListModel>? get linkedItemListModel =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_id")
+  int? get variantId => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LinkedItemPostModelCopyWith<LinkedItemPostModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LinkedItemPostModelCopyWith<$Res> {
+  factory $LinkedItemPostModelCopyWith(
+          LinkedItemPostModel value, $Res Function(LinkedItemPostModel) then) =
+      _$LinkedItemPostModelCopyWithImpl<$Res>;
+  $Res call(
+      {String? title,
+      String? description,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListModel>? linkedItemListModel,
+      @JsonKey(name: "variant_id")
+          int? variantId});
+}
+
+/// @nodoc
+class _$LinkedItemPostModelCopyWithImpl<$Res>
+    implements $LinkedItemPostModelCopyWith<$Res> {
+  _$LinkedItemPostModelCopyWithImpl(this._value, this._then);
+
+  final LinkedItemPostModel _value;
+  // ignore: unused_field
+  final $Res Function(LinkedItemPostModel) _then;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? inventoryId = freezed,
+    Object? isActive = freezed,
+    Object? linkedItemListModel = freezed,
+    Object? variantId = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      linkedItemListModel: linkedItemListModel == freezed
+          ? _value.linkedItemListModel
+          : linkedItemListModel // ignore: cast_nullable_to_non_nullable
+              as List<LinkedItemListModel>?,
+      variantId: variantId == freezed
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$LinkedItemPostModelCopyWith<$Res>
+    implements $LinkedItemPostModelCopyWith<$Res> {
+  factory _$LinkedItemPostModelCopyWith(_LinkedItemPostModel value,
+          $Res Function(_LinkedItemPostModel) then) =
+      __$LinkedItemPostModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String? title,
+      String? description,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListModel>? linkedItemListModel,
+      @JsonKey(name: "variant_id")
+          int? variantId});
+}
+
+/// @nodoc
+class __$LinkedItemPostModelCopyWithImpl<$Res>
+    extends _$LinkedItemPostModelCopyWithImpl<$Res>
+    implements _$LinkedItemPostModelCopyWith<$Res> {
+  __$LinkedItemPostModelCopyWithImpl(
+      _LinkedItemPostModel _value, $Res Function(_LinkedItemPostModel) _then)
+      : super(_value, (v) => _then(v as _LinkedItemPostModel));
+
+  @override
+  _LinkedItemPostModel get _value => super._value as _LinkedItemPostModel;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? inventoryId = freezed,
+    Object? isActive = freezed,
+    Object? linkedItemListModel = freezed,
+    Object? variantId = freezed,
+  }) {
+    return _then(_LinkedItemPostModel(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      inventoryId: inventoryId == freezed
+          ? _value.inventoryId
+          : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      linkedItemListModel: linkedItemListModel == freezed
+          ? _value.linkedItemListModel
+          : linkedItemListModel // ignore: cast_nullable_to_non_nullable
+              as List<LinkedItemListModel>?,
+      variantId: variantId == freezed
+          ? _value.variantId
+          : variantId // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LinkedItemPostModel implements _LinkedItemPostModel {
+  const _$_LinkedItemPostModel(
+      {this.title,
+      this.description,
+      @JsonKey(name: "inventory_id") this.inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive,
+      @JsonKey(name: "linked_item_id") this.linkedItemListModel,
+      @JsonKey(name: "variant_id") this.variantId});
+
+  factory _$_LinkedItemPostModel.fromJson(Map<String, dynamic> json) =>
+      _$$_LinkedItemPostModelFromJson(json);
+
+  @override
+  final String? title;
+  @override
+  final String? description;
+  @override
+  @JsonKey(name: "inventory_id")
+  final String? inventoryId;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  final bool? isActive;
+  @override
+  @JsonKey(name: "linked_item_id")
+  final List<LinkedItemListModel>? linkedItemListModel;
+  @override
+  @JsonKey(name: "variant_id")
+  final int? variantId;
+
+  @override
+  String toString() {
+    return 'LinkedItemPostModel(title: $title, description: $description, inventoryId: $inventoryId, isActive: $isActive, linkedItemListModel: $linkedItemListModel, variantId: $variantId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LinkedItemPostModel &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.inventoryId, inventoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.inventoryId, inventoryId)) &&
+            (identical(other.isActive, isActive) ||
+                const DeepCollectionEquality()
+                    .equals(other.isActive, isActive)) &&
+            (identical(other.linkedItemListModel, linkedItemListModel) ||
+                const DeepCollectionEquality()
+                    .equals(other.linkedItemListModel, linkedItemListModel)) &&
+            (identical(other.variantId, variantId) ||
+                const DeepCollectionEquality()
+                    .equals(other.variantId, variantId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(inventoryId) ^
+      const DeepCollectionEquality().hash(isActive) ^
+      const DeepCollectionEquality().hash(linkedItemListModel) ^
+      const DeepCollectionEquality().hash(variantId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LinkedItemPostModelCopyWith<_LinkedItemPostModel> get copyWith =>
+      __$LinkedItemPostModelCopyWithImpl<_LinkedItemPostModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LinkedItemPostModelToJson(this);
+  }
+}
+
+abstract class _LinkedItemPostModel implements LinkedItemPostModel {
+  const factory _LinkedItemPostModel(
+      {String? title,
+      String? description,
+      @JsonKey(name: "inventory_id")
+          String? inventoryId,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListModel>? linkedItemListModel,
+      @JsonKey(name: "variant_id")
+          int? variantId}) = _$_LinkedItemPostModel;
+
+  factory _LinkedItemPostModel.fromJson(Map<String, dynamic> json) =
+      _$_LinkedItemPostModel.fromJson;
+
+  @override
+  String? get title => throw _privateConstructorUsedError;
+  @override
+  String? get description => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "inventory_id")
+  String? get inventoryId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "linked_item_id")
+  List<LinkedItemListModel>? get linkedItemListModel =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "variant_id")
+  int? get variantId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LinkedItemPostModelCopyWith<_LinkedItemPostModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LinkedItemListModel _$LinkedItemListModelFromJson(Map<String, dynamic> json) {
+  return _LinkedItemListModel.fromJson(json);
+}
+
+/// @nodoc
+class _$LinkedItemListModelTearOff {
+  const _$LinkedItemListModelTearOff();
+
+  _LinkedItemListModel call({int? id, String? code, String? name}) {
+    return _LinkedItemListModel(
+      id: id,
+      code: code,
+      name: name,
+    );
+  }
+
+  LinkedItemListModel fromJson(Map<String, Object> json) {
+    return LinkedItemListModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LinkedItemListModel = _$LinkedItemListModelTearOff();
+
+/// @nodoc
+mixin _$LinkedItemListModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LinkedItemListModelCopyWith<LinkedItemListModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LinkedItemListModelCopyWith<$Res> {
+  factory $LinkedItemListModelCopyWith(
+          LinkedItemListModel value, $Res Function(LinkedItemListModel) then) =
+      _$LinkedItemListModelCopyWithImpl<$Res>;
+  $Res call({int? id, String? code, String? name});
+}
+
+/// @nodoc
+class _$LinkedItemListModelCopyWithImpl<$Res>
+    implements $LinkedItemListModelCopyWith<$Res> {
+  _$LinkedItemListModelCopyWithImpl(this._value, this._then);
+
+  final LinkedItemListModel _value;
+  // ignore: unused_field
+  final $Res Function(LinkedItemListModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$LinkedItemListModelCopyWith<$Res>
+    implements $LinkedItemListModelCopyWith<$Res> {
+  factory _$LinkedItemListModelCopyWith(_LinkedItemListModel value,
+          $Res Function(_LinkedItemListModel) then) =
+      __$LinkedItemListModelCopyWithImpl<$Res>;
+  @override
+  $Res call({int? id, String? code, String? name});
+}
+
+/// @nodoc
+class __$LinkedItemListModelCopyWithImpl<$Res>
+    extends _$LinkedItemListModelCopyWithImpl<$Res>
+    implements _$LinkedItemListModelCopyWith<$Res> {
+  __$LinkedItemListModelCopyWithImpl(
+      _LinkedItemListModel _value, $Res Function(_LinkedItemListModel) _then)
+      : super(_value, (v) => _then(v as _LinkedItemListModel));
+
+  @override
+  _LinkedItemListModel get _value => super._value as _LinkedItemListModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+  }) {
+    return _then(_LinkedItemListModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LinkedItemListModel implements _LinkedItemListModel {
+  const _$_LinkedItemListModel({this.id, this.code, this.name});
+
+  factory _$_LinkedItemListModel.fromJson(Map<String, dynamic> json) =>
+      _$$_LinkedItemListModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  final String? name;
+
+  @override
+  String toString() {
+    return 'LinkedItemListModel(id: $id, code: $code, name: $name)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LinkedItemListModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(code) ^
+      const DeepCollectionEquality().hash(name);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LinkedItemListModelCopyWith<_LinkedItemListModel> get copyWith =>
+      __$LinkedItemListModelCopyWithImpl<_LinkedItemListModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LinkedItemListModelToJson(this);
+  }
+}
+
+abstract class _LinkedItemListModel implements LinkedItemListModel {
+  const factory _LinkedItemListModel({int? id, String? code, String? name}) =
+      _$_LinkedItemListModel;
+
+  factory _LinkedItemListModel.fromJson(Map<String, dynamic> json) =
+      _$_LinkedItemListModel.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get code => throw _privateConstructorUsedError;
+  @override
+  String? get name => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LinkedItemListModelCopyWith<_LinkedItemListModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LinkedItemListReadModel _$LinkedItemListReadModelFromJson(
+    Map<String, dynamic> json) {
+  return _LinkedItemListReadModel.fromJson(json);
+}
+
+/// @nodoc
+class _$LinkedItemListReadModelTearOff {
+  const _$LinkedItemListReadModelTearOff();
+
+  _LinkedItemListReadModel call(
+      {int? id,
+      String? code,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListIdModel>? linkedItemListIdModel,
+      @JsonKey(name: "linkeditem_meta")
+          LinkedItemMetaModel? linkedItemMetaModel,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive}) {
+    return _LinkedItemListReadModel(
+      id: id,
+      code: code,
+      linkedItemListIdModel: linkedItemListIdModel,
+      linkedItemMetaModel: linkedItemMetaModel,
+      isActive: isActive,
+    );
+  }
+
+  LinkedItemListReadModel fromJson(Map<String, Object> json) {
+    return LinkedItemListReadModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LinkedItemListReadModel = _$LinkedItemListReadModelTearOff();
+
+/// @nodoc
+mixin _$LinkedItemListReadModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  @JsonKey(name: "linked_item_id")
+  List<LinkedItemListIdModel>? get linkedItemListIdModel =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: "linkeditem_meta")
+  LinkedItemMetaModel? get linkedItemMetaModel =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LinkedItemListReadModelCopyWith<LinkedItemListReadModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LinkedItemListReadModelCopyWith<$Res> {
+  factory $LinkedItemListReadModelCopyWith(LinkedItemListReadModel value,
+          $Res Function(LinkedItemListReadModel) then) =
+      _$LinkedItemListReadModelCopyWithImpl<$Res>;
+  $Res call(
+      {int? id,
+      String? code,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListIdModel>? linkedItemListIdModel,
+      @JsonKey(name: "linkeditem_meta")
+          LinkedItemMetaModel? linkedItemMetaModel,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive});
+
+  $LinkedItemMetaModelCopyWith<$Res>? get linkedItemMetaModel;
+}
+
+/// @nodoc
+class _$LinkedItemListReadModelCopyWithImpl<$Res>
+    implements $LinkedItemListReadModelCopyWith<$Res> {
+  _$LinkedItemListReadModelCopyWithImpl(this._value, this._then);
+
+  final LinkedItemListReadModel _value;
+  // ignore: unused_field
+  final $Res Function(LinkedItemListReadModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? linkedItemListIdModel = freezed,
+    Object? linkedItemMetaModel = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      linkedItemListIdModel: linkedItemListIdModel == freezed
+          ? _value.linkedItemListIdModel
+          : linkedItemListIdModel // ignore: cast_nullable_to_non_nullable
+              as List<LinkedItemListIdModel>?,
+      linkedItemMetaModel: linkedItemMetaModel == freezed
+          ? _value.linkedItemMetaModel
+          : linkedItemMetaModel // ignore: cast_nullable_to_non_nullable
+              as LinkedItemMetaModel?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+
+  @override
+  $LinkedItemMetaModelCopyWith<$Res>? get linkedItemMetaModel {
+    if (_value.linkedItemMetaModel == null) {
+      return null;
+    }
+
+    return $LinkedItemMetaModelCopyWith<$Res>(_value.linkedItemMetaModel!,
+        (value) {
+      return _then(_value.copyWith(linkedItemMetaModel: value));
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$LinkedItemListReadModelCopyWith<$Res>
+    implements $LinkedItemListReadModelCopyWith<$Res> {
+  factory _$LinkedItemListReadModelCopyWith(_LinkedItemListReadModel value,
+          $Res Function(_LinkedItemListReadModel) then) =
+      __$LinkedItemListReadModelCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {int? id,
+      String? code,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListIdModel>? linkedItemListIdModel,
+      @JsonKey(name: "linkeditem_meta")
+          LinkedItemMetaModel? linkedItemMetaModel,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive});
+
+  @override
+  $LinkedItemMetaModelCopyWith<$Res>? get linkedItemMetaModel;
+}
+
+/// @nodoc
+class __$LinkedItemListReadModelCopyWithImpl<$Res>
+    extends _$LinkedItemListReadModelCopyWithImpl<$Res>
+    implements _$LinkedItemListReadModelCopyWith<$Res> {
+  __$LinkedItemListReadModelCopyWithImpl(_LinkedItemListReadModel _value,
+      $Res Function(_LinkedItemListReadModel) _then)
+      : super(_value, (v) => _then(v as _LinkedItemListReadModel));
+
+  @override
+  _LinkedItemListReadModel get _value =>
+      super._value as _LinkedItemListReadModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? linkedItemListIdModel = freezed,
+    Object? linkedItemMetaModel = freezed,
+    Object? isActive = freezed,
+  }) {
+    return _then(_LinkedItemListReadModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      linkedItemListIdModel: linkedItemListIdModel == freezed
+          ? _value.linkedItemListIdModel
+          : linkedItemListIdModel // ignore: cast_nullable_to_non_nullable
+              as List<LinkedItemListIdModel>?,
+      linkedItemMetaModel: linkedItemMetaModel == freezed
+          ? _value.linkedItemMetaModel
+          : linkedItemMetaModel // ignore: cast_nullable_to_non_nullable
+              as LinkedItemMetaModel?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LinkedItemListReadModel implements _LinkedItemListReadModel {
+  const _$_LinkedItemListReadModel(
+      {this.id,
+      this.code,
+      @JsonKey(name: "linked_item_id") this.linkedItemListIdModel,
+      @JsonKey(name: "linkeditem_meta") this.linkedItemMetaModel,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
+
+  factory _$_LinkedItemListReadModel.fromJson(Map<String, dynamic> json) =>
+      _$$_LinkedItemListReadModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  @JsonKey(name: "linked_item_id")
+  final List<LinkedItemListIdModel>? linkedItemListIdModel;
+  @override
+  @JsonKey(name: "linkeditem_meta")
+  final LinkedItemMetaModel? linkedItemMetaModel;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  final bool? isActive;
+
+  @override
+  String toString() {
+    return 'LinkedItemListReadModel(id: $id, code: $code, linkedItemListIdModel: $linkedItemListIdModel, linkedItemMetaModel: $linkedItemMetaModel, isActive: $isActive)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LinkedItemListReadModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)) &&
+            (identical(other.linkedItemListIdModel, linkedItemListIdModel) ||
+                const DeepCollectionEquality().equals(
+                    other.linkedItemListIdModel, linkedItemListIdModel)) &&
+            (identical(other.linkedItemMetaModel, linkedItemMetaModel) ||
+                const DeepCollectionEquality()
+                    .equals(other.linkedItemMetaModel, linkedItemMetaModel)) &&
+            (identical(other.isActive, isActive) ||
+                const DeepCollectionEquality()
+                    .equals(other.isActive, isActive)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(code) ^
+      const DeepCollectionEquality().hash(linkedItemListIdModel) ^
+      const DeepCollectionEquality().hash(linkedItemMetaModel) ^
+      const DeepCollectionEquality().hash(isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LinkedItemListReadModelCopyWith<_LinkedItemListReadModel> get copyWith =>
+      __$LinkedItemListReadModelCopyWithImpl<_LinkedItemListReadModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LinkedItemListReadModelToJson(this);
+  }
+}
+
+abstract class _LinkedItemListReadModel implements LinkedItemListReadModel {
+  const factory _LinkedItemListReadModel(
+      {int? id,
+      String? code,
+      @JsonKey(name: "linked_item_id")
+          List<LinkedItemListIdModel>? linkedItemListIdModel,
+      @JsonKey(name: "linkeditem_meta")
+          LinkedItemMetaModel? linkedItemMetaModel,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive}) = _$_LinkedItemListReadModel;
+
+  factory _LinkedItemListReadModel.fromJson(Map<String, dynamic> json) =
+      _$_LinkedItemListReadModel.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get code => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "linked_item_id")
+  List<LinkedItemListIdModel>? get linkedItemListIdModel =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "linkeditem_meta")
+  LinkedItemMetaModel? get linkedItemMetaModel =>
+      throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LinkedItemListReadModelCopyWith<_LinkedItemListReadModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LinkedItemListIdModel _$LinkedItemListIdModelFromJson(
+    Map<String, dynamic> json) {
+  return _LinkedItemListIdModel.fromJson(json);
+}
+
+/// @nodoc
+class _$LinkedItemListIdModelTearOff {
+  const _$LinkedItemListIdModelTearOff();
+
+  _LinkedItemListIdModel call(
+      {int? id, String? code, String? name, String? title}) {
+    return _LinkedItemListIdModel(
+      id: id,
+      code: code,
+      name: name,
+      title: title,
+    );
+  }
+
+  LinkedItemListIdModel fromJson(Map<String, Object> json) {
+    return LinkedItemListIdModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LinkedItemListIdModel = _$LinkedItemListIdModelTearOff();
+
+/// @nodoc
+mixin _$LinkedItemListIdModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LinkedItemListIdModelCopyWith<LinkedItemListIdModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LinkedItemListIdModelCopyWith<$Res> {
+  factory $LinkedItemListIdModelCopyWith(LinkedItemListIdModel value,
+          $Res Function(LinkedItemListIdModel) then) =
+      _$LinkedItemListIdModelCopyWithImpl<$Res>;
+  $Res call({int? id, String? code, String? name, String? title});
+}
+
+/// @nodoc
+class _$LinkedItemListIdModelCopyWithImpl<$Res>
+    implements $LinkedItemListIdModelCopyWith<$Res> {
+  _$LinkedItemListIdModelCopyWithImpl(this._value, this._then);
+
+  final LinkedItemListIdModel _value;
+  // ignore: unused_field
+  final $Res Function(LinkedItemListIdModel) _then;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$LinkedItemListIdModelCopyWith<$Res>
+    implements $LinkedItemListIdModelCopyWith<$Res> {
+  factory _$LinkedItemListIdModelCopyWith(_LinkedItemListIdModel value,
+          $Res Function(_LinkedItemListIdModel) then) =
+      __$LinkedItemListIdModelCopyWithImpl<$Res>;
+  @override
+  $Res call({int? id, String? code, String? name, String? title});
+}
+
+/// @nodoc
+class __$LinkedItemListIdModelCopyWithImpl<$Res>
+    extends _$LinkedItemListIdModelCopyWithImpl<$Res>
+    implements _$LinkedItemListIdModelCopyWith<$Res> {
+  __$LinkedItemListIdModelCopyWithImpl(_LinkedItemListIdModel _value,
+      $Res Function(_LinkedItemListIdModel) _then)
+      : super(_value, (v) => _then(v as _LinkedItemListIdModel));
+
+  @override
+  _LinkedItemListIdModel get _value => super._value as _LinkedItemListIdModel;
+
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? code = freezed,
+    Object? name = freezed,
+    Object? title = freezed,
+  }) {
+    return _then(_LinkedItemListIdModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: code == freezed
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LinkedItemListIdModel implements _LinkedItemListIdModel {
+  const _$_LinkedItemListIdModel({this.id, this.code, this.name, this.title});
+
+  factory _$_LinkedItemListIdModel.fromJson(Map<String, dynamic> json) =>
+      _$$_LinkedItemListIdModelFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? code;
+  @override
+  final String? name;
+  @override
+  final String? title;
+
+  @override
+  String toString() {
+    return 'LinkedItemListIdModel(id: $id, code: $code, name: $name, title: $title)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LinkedItemListIdModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.code, code) ||
+                const DeepCollectionEquality().equals(other.code, code)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(code) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(title);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LinkedItemListIdModelCopyWith<_LinkedItemListIdModel> get copyWith =>
+      __$LinkedItemListIdModelCopyWithImpl<_LinkedItemListIdModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LinkedItemListIdModelToJson(this);
+  }
+}
+
+abstract class _LinkedItemListIdModel implements LinkedItemListIdModel {
+  const factory _LinkedItemListIdModel(
+      {int? id,
+      String? code,
+      String? name,
+      String? title}) = _$_LinkedItemListIdModel;
+
+  factory _LinkedItemListIdModel.fromJson(Map<String, dynamic> json) =
+      _$_LinkedItemListIdModel.fromJson;
+
+  @override
+  int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get code => throw _privateConstructorUsedError;
+  @override
+  String? get name => throw _privateConstructorUsedError;
+  @override
+  String? get title => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LinkedItemListIdModelCopyWith<_LinkedItemListIdModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LinkedItemMetaModel _$LinkedItemMetaModelFromJson(Map<String, dynamic> json) {
+  return _LinkedItemMetaModel.fromJson(json);
+}
+
+/// @nodoc
+class _$LinkedItemMetaModelTearOff {
+  const _$LinkedItemMetaModelTearOff();
+
+  _LinkedItemMetaModel call({String? title, String? description}) {
+    return _LinkedItemMetaModel(
+      title: title,
+      description: description,
+    );
+  }
+
+  LinkedItemMetaModel fromJson(Map<String, Object> json) {
+    return LinkedItemMetaModel.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $LinkedItemMetaModel = _$LinkedItemMetaModelTearOff();
+
+/// @nodoc
+mixin _$LinkedItemMetaModel {
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LinkedItemMetaModelCopyWith<LinkedItemMetaModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LinkedItemMetaModelCopyWith<$Res> {
+  factory $LinkedItemMetaModelCopyWith(
+          LinkedItemMetaModel value, $Res Function(LinkedItemMetaModel) then) =
+      _$LinkedItemMetaModelCopyWithImpl<$Res>;
+  $Res call({String? title, String? description});
+}
+
+/// @nodoc
+class _$LinkedItemMetaModelCopyWithImpl<$Res>
+    implements $LinkedItemMetaModelCopyWith<$Res> {
+  _$LinkedItemMetaModelCopyWithImpl(this._value, this._then);
+
+  final LinkedItemMetaModel _value;
+  // ignore: unused_field
+  final $Res Function(LinkedItemMetaModel) _then;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? description = freezed,
+  }) {
+    return _then(_value.copyWith(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$LinkedItemMetaModelCopyWith<$Res>
+    implements $LinkedItemMetaModelCopyWith<$Res> {
+  factory _$LinkedItemMetaModelCopyWith(_LinkedItemMetaModel value,
+          $Res Function(_LinkedItemMetaModel) then) =
+      __$LinkedItemMetaModelCopyWithImpl<$Res>;
+  @override
+  $Res call({String? title, String? description});
+}
+
+/// @nodoc
+class __$LinkedItemMetaModelCopyWithImpl<$Res>
+    extends _$LinkedItemMetaModelCopyWithImpl<$Res>
+    implements _$LinkedItemMetaModelCopyWith<$Res> {
+  __$LinkedItemMetaModelCopyWithImpl(
+      _LinkedItemMetaModel _value, $Res Function(_LinkedItemMetaModel) _then)
+      : super(_value, (v) => _then(v as _LinkedItemMetaModel));
+
+  @override
+  _LinkedItemMetaModel get _value => super._value as _LinkedItemMetaModel;
+
+  @override
+  $Res call({
+    Object? title = freezed,
+    Object? description = freezed,
+  }) {
+    return _then(_LinkedItemMetaModel(
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_LinkedItemMetaModel implements _LinkedItemMetaModel {
+  const _$_LinkedItemMetaModel({this.title, this.description});
+
+  factory _$_LinkedItemMetaModel.fromJson(Map<String, dynamic> json) =>
+      _$$_LinkedItemMetaModelFromJson(json);
+
+  @override
+  final String? title;
+  @override
+  final String? description;
+
+  @override
+  String toString() {
+    return 'LinkedItemMetaModel(title: $title, description: $description)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _LinkedItemMetaModel &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(title) ^
+      const DeepCollectionEquality().hash(description);
+
+  @JsonKey(ignore: true)
+  @override
+  _$LinkedItemMetaModelCopyWith<_LinkedItemMetaModel> get copyWith =>
+      __$LinkedItemMetaModelCopyWithImpl<_LinkedItemMetaModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_LinkedItemMetaModelToJson(this);
+  }
+}
+
+abstract class _LinkedItemMetaModel implements LinkedItemMetaModel {
+  const factory _LinkedItemMetaModel({String? title, String? description}) =
+      _$_LinkedItemMetaModel;
+
+  factory _LinkedItemMetaModel.fromJson(Map<String, dynamic> json) =
+      _$_LinkedItemMetaModel.fromJson;
+
+  @override
+  String? get title => throw _privateConstructorUsedError;
+  @override
+  String? get description => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$LinkedItemMetaModelCopyWith<_LinkedItemMetaModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,7 +6,10 @@ class Variable{
   static String  trn="";
   static String  address="";
   static String  vendorAddress="";
-  static String  inventory_ID="test";
+  static String  inventory_ID="";
+  static String  created_by="";
+  static String  username="";
+  static String  loginLeage="";
   static int  variantSearchId=0;
   static String  token="test";
   static String?  imageName="";
@@ -19,6 +22,15 @@ class Variable{
   static int?  img6;
   static int?  img7;
   static int?  img8;
+  static int?  catalog1;
+  static int?  catalog2;
+  static int?  catalog3;
+  static int?  catalog4;
+  static int?  catalog5;
+  static int?  catalog6;
+  static int?  catalog7;
+  static int?  catalog8;
+  static  List<int?>subIndex=[0,0,0,0,0,0,0];
 
 
   static int  tableindex=0;

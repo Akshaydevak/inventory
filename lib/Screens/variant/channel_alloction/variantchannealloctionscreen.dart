@@ -36,16 +36,29 @@ class _VariantChannelAllocationScreenState
   channelAllocatesRead group=channelAllocatesRead();
   String choosenValue = "group";
   String choosenValue2 = "";
+  String channelTypeCode = "";
+  String channelTypeName = "";
   bool apiChecking = false;
   var paginated;
   List<StockVerticalReadModel> result = [];
   List<Category> channels = [];
+  List<Category> channels1 = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   var list;
   int? veritiaclid = 0;
   filterTable(List<bool?>selections){
-    print(selections);
+    print("seeee u"+selections.toString());
+     channels1=[];
+
+    for(var i=0;i<selections.length;i++){
+      if(selections[i]==true){
+        channels1.add(channels[i]);
+      }
+    }
+    print(channels1);
+    // channels=channels1;
+    print("ssssssssssssss"+channels1.toString());
     // for(var i=0;i<selections.length;i++){
     //   if(selections[i]==true){
     //     print("aksksk");
@@ -72,7 +85,7 @@ class _VariantChannelAllocationScreenState
   }
   @override
   void initState() {
-    context.read<StockverticalCubit>().getStockList("RGC1659608240");
+    context.read<StockverticalCubit>().getStockList(Variable.inventory_ID);
     super.initState();
   }
 
@@ -183,6 +196,8 @@ class _VariantChannelAllocationScreenState
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].category?.id;
+                         channelTypeCode = result[0].category?.code.toString()??"";
+                         channelTypeName = result[0].category?.name.toString()??"";
                         // Variable.verticalid=result[0].id;
                         // print("Variable.ak"+Variable.verticalid.toString());
                         context.read<ChannelreadCubit>().getChannelRead(result[0].category?.id);
@@ -229,6 +244,8 @@ class _VariantChannelAllocationScreenState
 
 
                                 veritiaclid = result[index].category?.id;
+                                channelTypeCode = result[index].category?.code.toString()??"";
+                                channelTypeName = result[index].category?.name.toString()??"";
                                 // clear();
                                 // select=true;
                                 //
@@ -250,7 +267,7 @@ class _VariantChannelAllocationScreenState
                               if (va == "") {
                                 context
                                     .read<StockverticalCubit>()
-                                    .getStockList("RGC1659608240");
+                                    .getStockList(Variable.inventory_ID);
                               }
                             },
                             result: result,
@@ -261,6 +278,7 @@ class _VariantChannelAllocationScreenState
                                   SizedBox(
                                     height: h * .04,
                                   ),
+
                                   ChanneAllocationTopScreen(
                                       listAssign: listAssign,
                                       appiCheckingTrue: appiCheckingTrue,
@@ -274,25 +292,28 @@ class _VariantChannelAllocationScreenState
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
-                                        CustomDropDown(
-                                          border: true,
-                                          choosenValue: choosenValue,
-                                          onChange: (val) {
-                                            setState(() {
-                                              apiChecking = false;
-                                              choosenValue = val;
-                                            });
-                                            print(val);
-                                            context
-                                                .read<ChanneltypelistCubit>()
-                                                .getChannelTypeList(val);
-                                            // choosenValue=val;
-                                          },
-                                          items: items,
+                                        Container(
+                                          margin: EdgeInsets.symmetric(horizontal: w * .02),
+                                          child: CustomDropDown(
+                                            border: true,
+                                            choosenValue: choosenValue,
+                                            onChange: (val) {
+                                              setState(() {
+                                                apiChecking = false;
+                                                choosenValue = val;
+                                              });
+                                              print(val);
+                                              context
+                                                  .read<ChanneltypelistCubit>()
+                                                  .getChannelTypeList(val);
+                                              // choosenValue=val;
+                                            },
+                                            items: items,
+                                          ),
                                         ),
                                       ]),
                                   SizedBox(
-                                    height: 3,
+                                    height: 15,
                                   ),
                                   ChannelAllocationBottomTable(
                                     table: table,
@@ -336,89 +357,96 @@ class _VariantChannelAllocationScreenState
                                           choosenValue);
                                     },
                                   ),
-                                  SizedBox(height: h * .13,),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Button(Icons.delete, Colors.red,
-                                          ctx: context,
-                                          text: "Discard",
-                                          onApply: () {
-                                            // if(updateCheck){
-                                            //   // clears();
-                                            //
-                                            //
-                                            // }
+                                  SizedBox(height: h * .11,),
+                                  Container(
+                                    margin: EdgeInsets.symmetric(horizontal: w * .02),
 
-                                          },
-                                          height: 29,
-                                          width: 90,
-                                          labelcolor: Colors.red,
-                                          iconColor: Colors.red,
-                                          bdr: true),
-                                      SizedBox(
-                                        width: w * .008,
-                                      ),
-                                      Button(Icons.check, Colors.grey,
-                                          ctx: context,
-                                          text:"save",
-                                          height: 29,
-                                          Color: Color(0xff3E4F5B),
-                                          width: 90,
-                                          labelcolor: Colors.white,
-                                          iconColor: Colors.white,
-                                          onApply: () {
-                                            List<ChannelDatas>? channelDatas=[];
-                                            List<SelectedData>? selectedData=[];
-                                            if(channels.isNotEmpty==true){
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Button(Icons.delete, Colors.red,
+                                            ctx: context,
+                                            text: "Discard",
+                                            onApply: () {
+                                              // if(updateCheck){
+                                              //   // clears();
+                                              //
+                                              //
+                                              // }
 
-                                              for(var i=0;i<channels.length;i++) {
-                                                channelDatas.add(ChannelDatas(
+                                            },
+                                            height: 29,
+                                            width: 90,
+                                            labelcolor: Colors.red,
+                                            iconColor: Colors.red,
+                                            bdr: true),
+                                        SizedBox(
+                                          width: w * .008,
+                                        ),
+                                        Button(Icons.check, Colors.grey,
+                                            ctx: context,
+                                            text:"save",
+                                            height: 29,
+                                            Color: Color(0xff3E4F5B),
+                                            width: 90,
+                                            labelcolor: Colors.white,
+                                            iconColor: Colors.white,
+                                            onApply: () {
+                                              List<ChannelDatas>? channelDatas=[];
+                                              List<SelectedData>? selectedData=[];
+                                              if(channels1.isNotEmpty==true){
 
-                                                  channelId: channels[i].id
-                                                      .toString(),
-                                                  channelName: channels[i].name,
-                                                  priority: 1,
-                                                  channelStockType: channels[i]
-                                                      .channelStockType,
+                                                for(var i=0;i<channels1.length;i++) {
+                                                  channelDatas.add(ChannelDatas(
 
-                                                ));
+                                                    channelId: channels1[i].id
+                                                        .toString(),
+                                                    channelCode:channels1[i].channelCode ,
+                                                    channelName: channels1[i].name,
+                                                    priority: 1,
+                                                    channelStockType: channels1[i]
+                                                        .channelStockType,
+
+                                                  ));
+                                                }
+
                                               }
+                                              if(table.isNotEmpty==true){
+                                                for(var i=0;i<table.length;i++)
+                                                  selectedData.add(SelectedData(
 
-                                            }
-                                            if(table.isNotEmpty==true){
-                                              for(var i=0;i<table.length;i++)
-                                                selectedData.add(SelectedData(
+                                                  code  : table[i].code.toString(),
+                                                    id:table[i].id
 
-                                                code  : table[i].code.toString(),
-                                                  id:table[i].id
+                                                  ));
 
-                                                ));
+                                              }
+                                              ChannelPostModel model=ChannelPostModel(
+                                                inventoryId: Variable.inventory_ID,
+                                                selectionType:apiChecking?choosenValue2: choosenValue,
+                                                channelTypeCode: channelTypeCode,
+                                                channelTypeName: channelTypeName,
 
-                                            }
-                                            ChannelPostModel model=ChannelPostModel(
-                                              inventoryId: Variable.inventory_ID,
-                                              selectionType:apiChecking?choosenValue2: choosenValue,
-                                              channelTypeCode: group.channelTypeCode,
-                                              channelTypeId: group.channelTypeId.toString(),
-                                              priority: 1,
-                                              channelDatas:channelDatas??[],
-                                              selectedData:selectedData??[]
-
-
-
-                                            );
-                                            print(model);
-                                            context.read<ChannelpostCubit>().postSChannelPosts(model);
+                                                channelTypeId: group.channelTypeId.toString(),
+                                                priority: 1,
+                                                channelDatas:channelDatas??[],
+                                                selectedData:selectedData??[]
 
 
 
-                                            }
-                                           ),
-                                      SizedBox(
-                                        // width: width * .008,
-                                      ),
-                                    ],
+                                              );
+                                              print(model);
+                                              context.read<ChannelpostCubit>().postSChannelPosts(model);
+
+
+
+                                              }
+                                             ),
+                                        SizedBox(
+                                          // width: width * .008,
+                                        ),
+                                      ],
+                                    ),
                                   ),
 
                                 ],

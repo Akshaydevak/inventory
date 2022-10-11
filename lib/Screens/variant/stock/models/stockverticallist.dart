@@ -32,6 +32,7 @@ class Category with _$Category {
   const factory Category({
     final String? name,
     final String? description,
+    final String? code,
     final int? id,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
     @JsonKey(name: "legal_unit_type") final String? legalUnitType,

@@ -19,19 +19,23 @@ class CostingStableTable extends StatefulWidget {
   final TextEditingController pricingGptype;
   final TextEditingController gpPercentage;
   final TextEditingController sellingPrice;
+ final TextEditingController costingName ;
+ final Function sellingPriceCalculation ;
+ final int? channelId ;
+  TextEditingController pricingName ;
 
 
   CostingStableTable({
 
-    required this.costingmethod, required this.pricingGroupId, required this.channelStockCode, required this.costingCode, required this.channelName, required this.unitCost, required this.pricingGptype, required this.gpPercentage, required this.sellingPrice});
+  required this.channelId,required this.costingName,required this.pricingName , required this.costingmethod, required this.pricingGroupId, required this.channelStockCode, required this.costingCode, required this.channelName, required this.unitCost, required this.pricingGptype, required this.gpPercentage, required this.sellingPrice, required this.sellingPriceCalculation});
 
   @override
   _CostingStableTableState createState() => _CostingStableTableState();
 }
 
 class _CostingStableTableState extends State<CostingStableTable> {
-  TextEditingController costing = TextEditingController();
-  TextEditingController pricing = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +63,30 @@ class _CostingStableTableState extends State<CostingStableTable> {
                 state.maybeWhen(
                     orElse: () {},
                     error: () {
-                      print("error");
-                    },
-                    success: (data) {
+                      print("the reasons");
                       setState(() {
-                        print("aaakkku"+data.toString());
-                        widget.gpPercentage.text=data.gpPrecentage.toString();
-                        // group = data.data;
-                        // print("Akshgayaa" + group.toString());
-                        // channels=data?.results??[];
-
+                        widget.gpPercentage.text="0";;
                       });
+
+                    }, success: (data) {
+                  if (data.data1) {
+                    print("the reasons2");
+                    // context.showSnackBarSuccess(data.data2);
+                    widget.gpPercentage.text=data.data2["gp_percentage"];
+
+
+                  }
+                  else {
+                    print("the reasons3");
+                    setState(() {
+                      widget.gpPercentage.text="0";;
                     });
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1);
+                  }
+                  widget.sellingPriceCalculation(unitCost:int.tryParse(widget.unitCost.text),gp:int.tryParse(widget.gpPercentage.text));
+                    }
+                    );
               },
             ),
 
@@ -91,10 +107,10 @@ class _CostingStableTableState extends State<CostingStableTable> {
 
                               SelectableDropDownpopUp(
 
-                                controller: costing,
+                                controller: widget.costingName,
                                 label: "Costing Method Id",
                                 type: "CostingCreateMethodPopUpCall",
-                                value: costing.text,
+                                value: widget.costingName.text,
                                 onchange: (vale) {
                                   // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
                                 },
@@ -106,7 +122,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                   setState(() {
                                     widget.costingmethod.text =
                                         va?.id.toString() ?? "";
-                                    costing.text = va?.methodName ?? "";
+                                    widget.costingName.text = va?.methodName ?? "";
 
 
                                     // onChange = true;
@@ -129,10 +145,10 @@ class _CostingStableTableState extends State<CostingStableTable> {
                               ),
                               SelectableDropDownpopUp(
 
-                                controller: pricing,
+                                controller: widget.pricingName,
                                 label: "Pricing  GroupId Id",
                                 type: "Pricing_PopUpCall",
-                                value: pricing.text,
+                                value: widget.pricingName.text,
                                 onchange: (vale) {
                                   // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
                                 },
@@ -142,9 +158,9 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                     costingTypeMethodeCheck = true;
                                   });
                                   setState(() {
-                                    pricing.text = va?.pricingGroupName ?? "";
-                                    widget.pricingGroupId.text =
-                                        va?.pricingTypeId.toString() ?? "";
+                                    print("the searching value is"+va.toString());
+                                    widget.pricingName.text = va?.pricingGroupName ?? "";
+                                    widget.pricingGroupId.text = va?.pricingTypeId.toString() ?? "";
 
 
                                     // onChange = true;
@@ -219,12 +235,14 @@ class _CostingStableTableState extends State<CostingStableTable> {
 
 
                             NewInputCard(
+                              readOnly: true,
                                 controller: widget.costingCode,
                                 title: "Costing Code"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
+                              readOnly: true,
 
 
                                 controller: widget.channelName,
@@ -232,8 +250,18 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             SizedBox(
                               height: height * .030,
                             ),
+                            // UnderLinedInput(
+                            //   initialCheck: true,
+                            //   last: widget.unitCost.text,
+                            //   l
+                            //
+                            // )
                             NewInputCard(
                                 formatter: true,
+                                onChange: (va){
+                                  print("the value${va}");
+                                  widget.sellingPriceCalculation(unitCost:int.tryParse(va),gp:int.tryParse(widget.gpPercentage?.text??"0"));
+                                },
 
 
                                 controller: widget.unitCost,
@@ -252,7 +280,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                 setState(() {
                                   widget.pricingGptype.text = va ?? "";
                                 });
-                                context.read<PercentagegpCubit>().percentageGp(1, va);
+                                context.read<PercentagegpCubit>().percentageGp(widget.channelId, va);
 
 
 
@@ -269,6 +297,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                             ),
 
                             NewInputCard(
+                              readOnly: true,
                                 formatter: true,
 
                                 controller: widget.gpPercentage,

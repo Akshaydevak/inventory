@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
+import 'package:inventory/Screens/promotiontab/promotiontabscreen.dart';
 
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/purchasereturn.dart';
@@ -30,6 +32,7 @@ import 'package:inventory/widgets/titleIcon.dart';
 import 'package:provider/provider.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../commonWidget/sharedpreference.dart';
 import '../printScreen.dart';
@@ -39,6 +42,8 @@ import 'heirarchy/heirarchytabscreen.dart';
 import 'logi/login.dart';
 
 class DashBoard extends StatefulWidget {
+  final int index;
+  const DashBoard({Key? key, this.index = 1}) : super(key: key);
   @override
   State<DashBoard> createState() => _DashBoardState();
 }
@@ -48,18 +53,14 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
   bool isClossed = true;
   bool selected = false;
   bool pressed = false;
-  List<PurchaseOrder>result=[];
-  TextEditingController itemsearch=TextEditingController();
-
-
-
+  List<PurchaseOrder> result = [];
+  TextEditingController itemsearch = TextEditingController();
 
   isClosseChange(bool val) {
-    isClossed=val;
-    setState(() {
-
-    });
+    isClossed = val;
+    setState(() {});
   }
+
   final ScrollController _scrollController = ScrollController();
   late AutoScrollController controller;
   @override
@@ -73,12 +74,13 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
             Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
         axis: Axis.vertical);
     super.initState();
-
   }
 
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 7, vsync: this,initialIndex: 1);
+    TabController _tabController =
+        TabController(length: 8, vsync: this, initialIndex: widget.index);
+
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
@@ -89,7 +91,8 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+          create: (context) =>
+              InventorysearchCubit()..getInventorySearch("code"),
         ),
         BlocProvider(
           create: (context) => GeneralPurchaseReadCubit(),
@@ -103,120 +106,108 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
         BlocProvider(
           create: (context) => VertiacalCubit(),
         ),
-
-
-
       ],
-      child: Builder(
-          builder: (context) {
-            return BlocConsumer<InventorysearchCubit, InventorysearchState>(
+      child: Builder(builder: (context) {
+        return BlocConsumer<InventorysearchCubit, InventorysearchState>(
+          listener: (context, state) {
+            state.maybeWhen(
+                orElse: () {},
+                error: () {
+                  print("error");
+                },
+                success: (list) {
+                  print("listtt" + list.toString());
+                  result = list.data;
+                  setState(() {
+                    print("Here is the result");
+                    print(result);
+                    print(result[0].id);
+                    if (result.isNotEmpty) Variable.verticalid = result[0].id;
+                    context
+                        .read<GeneralPurchaseReadCubit>()
+                        .getGeneralPurchaseRead(result[0].id!);
+                    print("Variable.ak" + Variable.verticalid.toString());
+                    setState(() {});
 
-              listener: (context, state) {
-                state.maybeWhen(orElse:(){},
-                    error: (){
-                      print("error");
-                    },
-                    success: (list){
-                      print("listtt"+list.toString());
-                      result=list.data;setState(() {
-                        print("Here is the result");
-                        print(result);
-                        print(result[0].id);
-                        if(result.isNotEmpty)
-                          Variable.verticalid=result[0].id;
-                        context
-                            .read<GeneralPurchaseReadCubit>()
-                            .getGeneralPurchaseRead(result[0].id!);
-                        print("Variable.ak"+Variable.verticalid.toString());
-                        setState(() {
+                    print(Variable.verticalid);
+                    print("idssss" + result[0].id.toString());
+                  });
+                });
+          },
+          builder: (context, state) {
+            print("current index${_tabController.index}");
+            return Scaffold(
+                body: Stack(
+              children: [
+                Row(
+                  children: [
+                    SideMenuScreen(),
+                    Expanded(
+                        child: Container(
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          // Titlecard(_tabController,pressed),
+                          TitleScreen(
+                              tabController: _tabController,
+                              isCollapsed: isCollapsed,
+                              isClossed: isClossed,
+                              changer: isClosseChange),
 
-                        });
-
-                        print( Variable.verticalid);
-                        print("idssss"+result[0].id.toString());
-                      });
-
-                    }
-                );
-
-
-              },
-              builder: (context, state) {
-
-
-                return Scaffold(
-
-                    body: Stack(
-                      children: [
-                        Row(
-                          children: [
-                            SideMenuScreen(),
-                            Expanded(
-                                child: Container(
-                                  color: Color(0xffEDF1F2),
+                          Expanded(
+                            child: Row(
+                              children: [
+                                Expanded(
+                                    child: Container(
                                   child: Column(
                                     children: [
-                                      // Titlecard(_tabController,pressed),
-                                      TitleScreen(tabController: _tabController,isCollapsed: isCollapsed,isClossed:isClossed,changer:isClosseChange),
-
-
-
                                       Expanded(
-                                        child: Row(
-                                          children: [
-
-
-
-                                            Expanded(
-                                                child: Container(
-                                                  child: Column(
-                                                    children: [
-
-                                                      Expanded(
-                                                        child: Container(
-                                                          margin: EdgeInsets.only(
-                                                              left: width * .014, right: width * .014),
-                                                          color: Color(0xffFFFFFF),
-                                                          child: TabBarView(
-                                                            physics: NeverScrollableScrollPhysics(),
-                                                            controller: _tabController,
-                                                            children: [
-                                                              RegisterScreen(),
-                                                              // PrintScreen(),
-                                                              PurchaseScreen(isCollapsed),
-                                                              PurchaseReturn(),
-                                                              SalesScreen(isCollapsed),
-                                                              SalesReturnScreen(isCollapsed),
-                                                              HeirarchyTabScreen(isCollapsed),
-                                                              ProductModuleTab(isCollapsed),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )),
-                                            RightMenuScreen()
-                                          ],
+                                        child: Container(
+                                          margin: EdgeInsets.only(
+                                              left: width * .014,
+                                              right: width * .014),
+                                          color: Color(0xffFFFFFF),
+                                          child: TabBarView(
+                                            physics:
+                                                NeverScrollableScrollPhysics(),
+                                            controller: _tabController,
+                                            children: [
+                                              RegisterScreen(),
+                                              // PrintScreen(),
+                                              PurchaseScreen(isCollapsed),
+                                              PurchaseReturn(),
+                                              SalesScreen(isCollapsed),
+                                              SalesReturnScreen(isCollapsed),
+                                              HeirarchyTabScreen(isCollapsed),
+                                              ProductModuleTab(isCollapsed),
+                                              PromotionTabScreenTab(isCollapsed)
+                                            ],
+                                          ),
                                         ),
-                                      )
+                                      ),
                                     ],
                                   ),
-                                ))
-                          ],
-                        ),
-                        // AnimatedPositioned(
-                        //   duration: Duration(microseconds: 1000),
-                        //   right: isClossed?-250:0,
-                        //   child: RihtDrawer()
-                        // ,
-                        // )
-                      ],
-                    ));
-              },
-            );
-          }
-      ),
+                                )),
+                                RightMenuScreen()
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ))
+                  ],
+                ),
+                // AnimatedPositioned(
+                //   duration: Duration(microseconds: 1000),
+                //   right: isClossed?-250:0,
+                //   child: RihtDrawer()
+                // ,
+                // )
+              ],
+            ));
+          },
+        );
+      }),
     );
   }
 }
@@ -230,32 +221,36 @@ Widget RectangleContainer(String url, BuildContext context) {
     color: Colors.white,
     child: Center(
         child: Image.asset(
-          url,
-          height: 10,
-          width: 10,
-        )),
+      url,
+      height: 10,
+      width: 10,
+    )),
   );
 }
+
 class TitleScreen extends StatefulWidget {
   final TabController tabController;
   final Function changer;
-  bool  isCollapsed;
-  bool  isClossed;
-  TitleScreen({required this.tabController,this.isCollapsed=false,required this.isClossed,required this.changer});
+  bool isCollapsed;
+  bool isClossed;
+  TitleScreen(
+      {required this.tabController,
+      this.isCollapsed = false,
+      required this.isClossed,
+      required this.changer});
   @override
   _TitleScreenState createState() => _TitleScreenState();
 }
 
 class _TitleScreenState extends State<TitleScreen> {
-
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NavigationProvider>(context, listen: false);
-
+    print("at title screen");
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     Size size = MediaQuery.of(context).size;
-    return    Container(
+    return Container(
       width: size.width,
       height: size.height / 6.5,
       color: Color(0xff3E4F5B),
@@ -271,8 +266,8 @@ class _TitleScreenState extends State<TitleScreen> {
               ),
               Container(
                   margin: EdgeInsets.only(top: height * .0334
-                    //size.height*.003,
-                  ),
+                      //size.height*.003,
+                      ),
                   child: Image.asset(
                     'asset/logo1.png',
                     color: Colors.white,
@@ -318,8 +313,11 @@ class _TitleScreenState extends State<TitleScreen> {
                 onTap: () {
                   showDailogPopUp(
                       context,
-                      OpenSettings());
-
+                      BlocProvider(
+                        create: (context) => InventorylistCubit()
+                          ..getInventoryListRead(Variable.loginLeage),
+                        child: OpenSettings(),
+                      ));
                 },
               ),
               // TitleIcon(
@@ -333,7 +331,7 @@ class _TitleScreenState extends State<TitleScreen> {
                     top: height * .035,
                   ),
                   child: Text(
-                    "William joskinode",
+                    Variable.username,
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: size.width * .01,
@@ -363,10 +361,10 @@ class _TitleScreenState extends State<TitleScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              provider. isCollapsed == false
+              provider.isCollapsed == false
                   ? SizedBox(
-                width: size.width * .1680,
-              )
+                      width: size.width * .1680,
+                    )
                   : SizedBox(width: width * .015),
               InkWell(
                 onTap: () {
@@ -375,8 +373,7 @@ class _TitleScreenState extends State<TitleScreen> {
 
                   print(provider.isCollapsed.toString());
                   setState(() {
-                    widget.  isCollapsed = provider.isCollapsed;
-
+                    widget.isCollapsed = provider.isCollapsed;
                   });
                 },
                 child: Container(
@@ -394,7 +391,7 @@ class _TitleScreenState extends State<TitleScreen> {
                     //more than 50% of width makes circle
                   ),
                   child: Icon(
-                    widget.   isCollapsed == false ? Icons.remove : Icons.add,
+                    widget.isCollapsed == false ? Icons.remove : Icons.add,
                     color: Colors.white,
                     size: size.width * .010,
                   ),
@@ -407,6 +404,12 @@ class _TitleScreenState extends State<TitleScreen> {
                 // width: size.width * .298,
                 height: size.height * .0455,
                 child: TabBar(
+                    onTap: (val) async {
+                      print("valueeeeee is $val");
+                      final SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setInt('index', val);
+                    },
                     isScrollable: true,
                     indicatorSize: TabBarIndicatorSize.tab,
                     // labelPadding: EdgeInsets.only(left:size.width * .024,),
@@ -419,8 +422,7 @@ class _TitleScreenState extends State<TitleScreen> {
                     ),
                     unselectedLabelColor: Color(0xffEDF1F2),
                     unselectedLabelStyle: TextStyle(
-                        fontSize: height * 00.022,
-                        fontStyle: FontStyle.normal),
+                        fontSize: height * 00.022, fontStyle: FontStyle.normal),
                     indicator: UnderlineTabIndicator(
                       borderSide: BorderSide(
                         width: height * .008,
@@ -466,6 +468,10 @@ class _TitleScreenState extends State<TitleScreen> {
                         "Variant",
                         style: TextStyle(fontSize: height * 00.022),
                       ),
+                      Text(
+                        "Promotion",
+                        style: TextStyle(fontSize: height * 00.022),
+                      ),
                     ]),
               ),
               // Spacer(),
@@ -485,167 +491,148 @@ class _TitleScreenState extends State<TitleScreen> {
   }
 }
 
-
-
-
 class RihtDrawer extends StatefulWidget {
   @override
   _RihtDrawerState createState() => _RihtDrawerState();
 }
 
 class _RihtDrawerState extends State<RihtDrawer> {
-  List<String>drawerItems=["UOM group","Base UOM","Division"];
+  List<String> drawerItems = ["UOM group", "Base UOM", "Division"];
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return Container(
       margin: EdgeInsets.only(top: h / 6.5),
       height: h,
-      width: w*.14,
-      color:  Color(0xffEDF1F2),
+      width: w * .14,
+      color: Color(0xffEDF1F2),
       child: Column(
         children: [
-          SizedBox(height: 20,),
-          DrawerCared(label: "uomGroup_patch",ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "uomGroup_patch",
-              ),
-
-
-            );
-          },),
+          SizedBox(
+            height: 20,
+          ),
+          DrawerCared(
+            label: "uomGroup_patch",
+            ontap: () {
+              showDailogPopUp(
+                context,
+                ConfigurePopup(
+                  type: "uomGroup_patch",
+                ),
+              );
+            },
+          ),
           greyDivider(),
-
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "uom_patch",
-              ),
-
-
-            );
-          },label: "Base UOM",),
+          DrawerCared(
+            ontap: () {
+              showDailogPopUp(
+                context,
+                ConfigurePopup(
+                  type: "uom_patch",
+                ),
+              );
+            },
+            label: "Base UOM",
+          ),
           greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "division_patch",
-              ),
-
-
-            );
-          }, label: "Division"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "division_patch",
+                  ),
+                );
+              },
+              label: "Division"),
           greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "categoryPatch_group",
-              ),
-
-
-            );
-          }, label: "Category"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "categoryPatch_group",
+                  ),
+                );
+              },
+              label: "Category"),
           greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "categoryPatch_group",
-              ),
-
-
-            );
-          }, label: "Sub Category"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "categoryPatch_group",
+                  ),
+                );
+              },
+              label: "Sub Category"),
           greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "GroupPatch_PopUp",
-              ),
-
-
-            );
-          }, label: "Group"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "GroupPatch_PopUp",
+                  ),
+                );
+              },
+              label: "Group"),
           greyDivider(),
-
-
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "patchUom-group",
-              ),
-
-
-            );
-          }, label: "Create Material"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "patchUom-group",
+                  ),
+                );
+              },
+              label: "Create Material"),
           greyDivider(),
-
-
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "StaticPatch-group",
-              ),
-
-
-            );
-          }, label: "Create Static"),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "StaticPatch-group",
+                  ),
+                );
+              },
+              label: "Create Static"),
           greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "patchbrand-group",
-              ),
-
-
-            );
-          }, label: "Create Brand"),          greyDivider(),
-          DrawerCared(ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "create_framework",
-              ),
-
-
-            );
-          }, label: "framework"),
-
-
-
-
-                ],
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "patchbrand-group",
+                  ),
+                );
+              },
+              label: "Create Brand"),
+          greyDivider(),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "create_framework",
+                  ),
+                );
+              },
+              label: "framework"),
+        ],
       ),
     );
   }
 }
 
-
 class DrawerCared extends StatefulWidget {
-
-  final String label ;
+  final String label;
   final Function ontap;
-  DrawerCared({required this.label,required,required this.ontap });
+  DrawerCared({required this.label, required, required this.ontap});
 
   @override
   _DrawerCaredState createState() => _DrawerCaredState();
@@ -655,21 +642,22 @@ class _DrawerCaredState extends State<DrawerCared> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         widget.ontap();
       },
       child: Container(
         height: 30,
         child: Row(
           children: [
-
-
-            SizedBox(width: 20,),
-            Text(widget.label,style: TextStyle(color: Colors.black),)
-
+            SizedBox(
+              width: 20,
+            ),
+            Text(
+              widget.label,
+              style: TextStyle(color: Colors.black),
+            )
           ],
         ),
-
       ),
     );
   }

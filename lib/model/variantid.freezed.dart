@@ -403,11 +403,13 @@ class _$ResultTearOff {
 
   _Result call(
       {int? id,
+      String? name,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "partner_code") String? partnerCode,
       @JsonKey(name: "is_organization") bool? isOrganization}) {
     return _Result(
       id: id,
+      name: name,
       userLoginId: userLoginId,
       partnerCode: partnerCode,
       isOrganization: isOrganization,
@@ -425,6 +427,7 @@ const $Result = _$ResultTearOff();
 /// @nodoc
 mixin _$Result {
   int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   @JsonKey(name: "user_login_id")
   int? get userLoginId => throw _privateConstructorUsedError;
   @JsonKey(name: "partner_code")
@@ -443,6 +446,7 @@ abstract class $ResultCopyWith<$Res> {
       _$ResultCopyWithImpl<$Res>;
   $Res call(
       {int? id,
+      String? name,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "partner_code") String? partnerCode,
       @JsonKey(name: "is_organization") bool? isOrganization});
@@ -459,6 +463,7 @@ class _$ResultCopyWithImpl<$Res> implements $ResultCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
+    Object? name = freezed,
     Object? userLoginId = freezed,
     Object? partnerCode = freezed,
     Object? isOrganization = freezed,
@@ -468,6 +473,10 @@ class _$ResultCopyWithImpl<$Res> implements $ResultCopyWith<$Res> {
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       userLoginId: userLoginId == freezed
           ? _value.userLoginId
           : userLoginId // ignore: cast_nullable_to_non_nullable
@@ -491,6 +500,7 @@ abstract class _$ResultCopyWith<$Res> implements $ResultCopyWith<$Res> {
   @override
   $Res call(
       {int? id,
+      String? name,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "partner_code") String? partnerCode,
       @JsonKey(name: "is_organization") bool? isOrganization});
@@ -508,6 +518,7 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? name = freezed,
     Object? userLoginId = freezed,
     Object? partnerCode = freezed,
     Object? isOrganization = freezed,
@@ -517,6 +528,10 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       userLoginId: userLoginId == freezed
           ? _value.userLoginId
           : userLoginId // ignore: cast_nullable_to_non_nullable
@@ -538,6 +553,7 @@ class __$ResultCopyWithImpl<$Res> extends _$ResultCopyWithImpl<$Res>
 class _$_Result implements _Result {
   const _$_Result(
       {this.id,
+      this.name,
       @JsonKey(name: "user_login_id") this.userLoginId,
       @JsonKey(name: "partner_code") this.partnerCode,
       @JsonKey(name: "is_organization") this.isOrganization});
@@ -547,6 +563,8 @@ class _$_Result implements _Result {
 
   @override
   final int? id;
+  @override
+  final String? name;
   @override
   @JsonKey(name: "user_login_id")
   final int? userLoginId;
@@ -559,7 +577,7 @@ class _$_Result implements _Result {
 
   @override
   String toString() {
-    return 'Result(id: $id, userLoginId: $userLoginId, partnerCode: $partnerCode, isOrganization: $isOrganization)';
+    return 'Result(id: $id, name: $name, userLoginId: $userLoginId, partnerCode: $partnerCode, isOrganization: $isOrganization)';
   }
 
   @override
@@ -568,6 +586,8 @@ class _$_Result implements _Result {
         (other is _Result &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.userLoginId, userLoginId) ||
                 const DeepCollectionEquality()
                     .equals(other.userLoginId, userLoginId)) &&
@@ -583,6 +603,7 @@ class _$_Result implements _Result {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(userLoginId) ^
       const DeepCollectionEquality().hash(partnerCode) ^
       const DeepCollectionEquality().hash(isOrganization);
@@ -601,6 +622,7 @@ class _$_Result implements _Result {
 abstract class _Result implements Result {
   const factory _Result(
       {int? id,
+      String? name,
       @JsonKey(name: "user_login_id") int? userLoginId,
       @JsonKey(name: "partner_code") String? partnerCode,
       @JsonKey(name: "is_organization") bool? isOrganization}) = _$_Result;
@@ -609,6 +631,8 @@ abstract class _Result implements Result {
 
   @override
   int? get id => throw _privateConstructorUsedError;
+  @override
+  String? get name => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "user_login_id")
   int? get userLoginId => throw _privateConstructorUsedError;

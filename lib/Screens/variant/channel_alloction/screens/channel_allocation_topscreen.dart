@@ -81,7 +81,16 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                           onChange: (va) {
                             setState(() {
                               onChange=true;
-                              selection[index]=va;
+                              selection[index]=true;
+                              // for(var i=0;i<selection.length;i++){
+                              //   if(index==i){
+                              //     selection[index]=true;
+                              //   }
+                              //   else{
+                              //     selection[i]=false;
+                              //   }
+                              // }
+
 
 
                               widget.filterTable(selection);

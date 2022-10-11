@@ -22,7 +22,7 @@ class SalesReturnGeneralInvoiceReadModel with _$SalesReturnGeneralInvoiceReadMod
     @JsonKey(name: "taxable_amount") final double? taxableAmount,
     @JsonKey(name: "selling_price_total") final double? sellingPriceTotal,
     @JsonKey(name: "total_price") final double? totalPrice,
-    @JsonKey(name: "order_lines") final List<SalesReturnOrderLines>? lines,
+    @JsonKey(name: "invoice_lines") final List<SalesReturnOrderLines>? lines,
     @JsonKey(name: "invoice_data") final InvoicedDatas? invoicedData,
   }) = _SalesReturnGeneralInvoiceReadModel;
   factory SalesReturnGeneralInvoiceReadModel.fromJson(Map<String, dynamic> json) =>

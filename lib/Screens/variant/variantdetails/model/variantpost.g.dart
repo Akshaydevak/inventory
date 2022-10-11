@@ -32,14 +32,18 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       storage: (json['storage'] as List<dynamic>?)
           ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
           .toList(),
+      inventoryId: json['inventory_id'] as String?,
       uomCode: json['uom_code'] as String?,
+      varAlternativeRfid: json['var_alternative_rfid'] as String?,
       alternativeBarcode: (json['alternative_barcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
       alternativeQrCodeBarcode: (json['alternative_qrcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
-      inventoryId: json['inventory_id'] as String?,
+      vendorDetails: (json['vendor_details'] as List<dynamic>?)
+          ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
       vedioUrl: json['vedio_url'] as String?,
       searchName: json['search_name'] as String?,
       posName: json['pos_name'] as String?,
@@ -65,6 +69,7 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
           (json['online_selling_price_percentage'] as num?)?.toDouble(),
       safetyStock: json['safty_stock'] as int?,
       salesUom: json['sales_uom'] as int?,
+      seblingId: json['sebling_id'] as int?,
       purchaseUom: json['purchase_uom'] as int?,
       reOrderPoint: json['reorder_point'] as int?,
       reorderQuantity: json['reorder_quantity'] as int?,
@@ -77,6 +82,8 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       salesBolock: json['sales_block'] as bool? ?? false,
       stockWarning: json['stock_warning'] as bool? ?? false,
       isActive: json['is_active'] as bool? ?? false,
+      itemCatelog: json['item_catalog'] as bool? ?? false,
+      itemImage: json['item_image'] as bool? ?? false,
       ratioToEcommerce: json['ratio_to_eccommerce'] as String?,
       minMaxRatio: json['min_max_ratio'] as String?,
       returnType: json['return_type'] as String?,
@@ -105,7 +112,7 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
           .toList(),
       productBehavior: (json['product_behaviour'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
@@ -131,10 +138,12 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'catalog8': instance.catalog8,
       'Ingrediants': instance.Ingrediants,
       'storage': instance.storage,
+      'inventory_id': instance.inventoryId,
       'uom_code': instance.uomCode,
+      'var_alternative_rfid': instance.varAlternativeRfid,
       'alternative_barcode': instance.alternativeBarcode,
       'alternative_qrcode': instance.alternativeQrCodeBarcode,
-      'inventory_id': instance.inventoryId,
+      'vendor_details': instance.vendorDetails,
       'vedio_url': instance.vedioUrl,
       'search_name': instance.searchName,
       'pos_name': instance.posName,
@@ -158,6 +167,7 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'online_selling_price_percentage': instance.onlineSellingPercenage,
       'safty_stock': instance.safetyStock,
       'sales_uom': instance.salesUom,
+      'sebling_id': instance.seblingId,
       'purchase_uom': instance.purchaseUom,
       'reorder_point': instance.reOrderPoint,
       'reorder_quantity': instance.reorderQuantity,
@@ -170,6 +180,8 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'sales_block': instance.salesBolock,
       'stock_warning': instance.stockWarning,
       'is_active': instance.isActive,
+      'item_catalog': instance.itemCatelog,
+      'item_image': instance.itemImage,
       'ratio_to_eccommerce': instance.ratioToEcommerce,
       'min_max_ratio': instance.minMaxRatio,
       'return_type': instance.returnType,
@@ -184,4 +196,102 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'usage_direction': instance.usageDirection,
       'important_info': instance.importantInfo,
       'product_behaviour': instance.productBehavior,
+    };
+
+_$_LinkedItemPostModel _$$_LinkedItemPostModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_LinkedItemPostModel(
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+      inventoryId: json['inventory_id'] as String?,
+      isActive: json['is_active'] as bool? ?? false,
+      linkedItemListModel: (json['linked_item_id'] as List<dynamic>?)
+          ?.map((e) => LinkedItemListModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      variantId: json['variant_id'] as int?,
+    );
+
+Map<String, dynamic> _$$_LinkedItemPostModelToJson(
+        _$_LinkedItemPostModel instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'description': instance.description,
+      'inventory_id': instance.inventoryId,
+      'is_active': instance.isActive,
+      'linked_item_id': instance.linkedItemListModel,
+      'variant_id': instance.variantId,
+    };
+
+_$_LinkedItemListModel _$$_LinkedItemListModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_LinkedItemListModel(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$_LinkedItemListModelToJson(
+        _$_LinkedItemListModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'code': instance.code,
+      'name': instance.name,
+    };
+
+_$_LinkedItemListReadModel _$$_LinkedItemListReadModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_LinkedItemListReadModel(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      linkedItemListIdModel: (json['linked_item_id'] as List<dynamic>?)
+          ?.map(
+              (e) => LinkedItemListIdModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      linkedItemMetaModel: json['linkeditem_meta'] == null
+          ? null
+          : LinkedItemMetaModel.fromJson(
+              json['linkeditem_meta'] as Map<String, dynamic>),
+      isActive: json['is_active'] as bool? ?? false,
+    );
+
+Map<String, dynamic> _$$_LinkedItemListReadModelToJson(
+        _$_LinkedItemListReadModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'code': instance.code,
+      'linked_item_id': instance.linkedItemListIdModel,
+      'linkeditem_meta': instance.linkedItemMetaModel,
+      'is_active': instance.isActive,
+    };
+
+_$_LinkedItemListIdModel _$$_LinkedItemListIdModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_LinkedItemListIdModel(
+      id: json['id'] as int?,
+      code: json['code'] as String?,
+      name: json['name'] as String?,
+      title: json['title'] as String?,
+    );
+
+Map<String, dynamic> _$$_LinkedItemListIdModelToJson(
+        _$_LinkedItemListIdModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'code': instance.code,
+      'name': instance.name,
+      'title': instance.title,
+    };
+
+_$_LinkedItemMetaModel _$$_LinkedItemMetaModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_LinkedItemMetaModel(
+      title: json['title'] as String?,
+      description: json['description'] as String?,
+    );
+
+Map<String, dynamic> _$$_LinkedItemMetaModelToJson(
+        _$_LinkedItemMetaModel instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'description': instance.description,
     };

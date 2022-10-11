@@ -12,12 +12,14 @@ import 'package:inventory/Screens/heirarchy/general/cubits/listbrand2/listbrand2
 import 'package:inventory/Screens/heirarchy/general/cubits/material/material_list_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/verticallist_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/commonWidget/Navigationprovider.dart';
 import 'package:inventory/cubits/cubit/cubit/general_purchase_read_cubit.dart';
 import 'package:inventory/widgets/itemmenu.dart';
@@ -1940,6 +1942,201 @@ class _PricingGroupVerticalListState extends State<PricingGroupVerticalList> {
 
 
 
+class FrameWorkVerticalList extends StatefulWidget {
+  final TextEditingController itemsearch;
+  final  PaginatedResponse<dynamic>? list;
+  final   List<FrameWorkListModel> result ;
+  final String? tab;
+  int selectedVertical;
+  final Function(int) ontap;
+  final Function(String) search;
+  FrameWorkVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  @override
+  _FrameWorkVerticalListState createState() => _FrameWorkVerticalListState();
+}
+
+class _FrameWorkVerticalListState extends State<FrameWorkVerticalList> {
+  late AutoScrollController controller;
+  int? veritiaclid=0;
+  List<PricingGroupListModel>result=[];
+  bool select=false;
+  int selectedVertical=0;
+  TextEditingController itemsearch=TextEditingController();
+  NavigationProvider vm = NavigationProvider();
+  @override
+  void initState() {
+
+    int verticalScrollIndex = 0;
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Static"+widget.result.toString());
+    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    vm = Provider.of<NavigationProvider>(context);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<ListvraiantCubit, ListvraiantState>(
+              listener: (context, state) {
+                print("this portion is working");
+                state.maybeWhen(orElse:(){},
+                    error: (){
+                      print("error");
+                    },
+                    success: (list){
+                      print("listtt"+list.toString());
+                      result=list.data;setState(() {
+                        print("Here is the result");
+                        print(result);
+
+                      });
+
+                    }
+                );
+              },
+              builder: (context, state) {
+                return Container(
+                  height: double.infinity,
+                  width: width * .112,
+                  margin: EdgeInsets.all(10),
+                  child:
+
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .112,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  widget.search(va);
+                                  // context
+                                  //     .read<ItemcreationListCubit>()
+                                  //     .searchItemList(widget.itemsearch.text);
+                                  // if(va==""){
+                                  //   // context
+                                  //   //     .read<VertiacalCubit>()
+                                  //   //     .getGeneralVertical();
+                                  //
+                                  // }
+
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
+
+
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
+
+
+
+                                    separatorBuilder: (context, index) {
+
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
+                                            index: index,
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
+
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
+
+
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<Listbrand2Cubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+      ),
+
+    );
+
+  }
+}
+
+
+
+
+
+
+
 class PricingVerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
   final  PaginatedResponse<dynamic>? list;
@@ -2128,6 +2325,217 @@ class _PricingVerticalListState extends State<PricingVerticalList> {
 
   }
 }
+
+
+
+
+class LinkedItemVerticalList extends StatefulWidget {
+  final TextEditingController itemsearch;
+  final  PaginatedResponse<dynamic>? list;
+  final   List<LinkedItemListIdModel> result ;
+  final String? tab;
+  int selectedVertical;
+  final Function(int) ontap;
+  final Function(String) search;
+  LinkedItemVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  @override
+  _LinkedItemVerticalList createState() => _LinkedItemVerticalList();
+}
+
+class _LinkedItemVerticalList extends State<LinkedItemVerticalList> {
+  late AutoScrollController controller;
+  int? veritiaclid=0;
+  List<LinkedItemListIdModel>result=[];
+  bool select=false;
+  int selectedVertical=0;
+  TextEditingController itemsearch=TextEditingController();
+  NavigationProvider vm = NavigationProvider();
+  @override
+  void initState() {
+
+    int verticalScrollIndex = 0;
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Static"+widget.result.toString());
+    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    vm = Provider.of<NavigationProvider>(context);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<ListvraiantCubit, ListvraiantState>(
+              listener: (context, state) {
+                print("this portion is working");
+                state.maybeWhen(orElse:(){},
+                    error: (){
+                      print("error");
+                    },
+                    success: (list){
+                      print("listtt"+list.toString());
+                      result=list.data;setState(() {
+                        print("Here is the result");
+                        print(result);
+
+                      });
+
+                    }
+                );
+              },
+              builder: (context, state) {
+                return Container(
+                  height: double.infinity,
+                  width: width * .112,
+                  margin: EdgeInsets.all(10),
+                  child:
+
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .112,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  widget.search(va);
+                                  // context
+                                  //     .read<ItemcreationListCubit>()
+                                  //     .searchItemList(widget.itemsearch.text);
+                                  // if(va==""){
+                                  //   // context
+                                  //   //     .read<VertiacalCubit>()
+                                  //   //     .getGeneralVertical();
+                                  //
+                                  // }
+
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
+
+
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
+
+
+
+                                    separatorBuilder: (context, index) {
+
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
+                                            index: index,
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
+
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
+
+
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<Listbrand2Cubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+      ),
+
+    );
+
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 class StaticVerticalList extends StatefulWidget {
@@ -3310,7 +3718,7 @@ class _VariantVerticalListState extends State<VariantVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width:  width * .172,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -3371,7 +3779,7 @@ class _VariantVerticalListState extends State<VariantVerticalList> {
                                           child: ItemCard(
                                             index: index,
                                             selectedVertical:widget. selectedVertical,
-                                            item: widget.result[index].code,
+                                            item: widget.result[index].name,
                                             id:widget. result[index]
                                                 .id
                                                 .toString(),

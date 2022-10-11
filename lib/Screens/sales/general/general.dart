@@ -633,7 +633,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                                 orderMode:
                                                 orderModeController?.text ?? "",
                                                 inventoryid:
-                                                invemtoryIdController?.text ??
+                                                Variable.inventory_ID ??
                                                     "",
                                                 customerId:
                                                 cstomerIdController?.text ?? "",
@@ -755,12 +755,12 @@ class StableTable extends StatefulWidget {
 }
 
 class _StableTableState extends State<StableTable> {
-  TextEditingController controller = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController fnameController = TextEditingController();
-  TextEditingController lanameController = TextEditingController();
+  TextEditingController? controller = TextEditingController();
+  TextEditingController? email = TextEditingController();
+  TextEditingController? passwordController = TextEditingController();
+  TextEditingController? mobileController = TextEditingController();
+  TextEditingController? fnameController = TextEditingController();
+  TextEditingController? lanameController = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController gender = TextEditingController();
   TextEditingController accessSiteController = TextEditingController();
@@ -865,11 +865,11 @@ class _StableTableState extends State<StableTable> {
                                 readOnly: true,
                                 controller: widget.orderDate,
                                 title: "order date"),
-                            SizedBox(
-                              height: height * .030,
-                            ),
-                            NewInputCard(
-                                controller: widget.invenotryId, title: "Inventory id"),
+                            // SizedBox(
+                            //   height: height * .030,
+                            // ),
+                            // NewInputCard(
+                            //     controller: widget.invenotryId, title: "Inventory id"),
                             SizedBox(
                               height: height * .030,
                             ),
@@ -909,17 +909,17 @@ class _StableTableState extends State<StableTable> {
                                         taxid: taxidController,
                                         ontap:(){
                                           CustomerIdCreation2Model model=CustomerIdCreation2Model(
-                                            email: email.text,
-                                            password: passwordController.text,
-                                            mobile: mobileController.text,
-                                            fname: fnameController.text,
-                                            lname: lanameController.text,
-                                            country: country.text,
-                                            gender: gender.text,
-                                            accessSite: accessSiteController.text,
-                                            taxId: taxidController.text,
-                                            buisnessMode: buisnessUserController.text,
-                                            designation: designation.text,
+                                            email: email?.text??"",
+                                            password: passwordController?.text??"",
+                                            mobile: mobileController?.text??"",
+                                            fname: fnameController?.text,
+                                            lname: lanameController?.text,
+                                            country: country?.text,
+                                            gender: gender?.text,
+                                            accessSite: accessSiteController?.text,
+                                            taxId: taxidController?.text,
+                                            buisnessMode: buisnessUserController?.text,
+                                            designation: designation?.text,
 
                                           );
 
@@ -1002,6 +1002,9 @@ class _StableTableState extends State<StableTable> {
                                       // changeExtendedWarranty: onChangeExtendedWarranty,
                                     ));
                               },
+                            ),
+                            SizedBox(
+                              height: height * .1222,
                             ),
 
                             // NewInputCard(
@@ -1450,8 +1453,8 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                           unicostController.text = unitcost1.toString();
                           vat1 = purchaseTable?.vat ?? 0;
 
-                          supplierRefCode =
-                              purchaseTable?.vendorDetails?.vendorRefCode ?? "";
+                          // supplierRefCode =
+                          //     purchaseTable?.vendorDetails?.vendorRefCode ?? "";
                           print(supplierRefCode);
 
                           salesUom = purchaseTable?.purchaseUomName ?? "";
@@ -2914,8 +2917,10 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
           child: AlertDialog(
             content: PopUpHeader(
               label: "Adjust stock",
-              onApply: () {},
-              onEdit: () {
+
+              addNew: false,
+              isDirectCreate: true,
+              onApply: () {
 
                 ShippingAddressCreationModel model=ShippingAddressCreationModel(
                   country: country.text??"",
@@ -2935,6 +2940,10 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                     .postShippinAddress(
                     model);
 
+
+              },
+
+              onEdit: () {
 
 
               },
@@ -2974,6 +2983,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
 
                               ],
                             )),
+                            SizedBox(width: 15,),
                             Expanded(child:   Column(
                               children: [
                                 PopUpInputField(
@@ -3394,19 +3404,19 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
   }
 }
 class CustomerIdCreationPopUp extends StatefulWidget {
-  final TextEditingController email;
-  final TextEditingController password;
-  final TextEditingController mobile;
-  final TextEditingController fname;
-  final TextEditingController lname;
-  final TextEditingController country;
-  final TextEditingController gender;
-  final TextEditingController accesssite;
-  final TextEditingController buisnessuser;
-  final TextEditingController taxid;
-  final TextEditingController buisnessmode;
-  final TextEditingController buisnessname;
-  final TextEditingController designation;
+  final TextEditingController? email;
+  final TextEditingController? password;
+  final TextEditingController? mobile;
+  final TextEditingController? fname;
+  final TextEditingController? lname;
+  final TextEditingController? country;
+  final TextEditingController? gender;
+  final TextEditingController? accesssite;
+  final TextEditingController? buisnessuser;
+  final TextEditingController? taxid;
+  final TextEditingController? buisnessmode;
+  final TextEditingController? buisnessname;
+  final TextEditingController? designation;
   final Function ontap;
 
   CustomerIdCreationPopUp({
@@ -3434,6 +3444,7 @@ class CustomerIdCreationPopUp extends StatefulWidget {
 
 class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
   bool active = false;
+  bool addNew  = false;
   bool additionalWarranty = false;
   bool extendedWarranty = false;
   bool onChange = false;
@@ -3487,16 +3498,29 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
             // TODO: implement listener
           },
           child: AlertDialog(
+
             content: PopUpHeader(
               label: "Adjust stock",
-              onApply: () {},
-              onEdit: () {
+              onApply: () {
                 widget.ontap();
+              },
+              onTap: () {
+                print("akshay");
+                addNew = !addNew;
+                setState(() {});
+              },
+              isDirectCreate: true,
+              addNew: addNew,
+              onEdit: () {
+
 
 
 
 
               },
+                onAddNew:(bool){
+                print("akshay"+bool.toString());
+                },
               dataField: SizedBox(
                 height: MediaQuery.of(context).size.height * .6,
                 child: SingleChildScrollView(
@@ -3533,6 +3557,7 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
 
                               ],
                             )),
+                            SizedBox(width: 15,),
                             Expanded(child:   Column(
                               children: [
                                 PopUpInputField(

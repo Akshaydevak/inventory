@@ -27,7 +27,13 @@ class StockData with _$StockData {
     @JsonKey(name: "variant_id") final int? variantId,
     @JsonKey(name: "variant_code") final String? variantCode,
     @JsonKey(name: "inventory_id") final String? inventoryId,
+    @JsonKey(name: "channel_type_allocation_ratio") final String? channelTypeAllocationRatio,
+    @JsonKey(name: "min_max_ratio") final String? minMaxRatio,
+    @JsonKey(name: "virtual_type") final String? virtualType,
     @JsonKey(name: "stock_code") final String? stockCode,
+    @JsonKey(name: "safety_stock_qty") final int? safetyStockQty,
+    @JsonKey(name: "reorder_quantity") final int? reOrderQuantity,
+    @JsonKey(name: "reorder_point") final int? reOrderPoint,
     @JsonKey(name: "base_uom") final int? baseUom,
     @JsonKey(name: "sales_uom") final int? salesUOM,
     @JsonKey(name: "available_qty") final int? availableQuantity,
@@ -37,9 +43,13 @@ class StockData with _$StockData {
     @JsonKey(name: "return_qty") final int? returnQuantity,
     @JsonKey(name: "sales_blocked_qty") final int? salesBlockQuantity,
     @JsonKey(name: "purchase_blocked_qty") final int? purchaseBlockQuantity,
+    @JsonKey(name: "maximum_quantity") final int? maximumQuantity,
+    @JsonKey(name: "add_virtual_stock") final int? addVirtualStock,
+    @JsonKey(name: "minimum_quantity") final int? minimumQuantity,
     @JsonKey(name: "created_at") final String? createdAt,
     @JsonKey(name: "stock_warning",defaultValue: false) final bool? stockWarning,
     @JsonKey(name: "sales_blocked",defaultValue: false) final bool? salesBlocked,
+    @JsonKey(name: "purchase_blocked",defaultValue: false) final bool? purchaseBlocked,
 
 
   }) = _StockData;

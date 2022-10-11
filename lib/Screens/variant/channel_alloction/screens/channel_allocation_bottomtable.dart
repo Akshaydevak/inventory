@@ -179,6 +179,82 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                   ],
 
                 ),
+                if(widget.table?.isEmpty==true)...[
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey
+                              .shade200,
+                          shape: BoxShape
+                              .rectangle,
+                          border:const  Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors
+                                      .grey,
+                                  style: BorderStyle
+                                      .solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors
+                                      .grey,
+                                  style: BorderStyle
+                                      .solid),
+                              right: BorderSide(
+                                  color: Colors
+                                      .grey,
+                                  width: .5,
+                                  style: BorderStyle
+                                      .solid))),
+                      children: [
+
+
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding("")
+                          // Text(keys?[i]["name"]??"")
+
+
+
+                        ),
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding('')
+                          // Text(keys?[i]["name"]??"")
+
+
+
+                        ),
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding('')
+                          // Text(keys?[i]["name"]??"")
+
+
+
+                        ),
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding('')
+                          // Text(keys?[i]["name"]??"")
+
+
+
+                        ),
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:textPadding("")
+                        ),
+                        Container(height: 45,)
+
+
+                      ]),
+
+
+                ],
                 if (widget.table?.isNotEmpty==true ) ...[
 
 
@@ -285,7 +361,10 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
           )
 
 
-                        ]),],
+                        ]),
+
+                ],
+
                 // TableRow(
                 //     decoration: BoxDecoration(
                 //         color: Colors.grey

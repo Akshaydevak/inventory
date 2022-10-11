@@ -436,7 +436,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                     unitcost = purchaseTable?.unitCost;
                     vat1 = purchaseTable?.vat;
                     unitCostCheck.text=purchaseTable?.unitCost.toString()??"";
-                    supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                    // supplierRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                     print(  supplierRefCode);
                     print("unitttt"+unitcost.toString());
 
@@ -723,9 +723,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               //       print("promised_receipt_date.text"+orderDateController.text.toString());
                                                               //     },
                                                               //     enable: true),
-                                                              SizedBox(height: height*.030,),
-                                                              NewInputCard(
-                                                                  controller: inventoryIdController, title: "Inventory  id"),
+                                                              // SizedBox(height: height*.030,),
+                                                              // NewInputCard(
+                                                              //     controller: inventoryIdController, title: "Inventory  id"),
                                                               SizedBox(height: height*.030,),
                                                               SelectableDropDownpopUp(
                                                                 label: "Order Person",
@@ -783,6 +783,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               SizedBox(height: height*.030,),
                                                               SizedBox(height: height*.030,),
                                                               SizedBox(height: height*.030,),
+                                                              SizedBox(height: height*.030,),
+                                                              SizedBox(height: height*.094,),
 
 
                                                             ],
@@ -819,7 +821,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               NewInputCard(
                                                                   controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
                                                               SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.030,),
+                                                              SizedBox(height: height*.035,),
 
                                                             ],
                                                           ),),
@@ -2667,7 +2669,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                           PurchaseOrderPost(
                               purchaseOrderType: orderType.text??"",
                               orderedPerson:orderedPersonController.text??"",
-                              iventoryId: inventoryIdController.text??"",
+                              iventoryId: Variable.inventory_ID,
                               address1: "akshay",
                               address2: "anmaika",
                               discount:double.tryParse( discountController.text),

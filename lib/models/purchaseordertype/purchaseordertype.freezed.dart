@@ -25,12 +25,14 @@ class _$PurchaseOrdertypeTearOff {
       {@JsonKey(name: "order_types") List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
-      @JsonKey(name: "order_modes") List<String>? orderMode}) {
+      @JsonKey(name: "order_modes") List<String>? orderMode,
+      @JsonKey(name: "virtual_stock_type") List<String>? virtualStockType}) {
     return _PurchaseOrdertype(
       orderTypes: orderTypes,
       pricingPgT: pricingPgT,
       discountType: discountType,
       orderMode: orderMode,
+      virtualStockType: virtualStockType,
     );
   }
 
@@ -52,6 +54,8 @@ mixin _$PurchaseOrdertype {
   List<String>? get discountType => throw _privateConstructorUsedError;
   @JsonKey(name: "order_modes")
   List<String>? get orderMode => throw _privateConstructorUsedError;
+  @JsonKey(name: "virtual_stock_type")
+  List<String>? get virtualStockType => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -68,7 +72,8 @@ abstract class $PurchaseOrdertypeCopyWith<$Res> {
       {@JsonKey(name: "order_types") List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
-      @JsonKey(name: "order_modes") List<String>? orderMode});
+      @JsonKey(name: "order_modes") List<String>? orderMode,
+      @JsonKey(name: "virtual_stock_type") List<String>? virtualStockType});
 }
 
 /// @nodoc
@@ -86,6 +91,7 @@ class _$PurchaseOrdertypeCopyWithImpl<$Res>
     Object? pricingPgT = freezed,
     Object? discountType = freezed,
     Object? orderMode = freezed,
+    Object? virtualStockType = freezed,
   }) {
     return _then(_value.copyWith(
       orderTypes: orderTypes == freezed
@@ -104,6 +110,10 @@ class _$PurchaseOrdertypeCopyWithImpl<$Res>
           ? _value.orderMode
           : orderMode // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      virtualStockType: virtualStockType == freezed
+          ? _value.virtualStockType
+          : virtualStockType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -119,7 +129,8 @@ abstract class _$PurchaseOrdertypeCopyWith<$Res>
       {@JsonKey(name: "order_types") List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
       @JsonKey(name: "discount_type") List<String>? discountType,
-      @JsonKey(name: "order_modes") List<String>? orderMode});
+      @JsonKey(name: "order_modes") List<String>? orderMode,
+      @JsonKey(name: "virtual_stock_type") List<String>? virtualStockType});
 }
 
 /// @nodoc
@@ -139,6 +150,7 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
     Object? pricingPgT = freezed,
     Object? discountType = freezed,
     Object? orderMode = freezed,
+    Object? virtualStockType = freezed,
   }) {
     return _then(_PurchaseOrdertype(
       orderTypes: orderTypes == freezed
@@ -157,6 +169,10 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
           ? _value.orderMode
           : orderMode // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      virtualStockType: virtualStockType == freezed
+          ? _value.virtualStockType
+          : virtualStockType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -168,7 +184,8 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
       {@JsonKey(name: "order_types") this.orderTypes,
       @JsonKey(name: "pricing_pg_type") this.pricingPgT,
       @JsonKey(name: "discount_type") this.discountType,
-      @JsonKey(name: "order_modes") this.orderMode});
+      @JsonKey(name: "order_modes") this.orderMode,
+      @JsonKey(name: "virtual_stock_type") this.virtualStockType});
 
   factory _$_PurchaseOrdertype.fromJson(Map<String, dynamic> json) =>
       _$$_PurchaseOrdertypeFromJson(json);
@@ -185,10 +202,13 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   @override
   @JsonKey(name: "order_modes")
   final List<String>? orderMode;
+  @override
+  @JsonKey(name: "virtual_stock_type")
+  final List<String>? virtualStockType;
 
   @override
   String toString() {
-    return 'PurchaseOrdertype(orderTypes: $orderTypes, pricingPgT: $pricingPgT, discountType: $discountType, orderMode: $orderMode)';
+    return 'PurchaseOrdertype(orderTypes: $orderTypes, pricingPgT: $pricingPgT, discountType: $discountType, orderMode: $orderMode, virtualStockType: $virtualStockType)';
   }
 
   @override
@@ -206,7 +226,10 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
                     .equals(other.discountType, discountType)) &&
             (identical(other.orderMode, orderMode) ||
                 const DeepCollectionEquality()
-                    .equals(other.orderMode, orderMode)));
+                    .equals(other.orderMode, orderMode)) &&
+            (identical(other.virtualStockType, virtualStockType) ||
+                const DeepCollectionEquality()
+                    .equals(other.virtualStockType, virtualStockType)));
   }
 
   @override
@@ -215,7 +238,8 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
       const DeepCollectionEquality().hash(orderTypes) ^
       const DeepCollectionEquality().hash(pricingPgT) ^
       const DeepCollectionEquality().hash(discountType) ^
-      const DeepCollectionEquality().hash(orderMode);
+      const DeepCollectionEquality().hash(orderMode) ^
+      const DeepCollectionEquality().hash(virtualStockType);
 
   @JsonKey(ignore: true)
   @override
@@ -230,11 +254,16 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
 
 abstract class _PurchaseOrdertype implements PurchaseOrdertype {
   const factory _PurchaseOrdertype(
-          {@JsonKey(name: "order_types") List<String>? orderTypes,
-          @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
-          @JsonKey(name: "discount_type") List<String>? discountType,
-          @JsonKey(name: "order_modes") List<String>? orderMode}) =
-      _$_PurchaseOrdertype;
+      {@JsonKey(name: "order_types")
+          List<String>? orderTypes,
+      @JsonKey(name: "pricing_pg_type")
+          List<String>? pricingPgT,
+      @JsonKey(name: "discount_type")
+          List<String>? discountType,
+      @JsonKey(name: "order_modes")
+          List<String>? orderMode,
+      @JsonKey(name: "virtual_stock_type")
+          List<String>? virtualStockType}) = _$_PurchaseOrdertype;
 
   factory _PurchaseOrdertype.fromJson(Map<String, dynamic> json) =
       _$_PurchaseOrdertype.fromJson;
@@ -251,6 +280,9 @@ abstract class _PurchaseOrdertype implements PurchaseOrdertype {
   @override
   @JsonKey(name: "order_modes")
   List<String>? get orderMode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "virtual_stock_type")
+  List<String>? get virtualStockType => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$PurchaseOrdertypeCopyWith<_PurchaseOrdertype> get copyWith =>

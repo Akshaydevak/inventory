@@ -43,6 +43,7 @@ import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart
 import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/commonWidget/appurl.dart';
+import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/widgets/responseutils.dart';
@@ -83,7 +84,7 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
     String? code,
   );
-  Future<PurchaseOrdertype> getSalesOrdertype();
+  Future<PurchaseOrdertype> getSalesOrdertype({String? type});
   Future<SalesGeneralReadModel> getSalesGenralRead(int id);
   Future<DoubleResponse> salesGeneralDelete(int? id);
   Future<DoubleResponse> getSalesGeneralPatch(
@@ -221,7 +222,8 @@ abstract class PurchaseSourceAbstract {
     int? id,
   );
   Future<ChannelListModel> getChannelAllocationRead(int? id, int? channelId);
-  Future<List<FrameWorkListModel>> getFrameWorklist();
+  Future<PaginatedResponse<List<FrameWorkListModel>>> getFrameWorklist(
+      String? filter);
   Future<DoubleResponse> channel2StockAllocationPatch(
       ChannelListModel model, int? id);
   Future<DoubleResponse> postCreateFrameWork(VariantFrameWorkPostModel model);
@@ -266,25 +268,81 @@ abstract class PurchaseSourceAbstract {
   );
   Future<CostingPageCreationPostModel> getCostingRead(int? id);
   Future<PurchaseOrdertype> getPricingPgtype();
-  Future<ListingChnanelTableModel> percentageGp(int? id, String? gpType);
+  Future<DoubleResponse> percentageGp(int? id, String? gpType);
   Future<DoubleResponse> patchCosting(
       CostingPageCreationPostModel model, int? id);
   Future<DoubleResponse> postFrameWorkCreate(VariantFrameworkPostModel model);
   Future<PaginatedResponse<List<AttributeListModel>>> getAttributeList(
     String? code,
   );
-  Future<DoubleResponse> postPatchFrameWork(VariantFrameWorkPostModel model,int? id);
+  Future<DoubleResponse> postPatchFrameWork(
+      VariantFrameWorkPostModel model, int? id);
+  Future<DoubleResponse> postCombinationFrameWork(
+      {String? itemCode,
+      String? variantCode,
+      String? uomCode,
+      List<List<Map<String, dynamic>>>? variantlist});
+  Future<PurchaseOrdertype> getVirtualStiocktype();
+
+  Future<DoubleResponse> postStock(
+    StockData model,
+  );
+  Future<List<LinkedItemListReadModel>> getLinkedItemListRead(
+    String? code,
+  );
+  Future<DoubleResponse> postLinkedItem(LinkedItemPostModel model);
+  Future<LinkedItemPostModel> getLinkedItem(
+    int? id,
+  );
+  Future<PaginatedResponse<List<LinkedItemListIdModel>>> getLinkedItemList(
+      String? filter);
+  Future<DoubleResponse> patchLinkedItem(LinkedItemPostModel model, int? id);
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Dio client = Dio();
 
+  String? token = "";
+
   @override
   Future<List<PurchaseInvoice>> getPurchaseInvoice() async {
     String path =
-        "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/list-purchase-invoice-for-purchase-return/test";
+        purchaseReturnPurchaseInvoiceidReadApi + Variable.inventory_ID;
 
     print(path);
+
+    try {
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responseAkshay" + response.toString());
+      //print(response.data['results']);
+      List<PurchaseInvoice> items = [];
+      print("akkk");
+      print("nmml" + response.data.toString());
+
+      (response.data['data']['results'] as List).forEach((element) {
+        // print("data");
+
+        items.add(PurchaseInvoice.fromJson(element));
+        print("items" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
     final response = await client.get(
       path,
       // data:
@@ -318,10 +376,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<PurchaseReturnGeneralRead> getGeneralInvoiceRead(int? id) async {
     print("Akshaytttttttt" + id.toString());
     print(
-        "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id");
+        "https://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id");
     try {
       String path =
-          "http://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
+          "https://api-purchase-order-staging.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
       print("ppppath" + path.toString());
       print(path);
       final response = await client.get(
@@ -342,7 +400,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       print(e);
     }
     String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
+        "https://invtry-purchase-return.rgcdynamics.org/purchase-order/read-purchase-invoice-for-purchase-return/$id";
     print(path);
     print("ppppath" + path.toString());
     final response = await client.get(
@@ -402,7 +460,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getGeneralVertical() async {
     String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/list-purchase-return-order/test";
+        purchaseReturnGeneralVerticalListApi + Variable.inventory_ID.toString();
+    print(path);
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -444,9 +503,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<ReturnGeneralRead> getGeneralPurchaseReturnRead(int id) async {
     print("sssshamna" + id.toString());
-    String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/read-purchase-return/" +
-            id.toString();
+    String path = purchaseReturnGeneralreadApi + id.toString();
     try {
       print("ppppath" + path.toString());
       print(path);
@@ -494,9 +551,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> getGeneralFormPatch(
       ReturnGeneralPatchModel model, int? id) async {
     print("searching" + model.toString());
-    String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/read-purchase-return/" +
-            id.toString();
+    String path = purchaseReturnGeneralPatchApi + id.toString();
     print("asss" + path.toString());
     try {} catch (e) {
       print("erroe" + e.toString());
@@ -519,9 +574,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<DoubleResponse> returnGeneralDelete(int? id) async {
-    String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/read-purchase-return/" +
-            id.toString();
+    String path = purchaseReturnGeneralPatchApi + id.toString();
     print(path);
 
     final response = await client.delete(path,
@@ -541,9 +594,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PurchaseInvoiceReadModel> getInvoiceRead(int id) async {
-    String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/read-purchase-return-order-for-invoice/" +
-            id.toString();
+    String path = purchaseReturnInvoiceRead + id.toString();
     print(path);
 
     try {
@@ -596,11 +647,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> invoicePost(
       PurchaseReturnInvoicePostModel model) async {
     print("akkkaaa" + model.toString());
-    print(
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice");
+    print(purchaseReturnInvoicelPost);
     try {
-      final response = await client.post(
-          "http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice",
+      final response = await client.post(purchaseReturnInvoicelPost,
           data: model.toJson(),
           // data: {
           //
@@ -655,8 +704,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     } catch (e) {
       print("akshayaaa" + e.toString());
     }
-    final response = await client.post(
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return-invoice/create-purchase-return-invoice",
+    final response = await client.post(purchaseReturnInvoicelPost,
         data: model.toJson(),
         //     data: {
         //
@@ -796,11 +844,20 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PurchaseOrdertype> getSalesOrdertype() async {
-    print("aaaaa");
-    print(salesGeneralOrderType);
+  Future<PurchaseOrdertype> getSalesOrdertype({String? type}) async {
+String path="";
+print("typeeeeeeeeeeeeeeeeeeeeee"+type.toString());
+print(path);
+if(type=="1"){path=salesReturnOrderMode;}
+
+else{
+path=  salesGeneralOrderType;
+}
+
+print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
+
     final response = await client.get(
-      salesGeneralOrderType,
+      path,
       // data:
       // // {"payment_status": "completed", "order_status": "completed"},
       // {
@@ -1014,31 +1071,39 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> getLogin(
       String username, String password, String empCode) async {
-    String path =
-        "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
     // String path =
-    //     "https://api-rgc-user.hilalcart.com/user-employee_employeeuserlogin/inventory";
+    // "https://api-rgc-user.hilalcart.com/user-account_login/inventory";
+    String path =
+        "https://api-rgc-user.hilalcart.com/user-employee_employeeuserlogin/inventory";
     print(path);
 
     final response = await client.post(path,
-        data: {"user_name": username, "password": password},
+        data: {"email": username, "password": password, "code": empCode},
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
         }));
-    print("+++++++++++");
+    print("++++++++amnnnannana+++");
     print(response);
     print(response.data['message']);
-    RegisterModel model = RegisterModel.fromJson(response.data['data']);
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
-    return DoubleResponse(response.data['status'] == 'success', model);
+    RegisterModel dataa = RegisterModel.fromJson(response.data['data']);
+
+    return DoubleResponse(response.data['status'] == 'success', dataa);
+    ;
   }
 
   @override
   Future<List<ShippingAddressModel>> getShippingId() async {
     print("token" + Variable.token.toString());
+
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+    print("token is here exist" + token.toString());
     String path = "https://api-rgc-user.hilalcart.com/user-general_address";
 
     final response = await client.get(
@@ -1047,7 +1112,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'token ${Variable.token}'
+          'Authorization': 'token ${token}'
         },
       ),
     );
@@ -1069,6 +1134,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> postShippinAddress(
       ShippingAddressCreationModel model) async {
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+    });
     try {
       final response = await client.post(
           "https://api-rgc-user.hilalcart.com/user-general_addresscreate",
@@ -1076,7 +1144,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'token ${Variable.token}'
+            'Authorization': 'token ${token}'
           }));
       print("");
       print(response);
@@ -1096,7 +1164,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'token ${Variable.token}'
+          'Authorization': 'token ${token}'
         }));
     print("");
     print(response);
@@ -1112,6 +1180,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<List<CustomerIdCreationModel>> getCustomerId() async {
     String path =
         "https://api-rgc-user.hilalcart.com/user-customer_customeruser/inventory?business_user=True";
+    print(path);
+
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+    });
 
     final response = await client.get(
       path,
@@ -1119,16 +1192,16 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'token ${Variable.token}'
+          'Authorization': 'token ${token}'
         },
       ),
     );
     print("Prabhaakaran");
-    print("Anagha" + response.toString());
+    print("AnaghaSSSDATRSA" + response.toString());
     //print(response.data['results']);
     List<CustomerIdCreationModel> items = [];
 
-    (response.data['data'] as List).forEach((element) {
+    (response.data['data']["results"] as List).forEach((element) {
       // print("data");
 
       items.add(CustomerIdCreationModel.fromJson(element));
@@ -1140,6 +1213,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> postCustomerIdCreation(
       CustomerIdCreation2Model model) async {
     print("Arathiiii");
+    String? token;
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+    });
+    print("token is here" + token.toString());
 
     try {
       final response = await client.post(
@@ -1148,7 +1226,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'token ${Variable.token}'
+            'Authorization': 'token ${token}'
           }));
 
       if (response.data['status'] == 'failed') {
@@ -1166,7 +1244,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': 'token ${Variable.token}'
+          'Authorization': 'token ${token}'
         }));
     print("Akshayyaa");
 
@@ -1709,6 +1787,46 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           print('8st image');
           // Variable.img= ImagesModel(itemCatelog5: response.data);
           Variable.img8 = response.data["data"];
+          break;
+        case '1':
+          print('8st image');
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog1 = response.data["data"];
+          break;
+        case '2':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog2 = response.data["data"];
+          break;
+        case '3':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog3 = response.data["data"];
+          break;
+        case '4':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog4 = response.data["data"];
+          break;
+        case '5':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog5 = response.data["data"];
+          break;
+        case '6':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog6 = response.data["data"];
+          break;
+        case '7':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog7 = response.data["data"];
+          break;
+        case '8':
+
+          // Variable.img= ImagesModel(itemCatelog5: response.data);
+          Variable.catalog8 = response.data["data"];
           break;
       }
     }
@@ -3227,105 +3345,105 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> patchVariant(VariantPatch model, int? id) async {
     String path = variantPatchApi + id.toString();
     print(path);
-    print("variant name${model.variantName}");
+    print("variant name${model.itemImage}");
 
     final response = await client.post(path,
-        // data: model.toJson(),
+        data: model.toJson(),
 
-        data: {
-          "variant_name": model.variantName,
-          "sales_uom": model.salesUom,
-          "purchase_uom": model.purchaseUom,
-          "variant_value": null,
-          "barcode": model.barcode,
-          "qrcode": model.qrcode,
-          "alternative_barcode": model.barcode,
-          "alternative_qrcode": model.qrcode,
-          "search_name": model.searchName,
-          "display_name": model.displayName,
-          "description": model.description,
-          "arabic_description": model.arabicDescription,
-          "additional_description": model.additionalDescription,
-          "pos_name": model.posName,
-          "gross_weight": model.grossWeight,
-          "net_weight": model.netWeight,
-          "unit_cost": 100.0,
-          "landing_cost": 50.0,
-          "actual_cost": 60.0,
-          "base_price": 50.0,
-          "produced_country": model.producedCountry,
-          "manufacture_id": 1,
-          "manufacture_name": model.manuFacturedName,
-          "safty_stock": model.safetyStock,
-          "reorder_point": 1,
-          "reorder_quantity": 2,
-          "sales_block": model.salesBolock,
-          "purchase_block": model.purchaseBlock,
-          "ratio_to_eccommerce": model.ratioToEcommerce,
-          "min_max_ratio": model.minMaxRatio,
-          "min_sales_order_limit": 17,
-          "max_sales_order_limit": 29,
-          "whole_sale_stock": 1,
-          "stock_warning": model.stockWarning,
-          "item_catalog": model.itemCatelog,
-          "item_image": model.itemImage,
-          "is_active": model.isActive,
-          "sebling_id": model.sibilingCode,
-          "sibling_code": model.sibilingCode,
-          "related_item": null,
-          "retail_selling_price_percentage": 33,
-          "wholesale_selling_price_percentage": 10.0,
-          "online_selling_price_percentage": 5.5,
-          "image1": 308,
-          "image2":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "image3":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "image4":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "image5":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog1":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog2":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog3":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog4":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog5":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog6":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog7":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "catalog8":
-              "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
-          "vedio_url": null,
-          "minimum_gp": 12.2,
-          "maximum_gp": 13.2,
-          "average_gp": 14.5,
-          "targeted_gp": 12.6,
-          "min_purchase_order_limit": 23,
-          "max_purchase_order_limit": 8,
-          "vat": 12.0,
-          "excess_tax": 8.0,
-          "return_type": "Day",
-          "return_time": 2,
-          "variant_status": "listed",
-          "status": "in_active",
-          "vendor_details": model.vendorDetails,
-          "Ingrediants": model.Ingrediants,
-          "important_info": model.importantInfo,
-          "Additional_info": model.additionalInfo,
-          "Nutriants_facts": model.nutriantsFacts,
-          "product_details": model.productDetails,
-          "usage_direction": model.usageDirection,
-          "product_features": model.productFeatures,
-          "product_behaviour": model.productBehavior,
-          "about_the_products": model.aboutProducts,
-          "storage": model.storage,
-        },
+        // data: {
+        //   "variant_name": model.variantName,
+        //   "sales_uom": model.salesUom,
+        //   "purchase_uom": model.purchaseUom,
+        //   "variant_value": null,
+        //   "barcode": model.barcode,
+        //   "qrcode": model.qrcode,
+        //   "alternative_barcode": model.alternativeBarcode,
+        //   "alternative_qrcode": model.alternativeQrCodeBarcode,
+        //   "search_name": model.searchName,
+        //   "display_name": model.displayName,
+        //   "description": model.description,
+        //   "arabic_description": model.arabicDescription,
+        //   "additional_description": model.additionalDescription,
+        //   "pos_name": model.posName,
+        //   "gross_weight": model.grossWeight,
+        //   "net_weight": model.netWeight,
+        //   "unit_cost": 100.0,
+        //   "landing_cost": 50.0,
+        //   "actual_cost": 60.0,
+        //   "base_price": 50.0,
+        //   "produced_country": model.producedCountry,
+        //   "manufacture_id": 1,
+        //   "manufacture_name": model.manuFacturedName,
+        //   "safty_stock": model.safetyStock,
+        //   "reorder_point": 1,
+        //   "reorder_quantity": 2,
+        //   "sales_block": model.salesBolock,
+        //   "purchase_block": model.purchaseBlock,
+        //   "ratio_to_eccommerce": model.ratioToEcommerce,
+        //   "min_max_ratio": model.minMaxRatio,
+        //   "min_sales_order_limit": 17,
+        //   "max_sales_order_limit": 29,
+        //   "whole_sale_stock": 1,
+        //   "stock_warning": model.stockWarning,
+        //   "item_catalog": model.itemCatelog,
+        //   "item_image": model.itemImage,
+        //   "is_active": model.isActive,
+        //   "sebling_id": model.sibilingCode,
+        //   "sibling_code": model.sibilingCode,
+        //   "related_item": null,
+        //   "retail_selling_price_percentage": 33,
+        //   "wholesale_selling_price_percentage": 10.0,
+        //   "online_selling_price_percentage": 5.5,
+        //   "image1": 308,
+        //   "image2":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "image3":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "image4":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "image5":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog1":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog2":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog3":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog4":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog5":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog6":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog7":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "catalog8":
+        //       "https://rgc-marketplace.s3.amazonaws.com/static/marketplace-inventory-images/dy-p-rainnight03.jpg",
+        //   "vedio_url": null,
+        //   "minimum_gp": 12.2,
+        //   "maximum_gp": 13.2,
+        //   "average_gp": 14.5,
+        //   "targeted_gp": 12.6,
+        //   "min_purchase_order_limit": 23,
+        //   "max_purchase_order_limit": 8,
+        //   "vat": 12.0,
+        //   "excess_tax": 8.0,
+        //   "return_type": "Day",
+        //   "return_time": 2,
+        //   "variant_status": "listed",
+        //   "status": "in_active",
+        //   "vendor_details": model.vendorDetails,
+        //   "Ingrediants": model.Ingrediants,
+        //   "important_info": model.importantInfo,
+        //   "Additional_info": model.additionalInfo,
+        //   "Nutriants_facts": model.nutriantsFacts,
+        //   "product_details": model.productDetails,
+        //   "usage_direction": model.usageDirection,
+        //   "product_features": model.productFeatures,
+        //   "product_behaviour": model.productBehavior,
+        //   "about_the_products": model.aboutProducts,
+        //   "storage": model.storage,
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -3497,7 +3615,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
       String? code, String type) async {
-    String path = channelTypeReadApi + type.toString();
+    String path = channelTypeReadApi +"inventory_id="+Variable.inventory_ID.toString()+"&selection_type="+type.toString();
     print(path);
 
     final response = await client.get(path,
@@ -3603,7 +3721,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      print("Sea the result" + response.toString());
 
       List<StockTableReadModel> items = [];
       (response.data['data'] as List).forEach((element) {
@@ -3628,7 +3746,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    print("channelList" + response.toString());
     List<StockTableReadModel> items = [];
     (response.data['data'] as List).forEach((element) {
       items.add(StockTableReadModel.fromJson(element));
@@ -3642,6 +3760,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       String? code) async {
     code = code == null ? "" : code;
     String path = stockVerticalReadApi + code.toString();
+    print("spaths"+path.toString());
 
     // if (code == "")
     //   path = salesListApi + Variable.uomId.toString();
@@ -3711,27 +3830,48 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> postSChannelPosts(ChannelPostModel model) async {
     print("Salesgeneralpost" + channelPostApi.toString());
-    try {
-      final response = await client.post(channelPostApi,
-          data: model.toJson(),
-          options: Options(headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          }));
-      print("");
-      print(response);
-      print(response.data['message']);
-      if (response.data['status'] == 'failed') {
-        Variable.errorMessege = response.data['message'];
-      }
-      return DoubleResponse(
-          response.data['status'] == 'success', response.data['message']);
-    } catch (e) {
-      print("errrr" + e.toString());
-    }
+    // try {
+    //   final response = await client.post(channelPostApi,
+    //       data: model.toJson(),
+    //       options: Options(headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //       }));
+    //   print("");
+    //   print(response);
+    //   print(response.data['message']);
+    //   if (response.data['status'] == 'failed') {
+    //     Variable.errorMessege = response.data['message'];
+    //   }
+    //   return DoubleResponse(
+    //       response.data['status'] == 'success', response.data['message']);
+    // } catch (e) {
+    //   print("errrr" + e.toString());
+    // }
 
     final response = await client.post(channelPostApi,
-        data: model.toJson(),
+        // data: model.toJson(),
+        data:{
+
+          "inventory_id":model.inventoryId,
+
+          "selection_type":model.selectionType,
+
+          "channel_type_code":model.channelTypeCode,
+          "channel_type_name":model.channelTypeName,
+
+          "priority":1,
+
+          "channel_type_id":model.channelTypeId,
+
+          "selected_data":model.selectedData,
+
+
+          "channel_data":model.channelDatas
+
+
+        },
+
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -3757,7 +3897,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     // else
     //   path = salesListApi + Variable.uomId.toString() + "?name=$code";
 
-    print(path);
+    print("Accccc" + path.toString());
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3955,7 +4095,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<List<FrameWorkListModel>> getFrameWorklist() async {
+  Future<PaginatedResponse<List<FrameWorkListModel>>> getFrameWorklist(
+      String? filter) async {
     String path = frameWorkListApi;
     try {
       print("ppppath" + path.toString());
@@ -3969,13 +4110,16 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
+
       List<FrameWorkListModel> items = [];
-      print("rijinasdAY" + response.data["data"]["results"].toString());
-      (response.data["data"]["results"] as List).forEach((element) {
+      (response.data['data']['results'] as List).forEach((element) {
         items.add(FrameWorkListModel.fromJson(element));
-        print("rijinasdAY2" + items.toString());
+        print("itemsAk" + items.toString());
       });
-      return items;
+      return PaginatedResponse<List<FrameWorkListModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString());
     } catch (e) {
       print(e);
     }
@@ -3993,11 +4137,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     );
     print("data" + response.data["data"].toString());
     List<FrameWorkListModel> items = [];
-    (response.data["data"]["results"] as List).forEach((element) {
+    (response.data['data']['results'] as List).forEach((element) {
       items.add(FrameWorkListModel.fromJson(element));
       print("itemsAk" + items.toString());
     });
-    return items;
+    return PaginatedResponse<List<FrameWorkListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
   }
 
   @override
@@ -4240,6 +4387,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       case "4":
         {
           url = pricingDeleteApi;
+        }
+        break;
+      case "5":
+        {
+          url = linkedListDeletionApi;
         }
         break;
     }
@@ -4768,6 +4920,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> postCosting(CostingPageCreationPostModel model) async {
     String path = creaetCostingApi;
+    print(path);
     try {
       final response = await client.post(path,
           data: model.toJson(),
@@ -4874,7 +5027,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<ListingChnanelTableModel> percentageGp(int? id, String? gpType) async {
+  Future<DoubleResponse> percentageGp(int? id, String? gpType) async {
     String path = pricingPgPercentageApi;
     print("alallal");
     try {
@@ -4889,11 +5042,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
-      ListingChnanelTableModel dataa =
-          ListingChnanelTableModel.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
-      return dataa;
+      print("channelStockResponse" + response.toString());
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['data']);
     } catch (e) {
       print("the akku is" + e.toString());
     }
@@ -4910,12 +5064,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("alallal2");
-    print("brand response" + response.toString());
-    ListingChnanelTableModel dataa =
-        ListingChnanelTableModel.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
-    return dataa;
+    print("channelStockResponse" + response.toString());
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['data']);
   }
 
   @override
@@ -4987,9 +5141,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<AttributeListModel>>> getAttributeList(
       String? code) async {
-    String path=listAttributeTypeApi;
+    String path = listAttributeTypeApi;
 
-  final response = await client.get(path,
+    final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -5008,8 +5162,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<DoubleResponse> postPatchFrameWork(VariantFrameWorkPostModel model, int? id) async {
-    String path = VariantFrameWorkPatchApi+id.toString();
+  Future<DoubleResponse> postPatchFrameWork(
+      VariantFrameWorkPostModel model, int? id) async {
+    String path = VariantFrameWorkPatchApi + id.toString();
     try {
       final response = await client.patch(path,
           data: model.toJson(),
@@ -5036,6 +5191,381 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           'Accept': 'application/json',
         }));
     print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postCombinationFrameWork(
+      {String? itemCode,
+      String? variantCode,
+      String? uomCode,
+      List<List<Map<String, dynamic>>>? variantlist}) async {
+    String path = postCombinationFrameworkPostApi;
+
+    print(path);
+    print("i" + itemCode.toString());
+    print("v" + variantCode.toString());
+    print("u" + uomCode.toString());
+    try {
+      final response = await client.post(path,
+          data: {
+            "item_code": itemCode,
+
+            "variant_framework_code": variantCode,
+
+            "uom_code": uomCode,
+
+            "inventory_id": Variable.inventory_ID,
+
+            "variant_list": variantlist
+            // [[{"key":"color","value":"red"},{"key":"size","value":"large"}],[{"key":"color","value":"yellow"},{"key":"size","value":"small"}]]
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: {
+          "item_code": itemCode,
+
+          "variant_framework_code": variantCode,
+
+          "uom_code": uomCode,
+
+          "inventory_id": Variable.inventory_ID,
+
+          "variant_list": variantlist
+          // [[{"key":"color","value":"red"},{"key":"size","value":"large"}],[{"key":"color","value":"yellow"},{"key":"size","value":"small"}]]
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PurchaseOrdertype> getVirtualStiocktype() async {
+    final response = await client.get(
+      virtualStockTypeApi,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    print("ayalkaran" + response.toString());
+
+    PurchaseOrdertype ordertype =
+        PurchaseOrdertype.fromJson(response.data['data']);
+    print(ordertype);
+    return ordertype;
+  }
+
+  @override
+  Future<DoubleResponse> postStock(
+    StockData model,
+  ) async {
+    String path = stockPostkDeleteApi;
+    print(path);
+    print(model);
+    print(model.addVirtualStock);
+    // try {
+    //   final response = await client.patch(path,
+    //       // data: model.toJson(),
+    //   data:    {
+    //
+    //       "inventory_id":"test",
+    //
+    //       "variant_id":1,
+    //
+    //       "stock_warning":true,
+    //
+    //       "safety_stock_qty":10,
+    //
+    //       "reorder_point":10,
+    //
+    //       "reorder_quantity":10,
+    //
+    //       "channel_type_allocation_ratio":"5:5",
+    //
+    //       "min_max_ratio":"5:5",
+    //
+    //       "sales_blocked":false,
+    //
+    //       "maximum_quantity":100,
+    //
+    //       "minimum_quantity":100,
+    //
+    //       "add_virtual_stock":100,
+    //
+    //       "virtual_type":"Maximum",
+    //
+    //       "purchase_blocked":false
+    //
+    //       },
+    //       options: Options(headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json',
+    //       }));
+    //   print("+++++++++++");
+    //   print(response);
+    //   print(response.data['message']);
+    //   if (response.data['status'] == 'failed') {
+    //     Variable.errorMessege = response.data['message'];
+    //   }
+    //   return DoubleResponse(
+    //       response.data['status'] == 'success', response.data['message']);
+    // } catch (e) {
+    //   print(e);
+    // }
+    final response = await client.post(path,
+        // data: model.toJson(),
+        data: {
+          "inventory_id": model.inventoryId,
+          "variant_id": model.variantId,
+          "stock_warning": model.stockWarning,
+          "safety_stock_qty": model.safetyStockQty,
+          "reorder_point": model.reOrderPoint,
+          "reorder_quantity": model.reOrderQuantity,
+          "channel_type_allocation_ratio": model.channelTypeAllocationRatio,
+          "min_max_ratio": model.minMaxRatio,
+          "sales_blocked": model.salesBlocked,
+          "maximum_quantity": model.maximumQuantity,
+          "minimum_quantity": model.minimumQuantity,
+          "add_virtual_stock": 2,
+          "virtual_type": model.virtualType,
+          "purchase_blocked": model.purchaseBlocked
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<List<LinkedItemListReadModel>> getLinkedItemListRead(
+      String? code) async {
+    String path = listLinkedItemApi + "VAR0088";
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<LinkedItemListReadModel> items = [];
+
+      (response.data['data'] as List).forEach((element) {
+        items.add(LinkedItemListReadModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    List<LinkedItemListReadModel> items = [];
+
+    (response.data['data'] as List).forEach((element) {
+      items.add(LinkedItemListReadModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return items;
+    ;
+  }
+
+  @override
+  Future<DoubleResponse> postLinkedItem(LinkedItemPostModel model) async {
+    print(createLinkedItemtApi);
+    try {
+      final response = await client.post(createLinkedItemtApi,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("Seaaaa the error");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(createLinkedItemtApi,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<LinkedItemPostModel> getLinkedItem(int? id) async {
+    String path = readLinkedItemtApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      LinkedItemPostModel dataa =
+          LinkedItemPostModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("uomGroup response" + response.data['data'].toString());
+    LinkedItemPostModel dataa =
+        LinkedItemPostModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<PaginatedResponse<List<LinkedItemListIdModel>>> getLinkedItemList(
+      String? filter) async {
+    String path=readLinkedItemVerticalApi;
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(path);
+
+    List<LinkedItemListIdModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(LinkedItemListIdModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<LinkedItemListIdModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<DoubleResponse> patchLinkedItem(LinkedItemPostModel model, int? id) async {
+    String path = linkedListPatchnApi + id.toString();
+    print(path);
+    try{
+      final response = await client.patch(path,
+          data: model.toJson(),
+
+
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    }
+    catch(e){
+      print("the error exist that is"+e.toString());
+    }
+
+
+    final response = await client.post(path,
+        data: model.toJson(),
+
+
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
     print(response);
     print(response.data['message']);
     if (response.data['status'] == 'failed') {

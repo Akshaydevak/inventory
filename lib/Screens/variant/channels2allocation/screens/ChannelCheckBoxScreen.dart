@@ -20,7 +20,7 @@ class _ChannelCheckBoxScreenState extends State<ChannelCheckBoxScreen> {
     double w = MediaQuery.of(context).size.width;
     return Container(
       height: h/18,
-      width: 120,
+      // width: 120,
 
       child: ListView.separated(
         scrollDirection: Axis.horizontal,

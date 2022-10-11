@@ -409,20 +409,20 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      padding:
-                                          EdgeInsets.only(top: 15, left: 10),
-                                      child: TextButton(
-                                        style: TextButton.styleFrom(
-                                            primary: Colors.blue,
-                                            // elevation: 2,
-                                            backgroundColor: Colors.white24),
-                                        onPressed: () {
-                                          setState(() {});
-                                        },
-                                        child: Text("Create"),
-                                      ),
-                                    ),
+                                    // Container(
+                                    //   padding:
+                                    //       EdgeInsets.only(top: 15, left: 10),
+                                    //   child: TextButton(
+                                    //     style: TextButton.styleFrom(
+                                    //         primary: Colors.blue,
+                                    //         // elevation: 2,
+                                    //         backgroundColor: Colors.white24),
+                                    //     onPressed: () {
+                                    //       setState(() {});
+                                    //     },
+                                    //     child: Text("Create"),
+                                    //   ),
+                                    // ),
                                     TextButtonLarge(
                                       text: "PREVIEW",
                                       onPress: () {
@@ -780,6 +780,41 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                           // if (widget.onAddNew) textPadding(''),
                                                         ]),
+
+                                                    if(lines.isEmpty)...[
+                                                      TableRow(
+                                                          decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                                              border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                  bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                                  right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
+                                                                      .solid))),
+                                                          children: [
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+                                                            textPadding(""),
+
+                                                            textPadding("",height: 55),
+
+                                                          ]
+                                                      )
+
+
+                                                    ],
+
                                                     if (lines != null) ...[
                                                       for (var i = 0;
                                                           i < lines!.length;

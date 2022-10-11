@@ -19,10 +19,9 @@ _$_PurchaseOrderTableModel _$$_PurchaseOrderTableModelFromJson(
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
       returnTime: json['return_time'] as String?,
-      vendorDetails: json['vendor_details'] == null
-          ? null
-          : VendorDetails.fromJson(
-              json['vendor_details'] as Map<String, dynamic>),
+      vendorDetails: (json['vendor_details'] as List<dynamic>?)
+          ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
       barCode: json['barcode'] == null
           ? null
           : Barcode.fromJson(json['barcode'] as Map<String, dynamic>),

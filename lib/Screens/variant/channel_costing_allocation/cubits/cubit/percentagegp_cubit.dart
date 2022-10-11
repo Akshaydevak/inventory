@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inventory/Screens/purchasreturn/pages/repo.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
+import 'package:inventory/widgets/responseutils.dart';
 
 part 'percentagegp_state.dart';
 part 'percentagegp_cubit.freezed.dart';

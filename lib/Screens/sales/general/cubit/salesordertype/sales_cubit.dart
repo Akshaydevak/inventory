@@ -11,8 +11,8 @@ part 'sales_cubit.freezed.dart';
 class SalesCubit extends Cubit<SalesState> {
   SalesCubit() : super(SalesState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
-  Future getSalesOrdertype() async {
-    final result = await repo.getSalesOrdertype();
+  Future getSalesOrdertype({String? type}) async {
+    final result = await repo.getSalesOrdertype(type:type);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

@@ -1059,6 +1059,46 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
                                   // if (widget.onAddNew) textPadding(''),
                                 ]),
+                            if(table1.isEmpty)...[
+                              TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      shape: BoxShape.rectangle,
+                                      border: const Border(
+                                          left: BorderSide(
+                                              width: .5,
+                                              color: Colors.grey,
+                                              style: BorderStyle.solid),
+                                          bottom: BorderSide(
+                                              width: .5,
+                                              color: Colors.grey,
+                                              style: BorderStyle.solid),
+                                          right: BorderSide(
+                                              color: Colors.grey,
+                                              width: .5,
+                                              style: BorderStyle.solid))),
+                                  children: [
+
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    textPadding(""),
+                                    Container(height: 42,)
+
+                                  ]),
+
+                            ],
                             if (table1 != null) ...[
                               for (var i = 0; i < table1!.length; i++)
                                 TableRow(

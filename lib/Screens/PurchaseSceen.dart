@@ -1,11 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
+import 'package:inventory/Screens/purchaseorder/invoice/screens/invoice_mainScreen.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
 import 'package:inventory/model/purchase_order_table_model.dart';
 import 'package:inventory/widgets/titleIcon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'GeneralScreen.dart';
 import 'InventoryInvoiceScreen.dart';
@@ -26,7 +31,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
   @override
   Widget build(BuildContext context) {
 
-    TabController _tabController = TabController(length: 5, vsync: this);
+    TabController _tabController = TabController(length: 5, vsync: this,initialIndex: Variable.subIndex[0]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return MultiBlocProvider(
@@ -113,6 +118,20 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                               isScrollable: true,
                               physics: NeverScrollableScrollPhysics(),
                               indicatorSize: TabBarIndicatorSize.label,
+                              onTap: (val) async {
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                Variable.subIndex[0]=val;
+                                final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+                                prefs.setString('key', jsonEncode(strs)); // Encode the list here
+
+
+
+
+
+
+
+                              },
 
 
                               //indicatorSize:TabBarIndicatorSize.tab ,

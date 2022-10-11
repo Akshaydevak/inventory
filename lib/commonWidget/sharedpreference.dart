@@ -1,5 +1,7 @@
 
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/register/model/register.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserPreferences {
@@ -11,6 +13,10 @@ print(user);
     //prefs.setInt("userId", user.userId);
     prefs.setString('username', user?.fname??"");
     prefs.setString('token', user?.token??"");
+    prefs.setString('organizationCode', user?.organizationCode??"");
+    prefs.setString('legalEntiry', user?.legalEntiry??"");
+    prefs.setString('username', user?.fname??"");
+
 
     prefs.setBool("isLoggedIn", true);
     // prefs.setString("token", user.t);
@@ -25,6 +31,36 @@ print(user);
     // prefs.setString("mobile", user.mobile);
     return prefs.commit();
   }
+
+  // Future<bool> saveInventry(List<InventoryListModel> buisness) async {
+  //   print("prefs.getString(username) in Saving :");
+  //
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //
+  //   //prefs.setInt("userId", user.userId);
+  //   prefs.setStringList('inventory', user?.fname??"");
+  //
+  //
+  //
+  //
+  //   prefs.setBool("isLoggedIn", true);
+  //   // prefs.setString("token", user.t);
+  //   // prefs.setString("role", user.role);
+  //   // prefs.setString("firstname", user.firstname);
+  //   // prefs.setString("lastname", user.lastname);
+  //   // prefs.setString(" email", user. email);
+  //   // prefs.setString("password", user.password);
+  //   // prefs.setString("msg", user.msg);
+  //   // prefs.setString("address", user.address);
+  //   //
+  //   // prefs.setString("mobile", user.mobile);
+  //   return prefs.commit();
+  // }
+
+
+
+
+
   Future<RegisterModel> getUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     print("############################");
@@ -32,7 +68,9 @@ print(user);
     String?  username = prefs.getString("username");
     bool?  isLoggedIn = prefs.getBool("isLoggedIn");
     String?  token = prefs.getString("token");
-    print("username"+username.toString());
+    String?  legalEntiry = prefs.getString("legalEntiry");
+
+    print("username"+token.toString());
     // String password = prefs.getString("password");
     // print("password"+password.toString());
     // String msg = prefs.getString("msg");
@@ -46,7 +84,9 @@ print(user);
     return RegisterModel(
       fname: username,
       isLoggedIn: isLoggedIn,
-      token: token
+      token: token,
+      legalEntiry: legalEntiry,
+
       // password: password,
       //   msg:msg,
       //   address:address,

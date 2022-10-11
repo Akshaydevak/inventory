@@ -142,7 +142,7 @@ class _$VariantPatchTearOff {
       @JsonKey(name: "about_the_products")
           List<Storage>? aboutProducts,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior,
+          List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
           List<Storage>? usageDirection,
       @JsonKey(name: "vendor_details")
@@ -155,7 +155,7 @@ class _$VariantPatchTearOff {
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
-      @JsonKey(name: "produced_countrye")
+      @JsonKey(name: "produced_country")
           String? producedCountry,
       @JsonKey(name: "excess_tax")
           double? excessTax,
@@ -388,7 +388,7 @@ mixin _$VariantPatch {
   @JsonKey(name: "about_the_products")
   List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
   @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehavior =>
+  List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
   @JsonKey(name: "usage_direction")
   List<Storage>? get usageDirection => throw _privateConstructorUsedError;
@@ -404,7 +404,7 @@ mixin _$VariantPatch {
       throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
-  @JsonKey(name: "produced_countrye")
+  @JsonKey(name: "produced_country")
   String? get producedCountry => throw _privateConstructorUsedError;
   @JsonKey(name: "excess_tax")
   double? get excessTax => throw _privateConstructorUsedError;
@@ -547,7 +547,7 @@ abstract class $VariantPatchCopyWith<$Res> {
       @JsonKey(name: "about_the_products")
           List<Storage>? aboutProducts,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior,
+          List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
           List<Storage>? usageDirection,
       @JsonKey(name: "vendor_details")
@@ -560,7 +560,7 @@ abstract class $VariantPatchCopyWith<$Res> {
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
-      @JsonKey(name: "produced_countrye")
+      @JsonKey(name: "produced_country")
           String? producedCountry,
       @JsonKey(name: "excess_tax")
           double? excessTax,
@@ -954,7 +954,7 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as List<productBehaviour>?,
       usageDirection: usageDirection == freezed
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
@@ -1131,7 +1131,7 @@ abstract class _$VariantPatchCopyWith<$Res>
       @JsonKey(name: "about_the_products")
           List<Storage>? aboutProducts,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior,
+          List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
           List<Storage>? usageDirection,
       @JsonKey(name: "vendor_details")
@@ -1144,7 +1144,7 @@ abstract class _$VariantPatchCopyWith<$Res>
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
-      @JsonKey(name: "produced_countrye")
+      @JsonKey(name: "produced_country")
           String? producedCountry,
       @JsonKey(name: "excess_tax")
           double? excessTax,
@@ -1540,7 +1540,7 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as List<productBehaviour>?,
       usageDirection: usageDirection == freezed
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
@@ -1726,7 +1726,7 @@ class _$_VariantPatch implements _VariantPatch {
           this.alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           this.inventoryId,
-      @JsonKey(name: "produced_countrye")
+      @JsonKey(name: "produced_country")
           this.producedCountry,
       @JsonKey(name: "excess_tax")
           this.excessTax,
@@ -1932,7 +1932,7 @@ class _$_VariantPatch implements _VariantPatch {
   final List<Storage>? aboutProducts;
   @override
   @JsonKey(name: "product_behaviour")
-  final List<ProductFeatures>? productBehavior;
+  final List<productBehaviour>? productBehavior;
   @override
   @JsonKey(name: "usage_direction")
   final List<Storage>? usageDirection;
@@ -1952,7 +1952,7 @@ class _$_VariantPatch implements _VariantPatch {
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
   @override
-  @JsonKey(name: "produced_countrye")
+  @JsonKey(name: "produced_country")
   final String? producedCountry;
   @override
   @JsonKey(name: "excess_tax")
@@ -2324,7 +2324,7 @@ abstract class _VariantPatch implements VariantPatch {
       @JsonKey(name: "about_the_products")
           List<Storage>? aboutProducts,
       @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehavior,
+          List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
           List<Storage>? usageDirection,
       @JsonKey(name: "vendor_details")
@@ -2337,7 +2337,7 @@ abstract class _VariantPatch implements VariantPatch {
           List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
-      @JsonKey(name: "produced_countrye")
+      @JsonKey(name: "produced_country")
           String? producedCountry,
       @JsonKey(name: "excess_tax")
           double? excessTax,
@@ -2549,7 +2549,7 @@ abstract class _VariantPatch implements VariantPatch {
   List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehavior =>
+  List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "usage_direction")
@@ -2572,7 +2572,7 @@ abstract class _VariantPatch implements VariantPatch {
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "produced_countrye")
+  @JsonKey(name: "produced_country")
   String? get producedCountry => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "excess_tax")

@@ -12,6 +12,7 @@ import 'package:inventory/Screens/variant/channels2allocation/screens/ChannelChe
 import 'package:inventory/Screens/variant/channels2allocation/screens/channelbuttonScrollable.dart';
 import 'package:inventory/Screens/variant/channels2allocation/screens/stabletable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -57,6 +58,7 @@ class _ChannelTypeStockAllocationState
   int selectedVertical = 0;
   var list;
   int? veritiaclid = 0;
+  int? channelId ;
 
   @override
   void initState() {
@@ -84,6 +86,34 @@ class _ChannelTypeStockAllocationState
   List<ChanmneStockListModelModel>group=[];
   List<bool?>selection=[];
   bool onChange=false;
+  clear(){
+    setState(() {
+
+
+    addVirtualStock.text="";
+   channelStatusCrucialPoint.text="";
+   channelStatusMediumPoint.text="";
+   channelStockTypecode.text="";
+    channelTypeStockcode.text="";
+     stockwarning=false;
+     variantCodeController.text="";
+  cancelledQuantityController.text="";
+   channelTypeController.text="";
+     damagedQuantityController.text="";
+     purchaseBlockController.text="";
+    reorderPointQuantityController.text="";
+    reorderPointQuantityController.text="";
+     replaceMentQuantityController.text="";
+ reservedQuantityController.text="";
+     returnedQuantityController.text="";
+    salesBlockQuantityController.text="";
+  salesBlock=false;
+    channelstockCodeController.text="";
+ totalQuantityController.text="";
+ virtualStockController.text="";
+ virtualStockTypeController.text="";
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +175,8 @@ class _ChannelTypeStockAllocationState
                           setState(() {
                             print("welcome");
                             group = data.data;
+                            print(group);
+
                             // print("Akshgayaa" + group.toString());
                             // channels=data?.results??[];
 
@@ -205,18 +237,8 @@ class _ChannelTypeStockAllocationState
                             stockwarning=data.stockWarning??false;
                             salesBlock=data.salesBlock??false;
 
-
-
-
-
-                            // group = data.data;
-                            // print("Akshgayaa" + group.toString());
-                            // channels=data?.results??[];
-
                           });
                         });
-
-                    // TODO: implement listener
                   },
                 ),
               ],
@@ -263,7 +285,7 @@ class _ChannelTypeStockAllocationState
                         double height=MediaQuery.of(context).size.height;
                         double width=MediaQuery.of(context).size.width;
                         return Scaffold(
-                          backgroundColor: Colors.white,
+                          backgroundColor: Pellet.bagroundColor,
                           body: SingleChildScrollView(
                             child: IntrinsicHeight(
                               child: Row(
@@ -279,6 +301,11 @@ class _ChannelTypeStockAllocationState
                                     ontap: (int index) {
                                       setState(() {
                                         selectedVertical = index;
+                                        group.clear();
+                                        selection.clear();
+                                        checkBoxLis.clear();
+                                        clear();
+
 
                                         // select=false;
                                         // clear();
@@ -326,6 +353,11 @@ class _ChannelTypeStockAllocationState
                                           onPress: (int? index){
                                             setState(() {
                                               print(index);
+
+                                              selection.clear();
+                                              checkBoxLis.clear();
+                                              clear();
+                                              print((group[index!].channelTypecode));
                                               if(index!=null)
                                                 context
                                                     .read<ChannelListReadCubit>()
@@ -335,11 +367,14 @@ class _ChannelTypeStockAllocationState
                                           },
                                           list: group,
                                         ),
+
+
                                         ChannelCheckBoxScreen(list: checkBoxLis,
                                           selection:selection,
                                           onTap: (int index){
                                           print(index);
                                           onChange=true;
+                                          clear();
                                           setState(() {
                                             if(selection.isNotEmpty){
                                               for(var i=0;i<selection.length;i++){
@@ -351,6 +386,7 @@ class _ChannelTypeStockAllocationState
 
                                               }
                                             }
+                                            channelId=checkBoxLis[index].id;
 
                                             context.read<AllocationdataAssignCubit>().getChannelAllocationRead(checkBoxLis[index]?.id, int.tryParse(Variable.inventory_ID));
 
@@ -433,8 +469,7 @@ class _ChannelTypeStockAllocationState
                                                   ChannelListModel model=ChannelListModel(
                                                     stockWarning: stockwarning,
                                                     salesBlock: salesBlock,
-                                                    virtualType: "",
-                                                    // virtualStockController.text,
+                                                    virtualType: virtualStockTypeController.text,
                                                     addVirtualStock: int.tryParse(addVirtualStock?.text??""),
                                                     safetyStockQuantity:int.tryParse( safetyStockController.text),
                                                     reOrderPoint:int.tryParse( reorderPointQuantityController.text),
@@ -447,7 +482,7 @@ class _ChannelTypeStockAllocationState
 
                                                   );
                                                   print("Bad Model$model");
-                                                  context.read<ChannelpatchCubit>().channel2StockAllocationPatch(veritiaclid, model);
+                                                  context.read<ChannelpatchCubit>().channel2StockAllocationPatch(channelId, model);
 
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 
 class Buttons extends StatelessWidget {
   final Color clr;
@@ -19,14 +20,19 @@ class Buttons extends StatelessWidget {
   required this.icon,this.clr=Colors.black,this.border=Colors.white});
 
 
+
+
   @override
   Widget build(BuildContext context) {
+    double h=MediaQuery.of(context).size.height;
+    double w=MediaQuery.of(context).size.width;
 
     return GestureDetector(
       onTap: (){
         onApply();
       },
       child: Container(
+        margin: EdgeInsets.only(right:w *.02,left: w *.02),
         alignment:  Alignment.center,
         height: height,
         width: width,
@@ -116,7 +122,7 @@ class _TableTextButtonState extends State<TableTextButton> {
       ):
 
       TextButton(
-          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
+          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Color(0xffE9E9E9)
           ),
           onPressed: () {
             widget.onPress();

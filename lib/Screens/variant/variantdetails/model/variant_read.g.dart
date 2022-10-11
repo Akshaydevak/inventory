@@ -236,6 +236,9 @@ _$_VariantMeta _$$_VariantMetaFromJson(Map<String, dynamic> json) =>
       importantInfo: (json['important_info'] as List<dynamic>?)
           ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
           .toList(),
+      productBehave: (json['product_behaviour'] as List<dynamic>?)
+          ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
+          .toList(),
       additionalInfo: (json['Additional_info'] as List<dynamic>?)
           ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -246,9 +249,6 @@ _$_VariantMeta _$$_VariantMetaFromJson(Map<String, dynamic> json) =>
           ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
           .toList(),
       productFeatures: (json['product_features'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productBehaviour: (json['product_behaviour'] as List<dynamic>?)
           ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
           .toList(),
       aboutProducts: (json['about_the_products'] as List<dynamic>?)
@@ -268,11 +268,11 @@ Map<String, dynamic> _$$_VariantMetaToJson(_$_VariantMeta instance) =>
       'description': instance.description,
       'var_image': instance.image,
       'important_info': instance.importantInfo,
+      'product_behaviour': instance.productBehave,
       'Additional_info': instance.additionalInfo,
       'Nutriants_facts': instance.nutriantFacts,
       'product_details': instance.productDetails,
       'product_features': instance.productFeatures,
-      'product_behaviour': instance.productBehaviour,
       'about_the_products': instance.aboutProducts,
       'usage_direction': instance.usageDirection,
       'old_system_code': instance.oldSystemCode,
@@ -404,4 +404,22 @@ _$_NameStorage _$$_NameStorageFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_NameStorageToJson(_$_NameStorage instance) =>
     <String, dynamic>{
       'name': instance.name,
+    };
+
+_$_productBehaviour _$$_productBehaviourFromJson(Map<String, dynamic> json) =>
+    _$_productBehaviour(
+      genderGroup: json['genderGroup'] as String?,
+      ageGroup: json['ageGroup'] as String?,
+      ethinik: json['ethinik'] as String?,
+      countries: json['countries'] as String?,
+      purpose: json['purpose'] as String?,
+    );
+
+Map<String, dynamic> _$$_productBehaviourToJson(_$_productBehaviour instance) =>
+    <String, dynamic>{
+      'genderGroup': instance.genderGroup,
+      'ageGroup': instance.ageGroup,
+      'ethinik': instance.ethinik,
+      'countries': instance.countries,
+      'purpose': instance.purpose,
     };

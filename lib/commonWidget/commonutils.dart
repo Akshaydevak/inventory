@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomread/readbaseuom_cubit.dart';
@@ -12,6 +13,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/createcategory/create
 import 'package:inventory/Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/divisioncreate/divisioncreate_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/divisionread/divisionread_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/framework_list/frameworklist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/groupcreation/groupcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/grouplist/grouplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/groupread/groupread_cubit.dart';
@@ -31,6 +33,8 @@ import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
 import 'package:inventory/Screens/heirarchy/general/screens.dart';
+import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
+import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtype/costingtype_cubit.dart';
@@ -41,6 +45,14 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pric
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricingread/pricingread_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcosting/readcosting_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcostingtype/readcostingtype_cubit.dart';
+import 'package:inventory/Screens/variant/channels2allocation/cubits/channellistread/channel_list_read_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem/createlinkeditem_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem/linkeditemlistread_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/linkeditemcreation/linked_itemcreation_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/linkedlistvertica/linkedlistverticallist_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/read_linkeditem/readlinkeditem_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
@@ -52,7 +64,10 @@ import 'package:inventory/model/variantid.dart';
 import 'package:inventory/purchaseOrderPostmodel/purchaseOrderPost.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/custom_inputdecoration.dart';
+import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
+import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Screens/heirarchy/general/cubits/categoryread/categoryread_cubit.dart';
 import '../Screens/heirarchy/general/cubits/devision_list/materialdelete_cubit.dart';
@@ -67,12 +82,14 @@ import '../Screens/variant/channel_costing_allocation/cubits/pricinggroupread/re
 import '../Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pricingroupcreate_cubit.dart';
 import '../Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 
+
 void showDailogPopUp(BuildContext context, Widget child) {
   showDialog(
     context: context,
     builder: (context) => child,
   );
 }
+
 Widget gapWidthColumn({double width = 20}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: width),
@@ -81,6 +98,7 @@ Widget gapWidthColumn({double width = 20}) {
     ),
   );
 }
+
 class OpenSettings extends StatefulWidget {
   const OpenSettings({Key? key}) : super(key: key);
 
@@ -89,184 +107,217 @@ class OpenSettings extends StatefulWidget {
 }
 
 class _OpenSettingsState extends State<OpenSettings> {
-  List<String>? inventoryList = [
-    "test",
-    "test1",
-    "test2",
-    "test3"
-  ];
+  List<InventoryListModel>? inventoryList = [];
   bool _value = false;
   int selected = 0;
   int grpValue = 0;
 
-
-
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
-    Variable.inventory_ID=inventoryList![0];
-    return
-      AlertDialog(
-      content:SizedBox(
-        height: 200,
-                          width: 300,
-                          child: Container(
-                            child:ListView.builder(
-                                shrinkWrap: true,
-                                                        physics: NeverScrollableScrollPhysics(),
-                                itemBuilder:  (context, index) =>Container(
-                                  child: ListTile(
-                                    title:Text(inventoryList?[index]??"") ,
-                                    leading:  Radio(
-                                    value: index,
-                                    groupValue: grpValue,
-                                    onChanged: (int? value) {
-                                      setState(() {
-                                        grpValue = value!;
-                                        print("inventory"+Variable.inventory_ID.toString());
-                                        // print(inventoryList?[index]
-                                        //     .inventoryCode);
-                                        Variable.inventory_ID =
-                                        inventoryList![index];
-                                        setState(() {
+    // Variable.inventory_ID = inventoryList![0].businessUnitCode.toString();
+    return AlertDialog(
+        content: BlocConsumer<InventorylistCubit, InventorylistState>(
+      listener: (context, state) {
+        state.maybeWhen(
+            orElse: () {},
+            success: (data) {
+              print("inventory list");
+              print(data.data);
+              inventoryList = data.data;
+              // if(inventoryList?.isNotEmpty==true){
+              //   Variable.inventory_ID=inventoryList![0]?.businessUnitCode??"";
+              // }
+              print(Variable.inventory_ID);
+            });
+      },
+      builder: (context, state) {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              state.maybeWhen(orElse: () {
+                return Column(
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                );
+              }, success: (d) {
+                if (d.data.length != null)
+                  for (var i = 0; i < d.data.length; i++) {
+                    print(d.data.length);
 
-                                        });
+                    //   if (inventoryList?[i].inventoryCode ==
+                    //       Variable.inventory_ID) grpValue = i;
+                    //   // setState(() {});
+                    // }
 
-                                        // print("Value");
-                                        // print(value);
-                                        // print("grpvalue");
-                                        // print(grpValue);
-                                        // Navigator.of(context)
-                                        //     .push(MaterialPageRoute(
-                                        //   builder: (context) =>
-                                        //       ModulePage(),
-                                        // )
-                                        // );
-                                      });
+                    if (inventoryList?[i].businessUnitCode ==
+                        Variable.inventory_ID) grpValue = i;
+                    // setState(() {});
+                  }
+                return SizedBox(
+                  height: 200,
+                  width: 300,
+                  child: Container(
+                      child: ListView.builder(
+                    itemCount: inventoryList?.length,
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => Container(
+                      child: ListTile(
+                        title: Text(inventoryList?[index].name ?? ""),
+                        leading: Radio(
+                            value: index,
+                            groupValue: grpValue,
+                            onChanged: (int? value) {
+                              setState(() async {
+                                grpValue = value!;
+                                print("inventory" +
+                                    Variable.inventory_ID.toString());
+                                // print(inventoryList?[index]
+                                //     .inventoryCode);
+                                Variable.inventory_ID = inventoryList![index]
+                                    .businessUnitCode
+                                    .toString();
+                                setState(() {});
+                                final SharedPreferences prefs = await SharedPreferences.getInstance();
+                                prefs.setString("inventory", inventoryList![index]
+                                    .businessUnitCode.toString());
 
-                                      // print(Variable.inventory_ID);
-                                      // modulePageState.setState(() {});
-                                    },
-                                    // value: selected == index,
-                                    activeColor: Colors.green),
-                              ),
+                                // print("Value");
+                                // print(value);
+                                // print("grpvalue");
+                                // print(grpValue);
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => DashBoard(),
+                                ));
+                              });
 
-                                  ),
-                                )) ,
+                              // print(Variable.inventory_ID);
+                              // modulePageState.setState(() {});
+                            },
+                            // value: selected == index,
+                            activeColor: Colors.green),
+                      ),
+                    ),
+                  )),
+                );
+              }),
+            ],
+          ),
+        );
+      },
+    )
 
-                          )
-
-
-
-      // BlocConsumer<InventoryIdListCubit, InventoryIdListState>(
-      //   listener: (context, state) {
-      //     state.maybeWhen(
-      //         orElse: () {},
-      //         success: (data) {
-      //           print("inventory list");
-      //           print(data.data1);
-      //           inventoryList = data.data1;
-      //           print(Variable.inventory_ID);
-      //         });
-      //   },
-      //   builder: (context, state) {
-      //     return SingleChildScrollView(
-      //         child: Column(
-      //           children: [
-      //             state.maybeWhen(orElse: () {
-      //               return Column(
-      //                 children: [
-      //                   CircularProgressIndicator(),
-      //                 ],
-      //               );
-      //             }, success: (d) {
-      //               print("length");
-      //               if (d.data1.length != null)
-      //                 for (var i = 0; i < d.data1.length; i++) {
-      //                   print(d.data1.length);
-      //
-      //                   //   if (inventoryList?[i].inventoryCode ==
-      //                   //       Variable.inventory_ID) grpValue = i;
-      //                   //   // setState(() {});
-      //                   // }
-      //
-      //                   if (inventoryList?[i] == Variable.inventory_ID)
-      //                     grpValue = i;
-      //                   // setState(() {});
-      //                 }
-      //               // if (Variable.inventory_ID.isEmpty && d.data1.isNotEmpty) {
-      //               //   // Variable.inventory_ID = inventoryList?[0].inventoryCode ?? "";
-      //               //   Variable.inventory_ID = inventoryIdList[0];
-      //
-      //               // }
-      //               return SizedBox(
-      //                   height: 200,
-      //                   width: 300,
-      //                   child: Container(
-      //                     child:
-      //                     // List.generate(d.data1.length, (index) => Container()).toList();
-      //                     ListView.builder(
-      //                         shrinkWrap: true,
-      //                         physics: NeverScrollableScrollPhysics(),
-      //                         itemCount: d.data1.length,
-      //                         // inventoryList?.length,
-      //                         itemBuilder: (context, index) => Container(
-      //                           child:
-      //                           // Text("rtytgbhb"),
-      //                           ListTile(
-      //                             title:
-      //                             // Text(inventoryIdList[index]),
-      //                             Text(inventoryList?[index]
-      //                                 .inventoryName ??
-      //                                 ""),
-      //                             // Text(inventoryIdList[index]),
-      //                             dense: true,
-      //                             leading: Radio(
-      //                                 value: index,
-      //                                 groupValue: grpValue,
-      //                                 onChanged: (int? value) {
-      //                                   setState(() {
-      //                                     grpValue = value!;
-      //                                     print("inventory");
-      //                                     // print(inventoryList?[index]
-      //                                     //     .inventoryCode);
-      //                                     Variable.inventory_ID =
-      //                                     // inventoryIdList[index];
-      //                                     inventoryList?[index]
-      //                                         .inventoryCode ??
-      //                                         "";
-      //                                     print("Value");
-      //                                     print(value);
-      //                                     print("grpvalue");
-      //                                     print(grpValue);
-      //                                     Navigator.of(context)
-      //                                         .push(MaterialPageRoute(
-      //                                       builder: (context) =>
-      //                                           ModulePage(),
-      //                                     ));
-      //                                   });
-      //
-      //                                   print(Variable.inventory_ID);
-      //                                   modulePageState.setState(() {});
-      //                                 },
-      //                                 // value: selected == index,
-      //                                 activeColor: Colors.green),
-      //                           ),
-      //                         )),
-      //                   ));
-      //             }),
-      //           ],
-      //         ));
-      //   },
-      // ),
-    );
+        // BlocConsumer<InventoryIdListCubit, InventoryIdListState>(
+        //   listener: (context, state) {
+        //     state.maybeWhen(
+        //         orElse: () {},
+        //         success: (data) {
+        //           print("inventory list");
+        //           print(data.data1);
+        //           inventoryList = data.data1;
+        //           print(Variable.inventory_ID);
+        //         });
+        //   },
+        //   builder: (context, state) {
+        //     return SingleChildScrollView(
+        //         child: Column(
+        //           children: [
+        //             state.maybeWhen(orElse: () {
+        //               return Column(
+        //                 children: [
+        //                   CircularProgressIndicator(),
+        //                 ],
+        //               );
+        //             }, success: (d) {
+        //               print("length");
+        //               if (d.data1.length != null)
+        //                 for (var i = 0; i < d.data1.length; i++) {
+        //                   print(d.data1.length);
+        //
+        //                   //   if (inventoryList?[i].inventoryCode ==
+        //                   //       Variable.inventory_ID) grpValue = i;
+        //                   //   // setState(() {});
+        //                   // }
+        //
+        //                   if (inventoryList?[i] == Variable.inventory_ID)
+        //                     grpValue = i;
+        //                   // setState(() {});
+        //                 }
+        //               // if (Variable.inventory_ID.isEmpty && d.data1.isNotEmpty) {
+        //               //   // Variable.inventory_ID = inventoryList?[0].inventoryCode ?? "";
+        //               //   Variable.inventory_ID = inventoryIdList[0];
+        //
+        //               // }
+        //               return SizedBox(
+        //                   height: 200,
+        //                   width: 300,
+        //                   child: Container(
+        //                     child:
+        //                     // List.generate(d.data1.length, (index) => Container()).toList();
+        //                     ListView.builder(
+        //                         shrinkWrap: true,
+        //                         physics: NeverScrollableScrollPhysics(),
+        //                         itemCount: d.data1.length,
+        //                         // inventoryList?.length,
+        //                         itemBuilder: (context, index) => Container(
+        //                           child:
+        //                           // Text("rtytgbhb"),
+        //                           ListTile(
+        //                             title:
+        //                             // Text(inventoryIdList[index]),
+        //                             Text(inventoryList?[index]
+        //                                 .inventoryName ??
+        //                                 ""),
+        //                             // Text(inventoryIdList[index]),
+        //                             dense: true,
+        //                             leading: Radio(
+        //                                 value: index,
+        //                                 groupValue: grpValue,
+        //                                 onChanged: (int? value) {
+        //                                   setState(() {
+        //                                     grpValue = value!;
+        //                                     print("inventory");
+        //                                     // print(inventoryList?[index]
+        //                                     //     .inventoryCode);
+        //                                     Variable.inventory_ID =
+        //                                     // inventoryIdList[index];
+        //                                     inventoryList?[index]
+        //                                         .inventoryCode ??
+        //                                         "";
+        //                                     print("Value");
+        //                                     print(value);
+        //                                     print("grpvalue");
+        //                                     print(grpValue);
+        //                                     Navigator.of(context)
+        //                                         .push(MaterialPageRoute(
+        //                                       builder: (context) =>
+        //                                           ModulePage(),
+        //                                     ));
+        //                                   });
+        //
+        //                                   print(Variable.inventory_ID);
+        //                                   modulePageState.setState(() {});
+        //                                 },
+        //                                 // value: selected == index,
+        //                                 activeColor: Colors.green),
+        //                           ),
+        //                         )),
+        //                   ));
+        //             }),
+        //           ],
+        //         ));
+        //   },
+        // ),
+        );
   }
 }
 
 class VendorPopup extends StatefulWidget {
- final Function? assign;
- VendorPopup({this.assign});
+  final Function? assign;
 
+  VendorPopup({this.assign});
 
   @override
   State<VendorPopup> createState() => _VendorPopupState();
@@ -274,153 +325,174 @@ class VendorPopup extends StatefulWidget {
 
 class _VendorPopupState extends State<VendorPopup> {
   List<PartnerOrganizationData>? inventoryList = [];
-  VariantDetailsModel? wholeList ;
+  VariantDetailsModel? wholeList;
+
   bool _value = false;
   int selected = 0;
-  int? grpValue ;
+  int? grpValue;
+
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return AlertDialog(
-          actions: [
-        TextButton(
-        child: Text("OK"),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        )
-          ],
-          content: BlocConsumer<VendordetailsCubit, VendordetailsState>(
-            listener: (context, state) {
-              state.maybeWhen(
-                  orElse: () {},
-                  success: (data) {
-                    print("inventory list"+data.toString());
-                    print(data.partnerOrganizationdata);
-                    wholeList=data;
-                    inventoryList = data.partnerOrganizationdata;
-                    if(inventoryList!=null){
-                      widget.assign!(wholeList?.partnerAddressdata?[0].addressType??"",inventoryList?[0].trnNumber??"");
-                      Variable.vendorAddress=wholeList?.partnerAddressdata?[0].addressType??"";
-                      Variable.email=wholeList?.partnerOrganizationdata?[0].email??"";
-
-
-                    }
-
-                  });
+    return Builder(builder: (context) {
+      return AlertDialog(
+        actions: [
+          TextButton(
+            child: Text("OK"),
+            onPressed: () {
+              Navigator.pop(context);
             },
-            builder: (context, state) {
-              return SingleChildScrollView(
-                  child: Column(
+          )
+        ],
+        content: BlocConsumer<VendordetailsCubit, VendordetailsState>(
+          listener: (context, state) {
+            state.maybeWhen(
+                orElse: () {},
+                success: (data) {
+                  print("inventory list" + data.toString());
+                  print(data.partnerOrganizationdata);
+                  wholeList = data;
+                  inventoryList = data.partnerOrganizationdata;
+                  if (inventoryList != null) {
+                    widget.assign!(
+                        wholeList?.partnerAddressdata?[0].addressType ?? "",
+                        inventoryList?[0].trnNumber ?? "");
+                    Variable.vendorAddress =
+                        wholeList?.partnerAddressdata?[0].addressType ?? "";
+                    Variable.email =
+                        wholeList?.partnerOrganizationdata?[0].email ?? "";
+                  }
+                });
+          },
+          builder: (context, state) {
+            return SingleChildScrollView(
+                child: Column(
+              children: [
+                state.maybeWhen(orElse: () {
+                  return Column(
                     children: [
-                      state.maybeWhen(orElse: () {
-                        return Column(
-                          children: [
-                            CircularProgressIndicator(),
-                          ],
-                        );
-                      }, success: (d) {
-                        print("length");
-                        if (d.partnerOrganizationdata?.length != null)
-                          for (var i = 0; i < d.partnerOrganizationdata!.length; i++) {
-                            print(d.partnerOrganizationdata?.length);
-
-                            //   if (inventoryList?[i].inventoryCode ==
-                            //       Variable.inventory_ID) grpValue = i;
-                            //   // setState(() {});
-                            // }
-
-                            // if (inventoryList?[i] == Variable.inventory_ID)
-                            //   grpValue = i;
-                            // setState(() {});
-                          }
-                        // if (Variable.inventory_ID.isEmpty && d.data1.isNotEmpty) {
-                        //   // Variable.inventory_ID = inventoryList?[0].inventoryCode ?? "";
-                        //   Variable.inventory_ID = inventoryIdList[0];
-
-                        // }
-                        return SizedBox(
-                            height: 200,
-                            width: 300,
-                            child: Container(
-                              child:
-                              // List.generate(d.data1.length, (index) => Container()).toList();
-                              ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: d.partnerOrganizationdata?.length,
-                                  // inventoryList?.length,
-                                  itemBuilder: (context, index) => Container(
-                                    child:
-                                    // Text("rtytgbhb"),
-                                    ListTile(
-                                      title:
-                                      // Text(inventoryIdList[index]),
-                                      Text(inventoryList?[index]
-                                          .displayName ??
-                                          ""),
-                                      // Text(inventoryIdList[index]),
-                                      dense: true,
-                                      leading: Radio(
-                                          value: index,
-                                          groupValue: grpValue,
-                                          onChanged: (int? value) {
-                                            setState(() {
-
-                                              grpValue = value!;
-                                              print("inventory"+grpValue.toString());
-
-                                              Variable.trn=inventoryList?[index].trnNumber??"";
-                                              Variable.email=inventoryList?[index].email??"";
-                                              Variable.vendorAddress=wholeList?.partnerAddressdata?[index].addressType??"";
-                                              widget.assign!(wholeList?.partnerAddressdata?[index].addressType??"",inventoryList?[index].trnNumber??"");
-
-
-                                              // Variable.inventory_ID =
-                                              // // inventoryIdList[index];
-                                              // inventoryList?[index]
-                                              //     .inventoryCode ??
-                                                  "";
-                                              print("Value");
-                                              print(value);
-                                              print("grpvalue");
-                                              print(grpValue);
-                                              // Navigator.of(context)
-                                              //     .push(MaterialPageRoute(
-                                              //   builder: (context) =>
-                                              //       ModulePage(),
-                                              // ));
-                                            });
-
-                                            // print(Variable.inventory_ID);
-                                            // modulePageState.setState(() {});
-                                          },
-                                          // value: selected == index,
-                                          activeColor: Colors.green),
-                                    ),
-                                  )),
-                            ));
-                      }),
+                      CircularProgressIndicator(),
                     ],
-                  ));
-            },
-          ),
-        );
-      }
-    );
+                  );
+                }, success: (d) {
+                  print("length");
+                  if (d.partnerOrganizationdata?.length != null)
+                    for (var i = 0;
+                        i < d.partnerOrganizationdata!.length;
+                        i++) {
+                      print(d.partnerOrganizationdata?.length);
+
+                      //   if (inventoryList?[i].inventoryCode ==
+                      //       Variable.inventory_ID) grpValue = i;
+                      //   // setState(() {});
+                      // }
+
+                      // if (inventoryList?[i] == Variable.inventory_ID)
+                      //   grpValue = i;
+                      // setState(() {});
+                    }
+                  // if (Variable.inventory_ID.isEmpty && d.data1.isNotEmpty) {
+                  //   // Variable.inventory_ID = inventoryList?[0].inventoryCode ?? "";
+                  //   Variable.inventory_ID = inventoryIdList[0];
+
+                  // }
+                  return SizedBox(
+                      height: 200,
+                      width: 300,
+                      child: Container(
+                        child:
+                            // List.generate(d.data1.length, (index) => Container()).toList();
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: d.partnerOrganizationdata?.length,
+                                // inventoryList?.length,
+                                itemBuilder: (context, index) => Container(
+                                      child:
+                                          // Text("rtytgbhb"),
+                                          ListTile(
+                                        title:
+                                            // Text(inventoryIdList[index]),
+                                            Text(inventoryList?[index]
+                                                    .displayName ??
+                                                ""),
+                                        // Text(inventoryIdList[index]),
+                                        dense: true,
+                                        leading: Radio(
+                                            value: index,
+                                            groupValue: grpValue,
+                                            onChanged: (int? value) {
+                                              setState(() {
+                                                grpValue = value!;
+                                                print("inventory" +
+                                                    grpValue.toString());
+
+                                                Variable.trn =
+                                                    inventoryList?[index]
+                                                            .trnNumber ??
+                                                        "";
+                                                Variable.email =
+                                                    inventoryList?[index]
+                                                            .email ??
+                                                        "";
+                                                Variable
+                                                    .vendorAddress = wholeList
+                                                        ?.partnerAddressdata?[
+                                                            index]
+                                                        .addressType ??
+                                                    "";
+                                                widget.assign!(
+                                                    wholeList
+                                                            ?.partnerAddressdata?[
+                                                                index]
+                                                            .addressType ??
+                                                        "",
+                                                    inventoryList?[index]
+                                                            .trnNumber ??
+                                                        "");
+
+                                                // Variable.inventory_ID =
+                                                // // inventoryIdList[index];
+                                                // inventoryList?[index]
+                                                //     .inventoryCode ??
+                                                "";
+                                                print("Value");
+                                                print(value);
+                                                print("grpvalue");
+                                                print(grpValue);
+                                                // Navigator.of(context)
+                                                //     .push(MaterialPageRoute(
+                                                //   builder: (context) =>
+                                                //       ModulePage(),
+                                                // ));
+                                              });
+
+                                              // print(Variable.inventory_ID);
+                                              // modulePageState.setState(() {});
+                                            },
+                                            // value: selected == index,
+                                            activeColor: Colors.green),
+                                      ),
+                                    )),
+                      ));
+                }),
+              ],
+            ));
+          },
+        ),
+      );
+    });
   }
 }
 
 class ConfirmationPopup extends StatefulWidget {
-
   final Function? clear;
   final Function? onPressed;
- final List<OrderLines>? table;
+  final List<OrderLines>? table;
   final int? verticalId;
-  ConfirmationPopup({this.verticalId,this.table,this.clear,required this.onPressed});
 
+  ConfirmationPopup(
+      {this.verticalId, this.table, this.clear, required this.onPressed});
 
   @override
   State<ConfirmationPopup> createState() => _ConfirmationPopupState();
@@ -428,49 +500,45 @@ class ConfirmationPopup extends StatefulWidget {
 
 class _ConfirmationPopupState extends State<ConfirmationPopup> {
   List<PartnerOrganizationData>? inventoryList = [];
-  VariantDetailsModel? wholeList ;
+  VariantDetailsModel? wholeList;
+
   bool _value = false;
   int selected = 0;
-  int? grpValue ;
+  int? grpValue;
+
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-  providers: [
-    BlocProvider(
-  create: (context) => PurchaseorderdeleteCubit(),
-),
-BlocProvider(
-create: (context) => InventorysearchCubit(),)
-  ],
-  child: Builder(
-        builder: (context) {
-          return AlertDialog(
-                    actions: [
-                      TextButton(
-                        child: Text("OK"),
-                        onPressed: (){
-                          widget.onPressed!();
-                        }
-                          // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
+      providers: [
+        BlocProvider(
+          create: (context) => PurchaseorderdeleteCubit(),
+        ),
+        BlocProvider(
+          create: (context) => InventorysearchCubit(),
+        )
+      ],
+      child: Builder(builder: (context) {
+        return AlertDialog(actions: [
+          TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                widget.onPressed!();
+              }
+              // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(widget.verticalId);
 
-                      ),
-                      TextButton(
-                        child: Text("Cancel"),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                    content: Text("Do you want to delete the order?")
-
-                  );
-        }
-    ),
-);
+              ),
+          TextButton(
+            child: Text("Cancel"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ], content: Text("Do you want to delete the order?"));
+      }),
+    );
   }
 }
-
 
 class CommonIcon extends StatelessWidget {
   final double size;
@@ -478,6 +546,7 @@ class CommonIcon extends StatelessWidget {
   final IconData? iconData;
   final String? toolTip;
   final Color? color;
+
   const CommonIcon({
     Key? key,
     required this.size,
@@ -489,51 +558,59 @@ class CommonIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return toolTip==null? Container(
-      margin: EdgeInsets.only(top:  MediaQuery.of(context).size.height*.034,),
-      child: InkWell(
-        onTap: onTap,
-        child: Icon(
-          iconData,
-          color: color,
-          size: size,
-        ),
-      ),
-    ):Container(
-      margin: EdgeInsets.only(top:  MediaQuery.of(context).size.height*.034,),
-      child: Tooltip(message: toolTip??"",
-        child: InkWell(
-          onTap: onTap,
-          child: Icon(
-            iconData,
-            color: color,
-            size: size,
-          ),
-        ),
-      ),
-    );
+    return toolTip == null
+        ? Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * .034,
+            ),
+            child: InkWell(
+              onTap: onTap,
+              child: Icon(
+                iconData,
+                color: color,
+                size: size,
+              ),
+            ),
+          )
+        : Container(
+            margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * .034,
+            ),
+            child: Tooltip(
+              message: toolTip ?? "",
+              child: InkWell(
+                onTap: onTap,
+                child: Icon(
+                  iconData,
+                  color: color,
+                  size: size,
+                ),
+              ),
+            ),
+          );
   }
 }
-
-
-
-
 
 // ignore: must_be_immutable
 class ConfigurePopup extends StatelessWidget {
   final String type;
+  final Function? listAssign;
+  final int? veritiaclid;
 
   final bool onAddNew;
   final VoidCallback? onBack;
-  ConfigurePopup({Key? key, required this.type, this.onBack,this.onAddNew=false}) : super(key: key);
+
+  ConfigurePopup(
+      {Key? key, required this.type, this.onBack, this.onAddNew = false,this.listAssign,this.veritiaclid})
+      : super(key: key);
   late Widget data;
+
   @override
   Widget build(BuildContext context) {
     // data = BrandConfigurePopUp(
     //   type: type,
     // );
     switch (type) {
-
       case "uom-group":
         {
           data = CreateMaterialPopUp(
@@ -547,6 +624,13 @@ class ConfigurePopup extends StatelessWidget {
             type: type,
           );
         }
+        break;     case "CreateSearchLinkedItem-group":
+        {
+          data = CreateSearchLinkedItem(
+            listAssign:listAssign,
+            type: type,
+          );
+        }
         break;
       case "patchbrand-group":
         {
@@ -556,7 +640,6 @@ class ConfigurePopup extends StatelessWidget {
         }
         break;
 
-
       case "patchUom-group":
         {
           data = PatchMaterialPopUp(
@@ -565,22 +648,21 @@ class ConfigurePopup extends StatelessWidget {
         }
         break;
 
+      case "devision-group":
+        {
+          data = CreateDevisionPopUp(
+            type: type,
+          );
+        }
+        break;
 
-    case "devision-group":
-    {
-    data = CreateDevisionPopUp(
-    type: type,
-    );
-    }
-    break;
-
-    case "Static-group":
-    {
-    data = CreateStaticPopUp(
-    type: type,
-    );
-    }
-    break;
+      case "Static-group":
+        {
+          data = CreateStaticPopUp(
+            type: type,
+          );
+        }
+        break;
       case "StaticPatch-group":
         {
           data = PatchStaticPopUp(
@@ -588,8 +670,6 @@ class ConfigurePopup extends StatelessWidget {
           );
         }
         break;
-
-
 
       case "uomgroup":
         {
@@ -614,7 +694,6 @@ class ConfigurePopup extends StatelessWidget {
         }
         break;
 
-
       case "Group_PopUp":
         {
           data = GroupPopUp(
@@ -624,8 +703,7 @@ class ConfigurePopup extends StatelessWidget {
         break;
       case "GroupPatch_PopUp":
         {
-          data = GroupPatchPopUp
-            (
+          data = GroupPatchPopUp(
             type: type,
           );
         }
@@ -647,73 +725,70 @@ class ConfigurePopup extends StatelessWidget {
 
       case "uom_patch":
         {
-          data =UomPopUp
-            (
+          data = UomPopUp(
             type: type,
           );
         }
         break;
       case "division_patch":
         {
-          data =PatchDevisionPopUp
-            (
+          data = PatchDevisionPopUp(
             type: type,
           );
         }
         break;
       case "create_framework":
         {
-          data =CreateFrameWorkPopUp
-            (
+          data = CreateFrameWorkPopUp(
             type: type,
           );
         }
         break;
       case "create_costingtype":
         {
-          data =CreateCostingMethodeTypePopUp
-            (
+          data = CreateCostingMethodeTypePopUp(
             type: type,
           );
         }
         break;
       case "create_costingCreate":
         {
-          data =CreateCostingMethodeCreatePopUp
-            (
+          data = CreateCostingMethodeCreatePopUp(
             type: type,
           );
         }
         break;
       case "create_pricing":
         {
-          data =PricingGroupCreatePopUp
-            (
-            type: type,
-          );
-        }
-        break;    case "PricingCreatePopUp":
-        {
-          data =PricingCreatePopUp
-            (
+          data = PricingGroupCreatePopUp(
             type: type,
           );
         }
         break;
-
-
-
-  }
-
+      case "PricingCreatePopUp":
+        {
+          data = PricingCreatePopUp(
+            type: type,
+          );
+        }
+        break; case "LinkedItemCreatePopUp":
+        {
+          data = LinkedItemCreatePopUp(
+            veritiaclid:veritiaclid,
+            type: type,
+          );
+        }
+        break;
+    }
 
     return data;
   }
 }
 
-
 //create brand
 class CreateBrandPopUp extends StatefulWidget {
   final String type;
+
   // final Function onTap;
   // final TextEditingController country;
   // final TextEditingController gender;
@@ -725,14 +800,11 @@ class CreateBrandPopUp extends StatefulWidget {
   // final TextEditingController designation;
   // final Function ontap;
 
-  CreateBrandPopUp({
-    Key? key,
-    required this.type
-    // required this.onTap,
+  CreateBrandPopUp({Key? key, required this.type
+      // required this.onTap,
 
-
-
-  }) : super(key: key);
+      })
+      : super(key: key);
 
   @override
   _CreateBrandPopUpState createState() => _CreateBrandPopUpState();
@@ -745,37 +817,35 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   BrandReadModel? group;
-  int? veritiaclid=0;
-  TextEditingController codeController=TextEditingController();
-  TextEditingController nameController=  TextEditingController();
+  int? veritiaclid = 0;
+  TextEditingController codeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
-  TextEditingController imageController=TextEditingController();
-  TextEditingController parentIdController=TextEditingController();
-  TextEditingController descriptionController=TextEditingController();
-  TextEditingController brandIdentifierUrl=TextEditingController();
+  TextEditingController imageController = TextEditingController();
+  TextEditingController parentIdController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController brandIdentifierUrl = TextEditingController();
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
+  String parentName = "";
 
-  TextEditingController controller=TextEditingController();
+  TextEditingController controller = TextEditingController();
   bool addNew = false;
+
   void changeAddNew(bool va) => addNew = va;
 
   void initState() {
-    context
-        .read<Listbrand2Cubit>()
-        .getSlotSectionPage();
-
+    context.read<Listbrand2Cubit>().getSlotSectionPage();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -786,267 +856,238 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
         BlocProvider(
           create: (context) => CreatebrandCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<CreatebrandCubit, CreatebrandState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CreatebrandCubit, CreatebrandState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageController.text = data.data2.toString();
+                    // context.showSnackBarSuccess(data.data2);
 
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageController.text=data.data2.toString();
-                        // context.showSnackBarSuccess(data.data2);
-
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.verticalid = result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<BrandreadCubit>()
+                            .getBrandRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    addNew: false,
+                    buttonCheck: true,
+                    isDirectCreate: true,
 
-              ],
-              child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
+                    // buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    label: "Create Brand",
+                    onApply: () {
+                      BrandCreationtModel model = BrandCreationtModel(
+                        name: nameController?.text ?? "",
+                        description: descriptionController?.text ?? "",
+                        image: int.tryParse(imageController.text),
+                        brandIdentifierUrl: brandIdentifierUrl?.text ?? "",
+                        parentCode: parentIdController.text ?? "",
+                      );
 
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
+                      context.read<CreatebrandCubit>().postCreateBrand(model);
+                      setState(() {});
+                    },
+                    onEdit: () {},
+                    onCancel: () {},
 
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        addNew: false,
-                        buttonCheck: true,
-                        isDirectCreate: true,
-
-                        // buttonCheck: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        label: "Create Brand",
-                        onApply: () {
-                          BrandCreationtModel model=BrandCreationtModel(
-                            name: nameController?.text??"",
-                            description: descriptionController?.text??"",
-                            image:int.tryParse( imageController.text),
-                            brandIdentifierUrl: brandIdentifierUrl?.text??"",
-                            parentCode: parentIdController.text??"",
-                          );
-
-                          context
-                              .read<CreatebrandCubit>()
-                              .postCreateBrand(model);
-                          setState(() {
-
-                          });
-                        },
-                        onEdit: () {
-
-
-                        },
-                        onCancel: (){
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: nameController,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      imageName = myFile?.fileName ?? "";
 
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                  SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:nameController ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
 
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          imageName=myFile?.fileName??"";
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context
+                                          .read<ImagepostCubit>()
+                                          .postImage(imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
 
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-                                    SelectableDropDownpopUp(
-                                      label: "Parent Id",
-                                      // row: true,
-
-                                      type:"BrandPopUpCall",
-                                      value:parentName,
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-                                          parentName=va?.name??"";
-                                          parentIdController.text=va?.code??"";
-
-
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionController,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:brandIdentifierUrl ,
-                                      title: "Brand identifier URL",
-                                    ),
-
-
-                                  ],
-                                )),
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                SelectableDropDownpopUp(
+                                  label: "Parent Id",
+                                  // row: true,
+
+                                  type: "BrandPopUpCall",
+                                  value: parentName,
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+                                      parentName = va?.name ?? "";
+                                      parentIdController.text = va?.code ?? "";
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionController,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: brandIdentifierUrl,
+                                  title: "Brand identifier URL",
+                                ),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
 
 //patch brand
 
 class PatchBrandPopUp extends StatefulWidget {
   final String type;
+
   // final Function onTap;
   // final TextEditingController country;
   // final TextEditingController gender;
@@ -1058,14 +1099,11 @@ class PatchBrandPopUp extends StatefulWidget {
   // final TextEditingController designation;
   // final Function ontap;
 
-  PatchBrandPopUp({
-    Key? key,
-    required this.type
-    // required this.onTap,
+  PatchBrandPopUp({Key? key, required this.type
+      // required this.onTap,
 
-
-
-  }) : super(key: key);
+      })
+      : super(key: key);
 
   @override
   _PatchBrandPopUpState createState() => _PatchBrandPopUpState();
@@ -1078,37 +1116,35 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   BrandReadModel? group;
-  int? veritiaclid=0;
-  TextEditingController codeController=TextEditingController();
-  TextEditingController nameController=  TextEditingController();
+  int? veritiaclid = 0;
+  TextEditingController codeController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
 
-  TextEditingController imageController=TextEditingController();
-  TextEditingController parentIdController=TextEditingController();
-  TextEditingController descriptionController=TextEditingController();
-  TextEditingController brandIdentifierUrl=TextEditingController();
+  TextEditingController imageController = TextEditingController();
+  TextEditingController parentIdController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  TextEditingController brandIdentifierUrl = TextEditingController();
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
+  String parentName = "";
 
-  TextEditingController controller=TextEditingController();
+  TextEditingController controller = TextEditingController();
   bool addNew = false;
+
   void changeAddNew(bool va) => addNew = va;
 
   void initState() {
-    context
-        .read<Listbrand2Cubit>()
-        .getSlotSectionPage();
-
+    context.read<Listbrand2Cubit>().getSlotSectionPage();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -1128,329 +1164,297 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
         BlocProvider(
           create: (context) => CreatebrandCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<CreatebrandCubit, CreatebrandState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<CreatebrandCubit, CreatebrandState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<BrandreadCubit, BrandreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        nameController.text = data.name ?? "";
 
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<BrandreadCubit, BrandreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            nameController.text=data.name??"";
-
-                            imageController.text=data.image??"";
-                            parentIdController.text=data.parentCode??"";
-                            descriptionController.text=data.description??"";
-                            brandIdentifierUrl.text=data.brandIdentifierUrl??"";
-                            parentName=data.parentCode??"";
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<BranddeleteCubit, BranddeleteState>(
-                  listener: (context, state) {
-
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print("checkingdata"+data.data1.toString());
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context
-                            .read<Listbrand2Cubit>()
-                            .getSlotSectionPage();
-
-
-                        // select = true;
-                      }
-
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageController.text=data.data2.toString();
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-              ],
-              child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        imageController.text = data.image ?? "";
+                        parentIdController.text = data.parentCode ?? "";
+                        descriptionController.text = data.description ?? "";
+                        brandIdentifierUrl.text = data.brandIdentifierUrl ?? "";
+                        parentName = data.parentCode ?? "";
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<BranddeleteCubit, BranddeleteState>(
+              listener: (context, state) {
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print("checkingdata" + data.data1.toString());
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<Listbrand2Cubit>().getSlotSectionPage();
 
+                    // select = true;
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageController.text = data.data2.toString();
+                    // context.showSnackBarSuccess(data.data2);
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        addNew: false,
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<Listbrand2Cubit, Listbrand2State>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                        // buttonCheck: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.verticalid = result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<BrandreadCubit>()
+                            .getBrandRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        });},
-                        label: "Create Brand",
-                        onApply: () {
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    addNew: false,
 
-                        },
-                        onEdit: () {
-                          BrandCreationtModel model=BrandCreationtModel(
-                            parentCode: parentIdController?.text??"",
-                            name: nameController.text??"",
-                            brandIdentifierUrl: brandIdentifierUrl.text??"",
-                            image:int.tryParse( imageController.text),
-                            description: descriptionController.text,
-                            isActive: active,
+                    // buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    label: "Create Brand",
+                    onApply: () {},
+                    onEdit: () {
+                      BrandCreationtModel model = BrandCreationtModel(
+                        parentCode: parentIdController?.text ?? "",
+                        name: nameController.text ?? "",
+                        brandIdentifierUrl: brandIdentifierUrl.text ?? "",
+                        image: int.tryParse(imageController.text),
+                        description: descriptionController.text,
+                        isActive: active,
+                      );
+                      print(model);
+                      context
+                          .read<CreatebrandCubit>()
+                          .postBrandPatch(veritiaclid!, model);
+                    },
+                    onCancel: () {
+                      context.read<BranddeleteCubit>().brandDelete(veritiaclid);
+                    },
 
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BrandVerticalList(
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  // select=false;
+                                  // updateCheck=false;
 
-                          );
-                          print(model);
-                          context.read<CreatebrandCubit>().postBrandPatch(veritiaclid!,model);
+                                  veritiaclid = result[index].id;
+                                  context
+                                      .read<BrandreadCubit>()
+                                      .getBrandRead(veritiaclid!);
 
-
-                        },
-                        onCancel: (){
-                          context
-                              .read<BranddeleteCubit>()
-                              .brandDelete(veritiaclid);
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                BrandVerticalList(
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    context.read<BrandreadCubit>().getBrandRead(veritiaclid!);
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:nameController ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-                                    SelectableDropDownpopUp(
-                                      label: "Parent Id",
-                                      // row: true,
-
-                                      type:"BrandPopUpCall",
-                                      value:parentName,
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          parentName=va?.name??"";
-                                          parentIdController.text=va?.code??"";
-
-
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionController,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:brandIdentifierUrl ,
-                                      title: "Brand identifier URL",
-                                    ),
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: nameController,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context
+                                          .read<ImagepostCubit>()
+                                          .postImage(imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                SelectableDropDownpopUp(
+                                  label: "Parent Id",
+                                  // row: true,
+
+                                  type: "BrandPopUpCall",
+                                  value: parentName,
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      parentName = va?.name ?? "";
+                                      parentIdController.text = va?.code ?? "";
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionController,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: brandIdentifierUrl,
+                                  title: "Brand identifier URL",
+                                ),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -1460,53 +1464,53 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
 class CreateMaterialPopUp extends StatefulWidget {
   final String type;
 
-
   CreateMaterialPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
   _CreateMaterialPopUpState createState() => _CreateMaterialPopUpState();
 }
+
 class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
   bool? active = true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   MaterialReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
 
-  void changeAddNew(bool va){addNew =va;
-  onChange=false;}
   void initState() {
     // context
     //     .read<MaterialListCubit>()
     //     .getMaterialList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -1519,299 +1523,758 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
       providers: [
         BlocProvider(
           create: (context) => MaterialcraetionCubit(),
-        ),    BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => MaterialreadCubit(),
         ),
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // // context.
-                      // context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
+                    // context.showSnackBarSuccess(data.data2);
 
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<MaterialListCubit>().getMaterialList();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Create Material",
+                    onApply: () {
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        image: int.tryParse(imageContollercontroller.text),
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        name: namecontroller?.text ?? "",
+                      );
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postCreateMaterial(model);
 
-
-              ],
-              child: BlocConsumer<MaterialListCubit, MaterialListState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<MaterialreadCubit>().getMaterialRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-
-                        functionChane: true,
-                        buttonCheck: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        isDirectCreate:true,
-                        addNew: addNew,
-
-                        label: "Create Material",
-                        onApply: () {
-                          MaterialCreationtModel model=MaterialCreationtModel(
-
-                            description: descriptionContollercontroller?.text??"",
-                            image:int.tryParse(imageContollercontroller.text),
-                            searchNmae: searchNamecontroller?.text??"",
-                            name: namecontroller?.text??"",
-                          );
-                          context.read<MaterialcraetionCubit>().postCreateMaterial(model);
-
-                          // widget.onTap();
-                          setState(() {
-
-                          });
-                        },
-                        onEdit: () {
-                          MaterialReadModel model=MaterialReadModel(
-
-                            name: namecontroller?.text??"",
-
-                            image:imageContollercontroller?.text??"",
-                            description: descriptionContollercontroller?.text??"",
-                            searchNmae: searchNamecontroller?.text??"",
-                            isActive: active,
-
-
-                          );
-                          // print(model);
-                          context.read<MaterialcraetionCubit>().postmaterialPatch(veritiaclid,model);
-
-
-                        },
-                        onCancel: (){
-                          // context
-                          //     .read<MaterialdeleteCubit>()
-                          //     .materialDelete(veritiaclid,"material");
-
-                        },
-
-                        onAddNew: (v) {
-                          print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      MaterialReadModel model = MaterialReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      // print(model);
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
-
-
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                      readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          // if(!addNew)
-                                          //   active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-                                  ],
-                                )),
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      // if(!addNew)
+                                      //   active=!active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
 
 
+class CreateSearchLinkedItem extends StatefulWidget {
+  final String type;
+  final Function? listAssign;
+
+  CreateSearchLinkedItem({
+    Key? key,
+    required this.type,
+    required this.listAssign,
+  }) : super(key: key);
+
+  @override
+  _CreateSearchLinkedItem createState() => _CreateSearchLinkedItem();
+}
+
+class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller = TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  bool addNew = false;
+  List<LinkedItemListIdModel>table=[];
+  List<int>list=[];
+  List<LinkedItemListIdModel>list1=[];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => MaterialcraetionCubit(),
+        ),
+        BlocProvider(
+          create: (context) => LinkeditemlistreadCubit()..getLinkedItemListRead("code"),
+        ),
+        BlocProvider(
+          create: (context) => MaterialdeleteCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<LinkeditemlistreadCubit, LinkeditemlistreadState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print("the real Akshay"+data.toString());
+                  if(data.isNotEmpty){
+                    setState(() {
+                      table=data[0].linkedItemListIdModel??[];
+                    });
+
+                  }
+
+
+                    // context.showSnackBarSuccess(data.data2);
+
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<MaterialListCubit>().getMaterialList();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Linked Item",
+                    onApply: () {
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        image: int.tryParse(imageContollercontroller.text),
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        name: namecontroller?.text ?? "",
+                      );
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postCreateMaterial(model);
+
+                      // widget.onTap();
+                      setState(() {});
+                    },
+                    onEdit: () {
+                      MaterialReadModel model = MaterialReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      // print(model);
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                ctrlr:searchContoller,
+                                onChanged: (va) {
+                                  // print("searching case"+va.toString());
+                                  // context
+                                  //     .read<InventorysearchCubit>()
+                                  //     .getSearch(widget.itemsearch.text,tab: widget.tab);
+                                  // if(va==""){
+                                  //   context
+                                  //       .read<InventorysearchCubit>()
+                                  //       .getInventorySearch("code",tab: widget.tab);
+
+                                  // }
+
+                                },
+                              )),
+                          Container(
+                            // width: w/7,
+                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                            child: customTable(
+
+                              border: const TableBorder(
+
+                                verticalInside: BorderSide(
+                                    width:.5,
+                                    color: Colors.black45,
+                                    style: BorderStyle.solid),
+                                horizontalInside: BorderSide(
+                                    width:.3,
+                                    color: Colors.black45,
+                                    // color: Colors.blue,
+                                    style: BorderStyle.solid),),
+
+                              tableWidth: .5,
+
+                              childrens:[
+                                TableRow(
+
+                                  // decoration: BoxDecoration(
+
+                                  //     color: Colors.green.shade200,
+
+                                  //     shape: BoxShape.rectangle,
+
+                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                  children: [
+
+                                    tableHeadtext(
+
+                                      '',
+
+                                      padding: EdgeInsets.all(7),
+
+                                      height: 46,
+                                      // textColor: Colors.black,
+                                      // color: Color(0xffE5E5E5),
+
+                                      size: 13,
+
+
+                                    ),
+
+
+                                    tableHeadtext(
+                                      'Item Name',
+                                      // textColor: Colors.black,
+                                      padding: EdgeInsets.all(7),
+                                      height: 46,
+                                      size: 13,
+                                      // color: Color(0xffE5E5E5),
+                                    ),
+                                    // tableHeadtext(
+                                    //   '',
+                                    //   textColor: Colors.black,
+                                    //   padding: EdgeInsets.all(7),
+                                    //   height: 46,
+                                    //   size: 13,
+                                    //   // color: Color(0xffE5E5E5),
+                                    // ),
+
+
+
+                                  ],
+
+                                ),
+                                if (table?.isNotEmpty==true ) ...[
+
+
+                                  for (var i = 0; i <table.length; i++)
+
+
+
+                                    TableRow(
+                                        decoration: BoxDecoration(
+                                            color: Colors.grey
+                                                .shade200,
+                                            shape: BoxShape
+                                                .rectangle,
+                                            border:const  Border(
+                                                left: BorderSide(
+                                                    width: .5,
+                                                    color: Colors
+                                                        .grey,
+                                                    style: BorderStyle
+                                                        .solid),
+                                                bottom: BorderSide(
+                                                    width: .5,
+                                                    color: Colors
+                                                        .grey,
+                                                    style: BorderStyle
+                                                        .solid),
+                                                right: BorderSide(
+                                                    color: Colors
+                                                        .grey,
+                                                    width: .5,
+                                                    style: BorderStyle
+                                                        .solid))),
+                                        children: [
+
+                                          TableCell(
+                                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                            child:CustomCheckBox(
+                                              key: UniqueKey(),
+                                              value: list1.contains(table![i]),
+                                              onChange: (p0) {
+                                                if (p0)
+                                                  list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
+                                                else
+                                                  list1.removeWhere((element) => element == list1[i]);
+                                                  // list1.remove(table![i]);
+
+                                                  widget.listAssign!(list1);
+
+
+                                                print(list1);
+                                              },
+
+
+                                            ),
+                                            // Text(keys[i].key??"")
+
+
+
+                                          ),
+                                          TableCell(
+
+                                              verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                              child:textPadding(table[i].name??"",
+                                              height: 45)
+                                              // Text(keys[i].value??"",)
+
+                                          ),
+
+
+
+                                        ]),
+                                ],
+                                //
+                                // TableRow(
+                                //     decoration: BoxDecoration(
+                                //         color: Colors.grey
+                                //             .shade200,
+                                //         shape: BoxShape
+                                //             .rectangle,
+                                //         border:const  Border(
+                                //             left: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             bottom: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             right: BorderSide(
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 width: .5,
+                                //                 style: BorderStyle
+                                //                     .solid))),
+                                //     children: [
+                                //
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child: UnderLinedInput(
+                                //           onChanged: (va){
+                                //             key.text=va;
+                                //
+                                //           },
+                                //
+                                //           formatter: false,
+                                //
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child:
+                                //
+                                //         UnderLinedInput(
+                                //           onChanged: (va){
+                                //             value.text=va;
+                                //           },
+                                //           formatter: false,
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableTextButton(label: "", onPress: (){
+                                //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                //           Keys model=Keys(
+                                //             key: key.text??"",
+                                //             value: value.text??'',
+                                //           );
+                                //           setState(() {
+                                //             onChange=true;
+                                //
+                                //
+                                //             keys?.add(model);
+                                //
+                                //
+                                //             productFeatures?.add(ProductFeatures(
+                                //
+                                //                 keyValues: keys
+                                //             ));
+                                //             widget.productTableEdit(type:"3",list:productFeatures);
+                                //             key.text="";
+                                //             value.text="";
+                                //           });
+                                //
+                                //
+                                //
+                                //
+                                //         }
+                                //
+                                //       })
+                                //
+                                //
+                                //     ])
+
+                              ],
+                              widths: {
+
+                                0: FlexColumnWidth(2),
+                                1: FlexColumnWidth(5),
+
+
+                              },),
+
+
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
 
 // patch material
 class PatchMaterialPopUp extends StatefulWidget {
   final String type;
 
-
   PatchMaterialPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -1824,35 +2287,36 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   MaterialReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
 
-  void changeAddNew(bool va){addNew =va;
-  onChange=false;}
   void initState() {
-    context
-        .read<MaterialListCubit>()
-        .getMaterialList();
+    context.read<MaterialListCubit>().getMaterialList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -1865,337 +2329,294 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
       providers: [
         BlocProvider(
           create: (context) => MaterialcraetionCubit(),
-        ),    BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => MaterialreadCubit(),
         ),
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+                    // context.showSnackBarSuccess(data.data2);
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialreadCubit, MaterialreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
+                        searchNamecontroller.text = data.searchNmae ?? "";
 
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialreadCubit, MaterialreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            descriptionContollercontroller.text=data.description??"";
-                            searchNamecontroller.text=data.searchNmae??"";
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context
-                            .read<MaterialListCubit>()
-                            .getMaterialList();
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-              ],
-              child: BlocConsumer<MaterialListCubit, MaterialListState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<MaterialreadCubit>().getMaterialRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<MaterialcraetionCubit, MaterialcraetionState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<MaterialListCubit>().getMaterialList();
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<MaterialreadCubit>()
+                            .getMaterialRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                    return AlertDialog(
-                      content: PopUpHeader(
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    buttonCheck: true,
+                    addNew: addNew,
+                    label: "Create Material",
+                    onApply: () {},
+                    onEdit: () {
+                      MaterialReadModel model = MaterialReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      // print(model);
+                      context
+                          .read<MaterialcraetionCubit>()
+                          .postmaterialPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "material");
+                    },
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            MaterialVerticalList(
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
-                        functionChane: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                                  veritiaclid = result[index].id;
+                                  changer = false;
 
-                        });},
-                        buttonCheck: true,
+                                  context
+                                      .read<MaterialreadCubit>()
+                                      .getMaterialRead(veritiaclid!);
 
-                        addNew: addNew,
-
-                        label: "Create Material",
-                        onApply: () {
-
-                        },
-                        onEdit: () {
-                          MaterialReadModel model=MaterialReadModel(
-
-                            name: namecontroller?.text??"",
-
-                            image:imageContollercontroller?.text??"",
-                            description: descriptionContollercontroller?.text??"",
-                            searchNmae: searchNamecontroller?.text??"",
-                            isActive: active,
-
-
-                          );
-                          // print(model);
-                          context.read<MaterialcraetionCubit>().postmaterialPatch(veritiaclid,model);
-
-
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"material");
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                MaterialVerticalList(
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=false;
-
-                                    context.read<MaterialreadCubit>().getMaterialRead(veritiaclid!);
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                      readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
 
 // class CreateMaterialPopUp extends StatefulWidget {
 //   final String type;
@@ -2596,14 +3017,6 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
 //   }
 // }
 
-
-
-
-
-
-
-
-
 class UOMGroupConfigurePopUp extends StatefulWidget {
   final String type;
 
@@ -2629,6 +3042,7 @@ class _UOMGroupConfigurePopUpState extends State<UOMGroupConfigurePopUp> {
 
   bool isActive = true;
   bool addNew = false;
+
   void changeAddNew(bool va) => addNew = va;
   int? groupId;
   int? first;
@@ -2669,10 +3083,10 @@ class _UOMGroupConfigurePopUpState extends State<UOMGroupConfigurePopUp> {
 
       return AlertDialog(
         content: PopUpHeader(
-          onTap: () { addNew=!addNew;
-          setState(() {
-
-          });},
+          onTap: () {
+            addNew = !addNew;
+            setState(() {});
+          },
           onApply: () {
             // context.read<CreateUomGroupCubit>().createUOMGroup(UOMGroup(
             //     name: nameContrlr.text,
@@ -2684,18 +3098,18 @@ class _UOMGroupConfigurePopUpState extends State<UOMGroupConfigurePopUp> {
           onEdit: first == null
               ? null
               : () {
-            // context.read<ManageUomGroupCubit>().updateUOMGroup(
-            //     selectedIndex.toString(),
-            //     UOMGroup(
-            //       name: nameContrlr.text,
-            //       description: descContrlr.text,
-            //       id: int.tryParse(idContrlr.text),
-            //       code: codeContrlr.text,
-            //       image: null,
-            //       shortName: shortContrlr.text,
-            //       isActive: true,
-            //     ));
-          },
+                  // context.read<ManageUomGroupCubit>().updateUOMGroup(
+                  //     selectedIndex.toString(),
+                  //     UOMGroup(
+                  //       name: nameContrlr.text,
+                  //       description: descContrlr.text,
+                  //       id: int.tryParse(idContrlr.text),
+                  //       code: codeContrlr.text,
+                  //       image: null,
+                  //       shortName: shortContrlr.text,
+                  //       isActive: true,
+                  //     ));
+                },
           onAddNew: (v) {
             changeAddNew(v);
             setState(() {});
@@ -2782,20 +3196,13 @@ class _UOMGroupConfigurePopUpState extends State<UOMGroupConfigurePopUp> {
   }
 }
 
-
-
-
 //create division
 class CreateDevisionPopUp extends StatefulWidget {
   final String type;
 
-
   CreateDevisionPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -2808,37 +3215,39 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController displayContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController displayContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     // context
     //     .read<DevisionListCubit>()
     //     .getDevisionList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -2849,299 +3258,271 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                        // context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
 
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  // context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<DevisionListCubit>().getDevisionList();
+                    Navigator.pop(context);
+
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<DevisionListCubit, DevisionListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      // context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-
-                        setState(() {
-
-                        });
-
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"division");
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    isDirectCreate: true,
+                    functionChane: true,
+                    addNew: addNew,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    // isDirectCreate:changer,
 
+                    label: "Create division",
+                    onApply: () {
+                      print("save");
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                          description:
+                              descriptionContollercontroller?.text ?? "",
+                          image: int.tryParse(imageContollercontroller.text),
+                          searchNmae: searchNamecontroller?.text ?? "",
+                          name: namecontroller?.text ?? "",
+                          displayName: displayContollercontroller.text ?? "",
+                          status: "akskks");
+                      print(model);
+                      context
+                          .read<DivisioncreateCubit>()
+                          .postCreateDevision(model, "division");
 
-              ],
-              child: BlocConsumer<DevisionListCubit, DevisionListState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      // DevisionReadModel model=DevisionReadModel(
+                      //   name: namecontroller?.text??"",
+                      //   image:imageContollercontroller?.text??"",
+                      //   displayName: displayContollercontroller.text??"",
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   searchNmae: searchNamecontroller?.text??"",
+                      //   isActive: active,
+                      // );
+                      // // print(model);
+                      // context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"division");
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"division");
+                    },
 
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"division");
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck: true,
-                        isDirectCreate: true,
-                        functionChane: true,
-                        addNew: addNew,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        // isDirectCreate:changer,
-
-                        label: "Create division",
-                        onApply: () {
-                          print("save");
-                          MaterialCreationtModel model=MaterialCreationtModel(
-
-                            description: descriptionContollercontroller?.text??"",
-                            image:int.tryParse(imageContollercontroller.text),
-                            searchNmae: searchNamecontroller?.text??"",
-                            name: namecontroller?.text??"",
-                            displayName: displayContollercontroller.text??"",
-                            status: "akskks"
-                          );
-                          print(model);
-                          context.read<DivisioncreateCubit>().postCreateDevision(model,"division");
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          // DevisionReadModel model=DevisionReadModel(
-                          //   name: namecontroller?.text??"",
-                          //   image:imageContollercontroller?.text??"",
-                          //   displayName: displayContollercontroller.text??"",
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   searchNmae: searchNamecontroller?.text??"",
-                          //   isActive: active,
-                          // );
-                          // // print(model);
-                          // context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"division");
-                        },
-                        onCancel: (){
-                          // context
-                          //     .read<MaterialdeleteCubit>()
-                          //     .materialDelete(veritiaclid,"division");
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
-
-
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                      readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-                                    NewInputCard(
-                                      controller:displayContollercontroller ,
-                                      title: "Dispaly Name",
-                                    ),
-
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          print("imabbabba"+Variable.imageName.toString());
-                                          context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-
-
-                                  ],
-                                )),
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: displayContollercontroller,
+                                  title: "Dispaly Name",
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      print("imabbabba" +
+                                          Variable.imageName.toString());
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
 
 //patch division
 
 class PatchDevisionPopUp extends StatefulWidget {
   final String type;
 
-
   PatchDevisionPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -3154,37 +3535,37 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController displayContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController displayContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    context
-        .read<DevisionListCubit>()
-        .getDevisionList();
+    context.read<DevisionListCubit>().getDevisionList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -3204,363 +3585,328 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+                    // context.showSnackBarSuccess(data.data2);
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<DivisionreadCubit, DivisionreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        imageContollercontroller.text = data.image ?? "";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
+                        searchNamecontroller.text = data.searchNmae ?? "";
 
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<DivisionreadCubit, DivisionreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            imageContollercontroller.text=data.image??"";
-                            descriptionContollercontroller.text=data.description??"";
-                            searchNamecontroller.text=data.searchNmae??"";
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context
-                            .read<DevisionListCubit>()
-                            .getDevisionList();
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-              ],
-              child: BlocConsumer<DevisionListCubit, DevisionListState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        setState(() {
-                          if(result.isNotEmpty){
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"division");
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<DevisionListCubit>().getDevisionList();
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<DevisionListCubit, DevisionListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                    // if (!onChange) {
-                    //   print("onchange"+onChange.toString());
-                    //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
-                    //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
-                    //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
-                    //   imageContollercontroller = TextEditingController(text: addNew ? "" : group?.image);
-                    //   displayContollercontroller=TextEditingController(text: addNew ? "" : group?.displayName);
-                    //   searchNamecontroller = TextEditingController(text: addNew ? "" : group?.searchNmae);
-                    //   active=addNew?false:group?.isActive;
-                    // }
-                    // onChange = false;
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck: true,
-                        functionChane: true,
-                        addNew: addNew,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                    result = list.data;
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<DivisionreadCubit>()
+                            .getDivisionRead(veritiaclid!, "division");
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        });},
-                        // isDirectCreate:changer,
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                // if (!onChange) {
+                //   print("onchange"+onChange.toString());
+                //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
+                //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
+                //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //   imageContollercontroller = TextEditingController(text: addNew ? "" : group?.image);
+                //   displayContollercontroller=TextEditingController(text: addNew ? "" : group?.displayName);
+                //   searchNamecontroller = TextEditingController(text: addNew ? "" : group?.searchNmae);
+                //   active=addNew?false:group?.isActive;
+                // }
+                // onChange = false;
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    functionChane: true,
+                    addNew: addNew,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    // isDirectCreate:changer,
 
-                        label: "Create division",
-                        onApply: () {
-                          // print("save");
-                          // MaterialCreationtModel model=MaterialCreationtModel(
-                          //
-                          //     description: descriptionContollercontroller?.text??"",
-                          //     image:int.tryParse(imageContollercontroller.text),
-                          //     searchNmae: searchNamecontroller?.text??"",
-                          //     name: namecontroller?.text??"",
-                          //     displayName: displayContollercontroller.text??"",
-                          //     status: "akskks"
-                          // );
-                          // print(model);
-                          // context.read<DivisioncreateCubit>().postCreateDevision(model,"division");
-                          //
-                          // // widget.onTap();
+                    label: "Create division",
+                    onApply: () {
+                      // print("save");
+                      // MaterialCreationtModel model=MaterialCreationtModel(
+                      //
+                      //     description: descriptionContollercontroller?.text??"",
+                      //     image:int.tryParse(imageContollercontroller.text),
+                      //     searchNmae: searchNamecontroller?.text??"",
+                      //     name: namecontroller?.text??"",
+                      //     displayName: displayContollercontroller.text??"",
+                      //     status: "akskks"
+                      // );
+                      // print(model);
+                      // context.read<DivisioncreateCubit>().postCreateDevision(model,"division");
+                      //
+                      // // widget.onTap();
+                    },
+                    onEdit: () {
+                      DevisionReadModel model = DevisionReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        displayName: displayContollercontroller.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      print(model);
+                      context
+                          .read<DivisioncreateCubit>()
+                          .postDivisionPatch(veritiaclid, model, "division");
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "division");
+                    },
 
-                        },
-                        onEdit: () {
-                          DevisionReadModel model=DevisionReadModel(
-                            name: namecontroller?.text??"",
-                            image:imageContollercontroller?.text??"",
-                            displayName: displayContollercontroller.text??"",
-                            description: descriptionContollercontroller?.text??"",
-                            searchNmae: searchNamecontroller?.text??"",
-                            isActive: active,
-                          );
-                          print(model);
-                          context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"division");
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"division");
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DebvisionVerticalList(
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
-                        },
+                                  veritiaclid = result[index].id;
+                                  changer = true;
 
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                                  context
+                                      .read<DivisionreadCubit>()
+                                      .getDivisionRead(
+                                          veritiaclid!, "division");
 
-                                DebvisionVerticalList(
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=true;
-
-                                    context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"division");
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-                                    NewInputCard(
-                                      controller:displayContollercontroller ,
-                                      title: "Dispaly Name",
-                                    ),
-
-
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode = myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          print("imabbabba"+Variable.imageName.toString());
-                                          context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
+                                NewInputCard(
+                                  controller: displayContollercontroller,
+                                  title: "Dispaly Name",
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      print("imabbabba" +
+                                          Variable.imageName.toString());
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
-
 
 //static creation+++++++++++++++++++++++++++++++++++++
 
 class CreateStaticPopUp extends StatefulWidget {
   final String type;
 
-
   CreateStaticPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -3573,35 +3919,39 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController displayContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController displayContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
-  }
-  void initState() {
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -3612,283 +3962,242 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+                    // context.showSnackBarSuccess(data.data2);
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
-
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<ListstaticCubit, ListstaticState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                      Navigator.pop(context);
-                        setState(() {
-
-                        });
-
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
+                    label: "Create Static Group",
+                    onApply: () {
+                      print("save");
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        image: int.tryParse(imageContollercontroller.text),
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        name: namecontroller?.text ?? "",
+                      );
 
+                      context
+                          .read<DivisioncreateCubit>()
+                          .postCreateDevision(model, "static");
 
-              ],
-              child: BlocConsumer<ListstaticCubit, ListstaticState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
+                      // widget.onTap();
+                    },
+                    onEdit: () {},
+                    onCancel: () {},
 
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                          buttonCheck: true,
-                        isDirectCreate: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
-
-                        label: "Create Static Group",
-                        onApply: () {
-                          print("save");
-                          MaterialCreationtModel model=MaterialCreationtModel(
-
-                            description: descriptionContollercontroller?.text??"",
-                            image:int.tryParse(imageContollercontroller.text),
-                            searchNmae: searchNamecontroller?.text??"",
-                            name: namecontroller?.text??"",
-                          );
-
-                          context.read<DivisioncreateCubit>().postCreateDevision(model,"static");
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-
-                        },
-                        onCancel: (){
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
-
-
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          print("imabbabba"+Variable.imageName.toString());
-                                          context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-
-                                  ],
-                                )),
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      print("imabbabba" +
+                                          Variable.imageName.toString());
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
 class CreateFrameWorkPopUp extends StatefulWidget {
   final String type;
-
 
   CreateFrameWorkPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -3901,43 +4210,52 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
-  List<BrandListModel> result = [];
+  int? veritiaclid = 0;
+  var list;
+
+  List<FrameWorkListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
 
-  TextEditingController categoryController=TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController categoryNameController = TextEditingController();
   int? categoryid;
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
-  List<VariantLinesLiostModel>table=[];
-  listAssign(List<VariantLinesLiostModel>tables){
-    onChange=true;
-    setState(() {
-      table=tables;
+  List<VariantLinesLiostModel> table = [];
 
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
     });
   }
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
-  }
-  void initState() {
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    if (costingTypeMethodeCheck != true)
+      context.read<FrameworklistCubit>().getFrameWorklist();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -3948,350 +4266,380 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => VariantframeworkpostCubit(),
         ),
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<VariantframeworkpostCubit, VariantframeworkpostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("here after  creation");
 
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
+                    setState(() {
+                      context.showSnackBarSuccess(data.data2);
+                      context.read<FrameworklistCubit>().getFrameWorklist();
+                      print("here after  creation next call");
+
                     });
+
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<FrameworklistCubit, FrameworklistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+                    list = list;
 
-
-
-                BlocListener<VariantframeworkpostCubit, VariantframeworkpostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
+                    label: "Variant FrameWork Code Details",
+                    onApply: () {
+                      print("save");
+                      VariantFrameWorkPostModel model =
+                          VariantFrameWorkPostModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        categoryId: categoryid,
+                        variantListModel: table,
+                        // image:int.tryParse(imageContollercontroller.text),
+                        // searchNmae: searchNamecontroller?.text??"",
+                        name: namecontroller?.text ?? "",
+                      );
+                      context
+                          .read<VariantframeworkpostCubit>()
+                          .postCreateFrameWork(model);
 
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      VariantFrameWorkPostModel model =
+                          VariantFrameWorkPostModel(
+                        description: descriptionContollercontroller?.text ?? "",
+                        categoryId: categoryid,
+                        variantListModel: table,
+                        isActive: active,
 
-              ],
-              child: BlocConsumer<ListstaticCubit, ListstaticState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
+                        // image:int.tryParse(imageContollercontroller.text),
+                        // searchNmae: searchNamecontroller?.text??"",
+                        name: namecontroller?.text ?? "",
+                      );
+                      context
+                          .read<VariantframeworkpostCubit>()
+                          .postPatchFrameWork(model, veritiaclid);
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "framework_delete");
+                    },
 
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (costingTypeMethodeCheck != true)
+                                    Container(
+                                      // width: width * .112,
+                                      height: 400,
+                                      child: FrameWorkVerticalList(
+                                        list: list,
+                                        selectedVertical: selectedVertical,
+                                        itemsearch: itemsearch,
+                                        ontap: (int index) {
+                                          setState(() {
+                                            selectedVertical = index;
 
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            // context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
+                                            // select=false;
+                                            // clear();
+                                            // exportCheck=false;
+                                            // addNew=true;
 
-                          }
+                                            // updateCheck=false;
+                                            // print("rijina" +
+                                            //     // result[index].id.toString());
 
+                                            veritiaclid = result[index].id;
+                                            // clear();
+                                            // select=true;
+                                            //
+                                            //
 
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        isDirectCreate:     costingTypeMethodeCheck,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
-
-                        label: "Variant FrameWork Code Details",
-                        onApply: () {
-                          print("save");
-                          VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-
-                            description: descriptionContollercontroller?.text??"",
-                            categoryId:categoryid,
-                            variantListModel:table ,
-                            // image:int.tryParse(imageContollercontroller.text),
-                            // searchNmae: searchNamecontroller?.text??"",
-                            name: namecontroller?.text??"",
-                          );
-                          context.read<VariantframeworkpostCubit>().postCreateFrameWork(model);
-
-
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-
-                            description: descriptionContollercontroller?.text??"",
-                            categoryId:categoryid,
-                            variantListModel:table ,isActive: active,
-
-                            // image:int.tryParse(imageContollercontroller.text),
-                            // searchNmae: searchNamecontroller?.text??"",
-                            name: namecontroller?.text??"",
-                          );
-                          context.read<VariantframeworkpostCubit>().postPatchFrameWork(model,veritiaclid);
-
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"framework_delete");
-
-
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-
-
-
-                                    Expanded(child: Column(
-                                      children: [
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: codeController, title: "Code"),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                          controller:namecontroller ,
-                                          title: "Name",
-                                        ),
-
-                                      ],
-                                    )),
-
-                                    Expanded(child:   Column(
-                                      children: [
-                                        NewInputCard(
-                                          controller:descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(height: 10,),
-
-                                        SelectableDropDownpopUp(
-
-                                          controller:categoryController,
-                                          label: "category",
-                                          type:"Category_PopUpCall",
-                                          value: categoryController.text,
-                                          onchange: (vale){
-                                            // print("searching for search"+vale.toString());
-                                            // context.read<CategorylistCubit>().searchCategoryist(vale);
-                                          },
-                                          enable: true,
-                                          onSelection: (BrandListModel? va) {
                                             setState(() {
-
-                                              categoryController.text=va?.name??"";
-                                              categoryid=va?.id;
-                                              Variable.categoryId=va?.id;
-                                              setState(() {
-
-                                              });
-
-
-                                              // onChange = true;
-                                              // orderType.text = va!;
+                                              context
+                                                  .read<
+                                                      ReadpricingroupreadCubit>()
+                                                  .getPricingRead(veritiaclid);
+                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                             });
-                                          },
-                                          onAddNew: () {
-
-                                            showDailogPopUp(
-                                              context,
-                                              ConfigurePopup(
-                                                type: "category_group",
-                                              ),
-
-
-                                            );
-                                          },
-                                        ),
-
-
-
-                                        SizedBox(height: 10,),
-                                        PopUpSwitchTile(
-                                            value: active??false,
-                                            title: "isActive",
-                                            onClick: (gg) {
-                                              onChange=true;
-                                              if(!addNew)
-                                                active=!active!;
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-
-
-
-
-
-
+                                          });
+                                        },
+                                        search: (String va) {
+                                          // print(va);
+                                          // context
+                                          //     .read<ListvraiantCubit>()
+                                          //     .getSearchVariantList(va);
+                                          // if (va == "") {
+                                          //   context
+                                          //       .read<ListvraiantCubit>()
+                                          //       .getVariantList();
+                                          // }
+                                        },
+                                        result: result,
+                                      ),
+                                    ),
+                                  Expanded(
+                                    
+                                    child: Column(
+                                      children: [
+                                        Expanded(
+                                            child: Column(
+                                          children: [
+                                            NewInputCard(
+                                                readOnly: true,
+                                                controller: codeController,
+                                                title: "Code"),
+                                            SizedBox(
+                                              height: 10,
+                                            ),
+                                            NewInputCard(
+                                              controller: namecontroller,
+                                              title: "Name",
+                                            ),
+                                          ],
+                                        )),
                                       ],
-                                    )),
-                                  ],
-                                ),
-                                SizedBox(height: 10,),
-                                VariantFrameWorkBottomTable(listAssign:listAssign),
-                              ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: Column(
+                                    children: [
+                                      NewInputCard(
+                                        controller:
+                                            descriptionContollercontroller,
+                                        title: "Description",
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      SelectableDropDownpopUp(
+                                        controller: categoryNameController,
+                                        label: "category",
+                                        type: "Category_PopUpCall",
+                                        value: categoryNameController.text,
+                                        onchange: (vale) {
+                                          // print("searching for search"+vale.toString());
+                                          // context.read<CategorylistCubit>().searchCategoryist(vale);
+                                        },
+                                        enable: true,
+                                        onSelection: (BrandListModel? va) {
+                                          setState(() {
+                                            categoryNameController.text = va?.name ?? "";
+                                            categoryController.text = va?.code ?? "";
+                                            categoryid = va?.id;
+                                            Variable.categoryId = va?.id;
+                                            setState(() {});
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                        // onAddNew: () {
+                                        //   showDailogPopUp(
+                                        //     context,
+                                        //     ConfigurePopup(
+                                        //       type: "category_group",
+                                        //     ),
+                                        //   );
+                                        // },
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      PopUpSwitchTile(
+                                          value: active ?? false,
+                                          title: "isActive",
+                                          onClick: (gg) {
+                                            onChange = true;
+                                            if (!addNew) active = !active!;
+
+                                            // extendedWarranty = gg;
+                                            // widget.changeExtendedWarranty(gg);
+                                            // onChangeExtWarranty = gg;
+                                            setState(() {});
+                                          }),
+                                    ],
+                                  )),
+                                ],
+                              ),
                             ),
-                          ),
+
+                            SizedBox(height: 10,),
+                            VariantFrameWorkBottomTable(listAssign:listAssign),
+                        
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
 class CreateCostingMethodeTypePopUp extends StatefulWidget {
   final String type;
-
 
   CreateCostingMethodeTypePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
-  _CreateCostingMethodeTypePopUpState createState() => _CreateCostingMethodeTypePopUpState();
+  _CreateCostingMethodeTypePopUpState createState() =>
+      _CreateCostingMethodeTypePopUpState();
 }
-bool costingTypeMethodeCheck=true;
-class _CreateCostingMethodeTypePopUpState extends State<CreateCostingMethodeTypePopUp> {
+
+bool costingTypeMethodeCheck = true;
+
+class _CreateCostingMethodeTypePopUpState
+    extends State<CreateCostingMethodeTypePopUp> {
   bool? active = true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
-  int? veritiaclid=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  int? veritiaclid = 0;
   CostingMetodTypePostModel? group;
   List<CostingMetodTypePostModel> result = [];
 
   TextEditingController itemsearch = TextEditingController();
 
   var list;
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
 
-
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
-  List<VariantLinesLiostModel>table=[];
-  listAssign(List<VariantLinesLiostModel>tables){
-    onChange=true;
-    setState(() {
-      table=tables;
+  List<VariantLinesLiostModel> table = [];
 
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
     });
   }
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=true;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = true;
   }
+
   void initState() {
-    if(costingTypeMethodeCheck!=true)  context.read<CostingtypelistCubit>().getCostingTypeList();
+    if (costingTypeMethodeCheck != true)
+      context.read<CostingtypelistCubit>().getCostingTypeList();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -4307,401 +4655,366 @@ class _CreateCostingMethodeTypePopUpState extends State<CreateCostingMethodeType
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => CostingtypeCubit(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => DeletioncostingCubit(),
-        ),BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ReadcostingtypeCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadcostingtypeCubit, ReadcostingtypeState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.typeCode ?? "";
+                        namecontroller.text = data.typeName ?? "";
 
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-
-                BlocListener<ReadcostingtypeCubit, ReadcostingtypeState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.typeCode??"";
-                            namecontroller.text=data.typeName??"";
-
-                            descriptionContollercontroller.text=data.description??"";
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<DeletioncostingCubit, DeletioncostingState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-                BlocListener<CostingtypeCubit, CostingtypeState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-              ],
-              child: BlocConsumer<CostingtypelistCubit, CostingtypelistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-                            print("the deleting errpr"+result[0].id.toString());
-                            veritiaclid=result[0].id;
-                            // setState(() {
-                            //
-                            // });
-
-
-
-
-                            // // Variable.verticalid=result[0].id;
-                            // print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<DeletioncostingCubit, DeletioncostingState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<CostingtypeCubit, CostingtypeState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<CostingtypelistCubit, CostingtypelistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        print("the deleting errpr" + result[0].id.toString());
+                        veritiaclid = result[0].id;
+                        // setState(() {
+                        //
+                        // });
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        isDirectCreate: costingTypeMethodeCheck,
+                        // // Variable.verticalid=result[0].id;
+                        // print("Variable.ak"+Variable.verticalid.toString());
+                        context
+                            .read<ReadcostingtypeCubit>()
+                            .getCostMethodTypeRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
 
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                        label: "Costing Method Type Create",
-                        onApply: () {
-                          print("save");
-                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-                          //
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   categoryId:categoryid,
-                          //   variantListModel:table ,
-                          //   // image:int.tryParse(imageContollercontroller.text),
-                          //   // searchNmae: searchNamecontroller?.text??"",
-                          //   name: namecontroller?.text??"",
-                          // );
-                          context.read<CostingtypeCubit>().postCreateCostingType(namecontroller.text,descriptionContollercontroller.text,"afy");
+                    label: "Costing Method Type Create",
+                    onApply: () {
+                      print("save");
+                      // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                      //
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   categoryId:categoryid,
+                      //   variantListModel:table ,
+                      //   // image:int.tryParse(imageContollercontroller.text),
+                      //   // searchNmae: searchNamecontroller?.text??"",
+                      //   name: namecontroller?.text??"",
+                      // );
+                      context.read<CostingtypeCubit>().postCreateCostingType(
+                          namecontroller.text,
+                          descriptionContollercontroller.text,
+                          "afy");
 
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      context.read<CostingtypeCubit>().postPatchCostingType(
+                          veritiaclid,
+                          namecontroller.text,
+                          descriptionContollercontroller.text,
+                          "afy",
+                          active);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "1");
+                    },
 
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          context.read<CostingtypeCubit>().postPatchCostingType(veritiaclid,namecontroller.text,descriptionContollercontroller.text,"afy",active);
-
-                        },
-                        onCancel: (){
-                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"1");
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Column(
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    // Container(
-                                    //   color: Colors.red,
-                                    //   width: 300,
-                                    // ),
+                                // Container(
+                                //   color: Colors.red,
+                                //   width: 300,
+                                // ),
 
-                                    // if(costingTypeMethodeCheck==true)
-                                    //
+                                // if(costingTypeMethodeCheck==true)
+                                //
 
-                                    if(costingTypeMethodeCheck!=true)     Container(
-                                      // width: width * .112,
-                                      height: 400,
-                                      child: CostingTypeVerticalList(
-                                        list: list,
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: CostingTypeVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
 
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
 
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,
-                                        ontap: (int index) {
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
                                           setState(() {
-                                            selectedVertical = index;
-
-                                            // select=false;
-                                            // clear();
-                                            // exportCheck=false;
-                                            // addNew=true;
-
-                                            // updateCheck=false;
-                                            // print("rijina" +
-                                            //     // result[index].id.toString());
-
-
-                                            veritiaclid = result[index].id;
-                                            // clear();
-                                            // select=true;
-                                            //
-                                            //
-
-
-                                            setState(() {
-
-                                              context.read<ReadcostingtypeCubit>().getCostMethodTypeRead(veritiaclid!);
-                                            });
+                                            context
+                                                .read<ReadcostingtypeCubit>()
+                                                .getCostMethodTypeRead(
+                                                    veritiaclid!);
                                           });
-                                        },
-                                        search: (String va) {
-                                          // print(va);
-                                          // context
-                                          //     .read<ListvraiantCubit>()
-                                          //     .getSearchVariantList(va);
-                                          // if (va == "") {
-                                          //   context
-                                          //       .read<ListvraiantCubit>()
-                                          //       .getVariantList();
-                                          // }
-                                        },
-                                        result: result,
-                                      ),
+                                        });
+                                      },
+                                      search: (String va) {
+                                        // print(va);
+                                        // context
+                                        //     .read<ListvraiantCubit>()
+                                        //     .getSearchVariantList(va);
+                                        // if (va == "") {
+                                        //   context
+                                        //       .read<ListvraiantCubit>()
+                                        //       .getVariantList();
+                                        // }
+                                      },
+                                      result: result,
                                     ),
+                                  ),
 
-
-
-                                    Expanded(child: Column(
-                                      children: [
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: codeController, title: "Code"),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                          controller:namecontroller ,
-                                          title: "Name",
-                                        ),
-
-                                      ],
-                                    )),
-
-                                    Expanded(child:   Column(
-                                      children: [
-                                        NewInputCard(
-                                          controller:descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(height: 10,),
-
-
-
-
-
-                                        SizedBox(height: 10,),
-                                        PopUpSwitchTile(
-                                            value: active??false,
-                                            title: "isActive",
-                                            onClick: (gg) {
-                                              onChange=true;
-                                              if(!addNew)
-                                                active=!active!;
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-
-
-
-
-
-
-                                      ],
-                                    )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      controller: namecontroller,
+                                      title: "Name",
+                                    ),
                                   ],
-                                ),
-                                SizedBox(height: 10,),
-                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                                )),
+
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "isActive",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (!addNew) active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
                               ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
 class CreateCostingMethodeCreatePopUp extends StatefulWidget {
   final String type;
-
 
   CreateCostingMethodeCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
-  _CreateCostingMethodeCreatePopUpState createState() => _CreateCostingMethodeCreatePopUpState();
+  _CreateCostingMethodeCreatePopUpState createState() =>
+      _CreateCostingMethodeCreatePopUpState();
 }
 
-class _CreateCostingMethodeCreatePopUpState extends State<CreateCostingMethodeCreatePopUp> {
+class _CreateCostingMethodeCreatePopUpState
+    extends State<CreateCostingMethodeCreatePopUp> {
   bool? active = true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   CostingCreatePostModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   int? typeId;
   List<CostingCreatePostModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
   var list;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController costingMethodcontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController costingMethodcontroller = TextEditingController();
 
-
-
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
-  List<VariantLinesLiostModel>table=[];
-  listAssign(List<VariantLinesLiostModel>tables){
-    onChange=true;
-    setState(() {
-      table=tables;
+  List<VariantLinesLiostModel> table = [];
 
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
     });
   }
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    if(costingTypeMethodeCheck!=true)
-    context.read<CostingcreatelistCubit>().getCostingCreateList();
+    if (costingTypeMethodeCheck != true)
+      context.read<CostingcreatelistCubit>().getCostingCreateList();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -4712,349 +5025,306 @@ class _CreateCostingMethodeCreatePopUpState extends State<CreateCostingMethodeCr
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => CostingtypeCubit(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ReadcostingCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ReadcostingCubit, ReadcostingState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.methodCode??"";
-                            namecontroller.text=data.methodName??"";
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadcostingCubit, ReadcostingState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.methodCode ?? "";
+                        namecontroller.text = data.methodName ?? "";
 
-                            descriptionContollercontroller.text=data.description??"";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-
-
-
-                BlocListener<CostingtypeCubit, CostingtypeState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-              ],
-              child: BlocConsumer<CostingcreatelistCubit, CostingcreatelistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<CostingtypeCubit, CostingtypeState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<CostingcreatelistCubit, CostingcreatelistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<ReadcostingCubit>()
+                            .getCostMethodRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        isDirectCreate: costingTypeMethodeCheck,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                    label: "Costing Method  Create",
+                    onApply: () {
+                      print("save");
+                      // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                      //
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   categoryId:categoryid,
+                      //   variantListModel:table ,
+                      //   // image:int.tryParse(imageContollercontroller.text),
+                      //   // searchNmae: searchNamecontroller?.text??"",
+                      //   name: namecontroller?.text??"",
+                      // );
+                      context.read<CostingtypeCubit>().postCreateCostingType(
+                          namecontroller.text,
+                          descriptionContollercontroller.text,
+                          "afy",
+                          id: typeId);
 
-                        label: "Costing Method  Create",
-                        onApply: () {
-                          print("save");
-                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-                          //
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   categoryId:categoryid,
-                          //   variantListModel:table ,
-                          //   // image:int.tryParse(imageContollercontroller.text),
-                          //   // searchNmae: searchNamecontroller?.text??"",
-                          //   name: namecontroller?.text??"",
-                          // );
-                          context.read<CostingtypeCubit>().postCreateCostingType(namecontroller.text,descriptionContollercontroller.text,"afy",id: typeId);
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      context.read<CostingtypeCubit>().postPatchCostingCreate(
+                          veritiaclid,
+                          namecontroller.text,
+                          descriptionContollercontroller.text,
+                          "afy",
+                          active);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "2");
+                    },
 
-
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          context.read<CostingtypeCubit>().postPatchCostingCreate(veritiaclid,namecontroller.text,descriptionContollercontroller.text,"afy",active);
-
-                        },
-                        onCancel: (){
-                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"2");
-
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Column(
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                 if(costingTypeMethodeCheck!=true)   Container(
-                                      // width: width * .112,
-                                      height: 400,
-                                      child: CostingCreateVerticalList(
-                                        list: list,
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: CostingCreateVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
 
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
 
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,
-                                        ontap: (int index) {
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
                                           setState(() {
-                                            selectedVertical = index;
-
-                                            // select=false;
-                                            // clear();
-                                            // exportCheck=false;
-                                            // addNew=true;
-
-                                            // updateCheck=false;
-                                            // print("rijina" +
-                                            //     // result[index].id.toString());
-
-
-                                            veritiaclid = result[index].id;
-                                            // clear();
-                                            // select=true;
-                                            //
-                                            //
-
-
-                                            setState(() {
-
-                                              context.read<ReadcostingCubit>().getCostMethodRead(veritiaclid!);
-                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                                            });
+                                            context
+                                                .read<ReadcostingCubit>()
+                                                .getCostMethodRead(
+                                                    veritiaclid!);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });
-                                        },
-                                        search: (String va) {
-                                          // print(va);
-                                          // context
-                                          //     .read<ListvraiantCubit>()
-                                          //     .getSearchVariantList(va);
-                                          // if (va == "") {
-                                          //   context
-                                          //       .read<ListvraiantCubit>()
-                                          //       .getVariantList();
-                                          // }
-                                        },
-                                        result: result,
-                                      ),
+                                        });
+                                      },
+                                      search: (String va) {
+                                        // print(va);
+                                        // context
+                                        //     .read<ListvraiantCubit>()
+                                        //     .getSearchVariantList(va);
+                                        // if (va == "") {
+                                        //   context
+                                        //       .read<ListvraiantCubit>()
+                                        //       .getVariantList();
+                                        // }
+                                      },
+                                      result: result,
                                     ),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SelectableDropDownpopUp(
+                                      // bindType: "static",
+                                      controller: costingMethodcontroller,
+                                      label: "Costing Method Type Id",
+                                      type: "CostingMethodTypePopUpCall",
+                                      value: costingMethodcontroller.text,
+                                      onchange: (vale) {
+                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                      },
+                                      enable: true,
+                                      onSelection:
+                                          (CostingMetodTypePostModel? va) {
+                                        setState(() {
+                                          costingMethodcontroller.text =
+                                              va?.typeName ?? "";
+                                          typeId = va?.id;
+                                          setState(() {});
 
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                      onAddNew: () {
+                                        setState(() {
+                                          costingTypeMethodeCheck = true;
+                                        });
 
-
-                                    Expanded(child: Column(
-                                      children: [
-                                        SelectableDropDownpopUp(
-                                          // bindType: "static",
-                                          controller:costingMethodcontroller,
-                                          label: "Costing Method Type Id",
-                                          type:"CostingMethodTypePopUpCall",
-                                          value:  costingMethodcontroller.text,
-                                          onchange: (vale){
-                                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                          },
-                                          enable: true,
-                                          onSelection: (CostingMetodTypePostModel? va) {
-                                            setState(() {
-
-                                             costingMethodcontroller.text=va?.typeName??"";
-                                             typeId=va?.id;
-                                              setState(() {
-
-                                              });
-
-
-                                              // onChange = true;
-                                              // orderType.text = va!;
-                                            });
-                                          },
-                                          onAddNew: () {
-                                            setState(() {
-                                              costingTypeMethodeCheck=true;
-                                            });
-
-                                            showDailogPopUp(
-                                              context,
-                                              ConfigurePopup(
-                                                type: "create_costingtype",
-                                              ),
-
-
-                                            );
-                                          },
-                                        ),
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: codeController, title: "Code"),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                          controller:namecontroller ,
-                                          title: "Name",
-                                        ),
-
-                                      ],
-                                    )),
-
-                                    Expanded(child:   Column(
-                                      children: [
-                                        NewInputCard(
-                                          controller:descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(height: 10,),
-
-
-
-
-
-                                        SizedBox(height: 10,),
-                                        PopUpSwitchTile(
-                                            value: active??false,
-                                            title: "isActive",
-                                            onClick: (gg) {
-                                              onChange=true;
-                                              if(!addNew)
-                                                active=!active!;
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-
-
-
-
-
-
-                                      ],
-                                    )),
+                                        showDailogPopUp(
+                                          context,
+                                          ConfigurePopup(
+                                            type: "create_costingtype",
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      controller: namecontroller,
+                                      title: "Name",
+                                    ),
                                   ],
-                                ),
-                                SizedBox(height: 10,),
-                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "isActive",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (!addNew) active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
                               ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
-
-
 class PricingGroupCreatePopUp extends StatefulWidget {
   final String type;
-
 
   PricingGroupCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -5067,48 +5337,52 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   PricingGroupListModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   int? typeId;
   List<PricingGroupListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
   var list;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController costingMethodcontroller=TextEditingController();
-  TextEditingController customerGroupcontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController costingMethodcontroller = TextEditingController();
+  TextEditingController customerGroupcontroller = TextEditingController();
 
-
-
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
-  List<VariantLinesLiostModel>table=[];
-  listAssign(List<VariantLinesLiostModel>tables){
-    onChange=true;
-    setState(() {
-      table=tables;
+  List<VariantLinesLiostModel> table = [];
 
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
     });
   }
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    if(costingTypeMethodeCheck!=true) context.read<PricingroupcreateCubit>().getPricingGroupList();
+    if (costingTypeMethodeCheck != true)
+      context.read<PricingroupcreateCubit>().getPricingGroupList();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -5119,358 +5393,303 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => CostingtypeCubit(),
-        ),   BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PricinggrouppostCubit(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PricinggrouppatchCubit(),
         ),
         BlocProvider(
           create: (context) => ReadpricingroupreadCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ReadpricingroupreadCubit, ReadpricingroupreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.pricingTypeCode??"";
-                            namecontroller.text=data.pricingTypeName??"";
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadpricingroupreadCubit, ReadpricingroupreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.pricingTypeCode ?? "";
+                        namecontroller.text = data.pricingTypeName ?? "";
 
-                            descriptionContollercontroller.text=data.description??"";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-
-
-
-                BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-              ],
-              child: BlocConsumer<PricingroupcreateCubit, PricingroupcreateState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<PricingroupcreateCubit, PricingroupcreateState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<ReadpricingroupreadCubit>()
+                            .getPricingRead(veritiaclid);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        isDirectCreate: costingTypeMethodeCheck,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                    label: "Costing Method  Create",
+                    onApply: () {
+                      print("save");
+                      // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                      //
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   categoryId:categoryid,
+                      //   variantListModel:table ,
+                      //   // image:int.tryParse(imageContollercontroller.text),
+                      //   // searchNmae: searchNamecontroller?.text??"",
+                      //   name: namecontroller?.text??"",
+                      // );
+                      PricingGroupListModel model = PricingGroupListModel(
+                          pricingTypeName: namecontroller.text,
+                          description: descriptionContollercontroller.text,
+                          createdBy: "afy");
+                      context
+                          .read<PricinggrouppostCubit>()
+                          .postPricingGroupType(model, type: 1);
 
-                        label: "Costing Method  Create",
-                        onApply: () {
-                          print("save");
-                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-                          //
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   categoryId:categoryid,
-                          //   variantListModel:table ,
-                          //   // image:int.tryParse(imageContollercontroller.text),
-                          //   // searchNmae: searchNamecontroller?.text??"",
-                          //   name: namecontroller?.text??"",
-                          // );
-                          PricingGroupListModel model=PricingGroupListModel(
-                              pricingTypeName: namecontroller.text,
-                              description: descriptionContollercontroller.text,
-                              createdBy: "afy"
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      PricingGroupListModel model = PricingGroupListModel(
+                        pricingTypeName: namecontroller.text,
+                        description: descriptionContollercontroller.text,
+                        createdBy: "afy",
+                        isActive: active,
+                      );
+                      context
+                          .read<PricinggrouppatchCubit>()
+                          .patchPricingGroupType(model, veritiaclid, type: 1);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "3");
+                    },
 
-                          );
-                          context.read<PricinggrouppostCubit>().postPricingGroupType(model,type: 1);
-
-
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          PricingGroupListModel model=PricingGroupListModel(
-                              pricingTypeName: namecontroller.text,
-                              description: descriptionContollercontroller.text,
-                              createdBy: "afy",
-                            isActive: active,
-
-                          );
-                          context.read<PricinggrouppatchCubit>().patchPricingGroupType(model,veritiaclid,type: 1);
-
-
-                        },
-                        onCancel: (){
-                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"3");
-
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Column(
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if(costingTypeMethodeCheck!=true)   Container(
-                                      // width: width * .112,
-                                      height: 400,
-                                      child: PricingGroupVerticalList(
-                                        list: list,
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: PricingGroupVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
 
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
 
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,
-                                        ontap: (int index) {
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
                                           setState(() {
-                                            selectedVertical = index;
-
-                                            // select=false;
-                                            // clear();
-                                            // exportCheck=false;
-                                            // addNew=true;
-
-                                            // updateCheck=false;
-                                            // print("rijina" +
-                                            //     // result[index].id.toString());
-
-
-                                            veritiaclid = result[index].id;
-                                            // clear();
-                                            // select=true;
-                                            //
-                                            //
-
-
-                                            setState(() {
-
-                                              context.read<ReadpricingroupreadCubit>().getPricingRead(veritiaclid);
-                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                                            });
+                                            context
+                                                .read<
+                                                    ReadpricingroupreadCubit>()
+                                                .getPricingRead(veritiaclid);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });
-                                        },
-                                        search: (String va) {
-                                          // print(va);
-                                          // context
-                                          //     .read<ListvraiantCubit>()
-                                          //     .getSearchVariantList(va);
-                                          // if (va == "") {
-                                          //   context
-                                          //       .read<ListvraiantCubit>()
-                                          //       .getVariantList();
-                                          // }
-                                        },
-                                        result: result,
-                                      ),
+                                        });
+                                      },
+                                      search: (String va) {
+                                        // print(va);
+                                        // context
+                                        //     .read<ListvraiantCubit>()
+                                        //     .getSearchVariantList(va);
+                                        // if (va == "") {
+                                        //   context
+                                        //       .read<ListvraiantCubit>()
+                                        //       .getVariantList();
+                                        // }
+                                      },
+                                      result: result,
                                     ),
-
-
-
-                                    Expanded(child: Column(
-                                      children: [
-
-
-
-
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: codeController, title: "Code"),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                          controller:namecontroller ,
-                                          title: "Name",
-                                        ),
-
-                                      ],
-                                    )),
-
-                                    Expanded(child:   Column(
-                                      children: [
-                                        NewInputCard(
-                                          controller:descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(height: 10,),
-
-
-
-
-
-                                        SizedBox(height: 10,),
-                                        PopUpSwitchTile(
-                                            value: active??false,
-                                            title: "isActive",
-                                            onClick: (gg) {
-                                              onChange=true;
-                                              if(!addNew)
-                                                active=!active!;
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-
-
-
-
-
-
-                                      ],
-                                    )),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      controller: namecontroller,
+                                      title: "Name",
+                                    ),
                                   ],
-                                ),
-                                SizedBox(height: 10,),
-                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "isActive",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (!addNew) active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
                               ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
-
 class PricingCreatePopUp extends StatefulWidget {
   final String type;
-
 
   PricingCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -5483,50 +5702,54 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   PricingTypeListModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   int? typeId;
   List<PricingTypeListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
   var list;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController customerGroup=TextEditingController();
-  TextEditingController costingMethodcontroller=TextEditingController();
-  TextEditingController customerGroupcontroller=TextEditingController();
-  TextEditingController pricingTypecontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController customerGroup = TextEditingController();
+  TextEditingController costingMethodcontroller = TextEditingController();
+  TextEditingController customerGroupcontroller = TextEditingController();
+  TextEditingController pricingTypecontroller = TextEditingController();
 
-
-
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
-  List<VariantLinesLiostModel>table=[];
-  listAssign(List<VariantLinesLiostModel>tables){
-    onChange=true;
-    setState(() {
-      table=tables;
+  List<VariantLinesLiostModel> table = [];
 
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = tables;
     });
   }
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    if(costingTypeMethodeCheck!=true)  context.read<PricinglistCubit>().getPricingList();
+    if (costingTypeMethodeCheck != true)
+      context.read<PricinglistCubit>().getPricingList();
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -5537,406 +5760,1178 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => CostingtypeCubit(),
-        ),   BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PricinggrouppostCubit(),
-        ),  BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PricinggrouppatchCubit(),
         ),
         BlocProvider(
           create: (context) => PricingreadCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<PricingreadCubit, PricingreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.pricingCroupCode??"";
-                            namecontroller.text=data.pricingGroupName??"";
-                            pricingTypecontroller.text=data.pricingTypeId.toString()??"";
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<PricingreadCubit, PricingreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.pricingCroupCode ?? "";
+                        namecontroller.text = data.pricingGroupName ?? "";
+                        pricingTypecontroller.text =
+                            data.pricingTypeId.toString() ?? "";
 
-                            descriptionContollercontroller.text=data.description??"";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-
-
-
-                BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-              ],
-              child: BlocConsumer<PricinglistCubit, PricinglistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].pricingTypeId;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<PricinglistCubit, PricinglistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].pricingTypeId;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<PricingreadCubit>()
+                            .getPricingGroupRead(veritiaclid);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        isDirectCreate: costingTypeMethodeCheck,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                    label: "Costing Method  Create",
+                    onApply: () {
+                      print("save");
+                      // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
+                      //
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   categoryId:categoryid,
+                      //   variantListModel:table ,
+                      //   // image:int.tryParse(imageContollercontroller.text),
+                      //   // searchNmae: searchNamecontroller?.text??"",
+                      //   name: namecontroller?.text??"",
+                      // );
+                      PricingTypeListModel model = PricingTypeListModel(
+                        pricingTypeId: int.tryParse(pricingTypecontroller.text),
+                        pricingGroupName: namecontroller.text,
+                        customerGrouCode: customerGroupcontroller.text,
+                        description: descriptionContollercontroller.text,
+                        createdBy: "afy",
+                        isActive: active,
+                      );
+                      context
+                          .read<PricinggrouppostCubit>()
+                          .postPricingGroup(model, type: 1);
 
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      PricingTypeListModel model = PricingTypeListModel(
+                        pricingTypeId: int.tryParse(pricingTypecontroller.text),
+                        pricingGroupName: namecontroller.text,
+                        customerGrouCode: customerGroupcontroller.text,
+                        description: descriptionContollercontroller.text,
+                        createdBy: "afy",
+                        isActive: active,
+                      );
+                      context
+                          .read<PricinggrouppatchCubit>()
+                          .patchPricingGroup(model, veritiaclid);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "4");
+                    },
 
-                        label: "Costing Method  Create",
-                        onApply: () {
-                          print("save");
-                          // VariantFrameWorkPostModel model=VariantFrameWorkPostModel(
-                          //
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   categoryId:categoryid,
-                          //   variantListModel:table ,
-                          //   // image:int.tryParse(imageContollercontroller.text),
-                          //   // searchNmae: searchNamecontroller?.text??"",
-                          //   name: namecontroller?.text??"",
-                          // );
-                          PricingTypeListModel model=PricingTypeListModel(
-                            pricingTypeId:int.tryParse(pricingTypecontroller.text),
-                            pricingGroupName: namecontroller.text,
-                            customerGrouCode: customerGroupcontroller.text,
-                            description: descriptionContollercontroller.text,
-                            createdBy: "afy",
-                            isActive: active,
-
-                          );
-                          context.read<PricinggrouppostCubit>().postPricingGroup(model,type: 1);
-
-
-
-                          // widget.onTap();
-
-                        },
-                        onEdit: () {
-                          PricingTypeListModel model=PricingTypeListModel(
-                            pricingTypeId:int.tryParse(pricingTypecontroller.text),
-                            pricingGroupName: namecontroller.text,
-                            customerGrouCode: customerGroupcontroller.text,
-                            description: descriptionContollercontroller.text,
-                            createdBy: "afy",
-                            isActive: active,
-
-                          );
-                          context.read<PricinggrouppatchCubit>().patchPricingGroup(model,veritiaclid);
-
-
-                        },
-                        onCancel: (){
-                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"4");
-
-
-
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Column(
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    if(costingTypeMethodeCheck!=true)   Container(
-                                      // width: width * .112,
-                                      height: 400,
-                                      child: PricingVerticalList(
-                                        list: list,
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: PricingVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
 
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
 
-                                        selectedVertical: selectedVertical,
-                                        itemsearch: itemsearch,
-                                        ontap: (int index) {
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid =
+                                              result[index].pricingTypeId;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
                                           setState(() {
-                                            selectedVertical = index;
-
-                                            // select=false;
-                                            // clear();
-                                            // exportCheck=false;
-                                            // addNew=true;
-
-                                            // updateCheck=false;
-                                            // print("rijina" +
-                                            //     // result[index].id.toString());
-
-
-                                            veritiaclid = result[index].pricingTypeId;
-                                            // clear();
-                                            // select=true;
-                                            //
-                                            //
-
-
-                                            setState(() {
-
-                                              context.read<PricingreadCubit>().getPricingGroupRead(veritiaclid);
-                                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                                            });
+                                            context
+                                                .read<PricingreadCubit>()
+                                                .getPricingGroupRead(
+                                                    veritiaclid);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });
-                                        },
-                                        search: (String va) {
-                                          // print(va);
-                                          // context
-                                          //     .read<ListvraiantCubit>()
-                                          //     .getSearchVariantList(va);
-                                          // if (va == "") {
-                                          //   context
-                                          //       .read<ListvraiantCubit>()
-                                          //       .getVariantList();
-                                          // }
-                                        },
-                                        result: result,
-                                      ),
+                                        });
+                                      },
+                                      search: (String va) {
+                                        // print(va);
+                                        // context
+                                        //     .read<ListvraiantCubit>()
+                                        //     .getSearchVariantList(va);
+                                        // if (va == "") {
+                                        //   context
+                                        //       .read<ListvraiantCubit>()
+                                        //       .getVariantList();
+                                        // }
+                                      },
+                                      result: result,
                                     ),
+                                  ),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    SelectableDropDownpopUp(
+                                      controller: pricingTypecontroller,
+                                      label: "Costing Method Id",
+                                      type: "Pricing_GroupPopUpCall",
+                                      value: pricingTypecontroller.text,
+                                      onchange: (vale) {
+                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                      },
+                                      enable: true,
+                                      onSelection: (PricingGroupListModel? va) {
+                                        setState(() {
+                                          costingTypeMethodeCheck = true;
+                                        });
+                                        setState(() {
+                                          pricingTypecontroller.text =
+                                              va?.pricingTypeName ?? "";
+                                          setState(() {});
 
-
-
-                                    Expanded(child: Column(
-                                      children: [
-                                        SelectableDropDownpopUp(
-
-                                          controller:pricingTypecontroller,
-                                          label: "Costing Method Id",
-                                          type:"Pricing_GroupPopUpCall",
-                                          value:  pricingTypecontroller.text,
-                                          onchange: (vale){
-                                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                          },
-                                          enable: true,
-                                          onSelection: (PricingGroupListModel? va) {
-                                            setState(() {
-                                              costingTypeMethodeCheck=true;
-                                            });
-                                            setState(() {
-
-                                              pricingTypecontroller.text=va?.pricingTypeName??"";
-                                              setState(() {
-
-                                              });
-
-
-                                              // onChange = true;
-                                              // orderType.text = va!;
-                                            });
-                                          },
-                                          onAddNew: () {
-
-                                            showDailogPopUp(
-                                              context,
-                                              ConfigurePopup(
-                                                type: "create_pricing",
-                                              ),
-
-
-                                            );
-                                          },
-                                        ),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: customerGroup, title: "Customer Group"),
-                                        SizedBox(height: 10,),
-
-
-
-
-                                        NewInputCard(
-                                            readOnly: true,
-                                            controller: codeController, title: "Code"),
-                                        SizedBox(height: 10,),
-                                        NewInputCard(
-                                          controller:namecontroller ,
-                                          title: "Name",
-                                        ),
-
-                                      ],
-                                    )),
-
-                                    Expanded(child:   Column(
-                                      children: [
-                                        NewInputCard(
-                                          controller:descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(height: 10,),
-
-
-
-
-
-                                        SizedBox(height: 10,),
-                                        PopUpSwitchTile(
-                                            value: active??false,
-                                            title: "isActive",
-                                            onClick: (gg) {
-                                              onChange=true;
-                                              if(!addNew)
-                                                active=!active!;
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-
-
-
-
-
-
-                                      ],
-                                    )),
+                                          // onChange = true;
+                                          // orderType.text = va!;
+                                        });
+                                      },
+                                      onAddNew: () {
+                                        showDailogPopUp(
+                                          context,
+                                          ConfigurePopup(
+                                            type: "create_pricing",
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: customerGroup,
+                                        title: "Customer Group"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      controller: namecontroller,
+                                      title: "Name",
+                                    ),
                                   ],
-                                ),
-                                SizedBox(height: 10,),
-                                // VariantFrameWorkBottomTable(listAssign:listAssign),
+                                )),
+                                Expanded(
+                                    child: Column(
+                                  children: [
+                                    NewInputCard(
+                                      controller:
+                                          descriptionContollercontroller,
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "isActive",
+                                        onClick: (gg) {
+                                          onChange = true;
+                                          if (!addNew) active = !active!;
+
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
                               ],
                             ),
-                          ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
 
+class LinkedItemCreatePopUp extends StatefulWidget {
+  final String type;
+  final int? veritiaclid;
+
+  LinkedItemCreatePopUp({
+    Key? key,
+    required this.type,
+    this.veritiaclid
+  }) : super(key: key);
+
+  @override
+  _LinkedItemCreatePopUp createState() => _LinkedItemCreatePopUp();
+}
+
+class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  LinkedItemPostModel? group;
+  int? veritiaclid = 0;
+  int? typeId;
+
+  List<LinkedItemListIdModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+  var list;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController customerGroup = TextEditingController();
+  TextEditingController costingMethodcontroller = TextEditingController();
+  TextEditingController customerGroupcontroller = TextEditingController();
+  TextEditingController pricingTypecontroller = TextEditingController();
+
+  TextEditingController descriptionContollercontroller = TextEditingController();
+  List<LinkedItemListModel>?table=[];
+  bool addNew = false;
+
+
+  listAssign(List<LinkedItemListIdModel> list) {
+    table!.clear();
+    // onChange = true;
+    setState(() {
+      print("the list is here"+list.toString());
+      if(list.isNotEmpty){
+        for(var i=0;i<list.length;i++){
+          table?.add(LinkedItemListModel(id: list[i].id,code: list[i].code,name:  list[i].name
+          ));
+        }
+      }
+    //
+    });
+  }
+
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+  GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    if (costingTypeMethodeCheck != true)
+      context.read<LinkedlistverticallistCubit>().getLinkedItemList();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CostingtypeCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CreatelinkeditemCubit(),
+        ),
+        BlocProvider(
+          create: (context) => PricinggrouppatchCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ReadlinkeditemCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadlinkeditemCubit, ReadlinkeditemState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        print("the data is here");
+                        group = data;
+                        // codeController.text = data.pricingCroupCode ?? "";
+                        titleController.text = data.title ?? "";
+                        descriptionContollercontroller.text = data.description ?? "";
+                        table=data.linkedItemListModel;
+
+                        // pricingTypecontroller.text =
+                        //     data.pricingTypeId.toString() ?? "";
+                        //
+                        // descriptionContollercontroller.text =
+                        //     data.description ?? "";
+                        //
+                        // active = data.isActive ?? false;
+                      });
+                    });
+              },
+            ),
+            BlocListener<CreatelinkeditemCubit, CreatelinkeditemState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<PricinggrouppatchCubit, PricinggrouppatchState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<LinkedlistverticallistCubit, LinkedlistverticallistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        // print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<ReadlinkeditemCubit>()
+                            .getLinkedItem(veritiaclid);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                // double w=Med
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
+
+                    label: "Costing Method  Create",
+                    onApply: () {
+                      print("save");
+
+                      LinkedItemPostModel model = LinkedItemPostModel(
+                        variantId:widget.veritiaclid,
+                        inventoryId: Variable.inventory_ID,
+                        title: titleController.text
+                        ,
+                        linkedItemListModel:table ,
+                        description: descriptionContollercontroller.text,
+
+                      );
+                      print("the model is"+model.toString());
+                      context
+                          .read<CreatelinkeditemCubit>()
+                          .postLinkedItem(model);
+
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      LinkedItemPostModel model = LinkedItemPostModel(
+                        title: titleController.text,
+                        linkedItemListModel: table,
+
+                        description: descriptionContollercontroller.text,
+
+                        isActive: active,
+                      );
+                      print("the model is"+model.toString());
+                      context
+                          .read<CreatelinkeditemCubit>()
+                          .patchLinkedItem(veritiaclid,model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<DeletioncostingCubit>()
+                          .CostingDelete(veritiaclid, type: "5");
+                    },
+
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                if (costingTypeMethodeCheck != true)
+                                  Container(
+                                    // width: width * .112,
+                                    height: 400,
+                                    child: LinkedItemVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
+
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
+
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid =
+                                              result[index].id;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
+                                          setState(() {
+                                            context
+                                                .read<ReadlinkeditemCubit>()
+                                                .getLinkedItem(veritiaclid);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+                                          });
+                                        });
+                                      },
+                                      search: (String va) {
+                                        // print(va);
+                                        // context
+                                        //     .read<ListvraiantCubit>()
+                                        //     .getSearchVariantList(va);
+                                        // if (va == "") {
+                                        //   context
+                                        //       .read<ListvraiantCubit>()
+                                        //       .getVariantList();
+                                        // }
+                                      },
+                                      result: result,
+                                    ),
+                                  ),
+                                Container(
+                                  child: Column(
+                                    children: [
+                                      Container(
+
+                                        // height: 300,
+                                        width: MediaQuery.of(context).size.width/3.15,
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                                child: Column(
+                                                  children: [
+
+
+                                                    NewInputCard(
+                                                        readOnly: true,
+                                                        controller: titleController,
+                                                        title: "title"),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+
+                                                    PopUpSwitchTile(
+                                                        value: active ?? false,
+                                                        title: "isActive",
+                                                        onClick: (gg) {
+                                                          onChange = true;
+                                                          if (!addNew) active = !active!;
+
+                                                          // extendedWarranty = gg;
+                                                          // widget.changeExtendedWarranty(gg);
+                                                          // onChangeExtWarranty = gg;
+                                                          setState(() {});
+                                                        }),
+
+
+                                                  ],
+                                                )),
+                                            Expanded(
+                                                child: Column(
+                                                  children: [
+                                                    NewInputCard(
+                                                      controller:
+                                                      descriptionContollercontroller,
+                                                      title: "Description",
+                                                    ),
+                                                    SizedBox(
+                                                      height: 10,
+                                                    ),
+                                                    TextButtonLarge(onPress: (){
+
+                                                      showDailogPopUp(
+                                                        context,
+                                                        ConfigurePopup(
+                                                          listAssign:listAssign,
+                                                          type: "CreateSearchLinkedItem-group",
+                                                        ),
+
+
+                                                      );
+
+
+
+
+
+                                                    },text: "choose",)
+
+                                                  ],
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Container(
+                                        width: MediaQuery.of(context).size.width/3.15,
+                                        // width: w/7,
+                                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                                        child: customTable(
+
+                                          border: const TableBorder(
+
+                                            verticalInside: BorderSide(
+                                                width:.5,
+                                                color: Colors.black45,
+                                                style: BorderStyle.solid),
+                                            horizontalInside: BorderSide(
+                                                width:.3,
+                                                color: Colors.black45,
+                                                // color: Colors.blue,
+                                                style: BorderStyle.solid),),
+
+                                          tableWidth: .5,
+
+                                          childrens:[
+                                            TableRow(
+
+                                              // decoration: BoxDecoration(
+
+                                              //     color: Colors.green.shade200,
+
+                                              //     shape: BoxShape.rectangle,
+
+                                              //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                              children: [
+
+
+
+
+                                                tableHeadtext(
+                                                  'Item Name',
+                                                  // textColor: Colors.black,
+                                                  padding: EdgeInsets.all(7),
+                                                  height: 46,
+                                                  size: 13,
+                                                  // color: Color(0xffE5E5E5),
+                                                ),
+                                                tableHeadtext(
+
+                                                  '',
+
+                                                  padding: EdgeInsets.all(7),
+
+                                                  height: 46,
+                                                  // textColor: Colors.black,
+                                                  // color: Color(0xffE5E5E5),
+
+                                                  size: 13,
+
+
+                                                ),
+                                                // tableHeadtext(
+                                                //   '',
+                                                //   textColor: Colors.black,
+                                                //   padding: EdgeInsets.all(7),
+                                                //   height: 46,
+                                                //   size: 13,
+                                                //   // color: Color(0xffE5E5E5),
+                                                // ),
+
+
+
+                                              ],
+
+                                            ),
+                                            if(table!.isEmpty)...[
+                                              TableRow(
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.grey
+                                                          .shade200,
+                                                      shape: BoxShape
+                                                          .rectangle,
+                                                      border:const  Border(
+                                                          left: BorderSide(
+                                                              width: .5,
+                                                              color: Colors
+                                                                  .grey,
+                                                              style: BorderStyle
+                                                                  .solid),
+                                                          bottom: BorderSide(
+                                                              width: .5,
+                                                              color: Colors
+                                                                  .grey,
+                                                              style: BorderStyle
+                                                                  .solid),
+                                                          right: BorderSide(
+                                                              color: Colors
+                                                                  .grey,
+                                                              width: .5,
+                                                              style: BorderStyle
+                                                                  .solid))),
+                                                  children: [
+                                                    TableCell(
+
+                                                        verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                        child:Container(
+                                                          height: 44,
+                                                        )
+
+                                                      // Text(keys[i].value??"",)
+
+                                                    ),
+
+                                                    TableCell(
+                                                        verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                        child:textPadding("")
+                                                      // CustomCheckBox(
+                                                      //   key: UniqueKey(),
+                                                      //   value: list1.contains(table![i]),
+                                                      //   onChange: (p0) {
+                                                      //     if (p0)
+                                                      //       list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
+                                                      //     else
+                                                      //       list1.removeWhere((element) => element == list1[i]);
+                                                      //     list1.remove(table![i]);
+                                                      //
+                                                      //     widget.listAssign!(list1);
+                                                      //
+                                                      //
+                                                      //     print(list1);
+                                                      //   },
+                                                      //
+                                                      //
+                                                      // ),
+                                                      // Text(keys[i].key??"")
+
+
+
+                                                    ),
+
+
+
+
+                                                  ]),
+
+                                            ],
+
+
+                                            if (table?.isNotEmpty==true ) ...[
+
+
+                                              for (var i = 0; i <table!.length; i++)
+
+
+
+                                                TableRow(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.grey
+                                                            .shade200,
+                                                        shape: BoxShape
+                                                            .rectangle,
+                                                        border:const  Border(
+                                                            left: BorderSide(
+                                                                width: .5,
+                                                                color: Colors
+                                                                    .grey,
+                                                                style: BorderStyle
+                                                                    .solid),
+                                                            bottom: BorderSide(
+                                                                width: .5,
+                                                                color: Colors
+                                                                    .grey,
+                                                                style: BorderStyle
+                                                                    .solid),
+                                                            right: BorderSide(
+                                                                color: Colors
+                                                                    .grey,
+                                                                width: .5,
+                                                                style: BorderStyle
+                                                                    .solid))),
+                                                    children: [
+                                                      TableCell(
+
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                          child:textPadding(table?[i].name??"",
+                                                              height: 45)
+                                                        // Text(keys[i].value??"",)
+
+                                                      ),
+
+                                                      TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+
+                                                          child:TableTextButton(onPress: (){
+                                                            setState(() {
+                                                              table?.removeWhere((element) => element == table?[i]);
+                                                            });
+
+
+                                                          },
+                                                            label: "",
+                                                          )
+                                                        // CustomCheckBox(
+                                                        //   key: UniqueKey(),
+                                                        //   value: list1.contains(table![i]),
+                                                        //   onChange: (p0) {
+                                                        //     if (p0)
+                                                        //       list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
+                                                        //     else
+                                                        //       list1.removeWhere((element) => element == list1[i]);
+                                                        //     list1.remove(table![i]);
+                                                        //
+                                                        //     widget.listAssign!(list1);
+                                                        //
+                                                        //
+                                                        //     print(list1);
+                                                        //   },
+                                                        //
+                                                        //
+                                                        // ),
+                                                        // Text(keys[i].key??"")
+
+
+
+                                                      ),
+
+
+
+
+                                                    ]),
+                                            ],
+
+                                            //
+                                            // TableRow(
+                                            //     decoration: BoxDecoration(
+                                            //         color: Colors.grey
+                                            //             .shade200,
+                                            //         shape: BoxShape
+                                            //             .rectangle,
+                                            //         border:const  Border(
+                                            //             left: BorderSide(
+                                            //                 width: .5,
+                                            //                 color: Colors
+                                            //                     .grey,
+                                            //                 style: BorderStyle
+                                            //                     .solid),
+                                            //             bottom: BorderSide(
+                                            //                 width: .5,
+                                            //                 color: Colors
+                                            //                     .grey,
+                                            //                 style: BorderStyle
+                                            //                     .solid),
+                                            //             right: BorderSide(
+                                            //                 color: Colors
+                                            //                     .grey,
+                                            //                 width: .5,
+                                            //                 style: BorderStyle
+                                            //                     .solid))),
+                                            //     children: [
+                                            //
+                                            //       TableCell(
+                                            //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                            //
+                                            //         child: UnderLinedInput(
+                                            //           onChanged: (va){
+                                            //             key.text=va;
+                                            //
+                                            //           },
+                                            //
+                                            //           formatter: false,
+                                            //
+                                            //         ),
+                                            //
+                                            //
+                                            //       ),
+                                            //       TableCell(
+                                            //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                            //
+                                            //         child:
+                                            //
+                                            //         UnderLinedInput(
+                                            //           onChanged: (va){
+                                            //             value.text=va;
+                                            //           },
+                                            //           formatter: false,
+                                            //         ),
+                                            //
+                                            //
+                                            //       ),
+                                            //       TableTextButton(label: "", onPress: (){
+                                            //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                            //           Keys model=Keys(
+                                            //             key: key.text??"",
+                                            //             value: value.text??'',
+                                            //           );
+                                            //           setState(() {
+                                            //             onChange=true;
+                                            //
+                                            //
+                                            //             keys?.add(model);
+                                            //
+                                            //
+                                            //             productFeatures?.add(ProductFeatures(
+                                            //
+                                            //                 keyValues: keys
+                                            //             ));
+                                            //             widget.productTableEdit(type:"3",list:productFeatures);
+                                            //             key.text="";
+                                            //             value.text="";
+                                            //           });
+                                            //
+                                            //
+                                            //
+                                            //
+                                            //         }
+                                            //
+                                            //       })
+                                            //
+                                            //
+                                            //     ])
+
+                                          ],
+                                          widths: {
+
+                                            0: FlexColumnWidth(5),
+                                            1: FlexColumnWidth(2),
+
+
+                                          },),
+
+
+                                      ),
+
+                                    ],
+
+
+                                  ),
+                                ),
+                                // Expanded(
+                                //     child: Column(
+                                //       children: [
+                                //
+                                //
+                                //         NewInputCard(
+                                //             readOnly: true,
+                                //             controller: titleController,
+                                //             title: "title"),
+                                //         SizedBox(
+                                //           height: 10,
+                                //         ),
+                                //
+                                //         PopUpSwitchTile(
+                                //             value: active ?? false,
+                                //             title: "isActive",
+                                //             onClick: (gg) {
+                                //               onChange = true;
+                                //               if (!addNew) active = !active!;
+                                //
+                                //               // extendedWarranty = gg;
+                                //               // widget.changeExtendedWarranty(gg);
+                                //               // onChangeExtWarranty = gg;
+                                //               setState(() {});
+                                //             }),
+                                //
+                                //
+                                //       ],
+                                //     )),
+                                // Expanded(
+                                //     child: Column(
+                                //       children: [
+                                //         NewInputCard(
+                                //           controller:
+                                //           descriptionContollercontroller,
+                                //           title: "Description",
+                                //         ),
+                                //         SizedBox(
+                                //           height: 10,
+                                //         ),
+                                //         TextButtonLarge(onPress: (){
+                                //
+                                //             showDailogPopUp(
+                                //               context,
+                                //               ConfigurePopup(
+                                //                 listAssign:listAssign,
+                                //                 type: "CreateSearchLinkedItem-group",
+                                //               ),
+                                //
+                                //
+                                //             );
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //         },text: "choose",)
+                                //
+                                //       ],
+                                //     )),
+                              ],
+                            ),
+
+                            
+                            // VariantFrameWorkBottomTable(listAssign:listAssign),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
 class PatchStaticPopUp extends StatefulWidget {
   final String type;
-
 
   PatchStaticPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -5949,35 +6944,40 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController searchNamecontroller=TextEditingController();
-  TextEditingController imageContollercontroller=TextEditingController();
-  TextEditingController displayContollercontroller=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController searchNamecontroller = TextEditingController();
+  TextEditingController imageContollercontroller = TextEditingController();
+  TextEditingController displayContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     context.read<ListstaticCubit>().getStaticList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -5997,331 +6997,293 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageContollercontroller.text = data.data2.toString();
 
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+                    // context.showSnackBarSuccess(data.data2);
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageContollercontroller.text=data.data2.toString();
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<DivisionreadCubit, DivisionreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        imageContollercontroller.text = data.image ?? "";
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
+                        searchNamecontroller.text = data.searchNmae ?? "";
 
-                        // context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<DivisionreadCubit, DivisionreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            imageContollercontroller.text=data.image??"";
-                            descriptionContollercontroller.text=data.description??"";
-                            searchNamecontroller.text=data.searchNmae??"";
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context
-                            .read<DevisionListCubit>()
-                            .getDevisionList();
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-              ],
-              child: BlocConsumer<ListstaticCubit, ListstaticState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<DevisionListCubit>().getDevisionList();
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<ListstaticCubit, ListstaticState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<DivisionreadCubit>()
+                            .getDivisionRead(veritiaclid!, "static");
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
 
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                        });},
-                        key: _myWidgetState,
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                    label: "Create Static Group",
+                    onApply: () {},
+                    onEdit: () {
+                      DevisionReadModel model = DevisionReadModel(
+                        name: namecontroller?.text ?? "",
+                        image: imageContollercontroller?.text ?? "",
+                        description: descriptionContollercontroller?.text ?? "",
+                        searchNmae: searchNamecontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      print("Rijina" + model.toString());
+                      context
+                          .read<DivisioncreateCubit>()
+                          .postDivisionPatch(veritiaclid, model, "static");
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "static");
+                    },
 
-                        label: "Create Static Group",
-                        onApply: () {
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            StaticVerticalList(
+                              type: "static",
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
+                                  veritiaclid = result[index].id;
+                                  changer = true;
 
-                        },
-                        onEdit: () {
-                          DevisionReadModel model=DevisionReadModel(
-                            name: namecontroller?.text??"",
-                            image:imageContollercontroller?.text??"",
+                                  context
+                                      .read<DivisionreadCubit>()
+                                      .getDivisionRead(veritiaclid!, "static");
 
-                            description: descriptionContollercontroller?.text??"",
-                            searchNmae: searchNamecontroller?.text??"",
-                            isActive: active,
-                          );
-                          print("Rijina"+model.toString());
-                          context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"static");
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"static");
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                StaticVerticalList(
-                                  type: "static",
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=true;
-
-                                    context.read<DivisionreadCubit>().getDivisionRead(veritiaclid!,"static");
-
-
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:searchNamecontroller ,
-                                      title: "Search Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          print("imabbabba"+Variable.imageName.toString());
-                                          context.read<ImagepostCubit>().postImage(Variable.imageName, imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-
-
-                                    SizedBox(height: 10,),
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: searchNamecontroller,
+                                  title: "Search Name",
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      print("imabbabba" +
+                                          Variable.imageName.toString());
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -6738,21 +7700,12 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
 //   }
 // }
 
-
-
-
-
-
 class UomGroupCreatePopUp extends StatefulWidget {
   final String type;
-
 
   UomGroupCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -6765,34 +7718,38 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController shortNamecontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController shortNamecontroller = TextEditingController();
 
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
-  }
-  void initState() {
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -6806,256 +7763,225 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
         BlocProvider(
           create: (context) => UomgroupreadCubit(),
         ),
-
         BlocProvider(
           create: (context) => UomgroupCreationCubit(),
         ),
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<UomgroupreadCubit, UomgroupreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        shortNamecontroller.text = data.shortName ?? "";
 
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-                BlocListener<UomgroupreadCubit, UomgroupreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            shortNamecontroller.text=data.shortName??"";
-
-                            descriptionContollercontroller.text=data.description??"";
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<UomgroupCreationCubit, UomgroupCreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-
-              ],
-              child: BlocConsumer<UomgruoplistCubit, UomgruoplistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<UomgroupreadCubit>().getUomGroupRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<UomgruoplistCubit>().getUomGroupist();
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<UomgroupCreationCubit, UomgroupCreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<UomgruoplistCubit, UomgruoplistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck: true,
-                        functionChane: true,
-                        isDirectCreate: true,
-                        addNew: addNew,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<UomgroupreadCubit>()
+                            .getUomGroupRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        });},
-                        key: _myWidgetState,
-                        // isDirectCreate:changer,
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    functionChane: true,
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    // isDirectCreate:changer,
 
-                        label: "Create UOM Group",
-                        onApply: () {
-                          print("save");
+                    label: "Create UOM Group",
+                    onApply: () {
+                      print("save");
 
-                          context.read<UomgroupCreationCubit>().postCreateUomGroup(descriptionContollercontroller.text??"",namecontroller.text??"",shortNamecontroller.text??"");
+                      context.read<UomgroupCreationCubit>().postCreateUomGroup(
+                          descriptionContollercontroller.text ?? "",
+                          namecontroller.text ?? "",
+                          shortNamecontroller.text ?? "");
 
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      // DevisionReadModel model=DevisionReadModel(
+                      //   name: namecontroller?.text??"",
+                      //   shortName: shortNamecontroller.text??'',
+                      //
+                      //
+                      //   description: descriptionContollercontroller?.text??"",
+                      //
+                      //   isActive: active,
+                      // );
+                      // print("Rijina"+model.toString());
+                      // context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"Uom_goup");
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"Uom_group");
+                    },
 
-                          // widget.onTap();
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      changeAddNew(v);
+                      setState(() {});
 
-                        },
-                        onEdit: () {
-                          // DevisionReadModel model=DevisionReadModel(
-                          //   name: namecontroller?.text??"",
-                          //   shortName: shortNamecontroller.text??'',
-                          //
-                          //
-                          //   description: descriptionContollercontroller?.text??"",
-                          //
-                          //   isActive: active,
-                          // );
-                          // print("Rijina"+model.toString());
-                          // context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"Uom_goup");
-                        },
-                        onCancel: (){
-                          // context
-                          //     .read<MaterialdeleteCubit>()
-                          //     .materialDelete(veritiaclid,"Uom_group");
-
-                        },
-
-                        onAddNew: (v) {
-                          print("Akshay"+v.toString());
-                          changeAddNew(v);
-                          setState(() {});
-
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
-
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:shortNamecontroller ,
-                                      title: "Short Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: shortNamecontroller,
+                                  title: "Short Name",
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -7063,19 +7989,14 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
 class UomGroupPopUp extends StatefulWidget {
   final String type;
 
-
-     UomGroupPopUp({
+  UomGroupPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
   _UomGroupPopUpState createState() => _UomGroupPopUpState();
 }
-
 
 //create uom group
 
@@ -7085,35 +8006,40 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   DevisionReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
-  bool buttonCheck=false;
+  String parentName = "";
+  bool changer = false;
+  bool buttonCheck = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController shortNamecontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController shortNamecontroller = TextEditingController();
 
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     context.read<UomgruoplistCubit>().getUomGroupist();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -7136,335 +8062,285 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
         BlocProvider(
           create: (context) => DivisioncreateCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<UomgroupreadCubit, UomgroupreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        shortNamecontroller.text = data.shortName ?? "";
 
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-                BlocListener<UomgroupreadCubit, UomgroupreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            shortNamecontroller.text=data.shortName??"";
-
-                            descriptionContollercontroller.text=data.description??"";
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<DivisioncreateCubit, DivisioncreateState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<UomgroupCreationCubit, UomgroupCreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<UomgruoplistCubit>().getUomGroupist();
-                        setState(() {
-
-                        });
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<UomgruoplistCubit>().getUomGroupist();
-                        setState(() {
-
-                        });
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-              ],
-              child: BlocConsumer<UomgruoplistCubit, UomgruoplistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<UomgroupreadCubit>().getUomGroupRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<DivisioncreateCubit, DivisioncreateState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                    // if (!onChange) {
-                    //   print("onchange"+onChange.toString());
-                    //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
-                    //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
-                    //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
-                    //   shortNamecontroller = TextEditingController(text: addNew ? "" : group?.description);
-                    //   //
-                    //   active=addNew?true:group?.isActive;
-                    // }
-                    // onChange = false;
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck:true,
-                        functionChane: true,
-                       addNew: addNew,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<UomgroupCreationCubit, UomgroupCreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                        });},
-                        key: _myWidgetState,
-                        // isDirectCreate:changer,
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<UomgruoplistCubit>().getUomGroupist();
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<UomgruoplistCubit>().getUomGroupist();
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<UomgruoplistCubit, UomgruoplistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                        label: "Create UOM Group",
-                        onApply: () {
-                          print("save");
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<UomgroupreadCubit>()
+                            .getUomGroupRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                          // context.read<UomgroupCreationCubit>().postCreateUomGroup(descriptionContollercontroller.text??"",namecontroller.text??"",shortNamecontroller.text??"");
-                          // setState(() {
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                // if (!onChange) {
+                //   print("onchange"+onChange.toString());
+                //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
+                //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
+                //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //   shortNamecontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //   //
+                //   active=addNew?true:group?.isActive;
+                // }
+                // onChange = false;
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    functionChane: true,
+                    addNew: addNew,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    // isDirectCreate:changer,
 
-                          // });
+                    label: "Create UOM Group",
+                    onApply: () {
+                      print("save");
 
-                          // widget.onTap();
+                      // context.read<UomgroupCreationCubit>().postCreateUomGroup(descriptionContollercontroller.text??"",namecontroller.text??"",shortNamecontroller.text??"");
+                      // setState(() {
 
-                        },
-                        onEdit: () {
-                          DevisionReadModel model=DevisionReadModel(
-                            name: namecontroller?.text??"",
-                            shortName: shortNamecontroller.text??'',
+                      // });
 
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+                      DevisionReadModel model = DevisionReadModel(
+                        name: namecontroller?.text ?? "",
+                        shortName: shortNamecontroller.text ?? '',
+                        description: descriptionContollercontroller?.text ?? "",
+                        isActive: active,
+                      );
+                      print("Rijina" + model.toString());
+                      context
+                          .read<DivisioncreateCubit>()
+                          .postDivisionPatch(veritiaclid, model, "Uom_goup");
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "Uom_group");
+                    },
 
-                            description: descriptionContollercontroller?.text??"",
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
 
-                            isActive: active,
-                          );
-                          print("Rijina"+model.toString());
-                          context.read<DivisioncreateCubit>().postDivisionPatch(veritiaclid,model,"Uom_goup");
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"Uom_group");
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            UomGroupVerticalList(
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
-                        },
+                                  veritiaclid = result[index].id;
+                                  changer = true;
 
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
+                                  context
+                                      .read<UomgroupreadCubit>()
+                                      .getUomGroupRead(veritiaclid!);
 
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                UomGroupVerticalList(
-
-
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,
-                                  ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=true;
-
-                                    context.read<UomgroupreadCubit>().getUomGroupRead(veritiaclid!);
-
-
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:shortNamecontroller ,
-                                      title: "Short Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: shortNamecontroller,
+                                  title: "Short Name",
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
 
-
-
 //create baseuom
-
 
 class UomCreatePopUp extends StatefulWidget {
   final String type;
 
-
   UomCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -7477,39 +8353,42 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   BaseUomCreationtModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
   var list;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController uomGroupController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController shortNamecontroller=TextEditingController();
-  TextEditingController standardCodecontroller=TextEditingController();
-  TextEditingController conversionfactorcontroller=TextEditingController();
-  TextEditingController baseEquivalentcontroller=TextEditingController();
-
+  TextEditingController codeController = TextEditingController();
+  TextEditingController uomGroupController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController shortNamecontroller = TextEditingController();
+  TextEditingController standardCodecontroller = TextEditingController();
+  TextEditingController conversionfactorcontroller = TextEditingController();
+  TextEditingController baseEquivalentcontroller = TextEditingController();
 
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     // context.read<BaseuomlistCubit>().getUomist();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -7520,257 +8399,230 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => BaseuomcreationCubit(),
         ),
-
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<BaseuomcreationCubit, BaseuomcreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-
-
-                BlocListener<BaseuomcreationCubit, BaseuomcreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
-                    });
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<BaseuomlistCubit>().getUomist();
+                    Navigator.pop(context);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+                    list = list;
 
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<ReadbaseuomCubit>()
+                            .getBaseUomRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    isDirectCreate: true,
+                    functionChane: true,
+                    key: _myWidgetState,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
+                    label: "Create UOM Group",
+                    onApply: () {
+                      print("save");
+                      BaseUomCreationtModel model = BaseUomCreationtModel(
+                        name: namecontroller?.text ?? "",
+                        shortName: shortNamecontroller.text ?? '',
+                        baseEquivalent: baseEquivalentcontroller.text ?? "",
+                        uomGroupCode: uomGroupController.text ?? "",
+                        standardCode: standardCodecontroller.text ?? "",
+                        conversionFactor:
+                            int.tryParse(conversionfactorcontroller.text),
+                      );
+                      print("model" + model.toString());
+                      context
+                          .read<BaseuomcreationCubit>()
+                          .postCreateBaseUom(model);
+                    },
+                    onEdit: () {
+                      // BaseUomCreationtModel model=BaseUomCreationtModel(
+                      //     name: namecontroller?.text??"",
+                      //     shortName: shortNamecontroller.text??'',
+                      //     baseEquivalent: baseEquivalentcontroller.text??"",uomGroupCode: uomGroupController.text??"",
+                      //     standardCode: standardCodecontroller.text??"",
+                      //     conversionFactor:int.tryParse(conversionfactorcontroller.text),
+                      //     isActive: active
+                      //
+                      // );
+                      // print("model"+model.toString());
+                      // context.read<BaseuomcreationCubit>().postUomPatch(veritiaclid,model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"Uom");
+                    },
 
-              ],
-              child: BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-                        list=list;
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<ReadbaseuomCubit>().getBaseUomRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck: true,
-                        isDirectCreate: true,
-                        functionChane: true,
-                        key: _myWidgetState,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        addNew: addNew,
-                        // isDirectCreate:changer,
-
-                        label: "Create UOM Group",
-                        onApply: () {
-                          print("save");
-                          BaseUomCreationtModel model=BaseUomCreationtModel(
-                            name: namecontroller?.text??"",
-                            shortName: shortNamecontroller.text??'',
-                            baseEquivalent: baseEquivalentcontroller.text??"",uomGroupCode: uomGroupController.text??"",standardCode: standardCodecontroller.text??"",
-                            conversionFactor:int.tryParse(conversionfactorcontroller.text),
-
-                          );
-                          print("model"+model.toString());
-                          context.read<BaseuomcreationCubit>().postCreateBaseUom(model);
-
-
-                        },
-                        onEdit: () {
-                          // BaseUomCreationtModel model=BaseUomCreationtModel(
-                          //     name: namecontroller?.text??"",
-                          //     shortName: shortNamecontroller.text??'',
-                          //     baseEquivalent: baseEquivalentcontroller.text??"",uomGroupCode: uomGroupController.text??"",
-                          //     standardCode: standardCodecontroller.text??"",
-                          //     conversionFactor:int.tryParse(conversionfactorcontroller.text),
-                          //     isActive: active
-                          //
-                          // );
-                          // print("model"+model.toString());
-                          // context.read<BaseuomcreationCubit>().postUomPatch(veritiaclid,model);
-                        },
-                        onCancel: (){
-                          // context
-                          //     .read<MaterialdeleteCubit>()
-                          //     .materialDelete(veritiaclid,"Uom");
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: " Uom Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: uomGroupController,
+                                  label: "Uom Group Code",
+                                  type: "Uomgroup_PopUpCall",
+                                  value: uomGroupController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
 
+                                      uomGroupController.text = va?.code ?? "";
+                                      setState(() {});
 
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: " Uom Code"),
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-
-
-                                      controller:uomGroupController,
-                                      label: "Uom Group Code",
-                                      type:"Uomgroup_PopUpCall",
-                                      value: uomGroupController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-
-                                          uomGroupController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(height: 10,),
-
-
-
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:shortNamecontroller ,
-                                      title: "Short Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:standardCodecontroller,
-                                      title: "Standard code",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      keyboardType: "int",
-                                      controller:conversionfactorcontroller,
-                                      title: "Conversion Factor",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-
-                                      controller:baseEquivalentcontroller,
-                                      title: "Base Equivalent",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: shortNamecontroller,
+                                  title: "Short Name",
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: standardCodecontroller,
+                                  title: "Standard code",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  keyboardType: "int",
+                                  controller: conversionfactorcontroller,
+                                  title: "Conversion Factor",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: baseEquivalentcontroller,
+                                  title: "Base Equivalent",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew)
+                                        // extendedWarranty = gg;
+                                        // widget.changeExtendedWarranty(gg);
+                                        // onChangeExtWarranty = gg;
+                                        setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -7779,13 +8631,9 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
 class UomPopUp extends StatefulWidget {
   final String type;
 
-
   UomPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -7798,39 +8646,42 @@ class _UomPopUpState extends State<UomPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   BaseUomCreationtModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
   var list;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController uomGroupController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController shortNamecontroller=TextEditingController();
-  TextEditingController standardCodecontroller=TextEditingController();
-  TextEditingController conversionfactorcontroller=TextEditingController();
-  TextEditingController baseEquivalentcontroller=TextEditingController();
-
+  TextEditingController codeController = TextEditingController();
+  TextEditingController uomGroupController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController shortNamecontroller = TextEditingController();
+  TextEditingController standardCodecontroller = TextEditingController();
+  TextEditingController conversionfactorcontroller = TextEditingController();
+  TextEditingController baseEquivalentcontroller = TextEditingController();
 
   bool addNew = false;
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     context.read<BaseuomlistCubit>().getUomist(type: "all");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -7850,345 +8701,307 @@ class _UomPopUpState extends State<UomPopUp> {
         BlocProvider(
           create: (context) => BaseuomcreationCubit(),
         ),
-
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ReadbaseuomCubit, ReadbaseuomState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.uomCode ?? "";
+                        namecontroller.text = data.name ?? "";
+                        uomGroupController.text = data.uomGroupCode ?? "";
+                        shortNamecontroller.text = data.shortName ?? "";
+                        conversionfactorcontroller.text =
+                            data.conversionFactor.toString() ?? "";
+                        baseEquivalentcontroller.text =
+                            data.baseEquivalent.toString() ?? "";
+                        standardCodecontroller.text =
+                            data.standardCode.toString() ?? "";
+                        active = data.isActive ?? false;
 
-
-                BlocListener<ReadbaseuomCubit, ReadbaseuomState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.uomCode??"";
-                            namecontroller.text=data.name??"";
-                            uomGroupController.text=data.uomGroupCode??"";
-                            shortNamecontroller.text=data.shortName??"";
-                            conversionfactorcontroller.text=data.conversionFactor.toString()??"";
-                            baseEquivalentcontroller.text=data.baseEquivalent.toString()??"";
-                            standardCodecontroller.text=data.standardCode.toString()??"";
-                            active=data.isActive??false;
-
-
-
-
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-                BlocListener<BaseuomcreationCubit, BaseuomcreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<BaseuomlistCubit>().getUomist();
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-              ],
-              child: BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-                        list=list;
-
-                        result = list.data;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<ReadbaseuomCubit>().getBaseUomRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<BaseuomcreationCubit, BaseuomcreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        buttonCheck: true,
-                        key: _myWidgetState,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<BaseuomlistCubit>().getUomist();
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+                    list = list;
 
-                        });},
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<ReadbaseuomCubit>()
+                            .getBaseUomRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        label: "Create UOM Group",
-                        onApply: () {
-                          print("save");
-                          BaseUomCreationtModel model=BaseUomCreationtModel(
-                            name: namecontroller?.text??"",
-                            shortName: shortNamecontroller.text??'',
-                            baseEquivalent: baseEquivalentcontroller.text??"",uomGroupCode: uomGroupController.text??"",standardCode: standardCodecontroller.text??"",
-                              conversionFactor:int.tryParse(conversionfactorcontroller.text),
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    key: _myWidgetState,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                          );
-                          print("model"+model.toString());
-                          context.read<BaseuomcreationCubit>().postCreateBaseUom(model);
+                    label: "Create UOM Group",
+                    onApply: () {
+                      print("save");
+                      BaseUomCreationtModel model = BaseUomCreationtModel(
+                        name: namecontroller?.text ?? "",
+                        shortName: shortNamecontroller.text ?? '',
+                        baseEquivalent: baseEquivalentcontroller.text ?? "",
+                        uomGroupCode: uomGroupController.text ?? "",
+                        standardCode: standardCodecontroller.text ?? "",
+                        conversionFactor:
+                            int.tryParse(conversionfactorcontroller.text),
+                      );
+                      print("model" + model.toString());
+                      context
+                          .read<BaseuomcreationCubit>()
+                          .postCreateBaseUom(model);
+                    },
+                    onEdit: () {
+                      BaseUomCreationtModel model = BaseUomCreationtModel(
+                          name: namecontroller?.text ?? "",
+                          shortName: shortNamecontroller.text ?? '',
+                          baseEquivalent: baseEquivalentcontroller.text ?? "",
+                          uomGroupCode: uomGroupController.text ?? "",
+                          standardCode: standardCodecontroller.text ?? "",
+                          conversionFactor:
+                              int.tryParse(conversionfactorcontroller.text),
+                          isActive: active);
+                      print("model" + model.toString());
+                      context
+                          .read<BaseuomcreationCubit>()
+                          .postUomPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "Uom");
+                    },
 
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      changeAddNew(v);
+                      setState(() {});
 
-                        },
-                        onEdit: () {
-                          BaseUomCreationtModel model=BaseUomCreationtModel(
-                            name: namecontroller?.text??"",
-                            shortName: shortNamecontroller.text??'',
-                            baseEquivalent: baseEquivalentcontroller.text??"",uomGroupCode: uomGroupController.text??"",
-                            standardCode: standardCodecontroller.text??"",
-                            conversionFactor:int.tryParse(conversionfactorcontroller.text),
-                            isActive: active
+                      setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            BaseUomVerticalList(
+                              list: list,
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
-                          );
-                          print("model"+model.toString());
-                          context.read<BaseuomcreationCubit>().postUomPatch(veritiaclid,model);
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"Uom");
+                                  veritiaclid = result[index].id;
+                                  changer = true;
 
-                        },
+                                  context
+                                      .read<ReadbaseuomCubit>()
+                                      .getBaseUomRead(veritiaclid!);
 
-                        onAddNew: (v) {
-                          print("Akshay"+v.toString());
-                          changeAddNew(v);
-                          setState(() {});
-
-                          setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                BaseUomVerticalList(
-                                  list: list,
-
-
-
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=true;
-
-                                    context.read<ReadbaseuomCubit>().getBaseUomRead(veritiaclid!);
-
-
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: " Uom Code"),
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-
-
-                                      controller:uomGroupController,
-                                      label: "Uom Group Code",
-                                      type:"Uomgroup_PopUpCall",
-                                      value: uomGroupController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-
-                                          uomGroupController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                    ),
-
-
-
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:shortNamecontroller ,
-                                      title: "Short Name",
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-                                    NewInputCard(
-                                      controller:standardCodecontroller,
-                                      title: "Standard code",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      keyboardType: "int",
-                                      controller:conversionfactorcontroller,
-                                      title: "Conversion Factor",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:baseEquivalentcontroller,
-                                      title: "Base Equivalent",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: " Uom Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: uomGroupController,
+                                  label: "Uom Group Code",
+                                  type: "Uomgroup_PopUpCall",
+                                  value: uomGroupController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+
+                                      uomGroupController.text = va?.code ?? "";
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: shortNamecontroller,
+                                  title: "Short Name",
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                  controller: standardCodecontroller,
+                                  title: "Standard code",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  keyboardType: "int",
+                                  controller: conversionfactorcontroller,
+                                  title: "Conversion Factor",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: baseEquivalentcontroller,
+                                  title: "Base Equivalent",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
 
 //patch category
 
 class CategoryPopUp extends StatefulWidget {
   final String type;
 
-
   CategoryPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -8201,38 +9014,42 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   CategoryReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController parentCodeController=TextEditingController();
-  TextEditingController divisionCodeController=TextEditingController();
-  TextEditingController imageCodeController=TextEditingController();
-  TextEditingController alternativeController=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController parentCodeController = TextEditingController();
+  TextEditingController divisionCodeController = TextEditingController();
+  TextEditingController imageCodeController = TextEditingController();
+  TextEditingController alternativeController = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
   var list;
 
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    context.read<CategorylistCubit>().getCategoryist(type:"all");
+    context.read<CategorylistCubit>().getCategoryist(type: "all");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -8255,438 +9072,388 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
         BlocProvider(
           create: (context) => CreatecategoryCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageCodeController.text=data.data2.toString();
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageCodeController.text = data.data2.toString();
 
-                        // context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
 
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<CategoryreadCubit, CategoryreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        parentCodeController.text = data.parentCode ?? '';
+                        divisionCodeController.text = data.divisionCode ?? '';
+                        imageCodeController.text = data.image ?? '';
+                        alternativeController.text = data.alternativename ?? "";
+                        // shortNamecontroller.text=data.shortName??"";
 
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-                BlocListener<CategoryreadCubit,CategoryreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            parentCodeController.text=data.parentCode??'';
-                            divisionCodeController.text=data.divisionCode??'';
-                            imageCodeController.text=data.image??'';
-                            alternativeController.text=data.alternativename??"";
-                            // shortNamecontroller.text=data.shortName??"";
-
-                            descriptionContollercontroller.text=data.description??"";
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-
-                BlocListener<CreatecategoryCubit, CreatecategoryState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<CategorylistCubit>().getCategoryist(type: "all");
-                        setState(() {
-
-                        });
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-              ],
-              child: BlocConsumer<CategorylistCubit, CategorylistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        list=list;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            Variable.divisionId=result[0].id;
-
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<CategoryreadCubit>().getCategoryRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<CreatecategoryCubit, CreatecategoryState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context
+                        .read<CategorylistCubit>()
+                        .getCategoryist(type: "all");
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<CategorylistCubit, CategorylistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                    return AlertDialog(
-                      content: PopUpHeader(
+                    result = list.data;
+                    list = list;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.divisionId = result[0].id;
 
-                        buttonCheck: true,
-                        functionChane: true,
-                        key: _myWidgetState,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<CategoryreadCubit>()
+                            .getCategoryRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
-                        });},
-                        addNew: addNew,
-                        // isDirectCreate:changer,
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    functionChane: true,
+                    key: _myWidgetState,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
-                        label: "Create category",
-                        onApply: () {
-                          print("save");
+                    label: "Create category",
+                    onApply: () {
+                      print("save");
 
-                          //
-                          // CategoryCreationtModel model=CategoryCreationtModel(
-                          //   description: descriptionContollercontroller?.text??"",
-                          //   alternativeName: alternativeController?.text??"",
-                          //   parentCode: parentCodeController?.text??"",
-                          //   divisionCode: divisionCodeController?.text??"",
-                          //   name: namecontroller?.text??'',
-                          //   image:int.tryParse( imageCodeController.text)
-                          // );
-                          // context.read<CreatecategoryCubit>().postCreateCategory(model!);
+                      //
+                      // CategoryCreationtModel model=CategoryCreationtModel(
+                      //   description: descriptionContollercontroller?.text??"",
+                      //   alternativeName: alternativeController?.text??"",
+                      //   parentCode: parentCodeController?.text??"",
+                      //   divisionCode: divisionCodeController?.text??"",
+                      //   name: namecontroller?.text??'',
+                      //   image:int.tryParse( imageCodeController.text)
+                      // );
+                      // context.read<CreatecategoryCubit>().postCreateCategory(model!);
+                    },
+                    onEdit: () {
+                      CategoryCreationtModel model = CategoryCreationtModel(
+                        name: namecontroller?.text ?? "",
+                        alternativeName: alternativeController?.text ?? "",
+                        parentCode: parentCodeController?.text ?? "",
+                        divisionCode: divisionCodeController?.text ?? "",
+                        code: codeController?.text ?? "",
+                        image: int.tryParse(imageCodeController.text),
+                        isActive: active,
+                        description: descriptionContollercontroller?.text ?? "",
+                      );
+                      print("Rijina" + model.toString());
+                      context
+                          .read<CreatecategoryCubit>()
+                          .postcategoryPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "Category_Popup");
+                    },
 
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CategoryVerticalList(
+                              list: list,
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
+                                  veritiaclid = result[index].id;
+                                  changer = true;
+                                  Variable.divisionId = result[index].id;
+                                  //
+                                  context
+                                      .read<CategoryreadCubit>()
+                                      .getCategoryRead(veritiaclid!);
 
-                        },
-                        onEdit: () {
-                          CategoryCreationtModel model=CategoryCreationtModel(
-                            name: namecontroller?.text??"",
-                            alternativeName: alternativeController?.text??"",
-                            parentCode: parentCodeController?.text??"",
-                            divisionCode: divisionCodeController?.text??"",
-                            code: codeController?.text??"",
-                            image:int.tryParse( imageCodeController.text),
-                            isActive:active,
-                            description: descriptionContollercontroller?.text??"",
-
-                          );
-                          print("Rijina"+model.toString());
-                          context.read<CreatecategoryCubit>().postcategoryPatch(veritiaclid,model);
-                        },
-                        onCancel: (){
-                          context
-                              .read<MaterialdeleteCubit>()
-                              .materialDelete(veritiaclid,"Category_Popup");
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                CategoryVerticalList(
-                                  list: list,
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
-                                  setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    changer=true;
-                                    Variable.divisionId=result[index].id;
-                                    //
-                                    context.read<CategoryreadCubit>().getCategoryRead(veritiaclid!);
-
-
-
-
-                                    setState(() {
-
-                                    });
-                                  });
-                                },result: result,
-                                ),
-
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    gapWidthColumn(),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    gapWidthColumn(),
-                                    SelectableDropDownpopUp(
-                                      apiType:"all",
-
-                                      controller:parentCodeController,
-                                      label: "Parent Code",
-                                      type:"Category_PopUpCall",
-                                      value:  parentCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-                                          parentCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-
-                                    ),
-
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-                                      controller:divisionCodeController,
-                                      label: "Division code",
-                                      type:"DivisionListPopUpCall",
-                                      value:  divisionCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-
-
-                                          print(va?.id??"");
-                                          // divisionid=va?.id;
-                                          Variable.divisionId=va?.id;
-
-                                          divisionCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:alternativeController,
-                                      title: "Alternative Name",
-                                    ),
-
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                gapWidthColumn(),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                gapWidthColumn(),
+                                SelectableDropDownpopUp(
+                                  apiType: "all",
+                                  controller: parentCodeController,
+                                  label: "Parent Code",
+                                  type: "Category_PopUpCall",
+                                  value: parentCodeController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+                                      parentCodeController.text =
+                                          va?.code ?? "";
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: divisionCodeController,
+                                  label: "Division code",
+                                  type: "DivisionListPopUpCall",
+                                  value: divisionCodeController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+
+                                      print(va?.id ?? "");
+                                      // divisionid=va?.id;
+                                      Variable.divisionId = va?.id;
+
+                                      divisionCodeController.text =
+                                          va?.code ?? "";
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: alternativeController,
+                                  title: "Alternative Name",
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
-
 
 //create category
 class CategoryCreatePopUp extends StatefulWidget {
   final String type;
 
-
   CategoryCreatePopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -8699,38 +9466,44 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   CategoryReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController parentCodeController=TextEditingController();
-  TextEditingController divisionCodeController=TextEditingController();
-  TextEditingController imageCodeController=TextEditingController();
-  TextEditingController alternativeController=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController parentCodeController = TextEditingController();
+  TextEditingController parentCodeNameController = TextEditingController();
+  TextEditingController divisionCodeController = TextEditingController();
+  TextEditingController divisionCodeNameController = TextEditingController();
+  TextEditingController imageCodeController = TextEditingController();
+  TextEditingController alternativeController = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   bool addNew = false;
   var list;
 
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
     // context.read<CategorylistCubit>().getCategoryist(type: "all");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -8741,388 +9514,390 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
         BlocProvider(
           create: (context) => UomgroupCreationCubit(),
         ),
         BlocProvider(
           create: (context) => CreatecategoryCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageCodeController.text = data.data2.toString();
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageCodeController.text=data.data2.toString();
+                    // context.showSnackBarSuccess(data.data2);
 
-                        // context.showSnackBarSuccess(data.data2);
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<CreatecategoryCubit, CreatecategoryState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<CategorylistCubit>().getCategoryist(type:"");
+                    Navigator.pop(context);
+
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    Navigator.pop(context);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<CategorylistCubit, CategorylistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    list = list;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.divisionId = result[0].id;
 
-
-
-                BlocListener<CreatecategoryCubit, CreatecategoryState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        Navigator.pop(context);
-
-                        setState(() {
-
-                        });
-
-
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<CategoryreadCubit>()
+                            .getCategoryRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        Navigator.pop(context);
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                // if (!onChange) {
+                //   print("onchange"+onChange.toString());
+                //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
+                //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
+                //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
+                //
+                //   parentCodeController = TextEditingController(text: addNew ? "" : group?.parentCode);
+                //   divisionCodeController = TextEditingController(text: addNew ? "" : group?.divisionCode);
+                //   imageCodeController = TextEditingController(text: addNew ? "" : group?.image);
+                //   alternativeController = TextEditingController(text: addNew ? "" : group?.alternativename);
+                //   active=addNew?true:group?.isActive;
+                // }
+                // onChange = false;
+                return AlertDialog(
+                  content: PopUpHeader(
+                    buttonCheck: true,
+                    isDirectCreate: true,
+                    functionChane: true,
+                    key: _myWidgetState,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    // isDirectCreate:changer,
 
+                    label: "Create category",
+                    onApply: () {
+                      print("save");
 
+                      CategoryCreationtModel model = CategoryCreationtModel(
+                          description:
+                              descriptionContollercontroller?.text ?? "",
+                          alternativeName: alternativeController?.text ?? "",
+                          parentCode: parentCodeController?.text ?? "",
+                          divisionCode: divisionCodeController?.text ?? "",
+                          name: namecontroller?.text ?? '',
+                          image: int.tryParse(imageCodeController.text));
+                      context
+                          .read<CreatecategoryCubit>()
+                          .postCreateCategory(model!);
+                    },
+                    onEdit: () {
+                      // CategoryCreationtModel model=CategoryCreationtModel(
+                      //   name: namecontroller?.text??"",
+                      //   alternativeName: alternativeController?.text??"",
+                      //   parentCode: parentCodeController?.text??"",
+                      //   divisionCode: divisionCodeController?.text??"",
+                      //   code: codeController?.text??"",
+                      //   image:int.tryParse( imageCodeController.text),
+                      //   isActive:active,
+                      //   description: descriptionContollercontroller?.text??"",
+                      //
+                      // );
+                      // print("Rijina"+model.toString());
+                      // context.read<CreatecategoryCubit>().postcategoryPatch(veritiaclid,model);
+                    },
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"Category_Popup");
+                    },
 
-              ],
-              child: BlocConsumer<CategorylistCubit, CategorylistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        list=list;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            Variable.divisionId=result[0].id;
-
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<CategoryreadCubit>().getCategoryRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-                    // if (!onChange) {
-                    //   print("onchange"+onChange.toString());
-                    //   namecontroller = TextEditingController(text: addNew ? "" : group?.name);
-                    //   codeController = TextEditingController(text: addNew ? "" : group?.id.toString());
-                    //   descriptionContollercontroller = TextEditingController(text: addNew ? "" : group?.description);
-                    //
-                    //   parentCodeController = TextEditingController(text: addNew ? "" : group?.parentCode);
-                    //   divisionCodeController = TextEditingController(text: addNew ? "" : group?.divisionCode);
-                    //   imageCodeController = TextEditingController(text: addNew ? "" : group?.image);
-                    //   alternativeController = TextEditingController(text: addNew ? "" : group?.alternativename);
-                    //   active=addNew?true:group?.isActive;
-                    // }
-                    // onChange = false;
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        buttonCheck: true,
-                        isDirectCreate: true,
-                        functionChane: true,
-                        key: _myWidgetState,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        addNew: addNew,
-                        // isDirectCreate:changer,
-
-                        label: "Create category",
-                        onApply: () {
-                          print("save");
-
-
-                          CategoryCreationtModel model=CategoryCreationtModel(
-                              description: descriptionContollercontroller?.text??"",
-                              alternativeName: alternativeController?.text??"",
-                              parentCode: parentCodeController?.text??"",
-                              divisionCode: divisionCodeController?.text??"",
-                              name: namecontroller?.text??'',
-                              image:int.tryParse( imageCodeController.text)
-                          );
-                          context.read<CreatecategoryCubit>().postCreateCategory(model!);
-
-
-
-                        },
-                        onEdit: () {
-                          // CategoryCreationtModel model=CategoryCreationtModel(
-                          //   name: namecontroller?.text??"",
-                          //   alternativeName: alternativeController?.text??"",
-                          //   parentCode: parentCodeController?.text??"",
-                          //   divisionCode: divisionCodeController?.text??"",
-                          //   code: codeController?.text??"",
-                          //   image:int.tryParse( imageCodeController.text),
-                          //   isActive:active,
-                          //   description: descriptionContollercontroller?.text??"",
-                          //
-                          // );
-                          // print("Rijina"+model.toString());
-                          // context.read<CreatecategoryCubit>().postcategoryPatch(veritiaclid,model);
-                        },
-                        onCancel: (){
-                          // context
-                          //     .read<MaterialdeleteCubit>()
-                          //     .materialDelete(veritiaclid,"Category_Popup");
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: parentCodeNameController,
+                                  label: "Parent Code",
+                                  type: "Category_PopUpCall",
+                                  value: parentCodeNameController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+                                      parentCodeController.text = va?.code ?? "";
+                                      parentCodeNameController.text = va?.name ?? "";
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller:divisionCodeNameController,
+                                  label: "Division",
+                                  type:"Division_ListPopUpCall",
+                                  value: divisionCodeNameController.text,
+                                  onchange: (vale){
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+
+
+                                      // print(va?.id??"");
+                                      // divisionid=va?.id;
+                                      // Variable.divisionId=va?.id;
+
+                                      divisionCodeController.text=va?.code??"";
+                                      divisionCodeNameController.text=va?.name??"";
+                                      // widget.divisionName.text=va?.name??"";
+                                      setState(() {
+
+                                      });
+
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                  // onAddNew: () {
+                                  //
+                                  //   showDailogPopUp(
+                                  //     context,
+                                  //     ConfigurePopup(
+                                  //       type: "devision-group",
+                                  //     ),
+                                  //
+                                  //
+                                  //   );
+                                  // },
+                                ),
 
 
 
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-
-                                      controller:parentCodeController,
-                                      label: "Parent Code",
-                                      type:"Category_PopUpCall",
-                                      value:  parentCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-                                          parentCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-
-                                    ),
-
-                              SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-                                      controller:divisionCodeController,
-                                      label: "Division code",
-                                      type:"DivisionListPopUpCall",
-                                      value:  divisionCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-
-
-                                          print(va?.id??"");
-                                          // divisionid=va?.id;
-                                          Variable.divisionId=va?.id;
-
-                                          divisionCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-
-                                    ),
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:alternativeController,
-                                      title: "Alternative Name",
-                                    ),
-                                    SizedBox(height: 10,),
-
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          // if(!addNew)
-                                          //   active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
+                                // SelectableDropDownpopUp(
+                                //   controller: divisionCodeController,
+                                //   label: "Division code",
+                                //   type: "DivisionListPopUpCall",
+                                //   value: divisionCodeController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //
+                                //       print("divv${divisionCodeController.text}");
+                                //       // divisionid=va?.id;
+                                //       Variable.divisionId = va?.id;
+                                //
+                                //       divisionCodeController.text =
+                                //           va?.code ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
+
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: alternativeController,
+                                  title: "Alternative Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      // if(!addNew)
+                                      //   active=!active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
-
-
-
 
 //create group
 
 class GroupPopUp extends StatefulWidget {
   final String type;
 
-
   GroupPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -9135,39 +9910,42 @@ class _GroupPopUpState extends State<GroupPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   MaterialReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController imageCodeController=TextEditingController();
-  TextEditingController categoryCodeController=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
-  TextEditingController searchNameContollercontroller=TextEditingController();
-  TextEditingController displayNameContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController imageCodeController = TextEditingController();
+  TextEditingController categoryCodeController = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchNameContollercontroller = TextEditingController();
+  TextEditingController displayNameContollercontroller =
+      TextEditingController();
   bool addNew = false;
   var list;
 
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
-  void initState() {
 
+  void initState() {
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -9178,315 +9956,275 @@ class _GroupPopUpState extends State<GroupPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
-
-
         BlocProvider(
           create: (context) => GroupcreationCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageCodeController.text = data.data2.toString();
 
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageCodeController.text=data.data2.toString();
+                    // context.showSnackBarSuccess(data.data2);
 
-                        // context.showSnackBarSuccess(data.data2);
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<GroupcreationCubit, GroupcreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+
+                    context.read<GrouplistCubit>().getGroupListList();
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<GrouplistCubit, GrouplistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
                   },
-                ),
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
+                    result = list.data;
+                    list = list;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.divisionId = result[0].id;
 
-
-
-                BlocListener<GroupcreationCubit, GroupcreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<GrouplistCubit>().getGroupListList();
-                        setState(() {
-
-                        });
-
-
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<GroupreadCubit>()
+                            .getGroupRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
                       }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
+
+                      setState(() {});
                     });
-                  },
-                ),
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    key: _myWidgetState,
+                    isDirectCreate: true,
+                    changer: changer,
+                    buttonCheck: true,
+                    // isDirectCreate:changer,
 
+                    label: "Create Group",
+                    onApply: () {
+                      print("save");
 
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                          name: namecontroller?.text ?? "",
+                          searchNmae: searchNameContollercontroller?.text ?? "",
+                          description:
+                              descriptionContollercontroller?.text ?? "",
+                          image: int.tryParse(imageCodeController.text),
+                          displayName:
+                              displayNameContollercontroller?.text ?? "",
+                          categoryCode: categoryCodeController.text ?? "");
+                      context
+                          .read<GroupcreationCubit>()
+                          .postCreateGroup(model!);
+                    },
+                    onEdit: () {},
+                    onCancel: () {
+                      // context.read<MaterialdeleteCubit>().materialDelete(veritiaclid,"Group_popup");
+                    },
 
-              ],
-              child: BlocConsumer<GrouplistCubit, GrouplistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        list=list;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            Variable.divisionId=result[0].id;
-
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<GroupreadCubit>().getGroupRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
-                      });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
-
-
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
-
-                        });},
-                        addNew: addNew,
-                        key: _myWidgetState,
-                        isDirectCreate: true,
-                        changer:changer,
-                        buttonCheck: true,
-                        // isDirectCreate:changer,
-
-                        label: "Create Group",
-                        onApply: () {
-                          print("save");
-
-
-                          MaterialCreationtModel model=MaterialCreationtModel(
-                              name: namecontroller?.text??"",
-                              searchNmae: searchNameContollercontroller?.text??"",
-                              description: descriptionContollercontroller?.text??"",
-                              image: int.tryParse(imageCodeController.text),
-                              displayName: displayNameContollercontroller?.text??"",
-                              categoryCode: categoryCodeController.text??""
-                          );
-                          context.read<GroupcreationCubit>().postCreateGroup(model!);
-
-
-
-                        },
-                        onEdit: () {
-
-                        },
-                        onCancel: (){
-                          // context.read<MaterialdeleteCubit>().materialDelete(veritiaclid,"Group_popup");
-
-                        },
-
-                        onAddNew: (v) {
-                          // print("Akshay"+v.toString());
-                          // changeAddNew(v);
-                          // setState(() {});
-                          //
-                          // setState(() {});
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                    onAddNew: (v) {
+                      // print("Akshay"+v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Column(
                               children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
 
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
 
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
 
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: categoryCodeController,
+                                  label: "Category Code",
+                                  type: "Category_PopUpCall",
+                                  value: categoryCodeController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    // onChange=true;
+                                    categoryCodeController.text =
+                                        va?.code ?? "";
+                                    setState(() {});
 
-                                    FileUploadField(
-
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-                                          imageName=myFile?.fileName??"";
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-
-                                      controller:categoryCodeController,
-                                      label: "Category Code",
-                                      type:"Category_PopUpCall",
-                                      value:  categoryCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-
-                                          // onChange=true;
-                                          categoryCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-
-                                      },
-
-                                    ),
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      controller:searchNameContollercontroller,
-                                      title: "Search Name",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      controller:displayNameContollercontroller,
-                                      title: "Display Name",
-                                    ),
-                                    SizedBox(height: 10,),
-
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
+                                    // onChange = true;
+                                    // orderType.text = va!;
+                                  },
+                                ),
                               ],
-                            ),
-                          ),
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: searchNameContollercontroller,
+                                  title: "Search Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: displayNameContollercontroller,
+                                  title: "Display Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
@@ -9494,13 +10232,9 @@ class _GroupPopUpState extends State<GroupPopUp> {
 class GroupPatchPopUp extends StatefulWidget {
   final String type;
 
-
   GroupPatchPopUp({
     Key? key,
     required this.type,
-
-
-
   }) : super(key: key);
 
   @override
@@ -9513,39 +10247,43 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
-  String imageName="";
-  String imageEncode="";
-  int selectedVertical=0;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
   MaterialReadModel? group;
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  String parentName="";
-  bool changer=false;
+  String parentName = "";
+  bool changer = false;
 
-
-  TextEditingController codeController=TextEditingController();
-  TextEditingController namecontroller=TextEditingController();
-  TextEditingController imageCodeController=TextEditingController();
-  TextEditingController categoryCodeController=TextEditingController();
-  TextEditingController descriptionContollercontroller=TextEditingController();
-  TextEditingController searchNameContollercontroller=TextEditingController();
-  TextEditingController displayNameContollercontroller=TextEditingController();
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController imageCodeController = TextEditingController();
+  TextEditingController categoryCodeController = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  TextEditingController searchNameContollercontroller = TextEditingController();
+  TextEditingController displayNameContollercontroller =
+      TextEditingController();
   bool addNew = false;
   var list;
 
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
 
-  final GlobalKey< _CreateStaticPopUpState> _myWidgetState = GlobalKey< _CreateStaticPopUpState>();
-  void changeAddNew(bool va) { addNew = va;
-  onChange=false;
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
   }
+
   void initState() {
-    context.read<GrouplistCubit>().getGroupListList(type:"all");
+    context.read<GrouplistCubit>().getGroupListList(type: "all");
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
     // descriptionController = TextEditingController(
     //     text: widget.warranty?[widget.indexValue!].description == null
     //         ? ""
@@ -9562,397 +10300,357 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
         ),
-
         BlocProvider(
           create: (context) => GroupcreationCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return MultiBlocListener(
-              listeners: [
-                BlocListener<ImagepostCubit, ImagepostState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loadingggg");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        print("dataAkshay"+data.data2.toString());
-                        imageCodeController.text=data.data2.toString();
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ImagepostCubit, ImagepostState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    print("dataAkshay" + data.data2.toString());
+                    imageCodeController.text = data.data2.toString();
 
-                        // context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
 
-                      }
-                      else {
-                        // context.showSnackBarError(data.data2);
-                        // print(data.data1.toString());
-                      }
-                      ;
-                    });
-                  },
-                ),
+                  } else {
+                    // context.showSnackBarError(data.data2);
+                    // print(data.data1.toString());
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<GroupreadCubit, GroupreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data.name ?? "";
+                        displayNameContollercontroller.text =
+                            data.displayName ?? "";
+                        imageCodeController.text = data.image ?? '';
+                        categoryCodeController.text = data.categoryCode ?? "";
+                        // // shortNamecontroller.text=data.shortName??"";
 
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
 
-                BlocListener<GroupreadCubit,GroupreadState>(
-                  listener: (context, state) {
-                    print("nnnnop"+state.toString());
-                    state.maybeWhen(
-                        orElse: () {},
-                        error: () {
-                          print("error");
-                        },
-                        success: (data) {
-                          setState(() {
-                            group=data;
-                            codeController.text=data.code??"";
-                            namecontroller.text=data.name??"";
-                            displayNameContollercontroller.text=data.displayName??"";
-                            imageCodeController.text=data.image??'';
-                            categoryCodeController.text=data.categoryCode??"";
-                            // // shortNamecontroller.text=data.shortName??"";
-
-                            descriptionContollercontroller.text=data.description??"";
-
-
-                            active=data.isActive??false;
-
-                          });
-                        });
-
-
-
-                  },
-                ),
-
-                BlocListener<GroupcreationCubit, GroupcreationState>(
-                  listener: (context, state) {
-                    print("postssssssss" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      print(data.data1);
-
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-                        context.read<GrouplistCubit>().getGroupListList(type:"all");
-                        setState(() {
-
-                        });
-
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-                BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-                  listener: (context, state) {
-                    print("delete" + state.toString());
-                    state.maybeWhen(orElse: () {
-                      // context.
-                      context.showSnackBarError("Loading");
-                    }, error: () {
-                      context.showSnackBarError(Variable.errorMessege);
-                    }, success: (data) {
-                      if (data.data1) {
-                        context.showSnackBarSuccess(data.data2);
-
-                      }
-                      else {
-                        context.showSnackBarError(data.data2);
-                        print(data.data1);
-                      }
-                      ;
-                    });
-                  },
-                ),
-
-
-              ],
-              child: BlocConsumer<GrouplistCubit, GrouplistState>(
-                listener: (context, state) {
-                  print("state"+state.toString());
-                  state.maybeWhen(
-                      orElse: () {},
-                      error: () {
-                        print("error");
-                      },
-                      success: (list) {
-                        print("aaaaayyyiram"+list.data.toString());
-
-                        result = list.data;
-                        list=list;
-                        print("seee"+result.toString());
-                        setState(() {
-                          if(result.isNotEmpty){
-
-                            veritiaclid=result[0].id;
-                            Variable.divisionId=result[0].id;
-
-                            // Variable.verticalid=result[0].id;
-                            print("Variable.ak"+Variable.verticalid.toString());
-                            context.read<GroupreadCubit>().getGroupRead(veritiaclid!);
-                          }
-                          else{
-                            print("common");
-                            // select=true;
-                            setState(() {
-                            });
-
-                          }
-
-
-                          setState(() {});
-
-                        });
+                        active = data.isActive ?? false;
                       });
-                },
-                builder: (context, state) {
-                  return Builder(builder: (context) {
+                    });
+              },
+            ),
+            BlocListener<GroupcreationCubit, GroupcreationState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  print(data.data1);
 
-                    return AlertDialog(
-                      content: PopUpHeader(
-                        functionChane: true,
-                        onTap: () { addNew=!addNew;
-                        setState(() {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context
+                        .read<GrouplistCubit>()
+                        .getGroupListList(type: "all");
+                    setState(() {});
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<GrouplistCubit, GrouplistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
 
-                        });},
-                        addNew: addNew,
-                        buttonCheck: true,
-                        key: _myWidgetState,
-                        // isDirectCreate: changer,
-                        changer:changer,
-                        // isDirectCreate:changer,
+                    result = list.data;
+                    list = list;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        Variable.divisionId = result[0].id;
 
-                        label: "Create Group",
-                        onApply: () {
-                          print("save");
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context
+                            .read<GroupreadCubit>()
+                            .getGroupRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
 
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    addNew: addNew,
+                    buttonCheck: true,
+                    key: _myWidgetState,
+                    // isDirectCreate: changer,
+                    changer: changer,
+                    // isDirectCreate:changer,
 
+                    label: "Create Group",
+                    onApply: () {
+                      print("save");
+                    },
+                    onEdit: () {
+                      MaterialCreationtModel model = MaterialCreationtModel(
+                        name: namecontroller?.text ?? "",
+                        categoryCode: categoryCodeController?.text ?? "",
+                        displayName: displayNameContollercontroller?.text ?? "",
+                        searchNmae: searchNameContollercontroller?.text ?? "",
+                        image: int.tryParse(imageCodeController.text),
+                        isActive: active,
+                        description: descriptionContollercontroller?.text ?? "",
+                      );
+                      print("Rijina" + model.toString());
+                      context
+                          .read<GroupcreationCubit>()
+                          .postGroupPatch(veritiaclid, model);
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "Group_popup");
+                    },
 
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            GroupVerticalList(
+                              list: list,
+                              selectedVertical: selectedVertical,
+                              itemsearch: itemsearch,
+                              ontap: (int index) {
+                                setState(() {
+                                  selectedVertical = index;
+                                  addNew = false;
+                                  // select=false;
+                                  // updateCheck=false;
 
-
-                        },
-                        onEdit: () {
-                          MaterialCreationtModel model=MaterialCreationtModel(
-                            name: namecontroller?.text??"",
-                            categoryCode: categoryCodeController?.text??"",
-                            displayName: displayNameContollercontroller?.text??"",
-
-                            searchNmae: searchNameContollercontroller?.text??"",
-                            image:int.tryParse( imageCodeController.text),
-                            isActive:active,
-                            description: descriptionContollercontroller?.text??"",
-
-                          );
-                          print("Rijina"+model.toString());
-                          context.read<GroupcreationCubit>().postGroupPatch(veritiaclid,model);
-                        },
-                        onCancel: (){
-                          context.read<MaterialdeleteCubit>().materialDelete(veritiaclid,"Group_popup");
-
-                        },
-
-                        onAddNew: (v) {
-
-                        },
-                        dataField: Expanded(
-                          // height: MediaQuery.of(context).size.height * .6,
-                          child: IntrinsicHeight(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-
-                                GroupVerticalList(
-                                  list: list,
-                                  selectedVertical: selectedVertical,
-                                  itemsearch: itemsearch,ontap: (int index){
+                                  veritiaclid = result[index].id;
                                   setState(() {
-                                    selectedVertical=index;
-                                    addNew=false;
-                                    // select=false;
-                                    // updateCheck=false;
-
-
-                                    veritiaclid = result[index].id;
-                                    setState(() {
-                                      changer=false;
-                                    });
-
-                                    Variable.divisionId=result[index].id;
-                                    //
-                                    context.read<GroupreadCubit>().getGroupRead(veritiaclid!);
-
-
-
-
-                                    setState(() {
-
-                                    });
+                                    changer = false;
                                   });
-                                },result: result,
-                                ),
 
-                                Expanded(child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController, title: "Code"),
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:namecontroller ,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(height: 10,),
-                                    FileUploadField(
+                                  Variable.divisionId = result[index].id;
+                                  //
+                                  context
+                                      .read<GroupreadCubit>()
+                                      .getGroupRead(veritiaclid!);
 
-                                        fileName: imageName,
-                                        fileUrl:imageName,
-                                        onChangeTap: (p0) {
-                                          onChange=true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange=true;
-
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
-
-                                          imageEncode =
-                                              myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context
-                                              .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange=true;
-                                          // Variable.popUp = false;
-
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-                                    SizedBox(height: 10,),
-                                    SelectableDropDownpopUp(
-
-                                      controller:categoryCodeController,
-                                      label: "Category Code",
-                                      type:"Category_PopUpCall",
-                                      value:  categoryCodeController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange=true;
-                                          categoryCodeController.text=va?.code??"";
-                                          setState(() {
-
-                                          });
-
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-
-                                    ),
-
-
-                                  ],
-                                )),
-
-                                Expanded(child:   Column(
-                                  children: [
-
-
-                                    SizedBox(height: 10,),
-                                    NewInputCard(
-                                      controller:descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      controller:searchNameContollercontroller,
-                                      title: "Search Name",
-                                    ),
-                                    SizedBox(height: 10,),
-
-                                    NewInputCard(
-                                      controller:displayNameContollercontroller,
-                                      title: "Display Name",
-                                    ),
-                                    SizedBox(height: 10,),
-
-
-                                    PopUpSwitchTile(
-                                        value: active??false,
-                                        title: "isActive",
-                                        onClick: (gg) {
-                                          onChange=true;
-                                          if(!addNew)
-                                            active=!active!;
-
-                                          // extendedWarranty = gg;
-                                          // widget.changeExtendedWarranty(gg);
-                                          // onChangeExtWarranty = gg;
-                                          setState(() {});
-                                        }),
-
-
-
-
-
-                                  ],
-                                )),
-                              ],
+                                  setState(() {});
+                                });
+                              },
+                              result: result,
                             ),
-                          ),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
+
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
+
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                SelectableDropDownpopUp(
+                                  controller: categoryCodeController,
+                                  label: "Category Code",
+                                  type: "Category_PopUpCall",
+                                  value: categoryCodeController.text,
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (BrandListModel? va) {
+                                    setState(() {
+                                      onChange = true;
+                                      categoryCodeController.text =
+                                          va?.code ?? "";
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            )),
+                            Expanded(
+                                child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: searchNameContollercontroller,
+                                  title: "Search Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  controller: displayNameContollercontroller,
+                                  title: "Display Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                PopUpSwitchTile(
+                                    value: active ?? false,
+                                    title: "isActive",
+                                    onClick: (gg) {
+                                      onChange = true;
+                                      if (!addNew) active = !active!;
+
+                                      // extendedWarranty = gg;
+                                      // widget.changeExtendedWarranty(gg);
+                                      // onChangeExtWarranty = gg;
+                                      setState(() {});
+                                    }),
+                              ],
+                            )),
+                          ],
                         ),
                       ),
-                    );
-                  });
-                },
-              ),
-            );
-          }
-      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
     );
   }
 }
-
-
-
 
 // class GroupPopUp extends StatefulWidget {
 //   final String type;
@@ -10438,12 +11136,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
 //   }
 // }
 
-
-
-
 //Uom
-
-
 
 //Uom
 
@@ -11299,16 +11992,22 @@ class PopUpHeader extends StatefulWidget {
   final Function(bool)? onAddNew;
   final bool isDirectCreate;
   final bool changer;
+
   const PopUpHeader({
     Key? key,
-    this.buttonCheck=false,
-    this.functionChane=false,
-     this.label,this.onEdit,
-    this.widthPopup=50,
+    this.buttonCheck = false,
+    this.functionChane = false,
+    this.label,
+    this.onEdit,
+    this.widthPopup = 50,
     this.onCancel,
-    this.changer=false,
-    this.dataField,this.onAddNew,
-     this.onApply,  this.isDirectCreate=false,  this.onTap, this.addNew,
+    this.changer = false,
+    this.dataField,
+    this.onAddNew,
+    this.onApply,
+    this.isDirectCreate = false,
+    this.onTap,
+    this.addNew,
   }) : super(key: key);
 
   @override
@@ -11316,24 +12015,22 @@ class PopUpHeader extends StatefulWidget {
 }
 
 class _PopUpHeaderState extends State<PopUpHeader> {
-
   @override
   Widget build(BuildContext context) {
-    changer(){
-      widget.isDirectCreate!=false;
+    changer() {
+      widget.isDirectCreate != false;
     }
+
     return Container(
       // height:100,
 
-
       padding: EdgeInsets.all(10),
       width: 640,
-      child: GeneralSavePage(onEdit: widget.onEdit,
+      child: GeneralSavePage(
+        onEdit: widget.onEdit,
         onPopUp: true,
-  
-
         onApply: widget.onApply,
-        onCreate:widget.isDirectCreate?true: widget.addNew!,
+        onCreate: widget.isDirectCreate ? true : widget.addNew!,
         onCancel: widget.onCancel,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -11341,21 +12038,27 @@ class _PopUpHeaderState extends State<PopUpHeader> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                boldText(widget.label??"", fontSize: 18),
-              widget.buttonCheck?Container():  Transform.scale(
-                  scale: 0.8,
-                  child:widget.functionChane? ClipOval(
-                    child: Material(
-                      color: Colors.grey.withOpacity(.5),
-                      child:
-                      GestureDetector(
-                          onTap: widget.onTap,
-                          child: Icon(widget.addNew!?Icons.close:Icons.add,color: Colors.black,)),
-                    ),
-                  )
-
-                  : _toggleButtonList(widget.onAddNew??(v){}),
-                ),
+                boldText(widget.label ?? "", fontSize: 18),
+                widget.buttonCheck
+                    ? Container()
+                    : Transform.scale(
+                        scale: 0.8,
+                        child: widget.functionChane
+                            ? ClipOval(
+                                child: Material(
+                                  color: Colors.grey.withOpacity(.5),
+                                  child: GestureDetector(
+                                      onTap: widget.onTap,
+                                      child: Icon(
+                                        widget.addNew!
+                                            ? Icons.close
+                                            : Icons.add,
+                                        color: Colors.black,
+                                      )),
+                                ),
+                              )
+                            : _toggleButtonList(widget.onAddNew ?? (v) {}),
+                      ),
                 Transform.scale(
                   scale: 0.7,
                   alignment: Alignment.topRight,
@@ -11374,22 +12077,22 @@ class _PopUpHeaderState extends State<PopUpHeader> {
   }
 
   List<bool> _selections = List.generate(3, (index) => false);
-  _toggleButtonList(Function(bool) onAdNew) => ToggleButtons(
-    children: [
-      Icon(Icons.add_rounded, color: Colors.grey),
-      Icon(Icons.cleaning_services_rounded, color: Colors.grey),
-      Icon(Icons.history_rounded, color: Colors.grey),
-    ],
-    renderBorder: false,
-    borderWidth: 0.1,
-    // splashColor: Palette.SUCCESS,
-    isSelected: _selections,
-    onPressed: (int i) {
 
-      setState(() {
-        _selections[i] = !_selections[i];
-        onAdNew(_selections[0]);
-      });
-    },
-  );
+  _toggleButtonList(Function(bool) onAdNew) => ToggleButtons(
+        children: [
+          Icon(Icons.add_rounded, color: Colors.grey),
+          Icon(Icons.cleaning_services_rounded, color: Colors.grey),
+          Icon(Icons.history_rounded, color: Colors.grey),
+        ],
+        renderBorder: false,
+        borderWidth: 0.1,
+        // splashColor: Palette.SUCCESS,
+        isSelected: _selections,
+        onPressed: (int i) {
+          setState(() {
+            _selections[i] = !_selections[i];
+            onAdNew(_selections[0]);
+          });
+        },
+      );
 }

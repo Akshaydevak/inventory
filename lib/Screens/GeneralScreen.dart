@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/logi/login.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -83,6 +84,7 @@ class _GeneralScreenState extends State<GeneralScreen> {
   TextEditingController note = TextEditingController();
   TextEditingController orderDate = TextEditingController();
   TextEditingController vendorCode = TextEditingController();
+  TextEditingController vendorCodeName = TextEditingController();
   TextEditingController Paymentcode = TextEditingController();
   TextEditingController Paymentstatus = TextEditingController();
   TextEditingController orderStatus = TextEditingController();
@@ -223,6 +225,7 @@ List<TextEditingController> vatController =[];
     grandtotal.text="";
     actualcost.text="";
     vendorCode.text="";
+    vendorCodeName.text="";
     Recievingstatus.text="";
     variantId = "";
     varinatname =
@@ -390,6 +393,7 @@ List<TextEditingController> vatController =[];
     double width = MediaQuery.of(context).size.width;
     // inventoryId.text=Variable.inventory_ID ;
     return Scaffold(
+      backgroundColor: Pellet.bagroundColor,
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -453,18 +457,39 @@ List<TextEditingController> vatController =[];
                           print("Variable.tableedit"+Variable.tableedit.toString());
                           print("Variable.tableedit"+Variable.tableindex.toString());
                           if(Variable.tableedit==true){
+                            var vendorDetailList=purchaseTable?.vendorDetails;
+                            String? code;
+                            if(purchaseTable?.vendorDetails?.isNotEmpty==true){
+                              for(var i=0;i<vendorDetailList!.length;i++){
+                                if(vendorDetailList[i].vendorRefCode==vendorCode.text){
+                                  code=vendorDetailList[i].vendorRefCode;
+                                }
+
+                              }
+                            }
                             table.replaceRange(Variable.tableindex, (Variable.tableindex+1), [OrderLines(isRecieved: table[Variable.tableindex].isRecieved,isActive:table[Variable.tableindex].isActive ,maximumQty:table[Variable.tableindex].maximumQty,minimumQty:table[Variable.tableindex].minimumQty,requestedQty: table[Variable.tableindex].requestedQty,
                                 variableAmount:table[Variable.tableindex].variableAmount,vat: purchaseTable?.vat,currentQty: table[Variable.tableindex].currentQty,variantName:  purchaseTable?.name,barcode: purchaseTable?.barCode?.barcodeNumber,excessTax: table[Variable.tableindex].excessTax,
-                                unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount,supplierCode: purchaseTable?.vendorDetails?.vendorRefCode??""
+                                unitCost:purchaseTable?.unitCost,foc: table[Variable.tableindex].foc,grandTotal: table[Variable.tableindex].grandTotal,actualCost: table[Variable.tableindex].actualCost,variantId: table[Variable.tableindex].variantId,purchaseuom: purchaseTable?.purchaseUomName,discount: table[Variable.tableindex].discount,
+                                supplierCode: code
                             )]);
                           }
                           else{
                             print("searching data"+purchaseTable.toString());
                             varinatname = purchaseTable?.name;
-                           vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
+                            var vendorDetailList=purchaseTable?.vendorDetails;
+                          if(purchaseTable?.vendorDetails?.isNotEmpty==true){
+                            for(var i=0;i<vendorDetailList!.length;i++){
+                              if(vendorDetailList[i].vendorRefCode==vendorCode.text){
+                                vendorRefCode=vendorDetailList[i].vendorRefCode;
+                              }
+
+                            }
+                          }
+
+                           // vendorRefCode=purchaseTable?.vendorDetails?.vendorRefCode??"";
                             check = purchaseTable?.unitCost;
                             vvat = purchaseTable?.vat;
-                            unitCostCheck.text = purchaseTable?.unitCost.toString()??"";
+                            purchaseTable?.unitCost!=null?               unitCostCheck.text = purchaseTable?.unitCost.toString()??"":unitCostCheck.text ="";
                             print("check"+check.toString());
                             unitcostTestController?.text=purchaseTable?.unitCost.toString()??"";
                             vm.totalUnitcost = (vm.totalUnitcost!) + (check!);
@@ -609,6 +634,7 @@ List<TextEditingController> vatController =[];
                           }
                           ordercode.text=data.data?.orderCode.toString()??"";
                           vendorCode.text=data.data?.vendorId.toString()??"";
+                          // vendorCodeName.text=data.data?.ve.toString()??"";
                           Recievingstatus.text=data.data?.recievingStatus??"";
                           Paymentstatus.text=data.data?.paymentStatus??"";
                           Paymentcode.text=data.data?.paymentcode??"";
@@ -656,7 +682,7 @@ List<TextEditingController> vatController =[];
                 listener: (context, state) {
                   state.maybeWhen(orElse: () {
                     // context.
-                    context.showSnackBarError("Loadingggg");
+                    context.showSnackBarError("Loading");
                   }, error: () {
                     context.showSnackBarError(Variable.errorMessege);
                   }, success: (data) {
@@ -824,12 +850,7 @@ else{
                                                   children: [
                                                     //SizedBox(height: height*.030,),
 
-                                                    SizedBox(
-                                                      height: height * .030,
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .035,
-                                                    ),
+
 
 
                                                     SelectableDropDownpopUp(
@@ -853,7 +874,7 @@ else{
                                                     // NewInputCard(
                                                     //     controller: controller, title: "Order type"),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       // colors: Colors.red,
@@ -862,7 +883,7 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: orderDate,
@@ -870,21 +891,19 @@ else{
                                                       //label: "Place in setting",
                                                       readOnly: true,
                                                     ),
+
+                                                    // NewInputCard(
+                                                    //   controller: inventoryId,
+                                                    //   title: "Inventory Id",
+                                                    //   // label: "Place in setting",
+                                                    // ),
                                                     SizedBox(
-                                                      height: height * .030,
-                                                    ),
-                                                    NewInputCard(
-                                                      controller: inventoryId,
-                                                      title: "Inventory Id",
-                                                      // label: "Place in setting",
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     SelectableDropDownpopUp(
                                                       label: "Vendor Code",
                                                       type:"VendorCodeGeneral",
-                                                      value: vendorCode.text==null|| vendorCode.text=="null"?"":vendorCode.text,
+                                                      value: vendorCodeName.text==null|| vendorCodeName.text=="null"?"":vendorCodeName.text,
                                                       onSelection: (Result? va) {
 
                                                         print(
@@ -892,6 +911,7 @@ else{
                                                         //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                                         // setState(() {
                                                         vendorCode.text=va?.partnerCode??"";
+                                                        vendorCodeName.text=va?.name??"";
                                                         var id=va?.partnerCode;
 
                                                         print("vendorssss"+id.toString());
@@ -921,7 +941,7 @@ else{
                                                     ),
 
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       readOnly: true,
@@ -931,14 +951,14 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                         readOnly: true,
                                                         controller: vendortrnnumber,
                                                         title: "Vender TRN Number"),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
 
                                                     PopUpDateFormField(
@@ -956,25 +976,20 @@ else{
                                                           print("promised_receipt_date.text"+promised_receipt_date.text.toString());
                                                         },
                                                         enable: true),
+                                                    SizedBox(
+                                                      height: height * .065,
+                                                    ),    SizedBox(
+                                                      height: height * .11,
+                                                    ),
 
-                                                    SizedBox(
-                                                      height: height * .030,
-                                                    ),
-                                                    SizedBox(
-                                                      height: height * .028,
-                                                    ),
+
                                                   ],
                                                 )),
                                                 Expanded(
                                                     child: Column(
                                                   children: [
-                                                    SizedBox(
-                                                      height: height * .040,
-                                                    ),
+                                                    SizedBox(height: height*.032,),
 
-                                                    SizedBox(
-                                                      height: height * .020,
-                                                    ),
 
                                                     PopUpDateFormField(
 
@@ -995,14 +1010,14 @@ else{
 
 
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                         controller: Paymentcode,
                                                         title: "Payment Code",
                                                         readOnly: true),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: Paymentstatus,
@@ -1010,7 +1025,7 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .020,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: orderStatus,
@@ -1018,7 +1033,7 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .020,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: Recievingstatus,
@@ -1026,7 +1041,7 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .030,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: invoicestatus,
@@ -1034,7 +1049,7 @@ else{
                                                       readOnly: true,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .020,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: note,
@@ -1044,7 +1059,7 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .020,
+                                                      height: height * .035,
                                                     ),
                                                     NewInputCard(
                                                       controller: remarks,
@@ -1053,9 +1068,7 @@ else{
                                                       maxLines: 3,
                                                     ),
 
-                                                    SizedBox(
-                                                      height: height * .020,
-                                                    ),
+
                                                   ],
                                                 )),
                                                 Expanded(
@@ -1128,7 +1141,7 @@ else{
                                                       height: height * .008,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .018,
+                                                      height: height * .080,
                                                     ),
                                                   ],
                                                 )),
@@ -1140,6 +1153,7 @@ else{
                                     ],
                                   ),
                                 ),
+                                SizedBox(height: height/20,),
                                 Scrollbar(
                                   controller: _scrollController,
                                   isAlwaysShown: true,
@@ -4269,7 +4283,9 @@ else{
                                                                     setState(() {
                                                                       stockCheck=true;
                                                                       variantId = va?.code;
+                                                                      print("idssss"+variantId.toString());
                                                                       int? id = va!.id;
+                                                                      print("idssss"+id.toString());
                                                                       Variable.tableedit=false;
                                                                       onChange = true;
                                                                       context.read<TableDetailsCubitDartCubit>().getTableDetails(id);
@@ -4778,7 +4794,7 @@ else{
                                         else{
                                           PurchaseOrderPost model = PurchaseOrderPost(
                                             purchaseOrderType: orderType == "" ? "" : orderType,
-                                            iventoryId: inventoryId.text == "" ? "" : inventoryId.text,
+                                            iventoryId: Variable.inventory_ID,
                                             vendorId: vendorCode.text == "" ? "" : vendorCode.text,
                                             vendorTrnNumber: vendortrnnumber.text == "" ? "" : vendortrnnumber.text,
                                             vendorMailId: Variable.email,
@@ -4797,7 +4813,7 @@ else{
                                             vat: vat.text == "" ? 0 : double.parse(vat.text),
                                             grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
                                             variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
-                                            createdBy: "www",
+                                            createdBy: Variable.username,
                                             orderLines: table,
                                           );
                                           print("selecting "+model.toString());

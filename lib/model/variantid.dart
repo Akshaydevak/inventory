@@ -35,6 +35,7 @@ class Result with _$Result {
   const factory Result(
       {
         final int? id,
+        final String? name,
         @JsonKey(name: "user_login_id") final int? userLoginId,
         @JsonKey(name:"partner_code") final String? partnerCode,
         @JsonKey(name:"is_organization") final bool? isOrganization,

@@ -2977,26 +2977,16 @@ class _$VariantMetaTearOff {
       List<Storage>? storage,
       List<Storage>? Ingrediants,
       String? description,
-      @JsonKey(name: "var_image")
-          VarImage? image,
-      @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
-      @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
-      @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantFacts,
-      @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
-      @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
-      @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehaviour,
-      @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
-      @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
-      @JsonKey(name: "old_system_code")
-          String? oldSystemCode}) {
+      @JsonKey(name: "var_image") VarImage? image,
+      @JsonKey(name: "important_info") List<ProductFeatures>? importantInfo,
+      @JsonKey(name: "product_behaviour") List<productBehaviour>? productBehave,
+      @JsonKey(name: "Additional_info") List<ProductFeatures>? additionalInfo,
+      @JsonKey(name: "Nutriants_facts") List<ProductFeatures>? nutriantFacts,
+      @JsonKey(name: "product_details") List<ProductFeatures>? productDetails,
+      @JsonKey(name: "product_features") List<ProductFeatures>? productFeatures,
+      @JsonKey(name: "about_the_products") List<Storage>? aboutProducts,
+      @JsonKey(name: "usage_direction") List<Storage>? usageDirection,
+      @JsonKey(name: "old_system_code") String? oldSystemCode}) {
     return _VariantMeta(
       catelog: catelog,
       storage: storage,
@@ -3004,11 +2994,11 @@ class _$VariantMetaTearOff {
       description: description,
       image: image,
       importantInfo: importantInfo,
+      productBehave: productBehave,
       additionalInfo: additionalInfo,
       nutriantFacts: nutriantFacts,
       productDetails: productDetails,
       productFeatures: productFeatures,
-      productBehaviour: productBehaviour,
       aboutProducts: aboutProducts,
       usageDirection: usageDirection,
       oldSystemCode: oldSystemCode,
@@ -3034,6 +3024,9 @@ mixin _$VariantMeta {
   @JsonKey(name: "important_info")
   List<ProductFeatures>? get importantInfo =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: "product_behaviour")
+  List<productBehaviour>? get productBehave =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: "Additional_info")
   List<ProductFeatures>? get additionalInfo =>
       throw _privateConstructorUsedError;
@@ -3045,10 +3038,7 @@ mixin _$VariantMeta {
       throw _privateConstructorUsedError;
   @JsonKey(name: "product_features")
   List<ProductFeatures>? get productFeatures =>
-      throw _privateConstructorUsedError;
-  @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehaviour =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
   @JsonKey(name: "about_the_products")
   List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
   @JsonKey(name: "usage_direction")
@@ -3072,26 +3062,16 @@ abstract class $VariantMetaCopyWith<$Res> {
       List<Storage>? storage,
       List<Storage>? Ingrediants,
       String? description,
-      @JsonKey(name: "var_image")
-          VarImage? image,
-      @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
-      @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
-      @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantFacts,
-      @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
-      @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
-      @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehaviour,
-      @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
-      @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
-      @JsonKey(name: "old_system_code")
-          String? oldSystemCode});
+      @JsonKey(name: "var_image") VarImage? image,
+      @JsonKey(name: "important_info") List<ProductFeatures>? importantInfo,
+      @JsonKey(name: "product_behaviour") List<productBehaviour>? productBehave,
+      @JsonKey(name: "Additional_info") List<ProductFeatures>? additionalInfo,
+      @JsonKey(name: "Nutriants_facts") List<ProductFeatures>? nutriantFacts,
+      @JsonKey(name: "product_details") List<ProductFeatures>? productDetails,
+      @JsonKey(name: "product_features") List<ProductFeatures>? productFeatures,
+      @JsonKey(name: "about_the_products") List<Storage>? aboutProducts,
+      @JsonKey(name: "usage_direction") List<Storage>? usageDirection,
+      @JsonKey(name: "old_system_code") String? oldSystemCode});
 
   $CatelogCopyWith<$Res>? get catelog;
   $VarImageCopyWith<$Res>? get image;
@@ -3113,11 +3093,11 @@ class _$VariantMetaCopyWithImpl<$Res> implements $VariantMetaCopyWith<$Res> {
     Object? description = freezed,
     Object? image = freezed,
     Object? importantInfo = freezed,
+    Object? productBehave = freezed,
     Object? additionalInfo = freezed,
     Object? nutriantFacts = freezed,
     Object? productDetails = freezed,
     Object? productFeatures = freezed,
-    Object? productBehaviour = freezed,
     Object? aboutProducts = freezed,
     Object? usageDirection = freezed,
     Object? oldSystemCode = freezed,
@@ -3147,6 +3127,10 @@ class _$VariantMetaCopyWithImpl<$Res> implements $VariantMetaCopyWith<$Res> {
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
               as List<ProductFeatures>?,
+      productBehave: productBehave == freezed
+          ? _value.productBehave
+          : productBehave // ignore: cast_nullable_to_non_nullable
+              as List<productBehaviour>?,
       additionalInfo: additionalInfo == freezed
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
@@ -3162,10 +3146,6 @@ class _$VariantMetaCopyWithImpl<$Res> implements $VariantMetaCopyWith<$Res> {
       productFeatures: productFeatures == freezed
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
-      productBehaviour: productBehaviour == freezed
-          ? _value.productBehaviour
-          : productBehaviour // ignore: cast_nullable_to_non_nullable
               as List<ProductFeatures>?,
       aboutProducts: aboutProducts == freezed
           ? _value.aboutProducts
@@ -3217,26 +3197,16 @@ abstract class _$VariantMetaCopyWith<$Res>
       List<Storage>? storage,
       List<Storage>? Ingrediants,
       String? description,
-      @JsonKey(name: "var_image")
-          VarImage? image,
-      @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
-      @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
-      @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantFacts,
-      @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
-      @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
-      @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehaviour,
-      @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
-      @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
-      @JsonKey(name: "old_system_code")
-          String? oldSystemCode});
+      @JsonKey(name: "var_image") VarImage? image,
+      @JsonKey(name: "important_info") List<ProductFeatures>? importantInfo,
+      @JsonKey(name: "product_behaviour") List<productBehaviour>? productBehave,
+      @JsonKey(name: "Additional_info") List<ProductFeatures>? additionalInfo,
+      @JsonKey(name: "Nutriants_facts") List<ProductFeatures>? nutriantFacts,
+      @JsonKey(name: "product_details") List<ProductFeatures>? productDetails,
+      @JsonKey(name: "product_features") List<ProductFeatures>? productFeatures,
+      @JsonKey(name: "about_the_products") List<Storage>? aboutProducts,
+      @JsonKey(name: "usage_direction") List<Storage>? usageDirection,
+      @JsonKey(name: "old_system_code") String? oldSystemCode});
 
   @override
   $CatelogCopyWith<$Res>? get catelog;
@@ -3262,11 +3232,11 @@ class __$VariantMetaCopyWithImpl<$Res> extends _$VariantMetaCopyWithImpl<$Res>
     Object? description = freezed,
     Object? image = freezed,
     Object? importantInfo = freezed,
+    Object? productBehave = freezed,
     Object? additionalInfo = freezed,
     Object? nutriantFacts = freezed,
     Object? productDetails = freezed,
     Object? productFeatures = freezed,
-    Object? productBehaviour = freezed,
     Object? aboutProducts = freezed,
     Object? usageDirection = freezed,
     Object? oldSystemCode = freezed,
@@ -3296,6 +3266,10 @@ class __$VariantMetaCopyWithImpl<$Res> extends _$VariantMetaCopyWithImpl<$Res>
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
               as List<ProductFeatures>?,
+      productBehave: productBehave == freezed
+          ? _value.productBehave
+          : productBehave // ignore: cast_nullable_to_non_nullable
+              as List<productBehaviour>?,
       additionalInfo: additionalInfo == freezed
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
@@ -3311,10 +3285,6 @@ class __$VariantMetaCopyWithImpl<$Res> extends _$VariantMetaCopyWithImpl<$Res>
       productFeatures: productFeatures == freezed
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
-      productBehaviour: productBehaviour == freezed
-          ? _value.productBehaviour
-          : productBehaviour // ignore: cast_nullable_to_non_nullable
               as List<ProductFeatures>?,
       aboutProducts: aboutProducts == freezed
           ? _value.aboutProducts
@@ -3342,11 +3312,11 @@ class _$_VariantMeta implements _VariantMeta {
       this.description,
       @JsonKey(name: "var_image") this.image,
       @JsonKey(name: "important_info") this.importantInfo,
+      @JsonKey(name: "product_behaviour") this.productBehave,
       @JsonKey(name: "Additional_info") this.additionalInfo,
       @JsonKey(name: "Nutriants_facts") this.nutriantFacts,
       @JsonKey(name: "product_details") this.productDetails,
       @JsonKey(name: "product_features") this.productFeatures,
-      @JsonKey(name: "product_behaviour") this.productBehaviour,
       @JsonKey(name: "about_the_products") this.aboutProducts,
       @JsonKey(name: "usage_direction") this.usageDirection,
       @JsonKey(name: "old_system_code") this.oldSystemCode});
@@ -3369,6 +3339,9 @@ class _$_VariantMeta implements _VariantMeta {
   @JsonKey(name: "important_info")
   final List<ProductFeatures>? importantInfo;
   @override
+  @JsonKey(name: "product_behaviour")
+  final List<productBehaviour>? productBehave;
+  @override
   @JsonKey(name: "Additional_info")
   final List<ProductFeatures>? additionalInfo;
   @override
@@ -3380,10 +3353,7 @@ class _$_VariantMeta implements _VariantMeta {
   @override
   @JsonKey(name: "product_features")
   final List<ProductFeatures>? productFeatures;
-  @override
-  @JsonKey(name: "product_behaviour")
-  final List<ProductFeatures>? productBehaviour;
-  @override
+  @override // @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
   @JsonKey(name: "about_the_products")
   final List<Storage>? aboutProducts;
   @override
@@ -3395,7 +3365,7 @@ class _$_VariantMeta implements _VariantMeta {
 
   @override
   String toString() {
-    return 'VariantMeta(catelog: $catelog, storage: $storage, Ingrediants: $Ingrediants, description: $description, image: $image, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantFacts: $nutriantFacts, productDetails: $productDetails, productFeatures: $productFeatures, productBehaviour: $productBehaviour, aboutProducts: $aboutProducts, usageDirection: $usageDirection, oldSystemCode: $oldSystemCode)';
+    return 'VariantMeta(catelog: $catelog, storage: $storage, Ingrediants: $Ingrediants, description: $description, image: $image, importantInfo: $importantInfo, productBehave: $productBehave, additionalInfo: $additionalInfo, nutriantFacts: $nutriantFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, usageDirection: $usageDirection, oldSystemCode: $oldSystemCode)';
   }
 
   @override
@@ -3419,6 +3389,9 @@ class _$_VariantMeta implements _VariantMeta {
             (identical(other.importantInfo, importantInfo) ||
                 const DeepCollectionEquality()
                     .equals(other.importantInfo, importantInfo)) &&
+            (identical(other.productBehave, productBehave) ||
+                const DeepCollectionEquality()
+                    .equals(other.productBehave, productBehave)) &&
             (identical(other.additionalInfo, additionalInfo) ||
                 const DeepCollectionEquality()
                     .equals(other.additionalInfo, additionalInfo)) &&
@@ -3431,9 +3404,6 @@ class _$_VariantMeta implements _VariantMeta {
             (identical(other.productFeatures, productFeatures) ||
                 const DeepCollectionEquality()
                     .equals(other.productFeatures, productFeatures)) &&
-            (identical(other.productBehaviour, productBehaviour) ||
-                const DeepCollectionEquality()
-                    .equals(other.productBehaviour, productBehaviour)) &&
             (identical(other.aboutProducts, aboutProducts) ||
                 const DeepCollectionEquality()
                     .equals(other.aboutProducts, aboutProducts)) &&
@@ -3454,11 +3424,11 @@ class _$_VariantMeta implements _VariantMeta {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(image) ^
       const DeepCollectionEquality().hash(importantInfo) ^
+      const DeepCollectionEquality().hash(productBehave) ^
       const DeepCollectionEquality().hash(additionalInfo) ^
       const DeepCollectionEquality().hash(nutriantFacts) ^
       const DeepCollectionEquality().hash(productDetails) ^
       const DeepCollectionEquality().hash(productFeatures) ^
-      const DeepCollectionEquality().hash(productBehaviour) ^
       const DeepCollectionEquality().hash(aboutProducts) ^
       const DeepCollectionEquality().hash(usageDirection) ^
       const DeepCollectionEquality().hash(oldSystemCode);
@@ -3484,6 +3454,8 @@ abstract class _VariantMeta implements VariantMeta {
           VarImage? image,
       @JsonKey(name: "important_info")
           List<ProductFeatures>? importantInfo,
+      @JsonKey(name: "product_behaviour")
+          List<productBehaviour>? productBehave,
       @JsonKey(name: "Additional_info")
           List<ProductFeatures>? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
@@ -3492,8 +3464,6 @@ abstract class _VariantMeta implements VariantMeta {
           List<ProductFeatures>? productDetails,
       @JsonKey(name: "product_features")
           List<ProductFeatures>? productFeatures,
-      @JsonKey(name: "product_behaviour")
-          List<ProductFeatures>? productBehaviour,
       @JsonKey(name: "about_the_products")
           List<Storage>? aboutProducts,
       @JsonKey(name: "usage_direction")
@@ -3520,6 +3490,10 @@ abstract class _VariantMeta implements VariantMeta {
   List<ProductFeatures>? get importantInfo =>
       throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "product_behaviour")
+  List<productBehaviour>? get productBehave =>
+      throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "Additional_info")
   List<ProductFeatures>? get additionalInfo =>
       throw _privateConstructorUsedError;
@@ -3535,11 +3509,7 @@ abstract class _VariantMeta implements VariantMeta {
   @JsonKey(name: "product_features")
   List<ProductFeatures>? get productFeatures =>
       throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "product_behaviour")
-  List<ProductFeatures>? get productBehaviour =>
-      throw _privateConstructorUsedError;
-  @override
+  @override // @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
   @JsonKey(name: "about_the_products")
   List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
   @override
@@ -5367,5 +5337,260 @@ abstract class _NameStorage implements NameStorage {
   @override
   @JsonKey(ignore: true)
   _$NameStorageCopyWith<_NameStorage> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+productBehaviour _$productBehaviourFromJson(Map<String, dynamic> json) {
+  return _productBehaviour.fromJson(json);
+}
+
+/// @nodoc
+class _$productBehaviourTearOff {
+  const _$productBehaviourTearOff();
+
+  _productBehaviour call(
+      {String? genderGroup,
+      String? ageGroup,
+      String? ethinik,
+      String? countries,
+      String? purpose}) {
+    return _productBehaviour(
+      genderGroup: genderGroup,
+      ageGroup: ageGroup,
+      ethinik: ethinik,
+      countries: countries,
+      purpose: purpose,
+    );
+  }
+
+  productBehaviour fromJson(Map<String, Object> json) {
+    return productBehaviour.fromJson(json);
+  }
+}
+
+/// @nodoc
+const $productBehaviour = _$productBehaviourTearOff();
+
+/// @nodoc
+mixin _$productBehaviour {
+  String? get genderGroup => throw _privateConstructorUsedError;
+  String? get ageGroup => throw _privateConstructorUsedError;
+  String? get ethinik => throw _privateConstructorUsedError;
+  String? get countries => throw _privateConstructorUsedError;
+  String? get purpose => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $productBehaviourCopyWith<productBehaviour> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $productBehaviourCopyWith<$Res> {
+  factory $productBehaviourCopyWith(
+          productBehaviour value, $Res Function(productBehaviour) then) =
+      _$productBehaviourCopyWithImpl<$Res>;
+  $Res call(
+      {String? genderGroup,
+      String? ageGroup,
+      String? ethinik,
+      String? countries,
+      String? purpose});
+}
+
+/// @nodoc
+class _$productBehaviourCopyWithImpl<$Res>
+    implements $productBehaviourCopyWith<$Res> {
+  _$productBehaviourCopyWithImpl(this._value, this._then);
+
+  final productBehaviour _value;
+  // ignore: unused_field
+  final $Res Function(productBehaviour) _then;
+
+  @override
+  $Res call({
+    Object? genderGroup = freezed,
+    Object? ageGroup = freezed,
+    Object? ethinik = freezed,
+    Object? countries = freezed,
+    Object? purpose = freezed,
+  }) {
+    return _then(_value.copyWith(
+      genderGroup: genderGroup == freezed
+          ? _value.genderGroup
+          : genderGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageGroup: ageGroup == freezed
+          ? _value.ageGroup
+          : ageGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ethinik: ethinik == freezed
+          ? _value.ethinik
+          : ethinik // ignore: cast_nullable_to_non_nullable
+              as String?,
+      countries: countries == freezed
+          ? _value.countries
+          : countries // ignore: cast_nullable_to_non_nullable
+              as String?,
+      purpose: purpose == freezed
+          ? _value.purpose
+          : purpose // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$productBehaviourCopyWith<$Res>
+    implements $productBehaviourCopyWith<$Res> {
+  factory _$productBehaviourCopyWith(
+          _productBehaviour value, $Res Function(_productBehaviour) then) =
+      __$productBehaviourCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {String? genderGroup,
+      String? ageGroup,
+      String? ethinik,
+      String? countries,
+      String? purpose});
+}
+
+/// @nodoc
+class __$productBehaviourCopyWithImpl<$Res>
+    extends _$productBehaviourCopyWithImpl<$Res>
+    implements _$productBehaviourCopyWith<$Res> {
+  __$productBehaviourCopyWithImpl(
+      _productBehaviour _value, $Res Function(_productBehaviour) _then)
+      : super(_value, (v) => _then(v as _productBehaviour));
+
+  @override
+  _productBehaviour get _value => super._value as _productBehaviour;
+
+  @override
+  $Res call({
+    Object? genderGroup = freezed,
+    Object? ageGroup = freezed,
+    Object? ethinik = freezed,
+    Object? countries = freezed,
+    Object? purpose = freezed,
+  }) {
+    return _then(_productBehaviour(
+      genderGroup: genderGroup == freezed
+          ? _value.genderGroup
+          : genderGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ageGroup: ageGroup == freezed
+          ? _value.ageGroup
+          : ageGroup // ignore: cast_nullable_to_non_nullable
+              as String?,
+      ethinik: ethinik == freezed
+          ? _value.ethinik
+          : ethinik // ignore: cast_nullable_to_non_nullable
+              as String?,
+      countries: countries == freezed
+          ? _value.countries
+          : countries // ignore: cast_nullable_to_non_nullable
+              as String?,
+      purpose: purpose == freezed
+          ? _value.purpose
+          : purpose // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_productBehaviour implements _productBehaviour {
+  const _$_productBehaviour(
+      {this.genderGroup,
+      this.ageGroup,
+      this.ethinik,
+      this.countries,
+      this.purpose});
+
+  factory _$_productBehaviour.fromJson(Map<String, dynamic> json) =>
+      _$$_productBehaviourFromJson(json);
+
+  @override
+  final String? genderGroup;
+  @override
+  final String? ageGroup;
+  @override
+  final String? ethinik;
+  @override
+  final String? countries;
+  @override
+  final String? purpose;
+
+  @override
+  String toString() {
+    return 'productBehaviour(genderGroup: $genderGroup, ageGroup: $ageGroup, ethinik: $ethinik, countries: $countries, purpose: $purpose)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _productBehaviour &&
+            (identical(other.genderGroup, genderGroup) ||
+                const DeepCollectionEquality()
+                    .equals(other.genderGroup, genderGroup)) &&
+            (identical(other.ageGroup, ageGroup) ||
+                const DeepCollectionEquality()
+                    .equals(other.ageGroup, ageGroup)) &&
+            (identical(other.ethinik, ethinik) ||
+                const DeepCollectionEquality()
+                    .equals(other.ethinik, ethinik)) &&
+            (identical(other.countries, countries) ||
+                const DeepCollectionEquality()
+                    .equals(other.countries, countries)) &&
+            (identical(other.purpose, purpose) ||
+                const DeepCollectionEquality().equals(other.purpose, purpose)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(genderGroup) ^
+      const DeepCollectionEquality().hash(ageGroup) ^
+      const DeepCollectionEquality().hash(ethinik) ^
+      const DeepCollectionEquality().hash(countries) ^
+      const DeepCollectionEquality().hash(purpose);
+
+  @JsonKey(ignore: true)
+  @override
+  _$productBehaviourCopyWith<_productBehaviour> get copyWith =>
+      __$productBehaviourCopyWithImpl<_productBehaviour>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_productBehaviourToJson(this);
+  }
+}
+
+abstract class _productBehaviour implements productBehaviour {
+  const factory _productBehaviour(
+      {String? genderGroup,
+      String? ageGroup,
+      String? ethinik,
+      String? countries,
+      String? purpose}) = _$_productBehaviour;
+
+  factory _productBehaviour.fromJson(Map<String, dynamic> json) =
+      _$_productBehaviour.fromJson;
+
+  @override
+  String? get genderGroup => throw _privateConstructorUsedError;
+  @override
+  String? get ageGroup => throw _privateConstructorUsedError;
+  @override
+  String? get ethinik => throw _privateConstructorUsedError;
+  @override
+  String? get countries => throw _privateConstructorUsedError;
+  @override
+  String? get purpose => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(ignore: true)
+  _$productBehaviourCopyWith<_productBehaviour> get copyWith =>
       throw _privateConstructorUsedError;
 }

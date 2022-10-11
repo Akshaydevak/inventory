@@ -199,11 +199,12 @@ final List<Storage>? Ingrediants,
 final String? description,
     @JsonKey(name: "var_image") final VarImage? image,
     @JsonKey(name: "important_info") final List< ProductFeatures>? importantInfo,
+    @JsonKey(name: "product_behaviour") final List< productBehaviour>? productBehave,
     @JsonKey(name: "Additional_info") final List<ProductFeatures>? additionalInfo,
     @JsonKey(name: "Nutriants_facts") final List< ProductFeatures>? nutriantFacts,
     @JsonKey(name: "product_details") final List<ProductFeatures>? productDetails,
     @JsonKey(name: "product_features") final List< ProductFeatures>? productFeatures,
-    @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
+    // @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
     @JsonKey(name: "about_the_products") final List<Storage>? aboutProducts,
 
     @JsonKey(name: "usage_direction") final List<Storage>? usageDirection,
@@ -408,4 +409,34 @@ class NameStorage with _$NameStorage {
   }) = _NameStorage;
   factory NameStorage.fromJson(Map<String, dynamic> json) =>
       _$NameStorageFromJson(json);
+}
+
+
+
+
+
+@freezed
+class productBehaviour with _$productBehaviour {
+  const factory productBehaviour({
+
+    final String? genderGroup,
+    final String? ageGroup,
+    final String? ethinik,
+    final String? countries,
+    final String? purpose,
+
+
+
+
+
+
+
+
+
+
+
+
+  }) = _productBehaviour;
+  factory productBehaviour.fromJson(Map<String, dynamic> json) =>
+      _$productBehaviourFromJson(json);
 }

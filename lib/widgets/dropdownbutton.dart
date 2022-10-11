@@ -50,7 +50,8 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
     List<String> list = [];
     if (widget.list != null) list = widget.list!;
 
-    return  widget.row?
+    return
+      widget.row?
     SizedBox(
 
         child: ListTile(
@@ -163,6 +164,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                 child: widget.type != null
                     ? PopUpCall(
+                  apiType: widget.apiType,
                   bindType: widget.bindType,
                     onSelection: widget.onSelection,
                     onAddNew: widget.onAddNew,

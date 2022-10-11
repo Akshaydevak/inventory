@@ -49,6 +49,14 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController image3Controller = TextEditingController();
   TextEditingController image4Controller = TextEditingController();
   TextEditingController image5Controller = TextEditingController();
+  TextEditingController catalog1 = TextEditingController();
+  TextEditingController catalog2 = TextEditingController();
+  TextEditingController catalog3 = TextEditingController();
+  TextEditingController catalog4 = TextEditingController();
+  TextEditingController catalog5 = TextEditingController();
+  TextEditingController catalog6 = TextEditingController();
+  TextEditingController catalog7 = TextEditingController();
+  TextEditingController catalog8 = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController arabicDescriptionController = TextEditingController();
   TextEditingController additionalDescriptionController = TextEditingController();
@@ -107,6 +115,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   List<ProductFeatures>? additionalInfo=[];
   List<ProductFeatures>? nutriantsFacts=[];
   List<ProductFeatures>? ingredians=[];
+  List<productBehaviour>? inforMationList=[];
   List<Storage>? Ingrediants=[];
   VariantReadModel group=VariantReadModel();
 
@@ -124,6 +133,14 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   bool img3=false;
   bool img4=false;
   bool img5=false;
+  bool cata1=false;
+  bool cata2=false;
+  bool cata3=false;
+  bool cata4=false;
+  bool cata5=false;
+  bool cata6=false;
+  bool cata7=false;
+  bool cata8=false;
 
 
   trueOrFalseChange({String? type,bool val=false}){
@@ -226,7 +243,26 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
   }
-  productFeaturesableAssign({String? type,List<ProductFeatures>?list}){
+  productFeaturesableAssign({  List<productBehaviour>? list}){
+    print("here");
+    setState(() {
+      inforMationList=list;
+
+    });
+
+
+    // aboutProducts=list;
+
+
+
+
+
+
+
+
+
+  }
+  ProductBehaviourTableAssign({String? type,List<ProductFeatures>?list}){
     print("arrived"+type.toString());
     // aboutProducts=list;
 
@@ -282,6 +318,30 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       case '5' :
         img5=true;
         break;
+        case '6' :
+        cata1=true;
+        break;
+        case '7' :
+        cata2=true;
+        break;
+        case '8' :
+        cata3=true;
+        break;
+        case '9' :
+        cata4=true;
+        break;
+        case '10' :
+        cata5=true;
+        break;
+        case '11' :
+        cata6=true;
+        break;
+        case '12' :
+        cata7=true;
+        break;
+        case '13' :
+        cata8=true;
+        break;
 
 
 
@@ -301,6 +361,39 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       storage=[];
       Ingrediants=[];
       importantInfo=[];
+      variantNameController.text="";
+      variantNameController.text="";
+      salesUomController.text="";
+      purchaseUomController.text="";
+      searchNAmeController.text="";
+      posNameController.text="";
+      displayNAmeController.text="";
+      descriptionController.text="";
+      arabicDescriptionController.text="";
+      additionalDescriptionController.text="";
+      image1Controller.text="";
+      image2Controller.text="";
+      image3Controller.text="";
+      image4Controller.text="";
+      image5Controller.text="";
+      grossWeightController.text="";
+      netWeightController.text="";
+      unitCostController.text="";
+      landingCostController.text="";
+      actualCostController.text="";
+      producedCountryController.text="";
+      videoUrlController.text="";
+      salesBolock=false;
+      purchaseBolock=false;
+      stockWarning=false;
+      itmcatelog=false;
+      itmImage=false;
+      active=false;
+      vatController.text="";
+      exciseTaxController.text="";
+      minimumGpController.text="";
+      maximumGpController.text="";
+      targetedGpController.text="";
     });
 
 
@@ -405,6 +498,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           storage=data.variantMeta?.storage??[];
           Ingrediants=data.variantMeta?.Ingrediants??[];
           importantInfo=data.variantMeta?.importantInfo??[];
+          inforMationList=data.variantMeta?.productBehave??[];
+          print(alternativeBarcode);
+          print("alternativeBarcode");
           // addNew=false;
 
 
@@ -578,10 +674,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
 
-                                        setState(() {
+
                                           context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
 
-                                        });
+
                                       });
                                     },
                                     search: (String va) {
@@ -600,9 +696,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                   Expanded(child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(height: height * .04,),
+                                      SizedBox(height: height * .073,),
                                       Container(
-                                        width: width / 2,
+                                        // width: width / 2,
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment
                                               .start,
@@ -671,8 +767,17 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                           ],
                                         ),
                                       ),
-                                      SizedBox(height: height * .15,),
+                                      SizedBox(height: height * .10,),
                                       VariantStabletable(
+                                          veritiaclid:veritiaclid,
+                                        catalog1: catalog1,
+                                        catalog2: catalog2,
+                                        catalog3: catalog3,
+                                        catalog4: catalog4,
+                                        catalog5: catalog5,
+                                        catalog6: catalog6,
+                                        catalog7: catalog7,
+                                        catalog8: catalog8,
                                         searchName: searchNAmeController,
                                         image2: image2Controller,
                                         image3: image3Controller,
@@ -738,13 +843,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
                                       ),
-                                      SizedBox(height: 5,),
+                                      SizedBox(height: height * .04,),
                                       Row(mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           TextWidget(text: "Vendor details"),
                                         ],
                                       ),
                                       Divider(color: Colors.grey,thickness: 1,),
+                                      SizedBox(height: height * .04,),
 
                                       VendorDetailsVarient(
                                           vendorDetails:vendorDetails,
@@ -757,7 +863,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                         ],
                                       ),
                                       Divider(color: Colors.grey,thickness: 1,),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: height * .04,),
                                       Identification(
                                         rfId: rfIdController,
                                         qrCode: qrCodeController,
@@ -770,6 +876,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       SizedBox(height: 10,),
                                       TextWidget(text: "Product"),
                                       Divider(color: Colors.grey,thickness: 1,),
+                                      SizedBox(height: height * .04,),
                                       ProductTables(
                                         addNew:addNew,
                                           aboutProducts:aboutProducts,
@@ -781,8 +888,11 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                           usageDirection:usageDirection,
                                         storage:storage,
                                         storageTableEdit:storageDetailsTableAssign,
-                                        productTableEdit:productFeaturesableAssign,
+                                        productTableEdit:ProductBehaviourTableAssign,
                                         imPorantInfo:importantInfo,
+
+                                          productFeaturesableAssign:productFeaturesableAssign,
+                                          inforMationList:inforMationList,
 
 
 
@@ -829,6 +939,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 arabicDescription:arabicDescriptionController?.text??"",
                                                 additionalDescription:additionalDescriptionController?.text??"",
                                                 salesUom: int.tryParse(salesUomController?.text??""),
+                                                seblingId: int.tryParse(seblingController.text),
+
+
+
                                                 purchaseUom: int.tryParse(purchaseUomController?.text??""),
                                                 grossWeight:double.tryParse( grossWeightController.text??""),
                                                 actualCost:double.tryParse( actualCostController.text??""),
@@ -838,6 +952,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 salesBolock: salesBolock,
                                                 purchaseBlock: purchaseBolock,
                                                 ratioToEcommerce: ratioEcommerceController.text??"",
+                                                itemCatelog: itmcatelog,
+                                                itemImage: itmImage,
+                                                vendorDetails: vendorDetails,
+
                                                 minMaxRatio: minMaxController?.text??"",
                                                 wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
                                                 minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
@@ -857,8 +975,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 avgGp: double.tryParse(averageGpController.text??""),
                                                 targetedGp: double.tryParse(targetedGpController.text??""),
                                                 vedioUrl: videoUrlController.text??'',
-                                                alternativeBarcode:alternativeBarcode??[],
-                                                alternativeQrCodeBarcode: alternativeQrCode??[],
+                                                alternativeBarcode:alternativeBarcode,
+                                                alternativeQrCodeBarcode: alternativeQrCode,
                                                 returnType: returnTypeController.text??"",
                                                 returnTime: int.tryParse(returnTimeController.text),
                                                 variantStatus: "va",
@@ -867,38 +985,27 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 image3:img3?Variable.img3: int.tryParse(image3Controller?.text??""),
                                                 image4:img4?Variable.img4: int.tryParse(image4Controller?.text??""),
                                                 image5:img5?Variable.img5: int.tryParse(image5Controller?.text??""),
-                                                catalog1:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog1??""),
-                                                catalog2:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog2??""),
-                                                catalog3:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog3??""),
-                                                catalog4:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog4??""),
-                                                catalog5:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog5??""),
-                                                catalog6:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog6??""),
-                                                catalog7:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog7??""),
-                                                catalog8:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog8??""),
-                                                aboutProducts: aboutProducts??[],
-                                                productDetails: productDetails??[],
-                                                productFeatures:productFeatures??[],
-                                                additionalInfo: additionalInfo??[],
-                                                nutriantsFacts:nutriantsFacts??[],
-                                                Ingrediants: Ingrediants??[],
-                                                usageDirection: usageDirection??[],
-                                                storage:storage??[],
-                                                importantInfo:importantInfo??[],
-                                                productBehavior: productBehavior??[],
-
-
-
-
-
-
-
-
-
-
-
+                                                catalog1:cata1?Variable.catalog1:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog1??""),
+                                                catalog2:cata2?Variable.catalog2:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog2??""),
+                                                catalog3:cata3?Variable.catalog3:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog3??""),
+                                                catalog4:cata4?Variable.catalog4:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog4??""),
+                                                catalog5:cata5?Variable.catalog5:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog5??""),
+                                                catalog6:cata6?Variable.catalog6:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog6??""),
+                                                catalog7:cata7?Variable.catalog7:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog7??""),
+                                                catalog8:cata8?Variable.catalog8:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog8??""),
+                                                aboutProducts: aboutProducts,
+                                                productDetails: productDetails,
+                                                productFeatures:productFeatures,
+                                                additionalInfo: additionalInfo,
+                                                nutriantsFacts:nutriantsFacts,
+                                                Ingrediants: Ingrediants,
+                                                usageDirection: usageDirection,
+                                                storage:storage,
+                                                importantInfo:importantInfo,
+                                                productBehavior:   inforMationList,
 
                                               );
-                                              print("model"+  model.toString());
+                                              print("model"+  model.productBehavior.toString());
                                               context.read<VariantpostCubit>().postVariant(checkIdid, model);
                                               setState(() {
 
@@ -907,8 +1014,13 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                             else{
                                               VariantPatch model=VariantPatch (
                                                 variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
-                                                salesUom: salesUomController!.text.isEmpty?null:salesUomController?.text,
-                                                purchaseUom: purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
+                                                salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
+                                                // "1",
+
+                                                purchaseUom:"1",
+                                                itemImage: itmImage,
+                                                itemCatelog: itmcatelog,
+                                                // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
                                                 barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
                                                 qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,
                                                 alternativeBarcode: alternativeBarcode.isEmpty?null: alternativeBarcode,
@@ -932,6 +1044,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 reorderQuantity:int.tryParse(reorederQuaintityController?.text??""),
                                                 salesBolock: salesBolock,
                                                 purchaseBlock: purchaseBolock,
+                                                isActive: active,
                                                 ratioToEcommerce: ratioEcommerceController!.text.isEmpty?null: ratioEcommerceController?.text,
                                                 minMaxRatio: minMaxController!.text.isEmpty?null:minMaxController?.text,
                                                 minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
@@ -951,19 +1064,20 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
                                                 status: statusController.text.isEmpty?null:statusController?.text,
                                                 variantStatus:null,
-                                                aboutProducts: aboutProducts!.isEmpty?[]:aboutProducts,
-                                                productDetails: productDetails!.isEmpty?[]:productDetails,
-                                                productFeatures:productFeatures!.isEmpty?[]:productFeatures,
-                                                additionalInfo: additionalInfo!.isEmpty?[]:additionalInfo,
-                                                nutriantsFacts:nutriantsFacts!.isEmpty?[]:nutriantsFacts,
-                                                Ingrediants: Ingrediants!.isEmpty?[]:Ingrediants,
-                                                usageDirection: usageDirection!.isEmpty?[]:usageDirection,
-                                                storage:storage!.isEmpty?[]:storage,
-                                                importantInfo:importantInfo!.isEmpty?[]:importantInfo,
-                                                productBehavior: productBehavior!.isEmpty?[]:productBehavior,
+                                                stockWarning: stockWarning,
+                                                aboutProducts: aboutProducts,
+                                                productDetails:productDetails,
+                                                productFeatures:productFeatures,
+                                                additionalInfo: additionalInfo,
+                                                nutriantsFacts:nutriantsFacts,
+                                                Ingrediants: Ingrediants,
+                                                usageDirection: usageDirection,
+                                                storage:storage,
+                                                importantInfo:importantInfo,
+                                                productBehavior: inforMationList,
 
                                               );
-                                              print(model);
+                                              print("the searching model is here"+model.toString());
                                               context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
 
                                             }

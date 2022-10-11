@@ -24,7 +24,7 @@ _$_SalesReturnGeneralInvoiceReadModel
           taxableAmount: (json['taxable_amount'] as num?)?.toDouble(),
           sellingPriceTotal: (json['selling_price_total'] as num?)?.toDouble(),
           totalPrice: (json['total_price'] as num?)?.toDouble(),
-          lines: (json['order_lines'] as List<dynamic>?)
+          lines: (json['invoice_lines'] as List<dynamic>?)
               ?.map((e) =>
                   SalesReturnOrderLines.fromJson(e as Map<String, dynamic>))
               .toList(),
@@ -52,7 +52,7 @@ Map<String, dynamic> _$$_SalesReturnGeneralInvoiceReadModelToJson(
       'taxable_amount': instance.taxableAmount,
       'selling_price_total': instance.sellingPriceTotal,
       'total_price': instance.totalPrice,
-      'order_lines': instance.lines,
+      'invoice_lines': instance.lines,
       'invoice_data': instance.invoicedData,
     };
 

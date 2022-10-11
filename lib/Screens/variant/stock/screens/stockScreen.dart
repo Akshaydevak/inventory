@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/Screens/variant/stock/cubits/stockpost/stockpost_cubit.dart';
 import 'package:inventory/Screens/variant/stock/cubits/stockread/stockread_cubit.dart';
 import 'package:inventory/Screens/variant/stock/cubits/stocktableread/stocktableread_cubit.dart';
+import 'package:inventory/Screens/variant/stock/models/stock_read.dart';
 import 'package:inventory/Screens/variant/stock/models/stocktableread.dart';
 import 'package:inventory/Screens/variant/stock/screens/stock_bottom_table.dart';
 import 'package:inventory/Screens/variant/stock/screens/stock_stableTable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/variable.dart';
 
 import '../../../../commonWidget/Textwidget.dart';
 
@@ -41,6 +46,7 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController minimumQuantityController = TextEditingController();
   TextEditingController channelTypeController = TextEditingController();
   bool stockwarning = false;
+  int? variantId  ;
   bool salesBlock = false;
   bool purchaseBlock = false;
   List<BrandListModel> result = [];
@@ -83,6 +89,14 @@ class _StockScreenState extends State<StockScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -90,6 +104,9 @@ class _StockScreenState extends State<StockScreen> {
         ),
         BlocProvider(
           create: (context) => StocktablereadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => StockpostCubit(),
         ),
 
       ],
@@ -112,6 +129,7 @@ class _StockScreenState extends State<StockScreen> {
                             // group=data;
 
                             variantCodeController.text=data.stockData?.variantCode??"";
+                            variantId=data.stockData?.variantId;
                             stockCodeController.text=data.stockData?.stockCode??"";
                             salesUomController.text=data.stockData?.salesUOM.toString()??"";
                             baseUomController.text=data.stockData?.baseUom.toString()??"";
@@ -121,13 +139,18 @@ class _StockScreenState extends State<StockScreen> {
                             purchaseBlockController.text=data.stockData?.purchaseBlockQuantity.toString()??"";
                             cancelledQuantityController.text=data.stockData?.availablcancelledQuantityeQuantity.toString()??"";
                             reservedQuantityController.text=data.stockData?.reservedQuantity.toString()??"";
+                            reorderPointQuantityController.text=data.stockData?.reOrderPoint.toString()??"";
+                            returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
                             damagedQuantityController.text=data.stockData?.damagedQuantity.toString()??"";
                             returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
+                            minimumQuantityController.text=data.stockData?.minimumQuantity.toString()??"";
+                            maximumQuantityController.text=data.stockData?.maximumQuantity.toString()??"";
                             // channelTypeController.text=data.stockData?.c.toString()??"";
                             stockwarning=data.stockData?.stockWarning??false;
                             salesBlock=data.stockData?.salesBlocked??false;
-                            // purchaseBlock=data.stockData?.pu??false;
-                            // virtualStockTypeController.text=data.stockData?.v.toString()??"";
+                            purchaseBlock=data.stockData?.purchaseBlocked??false;
+                            virtualStockTypeController.text=data.stockData?.virtualType.toString()??"";
+                            virtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
                             // replaceMentQuantityController.text=data.stockData?.re.toString()??"";
 
                             // addNew=false;
@@ -156,6 +179,34 @@ class _StockScreenState extends State<StockScreen> {
                         });
                   },
                 ),
+
+                BlocListener<StockpostCubit, StockpostState>(
+                  listener: (context, state) {
+                    print("postssssssss" + state.toString());
+                    state.maybeWhen(orElse: () {
+                      // context.
+                      context.showSnackBarError("Loadingggg");
+                    }, error: () {
+                      context.showSnackBarError(Variable.errorMessege);
+                    }, success: (data) {
+                      if (data.data1) {
+                        context.showSnackBarSuccess(data.data2);
+
+                          setState(() {
+                            // context.read<ListvraiantCubit>().getVariantList();
+                            // select=false;
+                          });
+
+                      } else {
+                        context.showSnackBarError(data.data2);
+                        print(data.data1);
+                      }
+                      ;
+                    });
+                  },
+                ),
+
+
                 BlocListener<StocktablereadCubit, StocktablereadState>(
                   listener: (context, state) {
                     print("state++++++++++++++++++++++++++++++++");
@@ -334,7 +385,71 @@ class _StockScreenState extends State<StockScreen> {
                                 SizedBox(height: 15,),
                                 StockBottomTable(
                                     data:data
-                                )
+                                ),
+
+
+                                SizedBox(height: height * .13,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Button(Icons.delete, Colors.red,
+                                        ctx: context,
+                                        text: "Discard",
+                                        onApply: () {
+                                          // if(updateCheck){
+                                          //   // clears();
+                                          //
+                                          //
+                                          // }
+
+                                        },
+                                        height: 29,
+                                        width: 90,
+                                        labelcolor: Colors.red,
+                                        iconColor: Colors.red,
+                                        bdr: true),
+                                    SizedBox(
+                                      width: width * .008,
+                                    ),
+                                    Button(Icons.check, Colors.grey,
+                                        ctx: context,
+                                        text: "Save",
+                                        height: 29,
+                                        Color: Color(0xff3E4F5B),
+                                        width: 90,
+                                        labelcolor: Colors.white,
+                                        iconColor: Colors.white,
+                                        onApply: () {
+                                          StockData model=StockData(
+                                            inventoryId: Variable.inventory_ID,
+                                            variantId: variantId,
+                                            stockWarning: stockwarning,
+                                            reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
+                                            reOrderQuantity: int.tryParse(returnedQuantityController?.text??""),
+                                            channelTypeAllocationRatio: channelTypeController?.text??"",
+                                            minMaxRatio: minMaxRatioController?.text??"",
+                                            salesBlocked: salesBlock??false,
+                                            maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
+                                            minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
+                                            addVirtualStock:3,
+                                            // int.tryParse(virtualStockController.text)??null,
+                                            virtualType: virtualStockTypeController?.text??"",
+                                            purchaseBlocked: purchaseBlock??false,
+
+                                          );
+                                          print(model);
+                                          context.read<StockpostCubit>().postStock(model);
+
+
+
+
+
+                                        }),
+                                    SizedBox(
+                                      width: width * .008,
+                                    ),
+                                  ],
+                                ),
 
                               ],
                             )

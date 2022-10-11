@@ -38,7 +38,7 @@ class _$SalesReturnGeneralInvoiceReadModelTearOff {
       @JsonKey(name: "taxable_amount") double? taxableAmount,
       @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
       @JsonKey(name: "total_price") double? totalPrice,
-      @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? lines,
+      @JsonKey(name: "invoice_lines") List<SalesReturnOrderLines>? lines,
       @JsonKey(name: "invoice_data") InvoicedDatas? invoicedData}) {
     return _SalesReturnGeneralInvoiceReadModel(
       id: id,
@@ -99,7 +99,7 @@ mixin _$SalesReturnGeneralInvoiceReadModel {
   double? get sellingPriceTotal => throw _privateConstructorUsedError;
   @JsonKey(name: "total_price")
   double? get totalPrice => throw _privateConstructorUsedError;
-  @JsonKey(name: "order_lines")
+  @JsonKey(name: "invoice_lines")
   List<SalesReturnOrderLines>? get lines => throw _privateConstructorUsedError;
   @JsonKey(name: "invoice_data")
   InvoicedDatas? get invoicedData => throw _privateConstructorUsedError;
@@ -133,7 +133,7 @@ abstract class $SalesReturnGeneralInvoiceReadModelCopyWith<$Res> {
       @JsonKey(name: "taxable_amount") double? taxableAmount,
       @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
       @JsonKey(name: "total_price") double? totalPrice,
-      @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? lines,
+      @JsonKey(name: "invoice_lines") List<SalesReturnOrderLines>? lines,
       @JsonKey(name: "invoice_data") InvoicedDatas? invoicedData});
 
   $InvoicedDatasCopyWith<$Res>? get invoicedData;
@@ -276,7 +276,7 @@ abstract class _$SalesReturnGeneralInvoiceReadModelCopyWith<$Res>
       @JsonKey(name: "taxable_amount") double? taxableAmount,
       @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
       @JsonKey(name: "total_price") double? totalPrice,
-      @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? lines,
+      @JsonKey(name: "invoice_lines") List<SalesReturnOrderLines>? lines,
       @JsonKey(name: "invoice_data") InvoicedDatas? invoicedData});
 
   @override
@@ -409,7 +409,7 @@ class _$_SalesReturnGeneralInvoiceReadModel
       @JsonKey(name: "taxable_amount") this.taxableAmount,
       @JsonKey(name: "selling_price_total") this.sellingPriceTotal,
       @JsonKey(name: "total_price") this.totalPrice,
-      @JsonKey(name: "order_lines") this.lines,
+      @JsonKey(name: "invoice_lines") this.lines,
       @JsonKey(name: "invoice_data") this.invoicedData});
 
   factory _$_SalesReturnGeneralInvoiceReadModel.fromJson(
@@ -459,7 +459,7 @@ class _$_SalesReturnGeneralInvoiceReadModel
   @JsonKey(name: "total_price")
   final double? totalPrice;
   @override
-  @JsonKey(name: "order_lines")
+  @JsonKey(name: "invoice_lines")
   final List<SalesReturnOrderLines>? lines;
   @override
   @JsonKey(name: "invoice_data")
@@ -576,7 +576,7 @@ abstract class _SalesReturnGeneralInvoiceReadModel
           @JsonKey(name: "taxable_amount") double? taxableAmount,
           @JsonKey(name: "selling_price_total") double? sellingPriceTotal,
           @JsonKey(name: "total_price") double? totalPrice,
-          @JsonKey(name: "order_lines") List<SalesReturnOrderLines>? lines,
+          @JsonKey(name: "invoice_lines") List<SalesReturnOrderLines>? lines,
           @JsonKey(name: "invoice_data") InvoicedDatas? invoicedData}) =
       _$_SalesReturnGeneralInvoiceReadModel;
 
@@ -627,7 +627,7 @@ abstract class _SalesReturnGeneralInvoiceReadModel
   @JsonKey(name: "total_price")
   double? get totalPrice => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "order_lines")
+  @JsonKey(name: "invoice_lines")
   List<SalesReturnOrderLines>? get lines => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "invoice_data")

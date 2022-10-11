@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/frameworkpostcombination/variant_frameworkcombinationpost_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'package:inventory/Screens/variant/general/cubits/variantCreatio_read2/variant_creation_read2_cubit.dart';
@@ -10,7 +11,9 @@ import 'package:inventory/Screens/variant/general/model/variant_read_model.dart'
 import 'package:inventory/Screens/variant/general/screens/attributescreen.dart';
 import 'package:inventory/Screens/variant/general/screens/combinationTable.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 
@@ -33,16 +36,32 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController variantController = TextEditingController();
   VariantCreationReadModel group=VariantCreationReadModel();
   int selectedVertical = 0;
+  String itemCode = "";
+  String uomCode = "";
  List< VariantCreationRead2Model>attribute=[];
   List<List<Map<String,dynamic>>> combinationArray=[];
+  List<List<Map<String,dynamic>>>variantList=[];
+  List<List<Map<String,dynamic>>>variantList1=[];
   var lists;
-  // List<String>vals=[];
-  List<List<Map<String,dynamic>>>vals=[];
+  List<String>vals=[];
   combinationList( List<List<Map<String,dynamic>>> combinationArrays){
   setState(() {
     vals.clear();
+    variantList.clear();
   });
-    print("arrived");
+    // print("arrived");
+    // if(combinationArrays.isNotEmpty){
+    //   for(var i =0;i<combinationArrays.length;i++){
+    //     var list=combinationArrays[i];
+    //     print(list);
+    //     if(list.isNotEmpty){
+    //       for(var k=0;k<list.length;k++){
+    //
+    //
+    //       }
+    //     }
+    //   }
+    // }
   // List<List<Map<String, dynamic>>> filterArray=[];
   // if(combinationArray.isNotEmpty){
   //   for(var m=0;m<combinationArray.length;m++){
@@ -73,81 +92,134 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   // }
 
     combinationArray=combinationArrays;
-    if(combinationArray.isNotEmpty==true){
-
-    }
-
-
-
-
-    if(combinationArray.isNotEmpty){
-      for(var i=0;i<combinationArray.length-1;i++)
-        {
-          var firstList=combinationArray[i];
-          // firstList.retainWhere((element) {
-          //   return element["flag"]==true;
-          // });
-
-          print("the first list===="+firstList.toString());
-          print("the first list===="+firstList.toString());
-          for(var m=i+1;m<combinationArray.length;m++){
-            var secondList=combinationArray[m];
-            print("the first list===="+secondList.toString());
-            if(firstList.isNotEmpty)
-              print("entered2");
-              for(var j=0;j<firstList.length;j++) {
-                print("entered1");
-                if (secondList.isNotEmpty)
-                  for (var k = 0; k < secondList.length; k++) {
-                    if (firstList[j]["flag"] == true &&
-                        secondList[k]["flag"] == true) {
-                      setState(() {
-                        List<Map<String,dynamic> >mapList=[];
-                        mapList.add(firstList[j]);
-                        mapList.add(secondList[k]);
-                        vals.add(mapList);
-                        // var val= firstList[j]["value"] + secondList[k]["value"];
-                        // if(vals.contains(val)==false)
-                        //
-                        //
-                        // vals.add(
-                        //     firstList[j]["value"] + secondList[k]["value"]);
-                      });
-                    }
-                    else if (firstList[j]["flag"] == true) {
-                      setState(() {
-                        print("enteredist");
-                        print(firstList[j]);
-                        List<Map<String,dynamic> >mapList=[];
-                        mapList.add(firstList[j]);
-                        print(mapList);
-
-                        vals.add(mapList);
-                        // var val= firstList[j]["value"];
-                        // if(vals.contains(val)==false)
-                        // vals.add(firstList[j]["value"]);
-                      });
-                    }
-                    else if (secondList[k]["flag"] == true) {
-                      print("enteredist");
-                      setState(() {
-                        print(secondList[k]);
-                        List<Map<String,dynamic> >mapList=[];
-                        mapList.add(secondList[k]);
-
-                        vals.add(mapList);
-                        // var val=secondList[k]["value"];
-                        // if(vals.contains(val)==false)
-                        // vals.add(secondList[k]["value"]);
-                      });
-                    }
-                  }
-              }
-
-          }
+    print("Starting combination Array"+combinationArray.toString());
+    if(combinationArray.isNotEmpty) {
+      print("enterd to the condition");
+      for (var n = 0; n < combinationArray.length; n++) {
+        // print(combinationArray[n]);
+        // var l1=combinationArray[k];
+        if (combinationArray[n].isNotEmpty) {
+          print("enterd to 2nd the condition");
+          combinationArray[n].removeWhere((element) {
+            print("the element is"+element.toString());
+            return
+              element['flag'] == false;
+          });
+          // for(var s=0;s<combinationArray[n].length;s++){
+          //   if(combinationArray[n][s]["flag"]==false){
+          //     combinationArray[n].remove(combinationArray[n][s]);
+          //
+          //   }
+          // }
         }
-
+      }
     }
+
+
+
+
+
+    print("the combination Array is"+combinationArray.toString());
+
+ //
+ //  combinationArray.retainWhere((countryone) {
+ //   print(countryone);
+ //   List<Map<String,dynamic>> comb2=[];
+ //   countryone.retainWhere((element) {
+ //
+ //     if(element["flag"]==true){
+ //       comb2.add(element);
+ //     }
+ //
+ //     return true;
+ //
+ //   });
+ //  if(comb2.isNotEmpty)
+ //    combinationArray.add(comb2);
+ //    return true ;
+ //  });
+
+
+
+
+
+ print("Akskskksksksksksk"+combinationArray.toString());
+    // if(combinationArray.isNotEmpty==true){
+    //
+    // }
+
+
+
+
+    // if(combinationArray.isNotEmpty){
+    //   for(var i=0;i<combinationArray.length-1;i++)
+    //     {
+    //       var firstList=combinationArray[i];
+    //       // firstList.retainWhere((element) {
+    //       //   return element["flag"]==true;
+    //       // });
+    //
+    //       print("the first list===="+firstList.toString());
+    //       print("the first list===="+firstList.toString());
+    //       for(var m=i+1;m<combinationArray.length;m++){
+    //         var secondList=combinationArray[m];
+    //         print("the first list===="+secondList.toString());
+    //         if(firstList.isNotEmpty)
+    //           print("entered2");
+    //           for(var j=0;j<firstList.length;j++) {
+    //             print("entered1");
+    //             if (secondList.isNotEmpty)
+    //               for (var k = 0; k < secondList.length; k++) {
+    //                 if (firstList[j]["flag"] == true && secondList[k]["flag"] == true) {
+    //                   setState(() {
+    //                     var val= firstList[j]["value"] + secondList[k]["value"];
+    //                     if(vals.contains(val)==false) {
+    //                       List<Map<String, dynamic>>mapList = [];
+    //                       mapList.add(firstList[j]);
+    //                       mapList.add(secondList[k]);
+    //                       variantList.add(mapList);
+    //                       print("the maplist"+variantList.toString());
+    //
+    //
+    //                       vals.add(
+    //                           firstList[j]["value"] + secondList[k]["value"]);
+    //                     }});
+    //                   // break;
+    //                 }
+    //                 else if (firstList[j]["flag"] == true) {
+    //                   setState(() {
+    //                     var val= firstList[j]["value"];
+    //                     if(vals.contains(val)==false) {
+    //                       List<Map<String, dynamic>>mapList = [];
+    //                       mapList.add(firstList[j]);
+    //                       variantList.add(mapList);
+    //
+    //                       print("the maplist"+variantList.toString());
+    //                       vals.add(firstList[j]["value"]);
+    //
+    //
+    //
+    //                     }
+    //                   });
+    //                 }
+    //                 else if (secondList[k]["flag"] == true) {
+    //                   setState(() {
+    //                     var val=secondList[k]["value"];
+    //                     if(vals.contains(val)==false) {
+    //                       List<Map<String, dynamic>>mapList = [];
+    //                       mapList.add(secondList[k]);
+    //                       variantList.add(mapList);
+    //                       print("else if"+variantList.toString());
+    //                       vals.add(secondList[k]["value"]);
+    //                     } });
+    //                 }
+    //               }
+    //           }
+    //
+    //       }
+    //     }
+    //
+    // }
 
 
 
@@ -215,6 +287,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 ),
     BlocProvider(
       create: (context) => VariantCreationRead2Cubit(),
+    ), BlocProvider(
+      create: (context) => VariantFrameworkcombinationpostCubit(),
     ),
   
   ],
@@ -222,6 +296,30 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
     builder: (context) {
       return MultiBlocListener(
   listeners: [
+    BlocListener<VariantFrameworkcombinationpostCubit, VariantFrameworkcombinationpostState>(
+      listener: (context, state) {
+        print("patch" + state.toString());
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loadingggg");
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1){
+            context.showSnackBarSuccess(data.data2);
+
+
+            // context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
+          }
+
+          else {
+            context.showSnackBarError(data.data2);
+            print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
     BlocListener<VariantCreationReadCubit, VariantCreationReadState>(
       listener: (context, state) {
         state.maybeWhen(
@@ -292,6 +390,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                   setState(() {
                     if (result.isNotEmpty) {
                       veritiaclid = result[0].id;
+                      itemCode=result[0].code.toString();
+                      uomCode=result[0].uomCode.toString();
                       // Variable.verticalid=result[0].id;
                       // print("Variable.ak"+Variable.verticalid.toString());
                       context.read<VariantCreationReadCubit>().getVariantCreationRead(veritiaclid!);
@@ -420,122 +520,11 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                           print('Pressed');
                                         }
                                     ),
+                                    SizedBox(height: 10,),
+
                                     AttributeScreen(attributes: attribute,combination:combinationList),
-                                    // Row(
-                                    //   mainAxisAlignment:  MainAxisAlignment.start,
-                                    //   children: [
-                                    //     Expanded(
-                                    //
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Container(
-                                    //             width: width/4,
-                                    //             child:Row(
-                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //               children: [
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //               ],
-                                    //             ),
-                                    //
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     SizedBox(width: 25,),
-                                    //     TextButton.icon(
-                                    //         label: Text('Add New',style: TextStyle(fontSize: 11),),
-                                    //         icon: Icon(Icons.add,size: 11,),
-                                    //         onPressed: () {
-                                    //           print('Pressed');
-                                    //         }
-                                    //     ),
-                                    //     Expanded(
-                                    //
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Container(
-                                    //             width: width/4,
-                                    //             child:Row(
-                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //               children: [
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //               ],
-                                    //             ),
-                                    //
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     SizedBox(width: 25,),
-                                    //     Expanded(
-                                    //
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Container(
-                                    //             width: width/4,
-                                    //             child:Row(
-                                    //               mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //               children: [
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //                 NewCheckBoxText(label: "2",onChange: (va){},),
-                                    //               ],
-                                    //             ),
-                                    //
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //
-                                    //   ],
-                                    // ),
-                                    // SizedBox(height: height/9,),
-                                    // Container(
-                                    //   width: width/4,
-                                    //   child:Row(
-                                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //     children: [
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr:Colors.purple),
-                                    //     ],
-                                    //   ),
-                                    //
-                                    //
-                                    // ),
-                                    // SizedBox(height: 10,),
-                                    // Container(
-                                    //   width: width/4,
-                                    //   child:Row(
-                                    //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    //     children: [
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.red,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.blue,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-                                    //       NewCheckBoxBox(label: "2",onChange: (){},clr: Colors.green,),
-                                    //
-                                    //     ],
-                                    //   ),
-                                    //
-                                    // ),
-                                    // SizedBox(height: height/10,),
-                                    // Row(
-                                    //   mainAxisAlignment: MainAxisAlignment.start,
-                                    //   children: [
-                                    //     SizedBox(width: 10,),
-                                    //     Text("Variant List",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 13),),
-                                    //     SizedBox(width: 18,),
-                                    //     Text("Bulk Action",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                    //   ],
-                                    // ),
+                                    SizedBox(height: 10,),
+
                                     CombinationTable(list:vals),
                                     SizedBox(height: height/9,),
                                     Row(
@@ -557,6 +546,22 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                         Button(Icons.check, Colors.grey,
                                             ctx: context,
                                             text: "Save", onApply: (){
+                                          print("variantlist"+variantList.toString());
+
+
+
+
+
+
+                                            context.read<VariantFrameworkcombinationpostCubit>().postCombinationFrameWork(uomCode:uomCode,
+                                            itemCode: itemCode,
+                                            variantCode:group.variantFrameWork,
+                                            variantlist: variantList);
+
+
+
+
+
                                             // showDailogPopUp(
                                             //     context,
                                             //     ProductModulePopUp(

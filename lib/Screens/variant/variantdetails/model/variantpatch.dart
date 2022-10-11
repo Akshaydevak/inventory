@@ -86,7 +86,7 @@ class VariantPatch with _$VariantPatch {
     @JsonKey(name: "product_details") final  List<ProductFeatures>? productDetails,
     @JsonKey(name: "product_features") final List< ProductFeatures>? productFeatures,
     @JsonKey(name: "about_the_products") final List< Storage>? aboutProducts,
-    @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehavior,
+    @JsonKey(name: "product_behaviour") final List<productBehaviour>? productBehavior,
     @JsonKey(name: "usage_direction") final List<Storage>? usageDirection,
     @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
 
@@ -105,7 +105,7 @@ class VariantPatch with _$VariantPatch {
 
 
 
-    @JsonKey(name: "produced_countrye") final String? producedCountry,
+    @JsonKey(name: "produced_country") final String? producedCountry,
 
 
 

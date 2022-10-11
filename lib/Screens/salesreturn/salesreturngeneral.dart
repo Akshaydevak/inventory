@@ -8,6 +8,7 @@ import 'package:inventory/Screens/salesreturn/cubit/salesgeneralread/salesgenera
 
 import 'package:inventory/Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'package:inventory/Screens/salesreturn/model/salesreturnpost.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -46,7 +47,9 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
   TextEditingController cstomerIdController = TextEditingController();
   TextEditingController trnController = TextEditingController();
   TextEditingController shippingAddressIdController = TextEditingController();
+  TextEditingController shippingAddressNameController = TextEditingController();
   TextEditingController billingAddressIdController = TextEditingController();
+  TextEditingController billingAddressNameController = TextEditingController();
   TextEditingController slaesQuotesController = TextEditingController();
   TextEditingController paymentIdController = TextEditingController();
   TextEditingController paymentStatusController = TextEditingController();
@@ -77,33 +80,70 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
       addition();
     });
   }
-  listAssign( List< OrderReturnLinesInvoice> table1) {
+  listAssign( List< SalesReturnOrderLines> table1) {
     print("ethito");
-    if(table1.isNotEmpty)
-      for(var i=0;i<table1.length;i++)
-        table.add(SalesReturnOrderLines(
-            isActive: table1[i].isActive??false,
-            isInvoiced: table1[i].isInvoiced??false,
-            // stockId: table1[i].s??"",
-            totalPrice: table1[i].totalPrice,
-            sellingPrice: table1[i].sellingPriceTotal,
-            taxableAmount: table1[i].taxableAmount,
-            discountType: table1[i].discountType,
-            vat: table1[i].vat,
-            discount: table1[i].discount,
-            excessTax: table1[i].excessTax,
-            barcode: table1[i].barcode,
-            unitCost: table1[i].unitCost,
-            id: table1[i].id,
-            invoicedLineCode: table1[i].salesOrderLineCode,
-            quantity: table1[i].quantity,
-            salesUom: table1[i].salesUom??"",
-            variantId: table1[i].variantId,
-            warrentyPrice: table1[i].warrentyPrice
-        ));
-
+    print(table1);
     setState(() {
+      if(table1.isNotEmpty){
+        for(var i=0;i<table1.length;i++)
+          table.add(SalesReturnOrderLines(
+              isActive: table1[i].isActive??false,
+              isInvoiced: table1[i].isInvoiced??false,
+              // stockId: table1[i].s??"",
+              totalPrice: table1[i].totalPrice,
+              sellingPrice: table1[i].sellingPrice,
+              taxableAmount: table1[i].taxableAmount,
+              discountType: table1[i].discountType,
+              vat: table1[i].vat,
+              discount: table1[i].discount,
+              excessTax: table1[i].excessTax,
+              barcode: table1[i].barcode,
+              unitCost: table1[i].unitCost,
+              id: table1[i].id,
+              invoicedLineCode: table1[i].salesOrderLineCode,
+              quantity: table1[i].quantity,
+              salesUom: table1[i].salesUom??"",
+              variantId: table1[i].variantId,
+              warrentyPrice: table1[i].warrentyPrice
+          ));
+      }
+      print(table);
+
+
     });
+
+
+
+  }
+  clear(){
+    setState(() {
+      orderTypeController.text = "";
+      returnOrderCodeController.text="";
+      orderModeController.text = "";
+      orderDateController.text = "";
+      cstomerIdController.text = "";
+      trnController.text = "";
+      sellingPriceController.text="";
+      shippingAddressIdController.text = "";
+      billingAddressIdController.text = "";
+      slaesQuotesController.text = "";
+      paymentIdController.text = "";
+      paymentStatusController.text = "";
+      orderStatusController.text = "";
+      reasonController.text = "";
+      remarksController.text = "";
+      invoiceStatusController.text = "";
+      unitCostController.text = "";
+      discountController.text = "";
+      exciseTAxController.text = "";
+      taxableAmountController.text = "";
+      vatController.text = "";
+      toatalPriceController.text = "";
+      billingAddressNameController.text="";
+      salesInvoiceCodeController.text="";
+      shippingAddressNameController.text="";
+    });
+
   }
 
   addition() {
@@ -189,7 +229,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                     print("patch" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -262,7 +302,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -353,6 +393,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                   return Builder(
                       builder: (context) {
                         return Scaffold(
+                          backgroundColor: Pellet.bagroundColor,
+
                           body: SingleChildScrollView(
                             child: IntrinsicHeight(
                               child: Row(
@@ -366,6 +408,11 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                       setState(() {
                                         selectedVertical = index;
                                         select = false;
+
+                                        table= [];
+                                        clear();
+                                        // _myWidgetState.currentState?.cl();
+                                        _myWidgetState.currentState?.table1=[];
 
                                         veritiaclid = result[index].id;
                                         context
@@ -391,29 +438,9 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                             onPress: () {
                                               setState(() {
                                                 select = true;
-                                                orderTypeController.text = "";
-                                                returnOrderCodeController.text="";
-                                                orderModeController.text = "";
-                                                orderDateController.text = "";
-                                                cstomerIdController.text = "";
-                                                trnController.text = "";
-                                                sellingPriceController.text="";
-                                                shippingAddressIdController.text = "";
-                                                billingAddressIdController.text = "";
-                                                slaesQuotesController.text = "";
-                                                paymentIdController.text = "";
-                                                paymentStatusController.text = "";
-                                                orderStatusController.text = "";
-                                                reasonController.text = "";
-                                                remarksController.text = "";
-                                                invoiceStatusController.text = "";
-                                                unitCostController.text = "";
-                                                discountController.text = "";
-                                                exciseTAxController.text = "";
-                                                taxableAmountController.text = "";
-                                                vatController.text = "";
-                                                toatalPriceController.text = "";
+
                                                 table= [];
+                                                clear();
                                                 // _myWidgetState.currentState?.cl();
                                                 _myWidgetState.currentState?.table1=[];
 
@@ -465,6 +492,8 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                       ),
                                       SalesReturnGenealStableTable(
                                           select:select,
+                                          billingAddresName: billingAddressNameController,
+                                          shippingName: shippingAddressNameController,
                                           taxableAmount: taxableAmountController,
                                           vat: vatController,
                                           discount: discountController,
@@ -477,6 +506,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                           unitCost: unitCostController,
                                           orderType: orderTypeController,
                                           invoiceStatus: invoiceStatusController,
+
                                           paymentStatus: paymentStatusController,
                                           orderDate: orderDateController,
                                           returnOrderCode: returnOrderCodeController,
@@ -625,10 +655,13 @@ class SalesReturnGenealStableTable extends StatefulWidget {
   final TextEditingController vat;
   final TextEditingController sellingPriceTotal;
   final TextEditingController totalPrice;
+  final TextEditingController billingAddresName;
+  final TextEditingController shippingName;
   final Function assign;
   bool select;
   SalesReturnGenealStableTable(
-      {required this.orderType,
+      {
+        required this.orderType,
         required this.returnOrderCode,
         required this.orderMode,
         required this.orderDate,
@@ -652,7 +685,7 @@ class SalesReturnGenealStableTable extends StatefulWidget {
         required this.unitCost,
         required this.assign,
 
-        required this.sellingPriceTotal});
+        required this.sellingPriceTotal, required this.billingAddresName, required this.shippingName});
 
   @override
   _SalesReturnGenealStableTableState createState() => _SalesReturnGenealStableTableState();
@@ -708,6 +741,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                     widget.totalPrice.text=data?.invoicedData?.totalPrice.toString()??"";
                   }
                   else{
+                    print("the null case");
                     widget.customerId.text=data.customerId??"";
                     widget.trnNumber.text=data.trnNumber??"";
                     widget.paymentId.text=data.paymentId??"";
@@ -720,6 +754,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                     widget.vat.text=data.vat.toString()??"";
                     widget.sellingPriceTotal.text=data.sellingPriceTotal.toString()??"";
                     widget.totalPrice.text=data.totalPrice.toString()??"";
+                    // print( data?.i);
                     data?.lines != null
                         ? table = data?.lines  ?? []
                         : table = [];
@@ -762,6 +797,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             ),
                             SelectableDropDownpopUp(
                               label: "Order Mode",
+                              apiType:"1",
                               type: "SalesOrderMode",
                               value: widget.orderMode.text,
                               onSelection: (String va) {
@@ -884,7 +920,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             SelectableDropDownpopUp(
                               label: "billing address id",
                               type:"ShippingAddressPopUpCall",
-                              value: widget.billingAddressId.text,
+                              value: widget.billingAddresName.text,
                               enable: true,
                               onSelection: (ShippingAddressModel? va) {
                                 print(
@@ -892,6 +928,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                 setState(() {
                                   widget.billingAddressId.text=va?.id.toString()??"";
+                                  widget.billingAddresName.text=va?.fullName.toString()??"";
 
 
                                   // onChange = true;
@@ -916,7 +953,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             SelectableDropDownpopUp(
                               label: "shipping address id",
                               type:"ShippingAddressPopUpCall",
-                              value: widget.shipping.text,
+                              value: widget.shippingName.text,
                               enable: true,
                               onSelection: (ShippingAddressModel? va) {
                                 print(
@@ -924,6 +961,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                 setState(() {
                                   widget.shipping.text=va?.id.toString()??"";
+                                  widget.shippingName.text=va?.fullName.toString()??"";
 
 
                                   // onChange = true;
@@ -1173,6 +1211,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
   @override
   Widget build(BuildContext context) {
     if (assignCheck == false) table1 = widget.table ?? [];
+
     // if(widget.select && clear==true)table1.clear();
     // clear=false;
 
@@ -1250,8 +1289,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                           unicostController.text = unitcost1.toString();
                           vat1 = purchaseTable?.vat ?? 0;
 
-                          supplierRefCode =
-                              purchaseTable?.vendorDetails?.vendorRefCode ?? "";
+                          // supplierRefCode =
+                          //     purchaseTable?.vendorDetails?.vendorRefCode ?? "";
                           print(supplierRefCode);
 
                           salesUom = purchaseTable?.purchaseUomName ?? "";
@@ -1513,6 +1552,50 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
 
                                     // if (widget.onAddNew) textPadding(''),
                                   ]),
+                              if(table1.isEmpty)...[
+                                TableRow(
+                                    decoration: BoxDecoration(
+                                        color: Colors.grey.shade200,
+                                        shape: BoxShape.rectangle,
+                                        border: const Border(
+                                            left: BorderSide(
+                                                width: .5,
+                                                color: Colors.grey,
+                                                style: BorderStyle.solid),
+                                            bottom: BorderSide(
+                                                width: .5,
+                                                color: Colors.grey,
+                                                style: BorderStyle.solid),
+                                            right: BorderSide(
+                                                color: Colors.grey,
+                                                width: .5,
+                                                style: BorderStyle.solid))),
+                                    children: [
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      textPadding(""),
+                                      Container(height: 42,)
+
+                                    ]),
+
+                              ],
+
                               if (table1 != null) ...[
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
@@ -1913,6 +1996,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                           ),
                                         ),
                                         PopUpCall(
+                                          apiType: "1",
                                           type: "PriceTypePopUpCall",
                                           value: table1[i].discountType??"",
                                           onSelection: (String va) {
