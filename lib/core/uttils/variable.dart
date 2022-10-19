@@ -6,11 +6,14 @@ class Variable{
   static String  trn="";
   static String  address="";
   static String  vendorAddress="";
+  static String  variantCode="";
   static String  inventory_ID="";
+  static String  inventory_Name="";
   static String  created_by="";
   static String  username="";
   static String  loginLeage="";
   static int  variantSearchId=0;
+ static List<List<Map<String,dynamic>>> combinationArray=[];
   static String  token="test";
   static String?  imageName="";
   static ImagesModel?  img;
@@ -35,10 +38,10 @@ class Variable{
 
   static int  tableindex=0;
   static bool  tableedit=false;
-  static int? verticalid=1;
-  static int? divisionId=1;
-  static int? uomGroupId=1;
-  static int? categoryId=1;
+  static int? verticalid=0;
+  static int? divisionId=0;
+  static int? uomGroupId=0;
+  static int? categoryId=0;
   static int? uomId=0;
   static int? verticalid2;
   static bool? tableClear=false;

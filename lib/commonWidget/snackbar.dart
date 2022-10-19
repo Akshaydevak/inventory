@@ -22,6 +22,7 @@ extension ViewUtils on BuildContext {
         VoidCallback? onVisible,
       }) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
+      width: 400,
       content: Text(message, textAlign: TextAlign.center),
       backgroundColor: Colors.red,
       duration: duration,
@@ -33,6 +34,7 @@ extension ViewUtils on BuildContext {
   void showSnackBarSuccess(String message, [VoidCallback? onVisible]) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       backgroundColor: Colors.green,
+      width: 400,
       content: Text(message, textAlign: TextAlign.center),
       duration: Duration(seconds: 3),
       behavior: SnackBarBehavior.floating,
@@ -42,6 +44,7 @@ extension ViewUtils on BuildContext {
 
   void showSnackBarNormal(String message, [VoidCallback? onVisible]) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
+      width: 400,
       content: Text(message, textAlign: TextAlign.center),
       duration: Duration(seconds: 2),
       behavior: SnackBarBehavior.floating,

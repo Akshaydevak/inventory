@@ -3340,7 +3340,7 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                       child: Container(
                         height: height,
                         // height: double.minPositive,
-                        width:  width * .172,
+                        width:  width * .112,
                         //width: 232,
                         color: Color(0xffEDF1F2),
                         child: Column(

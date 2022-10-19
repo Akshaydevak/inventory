@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
@@ -90,7 +91,6 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
   String imageName7="";
   String imageName8="";
   String imageEncode="";
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -129,7 +129,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -218,18 +218,23 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             enable: true,
                             onSelection: (BrandListModel? va) {
                               setState(() {
-
                                 widget.uomGroupController.text=va?.code??"";
-                                widget.uomGroupNameController.text=va?.name??"";
-                                Variable.uomGroupId=va?.id;
-                                setState(() {
+                              widget.uomGroupNameController.text=va?.name??"";
+                              Variable.uomGroupId=va?.id;
 
-                                });
+
+                              });
+
+
+
+
+
+
 
 
                                 // onChange = true;
                                 // orderType.text = va!;
-                              });
+
                             },
                             onAddNew: () {
 
@@ -303,13 +308,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               }),
 
                           SizedBox(
-                            height: height * .002,
+                            height: height * .030,
                           ),
-                          NewInputCard(
-                            controller: widget.status, title: "Status", ),
-                          SizedBox(
-                            height: height * .045,
-                          ),
+                          // NewInputCard(
+                          //   controller: widget.status, title: "Status", ),
+                          // SizedBox(
+                          //   height: height * .045,
+                          // ),
                           FileUploadField(
 
                               fileName:widget.image1.text,
@@ -355,23 +360,8 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "Image"),
-
-
                           SizedBox(
-                            height: height * .120,
-
-                          ),
-                          SizedBox(
-                            height:height*.034,
-
-                          ),
-
-
-                        ],)),
-                        Expanded(child: Column(children: [
-
-                          SizedBox(
-                            height: height * .050,
+                            height: height * .030,
                           ),
                           FileUploadField(
                               fileName:widget.image2.text,
@@ -420,6 +410,23 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "image2"),
+
+
+
+                          SizedBox(
+                            height: height * .145,
+
+                          ),
+                          // SizedBox(
+                          //   height:height*.034,
+                          //
+                          // ),
+
+
+                        ],)),
+                        Expanded(child: Column(children: [
+
+
                           SizedBox(
                             height: height * .030,
                           ),
@@ -729,6 +736,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               },
                               onCreate: true,
                               label: "item catalog2"),
+                          SizedBox(
+                            height: height * .092,
+                          ),
 
                         ],))
 
@@ -758,6 +768,8 @@ class TableBottom extends StatefulWidget {
 }
 
 class _TableBottomState extends State<TableBottom> {
+  bool isTableReaD=false;
+
   TextEditingController controller=TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -785,6 +797,7 @@ class _TableBottomState extends State<TableBottom> {
                 child: Column(
                   children: [
                     NewInputCard(
+                      height: 77,
                         controller: widget.qrCode, title: "Qr code"),
                   ],
                 ),
@@ -966,20 +979,22 @@ class _TableBottomState extends State<TableBottom> {
 
 class VariantFrameWorkBottomTable extends StatefulWidget {
   final  Function listAssign;
-  // final  Function storageTableEdit;
-  // final  bool addNew;
-  // final  Key? key;
-  VariantFrameWorkBottomTable({required this.listAssign});
+  List<VariantLinesLiostModel>table;
+
+  VariantFrameWorkBottomTable({required this.listAssign,required this.table});
   @override
   VariantFrameWorkBottomTableState createState() => VariantFrameWorkBottomTableState();
 }
 
 class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable> {
+  bool isTableRead=false;
   List<VariantLinesLiostModel>table=[];
   TextEditingController name=TextEditingController();
   TextEditingController type=TextEditingController();
   TextEditingController val=TextEditingController();
+  List<TextEditingController>valuesTexgtEdingList=[];
   int ? attributeid;
+  bool onChange=false;
 
   List<String>values=[];
 
@@ -987,237 +1002,121 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    // if(!onChange){
-    //   print("welcome to the entire place");
-    //   setState(() {
-    //     keys=[];
-    //   });
-    //
-    //
-    //   if(widget.aboutProducts?.isNotEmpty==true){
-    //
-    //
-    //     setState(() {
-    //
-    //       headingController.text=widget.addNew?"":widget.aboutProducts?[0].name??"";
-    //     });
-    //     aboutProducts= widget.aboutProducts??[];
-    //     if(aboutProducts?[0].keyValues?.isNotEmpty==true)
-    //       keys=aboutProducts?[0].keyValues??[];
-    //
-    //   }
-    //
-    //
-    //
-    //
-    //
-    // }
-    // onChange=false;
+    if(onChange==false){
+
+        table=widget.table;
+        print("tablesssssssssssss"+table.toString());
+
+
+      }
+
+    onChange=false;
     return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      SingleChildScrollView(
+        physics: ScrollPhysics(),
+        scrollDirection: Axis.vertical,
+        child: Container(
+          // width: w/5,
+          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          child: customTable(
 
-          SingleChildScrollView(
-            child: Container(
-              // width: w/5,
-              margin: EdgeInsets.symmetric(horizontal: w*.02),
-              child: customTable(
+            border: const TableBorder(
 
-                border: const TableBorder(
+              verticalInside: BorderSide(
+                  width:.5,
+                  color: Colors.black45,
+                  style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width:.3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),),
 
-                  verticalInside: BorderSide(
-                      width:.5,
-                      color: Colors.black45,
-                      style: BorderStyle.solid),
-                  horizontalInside: BorderSide(
-                      width:.3,
-                      color: Colors.black45,
-                      // color: Colors.blue,
-                      style: BorderStyle.solid),),
+            tableWidth: .5,
 
-                tableWidth: .5,
+            childrens:[
+              TableRow(
 
-                childrens:[
-                  TableRow(
+                // decoration: BoxDecoration(
 
-                    // decoration: BoxDecoration(
+                //     color: Colors.green.shade200,
 
-                    //     color: Colors.green.shade200,
+                //     shape: BoxShape.rectangle,
 
-                    //     shape: BoxShape.rectangle,
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                children: [
 
-                    children: [
+                  tableHeadtext(
 
-                      tableHeadtext(
+                    'Variant Name',
 
-                        'Variant Name',
+                    padding: EdgeInsets.all(7),
 
-                        padding: EdgeInsets.all(7),
-
-                        height: 46,
-                        textColor: Colors.white,
+                    height: 46,
+                    textColor: Colors.white,
 
 
-                        size: 13,
+                    size: 13,
 
-
-                      ),
-                      tableHeadtext(
-
-                        'Type',
-
-                        padding: EdgeInsets.all(7),
-
-                        height: 46,
-                        textColor: Colors.white,
-
-
-                        size: 13,
-
-
-                      ),
-                      tableHeadtext(
-
-                        'Values',
-
-                        padding: EdgeInsets.all(7),
-
-                        height: 46,
-                        textColor: Colors.white,
-
-
-                        size: 13,
-
-
-                      ),
-
-
-                      tableHeadtext(
-
-                        'Action',
-
-                        padding: EdgeInsets.all(7),
-
-                        height: 46,
-                        textColor: Colors.white,
-
-
-                        size: 13,
-
-
-                      ),
-
-
-
-
-
-                    ],
 
                   ),
-                  if (table.isNotEmpty==true ) ...[
+                  tableHeadtext(
+
+                    'Type',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 46,
+                    textColor: Colors.white,
 
 
-                    for (var i = 0; i < table.length; i++)
-                      TableRow(
-                          decoration: BoxDecoration(
-                              color: Colors.grey
-                                  .shade200,
-                              shape: BoxShape
-                                  .rectangle,
-                              border:const  Border(
-                                  left: BorderSide(
-                                      width: .5,
-                                      color: Colors
-                                          .grey,
-                                      style: BorderStyle
-                                          .solid),
-                                  bottom: BorderSide(
-                                      width: .5,
-                                      color: Colors
-                                          .grey,
-                                      style: BorderStyle
-                                          .solid),
-                                  right: BorderSide(
-                                      color: Colors
-                                          .grey,
-                                      width: .5,
-                                      style: BorderStyle
-                                          .solid))),
-                          children: [
-
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                child:textPadding(table[i].name??"")
+                    size: 13,
 
 
+                  ),
+                  tableHeadtext(
 
-                            ),
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
+                    'Values',
 
-                                child:textPadding(table[i].type??"")
+                    padding: EdgeInsets.all(7),
 
-
-
-                            ),
-                            TableCell(
-                                verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                child:
-                                Row(
-                                  children: [
-                                    if (table[i]?.values?.isNotEmpty==true ) ...[
+                    height: 46,
+                    textColor: Colors.white,
 
 
-                                      for (var i = 0; i < table[i].values!.length; i++)
-                                        Container(
-                                          height: 15,
-                                            width: 10,
-                                            color: Colors.red,
-                                            child:textPadding(table[i]?.values?[i].toString()??"")
-                                        ),
-
-                                    ],
-                                    // Expanded(child:UnderLinedInput(
-                                    //   formatter: false,
-                                    //   controller: val,
-                                    //   onComplete: (){
-                                    //     setState(() {
-                                    //       values.add(val.text);
-                                    //     });
-                                    //   },
-                                    // )),
-                                  ],
-                                )
+                    size: 13,
 
 
+                  ),
 
-                            ),
-                            TableTextButton(
-                              label: "",
-                              // actionCheck: true,
-                              designCheck: true,
-                              onPress: (){
-                                setState(() {
-                                // table.remove(value)
-                                });
+
+                  tableHeadtext(
+
+                    'Action',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 46,
+                    textColor: Colors.white,
+
+
+                    size: 13,
+
+
+                  ),
 
 
 
 
 
-                              },
+                ],
 
-                            )
+              ),
+              if (table.isNotEmpty==true ) ...[
 
 
-
-
-                          ]),],
+                for (var i = 0; i < table.length; i++)
                   TableRow(
                       decoration: BoxDecoration(
                           color: Colors.grey
@@ -1244,7 +1143,157 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                                   style: BorderStyle
                                       .solid))),
                       children: [
-                        PopUpCall(
+
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding(table[i].name??"")
+
+
+
+                        ),
+                        TableCell(
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:textPadding(table[i].type??"")
+
+
+
+                        ),
+
+
+
+
+                        TableCell(
+
+                            verticalAlignment: TableCellVerticalAlignment.middle,
+
+                            child:
+
+                            SingleChildScrollView(
+    scrollDirection: Axis.horizontal,
+
+    child: Container(
+      color: Colors.green,
+    width: 230,
+    // // height: 40,
+    child: Wrap(
+    direction : Axis.horizontal,
+    children: [
+    if (table[i].values?.isNotEmpty==true )
+
+
+    for (var k = 0; i < table[i].values!.length; k++)...[
+
+    Container(
+      color: Colors.yellow,
+    // height: 30,
+    width: 50,
+    child: UnderLinedInput(
+    formatter: false,
+    initialCheck: true,
+    last: "5",
+    onChanged: (va){
+    print(va);
+
+    setState(() {
+   // t values[i]=va;
+    });
+
+    },
+    ),
+    ),
+
+    ] ,
+
+    ],
+    ),
+    ),
+    ),),
+   //                          // Container(
+   //                          //   width: 230,
+   //                          //   child:
+   //                          //   // Text("ak"),
+   //                          //   Row(
+   //                          //     children: [
+   //                          //       if (table[i]?.values?.isNotEmpty==true ) ...[
+   //                          //
+   //                          //
+   //                          //         for (var k = 0; i < 3; k++)
+   //                          //           Container(
+   //                          //             height: 15,
+   //                          //               width: 10,
+   //                          //               color: Colors.red,
+   //                          //               child:textPadding(table[i]?.values?[2].toString()??"")
+   //                          //           ),
+   //                          //
+   //                          //       ],
+   //                          //       // Expanded(child:UnderLinedInput(
+   //                          //       //   formatter: false,
+   //                          //       //   controller: val,
+   //                          //       //   onComplete: (){
+   //                          //       //     setState(() {
+   //                          //       //       values.add(val.text);
+   //                          //       //     });
+   //                          //       //   },
+   //                          //       // )),
+   //                          //     ],
+   //                          //   ),
+   //                          // )
+   //
+   //
+   //
+   //                      ),
+                        TableTextButton(
+                          label: "",
+                          // actionCheck: true,
+                          designCheck: true,
+                          onPress: (){
+                            setState(() {
+                            // table.remove(value)
+                            });
+
+
+
+
+
+                          },
+
+                        )
+
+
+
+
+                      ]),],
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Colors.grey
+                          .shade200,
+                      shape: BoxShape
+                          .rectangle,
+                      border:const  Border(
+                          left: BorderSide(
+                              width: .5,
+                              color: Colors
+                                  .grey,
+                              style: BorderStyle
+                                  .solid),
+                          bottom: BorderSide(
+                              width: .5,
+                              color: Colors
+                                  .grey,
+                              style: BorderStyle
+                                  .solid),
+                          right: BorderSide(
+                              color: Colors
+                                  .grey,
+                              width: .5,
+                              style: BorderStyle
+                                  .solid))),
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: PopUpCall(
 
     type: "attribute_list",
     value: name.text,
@@ -1263,34 +1312,45 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
     });
     },
     ),
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
 
-                          child:UnderLinedInput(
-                            controller: type,
-                            formatter: false,
-                            onChanged: (va){
-                              print(va);
-                              // name.text=va;
-                              // setState(() {
-                              //
-                              // });
+                      child:UnderLinedInput(
+                        controller: type,
+                        formatter: false,
+                        onChanged: (va){
+                          print(va);
+                          // name.text=va;
+                          // setState(() {
+                          //
+                          // });
 
-                            },
-                          ),
-                        ),
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
+                        },
+                      ),
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
 
-                          child:
+                      child:
 
-    Row(
-    children: [
+    SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+
+      child: Container(
+        width: 230,
+        // // height: 40,
+        child: Wrap(
+      direction : Axis.horizontal,
+        children: [
       if (values.isNotEmpty==true ) ...[
 
 
         for (var i = 0; i < values.length; i++)...[
-      Flexible(
+
+      Container(
+        // height: 30,
+        width: 50,
         child: UnderLinedInput(
         formatter: false,
         initialCheck: true,
@@ -1303,11 +1363,11 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
             });
 
         },
-    ),
+        ),
       ),
 
-     ] ],
-      Expanded(child:UnderLinedInput(
+         ] ],
+      UnderLinedInput(
         formatter: false,
         controller: val,
       onComplete: (){
@@ -1317,51 +1377,61 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
              val.text='';
          });
       },
-      )),
-    ],
+      ),
+        ],
+        ),
+      ),
     )
 
-                        ),
-                        TableTextButton(
-                          label: "",
-                          actionCheck: true,
-                          designCheck: true,
-                          onPress: (){
-                            setState(() {
-                              table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
-                              print(table.length);
-                              print("the table is"+table.toString());
+                    ),
+                    TableTextButton(
+                      label: "",
+                      actionCheck: true,
+                      designCheck: true,
+                      onPress: (){
+                        onChange=true;
+                        // setState(() {
+                          table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
+                          print(table.length);
+                          print("the table is"+table.toString());
+                           isTableRead=true;
+
+
+                          widget.listAssign(table);
+                          name.text='';
+                          type.text="";
+                          val.text="";
+                          attributeid=null;
+                          values.clear();
+                        // });
+
+                        setState(() {
+
+                        });
 
 
 
-                              widget.listAssign(table);
-                              name.text='';
-                              type.text="";
-                              val.text="";
-                              attributeid=null;
-                              values.clear();
-                            });
+
+                      },
+
+                    )
 
 
+                  ])
+            ],
+            widths: {
+              0: FlexColumnWidth(2),
+              1: FlexColumnWidth(2),
+              2: FlexColumnWidth(5),
+              3: FlexColumnWidth(2),
 
 
+            },
 
-                          },
-
-                        )
-
-
-                      ])
-
-
-                ],
-
-              ),
-
-
-            ),
           ),
-        ],
+
+
+        ),
       );
   }
 }

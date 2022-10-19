@@ -16,6 +16,7 @@ print(user);
     prefs.setString('organizationCode', user?.organizationCode??"");
     prefs.setString('legalEntiry', user?.legalEntiry??"");
     prefs.setString('username', user?.fname??"");
+    prefs.setString('empcode', user?.employeeCode??"");
 
 
     prefs.setBool("isLoggedIn", true);
@@ -69,6 +70,7 @@ print(user);
     bool?  isLoggedIn = prefs.getBool("isLoggedIn");
     String?  token = prefs.getString("token");
     String?  legalEntiry = prefs.getString("legalEntiry");
+    String?  emplCode = prefs.getString("empcode");
 
     print("username"+token.toString());
     // String password = prefs.getString("password");
@@ -86,6 +88,7 @@ print(user);
       isLoggedIn: isLoggedIn,
       token: token,
       legalEntiry: legalEntiry,
+      employeeCode: emplCode
 
       // password: password,
       //   msg:msg,

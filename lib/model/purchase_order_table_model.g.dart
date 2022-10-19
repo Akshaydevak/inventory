@@ -18,7 +18,7 @@ _$_PurchaseOrderTableModel _$$_PurchaseOrderTableModelFromJson(
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
-      returnTime: json['return_time'] as String?,
+      returnTime: json['return_time'] as int?,
       vendorDetails: (json['vendor_details'] as List<dynamic>?)
           ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
           .toList(),

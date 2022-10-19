@@ -38,15 +38,20 @@ class AttributesModel with _$AttributesModel {
       _$AttributesModelFromJson(json);
 }
 
+
+
 @freezed
 class VariantFrameWorkPostModel with _$VariantFrameWorkPostModel {
   const factory VariantFrameWorkPostModel({
 final String? name,
 final String? description,
+final String? code ,
 
     final List<dynamic>?values,
     @JsonKey(name: "category_id") final int? categoryId,
+    @JsonKey(name: "category_name") final String? categoryName,
     @JsonKey(name: "variant_lines_list") final List<VariantLinesLiostModel>? variantListModel,
+    @JsonKey(name: "lines") final List<VariantLinesLiostModel>? lines,
     @JsonKey(name: "attribute_type") final String? attrributeType,
     @JsonKey(name: "is_active") final bool? isActive,
 
@@ -57,11 +62,15 @@ final String? description,
 }@freezed
 class VariantLinesLiostModel with _$VariantLinesLiostModel {
   const factory VariantLinesLiostModel({
-final String? name,
-final String? type,
+
+
 
     final List<String>?values,
     @JsonKey(name: "attribute_id") final int? attributeId,
+    @JsonKey(name: "attribute_name") final String? name,
+    @JsonKey(name: "attribute_type") final String? type,
+    @JsonKey(name: "attribute_code") final String? attributeCode,
+    @JsonKey(name: "is_active") final bool? isActive,
 
 
 

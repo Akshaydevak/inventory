@@ -25,29 +25,62 @@ class _$ChannelAllocationStockStockReadModelTearOff {
   _ChannelAllocationStockStockReadModel call(
       {int? id,
       String? code,
-      @JsonKey(name: "channel_type_stock_code") String? channelTypeStockCode,
-      @JsonKey(name: "channel_type_code") String? channeltypeCode,
-      @JsonKey(name: "channel_type_id") String? channelTypeId,
-      @JsonKey(name: "channel_type_name") String? channelTypeName,
-      @JsonKey(name: "channel_allocation_ratio") String? channelAllocationRatio,
-      @JsonKey(name: "min_max_ratio") String? minMaxRatio,
-      @JsonKey(name: "safety_stock_qty") int? safetyStock,
-      @JsonKey(name: "reorder_point") int? reOrderPoint,
-      @JsonKey(name: "reorder_quantity") int? reOrderQuantity,
-      @JsonKey(name: "available_qty") int? availableQuantity,
-      @JsonKey(name: "reserved_qty") int? reservedQuantity,
-      @JsonKey(name: "damaged_qty") int? damagedQuantity,
-      @JsonKey(name: "returned_qty") int? returnedQuantity,
-      @JsonKey(name: "replacement_qty") int? replacementQuantity,
-      @JsonKey(name: "minimum_quantity") int? minimumQuantity,
-      @JsonKey(name: "maximum_quantity") int? maximumQuantity,
-      @JsonKey(name: "virtual_stock") int? virtualStock,
-      @JsonKey(name: "virtual_type") String? virtualType,
-      @JsonKey(name: "add_virtual_stock") int? addVirtualStock,
-      @JsonKey(name: "stock_id") int? stockId,
-      @JsonKey(name: "variant_id") int? variantId,
-      @JsonKey(name: "stock_warning", defaultValue: false) bool? stockWarning,
-      @JsonKey(name: "sales_block", defaultValue: false) bool? salesblock}) {
+      @JsonKey(name: "channel_type_stock_code")
+          String? channelTypeStockCode,
+      @JsonKey(name: "channel_type_code")
+          String? channeltypeCode,
+      @JsonKey(name: "channel_type_id")
+          String? channelTypeId,
+      @JsonKey(name: "channel_type_name")
+          String? channelTypeName,
+      @JsonKey(name: "channel_allocation_ratio")
+          String? channelAllocationRatio,
+      @JsonKey(name: "min_max_ratio")
+          String? minMaxRatio,
+      @JsonKey(name: "safety_stock_qty")
+          int? safetyStock,
+      @JsonKey(name: "reorder_point")
+          int? reOrderPoint,
+      @JsonKey(name: "reorder_quantity")
+          int? reOrderQuantity,
+      @JsonKey(name: "available_qty")
+          int? availableQuantity,
+      @JsonKey(name: "reserved_qty")
+          int? reservedQuantity,
+      @JsonKey(name: "damaged_qty")
+          int? damagedQuantity,
+      @JsonKey(name: "returned_qty")
+          int? returnedQuantity,
+      @JsonKey(name: "replacement_qty")
+          int? replacementQuantity,
+      @JsonKey(name: "minimum_quantity")
+          int? minimumQuantity,
+      @JsonKey(name: "maximum_quantity")
+          int? maximumQuantity,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
+      @JsonKey(name: "virtual_type")
+          String? virtualType,
+      @JsonKey(name: "add_virtual_stock")
+          int? addVirtualStock,
+      @JsonKey(name: "stock_id")
+          int? stockId,
+      @JsonKey(name: "purchase_blocked_qty")
+          int? purchaseblockQuantity,
+      @JsonKey(name: "variant_id")
+          int? variantId,
+      @JsonKey(name: "sales_blocked_qty")
+          int? salesblockQuantity,
+      @JsonKey(name: "variant_code")
+          String? variantCode,
+      @JsonKey(name: "stock_code")
+          String? stockCode,
+      @JsonKey(name: "stock_warning", defaultValue: false)
+          bool? stockWarning,
+      @JsonKey(name: "sales_block", defaultValue: false)
+          bool? salesblock,
+      @JsonKey(name: "purchase_blocked", defaultValue: false)
+          bool? purchaseBlock}) {
     return _ChannelAllocationStockStockReadModel(
       id: id,
       code: code,
@@ -71,9 +104,14 @@ class _$ChannelAllocationStockStockReadModelTearOff {
       virtualType: virtualType,
       addVirtualStock: addVirtualStock,
       stockId: stockId,
+      purchaseblockQuantity: purchaseblockQuantity,
       variantId: variantId,
+      salesblockQuantity: salesblockQuantity,
+      variantCode: variantCode,
+      stockCode: stockCode,
       stockWarning: stockWarning,
       salesblock: salesblock,
+      purchaseBlock: purchaseBlock,
     );
   }
 
@@ -130,12 +168,22 @@ mixin _$ChannelAllocationStockStockReadModel {
   int? get addVirtualStock => throw _privateConstructorUsedError;
   @JsonKey(name: "stock_id")
   int? get stockId => throw _privateConstructorUsedError;
+  @JsonKey(name: "purchase_blocked_qty")
+  int? get purchaseblockQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
   int? get variantId => throw _privateConstructorUsedError;
+  @JsonKey(name: "sales_blocked_qty")
+  int? get salesblockQuantity => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_code")
+  String? get variantCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "stock_code")
+  String? get stockCode => throw _privateConstructorUsedError;
   @JsonKey(name: "stock_warning", defaultValue: false)
   bool? get stockWarning => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesblock => throw _privateConstructorUsedError;
+  @JsonKey(name: "purchase_blocked", defaultValue: false)
+  bool? get purchaseBlock => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -153,29 +201,62 @@ abstract class $ChannelAllocationStockStockReadModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? code,
-      @JsonKey(name: "channel_type_stock_code") String? channelTypeStockCode,
-      @JsonKey(name: "channel_type_code") String? channeltypeCode,
-      @JsonKey(name: "channel_type_id") String? channelTypeId,
-      @JsonKey(name: "channel_type_name") String? channelTypeName,
-      @JsonKey(name: "channel_allocation_ratio") String? channelAllocationRatio,
-      @JsonKey(name: "min_max_ratio") String? minMaxRatio,
-      @JsonKey(name: "safety_stock_qty") int? safetyStock,
-      @JsonKey(name: "reorder_point") int? reOrderPoint,
-      @JsonKey(name: "reorder_quantity") int? reOrderQuantity,
-      @JsonKey(name: "available_qty") int? availableQuantity,
-      @JsonKey(name: "reserved_qty") int? reservedQuantity,
-      @JsonKey(name: "damaged_qty") int? damagedQuantity,
-      @JsonKey(name: "returned_qty") int? returnedQuantity,
-      @JsonKey(name: "replacement_qty") int? replacementQuantity,
-      @JsonKey(name: "minimum_quantity") int? minimumQuantity,
-      @JsonKey(name: "maximum_quantity") int? maximumQuantity,
-      @JsonKey(name: "virtual_stock") int? virtualStock,
-      @JsonKey(name: "virtual_type") String? virtualType,
-      @JsonKey(name: "add_virtual_stock") int? addVirtualStock,
-      @JsonKey(name: "stock_id") int? stockId,
-      @JsonKey(name: "variant_id") int? variantId,
-      @JsonKey(name: "stock_warning", defaultValue: false) bool? stockWarning,
-      @JsonKey(name: "sales_block", defaultValue: false) bool? salesblock});
+      @JsonKey(name: "channel_type_stock_code")
+          String? channelTypeStockCode,
+      @JsonKey(name: "channel_type_code")
+          String? channeltypeCode,
+      @JsonKey(name: "channel_type_id")
+          String? channelTypeId,
+      @JsonKey(name: "channel_type_name")
+          String? channelTypeName,
+      @JsonKey(name: "channel_allocation_ratio")
+          String? channelAllocationRatio,
+      @JsonKey(name: "min_max_ratio")
+          String? minMaxRatio,
+      @JsonKey(name: "safety_stock_qty")
+          int? safetyStock,
+      @JsonKey(name: "reorder_point")
+          int? reOrderPoint,
+      @JsonKey(name: "reorder_quantity")
+          int? reOrderQuantity,
+      @JsonKey(name: "available_qty")
+          int? availableQuantity,
+      @JsonKey(name: "reserved_qty")
+          int? reservedQuantity,
+      @JsonKey(name: "damaged_qty")
+          int? damagedQuantity,
+      @JsonKey(name: "returned_qty")
+          int? returnedQuantity,
+      @JsonKey(name: "replacement_qty")
+          int? replacementQuantity,
+      @JsonKey(name: "minimum_quantity")
+          int? minimumQuantity,
+      @JsonKey(name: "maximum_quantity")
+          int? maximumQuantity,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
+      @JsonKey(name: "virtual_type")
+          String? virtualType,
+      @JsonKey(name: "add_virtual_stock")
+          int? addVirtualStock,
+      @JsonKey(name: "stock_id")
+          int? stockId,
+      @JsonKey(name: "purchase_blocked_qty")
+          int? purchaseblockQuantity,
+      @JsonKey(name: "variant_id")
+          int? variantId,
+      @JsonKey(name: "sales_blocked_qty")
+          int? salesblockQuantity,
+      @JsonKey(name: "variant_code")
+          String? variantCode,
+      @JsonKey(name: "stock_code")
+          String? stockCode,
+      @JsonKey(name: "stock_warning", defaultValue: false)
+          bool? stockWarning,
+      @JsonKey(name: "sales_block", defaultValue: false)
+          bool? salesblock,
+      @JsonKey(name: "purchase_blocked", defaultValue: false)
+          bool? purchaseBlock});
 }
 
 /// @nodoc
@@ -211,9 +292,14 @@ class _$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
     Object? virtualType = freezed,
     Object? addVirtualStock = freezed,
     Object? stockId = freezed,
+    Object? purchaseblockQuantity = freezed,
     Object? variantId = freezed,
+    Object? salesblockQuantity = freezed,
+    Object? variantCode = freezed,
+    Object? stockCode = freezed,
     Object? stockWarning = freezed,
     Object? salesblock = freezed,
+    Object? purchaseBlock = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -304,10 +390,26 @@ class _$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as int?,
+      purchaseblockQuantity: purchaseblockQuantity == freezed
+          ? _value.purchaseblockQuantity
+          : purchaseblockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
+      salesblockQuantity: salesblockQuantity == freezed
+          ? _value.salesblockQuantity
+          : salesblockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantCode: variantCode == freezed
+          ? _value.variantCode
+          : variantCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stockCode: stockCode == freezed
+          ? _value.stockCode
+          : stockCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       stockWarning: stockWarning == freezed
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
@@ -315,6 +417,10 @@ class _$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
       salesblock: salesblock == freezed
           ? _value.salesblock
           : salesblock // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      purchaseBlock: purchaseBlock == freezed
+          ? _value.purchaseBlock
+          : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
   }
@@ -331,29 +437,62 @@ abstract class _$ChannelAllocationStockStockReadModelCopyWith<$Res>
   $Res call(
       {int? id,
       String? code,
-      @JsonKey(name: "channel_type_stock_code") String? channelTypeStockCode,
-      @JsonKey(name: "channel_type_code") String? channeltypeCode,
-      @JsonKey(name: "channel_type_id") String? channelTypeId,
-      @JsonKey(name: "channel_type_name") String? channelTypeName,
-      @JsonKey(name: "channel_allocation_ratio") String? channelAllocationRatio,
-      @JsonKey(name: "min_max_ratio") String? minMaxRatio,
-      @JsonKey(name: "safety_stock_qty") int? safetyStock,
-      @JsonKey(name: "reorder_point") int? reOrderPoint,
-      @JsonKey(name: "reorder_quantity") int? reOrderQuantity,
-      @JsonKey(name: "available_qty") int? availableQuantity,
-      @JsonKey(name: "reserved_qty") int? reservedQuantity,
-      @JsonKey(name: "damaged_qty") int? damagedQuantity,
-      @JsonKey(name: "returned_qty") int? returnedQuantity,
-      @JsonKey(name: "replacement_qty") int? replacementQuantity,
-      @JsonKey(name: "minimum_quantity") int? minimumQuantity,
-      @JsonKey(name: "maximum_quantity") int? maximumQuantity,
-      @JsonKey(name: "virtual_stock") int? virtualStock,
-      @JsonKey(name: "virtual_type") String? virtualType,
-      @JsonKey(name: "add_virtual_stock") int? addVirtualStock,
-      @JsonKey(name: "stock_id") int? stockId,
-      @JsonKey(name: "variant_id") int? variantId,
-      @JsonKey(name: "stock_warning", defaultValue: false) bool? stockWarning,
-      @JsonKey(name: "sales_block", defaultValue: false) bool? salesblock});
+      @JsonKey(name: "channel_type_stock_code")
+          String? channelTypeStockCode,
+      @JsonKey(name: "channel_type_code")
+          String? channeltypeCode,
+      @JsonKey(name: "channel_type_id")
+          String? channelTypeId,
+      @JsonKey(name: "channel_type_name")
+          String? channelTypeName,
+      @JsonKey(name: "channel_allocation_ratio")
+          String? channelAllocationRatio,
+      @JsonKey(name: "min_max_ratio")
+          String? minMaxRatio,
+      @JsonKey(name: "safety_stock_qty")
+          int? safetyStock,
+      @JsonKey(name: "reorder_point")
+          int? reOrderPoint,
+      @JsonKey(name: "reorder_quantity")
+          int? reOrderQuantity,
+      @JsonKey(name: "available_qty")
+          int? availableQuantity,
+      @JsonKey(name: "reserved_qty")
+          int? reservedQuantity,
+      @JsonKey(name: "damaged_qty")
+          int? damagedQuantity,
+      @JsonKey(name: "returned_qty")
+          int? returnedQuantity,
+      @JsonKey(name: "replacement_qty")
+          int? replacementQuantity,
+      @JsonKey(name: "minimum_quantity")
+          int? minimumQuantity,
+      @JsonKey(name: "maximum_quantity")
+          int? maximumQuantity,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
+      @JsonKey(name: "virtual_type")
+          String? virtualType,
+      @JsonKey(name: "add_virtual_stock")
+          int? addVirtualStock,
+      @JsonKey(name: "stock_id")
+          int? stockId,
+      @JsonKey(name: "purchase_blocked_qty")
+          int? purchaseblockQuantity,
+      @JsonKey(name: "variant_id")
+          int? variantId,
+      @JsonKey(name: "sales_blocked_qty")
+          int? salesblockQuantity,
+      @JsonKey(name: "variant_code")
+          String? variantCode,
+      @JsonKey(name: "stock_code")
+          String? stockCode,
+      @JsonKey(name: "stock_warning", defaultValue: false)
+          bool? stockWarning,
+      @JsonKey(name: "sales_block", defaultValue: false)
+          bool? salesblock,
+      @JsonKey(name: "purchase_blocked", defaultValue: false)
+          bool? purchaseBlock});
 }
 
 /// @nodoc
@@ -393,9 +532,14 @@ class __$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
     Object? virtualType = freezed,
     Object? addVirtualStock = freezed,
     Object? stockId = freezed,
+    Object? purchaseblockQuantity = freezed,
     Object? variantId = freezed,
+    Object? salesblockQuantity = freezed,
+    Object? variantCode = freezed,
+    Object? stockCode = freezed,
     Object? stockWarning = freezed,
     Object? salesblock = freezed,
+    Object? purchaseBlock = freezed,
   }) {
     return _then(_ChannelAllocationStockStockReadModel(
       id: id == freezed
@@ -486,10 +630,26 @@ class __$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as int?,
+      purchaseblockQuantity: purchaseblockQuantity == freezed
+          ? _value.purchaseblockQuantity
+          : purchaseblockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
       variantId: variantId == freezed
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
+      salesblockQuantity: salesblockQuantity == freezed
+          ? _value.salesblockQuantity
+          : salesblockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
+      variantCode: variantCode == freezed
+          ? _value.variantCode
+          : variantCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      stockCode: stockCode == freezed
+          ? _value.stockCode
+          : stockCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       stockWarning: stockWarning == freezed
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
@@ -497,6 +657,10 @@ class __$ChannelAllocationStockStockReadModelCopyWithImpl<$Res>
       salesblock: salesblock == freezed
           ? _value.salesblock
           : salesblock // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      purchaseBlock: purchaseBlock == freezed
+          ? _value.purchaseBlock
+          : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
   }
@@ -509,29 +673,62 @@ class _$_ChannelAllocationStockStockReadModel
   const _$_ChannelAllocationStockStockReadModel(
       {this.id,
       this.code,
-      @JsonKey(name: "channel_type_stock_code") this.channelTypeStockCode,
-      @JsonKey(name: "channel_type_code") this.channeltypeCode,
-      @JsonKey(name: "channel_type_id") this.channelTypeId,
-      @JsonKey(name: "channel_type_name") this.channelTypeName,
-      @JsonKey(name: "channel_allocation_ratio") this.channelAllocationRatio,
-      @JsonKey(name: "min_max_ratio") this.minMaxRatio,
-      @JsonKey(name: "safety_stock_qty") this.safetyStock,
-      @JsonKey(name: "reorder_point") this.reOrderPoint,
-      @JsonKey(name: "reorder_quantity") this.reOrderQuantity,
-      @JsonKey(name: "available_qty") this.availableQuantity,
-      @JsonKey(name: "reserved_qty") this.reservedQuantity,
-      @JsonKey(name: "damaged_qty") this.damagedQuantity,
-      @JsonKey(name: "returned_qty") this.returnedQuantity,
-      @JsonKey(name: "replacement_qty") this.replacementQuantity,
-      @JsonKey(name: "minimum_quantity") this.minimumQuantity,
-      @JsonKey(name: "maximum_quantity") this.maximumQuantity,
-      @JsonKey(name: "virtual_stock") this.virtualStock,
-      @JsonKey(name: "virtual_type") this.virtualType,
-      @JsonKey(name: "add_virtual_stock") this.addVirtualStock,
-      @JsonKey(name: "stock_id") this.stockId,
-      @JsonKey(name: "variant_id") this.variantId,
-      @JsonKey(name: "stock_warning", defaultValue: false) this.stockWarning,
-      @JsonKey(name: "sales_block", defaultValue: false) this.salesblock});
+      @JsonKey(name: "channel_type_stock_code")
+          this.channelTypeStockCode,
+      @JsonKey(name: "channel_type_code")
+          this.channeltypeCode,
+      @JsonKey(name: "channel_type_id")
+          this.channelTypeId,
+      @JsonKey(name: "channel_type_name")
+          this.channelTypeName,
+      @JsonKey(name: "channel_allocation_ratio")
+          this.channelAllocationRatio,
+      @JsonKey(name: "min_max_ratio")
+          this.minMaxRatio,
+      @JsonKey(name: "safety_stock_qty")
+          this.safetyStock,
+      @JsonKey(name: "reorder_point")
+          this.reOrderPoint,
+      @JsonKey(name: "reorder_quantity")
+          this.reOrderQuantity,
+      @JsonKey(name: "available_qty")
+          this.availableQuantity,
+      @JsonKey(name: "reserved_qty")
+          this.reservedQuantity,
+      @JsonKey(name: "damaged_qty")
+          this.damagedQuantity,
+      @JsonKey(name: "returned_qty")
+          this.returnedQuantity,
+      @JsonKey(name: "replacement_qty")
+          this.replacementQuantity,
+      @JsonKey(name: "minimum_quantity")
+          this.minimumQuantity,
+      @JsonKey(name: "maximum_quantity")
+          this.maximumQuantity,
+      @JsonKey(name: "virtual_stock")
+          this.virtualStock,
+      @JsonKey(name: "virtual_type")
+          this.virtualType,
+      @JsonKey(name: "add_virtual_stock")
+          this.addVirtualStock,
+      @JsonKey(name: "stock_id")
+          this.stockId,
+      @JsonKey(name: "purchase_blocked_qty")
+          this.purchaseblockQuantity,
+      @JsonKey(name: "variant_id")
+          this.variantId,
+      @JsonKey(name: "sales_blocked_qty")
+          this.salesblockQuantity,
+      @JsonKey(name: "variant_code")
+          this.variantCode,
+      @JsonKey(name: "stock_code")
+          this.stockCode,
+      @JsonKey(name: "stock_warning", defaultValue: false)
+          this.stockWarning,
+      @JsonKey(name: "sales_block", defaultValue: false)
+          this.salesblock,
+      @JsonKey(name: "purchase_blocked", defaultValue: false)
+          this.purchaseBlock});
 
   factory _$_ChannelAllocationStockStockReadModel.fromJson(
           Map<String, dynamic> json) =>
@@ -602,18 +799,33 @@ class _$_ChannelAllocationStockStockReadModel
   @JsonKey(name: "stock_id")
   final int? stockId;
   @override
+  @JsonKey(name: "purchase_blocked_qty")
+  final int? purchaseblockQuantity;
+  @override
   @JsonKey(name: "variant_id")
   final int? variantId;
+  @override
+  @JsonKey(name: "sales_blocked_qty")
+  final int? salesblockQuantity;
+  @override
+  @JsonKey(name: "variant_code")
+  final String? variantCode;
+  @override
+  @JsonKey(name: "stock_code")
+  final String? stockCode;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
   final bool? stockWarning;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
   final bool? salesblock;
+  @override
+  @JsonKey(name: "purchase_blocked", defaultValue: false)
+  final bool? purchaseBlock;
 
   @override
   String toString() {
-    return 'ChannelAllocationStockStockReadModel(id: $id, code: $code, channelTypeStockCode: $channelTypeStockCode, channeltypeCode: $channeltypeCode, channelTypeId: $channelTypeId, channelTypeName: $channelTypeName, channelAllocationRatio: $channelAllocationRatio, minMaxRatio: $minMaxRatio, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, availableQuantity: $availableQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnedQuantity: $returnedQuantity, replacementQuantity: $replacementQuantity, minimumQuantity: $minimumQuantity, maximumQuantity: $maximumQuantity, virtualStock: $virtualStock, virtualType: $virtualType, addVirtualStock: $addVirtualStock, stockId: $stockId, variantId: $variantId, stockWarning: $stockWarning, salesblock: $salesblock)';
+    return 'ChannelAllocationStockStockReadModel(id: $id, code: $code, channelTypeStockCode: $channelTypeStockCode, channeltypeCode: $channeltypeCode, channelTypeId: $channelTypeId, channelTypeName: $channelTypeName, channelAllocationRatio: $channelAllocationRatio, minMaxRatio: $minMaxRatio, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, availableQuantity: $availableQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnedQuantity: $returnedQuantity, replacementQuantity: $replacementQuantity, minimumQuantity: $minimumQuantity, maximumQuantity: $maximumQuantity, virtualStock: $virtualStock, virtualType: $virtualType, addVirtualStock: $addVirtualStock, stockId: $stockId, purchaseblockQuantity: $purchaseblockQuantity, variantId: $variantId, salesblockQuantity: $salesblockQuantity, variantCode: $variantCode, stockCode: $stockCode, stockWarning: $stockWarning, salesblock: $salesblock, purchaseBlock: $purchaseBlock)';
   }
 
   @override
@@ -684,9 +896,14 @@ class _$_ChannelAllocationStockStockReadModel
             (identical(other.stockId, stockId) ||
                 const DeepCollectionEquality()
                     .equals(other.stockId, stockId)) &&
+            (identical(other.purchaseblockQuantity, purchaseblockQuantity) || const DeepCollectionEquality().equals(other.purchaseblockQuantity, purchaseblockQuantity)) &&
             (identical(other.variantId, variantId) || const DeepCollectionEquality().equals(other.variantId, variantId)) &&
+            (identical(other.salesblockQuantity, salesblockQuantity) || const DeepCollectionEquality().equals(other.salesblockQuantity, salesblockQuantity)) &&
+            (identical(other.variantCode, variantCode) || const DeepCollectionEquality().equals(other.variantCode, variantCode)) &&
+            (identical(other.stockCode, stockCode) || const DeepCollectionEquality().equals(other.stockCode, stockCode)) &&
             (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
-            (identical(other.salesblock, salesblock) || const DeepCollectionEquality().equals(other.salesblock, salesblock)));
+            (identical(other.salesblock, salesblock) || const DeepCollectionEquality().equals(other.salesblock, salesblock)) &&
+            (identical(other.purchaseBlock, purchaseBlock) || const DeepCollectionEquality().equals(other.purchaseBlock, purchaseBlock)));
   }
 
   @override
@@ -714,9 +931,14 @@ class _$_ChannelAllocationStockStockReadModel
       const DeepCollectionEquality().hash(virtualType) ^
       const DeepCollectionEquality().hash(addVirtualStock) ^
       const DeepCollectionEquality().hash(stockId) ^
+      const DeepCollectionEquality().hash(purchaseblockQuantity) ^
       const DeepCollectionEquality().hash(variantId) ^
+      const DeepCollectionEquality().hash(salesblockQuantity) ^
+      const DeepCollectionEquality().hash(variantCode) ^
+      const DeepCollectionEquality().hash(stockCode) ^
       const DeepCollectionEquality().hash(stockWarning) ^
-      const DeepCollectionEquality().hash(salesblock);
+      const DeepCollectionEquality().hash(salesblock) ^
+      const DeepCollectionEquality().hash(purchaseBlock);
 
   @JsonKey(ignore: true)
   @override
@@ -776,12 +998,22 @@ abstract class _ChannelAllocationStockStockReadModel
           int? addVirtualStock,
       @JsonKey(name: "stock_id")
           int? stockId,
+      @JsonKey(name: "purchase_blocked_qty")
+          int? purchaseblockQuantity,
       @JsonKey(name: "variant_id")
           int? variantId,
+      @JsonKey(name: "sales_blocked_qty")
+          int? salesblockQuantity,
+      @JsonKey(name: "variant_code")
+          String? variantCode,
+      @JsonKey(name: "stock_code")
+          String? stockCode,
       @JsonKey(name: "stock_warning", defaultValue: false)
           bool? stockWarning,
       @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesblock}) = _$_ChannelAllocationStockStockReadModel;
+          bool? salesblock,
+      @JsonKey(name: "purchase_blocked", defaultValue: false)
+          bool? purchaseBlock}) = _$_ChannelAllocationStockStockReadModel;
 
   factory _ChannelAllocationStockStockReadModel.fromJson(
           Map<String, dynamic> json) =
@@ -852,14 +1084,29 @@ abstract class _ChannelAllocationStockStockReadModel
   @JsonKey(name: "stock_id")
   int? get stockId => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "purchase_blocked_qty")
+  int? get purchaseblockQuantity => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "variant_id")
   int? get variantId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "sales_blocked_qty")
+  int? get salesblockQuantity => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "variant_code")
+  String? get variantCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "stock_code")
+  String? get stockCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
   bool? get stockWarning => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesblock => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "purchase_blocked", defaultValue: false)
+  bool? get purchaseBlock => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChannelAllocationStockStockReadModelCopyWith<

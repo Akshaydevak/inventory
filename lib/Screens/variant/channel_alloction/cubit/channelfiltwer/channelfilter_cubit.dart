@@ -11,7 +11,7 @@ class ChannelfilterCubit extends Cubit<ChannelfilterState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getChannelFilterList(String code, String id, String option) async {
+  Future getChannelFilterList(List<String> code, String id, String option) async {
     next = null;
     prev = null;
     print("enterd");
@@ -24,20 +24,20 @@ class ChannelfilterCubit extends Cubit<ChannelfilterState> {
       emit(_Success(r));
     });
   }
+  //
+  // Future searchVariantList(String filter) async {
+  //   emit(ChannelfilterState.initial());
+  //   final result = await repo.getChannelFilterList(filter, "","");
+  //   result.fold((l) => emit(_Error()), (r) {
+  //     next = r.nextPage;
+  //     prev = r.previousPage;
+  //     // items = r.data;
+  //
+  //     emit(_Success(r));
+  //   });
+  // }
 
-  Future searchVariantList(String filter) async {
-    emit(ChannelfilterState.initial());
-    final result = await repo.getChannelFilterList(filter, "","");
-    result.fold((l) => emit(_Error()), (r) {
-      next = r.nextPage;
-      prev = r.previousPage;
-      // items = r.data;
-
-      emit(_Success(r));
-    });
-  }
-
-  Future nextslotSectionPageList(String code, String id, String option) async {
+  Future nextslotSectionPageList(List<String> code, String id, String option) async {
     final result = await repo.getChannelFilterList(code, id, option);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -50,7 +50,7 @@ class ChannelfilterCubit extends Cubit<ChannelfilterState> {
   Future previuosslotSectionPageList(
      ) async {
     // print(previous);
-    final result = await repo.getChannelFilterList("", "", "");
+    final result = await repo.getChannelFilterList([], "", "");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -61,6 +61,6 @@ class ChannelfilterCubit extends Cubit<ChannelfilterState> {
 
   Future refresh() async {
     emit(ChannelfilterState.initial());
-    getChannelFilterList("", "", "");
+    getChannelFilterList([], "", "");
   }
 }

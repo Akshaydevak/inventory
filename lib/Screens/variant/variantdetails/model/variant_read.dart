@@ -33,7 +33,7 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "landing_cost") final double? landingCost,
     @JsonKey(name: "uom_name_data") final UomNameData? uomNameData,
     @JsonKey(name: "sales_uom_data") final SalesUomData? salesUomData,
-    // @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
+    @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
     @JsonKey(name: "purchase_uom_data") final PurchaseUomData? purchaseUomdata,
     @JsonKey(name: "variant_framework_data") final VariantFrameWork? variantframeWork,
     @JsonKey(name: "variant_meta") final VariantMeta? variantMeta,
@@ -46,6 +46,7 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "net_weight") final String? netWeight,
     @JsonKey(name: "pos_name") final String? posName,
     @JsonKey(name: "display_name") final String? displayname,
+    @JsonKey(name: "purchase_uom") final String? purchaseuom,
     @JsonKey(name: "vedio_url") final String? vdeioUrl,
     @JsonKey(name: "arabic_description") final String? arabicDescription,
     @JsonKey(name: "additional_description") final String? additionalDescription,
@@ -90,13 +91,14 @@ class SalesUomData with _$SalesUomData {
 @freezed
 class VendorDetails with _$VendorDetails {
   const factory VendorDetails({
-    final int? key,
+
 
 
 
 
 
     @JsonKey(name: "vendor_reference_code") final String? vendorReerenceCode,
+    @JsonKey(name: "vendor_name") final String? vendorName,
     @JsonKey(name: "vendor_code") final String? vendorCode,
 
 
@@ -194,20 +196,20 @@ class ItemData with _$ItemData {
 class VariantMeta with _$VariantMeta {
   const factory VariantMeta({
 final Catelog? catelog,
- final List<Storage>? storage,
-final List<Storage>? Ingrediants,
+ final Storage? storage,
+final Storage? Ingrediants,
 final String? description,
     @JsonKey(name: "var_image") final VarImage? image,
-    @JsonKey(name: "important_info") final List< ProductFeatures>? importantInfo,
+    @JsonKey(name: "important_info") final  ProductFeatures? importantInfo,
     @JsonKey(name: "product_behaviour") final List< productBehaviour>? productBehave,
-    @JsonKey(name: "Additional_info") final List<ProductFeatures>? additionalInfo,
-    @JsonKey(name: "Nutriants_facts") final List< ProductFeatures>? nutriantFacts,
-    @JsonKey(name: "product_details") final List<ProductFeatures>? productDetails,
-    @JsonKey(name: "product_features") final List< ProductFeatures>? productFeatures,
+    @JsonKey(name: "Additional_info") final ProductFeatures? additionalInfo,
+    @JsonKey(name: "Nutriants_facts") final  ProductFeatures?  nutriantFacts,
+    @JsonKey(name: "product_details") final ProductFeatures? productDetails,
+    @JsonKey(name: "product_features") final ProductFeatures? productFeatures,
     // @JsonKey(name: "product_behaviour") final List<ProductFeatures>? productBehaviour,
-    @JsonKey(name: "about_the_products") final List<Storage>? aboutProducts,
+    @JsonKey(name: "about_the_products") final Storage? aboutProducts,
 
-    @JsonKey(name: "usage_direction") final List<Storage>? usageDirection,
+    @JsonKey(name: "usage_direction") final Storage? usageDirection,
     @JsonKey(name: "old_system_code") final String? oldSystemCode,
 
 

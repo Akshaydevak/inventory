@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
+import 'package:inventory/widgets/dropdownbutton.dart';
 
 class AllocationStockStableTable extends StatefulWidget {
   final TextEditingController variantCode;
@@ -30,6 +31,7 @@ class AllocationStockStableTable extends StatefulWidget {
   final Function trueOrFalseChange;
   final bool stockWarning;
   final bool salesBolck;
+  final bool purchaseBlock;
 
 
 
@@ -43,6 +45,7 @@ class AllocationStockStableTable extends StatefulWidget {
 
   AllocationStockStableTable({
     required this.stockWarning,
+    required this.purchaseBlock,
     required this.trueOrFalseChange,
     required this.addVirtualStock,
     required this.channelStatusCrucialPoint,
@@ -145,14 +148,16 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                           SizedBox(
                             height: height * .030,
                           ),
-                          NewInputCard(
-
-
-
-                              controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
+                          // NewInputCard(
+                          //  formatter: true,
+                          //
+                          //
+                          //
+                          //
+                          //     controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
+                          // SizedBox(
+                          //   height: height * .030,
+                          // ),
                           NewInputCard(
                               readOnly: true,
 
@@ -166,6 +171,9 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
 
 
                               controller: widget.purchaseBlockQuantity, title: "Purchase Block Quantity"),
+                          SizedBox(
+                            height: height * .120,
+                          ),
 
 
 
@@ -177,11 +185,13 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                         ),
 
                         NewInputCard(
+                          formatter: true,
                             controller: widget.reOrderPoint, title: "Reorder Point"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
+                          formatter: true,
 
 
                             controller: widget.returnedQuantity, title: "Reorder Quantity"),
@@ -220,10 +230,10 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                             readOnly: true,
                             controller: widget.replacementQuantity, title: "Replacement Quantity"),
                         SizedBox(
-                          height: height * .030,
+                          height: height * .12,
                         ),
-                        NewInputCard(
-                            controller: widget.virtualStockType, title: "Virtual Stock Type"),
+
+
 
 
 
@@ -231,6 +241,30 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
 
                       ],)),
                       Expanded(child: Column(children: [
+                        SelectableDropDownpopUp(
+                          label: "Virtual Stock Type",
+                          type: "VirtualStockTypePopupCall",
+                          value: widget.virtualStockType.text,
+                          onSelection: (String? va) {
+                            print(
+                                "++++se+++++++++++++++++++");
+                            setState(() {
+                              widget.virtualStockType.text = va ?? "";
+                            });
+
+
+
+
+                            // onChange = true;
+                            // orderType = va!;
+
+                          },
+
+                          restricted: true,
+                        ),
+                        SizedBox(
+                          height: height * .030,
+                        ),
                         NewInputCard(
                           readOnly: true,
                             controller: widget.virtualStock, title: "Virtual Stock"),
@@ -239,13 +273,15 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                         ),
 
                         NewInputCard(
+                          formatter: true,
 
                             controller: widget.addVirtualStock, title: "Add Virtual Stock"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                          readOnly: true,
+                          // readOnly: true,
+                          formatter: true,
 
 
                             controller: widget.channelStatusMediumPoint, title: "Channel Status Medium Point"),
@@ -253,6 +289,7 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
 
                             controller: widget.channelStatusCrucialPoint, title: "Channel Status Crucial Point"),
                         SizedBox(
@@ -289,9 +326,21 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               val=!val;
                               widget.trueOrFalseChange(type: "2",val:val);
                               setState(() {});
+                            }),                SizedBox(
+                          height: height * .030,
+                        ),
+
+                        PopUpSwitchTile(
+                            value:widget?. purchaseBlock??false,
+                            title: "Purchase Block",
+                            onClick: (gg) {
+                              bool val=widget.purchaseBlock;
+                              val=!val;
+                              widget.trueOrFalseChange(type: "3",val:val);
+                              setState(() {});
                             }),
                         SizedBox(
-                          height: height * .260,
+                          height: height * .06,
                         ),
 
 

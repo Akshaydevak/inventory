@@ -32,9 +32,14 @@ _$_ChannelAllocationStockStockReadModel
           virtualType: json['virtual_type'] as String?,
           addVirtualStock: json['add_virtual_stock'] as int?,
           stockId: json['stock_id'] as int?,
+          purchaseblockQuantity: json['purchase_blocked_qty'] as int?,
           variantId: json['variant_id'] as int?,
+          salesblockQuantity: json['sales_blocked_qty'] as int?,
+          variantCode: json['variant_code'] as String?,
+          stockCode: json['stock_code'] as String?,
           stockWarning: json['stock_warning'] as bool? ?? false,
           salesblock: json['sales_block'] as bool? ?? false,
+          purchaseBlock: json['purchase_blocked'] as bool? ?? false,
         );
 
 Map<String, dynamic> _$$_ChannelAllocationStockStockReadModelToJson(
@@ -62,7 +67,12 @@ Map<String, dynamic> _$$_ChannelAllocationStockStockReadModelToJson(
       'virtual_type': instance.virtualType,
       'add_virtual_stock': instance.addVirtualStock,
       'stock_id': instance.stockId,
+      'purchase_blocked_qty': instance.purchaseblockQuantity,
       'variant_id': instance.variantId,
+      'sales_blocked_qty': instance.salesblockQuantity,
+      'variant_code': instance.variantCode,
+      'stock_code': instance.stockCode,
       'stock_warning': instance.stockWarning,
       'sales_block': instance.salesblock,
+      'purchase_blocked': instance.purchaseBlock,
     };

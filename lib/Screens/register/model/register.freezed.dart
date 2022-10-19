@@ -33,6 +33,7 @@ class _$RegisterModelTearOff {
       @JsonKey(name: "login_id") int? loginid,
       @JsonKey(name: "accesssite") String? accesssite,
       @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "employee_code") String? employeeCode,
       @JsonKey(name: "organization_type") String? organizationType,
       @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) {
@@ -48,6 +49,7 @@ class _$RegisterModelTearOff {
       loginid: loginid,
       accesssite: accesssite,
       legalEntiry: legalEntiry,
+      employeeCode: employeeCode,
       organizationType: organizationType,
       organizationCode: organizationCode,
       isLoggedIn: isLoggedIn,
@@ -78,6 +80,8 @@ mixin _$RegisterModel {
   String? get accesssite => throw _privateConstructorUsedError;
   @JsonKey(name: "legal_entiry")
   String? get legalEntiry => throw _privateConstructorUsedError;
+  @JsonKey(name: "employee_code")
+  String? get employeeCode => throw _privateConstructorUsedError;
   @JsonKey(name: "organization_type")
   String? get organizationType => throw _privateConstructorUsedError;
   @JsonKey(name: "organization_code")
@@ -108,6 +112,7 @@ abstract class $RegisterModelCopyWith<$Res> {
       @JsonKey(name: "login_id") int? loginid,
       @JsonKey(name: "accesssite") String? accesssite,
       @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "employee_code") String? employeeCode,
       @JsonKey(name: "organization_type") String? organizationType,
       @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn});
@@ -135,6 +140,7 @@ class _$RegisterModelCopyWithImpl<$Res>
     Object? loginid = freezed,
     Object? accesssite = freezed,
     Object? legalEntiry = freezed,
+    Object? employeeCode = freezed,
     Object? organizationType = freezed,
     Object? organizationCode = freezed,
     Object? isLoggedIn = freezed,
@@ -184,6 +190,10 @@ class _$RegisterModelCopyWithImpl<$Res>
           ? _value.legalEntiry
           : legalEntiry // ignore: cast_nullable_to_non_nullable
               as String?,
+      employeeCode: employeeCode == freezed
+          ? _value.employeeCode
+          : employeeCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       organizationType: organizationType == freezed
           ? _value.organizationType
           : organizationType // ignore: cast_nullable_to_non_nullable
@@ -219,6 +229,7 @@ abstract class _$RegisterModelCopyWith<$Res>
       @JsonKey(name: "login_id") int? loginid,
       @JsonKey(name: "accesssite") String? accesssite,
       @JsonKey(name: "legal_entiry") String? legalEntiry,
+      @JsonKey(name: "employee_code") String? employeeCode,
       @JsonKey(name: "organization_type") String? organizationType,
       @JsonKey(name: "organization_code") String? organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn});
@@ -248,6 +259,7 @@ class __$RegisterModelCopyWithImpl<$Res>
     Object? loginid = freezed,
     Object? accesssite = freezed,
     Object? legalEntiry = freezed,
+    Object? employeeCode = freezed,
     Object? organizationType = freezed,
     Object? organizationCode = freezed,
     Object? isLoggedIn = freezed,
@@ -297,6 +309,10 @@ class __$RegisterModelCopyWithImpl<$Res>
           ? _value.legalEntiry
           : legalEntiry // ignore: cast_nullable_to_non_nullable
               as String?,
+      employeeCode: employeeCode == freezed
+          ? _value.employeeCode
+          : employeeCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       organizationType: organizationType == freezed
           ? _value.organizationType
           : organizationType // ignore: cast_nullable_to_non_nullable
@@ -328,6 +344,7 @@ class _$_RegisterModel implements _RegisterModel {
       @JsonKey(name: "login_id") this.loginid,
       @JsonKey(name: "accesssite") this.accesssite,
       @JsonKey(name: "legal_entiry") this.legalEntiry,
+      @JsonKey(name: "employee_code") this.employeeCode,
       @JsonKey(name: "organization_type") this.organizationType,
       @JsonKey(name: "organization_code") this.organizationCode,
       @JsonKey(name: "isLoggedIn", defaultValue: false) this.isLoggedIn});
@@ -361,6 +378,9 @@ class _$_RegisterModel implements _RegisterModel {
   @JsonKey(name: "legal_entiry")
   final String? legalEntiry;
   @override
+  @JsonKey(name: "employee_code")
+  final String? employeeCode;
+  @override
   @JsonKey(name: "organization_type")
   final String? organizationType;
   @override
@@ -372,7 +392,7 @@ class _$_RegisterModel implements _RegisterModel {
 
   @override
   String toString() {
-    return 'RegisterModel(email: $email, password: $password, mobile: $mobile, lname: $lname, fname: $fname, country: $country, gender: $gender, token: $token, loginid: $loginid, accesssite: $accesssite, legalEntiry: $legalEntiry, organizationType: $organizationType, organizationCode: $organizationCode, isLoggedIn: $isLoggedIn)';
+    return 'RegisterModel(email: $email, password: $password, mobile: $mobile, lname: $lname, fname: $fname, country: $country, gender: $gender, token: $token, loginid: $loginid, accesssite: $accesssite, legalEntiry: $legalEntiry, employeeCode: $employeeCode, organizationType: $organizationType, organizationCode: $organizationCode, isLoggedIn: $isLoggedIn)';
   }
 
   @override
@@ -406,6 +426,9 @@ class _$_RegisterModel implements _RegisterModel {
             (identical(other.legalEntiry, legalEntiry) ||
                 const DeepCollectionEquality()
                     .equals(other.legalEntiry, legalEntiry)) &&
+            (identical(other.employeeCode, employeeCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.employeeCode, employeeCode)) &&
             (identical(other.organizationType, organizationType) ||
                 const DeepCollectionEquality()
                     .equals(other.organizationType, organizationType)) &&
@@ -431,6 +454,7 @@ class _$_RegisterModel implements _RegisterModel {
       const DeepCollectionEquality().hash(loginid) ^
       const DeepCollectionEquality().hash(accesssite) ^
       const DeepCollectionEquality().hash(legalEntiry) ^
+      const DeepCollectionEquality().hash(employeeCode) ^
       const DeepCollectionEquality().hash(organizationType) ^
       const DeepCollectionEquality().hash(organizationCode) ^
       const DeepCollectionEquality().hash(isLoggedIn);
@@ -459,6 +483,7 @@ abstract class _RegisterModel implements RegisterModel {
           @JsonKey(name: "login_id") int? loginid,
           @JsonKey(name: "accesssite") String? accesssite,
           @JsonKey(name: "legal_entiry") String? legalEntiry,
+          @JsonKey(name: "employee_code") String? employeeCode,
           @JsonKey(name: "organization_type") String? organizationType,
           @JsonKey(name: "organization_code") String? organizationCode,
           @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) =
@@ -492,6 +517,9 @@ abstract class _RegisterModel implements RegisterModel {
   @override
   @JsonKey(name: "legal_entiry")
   String? get legalEntiry => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "employee_code")
+  String? get employeeCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "organization_type")
   String? get organizationType => throw _privateConstructorUsedError;

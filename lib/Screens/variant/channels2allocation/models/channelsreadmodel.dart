@@ -23,9 +23,12 @@ class ChannelListModel with _$ChannelListModel {
     @JsonKey(name: "returned_qty") final int? returnedQuantity,
     @JsonKey(name: "replacement_qty") final int? replaceMentQuantity,
     @JsonKey(name: "virtual_stock") final int? virtualStock,
+    @JsonKey(name: "purchase_blocked_qty") final int? purchaseBlockQuantity,
+    @JsonKey(name: "sales_blocked_qty") final int? salesblockQuantity,
     @JsonKey(name: "add_virtual_stock") final int? addVirtualStock,
     @JsonKey(name: "virtual_type") final String? virtualType,
     @JsonKey(name: "channel_type_code") final String? channelTypeCode,
+    @JsonKey(name: "variant_code") final String? variantCode,
     @JsonKey(name: "channel_type_stock_id") final int? channelTypeStockId,
     @JsonKey(name: "stock_id") final int? stockId,
     @JsonKey(name: "variant_id") final int? varaintId,
@@ -33,6 +36,7 @@ class ChannelListModel with _$ChannelListModel {
     @JsonKey(name: "channel_status_medium_point") final int? channelStatusMediumPoint,
     @JsonKey(name: "stock_warning",defaultValue: false) final bool? stockWarning,
     @JsonKey(name: "sales_block",defaultValue: false) final bool? salesBlock,
+    @JsonKey(name: "purchase_blocked",defaultValue: false) final bool? purchaseBlocked,
 
   }) = _ChannelListModel;
   factory ChannelListModel.fromJson(Map<String, dynamic> json) =>

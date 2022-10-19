@@ -43,20 +43,29 @@ class _VariantChannelAllocationScreenState
   List<StockVerticalReadModel> result = [];
   List<Category> channels = [];
   List<Category> channels1 = [];
+  List<String> channelCodeList = [];
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   var list;
   int? veritiaclid = 0;
   filterTable(List<bool?>selections){
-    print("seeee u"+selections.toString());
+    print("seeee u"+channels1.toString());
+   setState(() {
      channels1=[];
+     channelCodeList=[];
+   });
 
     for(var i=0;i<selections.length;i++){
       if(selections[i]==true){
-        channels1.add(channels[i]);
+        setState(() {
+          channels1.add(channels[i]);
+          channelCodeList.add(channels[i].channelCode.toString());
+        });
+
       }
     }
     print(channels1);
+    print(channelCodeList);
     // channels=channels1;
     print("ssssssssssssss"+channels1.toString());
     // for(var i=0;i<selections.length;i++){
@@ -123,7 +132,7 @@ class _VariantChannelAllocationScreenState
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -132,7 +141,7 @@ class _VariantChannelAllocationScreenState
                     Timer(Duration(seconds: 5), () {
                       setState(() {
 
-                        context.read<StockverticalCubit>().getStockList("RGC1659608240");
+                        context.read<StockverticalCubit>().getStockList(Variable.inventory_ID);
                         // select=false;
                       });
                     }
@@ -284,6 +293,7 @@ class _VariantChannelAllocationScreenState
                                       appiCheckingTrue: appiCheckingTrue,
                                     channels:channels,
                                     filterTable:filterTable,
+                                      channelCodeList:channelCodeList
 
                                   ),
                                   SizedBox(
@@ -353,7 +363,7 @@ class _VariantChannelAllocationScreenState
                                       context
                                           .read<ChannelfilterCubit>()
                                           .nextslotSectionPageList(
-                                          "ahlan", Variable.inventory_ID,
+                                          channelCodeList, Variable.inventory_ID,
                                           choosenValue);
                                     },
                                   ),
@@ -397,6 +407,7 @@ class _VariantChannelAllocationScreenState
                                               if(channels1.isNotEmpty==true){
 
                                                 for(var i=0;i<channels1.length;i++) {
+
                                                   channelDatas.add(ChannelDatas(
 
                                                     channelId: channels1[i].id

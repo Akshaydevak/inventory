@@ -43,8 +43,8 @@ class _$VariantPatchTearOff {
       String? catalog6,
       String? catalog7,
       String? catalog8,
-      List<Storage>? Ingrediants,
-      List<Storage>? storage,
+      Storage? Ingrediants,
+      Storage? storage,
       @JsonKey(name: "variant_name")
           String? variantName,
       @JsonKey(name: "maximum_gp")
@@ -130,21 +130,21 @@ class _$VariantPatchTearOff {
       @JsonKey(name: "max_purchase_order_limit")
           int? maxPurchaseOrderLimit,
       @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
+          ProductFeatures? importantInfo,
       @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
+          ProductFeatures? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantsFacts,
+          ProductFeatures? nutriantsFacts,
       @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
+          ProductFeatures? productDetails,
       @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
+          ProductFeatures? productFeatures,
       @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
+          Storage? aboutProducts,
       @JsonKey(name: "product_behaviour")
           List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
+          Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
@@ -283,8 +283,8 @@ mixin _$VariantPatch {
   String? get catalog6 => throw _privateConstructorUsedError;
   String? get catalog7 => throw _privateConstructorUsedError;
   String? get catalog8 => throw _privateConstructorUsedError;
-  List<Storage>? get Ingrediants => throw _privateConstructorUsedError;
-  List<Storage>? get storage => throw _privateConstructorUsedError;
+  Storage? get Ingrediants => throw _privateConstructorUsedError;
+  Storage? get storage => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "maximum_gp")
@@ -371,27 +371,22 @@ mixin _$VariantPatch {
   @JsonKey(name: "max_purchase_order_limit")
   int? get maxPurchaseOrderLimit => throw _privateConstructorUsedError;
   @JsonKey(name: "important_info")
-  List<ProductFeatures>? get importantInfo =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get importantInfo => throw _privateConstructorUsedError;
   @JsonKey(name: "Additional_info")
-  List<ProductFeatures>? get additionalInfo =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get additionalInfo => throw _privateConstructorUsedError;
   @JsonKey(name: "Nutriants_facts")
-  List<ProductFeatures>? get nutriantsFacts =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get nutriantsFacts => throw _privateConstructorUsedError;
   @JsonKey(name: "product_details")
-  List<ProductFeatures>? get productDetails =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get productDetails => throw _privateConstructorUsedError;
   @JsonKey(name: "product_features")
-  List<ProductFeatures>? get productFeatures =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get productFeatures => throw _privateConstructorUsedError;
   @JsonKey(name: "about_the_products")
-  List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
+  Storage? get aboutProducts => throw _privateConstructorUsedError;
   @JsonKey(name: "product_behaviour")
   List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
   @JsonKey(name: "usage_direction")
-  List<Storage>? get usageDirection => throw _privateConstructorUsedError;
+  Storage? get usageDirection => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
@@ -448,8 +443,8 @@ abstract class $VariantPatchCopyWith<$Res> {
       String? catalog6,
       String? catalog7,
       String? catalog8,
-      List<Storage>? Ingrediants,
-      List<Storage>? storage,
+      Storage? Ingrediants,
+      Storage? storage,
       @JsonKey(name: "variant_name")
           String? variantName,
       @JsonKey(name: "maximum_gp")
@@ -535,21 +530,21 @@ abstract class $VariantPatchCopyWith<$Res> {
       @JsonKey(name: "max_purchase_order_limit")
           int? maxPurchaseOrderLimit,
       @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
+          ProductFeatures? importantInfo,
       @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
+          ProductFeatures? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantsFacts,
+          ProductFeatures? nutriantsFacts,
       @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
+          ProductFeatures? productDetails,
       @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
+          ProductFeatures? productFeatures,
       @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
+          Storage? aboutProducts,
       @JsonKey(name: "product_behaviour")
           List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
+          Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
@@ -570,6 +565,16 @@ abstract class $VariantPatchCopyWith<$Res> {
           String? variantStatus,
       @JsonKey(name: "return_time")
           int? returnTime});
+
+  $StorageCopyWith<$Res>? get Ingrediants;
+  $StorageCopyWith<$Res>? get storage;
+  $ProductFeaturesCopyWith<$Res>? get importantInfo;
+  $ProductFeaturesCopyWith<$Res>? get additionalInfo;
+  $ProductFeaturesCopyWith<$Res>? get nutriantsFacts;
+  $ProductFeaturesCopyWith<$Res>? get productDetails;
+  $ProductFeaturesCopyWith<$Res>? get productFeatures;
+  $StorageCopyWith<$Res>? get aboutProducts;
+  $StorageCopyWith<$Res>? get usageDirection;
 }
 
 /// @nodoc
@@ -754,11 +759,11 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
       Ingrediants: Ingrediants == freezed
           ? _value.Ingrediants
           : Ingrediants // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       storage: storage == freezed
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       variantName: variantName == freezed
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
@@ -930,27 +935,27 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
       importantInfo: importantInfo == freezed
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       additionalInfo: additionalInfo == freezed
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       nutriantsFacts: nutriantsFacts == freezed
           ? _value.nutriantsFacts
           : nutriantsFacts // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       productDetails: productDetails == freezed
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       productFeatures: productFeatures == freezed
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       aboutProducts: aboutProducts == freezed
           ? _value.aboutProducts
           : aboutProducts // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
@@ -958,7 +963,7 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
       usageDirection: usageDirection == freezed
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       vendorDetails: vendorDetails == freezed
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
@@ -1001,6 +1006,105 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
               as int?,
     ));
   }
+
+  @override
+  $StorageCopyWith<$Res>? get Ingrediants {
+    if (_value.Ingrediants == null) {
+      return null;
+    }
+
+    return $StorageCopyWith<$Res>(_value.Ingrediants!, (value) {
+      return _then(_value.copyWith(Ingrediants: value));
+    });
+  }
+
+  @override
+  $StorageCopyWith<$Res>? get storage {
+    if (_value.storage == null) {
+      return null;
+    }
+
+    return $StorageCopyWith<$Res>(_value.storage!, (value) {
+      return _then(_value.copyWith(storage: value));
+    });
+  }
+
+  @override
+  $ProductFeaturesCopyWith<$Res>? get importantInfo {
+    if (_value.importantInfo == null) {
+      return null;
+    }
+
+    return $ProductFeaturesCopyWith<$Res>(_value.importantInfo!, (value) {
+      return _then(_value.copyWith(importantInfo: value));
+    });
+  }
+
+  @override
+  $ProductFeaturesCopyWith<$Res>? get additionalInfo {
+    if (_value.additionalInfo == null) {
+      return null;
+    }
+
+    return $ProductFeaturesCopyWith<$Res>(_value.additionalInfo!, (value) {
+      return _then(_value.copyWith(additionalInfo: value));
+    });
+  }
+
+  @override
+  $ProductFeaturesCopyWith<$Res>? get nutriantsFacts {
+    if (_value.nutriantsFacts == null) {
+      return null;
+    }
+
+    return $ProductFeaturesCopyWith<$Res>(_value.nutriantsFacts!, (value) {
+      return _then(_value.copyWith(nutriantsFacts: value));
+    });
+  }
+
+  @override
+  $ProductFeaturesCopyWith<$Res>? get productDetails {
+    if (_value.productDetails == null) {
+      return null;
+    }
+
+    return $ProductFeaturesCopyWith<$Res>(_value.productDetails!, (value) {
+      return _then(_value.copyWith(productDetails: value));
+    });
+  }
+
+  @override
+  $ProductFeaturesCopyWith<$Res>? get productFeatures {
+    if (_value.productFeatures == null) {
+      return null;
+    }
+
+    return $ProductFeaturesCopyWith<$Res>(_value.productFeatures!, (value) {
+      return _then(_value.copyWith(productFeatures: value));
+    });
+  }
+
+  @override
+  $StorageCopyWith<$Res>? get aboutProducts {
+    if (_value.aboutProducts == null) {
+      return null;
+    }
+
+    return $StorageCopyWith<$Res>(_value.aboutProducts!, (value) {
+      return _then(_value.copyWith(aboutProducts: value));
+    });
+  }
+
+  @override
+  $StorageCopyWith<$Res>? get usageDirection {
+    if (_value.usageDirection == null) {
+      return null;
+    }
+
+    return $StorageCopyWith<$Res>(_value.usageDirection!, (value) {
+      return _then(_value.copyWith(usageDirection: value));
+    });
+  }
 }
 
 /// @nodoc
@@ -1032,8 +1136,8 @@ abstract class _$VariantPatchCopyWith<$Res>
       String? catalog6,
       String? catalog7,
       String? catalog8,
-      List<Storage>? Ingrediants,
-      List<Storage>? storage,
+      Storage? Ingrediants,
+      Storage? storage,
       @JsonKey(name: "variant_name")
           String? variantName,
       @JsonKey(name: "maximum_gp")
@@ -1119,21 +1223,21 @@ abstract class _$VariantPatchCopyWith<$Res>
       @JsonKey(name: "max_purchase_order_limit")
           int? maxPurchaseOrderLimit,
       @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
+          ProductFeatures? importantInfo,
       @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
+          ProductFeatures? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantsFacts,
+          ProductFeatures? nutriantsFacts,
       @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
+          ProductFeatures? productDetails,
       @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
+          ProductFeatures? productFeatures,
       @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
+          Storage? aboutProducts,
       @JsonKey(name: "product_behaviour")
           List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
+          Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
@@ -1154,6 +1258,25 @@ abstract class _$VariantPatchCopyWith<$Res>
           String? variantStatus,
       @JsonKey(name: "return_time")
           int? returnTime});
+
+  @override
+  $StorageCopyWith<$Res>? get Ingrediants;
+  @override
+  $StorageCopyWith<$Res>? get storage;
+  @override
+  $ProductFeaturesCopyWith<$Res>? get importantInfo;
+  @override
+  $ProductFeaturesCopyWith<$Res>? get additionalInfo;
+  @override
+  $ProductFeaturesCopyWith<$Res>? get nutriantsFacts;
+  @override
+  $ProductFeaturesCopyWith<$Res>? get productDetails;
+  @override
+  $ProductFeaturesCopyWith<$Res>? get productFeatures;
+  @override
+  $StorageCopyWith<$Res>? get aboutProducts;
+  @override
+  $StorageCopyWith<$Res>? get usageDirection;
 }
 
 /// @nodoc
@@ -1340,11 +1463,11 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
       Ingrediants: Ingrediants == freezed
           ? _value.Ingrediants
           : Ingrediants // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       storage: storage == freezed
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       variantName: variantName == freezed
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
@@ -1516,27 +1639,27 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
       importantInfo: importantInfo == freezed
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       additionalInfo: additionalInfo == freezed
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       nutriantsFacts: nutriantsFacts == freezed
           ? _value.nutriantsFacts
           : nutriantsFacts // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       productDetails: productDetails == freezed
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       productFeatures: productFeatures == freezed
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
-              as List<ProductFeatures>?,
+              as ProductFeatures?,
       aboutProducts: aboutProducts == freezed
           ? _value.aboutProducts
           : aboutProducts // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       productBehavior: productBehavior == freezed
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
@@ -1544,7 +1667,7 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
       usageDirection: usageDirection == freezed
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
-              as List<Storage>?,
+              as Storage?,
       vendorDetails: vendorDetails == freezed
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
@@ -1783,9 +1906,9 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   final String? catalog8;
   @override
-  final List<Storage>? Ingrediants;
+  final Storage? Ingrediants;
   @override
-  final List<Storage>? storage;
+  final Storage? storage;
   @override
   @JsonKey(name: "variant_name")
   final String? variantName;
@@ -1914,28 +2037,28 @@ class _$_VariantPatch implements _VariantPatch {
   final int? maxPurchaseOrderLimit;
   @override
   @JsonKey(name: "important_info")
-  final List<ProductFeatures>? importantInfo;
+  final ProductFeatures? importantInfo;
   @override
   @JsonKey(name: "Additional_info")
-  final List<ProductFeatures>? additionalInfo;
+  final ProductFeatures? additionalInfo;
   @override
   @JsonKey(name: "Nutriants_facts")
-  final List<ProductFeatures>? nutriantsFacts;
+  final ProductFeatures? nutriantsFacts;
   @override
   @JsonKey(name: "product_details")
-  final List<ProductFeatures>? productDetails;
+  final ProductFeatures? productDetails;
   @override
   @JsonKey(name: "product_features")
-  final List<ProductFeatures>? productFeatures;
+  final ProductFeatures? productFeatures;
   @override
   @JsonKey(name: "about_the_products")
-  final List<Storage>? aboutProducts;
+  final Storage? aboutProducts;
   @override
   @JsonKey(name: "product_behaviour")
   final List<productBehaviour>? productBehavior;
   @override
   @JsonKey(name: "usage_direction")
-  final List<Storage>? usageDirection;
+  final Storage? usageDirection;
   @override
   @JsonKey(name: "vendor_details")
   final List<VendorDetails>? vendorDetails;
@@ -2225,8 +2348,8 @@ abstract class _VariantPatch implements VariantPatch {
       String? catalog6,
       String? catalog7,
       String? catalog8,
-      List<Storage>? Ingrediants,
-      List<Storage>? storage,
+      Storage? Ingrediants,
+      Storage? storage,
       @JsonKey(name: "variant_name")
           String? variantName,
       @JsonKey(name: "maximum_gp")
@@ -2312,21 +2435,21 @@ abstract class _VariantPatch implements VariantPatch {
       @JsonKey(name: "max_purchase_order_limit")
           int? maxPurchaseOrderLimit,
       @JsonKey(name: "important_info")
-          List<ProductFeatures>? importantInfo,
+          ProductFeatures? importantInfo,
       @JsonKey(name: "Additional_info")
-          List<ProductFeatures>? additionalInfo,
+          ProductFeatures? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
-          List<ProductFeatures>? nutriantsFacts,
+          ProductFeatures? nutriantsFacts,
       @JsonKey(name: "product_details")
-          List<ProductFeatures>? productDetails,
+          ProductFeatures? productDetails,
       @JsonKey(name: "product_features")
-          List<ProductFeatures>? productFeatures,
+          ProductFeatures? productFeatures,
       @JsonKey(name: "about_the_products")
-          List<Storage>? aboutProducts,
+          Storage? aboutProducts,
       @JsonKey(name: "product_behaviour")
           List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
-          List<Storage>? usageDirection,
+          Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
@@ -2394,9 +2517,9 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   String? get catalog8 => throw _privateConstructorUsedError;
   @override
-  List<Storage>? get Ingrediants => throw _privateConstructorUsedError;
+  Storage? get Ingrediants => throw _privateConstructorUsedError;
   @override
-  List<Storage>? get storage => throw _privateConstructorUsedError;
+  Storage? get storage => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "variant_name")
   String? get variantName => throw _privateConstructorUsedError;
@@ -2526,34 +2649,29 @@ abstract class _VariantPatch implements VariantPatch {
   int? get maxPurchaseOrderLimit => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "important_info")
-  List<ProductFeatures>? get importantInfo =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get importantInfo => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "Additional_info")
-  List<ProductFeatures>? get additionalInfo =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get additionalInfo => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "Nutriants_facts")
-  List<ProductFeatures>? get nutriantsFacts =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get nutriantsFacts => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "product_details")
-  List<ProductFeatures>? get productDetails =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get productDetails => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "product_features")
-  List<ProductFeatures>? get productFeatures =>
-      throw _privateConstructorUsedError;
+  ProductFeatures? get productFeatures => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "about_the_products")
-  List<Storage>? get aboutProducts => throw _privateConstructorUsedError;
+  Storage? get aboutProducts => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "product_behaviour")
   List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "usage_direction")
-  List<Storage>? get usageDirection => throw _privateConstructorUsedError;
+  Storage? get usageDirection => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;

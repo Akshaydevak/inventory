@@ -25,8 +25,11 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController variantCodeController = TextEditingController();
   TextEditingController stockCodeController = TextEditingController();
   TextEditingController salesUomController = TextEditingController();
+  TextEditingController salesUomNameController = TextEditingController();
   TextEditingController baseUomController = TextEditingController();
+  TextEditingController baseUomName = TextEditingController();
   TextEditingController purchaseUomController = TextEditingController();
+  TextEditingController purchaseUomNameController = TextEditingController();
   TextEditingController safetyStockController = TextEditingController();
   TextEditingController totalQuantityController = TextEditingController();
   TextEditingController salesStockQuantityController = TextEditingController();
@@ -41,11 +44,13 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController replaceMentQuantityController = TextEditingController();
   TextEditingController virtualStockTypeController = TextEditingController();
   TextEditingController virtualStockController = TextEditingController();
+  TextEditingController addVirtualStockController = TextEditingController();
   TextEditingController minMaxRatioController = TextEditingController();
   TextEditingController maximumQuantityController = TextEditingController();
   TextEditingController minimumQuantityController = TextEditingController();
   TextEditingController channelTypeController = TextEditingController();
   bool stockwarning = false;
+  bool check = false;
   int? variantId  ;
   bool salesBlock = false;
   bool purchaseBlock = false;
@@ -61,7 +66,23 @@ class _StockScreenState extends State<StockScreen> {
     context.read<ListvraiantCubit>().getVariantList();
     super.initState();
   }
+  ratiooCheck(String value,String type){
+    double sum = 0;
 
+    var b = value.split(":");
+    for (var a in b) {
+
+
+      sum = sum + double.parse(a.isEmpty?"0":a);
+    }
+    if(sum!=10) {
+      type=="1"?  context.showSnackBarError("the channel Allocation Ratio is in 10"): context.showSnackBarError("the Min Max Ratio is in 10");
+      check=true;
+    }else{
+      check=false;
+    }
+
+  }
   trueOrFalseChange({String? type, bool val = false}) {
     switch (type) {
       case '1' :
@@ -132,28 +153,33 @@ class _StockScreenState extends State<StockScreen> {
                             variantId=data.stockData?.variantId;
                             stockCodeController.text=data.stockData?.stockCode??"";
                             salesUomController.text=data.stockData?.salesUOM.toString()??"";
+                            salesUomNameController.text=data.stockData?.salesUomName.toString()??"";
                             baseUomController.text=data.stockData?.baseUom.toString()??"";
-                            purchaseUomController.text=data.stockData?.purchaseUomName??"";
+                            baseUomName.text=data.stockData?.baseUomName.toString()??"";
+                            purchaseUomController.text=data.stockData?.purchaseUom.toString()??"";
+                            purchaseUomNameController.text=data.stockData?.purchaseUomName??"";
                             salesStockQuantityController.text=data.stockData?.salesBlockQuantity.toString()??"";
+                            channelTypeController.text=data.stockData?.channelTypeAllocationRatio.toString()??"";
                             salesBlockQuantityController.text=data.stockData?.salesBlockQuantity.toString()??"";
                             purchaseBlockController.text=data.stockData?.purchaseBlockQuantity.toString()??"";
                             cancelledQuantityController.text=data.stockData?.availablcancelledQuantityeQuantity.toString()??"";
                             reservedQuantityController.text=data.stockData?.reservedQuantity.toString()??"";
                             reorderPointQuantityController.text=data.stockData?.reOrderPoint.toString()??"";
-                            returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
+                            reorderQuantityController.text=data.stockData?.reOrderQuantity.toString()??"";
+
                             damagedQuantityController.text=data.stockData?.damagedQuantity.toString()??"";
                             returnedQuantityController.text=data.stockData?.returnQuantity.toString()??"";
                             minimumQuantityController.text=data.stockData?.minimumQuantity.toString()??"";
                             maximumQuantityController.text=data.stockData?.maximumQuantity.toString()??"";
-                            // channelTypeController.text=data.stockData?.c.toString()??"";
+                            minMaxRatioController.text=data.stockData?.minMaxRatio.toString()??"";
+                            totalQuantityController.text=data.stockData?.availableQuantity.toString()??"";
                             stockwarning=data.stockData?.stockWarning??false;
                             salesBlock=data.stockData?.salesBlocked??false;
                             purchaseBlock=data.stockData?.purchaseBlocked??false;
                             virtualStockTypeController.text=data.stockData?.virtualType.toString()??"";
-                            virtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
-                            // replaceMentQuantityController.text=data.stockData?.re.toString()??"";
+                            virtualStockController.text=data.stockData?.virtualStock.toString()??"";
+                            addVirtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
 
-                            // addNew=false;
 
 
 
@@ -306,6 +332,7 @@ class _StockScreenState extends State<StockScreen> {
                               ontap: (int index) {
                                 setState(() {
                                   selectedVertical = index;
+                                  check=false;
 
                                   // select=false;
                                   // clear();
@@ -346,6 +373,10 @@ class _StockScreenState extends State<StockScreen> {
                             Expanded(child: Column(
                               children: [
                                 VAriantStockStableTable(
+                                  salesUomName: salesUomNameController,
+                                  purchaseUomName: purchaseUomNameController,
+                                  baseUomName: baseUomName,
+
                                   stockWarning: stockwarning,
                                   purchaseBlock: purchaseBlock,
                                   purchaseUom: purchaseUomController,
@@ -359,7 +390,7 @@ class _StockScreenState extends State<StockScreen> {
                                   minimumQuantity: minimumQuantityController,
                                   minMaxRatio: minMaxRatioController,
                                   purchaseBlockQuantity: purchaseBlockController,
-                                  reLOrderQuantity: reorderPointQuantityController,
+                                  reLOrderQuantity: reorderQuantityController,
                                   reOrderPoint: reorderPointQuantityController,
                                   replacementQuantity: replaceMentQuantityController,
                                   reservedQuantity: reservedQuantityController,
@@ -373,6 +404,7 @@ class _StockScreenState extends State<StockScreen> {
                                   trueOrFalseChange: trueOrFalseChange,
                                   virtualStock: virtualStockController,
                                   virtualStockType: virtualStockTypeController,
+                                 addVirtualStockType: addVirtualStockController,
 
                                 ),
                                 SizedBox(height: 15,),
@@ -420,25 +452,30 @@ class _StockScreenState extends State<StockScreen> {
                                         labelcolor: Colors.white,
                                         iconColor: Colors.white,
                                         onApply: () {
-                                          StockData model=StockData(
-                                            inventoryId: Variable.inventory_ID,
-                                            variantId: variantId,
-                                            stockWarning: stockwarning,
-                                            reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
-                                            reOrderQuantity: int.tryParse(returnedQuantityController?.text??""),
-                                            channelTypeAllocationRatio: channelTypeController?.text??"",
-                                            minMaxRatio: minMaxRatioController?.text??"",
-                                            salesBlocked: salesBlock??false,
-                                            maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
-                                            minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
-                                            addVirtualStock:3,
-                                            // int.tryParse(virtualStockController.text)??null,
-                                            virtualType: virtualStockTypeController?.text??"",
-                                            purchaseBlocked: purchaseBlock??false,
+                                  ratiooCheck(minMaxRatioController.text,"");
+                                  ratiooCheck(channelTypeController.text,"1");
+                               if(check!=true){
+                                 StockData model=StockData(
+                                   inventoryId: Variable.inventory_ID,
+                                   variantId: variantId,
+                                   stockWarning: stockwarning,
+                                   reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
+                                   reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
+                                   channelTypeAllocationRatio: channelTypeController?.text??"",
+                                   minMaxRatio: minMaxRatioController?.text??"",
+                                   salesBlocked: salesBlock??false,
+                                   maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
+                                   minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
+                                   addVirtualStock:int.tryParse(addVirtualStockController.text),
+                                   // int.tryParse(virtualStockController.text)??null,
+                                   virtualType: virtualStockTypeController?.text??"",
+                                   purchaseBlocked: purchaseBlock??false,
 
-                                          );
-                                          print(model);
-                                          context.read<StockpostCubit>().postStock(model);
+                                 );
+                                 print(model);
+                                 context.read<StockpostCubit>().postStock(model);
+                               }
+
 
 
 

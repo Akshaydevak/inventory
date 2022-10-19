@@ -249,6 +249,8 @@ class _$StockDataTearOff {
           String? baseUomName,
       @JsonKey(name: "purchase_uom_name")
           String? purchaseUomName,
+      @JsonKey(name: "purchase_uom")
+          int? purchaseUom,
       @JsonKey(name: "sales_uom_name")
           String? salesUomName,
       @JsonKey(name: "variant_id")
@@ -267,7 +269,7 @@ class _$StockDataTearOff {
           String? stockCode,
       @JsonKey(name: "safety_stock_qty")
           int? safetyStockQty,
-      @JsonKey(name: "reorder_quantity")
+      @JsonKey(name: "reorder_qty")
           int? reOrderQuantity,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
@@ -293,6 +295,8 @@ class _$StockDataTearOff {
           int? maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
       @JsonKey(name: "minimum_quantity")
           int? minimumQuantity,
       @JsonKey(name: "created_at")
@@ -308,6 +312,7 @@ class _$StockDataTearOff {
       code: code,
       baseUomName: baseUomName,
       purchaseUomName: purchaseUomName,
+      purchaseUom: purchaseUom,
       salesUomName: salesUomName,
       variantId: variantId,
       variantCode: variantCode,
@@ -330,6 +335,7 @@ class _$StockDataTearOff {
       purchaseBlockQuantity: purchaseBlockQuantity,
       maximumQuantity: maximumQuantity,
       addVirtualStock: addVirtualStock,
+      virtualStock: virtualStock,
       minimumQuantity: minimumQuantity,
       createdAt: createdAt,
       stockWarning: stockWarning,
@@ -354,6 +360,8 @@ mixin _$StockData {
   String? get baseUomName => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom_name")
   String? get purchaseUomName => throw _privateConstructorUsedError;
+  @JsonKey(name: "purchase_uom")
+  int? get purchaseUom => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_uom_name")
   String? get salesUomName => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
@@ -372,7 +380,7 @@ mixin _$StockData {
   String? get stockCode => throw _privateConstructorUsedError;
   @JsonKey(name: "safety_stock_qty")
   int? get safetyStockQty => throw _privateConstructorUsedError;
-  @JsonKey(name: "reorder_quantity")
+  @JsonKey(name: "reorder_qty")
   int? get reOrderQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_point")
   int? get reOrderPoint => throw _privateConstructorUsedError;
@@ -399,6 +407,8 @@ mixin _$StockData {
   int? get maximumQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "add_virtual_stock")
   int? get addVirtualStock => throw _privateConstructorUsedError;
+  @JsonKey(name: "virtual_stock")
+  int? get virtualStock => throw _privateConstructorUsedError;
   @JsonKey(name: "minimum_quantity")
   int? get minimumQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
@@ -427,6 +437,8 @@ abstract class $StockDataCopyWith<$Res> {
           String? baseUomName,
       @JsonKey(name: "purchase_uom_name")
           String? purchaseUomName,
+      @JsonKey(name: "purchase_uom")
+          int? purchaseUom,
       @JsonKey(name: "sales_uom_name")
           String? salesUomName,
       @JsonKey(name: "variant_id")
@@ -445,7 +457,7 @@ abstract class $StockDataCopyWith<$Res> {
           String? stockCode,
       @JsonKey(name: "safety_stock_qty")
           int? safetyStockQty,
-      @JsonKey(name: "reorder_quantity")
+      @JsonKey(name: "reorder_qty")
           int? reOrderQuantity,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
@@ -471,6 +483,8 @@ abstract class $StockDataCopyWith<$Res> {
           int? maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
       @JsonKey(name: "minimum_quantity")
           int? minimumQuantity,
       @JsonKey(name: "created_at")
@@ -497,6 +511,7 @@ class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
     Object? code = freezed,
     Object? baseUomName = freezed,
     Object? purchaseUomName = freezed,
+    Object? purchaseUom = freezed,
     Object? salesUomName = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
@@ -519,6 +534,7 @@ class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
     Object? purchaseBlockQuantity = freezed,
     Object? maximumQuantity = freezed,
     Object? addVirtualStock = freezed,
+    Object? virtualStock = freezed,
     Object? minimumQuantity = freezed,
     Object? createdAt = freezed,
     Object? stockWarning = freezed,
@@ -542,6 +558,10 @@ class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
+      purchaseUom: purchaseUom == freezed
+          ? _value.purchaseUom
+          : purchaseUom // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesUomName: salesUomName == freezed
           ? _value.salesUomName
           : salesUomName // ignore: cast_nullable_to_non_nullable
@@ -630,6 +650,10 @@ class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
       addVirtualStock: addVirtualStock == freezed
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
+              as int?,
+      virtualStock: virtualStock == freezed
+          ? _value.virtualStock
+          : virtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
       minimumQuantity: minimumQuantity == freezed
           ? _value.minimumQuantity
@@ -668,6 +692,8 @@ abstract class _$StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
           String? baseUomName,
       @JsonKey(name: "purchase_uom_name")
           String? purchaseUomName,
+      @JsonKey(name: "purchase_uom")
+          int? purchaseUom,
       @JsonKey(name: "sales_uom_name")
           String? salesUomName,
       @JsonKey(name: "variant_id")
@@ -686,7 +712,7 @@ abstract class _$StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
           String? stockCode,
       @JsonKey(name: "safety_stock_qty")
           int? safetyStockQty,
-      @JsonKey(name: "reorder_quantity")
+      @JsonKey(name: "reorder_qty")
           int? reOrderQuantity,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
@@ -712,6 +738,8 @@ abstract class _$StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
           int? maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
       @JsonKey(name: "minimum_quantity")
           int? minimumQuantity,
       @JsonKey(name: "created_at")
@@ -739,6 +767,7 @@ class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
     Object? code = freezed,
     Object? baseUomName = freezed,
     Object? purchaseUomName = freezed,
+    Object? purchaseUom = freezed,
     Object? salesUomName = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
@@ -761,6 +790,7 @@ class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
     Object? purchaseBlockQuantity = freezed,
     Object? maximumQuantity = freezed,
     Object? addVirtualStock = freezed,
+    Object? virtualStock = freezed,
     Object? minimumQuantity = freezed,
     Object? createdAt = freezed,
     Object? stockWarning = freezed,
@@ -784,6 +814,10 @@ class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
+      purchaseUom: purchaseUom == freezed
+          ? _value.purchaseUom
+          : purchaseUom // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesUomName: salesUomName == freezed
           ? _value.salesUomName
           : salesUomName // ignore: cast_nullable_to_non_nullable
@@ -873,6 +907,10 @@ class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
+      virtualStock: virtualStock == freezed
+          ? _value.virtualStock
+          : virtualStock // ignore: cast_nullable_to_non_nullable
+              as int?,
       minimumQuantity: minimumQuantity == freezed
           ? _value.minimumQuantity
           : minimumQuantity // ignore: cast_nullable_to_non_nullable
@@ -907,6 +945,8 @@ class _$_StockData implements _StockData {
           this.baseUomName,
       @JsonKey(name: "purchase_uom_name")
           this.purchaseUomName,
+      @JsonKey(name: "purchase_uom")
+          this.purchaseUom,
       @JsonKey(name: "sales_uom_name")
           this.salesUomName,
       @JsonKey(name: "variant_id")
@@ -925,7 +965,7 @@ class _$_StockData implements _StockData {
           this.stockCode,
       @JsonKey(name: "safety_stock_qty")
           this.safetyStockQty,
-      @JsonKey(name: "reorder_quantity")
+      @JsonKey(name: "reorder_qty")
           this.reOrderQuantity,
       @JsonKey(name: "reorder_point")
           this.reOrderPoint,
@@ -951,6 +991,8 @@ class _$_StockData implements _StockData {
           this.maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
           this.addVirtualStock,
+      @JsonKey(name: "virtual_stock")
+          this.virtualStock,
       @JsonKey(name: "minimum_quantity")
           this.minimumQuantity,
       @JsonKey(name: "created_at")
@@ -975,6 +1017,9 @@ class _$_StockData implements _StockData {
   @override
   @JsonKey(name: "purchase_uom_name")
   final String? purchaseUomName;
+  @override
+  @JsonKey(name: "purchase_uom")
+  final int? purchaseUom;
   @override
   @JsonKey(name: "sales_uom_name")
   final String? salesUomName;
@@ -1003,7 +1048,7 @@ class _$_StockData implements _StockData {
   @JsonKey(name: "safety_stock_qty")
   final int? safetyStockQty;
   @override
-  @JsonKey(name: "reorder_quantity")
+  @JsonKey(name: "reorder_qty")
   final int? reOrderQuantity;
   @override
   @JsonKey(name: "reorder_point")
@@ -1042,6 +1087,9 @@ class _$_StockData implements _StockData {
   @JsonKey(name: "add_virtual_stock")
   final int? addVirtualStock;
   @override
+  @JsonKey(name: "virtual_stock")
+  final int? virtualStock;
+  @override
   @JsonKey(name: "minimum_quantity")
   final int? minimumQuantity;
   @override
@@ -1059,7 +1107,7 @@ class _$_StockData implements _StockData {
 
   @override
   String toString() {
-    return 'StockData(id: $id, code: $code, baseUomName: $baseUomName, purchaseUomName: $purchaseUomName, salesUomName: $salesUomName, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, channelTypeAllocationRatio: $channelTypeAllocationRatio, minMaxRatio: $minMaxRatio, virtualType: $virtualType, stockCode: $stockCode, safetyStockQty: $safetyStockQty, reOrderQuantity: $reOrderQuantity, reOrderPoint: $reOrderPoint, baseUom: $baseUom, salesUOM: $salesUOM, availableQuantity: $availableQuantity, availablcancelledQuantityeQuantity: $availablcancelledQuantityeQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnQuantity: $returnQuantity, salesBlockQuantity: $salesBlockQuantity, purchaseBlockQuantity: $purchaseBlockQuantity, maximumQuantity: $maximumQuantity, addVirtualStock: $addVirtualStock, minimumQuantity: $minimumQuantity, createdAt: $createdAt, stockWarning: $stockWarning, salesBlocked: $salesBlocked, purchaseBlocked: $purchaseBlocked)';
+    return 'StockData(id: $id, code: $code, baseUomName: $baseUomName, purchaseUomName: $purchaseUomName, purchaseUom: $purchaseUom, salesUomName: $salesUomName, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, channelTypeAllocationRatio: $channelTypeAllocationRatio, minMaxRatio: $minMaxRatio, virtualType: $virtualType, stockCode: $stockCode, safetyStockQty: $safetyStockQty, reOrderQuantity: $reOrderQuantity, reOrderPoint: $reOrderPoint, baseUom: $baseUom, salesUOM: $salesUOM, availableQuantity: $availableQuantity, availablcancelledQuantityeQuantity: $availablcancelledQuantityeQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnQuantity: $returnQuantity, salesBlockQuantity: $salesBlockQuantity, purchaseBlockQuantity: $purchaseBlockQuantity, maximumQuantity: $maximumQuantity, addVirtualStock: $addVirtualStock, virtualStock: $virtualStock, minimumQuantity: $minimumQuantity, createdAt: $createdAt, stockWarning: $stockWarning, salesBlocked: $salesBlocked, purchaseBlocked: $purchaseBlocked)';
   }
 
   @override
@@ -1076,6 +1124,9 @@ class _$_StockData implements _StockData {
             (identical(other.purchaseUomName, purchaseUomName) ||
                 const DeepCollectionEquality()
                     .equals(other.purchaseUomName, purchaseUomName)) &&
+            (identical(other.purchaseUom, purchaseUom) ||
+                const DeepCollectionEquality()
+                    .equals(other.purchaseUom, purchaseUom)) &&
             (identical(other.salesUomName, salesUomName) ||
                 const DeepCollectionEquality()
                     .equals(other.salesUomName, salesUomName)) &&
@@ -1120,8 +1171,7 @@ class _$_StockData implements _StockData {
                 const DeepCollectionEquality()
                     .equals(other.availableQuantity, availableQuantity)) &&
             (identical(other.availablcancelledQuantityeQuantity, availablcancelledQuantityeQuantity) ||
-                const DeepCollectionEquality().equals(
-                    other.availablcancelledQuantityeQuantity, availablcancelledQuantityeQuantity)) &&
+                const DeepCollectionEquality().equals(other.availablcancelledQuantityeQuantity, availablcancelledQuantityeQuantity)) &&
             (identical(other.reservedQuantity, reservedQuantity) || const DeepCollectionEquality().equals(other.reservedQuantity, reservedQuantity)) &&
             (identical(other.damagedQuantity, damagedQuantity) || const DeepCollectionEquality().equals(other.damagedQuantity, damagedQuantity)) &&
             (identical(other.returnQuantity, returnQuantity) || const DeepCollectionEquality().equals(other.returnQuantity, returnQuantity)) &&
@@ -1129,6 +1179,7 @@ class _$_StockData implements _StockData {
             (identical(other.purchaseBlockQuantity, purchaseBlockQuantity) || const DeepCollectionEquality().equals(other.purchaseBlockQuantity, purchaseBlockQuantity)) &&
             (identical(other.maximumQuantity, maximumQuantity) || const DeepCollectionEquality().equals(other.maximumQuantity, maximumQuantity)) &&
             (identical(other.addVirtualStock, addVirtualStock) || const DeepCollectionEquality().equals(other.addVirtualStock, addVirtualStock)) &&
+            (identical(other.virtualStock, virtualStock) || const DeepCollectionEquality().equals(other.virtualStock, virtualStock)) &&
             (identical(other.minimumQuantity, minimumQuantity) || const DeepCollectionEquality().equals(other.minimumQuantity, minimumQuantity)) &&
             (identical(other.createdAt, createdAt) || const DeepCollectionEquality().equals(other.createdAt, createdAt)) &&
             (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
@@ -1143,6 +1194,7 @@ class _$_StockData implements _StockData {
       const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(baseUomName) ^
       const DeepCollectionEquality().hash(purchaseUomName) ^
+      const DeepCollectionEquality().hash(purchaseUom) ^
       const DeepCollectionEquality().hash(salesUomName) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantCode) ^
@@ -1165,6 +1217,7 @@ class _$_StockData implements _StockData {
       const DeepCollectionEquality().hash(purchaseBlockQuantity) ^
       const DeepCollectionEquality().hash(maximumQuantity) ^
       const DeepCollectionEquality().hash(addVirtualStock) ^
+      const DeepCollectionEquality().hash(virtualStock) ^
       const DeepCollectionEquality().hash(minimumQuantity) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(stockWarning) ^
@@ -1190,6 +1243,8 @@ abstract class _StockData implements StockData {
           String? baseUomName,
       @JsonKey(name: "purchase_uom_name")
           String? purchaseUomName,
+      @JsonKey(name: "purchase_uom")
+          int? purchaseUom,
       @JsonKey(name: "sales_uom_name")
           String? salesUomName,
       @JsonKey(name: "variant_id")
@@ -1208,7 +1263,7 @@ abstract class _StockData implements StockData {
           String? stockCode,
       @JsonKey(name: "safety_stock_qty")
           int? safetyStockQty,
-      @JsonKey(name: "reorder_quantity")
+      @JsonKey(name: "reorder_qty")
           int? reOrderQuantity,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
@@ -1234,6 +1289,8 @@ abstract class _StockData implements StockData {
           int? maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "virtual_stock")
+          int? virtualStock,
       @JsonKey(name: "minimum_quantity")
           int? minimumQuantity,
       @JsonKey(name: "created_at")
@@ -1258,6 +1315,9 @@ abstract class _StockData implements StockData {
   @override
   @JsonKey(name: "purchase_uom_name")
   String? get purchaseUomName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "purchase_uom")
+  int? get purchaseUom => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "sales_uom_name")
   String? get salesUomName => throw _privateConstructorUsedError;
@@ -1286,7 +1346,7 @@ abstract class _StockData implements StockData {
   @JsonKey(name: "safety_stock_qty")
   int? get safetyStockQty => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: "reorder_quantity")
+  @JsonKey(name: "reorder_qty")
   int? get reOrderQuantity => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "reorder_point")
@@ -1325,6 +1385,9 @@ abstract class _StockData implements StockData {
   @override
   @JsonKey(name: "add_virtual_stock")
   int? get addVirtualStock => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "virtual_stock")
+  int? get virtualStock => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "minimum_quantity")
   int? get minimumQuantity => throw _privateConstructorUsedError;

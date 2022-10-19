@@ -199,7 +199,7 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
       String? code, String type);
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelFilterList(
-      String code, String id, String option);
+      List<String> code, String id, String option);
   Future<StockReadModel> getStockRead(int? id);
   Future<List<StockTableReadModel>> getStockTableRead(String? code);
   Future<PaginatedResponse<List<StockVerticalReadModel>>> getStockList(
@@ -287,7 +287,7 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> postStock(
     StockData model,
   );
-  Future<List<LinkedItemListReadModel>> getLinkedItemListRead(
+  Future<List<LinkedItemListIdModel>> getLinkedItemListRead(
     String? code,
   );
   Future<DoubleResponse> postLinkedItem(LinkedItemPostModel model);
@@ -297,6 +297,10 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<LinkedItemListIdModel>>> getLinkedItemList(
       String? filter);
   Future<DoubleResponse> patchLinkedItem(LinkedItemPostModel model, int? id);
+  Future<VariantFrameWorkPostModel> getFrameWorkRead(
+    int? id,
+  );
+  Future<DoubleResponse> getQrCodeRead(int? id);
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -845,16 +849,16 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PurchaseOrdertype> getSalesOrdertype({String? type}) async {
-String path="";
-print("typeeeeeeeeeeeeeeeeeeeeee"+type.toString());
-print(path);
-if(type=="1"){path=salesReturnOrderMode;}
+    String path = "";
+    print("typeeeeeeeeeeeeeeeeeeeeee" + type.toString());
+    print(path);
+    if (type == "1") {
+      path = salesReturnOrderMode;
+    } else {
+      path = salesGeneralOrderType;
+    }
 
-else{
-path=  salesGeneralOrderType;
-}
-
-print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
+    print("typeeeeeeeeeeeeeeeeeeeeee" + path.toString());
 
     final response = await client.get(
       path,
@@ -3185,7 +3189,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
     else
       path = listVariantApi + Variable.inventory_ID.toString() + "?name=$code";
 
-    print(path);
+    print("afffffuu" + path.toString());
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3615,7 +3619,11 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   @override
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
       String? code, String type) async {
-    String path = channelTypeReadApi +"inventory_id="+Variable.inventory_ID.toString()+"&selection_type="+type.toString();
+    String path = channelTypeReadApi +
+        "inventory_id=" +
+        Variable.inventory_ID.toString() +
+        "&selection_type=" +
+        type.toString();
     print(path);
 
     final response = await client.get(path,
@@ -3637,9 +3645,12 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
 
   @override
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelFilterList(
-      String code, String id, String option) async {
+      List<String> code, String id, String option) async {
     String path = channelFilterReadApi;
-    print(path);
+    print("akshay" + path.toString());
+    print("option" + Variable.inventory_ID.toString());
+    print("option" + code.toString());
+    print("option" + option.toString());
 
     final response = await client.post(path,
         data: {
@@ -3668,7 +3679,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
     String path = stockReadApi + id.toString();
 
     try {
-      print("ppppath" + path.toString());
+      print("akkkuuuuu" + path.toString());
       print(path);
       final response = await client.get(
         path,
@@ -3760,7 +3771,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
       String? code) async {
     code = code == null ? "" : code;
     String path = stockVerticalReadApi + code.toString();
-    print("spaths"+path.toString());
+    print("spaths" + path.toString());
 
     // if (code == "")
     //   path = salesListApi + Variable.uomId.toString();
@@ -3851,27 +3862,16 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
 
     final response = await client.post(channelPostApi,
         // data: model.toJson(),
-        data:{
-
-          "inventory_id":model.inventoryId,
-
-          "selection_type":model.selectionType,
-
-          "channel_type_code":model.channelTypeCode,
-          "channel_type_name":model.channelTypeName,
-
-          "priority":1,
-
-          "channel_type_id":model.channelTypeId,
-
-          "selected_data":model.selectedData,
-
-
-          "channel_data":model.channelDatas
-
-
+        data: {
+          "inventory_id": model.inventoryId,
+          "selection_type": model.selectionType,
+          "channel_type_code": model.channelTypeCode,
+          "channel_type_name": model.channelTypeName,
+          "priority": 1,
+          "channel_type_id": model.channelTypeId,
+          "selected_data": model.selectedData,
+          "channel_data": model.channelDatas
         },
-
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -4178,7 +4178,11 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
           "sales_block": model.salesBlock,
           "add_virtual_stock": model.addVirtualStock,
           "channel_status_crucial_point": model.channelStatusCrucialPoint,
-          "channel_status_medium_point": model.channelStatusMediumPoint
+          "channel_status_medium_point": model.channelStatusMediumPoint,
+          "purchase_blocked": model.purchaseBlocked,
+              "purchase_blocked_qty":model.purchaseBlockQuantity,
+              "sales_blocked_qty":model.salesblockQuantity,
+
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4244,10 +4248,12 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
     else
       path = costingCreateApi;
 
+    print("the costinf Api");
     print(path);
     try {
-      final response = await client.post(costingTypePostApi,
+      final response = await client.post(path,
           data: {
+            "method_name":typeName,
             "type_name": typeName,
             "description": description,
             "created_by": createdBy,
@@ -4269,11 +4275,13 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
       print("errrr" + e.toString());
     }
 
-    final response = await client.post(costingTypePostApi,
+    final response = await client.post(path,
         data: {
+          "method_name":typeName,
           "type_name": typeName,
           "description": description,
-          "created_by": createdBy
+          "created_by": createdBy,
+          "method_type_id": id,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4836,7 +4844,9 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   @override
   Future<DoubleResponse> postPricingGroup(PricingTypeListModel model,
       {int? type}) async {
+    print(model);
     String path = pricingPostApi;
+    print(path);
     try {
       final response = await client.post(path,
           data: model.toJson(),
@@ -5029,7 +5039,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   @override
   Future<DoubleResponse> percentageGp(int? id, String? gpType) async {
     String path = pricingPgPercentageApi;
-    print("alallal");
+    print("alallal" + id.toString());
     try {
       print(path);
       final response = await client.post(
@@ -5365,7 +5375,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
           "sales_blocked": model.salesBlocked,
           "maximum_quantity": model.maximumQuantity,
           "minimum_quantity": model.minimumQuantity,
-          "add_virtual_stock": 2,
+          "add_virtual_stock": model.addVirtualStock,
           "virtual_type": model.virtualType,
           "purchase_blocked": model.purchaseBlocked
         },
@@ -5384,9 +5394,9 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   }
 
   @override
-  Future<List<LinkedItemListReadModel>> getLinkedItemListRead(
+  Future<List<LinkedItemListIdModel>> getLinkedItemListRead(
       String? code) async {
-    String path = listLinkedItemApi + "VAR0088";
+    String path = listLinkedItemApi + Variable.variantCode.toString();
     try {
       print("ppppath" + path.toString());
       print(path);
@@ -5399,10 +5409,10 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
           },
         ),
       );
-      List<LinkedItemListReadModel> items = [];
+      List<LinkedItemListIdModel> items = [];
 
-      (response.data['data'] as List).forEach((element) {
-        items.add(LinkedItemListReadModel.fromJson(element));
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(LinkedItemListIdModel.fromJson(element));
         print("itemsAk" + items.toString());
       });
       return items;
@@ -5419,10 +5429,10 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
         },
       ),
     );
-    List<LinkedItemListReadModel> items = [];
+    List<LinkedItemListIdModel> items = [];
 
-    (response.data['data'] as List).forEach((element) {
-      items.add(LinkedItemListReadModel.fromJson(element));
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(LinkedItemListIdModel.fromJson(element));
       print("itemsAk" + items.toString());
     });
     return items;
@@ -5511,7 +5521,7 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   @override
   Future<PaginatedResponse<List<LinkedItemListIdModel>>> getLinkedItemList(
       String? filter) async {
-    String path=readLinkedItemVerticalApi;
+    String path = readLinkedItemVerticalApi;
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -5531,14 +5541,13 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
   }
 
   @override
-  Future<DoubleResponse> patchLinkedItem(LinkedItemPostModel model, int? id) async {
+  Future<DoubleResponse> patchLinkedItem(
+      LinkedItemPostModel model, int? id) async {
     String path = linkedListPatchnApi + id.toString();
     print(path);
-    try{
+    try {
       final response = await client.patch(path,
           data: model.toJson(),
-
-
           options: Options(headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -5551,16 +5560,12 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
       }
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("the error exist that is" + e.toString());
     }
-    catch(e){
-      print("the error exist that is"+e.toString());
-    }
-
 
     final response = await client.post(path,
         data: model.toJson(),
-
-
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -5573,5 +5578,83 @@ print("typeeeeeeeeeeeeeeeeeeeeee"+path.toString());
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<VariantFrameWorkPostModel> getFrameWorkRead(int? id) async {
+    String path = frameWorkReadApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("ansaaaa" + response.toString());
+      VariantFrameWorkPostModel dataa =
+          VariantFrameWorkPostModel.fromJson(response.data['data']);
+      print("ansaaaa" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("AnnnnnnnBelk" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("uomGroup response" + response.toString());
+    VariantFrameWorkPostModel dataa =
+        VariantFrameWorkPostModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<DoubleResponse> getQrCodeRead(int? id) async {
+    String path = generateQrCodeApi + id.toString();
+    print(path);
+    try {
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['data']);
+    } catch (e) {
+      print("the error exist that is" + e.toString());
+    }
+
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("+++++++++++");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['data']);
   }
 }

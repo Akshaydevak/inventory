@@ -30,8 +30,8 @@ class VariantPatch with _$VariantPatch {
     final String? catalog6,
     final String? catalog7,
     final String? catalog8,
-    final  List<Storage>? Ingrediants,
-    final List<Storage>? storage,
+    final  Storage? Ingrediants,
+    final Storage? storage,
 
 
     @JsonKey(name: "variant_name") final String? variantName,
@@ -80,14 +80,14 @@ class VariantPatch with _$VariantPatch {
     @JsonKey(name: "targeted_gp") final double? targetedGp,
     @JsonKey(name: "min_purchase_order_limit") final int? minPurchaseOrderLimit,
     @JsonKey(name: "max_purchase_order_limit") final int? maxPurchaseOrderLimit,
-    @JsonKey(name: "important_info") final List< ProductFeatures>? importantInfo,
-    @JsonKey(name: "Additional_info") final  List<ProductFeatures>? additionalInfo,
-    @JsonKey(name: "Nutriants_facts") final List<ProductFeatures>? nutriantsFacts,
-    @JsonKey(name: "product_details") final  List<ProductFeatures>? productDetails,
-    @JsonKey(name: "product_features") final List< ProductFeatures>? productFeatures,
-    @JsonKey(name: "about_the_products") final List< Storage>? aboutProducts,
+    @JsonKey(name: "important_info") final  ProductFeatures? importantInfo,
+    @JsonKey(name: "Additional_info") final  ProductFeatures? additionalInfo,
+    @JsonKey(name: "Nutriants_facts") final ProductFeatures? nutriantsFacts,
+    @JsonKey(name: "product_details") final  ProductFeatures? productDetails,
+    @JsonKey(name: "product_features") final  ProductFeatures? productFeatures,
+    @JsonKey(name: "about_the_products") final  Storage? aboutProducts,
     @JsonKey(name: "product_behaviour") final List<productBehaviour>? productBehavior,
-    @JsonKey(name: "usage_direction") final List<Storage>? usageDirection,
+    @JsonKey(name: "usage_direction") final Storage? usageDirection,
     @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
 
 

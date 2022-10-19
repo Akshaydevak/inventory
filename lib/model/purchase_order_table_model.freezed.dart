@@ -32,7 +32,7 @@ class _$PurchaseOrderTableModelTearOff {
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") String? returnTime,
+      @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
       @JsonKey(name: "barcode") Barcode? barCode}) {
     return _PurchaseOrderTableModel(
@@ -76,7 +76,7 @@ mixin _$PurchaseOrderTableModel {
   @JsonKey(name: "return_type")
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
-  String? get returnTime => throw _privateConstructorUsedError;
+  int? get returnTime => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
   @JsonKey(name: "barcode")
@@ -103,7 +103,7 @@ abstract class $PurchaseOrderTableModelCopyWith<$Res> {
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") String? returnTime,
+      @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
       @JsonKey(name: "barcode") Barcode? barCode});
 
@@ -174,7 +174,7 @@ class _$PurchaseOrderTableModelCopyWithImpl<$Res>
       returnTime: returnTime == freezed
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       vendorDetails: vendorDetails == freezed
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
@@ -215,7 +215,7 @@ abstract class _$PurchaseOrderTableModelCopyWith<$Res>
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") String? returnTime,
+      @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
       @JsonKey(name: "barcode") Barcode? barCode});
 
@@ -290,7 +290,7 @@ class __$PurchaseOrderTableModelCopyWithImpl<$Res>
       returnTime: returnTime == freezed
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as int?,
       vendorDetails: vendorDetails == freezed
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
@@ -348,7 +348,7 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
   final String? returnType;
   @override
   @JsonKey(name: "return_time")
-  final String? returnTime;
+  final int? returnTime;
   @override
   @JsonKey(name: "vendor_details")
   final List<VendorDetails>? vendorDetails;
@@ -437,7 +437,7 @@ abstract class _PurchaseOrderTableModel implements PurchaseOrderTableModel {
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "unit_cost") double? unitCost,
       @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") String? returnTime,
+      @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
       @JsonKey(name: "barcode") Barcode? barCode}) = _$_PurchaseOrderTableModel;
 
@@ -469,7 +469,7 @@ abstract class _PurchaseOrderTableModel implements PurchaseOrderTableModel {
   String? get returnType => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "return_time")
-  String? get returnTime => throw _privateConstructorUsedError;
+  int? get returnTime => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;

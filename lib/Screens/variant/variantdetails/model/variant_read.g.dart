@@ -45,6 +45,9 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
           ? null
           : SalesUomData.fromJson(
               json['sales_uom_data'] as Map<String, dynamic>),
+      vendorDetails: (json['vendor_details'] as List<dynamic>?)
+          ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
+          .toList(),
       purchaseUomdata: json['purchase_uom_data'] == null
           ? null
           : PurchaseUomData.fromJson(
@@ -67,6 +70,7 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       netWeight: json['net_weight'] as String?,
       posName: json['pos_name'] as String?,
       displayname: json['display_name'] as String?,
+      purchaseuom: json['purchase_uom'] as String?,
       vdeioUrl: json['vedio_url'] as String?,
       arabicDescription: json['arabic_description'] as String?,
       additionalDescription: json['additional_description'] as String?,
@@ -108,6 +112,7 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'landing_cost': instance.landingCost,
       'uom_name_data': instance.uomNameData,
       'sales_uom_data': instance.salesUomData,
+      'vendor_details': instance.vendorDetails,
       'purchase_uom_data': instance.purchaseUomdata,
       'variant_framework_data': instance.variantframeWork,
       'variant_meta': instance.variantMeta,
@@ -120,6 +125,7 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'net_weight': instance.netWeight,
       'pos_name': instance.posName,
       'display_name': instance.displayname,
+      'purchase_uom': instance.purchaseuom,
       'vedio_url': instance.vdeioUrl,
       'arabic_description': instance.arabicDescription,
       'additional_description': instance.additionalDescription,
@@ -151,15 +157,15 @@ Map<String, dynamic> _$$_SalesUomDataToJson(_$_SalesUomData instance) =>
 
 _$_VendorDetails _$$_VendorDetailsFromJson(Map<String, dynamic> json) =>
     _$_VendorDetails(
-      key: json['key'] as int?,
       vendorReerenceCode: json['vendor_reference_code'] as String?,
+      vendorName: json['vendor_name'] as String?,
       vendorCode: json['vendor_code'] as String?,
     );
 
 Map<String, dynamic> _$$_VendorDetailsToJson(_$_VendorDetails instance) =>
     <String, dynamic>{
-      'key': instance.key,
       'vendor_reference_code': instance.vendorReerenceCode,
+      'vendor_name': instance.vendorName,
       'vendor_code': instance.vendorCode,
     };
 
@@ -223,40 +229,46 @@ _$_VariantMeta _$$_VariantMetaFromJson(Map<String, dynamic> json) =>
       catelog: json['catelog'] == null
           ? null
           : Catelog.fromJson(json['catelog'] as Map<String, dynamic>),
-      storage: (json['storage'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      Ingrediants: (json['Ingrediants'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      storage: json['storage'] == null
+          ? null
+          : Storage.fromJson(json['storage'] as Map<String, dynamic>),
+      Ingrediants: json['Ingrediants'] == null
+          ? null
+          : Storage.fromJson(json['Ingrediants'] as Map<String, dynamic>),
       description: json['description'] as String?,
       image: json['var_image'] == null
           ? null
           : VarImage.fromJson(json['var_image'] as Map<String, dynamic>),
-      importantInfo: (json['important_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      importantInfo: json['important_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['important_info'] as Map<String, dynamic>),
       productBehave: (json['product_behaviour'] as List<dynamic>?)
           ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
-      additionalInfo: (json['Additional_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      nutriantFacts: (json['Nutriants_facts'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productDetails: (json['product_details'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productFeatures: (json['product_features'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      aboutProducts: (json['about_the_products'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      usageDirection: (json['usage_direction'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      additionalInfo: json['Additional_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Additional_info'] as Map<String, dynamic>),
+      nutriantFacts: json['Nutriants_facts'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Nutriants_facts'] as Map<String, dynamic>),
+      productDetails: json['product_details'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_details'] as Map<String, dynamic>),
+      productFeatures: json['product_features'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_features'] as Map<String, dynamic>),
+      aboutProducts: json['about_the_products'] == null
+          ? null
+          : Storage.fromJson(
+              json['about_the_products'] as Map<String, dynamic>),
+      usageDirection: json['usage_direction'] == null
+          ? null
+          : Storage.fromJson(json['usage_direction'] as Map<String, dynamic>),
       oldSystemCode: json['old_system_code'] as String?,
     );
 

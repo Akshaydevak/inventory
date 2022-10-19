@@ -29,12 +29,12 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
       catalog6: json['catalog6'] as String?,
       catalog7: json['catalog7'] as String?,
       catalog8: json['catalog8'] as String?,
-      Ingrediants: (json['Ingrediants'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      storage: (json['storage'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      Ingrediants: json['Ingrediants'] == null
+          ? null
+          : Storage.fromJson(json['Ingrediants'] as Map<String, dynamic>),
+      storage: json['storage'] == null
+          ? null
+          : Storage.fromJson(json['storage'] as Map<String, dynamic>),
       variantName: json['variant_name'] as String?,
       maxGp: (json['maximum_gp'] as num?)?.toDouble(),
       minGap: (json['minimum_gp'] as num?)?.toDouble(),
@@ -80,30 +80,36 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
       targetedGp: (json['targeted_gp'] as num?)?.toDouble(),
       minPurchaseOrderLimit: json['min_purchase_order_limit'] as int?,
       maxPurchaseOrderLimit: json['max_purchase_order_limit'] as int?,
-      importantInfo: (json['important_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      additionalInfo: (json['Additional_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      nutriantsFacts: (json['Nutriants_facts'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productDetails: (json['product_details'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productFeatures: (json['product_features'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      aboutProducts: (json['about_the_products'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      importantInfo: json['important_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['important_info'] as Map<String, dynamic>),
+      additionalInfo: json['Additional_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Additional_info'] as Map<String, dynamic>),
+      nutriantsFacts: json['Nutriants_facts'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Nutriants_facts'] as Map<String, dynamic>),
+      productDetails: json['product_details'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_details'] as Map<String, dynamic>),
+      productFeatures: json['product_features'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_features'] as Map<String, dynamic>),
+      aboutProducts: json['about_the_products'] == null
+          ? null
+          : Storage.fromJson(
+              json['about_the_products'] as Map<String, dynamic>),
       productBehavior: (json['product_behaviour'] as List<dynamic>?)
           ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
-      usageDirection: (json['usage_direction'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      usageDirection: json['usage_direction'] == null
+          ? null
+          : Storage.fromJson(json['usage_direction'] as Map<String, dynamic>),
       vendorDetails: (json['vendor_details'] as List<dynamic>?)
           ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
           .toList(),

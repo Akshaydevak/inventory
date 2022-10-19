@@ -48,7 +48,7 @@ class _ItemCardState extends State<ItemCard> {
         onTap:widget.onClick,
         //widget.onClick,
         child: Container(
-          height: height * .084,
+          // height: height * .084,
           // decoration: BoxDecoration(
           //   // color: Colors.red,
           //     color: widget.isSelected

@@ -224,7 +224,7 @@ active=false;
         print("postssssssss" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -875,7 +875,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
         showDailogPopUp(
           context,
           ConfigurePopup(
-            type: "category_group",
+            type: "Subcategory_group",
           ),
 
 
@@ -978,6 +978,9 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               type:"FrameWorkPopUpCall",
               value:  widget.variantFrameworkName.text,
               onchange: (vale){
+                setState(() {
+                  costingTypeMethodeCheck = true;
+                });
                 // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
               },
               enable: true,
@@ -996,6 +999,9 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 });
               },
               onAddNew: () {
+                setState(() {
+                  costingTypeMethodeCheck = true;
+                });
 
                 showDailogPopUp(
                   context,

@@ -2762,6 +2762,7 @@ child: IntrinsicHeight(
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                  initialCheck: true,
                                                   last: additionalVariants[i].discount.toString() ?? "",
                                                   onChanged: (va) {
                                                     double? disc;

@@ -30,6 +30,7 @@ class ChannelStockStableTable extends StatefulWidget {
   final Function trueOrFalseChange;
   final bool stockWarning;
   final bool salesBolck;
+  final bool purchaseBlock;
 
   final TextEditingController totalQuantity;
 
@@ -43,6 +44,7 @@ class ChannelStockStableTable extends StatefulWidget {
 
   ChannelStockStableTable({
     required this.stockWarning,
+    required this.purchaseBlock,
     required this.trueOrFalseChange,
     required this.minMaxRatio,
 
@@ -139,13 +141,8 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                             readOnly: true,
 
                               controller: widget.totalQuantity, title: "Total Quantity"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
 
 
-                              controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -161,6 +158,14 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
 
 
                               controller: widget.purchaseBlockQuantity, title: "Purchase Block Quantity"),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          NewInputCard(
+                              formatter: true,
+                              controller: widget.reOrderPoint, title: "Reorder Point"),
+
+
 
 
 
@@ -171,12 +176,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                           height: height * .035,
                         ),
 
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.reOrderPoint, title: "Reorder Point"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
+
                         NewInputCard(
                           formatter: true,
 
@@ -241,6 +241,13 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
 
                           restricted: true,
                         ),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            readOnly: true,
+                            controller: widget.virtualStock, title: "Virtual Stock"),
+
                         // NewInputCard(
                         //     controller: widget.virtualStockType, title: "Virtual Stock Type"),
 
@@ -250,21 +257,23 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
 
                       ],)),
                       Expanded(child: Column(children: [
+
                         NewInputCard(
-                            readOnly: true,
-                            controller: widget.virtualStock, title: "Virtual Stock"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
+                          formatter: true,
 
                             controller: widget.addVirtualStock, title: " Add Virtual Stock"),
                         SizedBox(
                           height: height * .030,
                         ),
+                        NewInputCard(
+                            formatter: true,
+
+
+                            controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
 
 
                         NewInputCard(
+                          formatter: true,
 
                             controller: widget.minMaxRatio, title: "Min Max Ratio"),
                         SizedBox(
@@ -316,9 +325,21 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                               val=!val;
                               widget.trueOrFalseChange(type: "2",val:val);
                               setState(() {});
+                            }),             SizedBox(
+                          height: height * .030,
+                        ),
+
+                        PopUpSwitchTile(
+                            value:widget?. purchaseBlock??false,
+                            title: "Purchas Block",
+                            onClick: (gg) {
+                              bool val=widget.purchaseBlock;
+                              val=!val;
+                              widget.trueOrFalseChange(type: "3",val:val);
+                              setState(() {});
                             }),
                         SizedBox(
-                          height: height * .150,
+                          height: height * .08,
                         ),
 
 

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/Dashboard.dart';
@@ -70,12 +72,17 @@ List<  InventoryListModel> inventoryList=[];
             RegisterModel user = data.data2;
             Variable.loginLeage=user.legalEntiry.toString();
             Variable.username=user.fname.toString();
+            Variable.created_by=user.employeeCode.toString();
             // Variable.inventory_ID=user.fname.toString();
             context.read<InventorylistCubit>().getInventoryListRead(user.legalEntiry.toString());
 
 
 
             UserPreferences().saveUser(user);
+            final SharedPreferences prefs =
+            await SharedPreferences.getInstance();
+            final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+            prefs.setString('key', jsonEncode(strs));
 
 
             // Variable.isLoggedIn = true;
@@ -98,14 +105,17 @@ List<  InventoryListModel> inventoryList=[];
             loading: () {
               context.showSnackBarNormal("Loading");
             },
-            success: (data) async {
+            success: (data)  {
               print("welcome ther is something happening ");
               inventoryList=data.data;
 
               if(inventoryList.isNotEmpty==true){
-                setState(() {
+                setState(()   {
                   Variable.inventory_ID=inventoryList[0]?.businessUnitCode??"";
-                  print("ids"+Variable.inventory_ID.toString());
+                  Variable.inventory_Name=inventoryList[0]?.name??"";
+                  // final SharedPreferences prefs = await SharedPreferences.getInstance();
+                  // prefs.setString("inventory", inventoryList![0].businessUnitCode.toString());
+                  // prefs.setString("inventory_name", inventoryList![0].name.toString());
                 });
 
               }

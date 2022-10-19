@@ -8,6 +8,7 @@ import 'package:file_picker_cross/file_picker_cross.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
@@ -75,14 +76,15 @@ class _NewInputCardState extends State<NewInputCard> {
 
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
-      child:widget.direction==false?
+      child:
+      widget.direction==false?
       Column(
 
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.title,
-            style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
+            style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight: FontWeight.w600),
           ),
           SizedBox(height:3),
           widget.keyboardType=="int"?
@@ -166,10 +168,10 @@ class _NewInputCardState extends State<NewInputCard> {
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show, keyboardType:
-            widget.formatter? TextInputType.number:null ,
+            widget.formatter? TextInputType.phone:null ,
               inputFormatters:widget.formatter?
               <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
               ]:null,
 
 
@@ -216,7 +218,8 @@ class _NewInputCardState extends State<NewInputCard> {
             ),
           ),
         ],
-      ): Container(
+      ):
+      Container(
         height: 300,
         width: 300,
         child: Row(
@@ -224,7 +227,7 @@ class _NewInputCardState extends State<NewInputCard> {
     children: [
     Text(
     widget.title,
-    style: TextStyle(fontSize: widget.fontsize,fontWeight: FontWeight.bold),
+    style: GoogleFonts.roboto(fontSize: widget.fontsize,fontWeight:  FontWeight.w600),
     ),
     SizedBox(width:MediaQuery.of(context).size.width*.003),
     Container(
@@ -289,6 +292,7 @@ class NewInputCreateCard extends StatefulWidget {
   final Function ontap;
 
   final String title;
+  final String? subTitle;
   final String? hint;
 
   final bool password;
@@ -296,6 +300,7 @@ class NewInputCreateCard extends StatefulWidget {
   const NewInputCreateCard({
     Key? key,
     required this.ontap,
+    this.subTitle="creaet New",
     required this.controller,
     this.label,
     this.keyboardType,
@@ -344,7 +349,7 @@ class _NewInputCreateCardState extends State<NewInputCreateCard> {
                 ),
                 TextButton(onPressed: (){
                   widget.ontap();
-                }, child: Text("create New")),
+                }, child: Text(widget.subTitle.toString())),
               ],
             ),
             SizedBox(height:3),
@@ -959,7 +964,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
               width: 70,
               child: Text.rich(TextSpan(
                   text: widget.label,
-                  style: TextStyle(fontSize: 12),
+                  style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
                   children: widget.required
                       ? [
                     TextSpan(
@@ -1031,7 +1036,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
 
             child: Text.rich(TextSpan(
                 text: widget.label,
-                style: TextStyle(fontSize: 12),
+                style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
                 children: widget.required
                     ? [
                   TextSpan(
@@ -1313,10 +1318,10 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
       children: [
         Container(
 
-            padding: EdgeInsets.only(top: 10),
+            padding: EdgeInsets.only(top: 10,left: 22),
             child: Text(
               widget.title,
-              style: TextStyle(fontSize: 12),
+              style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
             )),
         Align(
           alignment: Alignment.centerLeft,

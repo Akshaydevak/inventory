@@ -26,9 +26,10 @@ class VariantPost with _$VariantPost {
     final int? catalog6,
     final int? catalog7,
     final int? catalog8,
-    final List<Storage>? Ingrediants,
-    final List<Storage>? storage,
+    final Storage? Ingrediants,
+    final Storage? storage,
     @JsonKey(name: "inventory_id") final String? inventoryId,
+    @JsonKey(name: "inventory_name") final String? inventoryName,
     @JsonKey(name: "uom_code") final String? uomCode,
     @JsonKey(name: "var_alternative_rfid") final String? varAlternativeRfid,
     @JsonKey(name: "alternative_barcode")
@@ -85,17 +86,17 @@ class VariantPost with _$VariantPost {
     @JsonKey(name: "variant_status") final String? variantStatus,
     @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "base_price") final double? basePrize,
-    @JsonKey(name: "about_the_products") final List<Storage>? aboutProducts,
+    @JsonKey(name: "about_the_products") final Storage? aboutProducts,
     @JsonKey(name: "product_details")
-        final List<ProductFeatures>? productDetails,
+        final ProductFeatures? productDetails,
     @JsonKey(name: "product_features")
-        final List<ProductFeatures>? productFeatures,
+        final ProductFeatures? productFeatures,
     @JsonKey(name: "Additional_info")
-        final List<ProductFeatures>? additionalInfo,
+        final ProductFeatures? additionalInfo,
     @JsonKey(name: "Nutriants_facts")
-        final List<ProductFeatures>? nutriantsFacts,
-    @JsonKey(name: "usage_direction") final List<Storage>? usageDirection,
-    @JsonKey(name: "important_info") final List<ProductFeatures>? importantInfo,
+        final ProductFeatures? nutriantsFacts,
+    @JsonKey(name: "usage_direction") final Storage? usageDirection,
+    @JsonKey(name: "important_info") final ProductFeatures? importantInfo,
     @JsonKey(name: "product_behaviour")
         final List<productBehaviour>? productBehavior,
   }) = _VariantPost;
@@ -151,6 +152,7 @@ class LinkedItemListIdModel with _$LinkedItemListIdModel {
     final String? code,
     final String? name,
     final String? title,
+    @JsonKey(name: "group_id", ) final int? groupId,
   }) = _LinkedItemListIdModel;
   factory LinkedItemListIdModel.fromJson(Map<String, dynamic> json) =>
       _$LinkedItemListIdModelFromJson(json);

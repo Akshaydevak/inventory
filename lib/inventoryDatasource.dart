@@ -1301,7 +1301,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     print(code);
     String path = inventoryListApi+code.toString();
     try {
-      print("ppppath" + path.toString());
+      print("THE INVENTORYLIST PATH" + path.toString());
       print(path);
       final response = await client.get(
         path,

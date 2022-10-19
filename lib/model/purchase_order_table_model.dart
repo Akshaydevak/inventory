@@ -16,7 +16,7 @@ PurchaseOrderTableModel with _$PurchaseOrderTableModel {
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "return_type") final String? returnType,
-    @JsonKey(name: "return_time") final String? returnTime,
+    @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "vendor_details") final List< VendorDetails>? vendorDetails,
     @JsonKey(name: "barcode") final Barcode? barCode,
   }) = _PurchaseOrderTableModel;

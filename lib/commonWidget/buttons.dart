@@ -113,6 +113,7 @@ class _TableTextButtonState extends State<TableTextButton> {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
+      // color: Colors.blue,
 
       child: widget.designCheck?InkWell(
         onTap: (){ widget.onPress();},
@@ -121,16 +122,21 @@ class _TableTextButtonState extends State<TableTextButton> {
         ),
       ):
 
-      TextButton(
-          style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Color(0xffE9E9E9)
-          ),
-          onPressed: () {
-            widget.onPress();
+      Container(
+        margin: EdgeInsets.all(4),
+        child: TextButton(
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Pellet.tableBlueHeaderPrint)),
+
+            // style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.red
+            // ),
+            onPressed: () {
+              widget.onPress();
 
 
-          },
-          child: Text(widget.label)
+            },
+            child: Text(widget.label,style: TextStyle(color: Colors.white),)
 
+        ),
       ),
     );
   }

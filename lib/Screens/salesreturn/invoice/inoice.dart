@@ -601,6 +601,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                           ),
                           NewInputCard(
                               readOnly: true,
+                              height: 46,
                               controller: widget.trnNumber,
                               title: " TRN Number"),
                           SizedBox(

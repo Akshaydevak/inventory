@@ -32,6 +32,7 @@ import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
+import 'Screens/variant/channels2allocation/cubits/data_assign/allocationdata_assign_cubit.dart';
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
@@ -132,8 +133,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => FrameworklistCubit(),
-        ),   BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => LinkedlistverticallistCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AllocationdataAssignCubit(),
         ),
       ],
       child: MaterialApp(
@@ -159,12 +164,13 @@ class _MyHomeState extends State<MyHome> {
   Future getvalidationData() async {
     print("enterdeeed");
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-  Variable.inventory_ID=  prefs.getString("inventory").toString();
+    Variable.inventory_ID = prefs.getString("inventory").toString();
+    Variable.inventory_Name = prefs.getString("inventory_name").toString();
 
     // Variable.subIndex = list.map(int.parse).toList();
 
-    print("therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee"+ Variable.subIndex.toString());
-
+    print(
+        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" + Variable.subIndex.toString());
 
     index = prefs.getInt('index') ?? 1;
     print("index after caching $index");
@@ -175,19 +181,19 @@ class _MyHomeState extends State<MyHome> {
         print("already logined");
         Variable.loginLeage = user.legalEntiry.toString();
         Variable.username = user.fname.toString();
-        Variable.subIndex=[];
-        var list=jsonDecode(prefs.getString('key').toString());
-        print("lists is herds"+list.runtimeType.toString());
-        for( var a in list)
-          {
-            print("the a i shere"+a.toString());
-            Variable.subIndex.add(int?.tryParse(a));
-          }
-        print("the a i shere"+Variable.subIndex.toString());
-      //   list.map((e) {
-      //     print("the eee is here"+e.toString());
-      //     // e.toInt()).toList()
-      // }    );
+        Variable.created_by = user.employeeCode.toString();
+        Variable.subIndex = [];
+        var list = jsonDecode(prefs.getString('key').toString());
+        print("lists is herds" + list.runtimeType.toString());
+        for (var a in list) {
+          print("the a i shere" + a.toString());
+          Variable.subIndex.add(int?.tryParse(a));
+        }
+        print("the a i shere" + Variable.subIndex.toString());
+        //   list.map((e) {
+        //     print("the eee is here"+e.toString());
+        //     // e.toInt()).toList()
+        // }    );
 
         Navigator.pushReplacement(
             context,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/Screens/logi/login.dart';
 import 'package:inventory/widgets/MenuIcon.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SideMenuScreen extends StatefulWidget {
 
@@ -90,7 +92,16 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
 
             },selected: selected5, size: .03,),
             MenuIcon(iconurl: "asset/menuicon6.png",ontap: (){
-              setState(() {
+              setState(() async {
+
+
+                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                sharedPreferences.remove('isLoggedIn');
+                sharedPreferences.clear();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>   LoginScreen()),
+                );
                 selected6=!selected6;
                 selected1=false;
 

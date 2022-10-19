@@ -16,6 +16,7 @@ class CostingPageCreationPostModel with _$CostingPageCreationPostModel {
     @JsonKey(name: "pricing_group_id") final int? pricingGroupId,
     @JsonKey(name: "channel_stock_id") final int? channelStockId,
     @JsonKey(name: "channel_code") final String? channelCode,
+    @JsonKey(name: "price_group_name") final String? pricingGroupName,
     @JsonKey(name: "costing_method_name") final String? costingMethodName,
     @JsonKey(name: "costing_code") final String? costingCode,
     @JsonKey(name: "variant_id") final int? variantId,

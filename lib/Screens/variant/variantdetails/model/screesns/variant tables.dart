@@ -10,100 +10,81 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 
 class ProductTable extends StatefulWidget {
-final  List<Storage>? aboutProducts;
-final  Function storageTableEdit;
-final  bool addNew;
-final  Key? key;
+  final Storage? aboutProducts;
+  final Function storageTableEdit;
+  final bool addNew;
+  final Key? key;
 
-ProductTable({required this.aboutProducts, required this.storageTableEdit,required this.key, required this.addNew});
+  ProductTable(
+      {required this.aboutProducts,
+      required this.storageTableEdit,
+      required this.key,
+      required this.addNew});
   @override
   ProductTableState createState() => ProductTableState();
 }
 
 class ProductTableState extends State<ProductTable> {
-  TextEditingController name=TextEditingController();
-  TextEditingController key=TextEditingController();
-  TextEditingController headingController=TextEditingController();
-  List<TextEditingController>nameListTextEditingController=[];
-  bool onChange=false;
-  List<Storage> aboutProducts=[];
-  List<dynamic>keys=[];
+  TextEditingController name = TextEditingController();
+  TextEditingController key = TextEditingController();
+  TextEditingController headingController = TextEditingController();
+  List<TextEditingController> nameListTextEditingController = [];
+  bool onChange = false;
+  Storage? aboutProducts;
+  List<dynamic> keys = [];
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
-      print("welcome to the entire place");
-    setState(() {
-      nameListTextEditingController.clear();
-      keys=[];
-    });
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (!onChange) {
 
+      setState(() {
+        nameListTextEditingController.clear();
+        keys =[] ;
+        nameListTextEditingController.clear();
+      });
 
-      if(widget.aboutProducts?.isNotEmpty==true){
-
-
-        setState(() {
-
-          headingController.text=widget.addNew?"":widget.aboutProducts?[0].name??"";
-        });
-        aboutProducts= widget.aboutProducts??[];
-        if(aboutProducts?[0].keyValues?.isNotEmpty==true) {
-          keys = aboutProducts ? [0].keyValues ?? [];
-          for(var i=0;i<keys.length;i++){
-            var value=keys?[i]["name"];
-            if(value==null)
-              value="";
-            nameListTextEditingController.add(TextEditingController(text: value));
-
-          }
-        } }
-
-
-
-
-
+      setState(() {
+        headingController.text =
+            widget.addNew ? "" : widget.aboutProducts?.name ?? "";
+      });
+      aboutProducts = widget.aboutProducts;
+      if (aboutProducts?.keyValues?.isNotEmpty == true) {
+        keys = aboutProducts?.keyValues ?? [];
+        for (var i = 0; i < keys.length; i++) {
+          var value = keys?[i]["name"];
+          if (value == null) value = "";
+          nameListTextEditingController.add(TextEditingController(text: value));
+        }
+      }
     }
-    onChange=false;
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          underlineTextForm(
-            controller: headingController,
-            onChange: (va){
-              print(va);
-              if(aboutProducts.isNotEmpty==true){
-                aboutProducts[0]=aboutProducts[0].copyWith(name: va);
-
-              }
-              else{
-                aboutProducts.add(Storage(name: va));
-              }
-            },
-          ),
-          Container(
+    onChange = false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        underlineTextForm(
+          controller: headingController,
+          onChange: (va) {
+            print(va);
+            aboutProducts = Storage(name: va);
+          },
+        ),
+        Container(
           // width: w/7,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
-
             border: const TableBorder(
-
               verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
               horizontalInside: BorderSide(
-                  width:.3,
+                  width: .3,
                   color: Colors.black45,
                   // color: Colors.blue,
-                  style: BorderStyle.solid),),
-
+                  style: BorderStyle.solid),
+            ),
             tableWidth: .5,
-
-            childrens:[
+            childrens: [
               TableRow(
-
                 // decoration: BoxDecoration(
 
                 //     color: Colors.green.shade200,
@@ -113,295 +94,203 @@ class ProductTableState extends State<ProductTable> {
                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
-
                   tableHeadtext(
-
                     'About the Product',
-
                     padding: EdgeInsets.all(7),
-
                     height: 46,
                     textColor: Colors.white,
-
-
                     size: 13,
-
-
                   ),
                   tableHeadtext(
-
                     '',
-
                     padding: EdgeInsets.all(7),
-
                     height: 46,
                     textColor: Colors.white,
-
-
                     size: 13,
-
-
                   ),
-
-
-
-
-
                 ],
-
               ),
-    if (keys?.isNotEmpty==true ) ...[
-
-
-          for (var i = 0; i < keys!.length; i++)
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys!.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys?[i]["name"]??"")
+                              UnderLinedInput(
+                            formatter: false,
+                            controller: nameListTextEditingController[i],
+                            onChanged: (va) {
+                              print(va);
+                              keys[i]["name"] = va;
+                              print(keys);
+                            },
+                          ),
+                        ),
+                        TableTextButton(
+                          label: "upadte",
+                          onPress: () {
+                            aboutProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "1", list: aboutProducts);
+                          },
+                        ),
+                      ]),
+              ],
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
-                    TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:
-    // Text(keys?[i]["name"]??"")
-                      UnderLinedInput(
-                        formatter: false,
-                        controller: nameListTextEditingController[i],
-                        onChanged: (va){
-                          print(va);
-                          keys[i]["name"] =va;
-                          print(keys);
-
-
-
-                        },
-
-                      ),
-
-
-                    ),
-                    TableTextButton(
-
-                 label: "upadte",
-                      onPress: (){
-
-                   aboutProducts[i]=aboutProducts[i].copyWith(keyValues: keys);
-                   widget.storageTableEdit(type:"1",list:aboutProducts);
-                      },
-
-
-
-                    ),
-
-
-                  ]),],
-              TableRow(
-                  decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
-                          left: BorderSide(
-                              width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
-                          bottom: BorderSide(
-                              width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
-                          right: BorderSide(
-                              color: Colors
-                                  .grey,
-                              width: .5,
-                              style: BorderStyle
-                                  .solid))),
-                  children: [
-
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:UnderLinedInput(
+                        child: UnderLinedInput(
                           formatter: false,
-                          onChanged: (va){
+                          onChanged: (va) {
                             print(va);
-                            name.text=va;
-                            setState(() {
-
-                            });
-
+                            onChange=true;
+                            name.text = va;
+                            setState(() {});
                           },
                         )
-                      // UnderLinedInput(
-                      //   formatter: false,
-                      // ),
+                        // UnderLinedInput(
+                        //   formatter: false,
+                        // ),
 
-
-                    ),
+                        ),
                     TableTextButton(
                       label: "",
-                      onPress: (){
-                        onChange=true;
-
+                      onPress: () {
+                        onChange = true;
 
                         setState(() {
-                          if(name.text.isNotEmpty==true){
-
-                            Map map={
-                              "name":name.text,
+                          if (name.text.isNotEmpty == true) {
+                            Map map = {
+                              "name": name.text,
                             };
-                            nameListTextEditingController.add(TextEditingController(text: name.text));
+                            nameListTextEditingController
+                                .add(TextEditingController(text: name.text));
                             keys.add(map);
                             print(keys);
 
-
-
                             print(keys);
-                            print("attata+"+aboutProducts.toString());
+                            print("attata+" + aboutProducts.toString());
 
-                            aboutProducts?.add(Storage(
-                                name: "Akshay",
-                                keyValues: keys
-                            ));
-                            widget.storageTableEdit(type:"1",list:aboutProducts);
-                            name.text="";
+                            aboutProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "1", list: aboutProducts);
+                            name.text = "";
                           }
-
-
-
-
                         });
-
-
-
                       },
-
                     )
-
-
                   ])
-
-
             ],
             widths: {
               0: FlexColumnWidth(5),
-
               2: FlexColumnWidth(2),
-
-
             },
-
           ),
-
-
-    ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
+
 class VariantProductDetails extends StatefulWidget {
-  final List<ProductFeatures>? productDetails;
-  final  Function productTableEdit;
-  VariantProductDetails({required this.productDetails, required this.productTableEdit});
+  final ProductFeatures? productDetails;
+  final Function productTableEdit;
+  VariantProductDetails(
+      {required this.productDetails, required this.productTableEdit});
 
   @override
   VariantProductDetailsState createState() => VariantProductDetailsState();
 }
 
 class VariantProductDetailsState extends State<VariantProductDetails> {
-  TextEditingController key= TextEditingController();
-  TextEditingController value= TextEditingController();
-  TextEditingController heading= TextEditingController();
-  bool  onChange=false;
-  List<ProductFeatures> productDetails=[];
-  List<Keys>keys=[];
+  TextEditingController key = TextEditingController();
+  TextEditingController value = TextEditingController();
+  TextEditingController heading = TextEditingController();
+  bool onChange = false;
+  ProductFeatures? productDetails;
+  List<Keys> keys = [];
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
 
-    if(!onChange){
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
 
-      if(widget.productDetails?.isNotEmpty==true){
-
-        productDetails= widget?.productDetails??[];
-        if(productDetails?[0].keyValues?.isNotEmpty==true)
-          keys=productDetails?[0].keyValues??[];
-
+      productDetails = widget.productDetails;
+      heading =
+          TextEditingController(text: productDetails?.name ?? "");
+      if (productDetails?.keyValues?.isNotEmpty == true) {
+        keys = productDetails?.keyValues ?? [];
       }
-
-
-
-
-
     }
-    onChange=false;
+    onChange = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         underlineTextForm(
           controller: heading,
-          onChange: (va){
+          onChange: (va) {
             print(va);
-            if(productDetails.isNotEmpty==true){
-              productDetails[0]=productDetails[0].copyWith(name: va);
-            }
-            else{
-              productDetails.add(ProductFeatures(name: va));
-            }
+            print(va);
+            productDetails = ProductFeatures(name: va);
           },
         ),
         Container(
           // width: w/7,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
-
             border: const TableBorder(
-
               verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
               horizontalInside: BorderSide(
-                  width:.3,
+                  width: .3,
                   color: Colors.black45,
                   // color: Colors.blue,
-                  style: BorderStyle.solid),),
-
+                  style: BorderStyle.solid),
+            ),
             tableWidth: .5,
-
-            childrens:[
+            childrens: [
               TableRow(
-
                 // decoration: BoxDecoration(
 
                 //     color: Colors.green.shade200,
@@ -411,12 +300,8 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
-
                   tableHeadtext(
-
-
                     'Product details',
-
 
                     padding: EdgeInsets.all(7),
 
@@ -425,11 +310,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     // color: Color(0xffE5E5E5),
 
                     size: 13,
-
-
                   ),
-
-
                   tableHeadtext(
                     'Technical details',
                     textColor: Colors.white,
@@ -446,280 +327,207 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
-
-
-
-
                 ],
-
               ),
-              if (keys?.isNotEmpty==true ) ...[
-
-
-                for (var i = 0; i <keys.length; i++)
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys[i].key??"")
+                              UnderLinedInput(
+                            last: keys[i].key ?? "",
+                            initialCheck: true,
+                            formatter: false,
+                            onChanged: (va) {
+                              print(va);
+                              keys[i] = keys[i].copyWith(
+                                key: va,
+                              );
+                            },
+                          ),
+                        ),
+                        TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child:
+                                // Text(keys[i].value??"",)
+                                UnderLinedInput(
+                              initialCheck: true,
+                              last: keys[i].value ?? "" ?? "",
+                              formatter: false,
+                              onChanged: (va) {
+                                print(va);
+                                keys[i] = keys[i].copyWith(value: va);
+                              },
+                            )),
+                        TableTextButton(
+                          onPress: () {
+                            productDetails = ProductFeatures(
+                                name: heading.text, keyValues: keys);
+                            // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
+                            widget.productTableEdit(
+                                type: "1", list: productDetails);
+                          },
+                          label: "",
+                        )
+                      ])
+              ],
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:
-                      // Text(keys[i].key??"")
-        UnderLinedInput(
-
-          last:  keys[i].key??"",
-          initialCheck: true,
-           formatter: false,
-          onChanged: (va){
-            print(va);
-            keys[i]=keys[i].copyWith(
-              key: va,
-            );
-          },
-
-
-
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          key.text = va;
+                        },
+                        formatter: false,
                       ),
-
-
                     ),
                     TableCell(
-
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:
-                        // Text(keys[i].value??"",)
-                        UnderLinedInput(
-                          initialCheck: true,
-        last: keys[i].value??""??"",
-                          formatter: false,
-                          onChanged: (va){
-                            print(va);
-                            keys[i]=keys[i].copyWith(value: va);
-                          },
-                        )
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          value.text = va;
+                        },
+                        formatter: false,
+                      ),
                     ),
-                    TableTextButton(onPress: (){
-                      productDetails[i]=productDetails[i].copyWith(keyValues: keys);
-                      widget.productTableEdit(type:"1",list:productDetails);
-
-                    },label: "",)
-
-
-                  ])],
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child: UnderLinedInput(
-                          onChanged: (va){
-                            key.text=va;
-
-                          },
-
-                          formatter: false,
-
-                        ),
-
-
-                      ),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:
-
-                        UnderLinedInput(
-                          onChanged: (va){
-                            value.text=va;
-                          },
-                          formatter: false,
-                        ),
-
-
-                      ),
-                      TableTextButton(label: "", onPress: (){
-                        onChange=true;
-                        if(key.text.isNotEmpty && value.text.isNotEmpty){
-                          Keys model=Keys(
-                            key: key.text??"",
-                            value: value.text??'',
-                          );
-                          print(model);
-                          setState(() {
-
-
-                            keys?.add(model);
-                            print(keys);
-                            print("attata+"+productDetails.toString());
-                            productDetails?.add(ProductFeatures(
-                                name: "Akshay",
-                                keyValues: keys
-                            ));
-                            widget.productTableEdit(type:"1",list:productDetails);
-                            key.text="";
-                            value.text="";
-                          });
-
-
-
-
-
-                        }
-
-
-
-                      })
-
-
-                    ])
-
-
-            ,
-
-          ],
-
+                    TableTextButton(
+                        label: "",
+                        onPress: () {
+                          onChange = true;
+                          if (key.text.isNotEmpty && value.text.isNotEmpty) {
+                            Keys model = Keys(
+                              key: key.text ?? "",
+                              value: value.text ?? '',
+                            );
+                            print(model);
+                            setState(() {
+                              keys?.add(model);
+                              print(keys);
+                              print("attata+" + productDetails.toString());
+                              productDetails = ProductFeatures(
+                                  name: heading.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "1", list: productDetails);
+                              key.text = "";
+                              value.text = "";
+                            });
+                          }
+                        })
+                  ]),
+            ],
             widths: {
               0: FlexColumnWidth(5),
               1: FlexColumnWidth(5),
               2: FlexColumnWidth(2),
-
-
             },
           ),
-
-
         ),
       ],
     );
   }
 }
+
 class PrtoductFeatures extends StatefulWidget {
- final  List<ProductFeatures>? productFeatures;
- final  Function productTableEdit;
-  PrtoductFeatures({required this.productFeatures, required this.productTableEdit});
+  final ProductFeatures? productFeatures;
+  final Function productTableEdit;
+  PrtoductFeatures(
+      {required this.productFeatures, required this.productTableEdit});
 
   @override
   PrtoductFeaturesState createState() => PrtoductFeaturesState();
 }
 
 class PrtoductFeaturesState extends State<PrtoductFeatures> {
-  TextEditingController key= TextEditingController();
-  TextEditingController value= TextEditingController();
-  TextEditingController headingController= TextEditingController();
- bool  onChange=false;
-  List<ProductFeatures> productFeatures=[];
-  List<Keys>keys=[];
+  TextEditingController key = TextEditingController();
+  TextEditingController value = TextEditingController();
+  TextEditingController headingController = TextEditingController();
+  bool onChange = false;
+  ProductFeatures? productFeatures;
+  List<Keys> keys = [];
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
 
-    if(!onChange){
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
-      if(widget.productFeatures?.isNotEmpty==true){
-        productFeatures= widget?.productFeatures??[];
-        headingController=TextEditingController(text:productFeatures?[0].name??"" );
-        if(productFeatures?[0].keyValues?.isNotEmpty==true)
-          keys=productFeatures?[0].keyValues??[];
 
-      }
-
-
-
-
-
+      productFeatures = widget?.productFeatures;
+      headingController =
+          TextEditingController(text: productFeatures?.name ?? "");
+      if (productFeatures?.keyValues?.isNotEmpty == true)
+        keys = productFeatures?.keyValues ?? [];
     }
-    onChange=false;
-    return  Column(
+    onChange = false;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         underlineTextForm(
           controller: headingController,
-          onChange: (va){
+          onChange: (va) {
             print(va);
-            if(productFeatures.isNotEmpty==true){
-              productFeatures[0]=productFeatures[0].copyWith(name: va);
-            }
-            else{
-              productFeatures.add(ProductFeatures(name: va));
-            }
+
+            print(va);
+            print(va);
+            productFeatures = ProductFeatures(name: va);
           },
         ),
         Container(
           // width: w/7,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
-
             border: const TableBorder(
-
               verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
               horizontalInside: BorderSide(
-                  width:.3,
+                  width: .3,
                   color: Colors.black45,
                   // color: Colors.blue,
-                  style: BorderStyle.solid),),
-
+                  style: BorderStyle.solid),
+            ),
             tableWidth: .5,
-
-            childrens:[
+            childrens: [
               TableRow(
-
                 // decoration: BoxDecoration(
 
                 //     color: Colors.green.shade200,
@@ -729,9 +537,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
-
                   tableHeadtext(
-
                     'Product Features',
 
                     padding: EdgeInsets.all(7),
@@ -741,11 +547,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     // color: Color(0xffE5E5E5),
 
                     size: 13,
-
-
                   ),
-
-
                   tableHeadtext(
                     'Features',
                     textColor: Colors.white,
@@ -762,277 +564,208 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
-
-
-
-
                 ],
-
               ),
-        if (keys?.isNotEmpty==true ) ...[
-
-
-        for (var i = 0; i <keys.length; i++)
-          TableRow(
-              decoration: BoxDecoration(
-                  color: Colors.grey
-                      .shade200,
-                  shape: BoxShape
-                      .rectangle,
-                  border:const  Border(
-                      left: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
-                      bottom: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
-                      right: BorderSide(
-                          color: Colors
-                              .grey,
-                          width: .5,
-                          style: BorderStyle
-                              .solid))),
-              children: [
-
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:
-                  // Text(keys[i].key??"")
-                  UnderLinedInput(
-
-                    last:  keys[i].key??"",
-                    initialCheck: true,
-                    formatter: false,
-                    onChanged: (va){
-                      print(va);
-                      keys[i]=keys[i].copyWith(
-                        key: va,
-                      );
-                    },
-
-
-
-                  ),
-
-
-                ),
-                TableCell(
-
-                    verticalAlignment: TableCellVerticalAlignment.middle,
-
-                    child:
-                    // Text(keys[i].value??"",)
-                    UnderLinedInput(
-                      initialCheck: true,
-                      last: keys[i].value??""??"",
-                      formatter: false,
-                      onChanged: (va){
-                        print(va);
-                        keys[i]=keys[i].copyWith(value: va);
-                      },
-                    )
-                ),
-                TableTextButton(onPress: (){
-                  productFeatures[i]=productFeatures[i].copyWith(keyValues: keys);
-                  widget.productTableEdit(type:"2",list:productFeatures);
-
-                },label: "",)
-
-
-              ]),],
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys[i].key??"")
+                              UnderLinedInput(
+                            last: keys[i].key ?? "",
+                            initialCheck: true,
+                            formatter: false,
+                            onChanged: (va) {
+                              print(va);
+                              keys[i] = keys[i].copyWith(
+                                key: va,
+                              );
+                            },
+                          ),
+                        ),
+                        TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child:
+                                // Text(keys[i].value??"",)
+                                UnderLinedInput(
+                              initialCheck: true,
+                              last: keys[i].value ?? "" ?? "",
+                              formatter: false,
+                              onChanged: (va) {
+                                print(va);
+                                keys[i] = keys[i].copyWith(value: va);
+                              },
+                            )),
+                        TableTextButton(
+                          onPress: () {
+                            productFeatures = ProductFeatures(
+                                name: headingController.text, keyValues: keys);
+                            widget.productTableEdit(
+                                type: "2", list: productFeatures);
+                          },
+                          label: "",
+                        )
+                      ]),
+              ],
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child: UnderLinedInput(
-                         onChanged: (va){
-                           key.text=va;
-
-                         },
-
-                        formatter: false,
-
-                      ),
-
-
-                    ),
-                    TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:
-
-                      UnderLinedInput(
-                        onChanged: (va){
-                          value.text=va;
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          key.text = va;
                         },
                         formatter: false,
                       ),
-
-
                     ),
-                    TableTextButton(label: "", onPress: (){
-                      onChange=true;
-                      if(key.text.isNotEmpty==true &&value.text.isNotEmpty==true){
-                        Keys model=Keys(
-                          key: key.text??"",
-                          value: value.text??'',
-                        );
-                        print(model);
-                        setState(() {
-
-
-                          keys?.add(model);
-                          print(keys);
-                          print("attata+"+productFeatures.toString());
-                          productFeatures?.add(ProductFeatures(
-
-                              keyValues: keys
-                          ));
-                          widget.productTableEdit(type:"2",list:productFeatures);
-                          key.text="";
-                          value.text="";
-                        });
-                      }
-
-
-
-
-
-                    })
-
-
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          value.text = va;
+                        },
+                        formatter: false,
+                      ),
+                    ),
+                    TableTextButton(
+                        label: "",
+                        onPress: () {
+                          onChange = true;
+                          if (key.text.isNotEmpty == true &&
+                              value.text.isNotEmpty == true) {
+                            Keys model = Keys(
+                              key: key.text ?? "",
+                              value: value.text ?? '',
+                            );
+                            print(model);
+                            setState(() {
+                              keys?.add(model);
+                              print(keys);
+                              print("attata+" + productFeatures.toString());
+                              productFeatures = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "2", list: productFeatures);
+                              key.text = "";
+                              value.text = "";
+                            });
+                          }
+                        })
                   ])
-
-
             ],
             widths: {
               0: FlexColumnWidth(5),
               1: FlexColumnWidth(5),
               2: FlexColumnWidth(2),
-
-
             },
-
           ),
-
-
         ),
       ],
     );
   }
 }
 
-
 class AdditionaslInfo extends StatefulWidget {
- final  List<ProductFeatures>? additionalInfo;
- final  Function productTableEdit;
- AdditionaslInfo({required this.additionalInfo, required this.productTableEdit});
+  final ProductFeatures? additionalInfo;
+  final Function productTableEdit;
+  AdditionaslInfo(
+      {required this.additionalInfo, required this.productTableEdit});
 
   @override
   AdditionaslInfoState createState() => AdditionaslInfoState();
 }
 
 class AdditionaslInfoState extends State<AdditionaslInfo> {
-  bool onChange=false;
-  List<ProductFeatures> productFeatures=[];
-  List<Keys>keys=[];
-  TextEditingController key=TextEditingController();
-  TextEditingController value=TextEditingController();
-  TextEditingController headingController=TextEditingController();
-
+  bool onChange = false;
+ProductFeatures? productFeatures ;
+  List<Keys> keys = [];
+  TextEditingController key = TextEditingController();
+  TextEditingController value = TextEditingController();
+  TextEditingController headingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
-      if(widget.additionalInfo?.isNotEmpty==true){
-        productFeatures= widget?.additionalInfo??[];
-        if(productFeatures?[0].keyValues?.isNotEmpty==true)
-          keys=productFeatures?[0].keyValues??[];
 
-      }
+        productFeatures = widget?.additionalInfo;
+      setState(() {
+        headingController =
 
+            TextEditingController(text: productFeatures?.name ?? "");
+      });
 
-
-
+        if (productFeatures?.keyValues?.isNotEmpty == true)
+          keys = productFeatures?.keyValues ?? [];
 
     }
-    onChange=false;
-    return   Column(
+    onChange = false;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         underlineTextForm(
           controller: headingController,
-          onChange: (va){
+          onChange: (va) {
             print(va);
-            if(productFeatures.isNotEmpty==true){
-              productFeatures[0]=productFeatures[0].copyWith(name: va);
-            }
-            else{
-              productFeatures.add(ProductFeatures(name: va));
-            }
+            productFeatures = ProductFeatures(name: va);
           },
         ),
-
         Container(
           // width: w/7,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
-
             border: const TableBorder(
-
               verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
               horizontalInside: BorderSide(
-                  width:.3,
+                  width: .3,
                   color: Colors.black45,
                   // color: Colors.blue,
-                  style: BorderStyle.solid),),
-
+                  style: BorderStyle.solid),
+            ),
             tableWidth: .5,
-
-            childrens:[
+            childrens: [
               TableRow(
-
                 // decoration: BoxDecoration(
 
                 //     color: Colors.green.shade200,
@@ -1042,9 +775,7 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
-
                   tableHeadtext(
-
                     'Additional Info',
 
                     padding: EdgeInsets.all(7),
@@ -1054,18 +785,6 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
                     // color: Color(0xffE5E5E5),
 
                     size: 13,
-
-
-                  ),
-
-
-                  tableHeadtext(
-                    '',
-                    textColor: Colors.black,
-                    padding: EdgeInsets.all(7),
-                    height: 46,
-                    size: 13,
-                    // color: Color(0xffE5E5E5),
                   ),
                   tableHeadtext(
                     '',
@@ -1075,193 +794,143 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
-
-
-
+                  tableHeadtext(
+                    '',
+                    textColor: Colors.black,
+                    padding: EdgeInsets.all(7),
+                    height: 46,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
                 ],
-
               ),
-        if (keys?.isNotEmpty==true ) ...[
-
-
-        for (var i = 0; i <keys.length; i++)
-
-
-
-        TableRow(
-        decoration: BoxDecoration(
-        color: Colors.grey
-            .shade200,
-        shape: BoxShape
-            .rectangle,
-        border:const  Border(
-        left: BorderSide(
-        width: .5,
-        color: Colors
-            .grey,
-        style: BorderStyle
-            .solid),
-        bottom: BorderSide(
-        width: .5,
-        color: Colors
-            .grey,
-        style: BorderStyle
-            .solid),
-        right: BorderSide(
-        color: Colors
-            .grey,
-        width: .5,
-        style: BorderStyle
-            .solid))),
-        children: [
-
-        TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-
-        child:
-        // Text(keys[i].key??"")
-        UnderLinedInput(
-
-        last:  keys[i].key??"",
-        initialCheck: true,
-        formatter: false,
-        onChanged: (va){
-        print(va);
-        keys[i]=keys[i].copyWith(
-        key: va,
-        );
-        },
-
-
-
-        ),
-
-
-        ),
-        TableCell(
-
-        verticalAlignment: TableCellVerticalAlignment.middle,
-
-        child:
-        // Text(keys[i].value??"",)
-        UnderLinedInput(
-        initialCheck: true,
-        last: keys[i].value??""??"",
-        formatter: false,
-        onChanged: (va){
-        print(va);
-        keys[i]=keys[i].copyWith(value: va);
-        },
-        )
-        ),
-        TableTextButton(onPress: (){
-        productFeatures[i]=productFeatures[i].copyWith(keyValues: keys);
-        widget.productTableEdit(type:"3",list:productFeatures);
-
-        },label: "",)
-
-
-        ]),
-            ],
-
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys[i].key??"")
+                              UnderLinedInput(
+                            last: keys[i].key ?? "",
+                            initialCheck: true,
+                            formatter: false,
+                            onChanged: (va) {
+                              print(va);
+                              keys[i] = keys[i].copyWith(
+                                key: va,
+                              );
+                            },
+                          ),
+                        ),
+                        TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child:
+                                // Text(keys[i].value??"",)
+                                UnderLinedInput(
+                              initialCheck: true,
+                              last: keys[i].value ?? "" ?? "",
+                              formatter: false,
+                              onChanged: (va) {
+                                print(va);
+                                keys[i] = keys[i].copyWith(value: va);
+                              },
+                            )),
+                        TableTextButton(
+                          onPress: () {
+                            productFeatures = ProductFeatures(
+                                name: headingController.text, keyValues: keys);
+                            widget.productTableEdit(
+                                type: "3", list: productFeatures);
+                          },
+                          label: "",
+                        )
+                      ]),
+              ],
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
                       child: UnderLinedInput(
-                        onChanged: (va){
-                          key.text=va;
-
+                        onChanged: (va) {
+                          key.text = va;
                         },
-
                         formatter: false,
-
                       ),
-
-
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:
-
-                      UnderLinedInput(
-                        onChanged: (va){
-                          value.text=va;
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          value.text = va;
                         },
                         formatter: false,
                       ),
-
-
                     ),
-                    TableTextButton(label: "", onPress: (){
-                      if(key.text.isNotEmpty==true && value.text.isNotEmpty){
-                        Keys model=Keys(
-                          key: key.text??"",
-                          value: value.text??'',
-                        );
-                        setState(() {
-                          onChange=true;
+                    TableTextButton(
+                        label: "",
+                        onPress: () {
+                          if (key.text.isNotEmpty == true &&
+                              value.text.isNotEmpty) {
+                            Keys model = Keys(
+                              key: key.text ?? "",
+                              value: value.text ?? '',
+                            );
+                            setState(() {
+                              onChange = true;
 
-
-                          keys?.add(model);
-
-
-                          productFeatures?.add(ProductFeatures(
-
-                              keyValues: keys
-                          ));
-                          widget.productTableEdit(type:"3",list:productFeatures);
-                          key.text="";
-                          value.text="";
-                        });
-
-
-
-
-                      }
-
-                    })
-
-
+                              keys?.add(model);
+                              productFeatures = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "3", list: productFeatures);
+                              key.text = "";
+                              value.text = "";
+                            });
+                          }
+                        })
                   ])
-
             ],
             widths: {
               0: FlexColumnWidth(5),
               1: FlexColumnWidth(5),
               2: FlexColumnWidth(2),
-
-
-            },),
-
-
+            },
+          ),
         ),
       ],
     );
@@ -1269,81 +938,68 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
 }
 
 class NeutrialFacts extends StatefulWidget {
-  List<ProductFeatures>? nutriantsFacts;
-  final  Function productTableEdit;
+  ProductFeatures? nutriantsFacts;
+  final Function productTableEdit;
   NeutrialFacts({required this.nutriantsFacts, required this.productTableEdit});
   @override
   NeutrialFactsState createState() => NeutrialFactsState();
 }
 
 class NeutrialFactsState extends State<NeutrialFacts> {
-  TextEditingController key =TextEditingController();
-  TextEditingController values=TextEditingController();
-  TextEditingController heading=TextEditingController();
-  bool onChange=false;
-  List<ProductFeatures> productFeatures=[];
-  List<Keys>keys=[];
+  TextEditingController key = TextEditingController();
+  TextEditingController values = TextEditingController();
+  TextEditingController heading = TextEditingController();
+  bool onChange = false;
+  ProductFeatures? productFeatures ;
+  List<Keys> keys = [];
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
-      if(widget.nutriantsFacts?.isNotEmpty==true){
-        heading=TextEditingController(text:widget?.nutriantsFacts?[0].name??"" );
-        productFeatures= widget?.nutriantsFacts??[];
-        if(productFeatures?[0].keyValues?.isNotEmpty==true)
-          keys=productFeatures?[0].keyValues??[];
 
-      }
+      productFeatures = widget?.nutriantsFacts;
+      setState(() {
+        heading =
 
+            TextEditingController(text: productFeatures?.name ?? "");
+      });
 
-
-
+      if (productFeatures?.keyValues?.isNotEmpty == true)
+        keys = productFeatures?.keyValues ?? [];
 
     }
-    onChange=false;
-    return   Column(
+    onChange = false;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         underlineTextForm(
           controller: heading,
-          onChange: (va){
+          onChange: (va) {
             print(va);
-            if(productFeatures.isNotEmpty==true){
-              productFeatures[0]=productFeatures[0].copyWith(name: va);
-            }
-            else{
-              productFeatures.add(ProductFeatures(name: va));
-            }
+            productFeatures = ProductFeatures(name: va);
           },
         ),
-
         Container(
           // width: w/7,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
-
             border: const TableBorder(
-
               verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
               horizontalInside: BorderSide(
-                  width:.3,
+                  width: .3,
                   color: Colors.black45,
                   // color: Colors.blue,
-                  style: BorderStyle.solid),),
-
+                  style: BorderStyle.solid),
+            ),
             tableWidth: .5,
-
-            childrens:[
+            childrens: [
               TableRow(
-
                 // decoration: BoxDecoration(
 
                 //     color: Colors.green.shade200,
@@ -1353,9 +1009,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
-
                   tableHeadtext(
-
                     '',
 
                     padding: EdgeInsets.all(7),
@@ -1365,11 +1019,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     // color: Color(0xffE5E5E5),
 
                     size: 13,
-
-
                   ),
-
-
                   tableHeadtext(
                     'NutrianFacts',
                     // textColor: Colors.black,
@@ -1386,208 +1036,153 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
-
-
-
-
                 ],
-
               ),
-        if (keys?.isNotEmpty==true ) ...[
-
-
-        for (var i = 0; i <keys.length; i++)
-    TableRow(
-    decoration: BoxDecoration(
-    color: Colors.grey
-        .shade200,
-    shape: BoxShape
-        .rectangle,
-    border:const  Border(
-    left: BorderSide(
-    width: .5,
-    color: Colors
-        .grey,
-    style: BorderStyle
-        .solid),
-    bottom: BorderSide(
-    width: .5,
-    color: Colors
-        .grey,
-    style: BorderStyle
-        .solid),
-    right: BorderSide(
-    color: Colors
-        .grey,
-    width: .5,
-    style: BorderStyle
-        .solid))),
-    children: [
-
-    TableCell(
-    verticalAlignment: TableCellVerticalAlignment.middle,
-
-    child:
-    // Text(keys[i].key??"")
-    UnderLinedInput(
-
-    last:  keys[i].key??"",
-    initialCheck: true,
-    formatter: false,
-    onChanged: (va){
-    print(va);
-    keys[i]=keys[i].copyWith(
-    key: va,
-    );
-    },
-
-
-
-    ),
-
-
-    ),
-    TableCell(
-
-    verticalAlignment: TableCellVerticalAlignment.middle,
-
-    child:
-    // Text(keys[i].value??"",)
-    UnderLinedInput(
-    initialCheck: true,
-    last: keys[i].value??""??"",
-    formatter: false,
-    onChanged: (va){
-    print(va);
-    keys[i]=keys[i].copyWith(value: va);
-    },
-    )
-    ),
-    TableTextButton(onPress: (){
-    productFeatures[i]=productFeatures[i].copyWith(keyValues: keys);
-    widget.productTableEdit(type:"4",list:productFeatures);
-
-    },label: "",)
-
-
-    ]),
-
-
-
-           ],
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys[i].key??"")
+                              UnderLinedInput(
+                            last: keys[i].key ?? "",
+                            initialCheck: true,
+                            formatter: false,
+                            onChanged: (va) {
+                              print(va);
+                              keys[i] = keys[i].copyWith(
+                                key: va,
+                              );
+                            },
+                          ),
+                        ),
+                        TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child:
+                                // Text(keys[i].value??"",)
+                                UnderLinedInput(
+                              initialCheck: true,
+                              last: keys[i].value ?? "" ?? "",
+                              formatter: false,
+                              onChanged: (va) {
+                                print(va);
+                                keys[i] = keys[i].copyWith(value: va);
+                              },
+                            )),
+                        TableTextButton(
+                          onPress: () {
+                            productFeatures = ProductFeatures(
+                                name: heading.text, keyValues: keys);
+                            widget.productTableEdit(
+                                type: "4", list: productFeatures);
+                          },
+                          label: "",
+                        )
+                      ]),
+              ],
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
-
                         child: UnderLinedInput(
                           formatter: false,
-                          onChanged: (va){
-                            values.text=va;
-
+                          onChanged: (va) {
+                            values.text = va;
                           },
                         )
-                      // UnderLinedInput(
-                      //                 formatter: false,
-                      //               ),
+                        // UnderLinedInput(
+                        //                 formatter: false,
+                        //               ),
 
-
-                    ),
+                        ),
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:UnderLinedInput(
+                        child: UnderLinedInput(
                           formatter: false,
-                          onChanged: (va){
-                            key.text=va;
-
+                          onChanged: (va) {
+                            key.text = va;
                           },
-
                         )
-                      // UnderLinedInput(
-                      //                   formatter: false,
-                      //                 )),
+                        // UnderLinedInput(
+                        //                   formatter: false,
+                        //                 )),
 
+                        ),
+                    TableTextButton(
+                        label: "",
+                        onPress: () {
+                          if (key.text.isNotEmpty == true &&
+                              values.text.isNotEmpty) {
+                            Keys model = Keys(
+                              key: key.text ?? "",
+                              value: values.text ?? '',
+                            );
+                            setState(() {
+                              onChange = true;
 
-                    ),
-                    TableTextButton(label: "", onPress: (){
-                      if(key.text.isNotEmpty==true && values.text.isNotEmpty){
-                        Keys model=Keys(
-                          key: key.text??"",
-                          value: values.text??'',
-                        );
-                        setState(() {
-                          onChange=true;
+                              keys?.add(model);
 
-                          keys?.add(model);
-
-
-                          productFeatures?.add(ProductFeatures(
-
-                              keyValues: keys
-                          ));
-                          widget.productTableEdit(type:"4",list:productFeatures);
-                          key.text="";
-                          values.text="";
-                        });
-
-                      }
-
-
-
-
-
-                    })
+                              productFeatures = ProductFeatures(
+                                  name: heading.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "4", list: productFeatures);
+                              key.text = "";
+                              values.text = "";
+                            });
+                          }
+                        })
                   ]),
-
-          ],
+            ],
             widths: {
               0: FlexColumnWidth(5),
               1: FlexColumnWidth(5),
               2: FlexColumnWidth(2),
-
-
             },
-
-
           ),
-
-
         ),
       ],
     );
   }
 }
 
-
 class Ingredians extends StatefulWidget {
-  List<Storage>? ingredians;
-  final  Function storageTableEdit;
+  Storage? ingredians;
+  final Function storageTableEdit;
   Ingredians({required this.ingredians, required this.storageTableEdit});
   @override
   IngrediansState createState() => IngrediansState();
@@ -1598,1186 +1193,844 @@ class IngrediansState extends State<Ingredians> {
   TextEditingController key = TextEditingController();
   TextEditingController headingController = TextEditingController();
   bool onChange = false;
-  List<Storage> ingriansProduct = [];
-  List<dynamic>keys = [];
+  Storage? ingriansProduct ;
+  List<dynamic> keys = [];
 
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
-      if (widget.ingredians?.isNotEmpty == true) {
+
         setState(() {
-          headingController.text = widget.ingredians ? [0].name ?? "";
+          headingController.text = widget.ingredians?.name ?? "";
         });
-        ingriansProduct = widget.ingredians ?? [];
-        if (ingriansProduct ? [0].keyValues?.isNotEmpty == true)
-          keys = ingriansProduct ? [0].keyValues ?? [];
-      }
+        ingriansProduct = widget.ingredians;
+        if (ingriansProduct?.keyValues?.isNotEmpty == true)
+          keys = ingriansProduct?.keyValues ?? [];
+
     }
     onChange = false;
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          underlineTextForm(
-            controller: headingController,
-            onChange: (va) {
-              print(va);
-              if (ingriansProduct.isNotEmpty == true) {
-                ingriansProduct[0] = ingriansProduct[0].copyWith(name: va);
-              }
-              else {
-                ingriansProduct.add(Storage(name: va));
-              }
-            },
-          ),
-          Container(
-            // width: w / 7,
-            margin: EdgeInsets.symmetric(horizontal: w * .02),
-            child: customTable(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        underlineTextForm(
+          controller: headingController,
+          onChange: (va) {
+            ingriansProduct = Storage(name: va);
+          },
+        ),
+        Container(
+          // width: w / 7,
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
+          child: customTable(
+            border: const TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-              border: const TableBorder(
+                //     color: Colors.green.shade200,
 
-                verticalInside: BorderSide(
-                    width: .5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width: .3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
+                //     shape: BoxShape.rectangle,
 
-              tableWidth: .5,
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-              childrens: [
-                TableRow(
+                children: [
+                  tableHeadtext(
+                    'Usage Direction',
 
-                  // decoration: BoxDecoration(
+                    padding: EdgeInsets.all(7),
 
-                  //     color: Colors.green.shade200,
+                    height: 46,
+                    textColor: Colors.white,
+                    // color: Color(0xffE5E5E5),
 
-                  //     shape: BoxShape.rectangle,
+                    size: 13,
+                  ),
+                  tableHeadtext(
+                    '',
 
-                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                    padding: EdgeInsets.all(7),
 
-                  children: [
+                    height: 46,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
 
-                    tableHeadtext(
-
-                      'Usage Direction',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.white,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-                    tableHeadtext(
-
-                      '',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.black,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-
-
-                  ],
-
-                ),
-                if (keys?.isNotEmpty == true ) ...[
-
-
-                  for (var i = 0; i < keys!.length; i++)
-                    TableRow(
-                        decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border: const Border(
-                                left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
-                        children: [
-
-                          TableCell(
-                            verticalAlignment: TableCellVerticalAlignment
-                                .middle,
-
-                            child:
-                            // Text(keys?[i]["name"]??"")
-                            UnderLinedInput(
-                              formatter: false,
-                              initialCheck: true,
-                              last: keys ? [i]["name"] ?? "",
-                              onChanged: (va) {
-                                print(va);
-                                keys[i]["name"] = va;
-                                print(keys);
-                              },
-
-                            ),
-
-
-                          ),
-                          TableTextButton(
-
-                            label: "upadte",
-                            onPress: () {
-                              ingriansProduct[i] =
-                                  ingriansProduct[i].copyWith(keyValues: keys);
-                              widget.storageTableEdit(
-                                  type: "3", list: ingriansProduct);
-                            },
-
-
-                          ),
-
-
-                        ]),
+                    size: 13,
+                  ),
                 ],
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border: const Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-
-                      TableCell(
+              ),
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys!.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
-
-                          child: UnderLinedInput(
+                          child:
+                              // Text(keys?[i]["name"]??"")
+                              UnderLinedInput(
                             formatter: false,
+                            initialCheck: true,
+                            last: keys?[i]["name"] ?? "",
                             onChanged: (va) {
                               print(va);
-                              name.text = va;
-                              setState(() {
-
-                              });
+                              keys[i]["name"] = va;
+                              print(keys);
                             },
-                          )
+                          ),
+                        ),
+                        TableTextButton(
+                          label: "upadte",
+                          onPress: () {
+                            ingriansProduct = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "3", list: ingriansProduct);
+                          },
+                        ),
+                      ]),
+              ],
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
+                          left: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Colors.grey,
+                              width: .5,
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: UnderLinedInput(
+                          formatter: false,
+                          onChanged: (va) {
+                            onChange=true;
+                            print(va);
+                            name.text = va;
+                            setState(() {});
+                          },
+                        )
                         // UnderLinedInput(
                         //   formatter: false,
                         // ),
 
+                        ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+                        if (name.text.isNotEmpty) {
+                          onChange = true;
 
-                      ),
-                      TableTextButton(
-                        label: "",
-                        onPress: () {
-                          if(name.text.isNotEmpty){
-                            onChange = true;
+                          setState(() {
+                            Map map = {
+                              "name": name.text,
+                            };
+                            keys.add(map);
+                            print(keys);
 
-
-                            setState(() {
-                              Map map = {
-                                "name": name.text,
-                              };
-                              keys.add(map);
-                              print(keys);
-
-
-                              print(keys);
-                              print("attata+" + ingriansProduct.toString());
-                              ingriansProduct?.add(Storage(
-
-                                  keyValues: keys
-                              ));
-                              widget.storageTableEdit(
-                                  type: "3", list: ingriansProduct);
-                              name.text = "";
-                            });
-                          }
-
-                        },
-
-                      )
-
-
-                    ])
-
-
-              ],
-              widths: {
-                0: FlexColumnWidth(5),
-                2: FlexColumnWidth(2),
-
-
-              },
-
-            ),
-
-
+                            print(keys);
+                            print("attata+" + ingriansProduct.toString());
+                            ingriansProduct = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "3", list: ingriansProduct);
+                            name.text = "";
+                          });
+                        }
+                      },
+                    )
+                  ])
+            ],
+            widths: {
+              0: FlexColumnWidth(5),
+              2: FlexColumnWidth(2),
+            },
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
-
-
 class UsageDirection extends StatefulWidget {
- final  List<Storage>? usageDirection;
- final  Function storageTableEdit;
- UsageDirection({required this.usageDirection, required this.storageTableEdit});
+  final Storage? usageDirection;
+  final Function storageTableEdit;
+  UsageDirection(
+      {required this.usageDirection, required this.storageTableEdit});
   @override
   _UsageDirectionState createState() => _UsageDirectionState();
 }
 
 class _UsageDirectionState extends State<UsageDirection> {
-  TextEditingController name=TextEditingController();
-  TextEditingController key=TextEditingController();
-  TextEditingController headingController=TextEditingController();
-  bool onChange=false;
-  List<Storage> usageProducts=[];
-  List<dynamic>keys=[];
+  TextEditingController name = TextEditingController();
+  TextEditingController key = TextEditingController();
+  TextEditingController headingController = TextEditingController();
+  bool onChange = false;
+  Storage? usageProducts;
+  List<dynamic> keys = [];
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
 
-      if(widget.usageDirection?.isNotEmpty==true){
-
-        setState(() {
-          headingController.text=widget.usageDirection?[0].name??"";
-        });
-        usageProducts= widget.usageDirection??[];
-        if(usageProducts?[0].keyValues?.isNotEmpty==true)
-          keys=usageProducts?[0].keyValues??[];
-
-      }
-
-
-
-
-
+      setState(() {
+        headingController.text = widget.usageDirection?.name ?? "";
+      });
+      usageProducts = widget.usageDirection;
+      if (usageProducts?.keyValues?.isNotEmpty == true)
+        keys = usageProducts?.keyValues ?? [];
     }
-    onChange=false;
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          underlineTextForm(
-            controller: headingController,
-            onChange: (va){
-              print(va);
-              if(usageProducts.isNotEmpty==true){
-                usageProducts[0]=usageProducts[0].copyWith(name: va);
+    onChange = false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        underlineTextForm(
+          controller: headingController,
+          onChange: (va) {
+            print(va);
+            usageProducts = Storage(name: va);
+          },
+        ),
+        Container(
+          // width: w/7,
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
+          child: customTable(
+            border: const TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-              }
-              else{
-                usageProducts.add(Storage(name: va));
-              }
-            },
-          ),
-          Container(
-            // width: w/7,
-            margin: EdgeInsets.symmetric(horizontal: w*.02),
-            child: customTable(
+                //     color: Colors.green.shade200,
 
-              border: const TableBorder(
+                //     shape: BoxShape.rectangle,
 
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-              tableWidth: .5,
+                children: [
+                  tableHeadtext(
+                    '',
 
-              childrens:[
-                TableRow(
+                    padding: EdgeInsets.all(7),
 
-                  // decoration: BoxDecoration(
+                    height: 46,
+                    textColor: Colors.white,
+                    // color: Color(0xffE5E5E5),
 
-                  //     color: Colors.green.shade200,
+                    size: 13,
+                  ),
+                  tableHeadtext(
+                    '',
 
-                  //     shape: BoxShape.rectangle,
+                    padding: EdgeInsets.all(7),
 
-                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                    height: 46,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
 
-                  children: [
-
-                    tableHeadtext(
-
-                      '',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.white,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-                    tableHeadtext(
-
-                      '',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.black,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-
-
-
-
-
-                  ],
-
-                ),
-                if (keys?.isNotEmpty==true ) ...[
-
-
-                  for (var i = 0; i < keys!.length; i++)
-                    TableRow(
-                        decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border:const  Border(
-                                left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
-                        children: [
-
-                          TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-
-                            child:
-                            // Text(keys?[i]["name"]??"")
-                            UnderLinedInput(
-                              formatter: false,
-                              initialCheck: true,
-                              last:keys?[i]["name"]??"",
-                              onChanged: (va){
-                                print(va);
-                                keys[i]["name"] =va;
-                                print(keys);
-
-
-
-                              },
-
-                            ),
-
-
-                          ),
-                          TableTextButton(
-
-                            label: "upadte",
-                            onPress: (){
-
-                              usageProducts[i]=usageProducts[i].copyWith(keyValues: keys);
-                              widget.storageTableEdit(type:"3",list:usageProducts);
-                            },
-
-
-
-                          ),
-
-
-                        ]),],
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-
-                      TableCell(
+                    size: 13,
+                  ),
+                ],
+              ),
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys!.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
-
-                          child:UnderLinedInput(
+                          child:
+                              // Text(keys?[i]["name"]??"")
+                              UnderLinedInput(
                             formatter: false,
-                            onChanged: (va){
+                            initialCheck: true,
+                            last: keys?[i]["name"] ?? "",
+                            onChanged: (va) {
                               print(va);
-                              name.text=va;
-                              setState(() {
-
-                              });
-
+                              keys[i]["name"] = va;
+                              print(keys);
                             },
-                          )
+                          ),
+                        ),
+                        TableTextButton(
+                          label: "upadte",
+                          onPress: () {
+                            usageProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "3", list: usageProducts);
+                          },
+                        ),
+                      ]),
+              ],
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
+                          left: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Colors.grey,
+                              width: .5,
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: UnderLinedInput(
+                          formatter: false,
+                          onChanged: (va) {
+                            onChange=true;
+                            print(va);
+                            name.text = va;
+                            setState(() {});
+                          },
+                        )
                         // UnderLinedInput(
                         //   formatter: false,
                         // ),
 
+                        ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+                        onChange = true;
 
-                      ),
-                      TableTextButton(
-                        label: "",
-                        onPress: (){
-                          onChange=true;
+                        setState(() {
+                          if (name.text.isNotEmpty) {
+                            Map map = {
+                              "name": name.text,
+                            };
+                            keys.add(map);
+                            print(keys);
 
-
-                          setState(() {
-                            if(name.text.isNotEmpty){
-                              Map map={
-                                "name":name.text,
-                              };
-                              keys.add(map);
-                              print(keys);
-
-
-
-                              print(keys);
-                              print("attata+"+usageProducts.toString());
-                              usageProducts?.add(Storage(
-
-                                  keyValues: keys
-                              ));
-                              widget.storageTableEdit(type:"3",list:usageProducts);
-                              name.text="";
-                            }
-
-
-                          });
-
-
-
-                        },
-
-                      )
-
-
-                    ])
-
-
-              ],
-              widths: {
-                0: FlexColumnWidth(5),
-
-                2: FlexColumnWidth(2),
-
-
-              },
-
-            ),
-
-
+                            print(keys);
+                            print("attata+" + usageProducts.toString());
+                            usageProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "3", list: usageProducts);
+                            name.text = "";
+                          }
+                        });
+                      },
+                    )
+                  ])
+            ],
+            widths: {
+              0: FlexColumnWidth(5),
+              2: FlexColumnWidth(2),
+            },
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
-
-
 class StoragesWidget extends StatefulWidget {
- final  List<Storage>? storage;
- final  Function storageTableEdit;
- StoragesWidget({required this.storage, required this.storageTableEdit});
+  final Storage? storage;
+  final Function storageTableEdit;
+  StoragesWidget({required this.storage, required this.storageTableEdit});
   @override
   _StoragesWidgetState createState() => _StoragesWidgetState();
 }
 
 class _StoragesWidgetState extends State<StoragesWidget> {
-
-  TextEditingController name=TextEditingController();
-  TextEditingController key=TextEditingController();
-  TextEditingController headingController=TextEditingController();
-  bool onChange=false;
-  List<Storage> aboutProducts=[];
-  List<dynamic>keys=[];
+  TextEditingController name = TextEditingController();
+  TextEditingController key = TextEditingController();
+  TextEditingController headingController = TextEditingController();
+  bool onChange = false;
+  Storage? aboutProducts ;
+  List<dynamic> keys = [];
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
 
-      if(widget.storage?.isNotEmpty==true){
-
-        setState(() {
-          headingController.text=widget.storage?[0].name??"";
-        });
-        aboutProducts= widget.storage??[];
-        if(aboutProducts?[0].keyValues?.isNotEmpty==true)
-          keys=aboutProducts?[0].keyValues??[];
-
-      }
-
-
-
-
-
+      setState(() {
+        headingController.text = widget.storage?.name ?? "";
+      });
+      aboutProducts = widget.storage;
+      if (aboutProducts?.keyValues?.isNotEmpty == true)
+        keys = aboutProducts?.keyValues ?? [];
     }
-    onChange=false;
-    return
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          underlineTextForm(
-            controller: headingController,
-            onChange: (va){
-              print(va);
-              if(aboutProducts.isNotEmpty==true){
-                aboutProducts[0]=aboutProducts[0].copyWith(name: va);
+    onChange = false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        underlineTextForm(
+          controller: headingController,
+          onChange: (va) {
+            print(va);
+            aboutProducts = Storage(name: va);
+          },
+        ),
+        Container(
+          // width: w/7,
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
+          child: customTable(
+            border: const TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-              }
-              else{
-                aboutProducts.add(Storage(name: va));
-              }
-            },
-          ),
-          Container(
-            // width: w/7,
-            margin: EdgeInsets.symmetric(horizontal: w*.02),
-            child: customTable(
+                //     color: Colors.green.shade200,
 
-              border: const TableBorder(
+                //     shape: BoxShape.rectangle,
 
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-              tableWidth: .5,
+                children: [
+                  tableHeadtext(
+                    'Importand Info',
 
-              childrens:[
-                TableRow(
+                    padding: EdgeInsets.all(7),
 
-                  // decoration: BoxDecoration(
+                    height: 46,
+                    textColor: Colors.white,
+                    // color: Color(0xffE5E5E5),
 
-                  //     color: Colors.green.shade200,
+                    size: 13,
+                  ),
+                  tableHeadtext(
+                    '',
 
-                  //     shape: BoxShape.rectangle,
+                    padding: EdgeInsets.all(7),
 
-                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                    height: 46,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
 
-                  children: [
-
-                    tableHeadtext(
-
-                      'Importand Info',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.white,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-                    tableHeadtext(
-
-                      '',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.black,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-
-
-
-
-
-                  ],
-
-                ),
-                if (keys?.isNotEmpty==true ) ...[
-
-
-                  for (var i = 0; i < keys!.length; i++)
-                    TableRow(
-                        decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border:const  Border(
-                                left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
-                        children: [
-
-                          TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-
-                            child:
-                            // Text(keys?[i]["name"]??"")
-                            UnderLinedInput(
-                              formatter: false,
-                              initialCheck: true,
-                              last:keys?[i]["name"]??"",
-                              onChanged: (va){
-                                print(va);
-                                keys[i]["name"] =va;
-                                print(keys);
-
-
-
-                              },
-
-                            ),
-
-
-                          ),
-                          TableTextButton(
-
-                            label: "upadte",
-                            onPress: (){
-
-                              aboutProducts[i]=aboutProducts[i].copyWith(keyValues: keys);
-                              widget.storageTableEdit(type:"4",list:aboutProducts);
-                            },
-
-
-
-                          ),
-
-
-                        ]),],
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-
-                      TableCell(
+                    size: 13,
+                  ),
+                ],
+              ),
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys!.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
-
-                          child:UnderLinedInput(
+                          child:
+                              // Text(keys?[i]["name"]??"")
+                              UnderLinedInput(
                             formatter: false,
-                            onChanged: (va){
+                            initialCheck: true,
+                            last: keys?[i]["name"] ?? "",
+                            onChanged: (va) {
                               print(va);
-                              name.text=va;
-                              setState(() {
-
-                              });
-
+                              keys[i]["name"] = va;
+                              print(keys);
                             },
-                          )
+                          ),
+                        ),
+                        TableTextButton(
+                          label: "upadte",
+                          onPress: () {
+                            aboutProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "4", list: aboutProducts);
+                          },
+                        ),
+                      ]),
+              ],
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
+                          left: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Colors.grey,
+                              width: .5,
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: UnderLinedInput(
+                          formatter: false,
+                          onChanged: (va) {
+                            onChange=true;
+                            print(va);
+                            name.text = va;
+                            setState(() {});
+                          },
+                        )
                         // UnderLinedInput(
                         //   formatter: false,
                         // ),
 
+                        ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+                        onChange = true;
 
-                      ),
-                      TableTextButton(
-                        label: "",
-                        onPress: (){
-                          onChange=true;
+                        setState(() {
+                          if (name.text.isNotEmpty) {
+                            Map map = {
+                              "name": name.text,
+                            };
+                            keys.add(map);
+                            print(keys);
 
+                            print(keys);
+                            print("attata+" + aboutProducts.toString());
 
-                          setState(() {
-                            if(name.text.isNotEmpty){
-                              Map map={
-                                "name":name.text,
-                              };
-                              keys.add(map);
-                              print(keys);
-
-
-
-                              print(keys);
-                              print("attata+"+aboutProducts.toString());
-                              aboutProducts?.add(Storage(
-
-                                  keyValues: keys
-                              ));
-                              widget.storageTableEdit(type:"4",list:aboutProducts);
-                              name.text="";
-                            }
-
-
-                          });
-
-
-
-                        },
-
-                      )
-
-
-                    ])
-
-
-              ],
-              widths: {
-                0: FlexColumnWidth(5),
-
-                2: FlexColumnWidth(2),
-
-
-              },
-
-            ),
-
-
+                            aboutProducts = Storage(
+                                name: headingController.text, keyValues: keys);
+                            widget.storageTableEdit(
+                                type: "4", list: aboutProducts);
+                            name.text = "";
+                          }
+                        });
+                      },
+                    )
+                  ])
+            ],
+            widths: {
+              0: FlexColumnWidth(5),
+              2: FlexColumnWidth(2),
+            },
           ),
-        ],
-      );
+        ),
+      ],
+    );
   }
 }
 
-
-
 class ImportantInfo extends StatefulWidget {
-  final  List<ProductFeatures>? importantInfo;
-final  Function productTableEdit;
-  ImportantInfo({ this.importantInfo, required this.productTableEdit});
-
+  final ProductFeatures? importantInfo;
+  final Function productTableEdit;
+  ImportantInfo({this.importantInfo, required this.productTableEdit});
 
   @override
   _ImportantInfoState createState() => _ImportantInfoState();
 }
 
 class _ImportantInfoState extends State<ImportantInfo> {
-  bool onChange=false;
-  List<ProductFeatures> importandInfo=[];
-  List<Keys>keys=[];
-  TextEditingController key=TextEditingController();
-  TextEditingController value=TextEditingController();
-  TextEditingController headingController=TextEditingController();
-
+  bool onChange = false;
+ ProductFeatures? importandInfo ;
+  List<Keys> keys = [];
+  TextEditingController key = TextEditingController();
+  TextEditingController value = TextEditingController();
+  TextEditingController headingController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
-    if(!onChange){
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    print('wwwwwwwwwwwwwwwwwwwwwwww' + widget.importantInfo.toString());
+    if (!onChange) {
       setState(() {
-        keys=[];
+        keys = [];
       });
-      if(widget.importantInfo?.isNotEmpty==true){
-        importandInfo= widget?.importantInfo??[];
-        if(importandInfo?[0].keyValues?.isNotEmpty==true)
-          keys=importandInfo?[0].keyValues??[];
 
+      importandInfo = widget.importantInfo;
+      headingController =
+          TextEditingController(text: importandInfo?.name ?? "");
+      if (importandInfo?.keyValues?.isNotEmpty == true) {
+        keys = importandInfo?.keyValues ?? [];
       }
-
-
-
-
-
     }
-    onChange=false;
-    return   Column(
+    print('wwwwwwwwwwwwwwwwwwwwwwww' + importandInfo.toString());
+    onChange = false;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         underlineTextForm(
           controller: headingController,
-          onChange: (va){
+          onChange: (va) {
             print(va);
-            if(importandInfo.isNotEmpty==true){
-              importandInfo[0]=importandInfo[0].copyWith(name: va);
-            }
-            else{
-              importandInfo.add(ProductFeatures(name: va));
-            }
+            importandInfo = ProductFeatures(name: va);
           },
         ),
-
         Container(
           // width: w/5,
-          margin: EdgeInsets.symmetric(horizontal: w*.02),
+          margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
+            border: const TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color: Colors.black45, style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color: Colors.black45,
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+            tableWidth: .5,
+            childrens: [
+              TableRow(
+                // decoration: BoxDecoration(
 
-              border: const TableBorder(
+                //     color: Colors.green.shade200,
 
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
+                //     shape: BoxShape.rectangle,
 
-              tableWidth: .5,
+                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
-              childrens:[
-                TableRow(
+                children: [
+                  tableHeadtext(
+                    'Importand Info',
 
-                  // decoration: BoxDecoration(
+                    padding: EdgeInsets.all(7),
 
-                  //     color: Colors.green.shade200,
+                    height: 46,
+                    textColor: Colors.white,
+                    // color: Color(0xffE5E5E5),
 
-                  //     shape: BoxShape.rectangle,
-
-                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
-                  children: [
-
-                    tableHeadtext(
-
-                      'Importand Info',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.white,
-                      // color: Color(0xffE5E5E5),
-
-                      size: 13,
-
-
-                    ),
-
-
-                    tableHeadtext(
-                      '',
-                      textColor: Colors.white,
-                      padding: EdgeInsets.all(7),
-                      height: 46,
-                      size: 13,
-                      // color: Color(0xffE5E5E5),
-                    ),
-                    tableHeadtext(
-                      '',
-                      textColor: Colors.white,
-                      padding: EdgeInsets.all(7),
-                      height: 46,
-                      size: 13,
-                      // color: Color(0xffE5E5E5),
-                    ),
-
-
-
-                  ],
-
-                ),
-                if (keys?.isNotEmpty==true ) ...[
-
-
-                  for (var i = 0; i <keys.length; i++)
-
-
-
-                    TableRow(
-                        decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border:const  Border(
-                                left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
-                                right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
-                        children: [
-
-                          TableCell(
-                            verticalAlignment: TableCellVerticalAlignment.middle,
-
-                            child:
-                            // Text(keys[i].key??"")
-                            UnderLinedInput(
-
-                              last:  keys[i].key??"",
-                              initialCheck: true,
-                              formatter: false,
-                              onChanged: (va){
-                                print(va);
-                                keys[i]=keys[i].copyWith(
-                                  key: va,
-                                );
-                              },
-
-
-
-                            ),
-
-
-                          ),
-                          TableCell(
-
-                              verticalAlignment: TableCellVerticalAlignment.middle,
-
-                              child:
-                              // Text(keys[i].value??"",)
-                              UnderLinedInput(
-                                initialCheck: true,
-                                last: keys[i].value??""??"",
-                                formatter: false,
-                                onChanged: (va){
-                                  print(va);
-                                  keys[i]=keys[i].copyWith(value: va);
-                                },
-                              )
-                          ),
-                          TableTextButton(onPress: (){
-                            importandInfo[i]=importandInfo[i].copyWith(keyValues: keys);
-                            widget.productTableEdit(type:"5",list:importandInfo);
-
-                          },label: "",)
-
-
-                        ]),
+                    size: 13,
+                  ),
+                  tableHeadtext(
+                    '',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 46,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
+                  tableHeadtext(
+                    '',
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(7),
+                    height: 46,
+                    size: 13,
+                    // color: Color(0xffE5E5E5),
+                  ),
                 ],
-
-                TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
-                    children: [
-
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child: UnderLinedInput(
-                          onChanged: (va){
-                            key.text=va;
-
-                          },
-
-                          formatter: false,
-
+              ),
+              if (keys?.isNotEmpty == true) ...[
+                for (var i = 0; i < keys.length; i++)
+                  TableRow(
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          shape: BoxShape.rectangle,
+                          border: const Border(
+                              left: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              bottom: BorderSide(
+                                  width: .5,
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid),
+                              right: BorderSide(
+                                  color: Colors.grey,
+                                  width: .5,
+                                  style: BorderStyle.solid))),
+                      children: [
+                        TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,
+                          child:
+                              // Text(keys[i].key??"")
+                              UnderLinedInput(
+                            last: keys[i].key ?? "",
+                            initialCheck: true,
+                            formatter: false,
+                            onChanged: (va) {
+                              print(va);
+                              keys[i] = keys[i].copyWith(
+                                key: va,
+                              );
+                            },
+                          ),
                         ),
-
-
-                      ),
-                      TableCell(
-                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                        child:
-
-                        UnderLinedInput(
-                          onChanged: (va){
-                            value.text=va;
+                        TableCell(
+                            verticalAlignment:
+                                TableCellVerticalAlignment.middle,
+                            child:
+                                // Text(keys[i].value??"",)
+                                UnderLinedInput(
+                              initialCheck: true,
+                              last: keys[i].value ?? "" ?? "",
+                              formatter: false,
+                              onChanged: (va) {
+                                print(va);
+                                keys[i] = keys[i].copyWith(value: va);
+                              },
+                            )),
+                        TableTextButton(
+                          onPress: () {
+                            importandInfo = ProductFeatures(
+                                name: headingController.text, keyValues: keys);
+                            widget.productTableEdit(
+                                type: "5", list: importandInfo);
                           },
-                          formatter: false,
-                        ),
-
-
+                          label: "",
+                        )
+                      ]),
+              ],
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
+                          left: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+                              width: .5,
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Colors.grey,
+                              width: .5,
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          key.text = va;
+                        },
+                        formatter: false,
                       ),
-                      TableTextButton(label: "", onPress: (){
-                        Keys model=Keys(
-                          key: key.text??"",
-                          value: value.text??'',
-                        );
-                        setState(() {
-                          onChange=true;
+                    ),
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: UnderLinedInput(
+                        onChanged: (va) {
+                          value.text = va;
+                        },
+                        formatter: false,
+                      ),
+                    ),
+                    TableTextButton(
+                        label: "",
+                        onPress: () {
+                          Keys model = Keys(
+                            key: key.text ?? "",
+                            value: value.text ?? '',
+                          );
+                          setState(() {
+                            onChange = true;
 
-                          keys?.add(model);
+                            keys?.add(model);
 
-
-                          importandInfo?.add(ProductFeatures(
-
-                              keyValues: keys
-                          ));
-                          widget.productTableEdit(type:"5",list:importandInfo);
-                          key.text="";
-                          value.text="";
-                        });
-
-
-
-
-                      })
-
-
-                    ])
-
-              ]
-          ,
+                            importandInfo = ProductFeatures(
+                                name: headingController.text, keyValues: keys);
+                            widget.productTableEdit(
+                                type: "5", list: importandInfo);
+                            key.text = "";
+                            value.text = "";
+                          });
+                        })
+                  ])
+            ],
             widths: {
               0: FlexColumnWidth(5),
-
-              2: FlexColumnWidth(2),
-
-
-            },),
-
-
+              1: FlexColumnWidth(5),  2: FlexColumnWidth(2),
+            },
+          ),
         ),
       ],
     );
@@ -2786,68 +2039,60 @@ class _ImportantInfoState extends State<ImportantInfo> {
 
 class ProductBehaviour extends StatefulWidget {
   final Function productFeaturesableAssign;
-  final  List<productBehaviour>?inforMationList;
-  ProductBehaviour({required this.productFeaturesableAssign,required this.inforMationList});
+  final List<productBehaviour>? inforMationList;
+  ProductBehaviour(
+      {required this.productFeaturesableAssign, required this.inforMationList});
   @override
   _ProductBehaviourState createState() => _ProductBehaviourState();
 }
 
 class _ProductBehaviourState extends State<ProductBehaviour> {
-  List<productBehaviour> inforMationList=[];
-  TextEditingController purposeController=TextEditingController();
-  TextEditingController ethlinkController=TextEditingController();
-  TextEditingController ageGroupController=TextEditingController();
-  TextEditingController countryController=TextEditingController();
-  String choosenValue='';
-  bool onChange=false;
-  List<String>items=["Male","Female"];
-  List<String>ethinikItem=["young","old","medium"];
+  List<productBehaviour> inforMationList = [];
+  TextEditingController purposeController = TextEditingController();
+  TextEditingController ethlinkController = TextEditingController();
+  TextEditingController ageGroupController = TextEditingController();
+  TextEditingController countryController = TextEditingController();
+  String choosenValue = '';
+  bool onChange = false;
+  List<String> items = ["Male", "Female"];
+  List<String> ethinikItem = ["young", "old", "medium"];
+
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
 
-    if(!onChange){
+    if (!onChange) {
       setState(() {
-        inforMationList=[];
+        choosenValue = '';
+        ageGroupController.clear();
+        countryController.clear() ;
+        purposeController.clear() ;
+        ethlinkController.clear() ;
+        inforMationList = [];
       });
-      if(widget.inforMationList?.isNotEmpty==true){
-        inforMationList= widget?.inforMationList??[];
-
-
+      if (widget.inforMationList?.isNotEmpty == true) {
+        inforMationList = widget?.inforMationList ?? [];
       }
-
-
-
-
-
     }
-    onChange=false;
+    onChange = false;
 
-
-
-    return  Container(
-      width: w/2.5,
-      margin: EdgeInsets.symmetric(horizontal: w*.02),
+    return Container(
+      width: w / 2.5,
+      margin: EdgeInsets.symmetric(horizontal: w * .02),
       child: customTable(
-
         border: const TableBorder(
-
           verticalInside: BorderSide(
-              width:.5,
-              color: Colors.black45,
-              style: BorderStyle.solid),
+              width: .5, color: Colors.black45, style: BorderStyle.solid),
           horizontalInside: BorderSide(
-              width:.3,
+              width: .3,
               color: Colors.black45,
               // color: Colors.blue,
-              style: BorderStyle.solid),),
-
+              style: BorderStyle.solid),
+        ),
         tableWidth: .5,
-
-        childrens:[
+        childrens: [
           TableRow(
-
             // decoration: BoxDecoration(
 
             //     color: Colors.green.shade200,
@@ -2857,9 +2102,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
             //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
             children: [
-
               tableHeadtext(
-
                 'Gender Group',
 
                 padding: EdgeInsets.all(7),
@@ -2869,11 +2112,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 // color: Color(0xffE5E5E5),
 
                 size: 13,
-
-
               ),
-
-
               tableHeadtext(
                 'Age Group',
                 textColor: Colors.white,
@@ -2882,7 +2121,6 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
-
               tableHeadtext(
                 'Ethinik',
                 textColor: Colors.white,
@@ -2915,98 +2153,68 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
-
-
             ],
-
           ),
-          if(inforMationList?.isNotEmpty==true)...[
-            for(var i=0;i<inforMationList!.length;i++)
+          if (inforMationList?.isNotEmpty == true) ...[
+            for (var i = 0; i < inforMationList!.length; i++)
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
+                      border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:
-                      CustomDropDown(choosenValue: inforMationList?[i].genderGroup??"",onChange: (val){
-                   // inforMationList?[i]=.gender=val;
-                   //      print(inforMationList);
-
-                      }, items: items),
-
-
+                      child: CustomDropDown(
+                          choosenValue: inforMationList?[i].genderGroup ?? "",
+                          onChange: (val) {
+                            // inforMationList?[i]=.gender=val;
+                            //      print(inforMationList);
+                          },
+                          items: items),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:  UnderLinedInput(
-
+                      child: UnderLinedInput(
                         initialCheck: true,
                         last: inforMationList[i].ageGroup,
                         formatter: false,
-                        onChanged: (val){
+                        onChanged: (val) {
                           // inforMationList[i].age=val;
                         },
-
-
-
                       ),
-
-
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:  UnderLinedInput(
+                      child: UnderLinedInput(
                         formatter: false,
                         initialCheck: true,
                         last: inforMationList[i].ethinik,
-                        onChanged: (val){
+                        onChanged: (val) {
                           // inforMationList[i].ethlink=val;
                         },
-
-
                       ),
-
-
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
                       child: Container(
-
                         // width: 100,
                         child: DropdownSearch<String>(
-                          dropdownSearchDecoration:InputDecoration(
+                          dropdownSearchDecoration: InputDecoration(
                             border: InputBorder.none,
-
                           ),
-
 
                           // mode of dropdown
                           mode: Mode.DIALOG,
@@ -3024,36 +2232,33 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                             "Singapore"
                           ],
                           // label: "Country",
-                          onChanged: (String? va){
+                          onChanged: (String? va) {
                             print(va);
                             // inforMationList[i].countries=va;
-
                           },
                           //show selected item
-                          selectedItem: inforMationList[i].countries??"",
+                          selectedItem: inforMationList[i].countries ?? "",
                         ),
-                      ),),
+                      ),
+                    ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:   UnderLinedInput(
+                      child: UnderLinedInput(
                         formatter: false,
                         initialCheck: true,
                         last: inforMationList[i].purpose,
-                        onChanged: (val){
+                        onChanged: (val) {
                           // inforMationList[i].purpose=val;
                         },
-
-
-
-                      ),),
+                      ),
+                    ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child:   TableTextButton(
+                      child: TableTextButton(
                         label: "Add",
-                        onPress: (){
-                          widget.productFeaturesableAssign(list:inforMationList);
+                        onPress: () {
+                          widget.productFeaturesableAssign(
+                              list: inforMationList);
                           // inforMationList?.add(InformationClass(
                           //   gender: choosenValue,
                           //   age: ageGroupController.text,
@@ -3062,84 +2267,56 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                           //   purpose: purposeController.text,
                           //
                           // ));
-                          setState(() {
-
-                          });
-
-
-
+                          setState(() {});
                         },
-
-
-                      ),),
-
-
+                      ),
+                    ),
                   ]),
-
           ],
-
           TableRow(
               decoration: BoxDecoration(
-                  color: Colors.grey
-                      .shade200,
-                  shape: BoxShape
-                      .rectangle,
-                  border:const  Border(
+                  color: Colors.grey.shade200,
+                  shape: BoxShape.rectangle,
+                  border: const Border(
                       left: BorderSide(
                           width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+                          color: Colors.grey,
+                          style: BorderStyle.solid),
                       bottom: BorderSide(
                           width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+                          color: Colors.grey,
+                          style: BorderStyle.solid),
                       right: BorderSide(
-                          color: Colors
-                              .grey,
+                          color: Colors.grey,
                           width: .5,
-                          style: BorderStyle
-                              .solid))),
+                          style: BorderStyle.solid))),
               children: [
-
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:  CustomDropDown(choosenValue: choosenValue,onChange:(val){
-                    choosenValue=val;
-
-                  } ,items: items),
-
-
+                  child: CustomDropDown(
+                      choosenValue: choosenValue,
+                      onChange: (val) {
+                        choosenValue = val;
+                      },
+                      items: items),
                 ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:  UnderLinedInput(
+                  child: UnderLinedInput(
                     formatter: false,
-
                     controller: ageGroupController,
-
                   ),
-
-
                 ),
-
-
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:  CustomDropDown(choosenValue: ethlinkController.text,onChange:(val){
-                    ethlinkController.text=val;
-
-                  } ,items: ethinikItem),
-
-
+                  child: CustomDropDown(
+                      choosenValue: ethlinkController.text,
+                      onChange: (val) {
+                        ethlinkController.text = val;
+                      },
+                      items: ethinikItem),
                 ),
-               /* TableCell(
+                /* TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
 
                   child:  UnderLinedInput(
@@ -3152,16 +2329,12 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 ),*/
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
                   child: Container(
-
                     // width: 100,
                     child: DropdownSearch<String>(
-                      dropdownSearchDecoration:InputDecoration(
+                      dropdownSearchDecoration: InputDecoration(
                         border: InputBorder.none,
-
                       ),
-
 
                       // mode of dropdown
                       mode: Mode.DIALOG,
@@ -3179,75 +2352,50 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                         "Singapore"
                       ],
                       // label: "Country",
-                      onChanged: (String? va){
-                        onChange=true;
+                      onChanged: (String? va) {
+                        onChange = true;
                         setState(() {
-                          countryController?.text=va??"";
+                          countryController?.text = va ?? "";
                           print("weldone ");
-                          print(" countryController?.text${ countryController?.text}");
+                          print(
+                              " countryController?.text${countryController?.text}");
                         });
-
-
                       },
                       //show selected item
                       // selectedItem: "India",
                     ),
-                  ),),
+                  ),
+                ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:   UnderLinedInput(
+                  child: UnderLinedInput(
                     formatter: false,
                     controller: purposeController,
-
-
-
-                  ),),
+                  ),
+                ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:   TableTextButton(
+                  child: TableTextButton(
                     label: "Add",
-                    onPress: (){
+                    onPress: () {
                       setState(() {
                         inforMationList?.add(productBehaviour(
                           genderGroup: choosenValue,
-                          ageGroup: ageGroupController.text??'',
+                          ageGroup: ageGroupController.text ?? '',
                           ethinik: ethlinkController.text,
-                          countries:countryController.text,
+                          countries: countryController.text,
                           purpose: purposeController.text,
-
                         ));
-                        print("the list is"+inforMationList.toString());
-                        widget.productFeaturesableAssign(list:inforMationList);
-                        choosenValue='';
-                        ageGroupController.text="";
-                        countryController.text="";
-                        purposeController.text="";
-                        ethlinkController.text="";
-
-
-
+                        print("the list is" + inforMationList.toString());
+                        widget.productFeaturesableAssign(list: inforMationList);
 
                       });
-
-
-
-
                     },
-
-
-                  ),),
-
-
+                  ),
+                ),
               ]),
-
-
         ],
-
       ),
-
-
     );
   }
 }

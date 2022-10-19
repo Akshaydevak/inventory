@@ -1,69 +1,72 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/variant/general/cubits/variantCreatio_read2/variant_creation_read2_cubit.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
 import 'package:inventory/commonWidget/commonCheckbox2.dart';
+import 'package:inventory/core/uttils/variable.dart';
 
 import '../productmodulegeneral.dart';
 
 class AttributeScreen extends StatefulWidget {
-  final List<VariantCreationRead2Model> attributes;
-  final Function  combination;
-  AttributeScreen({required this.attributes,required this.combination});
+  final List<VariantCreationRead2Model>? attributes;
+  final Function(List<List<Map<String, dynamic>>>) combination;
+  AttributeScreen({this.attributes, required this.combination});
 
   @override
   _AttributeScreenState createState() => _AttributeScreenState();
 }
 
 class _AttributeScreenState extends State<AttributeScreen> {
-  bool onChange=false;
-  List<Map<String,dynamic>>attributes=[];
-  List<List<Map<String,dynamic>>> graphArray=[];
+  List<VariantCreationRead2Model> attribute = [];
 
+  bool onChange = false;
+  List<Map<String, dynamic>> attributes = [];
+  List<List<Map<String, dynamic>>> graphArray = [];
+  List<List<Map<String, dynamic>>> newGraphArray = [];
+
+  List<VariantCreationRead2Model> newAttribute = [];
   var maps;
+  @override
+  void initState() {
+// newAttribute=attribute;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print("akkuttan"+widget.attributes.toString());
-    print("akkumon"+attributes.toString());
+    print("akkuttan" + graphArray.toString());
+    print("akkumon" + attribute.toString());
 
-
-
-
-    if(!onChange){
-
+    if (!onChange) {
       print("hellooooooooo");
 
       graphArray.clear();
 
-      for(var i =0;i<widget.attributes.length;i++) {
+      for (var i = 0; i < attribute.length; i++) {
         graphArray.add([]);
       }
       // if
 
-      for(var i =0;i<widget.attributes.length;i++){
-        if(widget.attributes[i]?.values?.isNotEmpty==true) {
-          for (var j = 0; j < widget.attributes[i].values!.length; j++) {
+      for (var i = 0; i < attribute.length; i++) {
+        if (attribute[i].values?.isNotEmpty == true) {
+          for (var j = 0; j < attribute[i].values!.length; j++) {
 // maps={
 //   "flag":false,
-//   "value":widget.attributes[i].values?[j]
+//   "value":attribute[i].values?[j]
 // };
 // attributes.add(maps);
-graphArray[i].add({
+            graphArray[i].add({
+              "key": attribute[i].attributeName,
+              "attributeId": attribute[i].attributeId,
+              "attributeCode": attribute[i].attributeCode,
+              "flag": false,
+              "value": attribute[i].values?[j]
+            });
 
-  "key":widget.attributes[i].attributeName,
-  "attributeId":widget.attributes[i].attributeId,
-  "attributeCode":widget.attributes[i].attributeCode,
-  "flag":false,
-  "value":widget.attributes[i].values?[j]
-});
-
-
-
-print("grappphAtrray"+graphArray.toString());
-
-
+            print("grappphAtrray" + graphArray.toString());
           }
 
-          // widget.attributes[i].values?.forEach((element) {
+          // attribute[i].values?.forEach((element) {
           //   print(element);
           //   print(i);
           //   maps={
@@ -83,18 +86,16 @@ print("grappphAtrray"+graphArray.toString());
           // }
           // );
 
-
-
         }
-        print("garray  0"+graphArray[0].toString());
-        print("garray   1"+graphArray[1].toString());
+        print("garray  0" + graphArray[0].toString());
+        print("garray   1" + graphArray[1].toString());
       }
-//        graphArray = new List.generate(widget.attributes.length, (i) {
+//        graphArray = new List.generate(attribute.length, (i) {
 //          print("the i is here"+i.toString());
 //
 //
 //
-//         var   map= widget.attributes[i].values?.forEach((element) {
+//         var   map= attribute[i].values?.forEach((element) {
 //         maps={
 //          "flag":false,
 //          "value":element
@@ -112,91 +113,130 @@ print("grappphAtrray"+graphArray.toString());
 //       return [];
 //       });
 
-      // if(widget.attributes.length)
+      // if(attribute.length)
 
     }
-    onChange=false;
-    print("grappphAtrray"+graphArray.toString());
-    return Container(
-      height:400,
-      width: MediaQuery.of(context).size.width-60,
-      child:
-      widget.attributes.isNotEmpty==true?
-      ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: widget.attributes.length,
-        itemBuilder: (context, index) {
-        return
-          Container(
-            height:400,
-            width: MediaQuery.of(context).size.width/2,
-          child:  Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-                Text(widget.attributes[index]?.attributeName.toString()??""),
-           SizedBox(height: 10,),
-           if( graphArray[index].isNotEmpty==true)   Container(height: 150,
-              child: ListView.builder(
+    onChange = false;
+    print("grappphAtrray" + graphArray.toString());
+
+    return BlocListener<VariantCreationRead2Cubit, VariantCreationRead2State>(
+      listener: (context, state) {
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              print("error");
+            },
+            success: (data) {
+              print("the entire data" + data.toString());
+              attribute = data;
+              print("the entire data attribute" + attribute.toString());
+
+              setState(() {});
+            });
+      },
+      child: Container(
+        height: 400,
+        width: MediaQuery.of(context).size.width - 60,
+        child: attribute.isNotEmpty == true
+            ? ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: graphArray[index]!.length,
-                itemBuilder: (context, item) {
+                itemCount: attribute.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 400,
+                    width: MediaQuery.of(context).size.width / 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(attribute[index]?.attributeName.toString() ?? ""),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        if (graphArray[index].isNotEmpty == true)
+                          Container(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: graphArray[index]!.length,
+                              itemBuilder: (context, item) {
+                                return Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // CustomCheckBox(
+                                    //
+                                    //   key: UniqueKey(),
+                                    //
+                                    //   value: list
+                                    //
+                                    //       .contains(data.data[i].id),
+                                    //
+                                    //   onChange: (p0) {
+                                    //
+                                    //     if (p0)
+                                    //
+                                    //       list.add(data.data[i]);
+                                    //
+                                    //     else
+                                    //
+                                    //       list.remove(data.data[i]);
+                                    //
+                                    //   },
+                                    //
+                                    // ),
+                                    NewCheckBoxText(
+                                      label: graphArray[index][item]["value"],
+                                      valueChanger: graphArray[index][item]
+                                          ["flag"],
+                                      onChange: (va) {
+                                        setState(() {
+                                          print("grapppppppp${graphArray}");
 
-                return   Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // CustomCheckBox(
-                    //
-                    //   key: UniqueKey(),
-                    //
-                    //   value: list
-                    //
-                    //       .contains(data.data[i].id),
-                    //
-                    //   onChange: (p0) {
-                    //
-                    //     if (p0)
-                    //
-                    //       list.add(data.data[i]);
-                    //
-                    //     else
-                    //
-                    //       list.remove(data.data[i]);
-                    //
-                    //   },
-                    //
-                    // ),
-                    NewCheckBoxText(label:graphArray[index][item]["value"],valueChanger:graphArray[index][item]["flag"],onChange: (va){
-                    setState(() {
-                      onChange=true;
-print("grapppppppp${graphArray}");
-                      var val=graphArray[index][item]["flag"];
-                      print("ch"+val.toString());
-                      val=!val;
-                      print("val"+val.toString());
-                     graphArray[index][item]["flag"]=val;
-                      print(  graphArray[index][item]["flag"]);
-                      print("the changing array is"+graphArray.toString());
+                                          onChange = true;
+                                          var val =
+                                              graphArray[index][item]["flag"];
+                                          print("ch" + val.toString());
+                                          val = !val;
+                                          print("val" + val.toString());
+                                          graphArray[index][item]["flag"] = val;
+                                          print(
+                                              graphArray[index][item]["flag"]);
+                                          print("the changing array is" +
+                                              graphArray.toString());
+
+                                          // newGraphArray =[...graphArray];
 
 
-                      widget.combination(graphArray);
+
+                                          // var copy = [for (var e in graphArray) ...e];
+                                          // print("the copy of data"+copy.toString());
+
+                                          // List<dynamic> weightData =
+                                          // newGraphArray.entries.map( (entry) => Weight(entry.key, entry.value)).toList();
+                                          // Variable.combinationArray=graphArray;
+                                          // Variable.combinationArray.clear();
 
 
-                    });
-
-                    print("akskks");
-                    },),
-                  ],
-                );
-              },),)
 
 
-            ],
-          ),
-        );
-      },)
-          :Text("nothing"),
+                                          widget.combination(graphArray);
+                                        });
+
+                                        print("akskks");
+                                      },
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          )
+                      ],
+                    ),
+                  );
+                },
+              )
+            : Text("nothing"),
+      ),
     );
   }
 }
-

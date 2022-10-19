@@ -72,8 +72,13 @@ class _CostingStableTableState extends State<CostingStableTable> {
                   if (data.data1) {
                     print("the reasons2");
                     // context.showSnackBarSuccess(data.data2);
-                    widget.gpPercentage.text=data.data2["gp_percentage"];
+                    setState(() {
 
+
+                    widget.gpPercentage.text=data.data2["gp_percentage"].toString();
+                    print("the gp value is here"+ widget.gpPercentage.text);
+                    widget.sellingPriceCalculation(unitCost:int.tryParse(widget.unitCost.text),gp:double.tryParse(widget.gpPercentage.text));
+                    });
 
                   }
                   else {
@@ -84,7 +89,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                     // context.showSnackBarError(data.data2);
                     // print(data.data1);
                   }
-                  widget.sellingPriceCalculation(unitCost:int.tryParse(widget.unitCost.text),gp:int.tryParse(widget.gpPercentage.text));
+                  // widget.sellingPriceCalculation(unitCost:int.tryParse(widget.unitCost.text),gp:int.tryParse(widget.gpPercentage.text));
                     }
                     );
               },
@@ -130,6 +135,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                   });
                                 },
                                 onAddNew: () {
+                                  costingTypeMethodeCheck = true;
                                   showDailogPopUp(
                                     context,
                                     ConfigurePopup(
@@ -168,6 +174,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                   });
                                 },
                                 onAddNew: () {
+                                  costingTypeMethodeCheck = true;
                                   showDailogPopUp(
                                     context,
                                     ConfigurePopup(
@@ -260,7 +267,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                                 formatter: true,
                                 onChange: (va){
                                   print("the value${va}");
-                                  widget.sellingPriceCalculation(unitCost:int.tryParse(va),gp:int.tryParse(widget.gpPercentage?.text??"0"));
+                                  widget.sellingPriceCalculation(unitCost:int.tryParse(va),gp:double.tryParse(widget.gpPercentage?.text??"0"));
                                 },
 
 

@@ -26,13 +26,14 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       catalog6: json['catalog6'] as int?,
       catalog7: json['catalog7'] as int?,
       catalog8: json['catalog8'] as int?,
-      Ingrediants: (json['Ingrediants'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      storage: (json['storage'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      Ingrediants: json['Ingrediants'] == null
+          ? null
+          : Storage.fromJson(json['Ingrediants'] as Map<String, dynamic>),
+      storage: json['storage'] == null
+          ? null
+          : Storage.fromJson(json['storage'] as Map<String, dynamic>),
       inventoryId: json['inventory_id'] as String?,
+      inventoryName: json['inventory_name'] as String?,
       uomCode: json['uom_code'] as String?,
       varAlternativeRfid: json['var_alternative_rfid'] as String?,
       alternativeBarcode: (json['alternative_barcode'] as List<dynamic>?)
@@ -90,27 +91,33 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       variantStatus: json['variant_status'] as String?,
       returnTime: json['return_time'] as int?,
       basePrize: (json['base_price'] as num?)?.toDouble(),
-      aboutProducts: (json['about_the_products'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productDetails: (json['product_details'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      productFeatures: (json['product_features'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      additionalInfo: (json['Additional_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      nutriantsFacts: (json['Nutriants_facts'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      usageDirection: (json['usage_direction'] as List<dynamic>?)
-          ?.map((e) => Storage.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      importantInfo: (json['important_info'] as List<dynamic>?)
-          ?.map((e) => ProductFeatures.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      aboutProducts: json['about_the_products'] == null
+          ? null
+          : Storage.fromJson(
+              json['about_the_products'] as Map<String, dynamic>),
+      productDetails: json['product_details'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_details'] as Map<String, dynamic>),
+      productFeatures: json['product_features'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['product_features'] as Map<String, dynamic>),
+      additionalInfo: json['Additional_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Additional_info'] as Map<String, dynamic>),
+      nutriantsFacts: json['Nutriants_facts'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['Nutriants_facts'] as Map<String, dynamic>),
+      usageDirection: json['usage_direction'] == null
+          ? null
+          : Storage.fromJson(json['usage_direction'] as Map<String, dynamic>),
+      importantInfo: json['important_info'] == null
+          ? null
+          : ProductFeatures.fromJson(
+              json['important_info'] as Map<String, dynamic>),
       productBehavior: (json['product_behaviour'] as List<dynamic>?)
           ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -139,6 +146,7 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'Ingrediants': instance.Ingrediants,
       'storage': instance.storage,
       'inventory_id': instance.inventoryId,
+      'inventory_name': instance.inventoryName,
       'uom_code': instance.uomCode,
       'var_alternative_rfid': instance.varAlternativeRfid,
       'alternative_barcode': instance.alternativeBarcode,
@@ -271,6 +279,7 @@ _$_LinkedItemListIdModel _$$_LinkedItemListIdModelFromJson(
       code: json['code'] as String?,
       name: json['name'] as String?,
       title: json['title'] as String?,
+      groupId: json['group_id'] as int?,
     );
 
 Map<String, dynamic> _$$_LinkedItemListIdModelToJson(
@@ -280,6 +289,7 @@ Map<String, dynamic> _$$_LinkedItemListIdModelToJson(
       'code': instance.code,
       'name': instance.name,
       'title': instance.title,
+      'group_id': instance.groupId,
     };
 
 _$_LinkedItemMetaModel _$$_LinkedItemMetaModelFromJson(

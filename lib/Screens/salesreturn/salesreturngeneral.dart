@@ -82,31 +82,32 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
   }
   listAssign( List< SalesReturnOrderLines> table1) {
     print("ethito");
-    print(table1);
+    print("table1"+table1.toString());
     setState(() {
-      if(table1.isNotEmpty){
-        for(var i=0;i<table1.length;i++)
-          table.add(SalesReturnOrderLines(
-              isActive: table1[i].isActive??false,
-              isInvoiced: table1[i].isInvoiced??false,
-              // stockId: table1[i].s??"",
-              totalPrice: table1[i].totalPrice,
-              sellingPrice: table1[i].sellingPrice,
-              taxableAmount: table1[i].taxableAmount,
-              discountType: table1[i].discountType,
-              vat: table1[i].vat,
-              discount: table1[i].discount,
-              excessTax: table1[i].excessTax,
-              barcode: table1[i].barcode,
-              unitCost: table1[i].unitCost,
-              id: table1[i].id,
-              invoicedLineCode: table1[i].salesOrderLineCode,
-              quantity: table1[i].quantity,
-              salesUom: table1[i].salesUom??"",
-              variantId: table1[i].variantId,
-              warrentyPrice: table1[i].warrentyPrice
-          ));
-      }
+      table=table1;
+      // if(table1.isNotEmpty){
+      //   for(var i=0;i<table1.length;i++)
+      //     table.add(SalesReturnOrderLines(
+      //         isActive: table1[i].isActive??false,
+      //         isInvoiced: table1[i].isInvoiced??false,
+      //         // stockId: table1[i].s??"",
+      //         totalPrice: table1[i].totalPrice,
+      //         sellingPrice: table1[i].sellingPrice,
+      //         taxableAmount: table1[i].taxableAmount,
+      //         discountType: table1[i].discountType,
+      //         vat: table1[i].vat,
+      //         discount: table1[i].discount,
+      //         excessTax: table1[i].excessTax,
+      //         barcode: table1[i].barcode,
+      //         unitCost: table1[i].unitCost,
+      //         id: table1[i].id,
+      //         invoicedLineCode: table1[i].salesOrderLineCode,
+      //         quantity: table1[i].quantity,
+      //         salesUom: table1[i].salesUom??"",
+      //         variantId: table1[i].variantId,
+      //         warrentyPrice: table1[i].warrentyPrice
+      //     ));
+      // }
       print(table);
 
 
@@ -594,7 +595,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                                       totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
                                                       createdBy: "akaka",
                                                       // editedBy: "",
-                                                      orderLines: []);
+                                                      orderLines: table);
                                                   print("modelllls" + model.toString());
                                                   select
                                                       ? context
@@ -900,6 +901,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             ),
                             NewInputCard(
                                 readOnly: true,
+                                height: 46,
                                 controller: widget.trnNumber,
                                 title: "TRN number"),
                             SizedBox(
@@ -1236,6 +1238,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                     },
                     success: (data) {
                       print("checkin Case");
+                      table1.clear();
                       if(data.invoicedData?.lines?.isNotEmpty==true){
                         data?.invoicedData?.lines != null
                             ? table1 = data?.invoicedData?.lines ?? []
@@ -1249,6 +1252,11 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                             : table1 = [];
 
                       }
+                      setState(() {
+                        table1[0]=table1[0].copyWith(unitCost: 3);
+                      });
+
+                      print("thee table"+table1.toString());
                     });
 
               },
@@ -1278,13 +1286,13 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                   barcode: purchaseTable?.barCode?.barcodeNumber
                                       .toString() ??
                                       "",
-                                  returnTime:int.tryParse( purchaseTable?.returnTime??""),
+                                  returnTime: purchaseTable?.returnTime,
                                   returnType: purchaseTable?.returnType);
                           setState(() {});
                         } else {
                           varinatname = purchaseTable?.name ?? "";
                           returntype = purchaseTable?.returnType ?? "";
-                          returntime = purchaseTable?.returnTime ?? "";
+                          returntime = purchaseTable?.returnTime.toString() ?? "";
                           unitcost1 = purchaseTable?.unitCost ?? 0;
                           unicostController.text = unitcost1.toString();
                           vat1 = purchaseTable?.vat ?? 0;
@@ -1775,6 +1783,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                                 .toString() ??
                                                 "",
                                             onChanged: (va) {
+
                                               // widget.updateCheck(true);
                                               table1[i] = table1[i].copyWith(updatecheck: true);
                                               // // table[i] = table[i].copyWith(updateCheck: true);
@@ -2217,8 +2226,12 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                         ),
                                         TableTextButton(
                                           onPress: () {
+                                            print("the date mistake is "+table1.toString());
                                             // widget.updateCheck(false);
                                             widget.updation(table1);
+
+
+                                            print("the date mistake is "+table1.toString());
                                             table1[i].copyWith(updatecheck: false);
                                           },
                                           label: "update",

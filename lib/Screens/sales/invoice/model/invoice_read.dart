@@ -42,6 +42,7 @@ class OrderLinesInvoice with _$OrderLinesInvoice {
     @JsonKey(name: "sales_uom") final String? salesUom,
     @JsonKey(name: "return_type") final String? returnType,
     @JsonKey(name: "return_time") final int? returnTime,
+    @JsonKey(name: "total_qty") final int? totalQuantity,
     @JsonKey(name: "is_invoiced", defaultValue: false) final bool? isInvoiced,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
     @JsonKey(name: "discount_type") final String? discountType,

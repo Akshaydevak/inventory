@@ -553,9 +553,11 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                 print("error");
               },
               success: (data) {
-                print("data" + data.toString());
+                print("algorithm" + data.toString());
                 if(data.invoicedData?.lines?.isNotEmpty==true)
                 {
+                  print("algorithm1" + data.toString());
+                  print(data?.invoicedData?.lines.toString());
                   data.invoicedData?.lines != null
                       ? table1 =  data.invoicedData?.lines ?? []
                       : table1 = [];
@@ -563,9 +565,12 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                 }
                 else{
+                  print("algorithm2" + data.toString());
+                  print(  data.lines.toString());
                   data.lines != null
                       ? table1 =  data.lines ?? []
                       : table1 = [];
+                  print("algorithm2" + table1[0].quantity.toString());
 
 
 
@@ -582,840 +587,797 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
               });
           // TODO: implement listener
         },
-        child: MultiBlocListener(
-  listeners: [
-
-    BlocListener<InvoicereadCubit, InvoicereadState>(
-      listener: (context, state) {
-        print("state++++++++++++++++++++++++++++++++");
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (data) {
-              print("data" + data.toString());
-              if(data.invoicedData?.lines?.isNotEmpty==true)
-              {
-                data.invoicedData?.lines != null
-                    ? table1 =  data.invoicedData?.lines ?? []
-                    : table1 = [];
+        child: Builder(
+                  builder: (context) {
+                    return Scrollbar(
+                      controller: recieveController,
+                      isAlwaysShown: true,
+                      child: Container(
+                        color: Colors.white,
+                        alignment: Alignment.topRight,
+                        child: SingleChildScrollView(
+                          controller:recieveController ,
+                          physics: ScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SingleChildScrollView(
+                                child:
+                                Container(
+                                  width: 2200,
+                                  padding: EdgeInsets.all(10),
+                                  child: customTable(
 
+                                      border: const TableBorder(
 
-              }
-              else{
-                data.lines != null
-                    ? table1 =  data.lines ?? []
-                    : table1 = [];
+                                        verticalInside: BorderSide(
+                                            width:.5,
+                                            color: Colors.black45,
+                                            style: BorderStyle.solid),
+                                        horizontalInside: BorderSide(
+                                            width:.3,
+                                            color: Colors.black45,
+                                            // color: Colors.blue,
+                                            style: BorderStyle.solid),),
 
+                                      tableWidth: .5,
 
+                                      childrens:[
+                                        TableRow(
 
+                                          // decoration: BoxDecoration(
 
+                                          //     color: Colors.green.shade200,
 
+                                          //     shape: BoxShape.rectangle,
 
-              }
+                                          //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
+                                            children: [
 
-              // setState(() {
-              //   print("taskssss");
+                                              tableHeadtext('Variant Id', padding: EdgeInsets.all(7), height: 46, size: 13,),
+                                              tableHeadtext('Barcode', padding: EdgeInsets.all(7), height: 46, size: 13,
+                                              ),
+                                              tableHeadtext('Sales Order Line Code', padding: EdgeInsets.all(7), height: 46, size: 13,
+                                              ),
 
-              setState(() {});
-            });
-      },
-    ),
-  ],
-  child: Builder(
-            builder: (context) {
-              return Scrollbar(
-                controller: recieveController,
-                isAlwaysShown: true,
-                child: Container(
-                  color: Colors.white,
-                  alignment: Alignment.topRight,
-                  child: SingleChildScrollView(
-                    controller:recieveController ,
-                    physics: ScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SingleChildScrollView(
-                          child:
-                          Container(
-                            width: 2200,
-                            padding: EdgeInsets.all(10),
-                            child: customTable(
+                                              tableHeadtext('Return Based On', padding: EdgeInsets.all(7), height: 46, size: 13,),
+                                              tableHeadtext(
+                                                'Return time ', padding: EdgeInsets.all(7),
+                                                height: 46,
 
-                                border: const TableBorder(
+                                                size: 13,
 
-                                  verticalInside: BorderSide(
-                                      width:.5,
-                                      color: Colors.black45,
-                                      style: BorderStyle.solid),
-                                  horizontalInside: BorderSide(
-                                      width:.3,
-                                      color: Colors.black45,
-                                      // color: Colors.blue,
-                                      style: BorderStyle.solid),),
+                                                // color: Palette.containerDarknew,
 
-                                tableWidth: .5,
+                                                // textColor: Palette.white
 
-                                childrens:[
-                                  TableRow(
+                                              ),
 
-                                    // decoration: BoxDecoration(
+                                              tableHeadtext(
 
-                                    //     color: Colors.green.shade200,
+                                                ' Is Invoiced',
 
-                                    //     shape: BoxShape.rectangle,
+                                                padding: EdgeInsets.all(7),
 
-                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                                                height: 46,
 
-                                      children: [
+                                                size: 13,
 
-                                        tableHeadtext('Variant Id', padding: EdgeInsets.all(7), height: 46, size: 13,),
-                                        tableHeadtext('Barcode', padding: EdgeInsets.all(7), height: 46, size: 13,
-                                        ),
-                                        tableHeadtext('Sales Order Line Code', padding: EdgeInsets.all(7), height: 46, size: 13,
-                                        ),
+                                                // color: Palette.containerDarknew,
 
-                                        tableHeadtext('Return Based On', padding: EdgeInsets.all(7), height: 46, size: 13,),
-                                        tableHeadtext(
-                                          'Return time ', padding: EdgeInsets.all(7),
-                                          height: 46,
+                                                // textColor: Palette.white
 
-                                          size: 13,
+                                              ),
 
-                                          // color: Palette.containerDarknew,
+                                              tableHeadtext(
 
-                                          // textColor: Palette.white
+                                                'Sales UOM',
 
-                                        ),
+                                                padding: EdgeInsets.all(7),
 
-                                        tableHeadtext(
+                                                height: 46,
 
-                                          ' Is Invoiced',
+                                                size: 13,
 
-                                          padding: EdgeInsets.all(7),
+                                                // color: Palette.containerDarknew,
 
-                                          height: 46,
+                                                // textColor: Palette.white
 
-                                          size: 13,
+                                              ),
 
-                                          // color: Palette.containerDarknew,
+                                              tableHeadtext(
 
-                                          // textColor: Palette.white
+                                                'Quantity',
 
-                                        ),
+                                                padding: EdgeInsets.all(7),
 
-                                        tableHeadtext(
+                                                height: 46,
 
-                                          'Sales UOM',
+                                                size: 13,
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
-                                          size: 13,
+                                              ),
 
-                                          // color: Palette.containerDarknew,
 
-                                          // textColor: Palette.white
+                                              tableHeadtext(
 
-                                        ),
+                                                'Unit Cost',
 
-                                        tableHeadtext(
+                                                padding: EdgeInsets.all(7),
 
-                                          'Quantity',
+                                                height: 46,
 
-                                          padding: EdgeInsets.all(7),
+                                                size: 13,
+                                                // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
+                                              ),
+                                              tableHeadtext(
+                                                'Discount Type',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
+                                              ),
+                                              tableHeadtext(
 
-                                          height: 46,
+                                                'Discount',
 
-                                          size: 13,
+                                                padding: EdgeInsets.all(7),
 
+                                                height: 46,
 
+                                                size: 13,
 
-                                        ),
+                                                // color: Palette.containerDarknew,
 
+                                                // textColor: Palette.white
 
-                                        tableHeadtext(
+                                              ),
 
-                                          'Unit Cost',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
+                                              tableHeadtext(
 
-                                          size: 13,
-                                          // color: Palette.containerDarknew,
-                                          // textColor: Palette.white
-                                        ),
-                                        tableHeadtext(
-                                          'Discount Type',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
-                                        ),
-                                        tableHeadtext(
+                                                'Excise Tax',
 
-                                          'Discount',
+                                                padding: EdgeInsets.all(7),
 
-                                          padding: EdgeInsets.all(7),
+                                                height: 46,
 
-                                          height: 46,
+                                                size: 13,
 
-                                          size: 13,
+                                                // color: Palette.containerDarknew,
 
-                                          // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
 
-                                          // textColor: Palette.white
+                                              ),
 
-                                        ),
+                                              tableHeadtext(
 
+                                                'Taxable Amount',
 
+                                                padding: EdgeInsets.all(7),
 
-                                        tableHeadtext(
+                                                height: 46,
 
-                                          'Excise Tax',
+                                                size: 13,
 
-                                          padding: EdgeInsets.all(7),
+                                                // color: Palette.containerDarknew,
 
-                                          height: 46,
+                                                // textColor: Palette.white
 
-                                          size: 13,
+                                              ),
 
-                                          // color: Palette.containerDarknew,
+                                              tableHeadtext(
 
-                                          // textColor: Palette.white
+                                                'VAT',
 
-                                        ),
+                                                padding: EdgeInsets.all(7),
 
-                                        tableHeadtext(
+                                                height: 46,
 
-                                          'Taxable Amount',
+                                                size: 13,
 
-                                          padding: EdgeInsets.all(7),
+                                                // color: Palette.containerDarknew,
 
-                                          height: 46,
+                                                // textColor: Palette.white
 
-                                          size: 13,
+                                              ),
 
-                                          // color: Palette.containerDarknew,
 
-                                          // textColor: Palette.white
 
-                                        ),
+                                              tableHeadtext(
 
-                                        tableHeadtext(
+                                                'Selling Price',
 
-                                          'VAT',
+                                                padding: EdgeInsets.all(7),
 
-                                          padding: EdgeInsets.all(7),
+                                                height: 46,
 
-                                          height: 46,
+                                                size: 13,
 
-                                          size: 13,
+                                                // color: Palette.containerDarknew,
 
-                                          // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
 
-                                          // textColor: Palette.white
+                                              ),
+                                              tableHeadtext(
+                                                'Warrenty Price',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
+                                                // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
+                                              ),
 
-                                        ),
 
 
+                                              tableHeadtext(
+                                                'Total Price',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
+                                                // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
+                                              ),
+                                              tableHeadtext(
+                                                'Is Active',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
+                                                // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
+                                              ),
+                                              tableHeadtext(
+                                                '',
+                                                padding: EdgeInsets.all(7),
+                                                height: 46,
+                                                size: 13,
+                                                // color: Palette.containerDarknew,
+                                                // textColor: Palette.white
+                                              ),
 
-                                        tableHeadtext(
 
-                                          'Selling Price',
 
-                                          padding: EdgeInsets.all(7),
+                                              // if (widget.onAddNew) textPadding(''),
 
-                                          height: 46,
+                                            ]),
+                                        if (table1 != null)...[
+                                          for (var i = 0; i < table1!.length; i++)
+                                            TableRow(
+                                                decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
+                                                    border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                        bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
+                                                        right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
+                                                            .solid))),
+                                                children: [
 
-                                          size: 13,
-
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
-
-                                        ),
-                                        tableHeadtext(
-                                          'Warrenty Price',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
-                                          // color: Palette.containerDarknew,
-                                          // textColor: Palette.white
-                                        ),
-
-
-
-                                        tableHeadtext(
-                                          'Total Price',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
-                                          // color: Palette.containerDarknew,
-                                          // textColor: Palette.white
-                                        ),
-                                        tableHeadtext(
-                                          'Is Active',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
-                                          // color: Palette.containerDarknew,
-                                          // textColor: Palette.white
-                                        ),
-                                        tableHeadtext(
-                                          '',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
-                                          // color: Palette.containerDarknew,
-                                          // textColor: Palette.white
-                                        ),
-
-
-
-                                        // if (widget.onAddNew) textPadding(''),
-
-                                      ]),
-                                  if (table1 != null)...[
-                                    for (var i = 0; i < table1!.length; i++)
-                                      TableRow(
-                                          decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                              border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                  bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                  right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                      .solid))),
-                                          children: [
-
-                                            TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1?[i].variantId??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),    TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1?[i].barcode??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),    TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1[i].salesOrderLineCode??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),    TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1[i].returnType??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),    TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1[i].returnTime.toString()??""??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),
-
-                                            TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: CheckedBoxs(
-                                                  valueChanger:table1[i].isInvoiced??false,
-
-                                                  onSelection:(bool ? value){
-                                                    editionchek=true;
-                                                    // widget.updateCheck(true);
-                                                    bool isinvoiced =table1[i].isInvoiced??false;
-                                                    setState(() {
-                                                      isinvoiced = !isinvoiced!;
-                                                      table1[i] = table1[i].copyWith(isInvoiced: isinvoiced);
-                                                      setState(() {});
-                                                    });
-                                                  }),
-                                            ),   TableCell(
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-                                              child: textPadding(table1[i].salesUom??"", fontSize: 12,
-                                                  padding: EdgeInsets.only(left: 11.5, top:
-                                                  1.5), fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: UnderLinedInput(
-                                                initialCheck: true,
-                                                // controller: requestedListControllers[i],
-                                                last: table1?[i]
-                                                    .quantity
-                                                    .toString() ??
-                                                    "",
-                                                onChanged: (va) {
-                                                  widget.updateCheck(true);
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // // table[i] = table[i].copyWith(updateCheck: true);
-                                                  // setState(() {
-                                                  //
-                                                  // });
-                                                  // print(va);
-                                                  if (va == "") {
-                                                    print("entered");
-                                                    // assignCheck = true;
-                                                    table1[i] = table1[i].copyWith(
-                                                        quantity: 0,
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0);
-
-                                                    setState(() {});
-                                                  } else {
-                                                    var qty = int.tryParse(va);
-                                                    var dis =
-                                                    table1?[i].discount ?? 0;
-                                                    var excess =
-                                                    table1?[i].excessTax ?? 0;
-                                                    var unitcost =
-                                                    table1?[i].unitCost ?? 0;
-                                                    var vat = table1?[i].vat ?? 0;
-
-
-                                                    if (qty == 0 ||
-                                                        unitcost == 0 ||
-                                                        unitcost == "") {
-                                                      table1[i] = table1[i]
-                                                          .copyWith(
-                                                          taxableAmount: 0,
-                                                          sellingPriceTotal: 0,
-                                                          totalPrice: 0);
-                                                    } else {
-                                                      var taxableAmount;
-                                                      var sellingPrice;
-                                                      var total;
-                                                      //
-                                                      taxableAmount =
+                                                  TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1?[i].variantId??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),    TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1?[i].barcode??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),    TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1[i].salesOrderLineCode??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),    TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1[i].returnType??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),    TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1[i].returnTime.toString()??""??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),
+
+                                                  TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: CheckedBoxs(
+                                                        valueChanger:table1[i].isInvoiced??false,
+
+                                                        onSelection:(bool ? value){
+                                                          editionchek=true;
+                                                          // widget.updateCheck(true);
+                                                          bool isinvoiced =table1[i].isInvoiced??false;
+                                                          setState(() {
+                                                            isinvoiced = !isinvoiced!;
+                                                            table1[i] = table1[i].copyWith(isInvoiced: isinvoiced);
+                                                            setState(() {});
+                                                          });
+                                                        }),
+                                                  ),   TableCell(
+                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                    child: textPadding(table1[i].salesUom??"", fontSize: 12,
+                                                        padding: EdgeInsets.only(left: 11.5, top:
+                                                        1.5), fontWeight: FontWeight.w500),
+                                                  ),
+
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: UnderLinedInput(
+                                                      initialCheck:true,
+                                                      // controller: requestedListControllers[i],
+                                                      last: table1[0]?.totalQuantity
+                                                          .toString() ??
+                                                          "",
+                                                      onChanged: (va) {
+                                                        widget.updateCheck(true);
+                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        // // table[i] = table[i].copyWith(updateCheck: true);
+                                                        // setState(() {
+                                                        //
+                                                        // });
+                                                        // print(va);
+                                                        if (va == "") {
+                                                          print("entered");
+                                                          // assignCheck = true;
+                                                          table1[i] = table1[i].copyWith(
+                                                              quantity: 0,
+                                                              taxableAmount: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0);
+
+                                                          setState(() {});
+                                                        } else {
+                                                          var qty = int.tryParse(va);
+                                                          var dis =
+                                                          table1?[i].discount ?? 0;
+                                                          var excess =
+                                                          table1?[i].excessTax ?? 0;
+                                                          var unitcost =
+                                                          table1?[i].unitCost ?? 0;
+                                                          var vat = table1?[i].vat ?? 0;
+
+
+                                                          if (qty == 0 ||
+                                                              unitcost == 0 ||
+                                                              unitcost == "") {
+                                                            table1[i] = table1[i]
+                                                                .copyWith(
+                                                                taxableAmount: 0,
+                                                                sellingPriceTotal: 0,
+                                                                totalPrice: 0);
+                                                          } else {
+                                                            var taxableAmount;
+                                                            var sellingPrice;
+                                                            var total;
+                                                            //
+                                                            taxableAmount =
+                                                                taxableUpdateMethod(
+                                                                    qty!,
+                                                                    unitcost,
+                                                                    excess,
+                                                                    dis,
+                                                                    table1[i]
+                                                                        .discountType);
+                                                            sellingPrice =
+                                                                sellingPriceUpdation(
+                                                                    taxableAmount, vat);
+                                                            total = totalPriceUpdation(
+                                                                sellingPrice,
+                                                                table1[i].warrentyPrice ??
+                                                                    0);
+
+                                                            table1[i] = table1[i]
+                                                                .copyWith(
+                                                                totalPrice: total,
+                                                                taxableAmount:
+                                                                taxableAmount,
+                                                                sellingPriceTotal:
+                                                                sellingPrice,
+                                                                quantity: qty);
+                                                          }
+                                                        }
+
+                                                        setState(() {});
+                                                      },
+                                                    ),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: UnderLinedInput(
+                                                      initialCheck: true,
+                                                      //controller: unitcostListControllers[i],
+                                                      last: table1?[i]
+                                                          .unitCost
+                                                          .toString() ??
+                                                          "",
+                                                      onChanged: (va) {
+                                                        widget.updateCheck(true);
+                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        // table1[i] = table[i].copyWith(updateCheck: true);
+                                                        // setState(() {
+                                                        //
+                                                        // });
+                                                        double? unitcost;
+                                                        if (va == "") {
+                                                          print("entered");
+                                                          unitcost = 0;
+                                                          print("disc" +
+                                                              unitcost.toString());
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount: 0,
+                                                              unitCost: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0);
+                                                          setState(() {});
+                                                        }
+                                                        unitcost = double.tryParse(va);
+                                                        var qty = table1[i].quantity ?? 0;
+                                                        var excess =
+                                                            table1[i].excessTax ?? 0;
+                                                        var disc =
+                                                            table1[i].discount ?? 0;
+                                                        var vat = table1[i].vat ?? 0;
+                                                        if (qty == 0 ||
+                                                            qty == null ||
+                                                            unitcost == 0) {
+                                                          print("checking case");
+
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0,
+                                                              unitCost: 0);
+                                                          setState(() {});
+                                                        } else {
+                                                          var taxableAmounts =
                                                           taxableUpdateMethod(
-                                                              qty!,
-                                                              unitcost,
+                                                              qty,
+                                                              unitcost!,
                                                               excess,
-                                                              dis,
+                                                              disc,
+                                                              table1[i].discountType);
+                                                          print("taxableAmounts" +
+                                                              taxableAmounts.toString());
+
+                                                          var sellingPrice =
+                                                          sellingPriceUpdation(
+                                                              taxableAmounts, vat);
+                                                          var totalPrice =
+                                                          totalPriceUpdation(
+                                                              sellingPrice,
                                                               table1[i]
-                                                                  .discountType);
-                                                      sellingPrice =
+                                                                  .warrentyPrice ??
+                                                                  0);
+
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount:
+                                                              taxableAmounts,
+                                                              sellingPriceTotal: sellingPrice,
+                                                              totalPrice: totalPrice,
+                                                              unitCost: unitcost);
+                                                          setState(() {});
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                  PopUpCall(
+                                                    type: "PriceTypePopUpCall",
+                                                    value: table1[i].discountType??"price",
+                                                    onSelection: (String va) {
+                                                      print("+++++++++++++++++++++++");
+
+                                                      setState(() {
+                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        table1[i] = table1[i]
+                                                            .copyWith(discountType: va);
+                                                        widget.updateCheck(true);
+                                                        var qty = table1[i].quantity ?? 0;
+                                                        var unitcost =
+                                                            table1[i].unitCost ?? 0;
+                                                        var excess =
+                                                            table1[i].excessTax ?? 0;
+                                                        var discounts =
+                                                            table1[i].discount ?? 0;
+                                                        var disc =
+                                                            table1[i].discount ?? 0;
+                                                        var vat = table1[i].vat ?? 0;
+                                                        if (unitcost == 0 || qty == 0) {
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0);
+                                                        } else {
+                                                          if (qty == 0 || unitcost == 0) {
+                                                            table1[i] =
+                                                                table1[i].copyWith(
+                                                                  taxableAmount: 0,
+                                                                  sellingPriceTotal: 0,
+                                                                  totalPrice: 0,
+                                                                );
+                                                            setState(() {});
+                                                          } else {
+                                                            var taxableAmount =
+                                                            taxableUpdateMethod(
+                                                                qty,
+                                                                unitcost,
+                                                                excess,
+                                                                discounts,
+                                                                table1[i]
+                                                                    .discountType);
+                                                            var sellingPrice =
+                                                            sellingPriceUpdation(
+                                                                taxableAmount, vat);
+                                                            var totalPrice =
+                                                            totalPriceUpdation(
+                                                                sellingPrice,
+                                                                table1[i]
+                                                                    .warrentyPrice ??
+                                                                    0);
+                                                            table1[i] =
+                                                                table1[i].copyWith(
+                                                                  taxableAmount:
+                                                                  taxableAmount,
+                                                                  sellingPriceTotal: sellingPrice,
+                                                                  totalPrice: totalPrice,
+                                                                );
+                                                            setState(() {});
+                                                          }
+                                                        }
+
+                                                        // onChange = true;
+                                                        // orderType = va!;
+                                                      });
+                                                    },
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: UnderLinedInput(
+                                                      initialCheck: true,
+                                                      last:
+                                                      table1?[i].discount.toString()
+                                                          ,
+                                                      onChanged: (va) {
+                                                        widget.updateCheck(true);
+                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        // table[i] = table[i].copyWith(updateCheck: true);
+                                                        setState(() {});
+                                                        var disc;
+                                                        if (va == "") {
+                                                          disc = 0;
+                                                          setState(() {});
+                                                        } else {
+                                                          disc = double.tryParse(va);
+                                                          setState(() {});
+                                                        }
+                                                        var qty = table1[i].quantity ?? 0;
+                                                        var vat = table1[i].vat ?? 0;
+                                                        var unitcost =
+                                                            table1[i].unitCost ?? 0;
+                                                        var excess =
+                                                            table1[i].excessTax ?? 0;
+
+                                                        if (qty == 0 || unitcost == 0) {
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0,
+                                                              discount: disc);
+                                                          setState(() {});
+                                                        } else {
+                                                          var taxableAmount =
+                                                          taxableUpdateMethod(
+                                                              qty,
+                                                              unitcost,
+                                                              excess!,
+                                                              disc,
+                                                              table1[i].discountType);
+
+                                                          var sellingPrice =
                                                           sellingPriceUpdation(
                                                               taxableAmount, vat);
-                                                      total = totalPriceUpdation(
-                                                          sellingPrice,
-                                                          table1[i].warrentyPrice ??
-                                                              0);
+                                                          var totalprice =
+                                                          totalPriceUpdation(
+                                                              sellingPrice,
+                                                              table1[i]
+                                                                  .warrentyPrice ??
+                                                                  0);
 
-                                                      table1[i] = table1[i]
-                                                          .copyWith(
-                                                          totalPrice: total,
-                                                          taxableAmount:
-                                                          taxableAmount,
-                                                          sellingPriceTotal:
-                                                          sellingPrice,
-                                                          quantity: qty);
-                                                    }
-                                                  }
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount:
+                                                              taxableAmount,
+                                                              sellingPriceTotal: sellingPrice,
+                                                              totalPrice: totalprice,
+                                                              discount: disc);
+                                                          setState(() {});
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: UnderLinedInput(
+                                                      initialCheck: true,
 
-                                                  setState(() {});
-                                                },
-                                              ),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: UnderLinedInput(
-                                                initialCheck: true,
-                                                //controller: unitcostListControllers[i],
-                                                last: table1?[i]
-                                                    .unitCost
-                                                    .toString() ??
-                                                    "",
-                                                onChanged: (va) {
-                                                  widget.updateCheck(true);
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // table1[i] = table[i].copyWith(updateCheck: true);
-                                                  // setState(() {
-                                                  //
-                                                  // });
-                                                  double? unitcost;
-                                                  if (va == "") {
-                                                    print("entered");
-                                                    unitcost = 0;
-                                                    print("disc" +
-                                                        unitcost.toString());
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        unitCost: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0);
-                                                    setState(() {});
-                                                  }
-                                                  unitcost = double.tryParse(va);
-                                                  var qty = table1[i].quantity ?? 0;
-                                                  var excess =
-                                                      table1[i].excessTax ?? 0;
-                                                  var disc =
-                                                      table1[i].discount ?? 0;
-                                                  var vat = table1[i].vat ?? 0;
-                                                  if (qty == 0 ||
-                                                      qty == null ||
-                                                      unitcost == 0) {
-                                                    print("checking case");
+                                                      // controller: excesstListControllers[i],
+                                                      last: table1?[i]
+                                                          .excessTax
+                                                          .toString() ??
+                                                          "",
+                                                      onChanged: (va) {
+                                                        widget.updateCheck(true);
+                                                        // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                        // table[i] = table[i].copyWith(updateCheck: true);
+                                                        setState(() {});
+                                                        double? excess;
+                                                        if (va == "") {
+                                                          excess = 0;
+                                                          setState(() {});
+                                                        } else {
+                                                          excess = double.tryParse(va);
+                                                          setState(() {});
+                                                        }
+                                                        var qty = table1[i].quantity ?? 0;
+                                                        var vat = table1[i].vat ?? 0;
+                                                        var unitcost =
+                                                            table1[i].unitCost ?? 0;
+                                                        var Vdiscount =
+                                                            table1[i].discount ?? 0;
+                                                        if (qty == 0 || unitcost == 0) {
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount: 0,
+                                                              sellingPriceTotal: 0,
+                                                              totalPrice: 0,
+                                                              excessTax: excess);
+                                                          setState(() {});
+                                                        } else {
+                                                          var taxableAmount =
+                                                          taxableUpdateMethod(
+                                                              qty,
+                                                              unitcost,
+                                                              excess!,
+                                                              Vdiscount,
+                                                              table1[i].discountType);
 
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0,
-                                                        unitCost: 0);
-                                                    setState(() {});
-                                                  } else {
-                                                    var taxableAmounts =
-                                                    taxableUpdateMethod(
-                                                        qty,
-                                                        unitcost!,
-                                                        excess,
-                                                        disc,
-                                                        table1[i].discountType);
-                                                    print("taxableAmounts" +
-                                                        taxableAmounts.toString());
+                                                          var sellingPrice =
+                                                          sellingPriceUpdation(
+                                                              taxableAmount, vat);
+                                                          var totalprice =
+                                                          totalPriceUpdation(
+                                                              sellingPrice,
+                                                              table1[i]
+                                                                  .warrentyPrice ??
+                                                                  0);
 
-                                                    var sellingPrice =
-                                                    sellingPriceUpdation(
-                                                        taxableAmounts, vat);
-                                                    var totalPrice =
-                                                    totalPriceUpdation(
-                                                        sellingPrice,
-                                                        table1[i]
-                                                            .warrentyPrice ??
-                                                            0);
+                                                          table1[i] = table1[i].copyWith(
+                                                              taxableAmount:
+                                                              taxableAmount,
+                                                              sellingPriceTotal: sellingPrice,
+                                                              totalPrice: totalprice,
+                                                              excessTax: excess);
+                                                          setState(() {});
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: textPadding(
+                                                        table1?[i]
+                                                            .taxableAmount
+                                                            .toString() ??
+                                                            "",
+                                                        fontSize: 12,
+                                                        padding: EdgeInsets.only(
+                                                            left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: textPadding(
+                                                        table1?[i].vat.toString() ?? "",
+                                                        fontSize: 12,
+                                                        padding: EdgeInsets.only(
+                                                            left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: textPadding(
+                                                        table1?[i]
+                                                            .sellingPriceTotal
+                                                            .toString() ??
+                                                            "",
+                                                        fontSize: 12,
+                                                        padding: EdgeInsets.only(
+                                                            left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: textPadding(
+                                                        table1?[i]
+                                                            .warrentyPrice
+                                                            .toString() ??
+                                                            "",
+                                                        fontSize: 12,
+                                                        padding: EdgeInsets.only(
+                                                            left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: textPadding(
+                                                        table1?[i]
+                                                            .totalPrice
+                                                            .toString() ??
+                                                            "",
+                                                        fontSize: 12,
+                                                        padding: EdgeInsets.only(
+                                                            left: 11.5, top: 1.5),
+                                                        fontWeight: FontWeight.w500),
+                                                  ),
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: CheckedBoxs(
+                                                        valueChanger:
+                                                        table1?[i].isActive == null
+                                                            ? false
+                                                            : table1?[i].isActive,
+                                                        onSelection: (bool? value) {
+                                                          bool? isActive =
+                                                              table1[i].isActive;
+                                                          setState(() {
+                                                            widget.updateCheck(true);
+                                                            // table1[i] = table1[i].copyWith(updatecheck: true);
+                                                            // table1[i] = table1[i].copyWith(updateCheck: true);
+                                                            setState(() {});
+                                                            isActive = !isActive!;
+                                                            table1[i] = table1[i]
+                                                                .copyWith(
+                                                                isActive: isActive);
+                                                          });
+                                                        }),
+                                                  ),
+                                                  TableTextButton(
+                                                    onPress: () {
+                                                      widget.updateCheck(false);
+                                                      widget.updation(table1);
+                                                      // table1[i].copyWith(updatecheck: false);
+                                                    },
+                                                    label: "update",
+                                                  )
 
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount:
-                                                        taxableAmounts,
-                                                        sellingPriceTotal: sellingPrice,
-                                                        totalPrice: totalPrice,
-                                                        unitCost: unitcost);
-                                                    setState(() {});
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                            PopUpCall(
-                                              type: "PriceTypePopUpCall",
-                                              value: table1[i].discountType??"price",
-                                              onSelection: (String va) {
-                                                print("+++++++++++++++++++++++");
 
-                                                setState(() {
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  table1[i] = table1[i]
-                                                      .copyWith(discountType: va);
-                                                  widget.updateCheck(true);
-                                                  var qty = table1[i].quantity ?? 0;
-                                                  var unitcost =
-                                                      table1[i].unitCost ?? 0;
-                                                  var excess =
-                                                      table1[i].excessTax ?? 0;
-                                                  var discounts =
-                                                      table1[i].discount ?? 0;
-                                                  var disc =
-                                                      table1[i].discount ?? 0;
-                                                  var vat = table1[i].vat ?? 0;
-                                                  if (unitcost == 0 || qty == 0) {
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0);
-                                                  } else {
-                                                    if (qty == 0 || unitcost == 0) {
-                                                      table1[i] =
-                                                          table1[i].copyWith(
-                                                            taxableAmount: 0,
-                                                            sellingPriceTotal: 0,
-                                                            totalPrice: 0,
-                                                          );
-                                                      setState(() {});
-                                                    } else {
-                                                      var taxableAmount =
-                                                      taxableUpdateMethod(
-                                                          qty,
-                                                          unitcost,
-                                                          excess,
-                                                          discounts,
-                                                          table1[i]
-                                                              .discountType);
-                                                      var sellingPrice =
-                                                      sellingPriceUpdation(
-                                                          taxableAmount, vat);
-                                                      var totalPrice =
-                                                      totalPriceUpdation(
-                                                          sellingPrice,
-                                                          table1[i]
-                                                              .warrentyPrice ??
-                                                              0);
-                                                      table1[i] =
-                                                          table1[i].copyWith(
-                                                            taxableAmount:
-                                                            taxableAmount,
-                                                            sellingPriceTotal: sellingPrice,
-                                                            totalPrice: totalPrice,
-                                                          );
-                                                      setState(() {});
-                                                    }
-                                                  }
-
-                                                  // onChange = true;
-                                                  // orderType = va!;
-                                                });
-                                              },
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: UnderLinedInput(
-                                                initialCheck: true,
-                                                last:
-                                                table1?[i].discount.toString() ??
-                                                    "",
-                                                onChanged: (va) {
-                                                  widget.updateCheck(true);
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // table[i] = table[i].copyWith(updateCheck: true);
-                                                  setState(() {});
-                                                  var disc;
-                                                  if (va == "") {
-                                                    disc = 0;
-                                                    setState(() {});
-                                                  } else {
-                                                    disc = double.tryParse(va);
-                                                    setState(() {});
-                                                  }
-                                                  var qty = table1[i].quantity ?? 0;
-                                                  var vat = table1[i].vat ?? 0;
-                                                  var unitcost =
-                                                      table1[i].unitCost ?? 0;
-                                                  var excess =
-                                                      table1[i].excessTax ?? 0;
-
-                                                  if (qty == 0 || unitcost == 0) {
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0,
-                                                        discount: disc);
-                                                    setState(() {});
-                                                  } else {
-                                                    var taxableAmount =
-                                                    taxableUpdateMethod(
-                                                        qty,
-                                                        unitcost,
-                                                        excess!,
-                                                        disc,
-                                                        table1[i].discountType);
-
-                                                    var sellingPrice =
-                                                    sellingPriceUpdation(
-                                                        taxableAmount, vat);
-                                                    var totalprice =
-                                                    totalPriceUpdation(
-                                                        sellingPrice,
-                                                        table1[i]
-                                                            .warrentyPrice ??
-                                                            0);
-
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount:
-                                                        taxableAmount,
-                                                        sellingPriceTotal: sellingPrice,
-                                                        totalPrice: totalprice,
-                                                        discount: disc);
-                                                    setState(() {});
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: UnderLinedInput(
-                                                initialCheck: true,
-
-                                                // controller: excesstListControllers[i],
-                                                last: table1?[i]
-                                                    .excessTax
-                                                    .toString() ??
-                                                    "",
-                                                onChanged: (va) {
-                                                  widget.updateCheck(true);
-                                                  // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                  // table[i] = table[i].copyWith(updateCheck: true);
-                                                  setState(() {});
-                                                  double? excess;
-                                                  if (va == "") {
-                                                    excess = 0;
-                                                    setState(() {});
-                                                  } else {
-                                                    excess = double.tryParse(va);
-                                                    setState(() {});
-                                                  }
-                                                  var qty = table1[i].quantity ?? 0;
-                                                  var vat = table1[i].vat ?? 0;
-                                                  var unitcost =
-                                                      table1[i].unitCost ?? 0;
-                                                  var Vdiscount =
-                                                      table1[i].discount ?? 0;
-                                                  if (qty == 0 || unitcost == 0) {
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount: 0,
-                                                        sellingPriceTotal: 0,
-                                                        totalPrice: 0,
-                                                        excessTax: excess);
-                                                    setState(() {});
-                                                  } else {
-                                                    var taxableAmount =
-                                                    taxableUpdateMethod(
-                                                        qty,
-                                                        unitcost,
-                                                        excess!,
-                                                        Vdiscount,
-                                                        table1[i].discountType);
-
-                                                    var sellingPrice =
-                                                    sellingPriceUpdation(
-                                                        taxableAmount, vat);
-                                                    var totalprice =
-                                                    totalPriceUpdation(
-                                                        sellingPrice,
-                                                        table1[i]
-                                                            .warrentyPrice ??
-                                                            0);
-
-                                                    table1[i] = table1[i].copyWith(
-                                                        taxableAmount:
-                                                        taxableAmount,
-                                                        sellingPriceTotal: sellingPrice,
-                                                        totalPrice: totalprice,
-                                                        excessTax: excess);
-                                                    setState(() {});
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i]
-                                                      .taxableAmount
-                                                      .toString() ??
-                                                      "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i].vat.toString() ?? "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i]
-                                                      .sellingPriceTotal
-                                                      .toString() ??
-                                                      "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i]
-                                                      .warrentyPrice
-                                                      .toString() ??
-                                                      "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: textPadding(
-                                                  table1?[i]
-                                                      .totalPrice
-                                                      .toString() ??
-                                                      "",
-                                                  fontSize: 12,
-                                                  padding: EdgeInsets.only(
-                                                      left: 11.5, top: 1.5),
-                                                  fontWeight: FontWeight.w500),
-                                            ),
-                                            TableCell(
-                                              verticalAlignment:
-                                              TableCellVerticalAlignment.middle,
-                                              child: CheckedBoxs(
-                                                  valueChanger:
-                                                  table1?[i].isActive == null
-                                                      ? false
-                                                      : table1?[i].isActive,
-                                                  onSelection: (bool? value) {
-                                                    bool? isActive =
-                                                        table1[i].isActive;
-                                                    setState(() {
-                                                      widget.updateCheck(true);
-                                                      // table1[i] = table1[i].copyWith(updatecheck: true);
-                                                      // table1[i] = table1[i].copyWith(updateCheck: true);
-                                                      setState(() {});
-                                                      isActive = !isActive!;
-                                                      table1[i] = table1[i]
-                                                          .copyWith(
-                                                          isActive: isActive);
-                                                    });
-                                                  }),
-                                            ),
-                                            TableTextButton(
-                                              onPress: () {
-                                                widget.updateCheck(false);
-                                                widget.updation(table1);
-                                                // table1[i].copyWith(updatecheck: false);
-                                              },
-                                              label: "update",
+                                                ]
                                             )
+                                        ]
+                                      ]
+                                  ),
+                                ),
 
+                              )
 
-                                          ]
-                                      )
-                                  ]
-                                ]
-                            ),
+                            ],
                           ),
 
-                        )
-
-                      ],
-                    ),
-
-                  ),
-                ),
-              );
-            }
-        ),
-),
+                        ),
+                      ),
+                    );
+                  }
+              ),
       );
   }
 }

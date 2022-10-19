@@ -12,6 +12,7 @@ import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart
 import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
 import 'package:inventory/Screens/variant/variantdetails/screens.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -66,6 +67,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController salesUomController = TextEditingController();
   TextEditingController purchaseUomController = TextEditingController();
   TextEditingController grossWeightController = TextEditingController();
+  TextEditingController uomGroupNameController = TextEditingController();
+  TextEditingController baseUomNameController = TextEditingController();
+  TextEditingController salesUomNameController = TextEditingController();
+  TextEditingController purchaseUomNameController = TextEditingController();
   TextEditingController netWeightController = TextEditingController();
   TextEditingController unitCostController = TextEditingController();
   TextEditingController landingCostController = TextEditingController();
@@ -108,21 +113,21 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   bool addNew=false;
   List<AlternativeBarcode>alternativeBarcode=[];
   List<AlternativeBarcode>alternativeQrCode=[];
-  List<Storage>? aboutProducts=[];
-  List<VendorDetails>? vendorDetails=[];
-  List<ProductFeatures>? productDetails=[];
-  List<ProductFeatures>? productFeatures=[];
-  List<ProductFeatures>? additionalInfo=[];
-  List<ProductFeatures>? nutriantsFacts=[];
-  List<ProductFeatures>? ingredians=[];
-  List<productBehaviour>? inforMationList=[];
-  List<Storage>? Ingrediants=[];
+  Storage? aboutProducts;
+ List< VendorDetails>? vendorDetails;
+  ProductFeatures? productDetails;
+  ProductFeatures? productFeatures;
+  ProductFeatures? additionalInfo;
+  ProductFeatures? nutriantsFacts;
+  ProductFeatures? ingredians;
+ List< productBehaviour>? inforMationList;
+  Storage? Ingrediants;
   VariantReadModel group=VariantReadModel();
 
-  List<Storage>? usageDirection=[];
-  List<Storage>? storage=[];
-  List<ProductFeatures>? importantInfo=[];
-  List<ProductFeatures>? productBehavior=[];
+  Storage? usageDirection;
+  Storage? storage;
+ProductFeatures? importantInfo;
+  ProductFeatures? productBehavior;
   bool exportCheck=false;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
@@ -194,6 +199,10 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   vendorDetailsTableAssign({List<VendorDetails>?list}) {
     setState(() {
       vendorDetails = list;
+
+      print("vendordetailS${vendorDetails}");
+
+
     });
   }
 barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
@@ -216,7 +225,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
   }
 
   }
-  storageDetailsTableAssign({String? type,List<Storage>?list}){
+  storageDetailsTableAssign({String? type,Storage ?list}){
+
+
+    print("list is hereeeee"+list.toString());
 
     switch(type){
 
@@ -262,7 +274,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
   }
-  ProductBehaviourTableAssign({String? type,List<ProductFeatures>?list}){
+  ProductBehaviourTableAssign({String? type,ProductFeatures? list}){
     print("arrived"+type.toString());
     // aboutProducts=list;
 
@@ -352,15 +364,15 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
   }
   clear(){
     setState(() {
-      aboutProducts=[];
-      importantInfo=[];
-      productDetails=[];
-      nutriantsFacts=[];
-      usageDirection=[];
-      productFeatures=[];
-      storage=[];
-      Ingrediants=[];
-      importantInfo=[];
+      // aboutProducts?.clear();
+      // importantInfo=[];
+      // productDetails=[];
+      // nutriantsFacts=[];
+      // usageDirection=[];
+      // productFeatures=[];
+      // storage=[];
+      // Ingrediants=[];
+      // importantInfo=[];
       variantNameController.text="";
       variantNameController.text="";
       salesUomController.text="";
@@ -394,6 +406,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       minimumGpController.text="";
       maximumGpController.text="";
       targetedGpController.text="";
+
+      uomGroupNameController.text="";
+      purchaseUomNameController.text="";
+      salesUomNameController.text="";
+      baseUomNameController.text="";
+
     });
 
 
@@ -450,8 +468,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
           variantNameController.text=data.name??"";
           variantNameController.text=data.name??"";
-          salesUomController.text=data.salesUomData?.salesUomName??"";
-          purchaseUomController.text=data.purchaseUomdata?.purchaseUomName??"";
+          salesUomController.text=data.SalesUom??"";
+          salesUomNameController.text=data.salesUomData?.salesUomName??"";
+          purchaseUomController.text=data.purchaseuom??"";
+          purchaseUomNameController.text=data.purchaseUomdata?.purchaseUomName??"";
           searchNAmeController.text=data?.searchName??"";
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
@@ -460,7 +480,6 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           additionalDescriptionController.text=data?.additionalDescription??"";
           image1Controller.text=data?.image1??"";
           image2Controller.text=data?.variantMeta?.image?.keyValues?.image2??"";
-
           image3Controller.text=data?.variantMeta?.image?.keyValues?.image3??"";
           image4Controller.text=data?.variantMeta?.image?.keyValues?.image4??"";
           image5Controller.text=data?.variantMeta?.image?.keyValues?.image5??"";
@@ -487,37 +506,22 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           alternativeQrCode=data.alterNativeQrCode??[];
           barCodeController.text=data?.barcode?.barcodeNumber??"";
           qrCodeController.text=data?.qrcode?.qrCodeNumber??"";
-          aboutProducts=data.variantMeta?.aboutProducts??[];
-          importantInfo=data.variantMeta?.importantInfo??[];
-          productDetails=data.variantMeta?.productDetails??[];
-          nutriantsFacts=data.variantMeta?.nutriantFacts??[];
-          usageDirection=data.variantMeta?.usageDirection??[];
-          // vendorDetails=data.vendorDetails??[];
+          aboutProducts=data.variantMeta?.aboutProducts;
+          importantInfo=data.variantMeta?.importantInfo;
+          productDetails=data.variantMeta?.productDetails;
+          nutriantsFacts=data.variantMeta?.nutriantFacts;
+          usageDirection=data.variantMeta?.usageDirection;
+          vendorDetails=data.vendorDetails??[];
           print("vendor detailse"+vendorDetails.toString());
-          productFeatures=data.variantMeta?.productFeatures??[];
-          storage=data.variantMeta?.storage??[];
-          Ingrediants=data.variantMeta?.Ingrediants??[];
-          importantInfo=data.variantMeta?.importantInfo??[];
-          inforMationList=data.variantMeta?.productBehave??[];
+          productFeatures=data.variantMeta?.productFeatures;
+          additionalInfo=data.variantMeta?.additionalInfo;
+          storage=data.variantMeta?.storage;
+          Ingrediants=data.variantMeta?.Ingrediants;
+          importantInfo=data.variantMeta?.importantInfo;
+          inforMationList=data.variantMeta?.productBehave;
           print(alternativeBarcode);
           print("alternativeBarcode");
           // addNew=false;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         });
 
 
@@ -623,6 +627,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
+                        Variable.variantCode=result[0].code.toString();
+
                         // Variable.verticalid=result[0].id;
                         // print("Variable.ak"+Variable.verticalid.toString());
                         context.read<VariantreadCubit>().getVariantRead(veritiaclid!);
@@ -642,7 +648,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
               return Builder(
                   builder: (context) {
                     return Scaffold(
-                        backgroundColor: Colors.white,
+                        backgroundColor: Pellet.bagroundColor,
                         body: SingleChildScrollView(
                           child: IntrinsicHeight(
                               child: Row(
@@ -667,6 +673,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
                                         veritiaclid = result[index].id;
+                                        Variable.variantCode=result[index].code.toString();
                                         // clear();
                                         // select=true;
                                         //
@@ -769,6 +776,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       ),
                                       SizedBox(height: height * .10,),
                                       VariantStabletable(
+                                        baseGroupName: baseUomNameController,
+                                          purchaseUomName: purchaseUomNameController,
+                                          salesUomName: salesUomNameController,
+                                          uomGroupName: uomGroupNameController,
                                           veritiaclid:veritiaclid,
                                         catalog1: catalog1,
                                         catalog2: catalog2,
@@ -865,6 +876,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       Divider(color: Colors.grey,thickness: 1,),
                                       SizedBox(height: height * .04,),
                                       Identification(
+                                        veritiaclid:veritiaclid ,
                                         rfId: rfIdController,
                                         qrCode: qrCodeController,
                                         barCode: barCodeController,
@@ -933,6 +945,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                             if(select){
                                               VariantPost model = VariantPost(
                                                 inventoryId: Variable.inventory_ID,
+                                                inventoryName: Variable.inventory_Name,
                                                 searchName:searchNAmeController?.text??"",
                                                 posName:posNameController?.text??"",
                                                 displayName:displayNAmeController?.text??"",
@@ -940,9 +953,6 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 additionalDescription:additionalDescriptionController?.text??"",
                                                 salesUom: int.tryParse(salesUomController?.text??""),
                                                 seblingId: int.tryParse(seblingController.text),
-
-
-
                                                 purchaseUom: int.tryParse(purchaseUomController?.text??""),
                                                 grossWeight:double.tryParse( grossWeightController.text??""),
                                                 actualCost:double.tryParse( actualCostController.text??""),
@@ -974,10 +984,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 maxGp: double.tryParse(maximumGpController.text??""),
                                                 avgGp: double.tryParse(averageGpController.text??""),
                                                 targetedGp: double.tryParse(targetedGpController.text??""),
-                                                vedioUrl: videoUrlController.text??'',
+                                                vedioUrl: videoUrlController.text.isEmpty?null:videoUrlController.text,
                                                 alternativeBarcode:alternativeBarcode,
                                                 alternativeQrCodeBarcode: alternativeQrCode,
-                                                returnType: returnTypeController.text??"",
+                                                returnType: returnTypeController.text,
                                                 returnTime: int.tryParse(returnTimeController.text),
                                                 variantStatus: "va",
                                                 isActive: active,
@@ -1017,9 +1027,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
                                                 // "1",
 
-                                                purchaseUom:"1",
+                                                purchaseUom:purchaseUomController.text,
                                                 itemImage: itmImage,
                                                 itemCatelog: itmcatelog,
+                                                vendorDetails: vendorDetails,
                                                 // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
                                                 barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
                                                 qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,

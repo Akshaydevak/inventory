@@ -373,6 +373,7 @@ class _TitleScreenState extends State<TitleScreen> {
 
                   print(provider.isCollapsed.toString());
                   setState(() {
+                    costingTypeMethodeCheck=false;
                     widget.isCollapsed = provider.isCollapsed;
                   });
                 },
@@ -622,7 +623,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "framework"),
+              label: "frame work"),
         ],
       ),
     );

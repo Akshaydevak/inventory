@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 
@@ -63,7 +64,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                 width: 70,
                 child: Text.rich(TextSpan(
                     text: widget.label,
-                    style: TextStyle(fontSize: 12),
+                    style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
                     children: widget.required
                         ? [
                       TextSpan(
@@ -145,7 +146,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
           children: [
             Text(
               widget.label,
-              style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),
+              style:GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
             ),
             SizedBox(height:3),
             Container(

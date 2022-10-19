@@ -241,7 +241,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
       getChannelTypeList(String? code, String type);
   Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
-      getChannelFilterList(String code, String id, String option);
+      getChannelFilterList(List<String> code, String id, String option);
   Future<Either<Failure, StockReadModel>> getStockRead(int? id);
   Future<Either<Failure, List<StockTableReadModel>>> getStockTableRead(
       String? code);
@@ -330,8 +330,7 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(int? id);
   Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype();
-  Future<Either<Failure, DoubleResponse>> percentageGp(
-      int? id, String? gpType);
+  Future<Either<Failure, DoubleResponse>> percentageGp(int? id, String? gpType);
   Future<Either<Failure, DoubleResponse>> patchCosting(
       CostingPageCreationPostModel model, int? id);
   Future<Either<Failure, DoubleResponse>> postFrameWorkCreate(
@@ -347,7 +346,7 @@ abstract class PurchaseReturnRepoAbstract {
       List<List<Map<String, dynamic>>>? variantlist});
   Future<Either<Failure, PurchaseOrdertype>> getVirtualStiocktype();
   Future<Either<Failure, DoubleResponse>> postStock(StockData model);
-  Future<Either<Failure, List<LinkedItemListReadModel>>> getLinkedItemListRead(
+  Future<Either<Failure, List<LinkedItemListIdModel>>> getLinkedItemListRead(
     String? code,
   );
   Future<Either<Failure, DoubleResponse>> postLinkedItem(
@@ -361,6 +360,11 @@ abstract class PurchaseReturnRepoAbstract {
       getLinkedItemList(
     String? filter,
   );
+
+  Future<Either<Failure, VariantFrameWorkPostModel>> getFrameWorkRead(
+    int? id,
+  );
+  Future<Either<Failure, DoubleResponse>> getQrCodeRead(int? id);
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -460,7 +464,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PurchaseOrdertype>> getSalesOrdertype({String? type}) {
     return repoExecute<PurchaseOrdertype>(
-        () async => remoteDataSource.getSalesOrdertype(type:type));
+        () async => remoteDataSource.getSalesOrdertype(type: type));
   }
 
   @override
@@ -978,7 +982,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<ChannelTypeModel>>>>
-      getChannelFilterList(String code, String id, String option) {
+      getChannelFilterList(List<String> code, String id, String option) {
     return repoExecute<PaginatedResponse<List<ChannelTypeModel>>>(
         () async => remoteDataSource.getChannelFilterList(code, id, option));
   }
@@ -1301,9 +1305,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<LinkedItemListReadModel>>> getLinkedItemListRead(
+  Future<Either<Failure, List<LinkedItemListIdModel>>> getLinkedItemListRead(
       String? code) {
-    return repoExecute<List<LinkedItemListReadModel>>(
+    return repoExecute<List<LinkedItemListIdModel>>(
         () async => remoteDataSource.getLinkedItemListRead(
               code,
             ));
@@ -1332,11 +1336,28 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> patchLinkedItem(LinkedItemPostModel model, int? id) {
+  Future<Either<Failure, DoubleResponse>> patchLinkedItem(
+      LinkedItemPostModel model, int? id) {
     return repoExecute<DoubleResponse>(
-            () async => remoteDataSource.patchLinkedItem(
-          model,
-          id,
-        ));
+        () async => remoteDataSource.patchLinkedItem(
+              model,
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, VariantFrameWorkPostModel>> getFrameWorkRead(int? id) {
+    return repoExecute<VariantFrameWorkPostModel>(
+        () async => remoteDataSource.getFrameWorkRead(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getQrCodeRead(int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.getQrCodeRead(
+              id,
+            ));
   }
 }

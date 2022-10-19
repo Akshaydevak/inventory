@@ -45,7 +45,11 @@ dependencies:
   image_picker: ^0.8.3+3
   url_launcher: 6.0.7
   http: ^0.13.5
+  google_fonts: ^3.0.1
   freezed_annotation:
+
+
+
 
   bloc: ^7.1.0
   dio: 4.0.0

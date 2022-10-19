@@ -55,9 +55,15 @@ _$_VariantFrameWorkPostModel _$$_VariantFrameWorkPostModelFromJson(
     _$_VariantFrameWorkPostModel(
       name: json['name'] as String?,
       description: json['description'] as String?,
+      code: json['code'] as String?,
       values: json['values'] as List<dynamic>?,
       categoryId: json['category_id'] as int?,
+      categoryName: json['category_name'] as String?,
       variantListModel: (json['variant_lines_list'] as List<dynamic>?)
+          ?.map(
+              (e) => VariantLinesLiostModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      lines: (json['lines'] as List<dynamic>?)
           ?.map(
               (e) => VariantLinesLiostModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -70,9 +76,12 @@ Map<String, dynamic> _$$_VariantFrameWorkPostModelToJson(
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
+      'code': instance.code,
       'values': instance.values,
       'category_id': instance.categoryId,
+      'category_name': instance.categoryName,
       'variant_lines_list': instance.variantListModel,
+      'lines': instance.lines,
       'attribute_type': instance.attrributeType,
       'is_active': instance.isActive,
     };
@@ -80,18 +89,22 @@ Map<String, dynamic> _$$_VariantFrameWorkPostModelToJson(
 _$_VariantLinesLiostModel _$$_VariantLinesLiostModelFromJson(
         Map<String, dynamic> json) =>
     _$_VariantLinesLiostModel(
-      name: json['name'] as String?,
-      type: json['type'] as String?,
       values:
           (json['values'] as List<dynamic>?)?.map((e) => e as String).toList(),
       attributeId: json['attribute_id'] as int?,
+      name: json['attribute_name'] as String?,
+      type: json['attribute_type'] as String?,
+      attributeCode: json['attribute_code'] as String?,
+      isActive: json['is_active'] as bool?,
     );
 
 Map<String, dynamic> _$$_VariantLinesLiostModelToJson(
         _$_VariantLinesLiostModel instance) =>
     <String, dynamic>{
-      'name': instance.name,
-      'type': instance.type,
       'values': instance.values,
       'attribute_id': instance.attributeId,
+      'attribute_name': instance.name,
+      'attribute_type': instance.type,
+      'attribute_code': instance.attributeCode,
+      'is_active': instance.isActive,
     };

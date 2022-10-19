@@ -12,7 +12,8 @@ class ChanneAllocationTopScreen extends StatefulWidget {
   List<Category> channels;
   final Function appiCheckingTrue;
   final Function filterTable;
-  ChanneAllocationTopScreen({required this.appiCheckingTrue,required this.channels, required this.listAssign, required this.filterTable});
+  final List<String> channelCodeList;
+  ChanneAllocationTopScreen({required this.appiCheckingTrue,required this.channels, required this.listAssign, required this.filterTable, required this.channelCodeList});
   @override
   _ChanneAllocationTopScreenState createState() =>
       _ChanneAllocationTopScreenState();
@@ -81,7 +82,9 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                           onChange: (va) {
                             setState(() {
                               onChange=true;
-                              selection[index]=true;
+                              var value=selection[index];
+                              value=!value!;
+                              selection[index]= value;
                               // for(var i=0;i<selection.length;i++){
                               //   if(index==i){
                               //     selection[index]=true;
@@ -144,7 +147,7 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                       widget.appiCheckingTrue(true,choosenValue);
                       context
                           .read<ChannelfilterCubit>()
-                          .getChannelFilterList("ahlan",Variable.inventory_ID,val);
+                          .getChannelFilterList(widget.channelCodeList,Variable.inventory_ID,val);
                       choosenValue=val;
                     },
                     items: items,

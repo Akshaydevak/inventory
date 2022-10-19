@@ -30,9 +30,14 @@ class ChannelAllocationStockStockReadModel with _$ChannelAllocationStockStockRea
     @JsonKey(name: "virtual_type") final String? virtualType  ,
     @JsonKey(name: "add_virtual_stock") final int? addVirtualStock  ,
     @JsonKey(name: "stock_id") final int? stockId  ,
+    @JsonKey(name: "purchase_blocked_qty") final int? purchaseblockQuantity  ,
     @JsonKey(name: "variant_id") final int? variantId  ,
+    @JsonKey(name: "sales_blocked_qty") final int? salesblockQuantity  ,
+    @JsonKey(name: "variant_code") final String? variantCode  ,
+    @JsonKey(name: "stock_code") final String? stockCode  ,
     @JsonKey(name: "stock_warning",defaultValue: false) final bool? stockWarning,
     @JsonKey(name: "sales_block",defaultValue: false) final bool? salesblock,
+    @JsonKey(name: "purchase_blocked",defaultValue: false) final bool? purchaseBlock,
 
 
 

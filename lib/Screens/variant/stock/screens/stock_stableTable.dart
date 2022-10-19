@@ -6,9 +6,12 @@ import 'package:inventory/widgets/dropdownbutton.dart';
 class VAriantStockStableTable extends StatefulWidget {
   final TextEditingController variantCode;
   final TextEditingController stockCode;
+  final TextEditingController salesUomName;
   final TextEditingController salesUom;
   final TextEditingController baseUom;
+  final TextEditingController baseUomName;
   final TextEditingController purchaseUom;
+  final TextEditingController purchaseUomName;
   final TextEditingController totalQuantity;
   final TextEditingController safetyStockQuantity;
   final TextEditingController salesBlockQuantity;
@@ -26,6 +29,7 @@ class VAriantStockStableTable extends StatefulWidget {
   final TextEditingController minMaxRatio;
   final TextEditingController maximumQuantity;
   final TextEditingController minimumQuantity;
+  final TextEditingController addVirtualStockType;
   final TextEditingController channelTypeAllocationRatio;
   final Function trueOrFalseChange;
   final bool stockWarning;
@@ -34,7 +38,7 @@ class VAriantStockStableTable extends StatefulWidget {
 
 
   VAriantStockStableTable({
-    required this.stockWarning,
+    required this.stockWarning,required this.addVirtualStockType,
     required this.trueOrFalseChange,
     required this.minMaxRatio,
     required this.purchaseBlock,
@@ -59,7 +63,7 @@ class VAriantStockStableTable extends StatefulWidget {
     required this.stockCode,
     required this.totalQuantity,
     required this.virtualStock,required this.virtualStockType,
-    required this.salesStockQuantity
+    required this.salesStockQuantity, required this.salesUomName, required this.baseUomName, required this.purchaseUomName
 
 
 
@@ -116,7 +120,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                           ),
                           NewInputCard(
                             readOnly: true,
-                              controller: widget.salesUom, title: "Sales UOM"),
+                              controller: widget.salesUomName, title: "Sales UOM"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -124,13 +128,13 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                             readOnly: true,
 
 
-                              controller: widget.baseUom, title: "Base UOM"),
+                              controller: widget.baseUomName, title: "Base UOM"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                             readOnly: true,
-                              controller: widget.purchaseUom, title: "Purchase UOM"),
+                              controller: widget.purchaseUomName, title: "Purchase UOM"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -142,10 +146,11 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                             height: height * .030,
                           ),
                           NewInputCard(
+                            readOnly: true,
 
 
 
-                              controller: widget.salesStockQuantity, title: "Sales Stock Quantity"),
+                              controller: widget.salesStockQuantity, title: "Safety Stock Quantity"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -173,14 +178,16 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                         ),
 
                         NewInputCard(
+                          formatter: true,
                             controller: widget.reOrderPoint, title: "Reorder Point"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
 
 
-                            controller: widget.returnedQuantity, title: "Reorder Quantity"),
+                            controller: widget.reLOrderQuantity, title: "Reorder Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -246,6 +253,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
                             controller: widget.virtualStock, title: "Virtual Stock"),
 
 
@@ -254,6 +262,13 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                       Expanded(child: Column(children: [
 
                         NewInputCard(
+                            formatter: true,
+
+                            controller: widget.addVirtualStockType, title: "Add virtual stock"),
+                        SizedBox(
+                          height: height * .030,
+                        ),   NewInputCard(
+                            formatter: true,
 
                             controller: widget.minMaxRatio, title: "Min Max Ratio"),
                         SizedBox(
@@ -272,6 +287,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                            formatter: true,
 
                             controller: widget.channelTypeAllocationRatio, title: "Channel Type Allocation Ratio"),
                         SizedBox(
@@ -303,10 +319,10 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                             value:widget?. salesBolck??false,
                             title: "Sales Block",
                             onClick: (gg) {
-                              bool val=widget.salesBolck;
-                              val=!val;
-                              widget.trueOrFalseChange(type: "2",val:val);
-                              setState(() {});
+                              // bool val=widget.salesBolck;
+                              // val=!val;
+                              // widget.trueOrFalseChange(type: "2",val:val);
+                              // setState(() {});
                             }),
                         SizedBox(
                           height: height * .030,
@@ -316,13 +332,13 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                             value:widget?. purchaseBlock??false,
                             title: "Purchase Block",
                             onClick: (gg) {
-                              bool val=widget.purchaseBlock;
-                              val=!val;
-                              widget.trueOrFalseChange(type: "3",val:val);
-                              setState(() {});
+                              // bool val=widget.purchaseBlock;
+                              // val=!val;
+                              // widget.trueOrFalseChange(type: "3",val:val);
+                              // setState(() {});
                             }),
                         SizedBox(
-                          height: height * .28,
+                          height: height * .16,
                         ),
 
 

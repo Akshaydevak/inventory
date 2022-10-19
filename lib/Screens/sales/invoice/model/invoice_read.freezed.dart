@@ -679,6 +679,7 @@ class _$OrderLinesInvoiceTearOff {
       @JsonKey(name: "sales_uom") String? salesUom,
       @JsonKey(name: "return_type") String? returnType,
       @JsonKey(name: "return_time") int? returnTime,
+      @JsonKey(name: "total_qty") int? totalQuantity,
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "discount_type") String? discountType,
@@ -699,6 +700,7 @@ class _$OrderLinesInvoiceTearOff {
       salesUom: salesUom,
       returnType: returnType,
       returnTime: returnTime,
+      totalQuantity: totalQuantity,
       isInvoiced: isInvoiced,
       isActive: isActive,
       discountType: discountType,
@@ -736,6 +738,8 @@ mixin _$OrderLinesInvoice {
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
   int? get returnTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "total_qty")
+  int? get totalQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
@@ -777,6 +781,7 @@ abstract class $OrderLinesInvoiceCopyWith<$Res> {
       @JsonKey(name: "sales_uom") String? salesUom,
       @JsonKey(name: "return_type") String? returnType,
       @JsonKey(name: "return_time") int? returnTime,
+      @JsonKey(name: "total_qty") int? totalQuantity,
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "discount_type") String? discountType,
@@ -809,6 +814,7 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res>
     Object? salesUom = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
+    Object? totalQuantity = freezed,
     Object? isInvoiced = freezed,
     Object? isActive = freezed,
     Object? discountType = freezed,
@@ -859,6 +865,10 @@ class _$OrderLinesInvoiceCopyWithImpl<$Res>
       returnTime: returnTime == freezed
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalQuantity: totalQuantity == freezed
+          ? _value.totalQuantity
+          : totalQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
       isInvoiced: isInvoiced == freezed
           ? _value.isInvoiced
@@ -918,6 +928,7 @@ abstract class _$OrderLinesInvoiceCopyWith<$Res>
       @JsonKey(name: "sales_uom") String? salesUom,
       @JsonKey(name: "return_type") String? returnType,
       @JsonKey(name: "return_time") int? returnTime,
+      @JsonKey(name: "total_qty") int? totalQuantity,
       @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
       @JsonKey(name: "discount_type") String? discountType,
@@ -952,6 +963,7 @@ class __$OrderLinesInvoiceCopyWithImpl<$Res>
     Object? salesUom = freezed,
     Object? returnType = freezed,
     Object? returnTime = freezed,
+    Object? totalQuantity = freezed,
     Object? isInvoiced = freezed,
     Object? isActive = freezed,
     Object? discountType = freezed,
@@ -1002,6 +1014,10 @@ class __$OrderLinesInvoiceCopyWithImpl<$Res>
       returnTime: returnTime == freezed
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      totalQuantity: totalQuantity == freezed
+          ? _value.totalQuantity
+          : totalQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
       isInvoiced: isInvoiced == freezed
           ? _value.isInvoiced
@@ -1057,6 +1073,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
       @JsonKey(name: "sales_uom") this.salesUom,
       @JsonKey(name: "return_type") this.returnType,
       @JsonKey(name: "return_time") this.returnTime,
+      @JsonKey(name: "total_qty") this.totalQuantity,
       @JsonKey(name: "is_invoiced", defaultValue: false) this.isInvoiced,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive,
       @JsonKey(name: "discount_type") this.discountType,
@@ -1096,6 +1113,9 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
   @JsonKey(name: "return_time")
   final int? returnTime;
   @override
+  @JsonKey(name: "total_qty")
+  final int? totalQuantity;
+  @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   final bool? isInvoiced;
   @override
@@ -1125,7 +1145,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
 
   @override
   String toString() {
-    return 'OrderLinesInvoice(id: $id, quantity: $quantity, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
+    return 'OrderLinesInvoice(id: $id, quantity: $quantity, barcode: $barcode, discount: $discount, vat: $vat, variantId: $variantId, salesOrderLineCode: $salesOrderLineCode, salesUom: $salesUom, returnType: $returnType, returnTime: $returnTime, totalQuantity: $totalQuantity, isInvoiced: $isInvoiced, isActive: $isActive, discountType: $discountType, unitCost: $unitCost, excessTax: $excessTax, taxableAmount: $taxableAmount, sellingPriceTotal: $sellingPriceTotal, totalPrice: $totalPrice, warrentyPrice: $warrentyPrice)';
   }
 
   @override
@@ -1160,6 +1180,9 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
             (identical(other.returnTime, returnTime) ||
                 const DeepCollectionEquality()
                     .equals(other.returnTime, returnTime)) &&
+            (identical(other.totalQuantity, totalQuantity) ||
+                const DeepCollectionEquality()
+                    .equals(other.totalQuantity, totalQuantity)) &&
             (identical(other.isInvoiced, isInvoiced) ||
                 const DeepCollectionEquality()
                     .equals(other.isInvoiced, isInvoiced)) &&
@@ -1202,6 +1225,7 @@ class _$_OrderLinesInvoice implements _OrderLinesInvoice {
       const DeepCollectionEquality().hash(salesUom) ^
       const DeepCollectionEquality().hash(returnType) ^
       const DeepCollectionEquality().hash(returnTime) ^
+      const DeepCollectionEquality().hash(totalQuantity) ^
       const DeepCollectionEquality().hash(isInvoiced) ^
       const DeepCollectionEquality().hash(isActive) ^
       const DeepCollectionEquality().hash(discountType) ^
@@ -1235,6 +1259,7 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
           @JsonKey(name: "sales_uom") String? salesUom,
           @JsonKey(name: "return_type") String? returnType,
           @JsonKey(name: "return_time") int? returnTime,
+          @JsonKey(name: "total_qty") int? totalQuantity,
           @JsonKey(name: "is_invoiced", defaultValue: false) bool? isInvoiced,
           @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
           @JsonKey(name: "discount_type") String? discountType,
@@ -1274,6 +1299,9 @@ abstract class _OrderLinesInvoice implements OrderLinesInvoice {
   @override
   @JsonKey(name: "return_time")
   int? get returnTime => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "total_qty")
+  int? get totalQuantity => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
   bool? get isInvoiced => throw _privateConstructorUsedError;

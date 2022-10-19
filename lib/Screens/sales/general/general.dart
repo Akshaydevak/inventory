@@ -968,6 +968,7 @@ class _StableTableState extends State<StableTable> {
                             ),
                             NewInputCard(
                                 readOnly: true,
+                                height: 46,
                                 controller: widget.trnNumber,
                                 title: "TRN number"),
                             SizedBox(
@@ -1020,7 +1021,7 @@ class _StableTableState extends State<StableTable> {
                             SelectableDropDownpopUp(
                               label: "billing address id",
                               type:"ShippingAddressPopUpCall",
-                              value: widget.billingAddressId.text,
+                              value: widget.billingName.text,
                               enable: true,
                               onSelection: (ShippingAddressModel? va) {
                                 print(
@@ -1442,13 +1443,13 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                   barcode: purchaseTable?.barCode?.barcodeNumber
                                       .toString() ??
                                       "",
-                                  returnTime:int.tryParse( purchaseTable?.returnTime??""),
+                                  returnTime: purchaseTable?.returnTime,
                                   returnType: purchaseTable?.returnType);
                           setState(() {});
                         } else {
                           varinatname = purchaseTable?.name ?? "";
                           returntype = purchaseTable?.returnType ?? "";
-                          returntime = purchaseTable?.returnTime ?? "";
+                          returntime = purchaseTable?.returnTime .toString()?? "";
                           unitcost1 = purchaseTable?.unitCost ?? 0;
                           unicostController.text = unitcost1.toString();
                           vat1 = purchaseTable?.vat ?? 0;

@@ -121,8 +121,8 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                                     // padding: EdgeInsets.only(bottom: 10),
 
                                     controller: _tabController,
-                                    tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                      Text("Variantdetail",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                    tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                      Text("Variant detail",style: TextStyle(color: Colors.black,fontSize: 13),),
                                       Text("Channel Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
                                       Text("Stock",style: TextStyle(color: Colors.black,fontSize: 13),),
                                       Text("Channel Type Stock Allocation",style: TextStyle(color: Colors.black,fontSize: 13),),
@@ -220,7 +220,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
             );
           },),
-          DrawerCared(label: "Costing Method Type",ontap: (){
+          DrawerCared(label: "Costing Method ",ontap: (){
 
             showDailogPopUp(
               context,

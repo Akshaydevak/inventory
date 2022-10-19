@@ -29,7 +29,7 @@ class _$LinkeditemlistreadStateTearOff {
     return const _Error();
   }
 
-  _Success success(List<LinkedItemListReadModel> data) {
+  _Success success(List<LinkedItemListIdModel> data) {
     return _Success(
       data,
     );
@@ -46,7 +46,7 @@ mixin _$LinkeditemlistreadState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<LinkedItemListReadModel> data) success,
+    required TResult Function(List<LinkedItemListIdModel> data) success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -54,7 +54,7 @@ mixin _$LinkeditemlistreadState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -62,7 +62,7 @@ mixin _$LinkeditemlistreadState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -151,7 +151,7 @@ class _$_Initial implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<LinkedItemListReadModel> data) success,
+    required TResult Function(List<LinkedItemListIdModel> data) success,
   }) {
     return initial();
   }
@@ -162,7 +162,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
   }) {
     return initial?.call();
   }
@@ -173,7 +173,7 @@ class _$_Initial implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -265,7 +265,7 @@ class _$_Loading implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<LinkedItemListReadModel> data) success,
+    required TResult Function(List<LinkedItemListIdModel> data) success,
   }) {
     return loading();
   }
@@ -276,7 +276,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
   }) {
     return loading?.call();
   }
@@ -287,7 +287,7 @@ class _$_Loading implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -379,7 +379,7 @@ class _$_Error implements _Error {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<LinkedItemListReadModel> data) success,
+    required TResult Function(List<LinkedItemListIdModel> data) success,
   }) {
     return error();
   }
@@ -390,7 +390,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
   }) {
     return error?.call();
   }
@@ -401,7 +401,7 @@ class _$_Error implements _Error {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -456,7 +456,7 @@ abstract class _Error implements LinkeditemlistreadState {
 abstract class _$SuccessCopyWith<$Res> {
   factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
       __$SuccessCopyWithImpl<$Res>;
-  $Res call({List<LinkedItemListReadModel> data});
+  $Res call({List<LinkedItemListIdModel> data});
 }
 
 /// @nodoc
@@ -477,7 +477,7 @@ class __$SuccessCopyWithImpl<$Res>
       data == freezed
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
-              as List<LinkedItemListReadModel>,
+              as List<LinkedItemListIdModel>,
     ));
   }
 }
@@ -488,7 +488,7 @@ class _$_Success implements _Success {
   const _$_Success(this.data);
 
   @override
-  final List<LinkedItemListReadModel> data;
+  final List<LinkedItemListIdModel> data;
 
   @override
   String toString() {
@@ -518,7 +518,7 @@ class _$_Success implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() error,
-    required TResult Function(List<LinkedItemListReadModel> data) success,
+    required TResult Function(List<LinkedItemListIdModel> data) success,
   }) {
     return success(data);
   }
@@ -529,7 +529,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
   }) {
     return success?.call(data);
   }
@@ -540,7 +540,7 @@ class _$_Success implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? error,
-    TResult Function(List<LinkedItemListReadModel> data)? success,
+    TResult Function(List<LinkedItemListIdModel> data)? success,
     required TResult orElse(),
   }) {
     if (success != null) {
@@ -588,9 +588,9 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements LinkeditemlistreadState {
-  const factory _Success(List<LinkedItemListReadModel> data) = _$_Success;
+  const factory _Success(List<LinkedItemListIdModel> data) = _$_Success;
 
-  List<LinkedItemListReadModel> get data => throw _privateConstructorUsedError;
+  List<LinkedItemListIdModel> get data => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$SuccessCopyWith<_Success> get copyWith =>
       throw _privateConstructorUsedError;
