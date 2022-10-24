@@ -514,7 +514,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
             height: 20,
           ),
           DrawerCared(
-            label: "uomGroup_patch",
+            label: "Uom Group patch",
             ontap: () {
               showDailogPopUp(
                 context,

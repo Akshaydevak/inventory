@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart'as http;
@@ -33,6 +34,7 @@ class NewInputCard extends StatefulWidget {
   final String? label;
   final String? keyboardType;
   final Function? onChange;
+  final Function? ontap;
 
   final String title;
   final String? hint;
@@ -42,6 +44,7 @@ class NewInputCard extends StatefulWidget {
   const NewInputCard({
     Key? key,
     this.onChange,
+    this.ontap,
     required this.controller,
     this.label,
     this.keyboardType,
@@ -96,6 +99,7 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: widget.colors,
             // color: Colors.grey.shade200,
             child: TextFormField(
+
               textAlignVertical: TextAlignVertical.center,
               onChanged:(va){widget?.onChange!(va);} ,
 
@@ -161,7 +165,10 @@ class _NewInputCardState extends State<NewInputCard> {
             // color: Colors.grey.shade200,
             child: TextFormField(
               textAlignVertical: TextAlignVertical.center,
-              onChanged:(va){widget?.onChange!(va);} ,
+              onTap: (){
+                print("www");
+               widget.ontap!=null?widget.ontap!():null;
+              },              onChanged:(va){widget?.onChange!(va);} ,
 
 
               readOnly: widget.readOnly,
@@ -287,9 +294,11 @@ class NewInputCreateCard extends StatefulWidget {
   final TextEditingController controller;
   final int maxLines;
   final Color colors;
+  final Color fontColors;
   final String? label;
   final String? keyboardType;
   final Function ontap;
+  final Function? onChange;
 
   final String title;
   final String? subTitle;
@@ -299,6 +308,8 @@ class NewInputCreateCard extends StatefulWidget {
   final  bool direction;
   const NewInputCreateCard({
     Key? key,
+    this.onChange,
+    this.fontColors=Colors.black,
     required this.ontap,
     this.subTitle="creaet New",
     required this.controller,
@@ -363,6 +374,11 @@ class _NewInputCreateCardState extends State<NewInputCreateCard> {
               // color: widget.colors,
               // color: Colors.grey.shade200,
               child: TextFormField(
+                style: TextStyle(color: widget.fontColors),
+                onTap: (){
+                  print("asss");
+                  widget.onChange!();
+                },
                 textAlignVertical: TextAlignVertical.center,
 
 
@@ -370,10 +386,11 @@ class _NewInputCreateCardState extends State<NewInputCreateCard> {
                 maxLines: widget.maxLines,
                 controller: widget.controller,
                 obscureText: show, keyboardType:
-              widget.formatter? TextInputType.number:null ,
+
+                widget.formatter? TextInputType.phone:null ,
                 inputFormatters:widget.formatter?
                 <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
+                  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
                 ]:null,
 
 
@@ -1315,6 +1332,7 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
 

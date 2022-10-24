@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
 import 'package:inventory/inventoryDatasource.dart';
 import 'package:inventory/model/purchase_current_stock_qty.dart';
@@ -69,6 +70,7 @@ abstract class InventoryRepository {
       InventoryPostModel model);
   Future<Either<Failure, PaginatedResponse<List<InventoryListModel>>>>
       getInventoryListRead(String code);
+  Future<Either<Failure, double>> getUnitcost(int? variantId);
 }
 
 class InventoryRepositoryImpl extends InventoryRepository {
@@ -277,5 +279,11 @@ class InventoryRepositoryImpl extends InventoryRepository {
       getInventoryListRead(String code) {
     return repoExecute<PaginatedResponse<List<InventoryListModel>>>(
         () async => remoteDataSource.getInventoryListRead(code));
+  }
+
+  @override
+  Future<Either<Failure, double>> getUnitcost(int? variantId) {
+    return repoExecute<double>(
+        () async => remoteDataSource.getUnitcost(variantId));
   }
 }

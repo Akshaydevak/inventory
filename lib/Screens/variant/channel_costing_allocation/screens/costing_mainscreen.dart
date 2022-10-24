@@ -7,6 +7,7 @@ import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/channelStocktableread/channelsttocktableread_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/creation/costing_creation_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/cubit/unicost_costing_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/read/channelread_cubit.dart';
 
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
@@ -68,7 +69,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
     super.initState();
   }
   clear(){
-    setState(() {
+
       unitCostController.clear();
       sellingPriceController.clear();
       costingCodeController.clear();
@@ -83,8 +84,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
       pricingGptypeController.clear();
       pricingGroupIdController.clear();
       pricingNameController.clear();
-      table.clear();
-    });
+
+
   }
   sellingPriceCalculation({int ?unitCost=0,double? gp=0}){
     setState(() {
@@ -114,8 +115,6 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
         create: (context) => ChannelstockverticalCubit(),
         ),
     BlocProvider(
-        create: (context) => ChannelListReadCubit(),
-        ),  BlocProvider(
         create: (context) => ChannelsttocktablereadCubit(),
         ), BlocProvider(
         create: (context) => CostingCreationCubit(),
@@ -191,7 +190,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 costingCodeController.text=data.costingCode.toString();
                 pricingNameController.text=data.pricingGroupName??"";
 
-                channelStockCodeController.text=data.channelCode.toString();
+                channelStockCodeController.text=data.channelStockCode.toString();
 
 
 
@@ -228,6 +227,30 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 print(data);
                 // checkBoxLis=data.data;
                 // print(checkBoxLis);
+                // group = data.data;
+                // print("Akshgayaa" + group.toString());
+                // channels=data?.results??[];
+
+              });
+            });
+
+        // TODO: implement listener
+      },
+    ),
+    BlocListener<UnicostCostingCubit, UnicostCostingState>(
+      listener: (context, state) {
+        print(state);
+        state.maybeWhen(
+            orElse: () {},
+            error: () {
+              print("error");
+            },
+            success: (data) {
+              setState(() {
+                onChange=true;
+                print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+data.toString());
+
+             unitCostController.text=data?.toString()??"";
                 // group = data.data;
                 // print("Akshgayaa" + group.toString());
                 // channels=data?.results??[];
@@ -333,7 +356,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                         ontap: (int index) {
                           setState(() {
                             selectedVertical = index;
-
+                            onChange=true;
                             select=false;
                             checkBoxLis.clear();
                             selection.clear();
@@ -360,6 +383,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
 
 
                             setState(() {
+                              onChange=true;
                               context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
                               // context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
@@ -426,7 +450,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                               channelStockId=checkBoxLis[index].id;
                               channelCode=checkBoxLis[index]?.channelCode;
                               channelNameController.text=checkBoxLis[index].channelName??"";
-                              channelStockCodeController.text=channelCode??"";
+                              channelStockCodeController.text=checkBoxLis[index]?.channelStockCode??"";
 
                               context.read<ChannelsttocktablereadCubit>().getChannelStockTableRead(channelStockId,);
 
@@ -442,8 +466,17 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             Container(
                               margin: EdgeInsets.symmetric(horizontal:width *.02),
                               child: CreateTextButton(onPress: (){
+                                context.read<UnicostCostingCubit>().getUnitcost(veritiaclid);
+
+                                print("veritcalId"+veritiaclid.toString());
+                                onChange=true;
                                 clear();
                                 select=true;
+
+                                setState(() {
+                              unitCostController.text=    Variable.unitCostCosting.toString();
+                                });
+
                               },label: "Add New",),
                             ),
                           ],
@@ -456,7 +489,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                               tableId=id;
                               select=false;
                               channelTableSelcteddId=id;
-                              context.read<ChannelreadCubit>().getCostingRead(tableId);
+                              onChange=true;
+
+                                context.read<ChannelreadCubit>().getCostingRead(tableId);
+
+
 
                           }
                         ),

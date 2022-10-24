@@ -8,47 +8,43 @@ import 'package:inventory/widgets/customtable.dart';
 
 class ChannelAllocationBottomTable extends StatefulWidget {
   final  List<ChannelTypeModel>? table;
-  // final  Function storageTableEdit;
+  final  Function tableAssign;
   // final  bool addNew;
   // final  Key? key;
-  ChannelAllocationBottomTable({required this.table});
+  ChannelAllocationBottomTable({required this.table,required this.tableAssign});
   @override
   ChannelAllocationBottomTableState createState() => ChannelAllocationBottomTableState();
 }
 
 class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTable> {
   List<String>items=["Male","Female"];
+  bool onChange=false;
+  List<ChannelTypeModel> table=[];
+
 
   @override
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    // if(!onChange){
-    //   print("welcome to the entire place");
-    //   setState(() {
-    //     keys=[];
-    //   });
-    //
-    //
-    //   if(widget.aboutProducts?.isNotEmpty==true){
-    //
-    //
-    //     setState(() {
-    //
-    //       headingController.text=widget.addNew?"":widget.aboutProducts?[0].name??"";
-    //     });
-    //     aboutProducts= widget.aboutProducts??[];
-    //     if(aboutProducts?[0].keyValues?.isNotEmpty==true)
-    //       keys=aboutProducts?[0].keyValues??[];
-    //
-    //   }
-    //
-    //
-    //
-    //
-    //
-    // }
-    // onChange=false;
+    if(onChange==false){
+      print("welcome to the entire place");
+      setState(() {
+        table=[];
+      });
+
+
+      if(widget.table?.isNotEmpty==true){
+
+        table= widget.table??[];
+
+      }
+
+
+
+
+
+    }
+    onChange=false;
     return
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,20 +153,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
 
                     ),
-                    tableHeadtext(
 
-                      '',
-
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
-                      textColor: Colors.white,
-
-
-                      size: 13,
-
-
-                    ),
 
 
 
@@ -179,7 +162,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                   ],
 
                 ),
-                if(widget.table?.isEmpty==true)...[
+                if(table?.isEmpty==true)...[
                   TableRow(
                       decoration: BoxDecoration(
                           color: Colors.grey
@@ -244,10 +227,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
 
                         ),
-                        TableCell(
-                          verticalAlignment: TableCellVerticalAlignment.middle,
-                          child:textPadding("")
-                        ),
+
                         Container(height: 45,)
 
 
@@ -255,10 +235,10 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
 
                 ],
-                if (widget.table?.isNotEmpty==true ) ...[
+                if (table?.isNotEmpty==true ) ...[
 
 
-                  for (var i = 0; i < widget.table!.length; i++)
+                  for (var i = 0; i < table!.length; i++)
                     TableRow(
                         decoration: BoxDecoration(
                             color: Colors.grey
@@ -299,7 +279,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                           TableCell(
                               verticalAlignment: TableCellVerticalAlignment.middle,
 
-                              child:textPadding(widget.table?[i].code??'')
+                              child:textPadding(table?[i].code??'')
                             // Text(keys?[i]["name"]??"")
 
 
@@ -308,7 +288,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
     TableCell(
     verticalAlignment: TableCellVerticalAlignment.middle,
 
-    child:textPadding(widget.table?[i].name??'')
+    child:textPadding(table?[i].name??'')
     // Text(keys?[i]["name"]??"")
 
 
@@ -317,7 +297,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                           TableCell(
                               verticalAlignment: TableCellVerticalAlignment.middle,
 
-                              child:textPadding(widget.table?[i].barcode?.barcodeNumber??'')
+                              child:textPadding(table?[i].barcode?.barcodeNumber??'')
                             // Text(keys?[i]["name"]??"")
 
 
@@ -326,39 +306,23 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                           TableCell(
                             verticalAlignment: TableCellVerticalAlignment.middle,
                             child: CheckedBoxs(
-                                valueChanger:true,
+                                valueChanger: table[i].isActive,
+
 
                                 onSelection:(bool ? value){
-                                  // bool? isActive = table[i].isActive;
-                                  // setState(() {
-                                  //   updateCheck=true;
-                                  //   table[i] = table[i].copyWith(updateCheck: true);
-                                  //   setState(() {
-                                  //
-                                  //   });
-                                  //   isActive = !isActive!;
-                                  //   table[i] = table[i].copyWith(isActive: isActive);
-                                  //   print(isInvoiced);
-                                  //   setState(() {});
-                                  // }),
+                                  bool? isActive = table[i].isActive;
+                                  onChange=true;
+                                  setState(() {
+
+
+                                    isActive = !isActive!;
+                                    table[i] = table[i].copyWith(isActive: isActive);
+                                widget.tableAssign(table);
+
+                                  });
                                 }),
                           ),
-    TableTextButton(
-            label: "",
-            onPress: (){
 
-
-
-              setState(() {
-
-
-              });
-
-
-
-            },
-
-          )
 
 
                         ]),

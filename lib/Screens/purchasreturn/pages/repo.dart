@@ -41,6 +41,7 @@ import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/model/variantid.dart';
 import 'package:inventory/widgets/failiure.dart';
 import 'package:inventory/widgets/repoExecute.dart';
@@ -365,6 +366,11 @@ abstract class PurchaseReturnRepoAbstract {
     int? id,
   );
   Future<Either<Failure, DoubleResponse>> getQrCodeRead(int? id);
+  Future<Either<Failure, PaginatedResponse<List<VendorDetailsModel>>>>
+      getVendorDetailList(
+    String? code,
+  );
+  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry();
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -1359,5 +1365,20 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
         () async => remoteDataSource.getQrCodeRead(
               id,
             ));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<VendorDetailsModel>>>>
+      getVendorDetailList(String? code) {
+    return repoExecute<PaginatedResponse<List<VendorDetailsModel>>>(
+        () async => remoteDataSource.getVendorDetailList(
+              code,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry() {
+    return repoExecute<List<VariantReadModel>>(
+        () async => remoteDataSource.getProducedCountry());
   }
 }

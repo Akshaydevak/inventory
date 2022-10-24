@@ -180,8 +180,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                   textFieldConfiguration: TextFieldConfiguration(
 
-                      controller:
-                      TextEditingController(text: widget.value),
+                      controller: TextEditingController(text: widget.value),
                       onTap: () {},
                       decoration: InputDecoration(
                           enabledBorder:OutlineInputBorder(

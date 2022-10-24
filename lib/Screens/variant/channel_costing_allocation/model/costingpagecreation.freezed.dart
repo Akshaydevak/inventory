@@ -33,6 +33,7 @@ class _$CostingPageCreationPostModelTearOff {
       @JsonKey(name: "channel_code") String? channelCode,
       @JsonKey(name: "price_group_name") String? pricingGroupName,
       @JsonKey(name: "costing_method_name") String? costingMethodName,
+      @JsonKey(name: "channel_stock_code") String? channelStockCode,
       @JsonKey(name: "costing_code") String? costingCode,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "variant_code") String? variantCode,
@@ -54,6 +55,7 @@ class _$CostingPageCreationPostModelTearOff {
       channelCode: channelCode,
       pricingGroupName: pricingGroupName,
       costingMethodName: costingMethodName,
+      channelStockCode: channelStockCode,
       costingCode: costingCode,
       variantId: variantId,
       variantCode: variantCode,
@@ -95,6 +97,8 @@ mixin _$CostingPageCreationPostModel {
   String? get pricingGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "costing_method_name")
   String? get costingMethodName => throw _privateConstructorUsedError;
+  @JsonKey(name: "channel_stock_code")
+  String? get channelStockCode => throw _privateConstructorUsedError;
   @JsonKey(name: "costing_code")
   String? get costingCode => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_id")
@@ -139,6 +143,7 @@ abstract class $CostingPageCreationPostModelCopyWith<$Res> {
       @JsonKey(name: "channel_code") String? channelCode,
       @JsonKey(name: "price_group_name") String? pricingGroupName,
       @JsonKey(name: "costing_method_name") String? costingMethodName,
+      @JsonKey(name: "channel_stock_code") String? channelStockCode,
       @JsonKey(name: "costing_code") String? costingCode,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "variant_code") String? variantCode,
@@ -172,6 +177,7 @@ class _$CostingPageCreationPostModelCopyWithImpl<$Res>
     Object? channelCode = freezed,
     Object? pricingGroupName = freezed,
     Object? costingMethodName = freezed,
+    Object? channelStockCode = freezed,
     Object? costingCode = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
@@ -223,6 +229,10 @@ class _$CostingPageCreationPostModelCopyWithImpl<$Res>
       costingMethodName: costingMethodName == freezed
           ? _value.costingMethodName
           : costingMethodName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      channelStockCode: channelStockCode == freezed
+          ? _value.channelStockCode
+          : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
       costingCode: costingCode == freezed
           ? _value.costingCode
@@ -287,6 +297,7 @@ abstract class _$CostingPageCreationPostModelCopyWith<$Res>
       @JsonKey(name: "channel_code") String? channelCode,
       @JsonKey(name: "price_group_name") String? pricingGroupName,
       @JsonKey(name: "costing_method_name") String? costingMethodName,
+      @JsonKey(name: "channel_stock_code") String? channelStockCode,
       @JsonKey(name: "costing_code") String? costingCode,
       @JsonKey(name: "variant_id") int? variantId,
       @JsonKey(name: "variant_code") String? variantCode,
@@ -324,6 +335,7 @@ class __$CostingPageCreationPostModelCopyWithImpl<$Res>
     Object? channelCode = freezed,
     Object? pricingGroupName = freezed,
     Object? costingMethodName = freezed,
+    Object? channelStockCode = freezed,
     Object? costingCode = freezed,
     Object? variantId = freezed,
     Object? variantCode = freezed,
@@ -375,6 +387,10 @@ class __$CostingPageCreationPostModelCopyWithImpl<$Res>
       costingMethodName: costingMethodName == freezed
           ? _value.costingMethodName
           : costingMethodName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      channelStockCode: channelStockCode == freezed
+          ? _value.channelStockCode
+          : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
       costingCode: costingCode == freezed
           ? _value.costingCode
@@ -434,6 +450,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
       @JsonKey(name: "channel_code") this.channelCode,
       @JsonKey(name: "price_group_name") this.pricingGroupName,
       @JsonKey(name: "costing_method_name") this.costingMethodName,
+      @JsonKey(name: "channel_stock_code") this.channelStockCode,
       @JsonKey(name: "costing_code") this.costingCode,
       @JsonKey(name: "variant_id") this.variantId,
       @JsonKey(name: "variant_code") this.variantCode,
@@ -477,6 +494,9 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
   @JsonKey(name: "costing_method_name")
   final String? costingMethodName;
   @override
+  @JsonKey(name: "channel_stock_code")
+  final String? channelStockCode;
+  @override
   @JsonKey(name: "costing_code")
   final String? costingCode;
   @override
@@ -509,7 +529,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
 
   @override
   String toString() {
-    return 'CostingPageCreationPostModel(description: $description, id: $id, pricingPgtype: $pricingPgtype, channelId: $channelId, costingMethodId: $costingMethodId, pricingGroupId: $pricingGroupId, channelStockId: $channelStockId, channelCode: $channelCode, pricingGroupName: $pricingGroupName, costingMethodName: $costingMethodName, costingCode: $costingCode, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, createdBy: $createdBy, pricingGpType: $pricingGpType, gpPercentage: $gpPercentage, unitCost: $unitCost, sellingPrice: $sellingPrice, isActive: $isActive)';
+    return 'CostingPageCreationPostModel(description: $description, id: $id, pricingPgtype: $pricingPgtype, channelId: $channelId, costingMethodId: $costingMethodId, pricingGroupId: $pricingGroupId, channelStockId: $channelStockId, channelCode: $channelCode, pricingGroupName: $pricingGroupName, costingMethodName: $costingMethodName, channelStockCode: $channelStockCode, costingCode: $costingCode, variantId: $variantId, variantCode: $variantCode, inventoryId: $inventoryId, createdBy: $createdBy, pricingGpType: $pricingGpType, gpPercentage: $gpPercentage, unitCost: $unitCost, sellingPrice: $sellingPrice, isActive: $isActive)';
   }
 
   @override
@@ -545,6 +565,9 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
             (identical(other.costingMethodName, costingMethodName) ||
                 const DeepCollectionEquality()
                     .equals(other.costingMethodName, costingMethodName)) &&
+            (identical(other.channelStockCode, channelStockCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.channelStockCode, channelStockCode)) &&
             (identical(other.costingCode, costingCode) ||
                 const DeepCollectionEquality()
                     .equals(other.costingCode, costingCode)) &&
@@ -590,6 +613,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
       const DeepCollectionEquality().hash(channelCode) ^
       const DeepCollectionEquality().hash(pricingGroupName) ^
       const DeepCollectionEquality().hash(costingMethodName) ^
+      const DeepCollectionEquality().hash(channelStockCode) ^
       const DeepCollectionEquality().hash(costingCode) ^
       const DeepCollectionEquality().hash(variantId) ^
       const DeepCollectionEquality().hash(variantCode) ^
@@ -626,6 +650,7 @@ abstract class _CostingPageCreationPostModel
           @JsonKey(name: "channel_code") String? channelCode,
           @JsonKey(name: "price_group_name") String? pricingGroupName,
           @JsonKey(name: "costing_method_name") String? costingMethodName,
+          @JsonKey(name: "channel_stock_code") String? channelStockCode,
           @JsonKey(name: "costing_code") String? costingCode,
           @JsonKey(name: "variant_id") int? variantId,
           @JsonKey(name: "variant_code") String? variantCode,
@@ -669,6 +694,9 @@ abstract class _CostingPageCreationPostModel
   @override
   @JsonKey(name: "costing_method_name")
   String? get costingMethodName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "channel_stock_code")
+  String? get channelStockCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "costing_code")
   String? get costingCode => throw _privateConstructorUsedError;

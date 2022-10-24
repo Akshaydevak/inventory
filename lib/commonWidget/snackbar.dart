@@ -42,6 +42,8 @@ extension ViewUtils on BuildContext {
     ));
   }
 
+
+
   void showSnackBarNormal(String message, [VoidCallback? onVisible]) {
     ScaffoldMessenger.of(this).showSnackBar(SnackBar(
       width: 400,

@@ -1,6 +1,7 @@
 const baseUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
 
 const stagingUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
+const hilalBaseUrl = "https://api-rgc-user.hilalcart.com/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryBaseUrl = "http://65.1.61.201:8112/";
 const inventoryBaseUrl =
@@ -207,8 +208,7 @@ const variantCreatetApi =
 const variantPatchApi = inventoryBaseUrl + "inventory-product/variant-update/";
 //variant creation Apisssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const variantCreationListApi = inventoryBaseUrl + "inventory-product/list-item";
-const generateQrCodeApi =
-    inventoryBaseUrl + "inventory-product/generate-qrcode/";
+const generateQrCodeApi = inventoryBaseUrl + "inventory-product/generate-qrcode/";
 const variantCreationSearchListApi =
     inventoryBaseUrl + "inventory-product/list-variant-by-inventory-by-item/";
 const linkedListDeletionApi =
@@ -254,8 +254,8 @@ const VariantFrameWorkPatchApi =
 const postCombinationFrameworkPostApi =
     inventoryBaseUrl + "inventory-product/create-variant";
 //costing
-const costingTypePostApi =
-    inventoryBaseUrl + "inventory-costing/costing-method-type-create";
+const costingTypePostApi = inventoryBaseUrl + "inventory-costing/costing-method-type-create";
+const unicostGetApi = inventoryBaseUrl + "inventory-costing/create-costing-pricing?variant=";
 const costingCreateApi =
     inventoryBaseUrl + "inventory-costing/costing-method-create";
 const listcostingMethodApi =
@@ -305,3 +305,4 @@ const listAttributeTypeApi =
 const frameworkDeleteApi =
     inventoryBaseUrl + "inventory-product/patch-variantframework/";
 const stockPostkDeleteApi = inventoryBaseUrl + "inventory-stock/create-stock";
+const vendorDetailsApi = hilalBaseUrl + "user-manufacturer_manufactureruserlist";

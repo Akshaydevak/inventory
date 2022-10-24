@@ -31,6 +31,7 @@ class CostingCreatePostModel with _$CostingCreatePostModel {
     final int? id,
 
     @JsonKey(name: "method_type_id") final int? methodTypeId,
+    @JsonKey(name: "costing_method_type_name") final String? costingMethodTypeName,
     @JsonKey(name: "method_code") final String? methodCode,
     @JsonKey(name: "method_name") final String? methodName,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,

@@ -66,7 +66,9 @@ class ProductTableState extends State<ProductTable> {
           controller: headingController,
           onChange: (va) {
             print(va);
-            aboutProducts = Storage(name: va);
+            aboutProducts = Storage(name: va,keyValues: keys);
+            widget.storageTableEdit(
+                type: "1", list: aboutProducts);
           },
         ),
         Container(
@@ -272,7 +274,9 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
           onChange: (va) {
             print(va);
             print(va);
-            productDetails = ProductFeatures(name: va);
+            productDetails = ProductFeatures(name: va,keyValues: keys);
+            widget.productTableEdit(
+                type: "1", list: productDetails);
           },
         ),
         Container(
@@ -510,6 +514,8 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
             print(va);
             print(va);
             productFeatures = ProductFeatures(name: va);
+            widget.productTableEdit(
+                type: "2", list: productFeatures);
           },
         ),
         Container(
@@ -748,6 +754,8 @@ ProductFeatures? productFeatures ;
           onChange: (va) {
             print(va);
             productFeatures = ProductFeatures(name: va);
+            widget.productTableEdit(
+                type: "3", list: productFeatures);
           },
         ),
         Container(
@@ -982,6 +990,8 @@ class NeutrialFactsState extends State<NeutrialFacts> {
           onChange: (va) {
             print(va);
             productFeatures = ProductFeatures(name: va);
+            widget.productTableEdit(
+                type: "4", list: productFeatures);
           },
         ),
         Container(
@@ -1221,6 +1231,8 @@ class IngrediansState extends State<Ingredians> {
           controller: headingController,
           onChange: (va) {
             ingriansProduct = Storage(name: va);
+            widget.storageTableEdit(
+                type: "2", list: ingriansProduct);
           },
         ),
         Container(
@@ -1313,7 +1325,7 @@ class IngrediansState extends State<Ingredians> {
                             ingriansProduct = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
-                                type: "3", list: ingriansProduct);
+                                type: "2", list: ingriansProduct);
                           },
                         ),
                       ]),
@@ -1370,7 +1382,7 @@ class IngrediansState extends State<Ingredians> {
                             ingriansProduct = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
-                                type: "3", list: ingriansProduct);
+                                type: "2", list: ingriansProduct);
                             name.text = "";
                           });
                         }
@@ -1430,6 +1442,8 @@ class _UsageDirectionState extends State<UsageDirection> {
           onChange: (va) {
             print(va);
             usageProducts = Storage(name: va);
+            widget.storageTableEdit(
+                type: "3", list: usageProducts);
           },
         ),
         Container(
@@ -1638,6 +1652,8 @@ class _StoragesWidgetState extends State<StoragesWidget> {
           onChange: (va) {
             print(va);
             aboutProducts = Storage(name: va);
+            widget.storageTableEdit(
+                type: "4", list: aboutProducts);
           },
         ),
         Container(
@@ -1851,6 +1867,8 @@ class _ImportantInfoState extends State<ImportantInfo> {
           onChange: (va) {
             print(va);
             importandInfo = ProductFeatures(name: va);
+            widget.productTableEdit(
+                type: "5", list: importandInfo);
           },
         ),
         Container(

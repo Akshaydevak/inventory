@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 
@@ -32,12 +33,18 @@ class VAriantStockStableTable extends StatefulWidget {
   final TextEditingController addVirtualStockType;
   final TextEditingController channelTypeAllocationRatio;
   final Function trueOrFalseChange;
+  final Function addCheckLimit;
+  final Function minMaxRatioCalculation;
   final bool stockWarning;
+  final bool check;
   final bool salesBolck;
   final bool purchaseBlock;
 
 
   VAriantStockStableTable({
+    required this.addCheckLimit,
+    required this.check,
+    required this.minMaxRatioCalculation,
     required this.stockWarning,required this.addVirtualStockType,
     required this.trueOrFalseChange,
     required this.minMaxRatio,
@@ -230,7 +237,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                         SelectableDropDownpopUp(
                           label: "Virtual Stock Type",
                           type: "VirtualStockTypePopupCall",
-                          value: widget.virtualStockType.text,
+                          value: widget.virtualStockType.text=="null"?"":widget.virtualStockType.text,
                           onSelection: (String? va) {
                             print(
                                 "++++se+++++++++++++++++++");
@@ -253,6 +260,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                          readOnly: true,
                             formatter: true,
                             controller: widget.virtualStock, title: "Virtual Stock"),
 
@@ -262,27 +270,47 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                       Expanded(child: Column(children: [
 
                         NewInputCard(
+                          readOnly: widget.check,
+
+                          onChange: (va){
+                            if(widget.addVirtualStockType.text.length>21){
+                              setState(() {
+                                widget.addCheckLimit(true);
+                              });
+
+                              (widget.addVirtualStockType.text.substring(0, 21));
+                              context.showSnackBarError("the limit is finished");
+
+                            }else{
+                              widget.minMaxRatioCalculation();
+                            }
+                          },
                             formatter: true,
 
                             controller: widget.addVirtualStockType, title: "Add virtual stock"),
                         SizedBox(
                           height: height * .030,
-                        ),   NewInputCard(
+                        ),   NewInputCreateCard(
+                          ontap: (){
+                            widget.minMaxRatioCalculation();
+                          },
+                            subTitle: "calculate",
                             formatter: true,
 
                             controller: widget.minMaxRatio, title: "Min Max Ratio"),
                         SizedBox(
                           height: height * .030,
                         ),
+
                         NewInputCard(
                             readOnly: true,
-                            controller: widget.maximumQuantity, title: "Maximum Quantity"),
+                            controller: widget.minimumQuantity, title: "Minimum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
                             readOnly: true,
-                            controller: widget.minimumQuantity, title: "Minimum Quantity"),
+                            controller: widget.maximumQuantity, title: "Maximum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -338,7 +366,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                               // setState(() {});
                             }),
                         SizedBox(
-                          height: height * .16,
+                          height: height * .15,
                         ),
 
 

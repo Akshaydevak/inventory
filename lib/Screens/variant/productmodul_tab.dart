@@ -210,7 +210,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
         children: [
           SizedBox(height: 20,),
           DrawerCared(label: "Costing Method Type",ontap: (){
-
+            costingTypeMethodeCheck = false;
             showDailogPopUp(
               context,
               ConfigurePopup(
@@ -221,6 +221,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
             );
           },),
           DrawerCared(label: "Costing Method ",ontap: (){
+            costingTypeMethodeCheck = false;
 
             showDailogPopUp(
               context,
@@ -232,6 +233,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
             );
           },),
           DrawerCared(label: "pricing  type group ",ontap: (){
+            costingTypeMethodeCheck = false;
 
             showDailogPopUp(
               context,
@@ -242,6 +244,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
             );
           },), DrawerCared(label: "pricing group ",ontap: (){
+            costingTypeMethodeCheck = false;
 
             showDailogPopUp(
               context,
@@ -251,21 +254,23 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
 
             );
-          },), DrawerCared(label: "Linked Item ",ontap: (){
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                veritiaclid:2,
-                type: "LinkedItemCreatePopUp",
-              ),
-
-
-            );
-
-
-
           },),
+          // DrawerCared(label: "Linked Item ",ontap: (){
+          //   costingTypeMethodeCheck = false;
+          //
+          //   showDailogPopUp(
+          //     context,
+          //     ConfigurePopup(
+          //       veritiaclid:2,
+          //       type: "LinkedItemCreatePopUp",
+          //     ),
+          //
+          //
+          //   );
+          //
+          //
+          //
+          // },),
 
 
 

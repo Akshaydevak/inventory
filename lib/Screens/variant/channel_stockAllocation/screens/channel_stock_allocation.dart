@@ -60,6 +60,13 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   bool salesBlock = false;
   bool check = false;
   bool purchaseBlock = false;
+  bool addVirtualLimit=false;
+  addCheckLimit(bool val){
+    setState(() {
+      addVirtualLimit=val;
+    });
+
+  }
 
   trueOrFalseChange({String? type, bool val = false}) {
     switch (type) {
@@ -111,6 +118,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
     channelAllocationRatio.text="";
     purchaseBlockController.clear();
     salesBlockQuantityController.clear();
+    totalQuantityController.text="";
     stockwarning==false;
     salesBlock=false;
     purchaseBlock=false;
@@ -129,11 +137,106 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
     if(sum!=10) {
     type=="1"?  context.showSnackBarError("the channel Allocation Ratio is in 10"): context.showSnackBarError("the Min Max Ratio is in 10");
       check=true;
-    }else{
-      check=false;
     }
 
+
   }
+
+  minMaxRatioCalculation(){
+    print(minMaxRatioController.text);
+    double sum = 0;
+if(minMaxRatioController.text.isNotEmpty){
+  print("entered MIN");
+  var minMax = minMaxRatioController.text.split(":");
+  print(minMax);
+  if(minMax.length>2){
+    context.showSnackBarError("the ratio range is in 2");
+
+  }
+  else{
+    for (var ratio in minMax) {
+
+
+      sum = sum + double.parse(ratio.isEmpty?"0":ratio);
+    }
+    print(sum);
+    if(sum!=10) {
+   context.showSnackBarError("the Min Max Ratio is in 10");
+
+    }
+    else{
+      print("aaaaaaaa"+totalQuantityController.text.toString());
+      if(totalQuantityController.text.isNotEmpty==true && totalQuantityController.text!="0"){
+        print("entered totAL");
+        double? total=double.tryParse(totalQuantityController?.text??"0");
+        print(total);
+        if(total!=null &&total!=0){
+          double? dividedvalue=total/10;
+          double? minimum=double.tryParse(minMax[0]);
+          double? maximum=double.tryParse(minMax[1]);
+          if(minimum!=null && minimum!=0){
+            setState(() {
+
+              minimumQuantityController.text=((dividedvalue*minimum)).round().toString();
+            });
+
+          }    if(maximum!=null && maximum!=0){
+            setState(() {
+              maximumQuantityController.text=((dividedvalue*maximum)).round().toString();
+            });
+
+          }
+
+        }
+
+
+      }
+      else{
+        print("entered virtual");
+        double? virtual=double.tryParse(virtualStockController?.text??"0");
+        double? addVirtual=double.tryParse(addVirtualController?.text??"0");
+if(addVirtual==null){
+ addVirtual=0;
+}
+        if(virtual==null){
+          virtual=0;
+        }
+
+        print(virtual);
+        print(addVirtual);
+        double? total=virtual!+addVirtual!;
+        print(total);
+
+        if(total!=0 && total!=null){
+          double? dividedvalue=total/10;
+          double? minimum=double.tryParse(minMax[0]);
+          double? maximum=double.tryParse(minMax[1]);
+          if(minimum!=null && minimum!=0){
+            setState(() {
+              minimumQuantityController.text=(dividedvalue*minimum).round().toString();
+            });
+
+          }    if(maximum!=null && maximum!=0){
+            setState(() {
+              maximumQuantityController.text=(dividedvalue*maximum).round().toString();
+            });
+
+          }
+
+        }
+
+      }
+    }
+
+
+
+  }
+
+}
+
+
+  }
+
   List<ChanmneStockListModelModel>group=[];
   @override
   void initState() {
@@ -144,9 +247,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   Widget build(BuildContext context) {
     return MultiBlocProvider(
   providers: [
-    BlocProvider(
-  create: (context) => ChannelstockverticalCubit(),
-),    BlocProvider(
+   BlocProvider(
   create: (context) => ChannelstockallocationreadCubit(),
 ), BlocProvider(
   create: (context) => ChannelStockAllocationPostCubit(),
@@ -225,24 +326,25 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                 variantCodeController.text=data.variantCode.toString()??"";
                 stockCodeController.text=data?.stockCode.toString()??"";
                 safetyStockController.text=data.safetyStock.toString()??"";
-                reorderPointQuantityController.text=data.reOrderPoint.toString()??"";
-                reorderQuantityController.text=data.reOrderQuantity.toString()??"";
-                reservedQuantityController.text=data.reservedQuantity.toString()??"";
-                reservedQuantityController.text=data.reservedQuantity.toString()??"";
-                damagedQuantityController.text=data.damagedQuantity.toString()??"";
-                returnedQuantityController.text=data.returnedQuantity.toString()??"";
-                replaceMentQuantityController.text=data.replacementQuantity.toString()??"";
-                minimumQuantityController.text=data.minimumQuantity.toString()??"";
-                maximumQuantityController.text=data.maximumQuantity.toString()??"";
-                virtualStockTypeController.text=data.virtualType.toString()??"";
-                virtualStockController.text=data.virtualStock.toString()??"";
-                salesBlockQuantityController.text=data.salesblockQuantity.toString();
-                purchaseBlockController.text=data.purchaseblockQuantity.toString();
+                reorderPointQuantityController.text=data?.reOrderPoint.toString()??"";
+                reorderQuantityController.text=data?.reOrderQuantity.toString()??"";
+                reservedQuantityController.text=data?.reservedQuantity.toString()??"";
+                reservedQuantityController.text=data?.reservedQuantity.toString()??"";
+                damagedQuantityController.text=data?.damagedQuantity.toString()??"";
+                returnedQuantityController.text=data?.returnedQuantity.toString()??"";
+                replaceMentQuantityController.text=data?.replacementQuantity.toString()??"";
+                minimumQuantityController.text=data?.minimumQuantity.toString()??"";
+                maximumQuantityController.text=data?.maximumQuantity.toString()??"";
+                virtualStockTypeController.text=data?.virtualType?.toString()??"";
+                virtualStockController.text=data?.virtualStock.toString()??"";
+                salesBlockQuantityController.text=data?.salesblockQuantity.toString()??"";
+                purchaseBlockController.text=data?.purchaseblockQuantity.toString()??"";
+                // totalQuantityController.text=data.availableQuantity.toString();
 
 
-                channelAllocationRatio.text=data.channelAllocationRatio.toString()??"";
-                addVirtualController.text=data.addVirtualStock.toString()??"";
-                minMaxRatioController.text=data.minMaxRatio.toString()??"";
+                channelAllocationRatio.text=data?.channelAllocationRatio.toString()??"";
+                addVirtualController.text=data?.addVirtualStock.toString()??"";
+                minMaxRatioController.text=data?.minMaxRatio.toString()??"";
                 stockwarning=data?.stockWarning??false;
                 salesBlock=data?.salesblock??false;
                 purchaseBlock=data?.purchaseBlock??false;
@@ -314,6 +416,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                             clear();
                             group.clear();
                             check = false;
+                            addVirtualLimit=false;
 
                             // select=false;
                             // clear();
@@ -367,6 +470,8 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
 
                                     channelId=group[index].id;
                                     setState(() {
+                                      check = false;
+                                      addVirtualLimit=false;
                                       context.read<ChannelstockallocationreadCubit>().getChannelStockAllocationRead(veritiaclid,group[index].id);
                                     });
                                     // clear();
@@ -383,6 +488,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
 
                             ),
                           ),
+
                           // Row(
                           //   children: [
                           //     Expanded(
@@ -403,7 +509,9 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
 
 
 
-                        ChannelStockStableTable(
+                        ChannelStockStableTable(addCheckLimit:addCheckLimit,
+
+                          addCheck:addVirtualLimit,
                           purchaseBlock:purchaseBlock,
                           addVirtualStock: addVirtualController,
                           trueOrFalseChange: trueOrFalseChange,
@@ -429,6 +537,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
                         replacementQuantity: replaceMentQuantityController,
                         reservedQuantity: reservedQuantityController,
                         returnedQuantity: returnedQuantityController,
+                          minMaxRatioCalculation:minMaxRatioCalculation,
 
                         salesBlockQuantity: salesBlockQuantityController,
                         salesBolck: salesBlock,

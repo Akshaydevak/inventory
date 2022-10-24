@@ -89,6 +89,8 @@ class _ChannelTypeStockAllocationState
     }
   }
 
+
+
   List<ChanmneStockListModelModel> group = [];
   List<bool?> selection = [];
   bool onChange = false;
@@ -132,9 +134,6 @@ class _ChannelTypeStockAllocationState
           create: (context) => ChannelstockverticalCubit(),
         ),
         BlocProvider(
-          create: (context) => ChannelListReadCubit(),
-        ),
-        BlocProvider(
           create: (context) => ChannelpatchCubit(),
         ),
       ],
@@ -154,45 +153,45 @@ class _ChannelTypeStockAllocationState
                         print("kingfra" + data.toString());
                         channelstockCodeController.text = data.channelStockCode ?? "";
                         variantCodeController.text = data.variantCode ?? "";
-                        salesBlockQuantityController.text = data.salesblockQuantity.toString() ?? "";
-                        purchaseBlockController.text = data.purchaseBlockQuantity.toString() ?? "";
+                        salesBlockQuantityController.text = data?.salesblockQuantity.toString() ?? "";
+                        purchaseBlockController.text = data?.purchaseBlockQuantity.toString() ?? "";
 
 
 
-                        channelStockTypecode.text = data.channelStockType ?? "";
+                        channelStockTypecode.text = data?.channelStockType ?? "";
                         safetyStockController.text =
-                            data.safetyStockQuantity.toString() ?? "";
+                            data?.safetyStockQuantity.toString() ?? "";
                         reorderPointQuantityController.text =
-                            data.reOrderPoint.toString() ?? "";
+                            data?.reOrderPoint.toString() ?? "";
                         reorderQuantityController.text =
-                            data.reOrderQuantity.toString() ?? "";
+                            data?.reOrderQuantity.toString() ?? "";
                         reservedQuantityController.text =
-                            data.reservedQuantity.toString() ?? "";
+                            data?.reservedQuantity.toString() ?? "";
                         damagedQuantityController.text =
-                            data.damagedQuantity.toString() ?? "";
+                            data?.damagedQuantity.toString() ?? "";
                         returnedQuantityController.text =
-                            data.returnedQuantity.toString() ?? "";
+                            data?.returnedQuantity.toString() ?? "";
                         replaceMentQuantityController.text =
-                            data.replaceMentQuantity.toString() ?? "";
+                            data?.replaceMentQuantity.toString() ?? "";
                         virtualStockController.text =
-                            data.virtualStock.toString() ?? "";
+                            data?.virtualStock.toString() ?? "";
                         virtualStockTypeController.text =
-                            data.virtualType.toString() ?? "";
+                            data?.virtualType ?? "";
                         totalQuantityController.text =
-                            data.availableQuantity.toString() ?? "";
+                            data?.availableQuantity.toString() ?? "";
                         channelStatusCrucialPoint.text =
-                            data.channelStatusCrucialPoint.toString() ?? "";
+                            data?.channelStatusCrucialPoint.toString() ?? "";
                         channelStatusMediumPoint.text =
-                            data.channelStatusMediumPoint.toString() ?? "";
+                            data?.channelStatusMediumPoint.toString() ?? "";
                         channelstockCodeController.text =
-                            data.channelTypeStockId.toString() ?? "";
+                            data?.channelTypeStockId.toString() ?? "";
                         // channelAllocationRatio.text=data.chann.toString()??"";
 
                         addVirtualStock.text =
-                            data.addVirtualStock.toString() ?? "";
+                            data?.addVirtualStock.toString() ?? "";
 
                         channelStatusMediumPoint.text =
-                            data.channelStatusMediumPoint.toString() ?? "";
+                            data?.channelStatusMediumPoint.toString() ?? "";
 
                         stockwarning = data.stockWarning ?? false;
                         salesBlock = data.salesBlock ?? false;
@@ -247,7 +246,14 @@ class _ChannelTypeStockAllocationState
                       setState(() {
                         print("welcome");
                         group = data.data;
-                        print(group);
+                        print(group);if(group.isNotEmpty){
+                          context
+                              .read<ChannelListReadCubit>()
+                              .getChannelList(
+                              group[0].channelTypecode,
+                              veritiaclid);
+
+                        }
 
                         // print("Akshgayaa" + group.toString());
                         // channels=data?.results??[];
@@ -270,6 +276,15 @@ class _ChannelTypeStockAllocationState
                         print("arion");
                         checkBoxLis = data.data;
                         print(checkBoxLis);
+                        // if(checkBoxLis.isNotEmpty){
+                        //   context
+                        //       .read<AllocationdataAssignCubit>()
+                        //       .getChannelAllocationRead(
+                        //       checkBoxLis[0].id,
+                        //       int.tryParse(
+                        //           Variable.inventory_ID));
+                        //
+                        // }
                         // group = data.data;
                         // print("Akshgayaa" + group.toString());
                         // channels=data?.results??[];
@@ -403,7 +418,7 @@ class _ChannelTypeStockAllocationState
                                   onTap: (int index) {
                                     print(index);
                                     onChange = true;
-                                    clear();
+                                    // clear();
                                     setState(() {
                                       if (selection.isNotEmpty) {
                                         for (var i = 0;
@@ -428,6 +443,7 @@ class _ChannelTypeStockAllocationState
                                   },
                                 ),
                                 AllocationStockStableTable(
+                                  safetyStock:safetyStockController,
                                   addVirtualStock: addVirtualStock,
                                   channelStatusCrucialPoint:
                                       channelStatusCrucialPoint,

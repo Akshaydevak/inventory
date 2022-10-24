@@ -47,6 +47,8 @@ import '../../Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit
 import '../../Screens/sales/general/cubit/salesordertype/sales_cubit.dart';
 import '../../Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import '../../Screens/sales/general/model/shippinfaddressmodel.dart';
+import '../../Screens/variant/variantdetails/cubits/producedcountry/producedcountry_cubit.dart';
+import '../../Screens/variant/variantdetails/model/variant_read.dart';
 
 class PopUpCall extends StatefulWidget {
   final String? value;
@@ -391,6 +393,20 @@ class _PopUpCallState extends State<PopUpCall> {
 
         {
           data =  SalesUomPopUpCall(
+
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              id: widget.id,
+              value: widget.value,
+              enable: widget.enable,
+              onchange:widget.onchange,
+              type: widget.type);
+        }
+        break;
+      case "ProducedCountryPopUpCall":
+
+        {
+          data =  ProducedCountryPopUpCall(
 
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
@@ -2945,125 +2961,122 @@ class _BrandListPopUpCallState extends State<BrandListPopUpCall> {
     //
     // }
     label = widget.value;
-    return BlocProvider(
-  create: (context) => Listbrand2Cubit(),
-  child: Builder(builder: (context) {
-      context.read<Listbrand2Cubit>().getSlotSectionPage();
+    return Builder(builder: (context) {
+        context.read<Listbrand2Cubit>().getSlotSectionPage();
 
-      return BlocBuilder<Listbrand2Cubit, Listbrand2State>(
-          builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () => Center(
-                child: CircularProgressIndicator(),
-              ),
-              error: () => SizedBox(),
-              // errorLoader(widget.onAddNew),
-              success: (data) {
-                print("anagha"+data.toString());
-                List<String> list = [];
-                int length=data.data.length;
-                // list=data.orderTypes;
-                for(var i=0;i<length;i++){
-                  list.add(data?.data[i].name??"" );
+        return BlocBuilder<Listbrand2Cubit, Listbrand2State>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: () => SizedBox(),
+                // errorLoader(widget.onAddNew),
+                success: (data) {
+                  print("anagha"+data.toString());
+                  List<String> list = [];
+                  int length=data.data.length;
+                  // list=data.orderTypes;
+                  for(var i=0;i<length;i++){
+                    list.add(data?.data[i].name??"" );
 
-                }
+                  }
 
-                BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
-                  BrandListModel ? newData;
-                  list.forEach((element) {
-                    if (element.name != null &&
-                        element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
-                    if (element.id != null &&
-                        element.id == (value.toLowerCase())) newData = element;
+                  BrandListModel? onSellingBasedSelect(var value, List<BrandListModel> list) {
+                    BrandListModel ? newData;
+                    list.forEach((element) {
+                      if (element.name != null &&
+                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                      if (element.id != null &&
+                          element.id == (value.toLowerCase())) newData = element;
 
 
-                  });
-                  print("value" + value.toString());
-                  // print("value"+list.toString());
+                    });
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
 
-                  // PurchaseOrdertype? newData;
-                  // list.forEach((element) {
-                  //   newData?.orderTypes?.add(element);
-                  // });
-                  return newData;
-                } // });
+                    // PurchaseOrdertype? newData;
+                    // list.forEach((element) {
+                    //   newData?.orderTypes?.add(element);
+                    // });
+                    return newData;
+                  } // });
 
-                if (widget.onAddNew != null) list.add("Add new");
-                _controller = TextEditingController(text: label);
-                // hintText = label;
+                  if (widget.onAddNew != null) list.add("Add new");
+                  _controller = TextEditingController(text: label);
+                  // hintText = label;
 
-                return Container(
+                  return Container(
 
-                  child: TypeAheadFormField(
+                    child: TypeAheadFormField(
 
-                    enabled: widget.enable,
-                    hideSuggestionsOnKeyboardHide: true,
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "required";
-                      }
-                    },
-                    textFieldConfiguration: TextFieldConfiguration(
-                        style: TextStyle(fontSize: 13),
-
-                      onChanged: (va){
-                      print(va);
-                      // search3(context, va);
-                      // context.read<Listbrand2Cubit>().searchSlotSectionPageList(va);
-
+                      enabled: widget.enable,
+                      hideSuggestionsOnKeyboardHide: true,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return "required";
+                        }
                       },
-                        controller: _controller,
-                        decoration: InputDecoration(
-                          // hintText: hintText,
-                            isDense: true,
-                            enabledBorder:OutlineInputBorder(
-                                borderRadius:BorderRadius.circular(2),
+                      textFieldConfiguration: TextFieldConfiguration(
+                          style: TextStyle(fontSize: 13),
 
-                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                            focusedBorder:   OutlineInputBorder(
-                                borderRadius:BorderRadius.circular(2),
+                        onChanged: (va){
+                        print(va);
+                        // search3(context, va);
+                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(va);
 
-                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                            suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        },
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            // hintText: hintText,
+                              isDense: true,
+                              enabledBorder:OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
 
-                    onSuggestionSelected: (suggestion) {
-                      if (suggestion == "Add new")
-                        widget.onAddNew!();
-                      else{
-                        widget.onSelection(onSellingBasedSelect(
-                            suggestion.toString(), data.data));
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              focusedBorder:   OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
 
-                      }
-                      // widget.onSelection(
-                      //     onSelect(suggestion.toString(), data ?? []));
-                    },
-                    itemBuilder: (context, suggestion) {
-                      if (suggestion == "Add new")
-                        return Column(
-                          children: [
-                            ListTile(
-                              leading: Icon(Icons.add_circle_outline_outlined),
-                              title: Text(suggestion.toString()),
-                            ),
-                          ],
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+
+                      onSuggestionSelected: (suggestion) {
+                        if (suggestion == "Add new")
+                          widget.onAddNew!();
+                        else{
+                          widget.onSelection(onSellingBasedSelect(
+                              suggestion.toString(), data.data));
+
+                        }
+                        // widget.onSelection(
+                        //     onSelect(suggestion.toString(), data ?? []));
+                      },
+                      itemBuilder: (context, suggestion) {
+                        if (suggestion == "Add new")
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.add_circle_outline_outlined),
+                                title: Text(suggestion.toString()),
+                              ),
+                            ],
+                          );
+                        return ListTile(
+                          ////leading: Icon(Icons.shopping_cart_outlined),
+                          title: Text(suggestion.toString()),
                         );
-                      return ListTile(
-                        ////leading: Icon(Icons.shopping_cart_outlined),
-                        title: Text(suggestion.toString()),
-                      );
-                    },
-                    suggestionsCallback: (String? value) async {
-                      return value == null || value.isEmpty
-                          ? list
-                          : search(value, list, widget.onAddNew);
-                    },
-                  ),
-                );
-              },
-            );
-          });
-    }),
-);
+                      },
+                      suggestionsCallback: (String? value) async {
+                        return value == null || value.isEmpty
+                            ? list
+                            : search(value, list, widget.onAddNew);
+                      },
+                    ),
+                  );
+                },
+              );
+            });
+      });
   }
 }
 
@@ -3915,6 +3928,7 @@ class DivisionListPopUpCall extends StatefulWidget {
 class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
   String? label;
   String? hintText;
+    var paginatedList;
   TextEditingController _controller = TextEditingController();
   @override
   void initState() {
@@ -3944,6 +3958,7 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                 // errorLoader(widget.onAddNew),
                 success: (data) {
                   print("appuram3"+data.data.toString());
+                  paginatedList=data;
                   List<String> list = [];
                   int length=data.data.length;
                   // list=data.orderTypes;
@@ -3974,7 +3989,11 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                     return newData;
                   } // });
 
-                  if (widget.onAddNew != null) list.add("Add new");
+                  if (widget.onAddNew != null) {
+                    list.add("Add new");
+                    list.add("Next");
+                    list.add("Previous");
+                  }
                   _controller = TextEditingController(text: label);
                   // hintText = label;
 
@@ -4016,6 +4035,27 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                       onSuggestionSelected: (suggestion) {
                         if (suggestion == "Add new")
                           widget.onAddNew!();
+                     else   if(suggestion == "Next") {
+                          paginatedList?.nextPageUrl == null
+                              ? null
+                              : () {
+                            // print(data.nextPageUrl);
+                            context
+                                .read<DevisionListCubit>()
+                                .nextslotSectionPageList();
+                          };
+                        }
+                     else   if(suggestion == "Previous"){
+                        paginatedList.previousUrl == null
+                              ? null
+                              : () {
+                            // print(data.nextPageUrl);
+                            context
+                                .read<DevisionListCubit>()
+                                .nextslotSectionPageList();
+                          };
+
+                        }
                         else{
                           widget.onSelection(onSellingBasedSelect(
                               suggestion.toString(), data.data));
@@ -4034,6 +4074,24 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                               ),
                             ],
                           );
+                        if (suggestion == "Next")
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.arrow_forward_ios),
+                                title: Text(suggestion.toString()),
+                              ),
+                            ],
+                          ); if (suggestion == "Previous")
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.arrow_back_ios),
+                                title: Text(suggestion.toString()),
+                              ),
+                            ],
+                          );
+
                         return ListTile(
                           ////leading: Icon(Icons.shopping_cart_outlined),
                           title: Text(suggestion.toString()),
@@ -4090,11 +4148,11 @@ class _VariantSerachPopUpCall extends State<VariantSerachPopUpCall> {
 
   @override
   Widget build(BuildContext context) {
-    search3(BuildContext ctx,value){
-      print("enterd"+value.toString());
-      context.read<DevisionListCubit>().searchDevisionList(value);
-
-    }
+    // search3(BuildContext ctx,value){
+    //   print("enterd"+value.toString());
+    //   context.read<DevisionListCubit>().searchDevisionList(value);
+    //
+    // }
     label = widget.value;
     return BlocProvider(
       create: (context) => VariantselectionCubit(),
@@ -4159,7 +4217,7 @@ class _VariantSerachPopUpCall extends State<VariantSerachPopUpCall> {
 
                           onChanged: (va){
                             print(va);
-                            search3(context, va);
+                            // search3(context, va);
                             // context.read<MaterialListCubit>().searchMaterialList(va);
 
                           },
@@ -4309,7 +4367,11 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
                     return newData;
                   } // });
 
-                  if (widget.onAddNew != null) list.add("Add new");
+                  if (widget.onAddNew != null){
+                    list.add("Add new");
+                    list.add("Next");
+                    list.add("previous");
+                  }
                   _controller = TextEditingController(text: label);
                   // hintText = label;
 
@@ -4430,11 +4492,11 @@ class _GroupPopUpCall extends State<GroupPopUpCall> {
 
   @override
   Widget build(BuildContext context) {
-    search3(BuildContext ctx,value){
-      print("enterd"+value.toString());
-      context.read<GrouplistCubit>().searchGroupList(value);
-
-    }
+    // search3(BuildContext ctx,value){
+    //   print("enterd"+value.toString());
+    //   context.read<GrouplistCubit>().searchGroupList(value);
+    //
+    // }
     label = widget.value;
     return Builder(builder: (context) {
       context.read<GrouplistCubit>().getGroupListList();
@@ -4497,7 +4559,7 @@ class _GroupPopUpCall extends State<GroupPopUpCall> {
 
                         onChanged: (va){
                           print(va);
-                          search3(context, va);
+                          // search3(context, va);
                           // context.read<MaterialListCubit>().searchMaterialList(va);
 
                         },
@@ -5381,6 +5443,200 @@ class _SalesUomPopUpCall extends State<SalesUomPopUpCall> {
                         else{
                           widget.onSelection(onSellingBasedSelect(
                               suggestion.toString(), data.data));
+
+                        }
+                        // widget.onSelection(
+                        //     onSelect(suggestion.toString(), data ?? []));
+                      },
+                      itemBuilder: (context, suggestion) {
+                        if (suggestion == "Add new")
+                          return Column(
+                            children: [
+                              ListTile(
+                                leading: Icon(Icons.add_circle_outline_outlined),
+                                title: Text(suggestion.toString()),
+                              ),
+                            ],
+                          );
+                        return ListTile(
+                          ////leading: Icon(Icons.shopping_cart_outlined),
+                          title: Text(suggestion.toString()),
+                        );
+                      },
+                      suggestionsCallback: (String? value) async {
+                        return value == null || value.isEmpty
+                            ? list
+                            : search(value, list, widget.onAddNew);
+                      },
+                    ),
+                  );
+                },
+              );
+            });
+      }),
+    );
+  }
+}
+
+
+
+
+
+class ProducedCountryPopUpCall extends StatefulWidget {
+  final String? value;
+  final int ? id;
+
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final Function? onchange;
+  final String type;
+  final bool enable;
+
+  final List<String>? list;
+  const ProducedCountryPopUpCall({
+    Key? key,
+    this.value,
+    this.onchange,
+    this.id,
+    required this.type,
+    this.onAddNew,
+    required this.enable,
+    required this.onSelection,
+    this.list,
+  }) : super(key: key);
+
+  @override
+  _ProducedCountryPopUpCall createState() => _ProducedCountryPopUpCall();
+}
+
+class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
+  String? label;
+  String? hintText;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+
+    setState(() {
+
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // search3(BuildContext ctx,value){
+    //   print("enterd"+value.toString());
+    //   context.read<BaseuomlistCubit>().searchUomList(value);
+    //
+    // }
+    label = widget.value;
+    return BlocProvider(
+      create: (context) => ProducedcountryCubit(),
+      child: Builder(builder: (context) {
+        context.read<ProducedcountryCubit>().getProducedCountry();
+
+        return BlocBuilder<ProducedcountryCubit, ProducedcountryState>(
+            builder: (context, state) {
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                error: () =>    TextFormField (
+
+
+
+
+                  controller:
+                  TextEditingController(text: widget.value),
+                  onTap: () {},
+                  decoration: InputDecoration(
+                      enabledBorder:OutlineInputBorder(
+                          borderRadius:BorderRadius.circular(2),
+
+
+                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                      focusedBorder:   OutlineInputBorder(
+                          borderRadius:BorderRadius.circular(2),
+
+                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                      isDense: true,
+                      border: OutlineInputBorder(),
+                      suffixIcon: Icon(Icons.more_horiz_rounded)),),
+                // errorLoader(widget.onAddNew),
+                success: (data) {
+                  print("anagha"+data.toString());
+                  List<String> list = [];
+                  int length=data.length;
+                  // list=data.orderTypes;
+                  for(var i=0;i<length;i++){
+                    list.add(data?[i].name??"" );
+
+                  }
+
+                  VariantReadModel? onSellingBasedSelect(var value, List<VariantReadModel> list) {
+                    VariantReadModel ? newData;
+                    list.forEach((element) {
+                      if (element.name != null &&
+                          element.name?.toLowerCase() == (value.toLowerCase())) newData = element;
+                      if (element.code != null &&
+                          element.code == (value.toLowerCase())) newData = element;
+
+
+                    });
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    // PurchaseOrdertype? newData;
+                    // list.forEach((element) {
+                    //   newData?.orderTypes?.add(element);
+                    // });
+                    return newData;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("Add new");
+                  _controller = TextEditingController(text: label);
+                  // hintText = label;
+
+                  return Container(
+
+                    child: TypeAheadFormField(
+
+                      enabled: widget.enable,
+                      hideSuggestionsOnKeyboardHide: true,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return "required";
+                        }
+                      },
+                      textFieldConfiguration: TextFieldConfiguration(
+                          style: TextStyle(fontSize: 13),
+
+                          onChanged: (va){
+                            print(va);
+                            // search3(context, va);
+                            // context.read<MaterialListCubit>().searchMaterialList(va);
+
+                          },
+                          controller: _controller,
+                          decoration: InputDecoration(
+                            // hintText: hintText,
+                              isDense: true,
+                              enabledBorder:OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
+
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              focusedBorder:   OutlineInputBorder(
+                                  borderRadius:BorderRadius.circular(2),
+
+                                  borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                              suffixIcon: Icon(Icons.more_horiz_rounded))),
+
+                      onSuggestionSelected: (suggestion) {
+                        if (suggestion == "Add new")
+                          widget.onAddNew!();
+                        else{
+                          widget.onSelection(onSellingBasedSelect(
+                              suggestion.toString(), data));
 
                         }
                         // widget.onSelection(

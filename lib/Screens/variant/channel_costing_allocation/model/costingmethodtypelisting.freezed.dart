@@ -295,6 +295,7 @@ class _$CostingCreatePostModelTearOff {
       {String? description,
       int? id,
       @JsonKey(name: "method_type_id") int? methodTypeId,
+      @JsonKey(name: "costing_method_type_name") String? costingMethodTypeName,
       @JsonKey(name: "method_code") String? methodCode,
       @JsonKey(name: "method_name") String? methodName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
@@ -302,6 +303,7 @@ class _$CostingCreatePostModelTearOff {
       description: description,
       id: id,
       methodTypeId: methodTypeId,
+      costingMethodTypeName: costingMethodTypeName,
       methodCode: methodCode,
       methodName: methodName,
       isActive: isActive,
@@ -322,6 +324,8 @@ mixin _$CostingCreatePostModel {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "method_type_id")
   int? get methodTypeId => throw _privateConstructorUsedError;
+  @JsonKey(name: "costing_method_type_name")
+  String? get costingMethodTypeName => throw _privateConstructorUsedError;
   @JsonKey(name: "method_code")
   String? get methodCode => throw _privateConstructorUsedError;
   @JsonKey(name: "method_name")
@@ -344,6 +348,7 @@ abstract class $CostingCreatePostModelCopyWith<$Res> {
       {String? description,
       int? id,
       @JsonKey(name: "method_type_id") int? methodTypeId,
+      @JsonKey(name: "costing_method_type_name") String? costingMethodTypeName,
       @JsonKey(name: "method_code") String? methodCode,
       @JsonKey(name: "method_name") String? methodName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -363,6 +368,7 @@ class _$CostingCreatePostModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? id = freezed,
     Object? methodTypeId = freezed,
+    Object? costingMethodTypeName = freezed,
     Object? methodCode = freezed,
     Object? methodName = freezed,
     Object? isActive = freezed,
@@ -380,6 +386,10 @@ class _$CostingCreatePostModelCopyWithImpl<$Res>
           ? _value.methodTypeId
           : methodTypeId // ignore: cast_nullable_to_non_nullable
               as int?,
+      costingMethodTypeName: costingMethodTypeName == freezed
+          ? _value.costingMethodTypeName
+          : costingMethodTypeName // ignore: cast_nullable_to_non_nullable
+              as String?,
       methodCode: methodCode == freezed
           ? _value.methodCode
           : methodCode // ignore: cast_nullable_to_non_nullable
@@ -407,6 +417,7 @@ abstract class _$CostingCreatePostModelCopyWith<$Res>
       {String? description,
       int? id,
       @JsonKey(name: "method_type_id") int? methodTypeId,
+      @JsonKey(name: "costing_method_type_name") String? costingMethodTypeName,
       @JsonKey(name: "method_code") String? methodCode,
       @JsonKey(name: "method_name") String? methodName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -428,6 +439,7 @@ class __$CostingCreatePostModelCopyWithImpl<$Res>
     Object? description = freezed,
     Object? id = freezed,
     Object? methodTypeId = freezed,
+    Object? costingMethodTypeName = freezed,
     Object? methodCode = freezed,
     Object? methodName = freezed,
     Object? isActive = freezed,
@@ -445,6 +457,10 @@ class __$CostingCreatePostModelCopyWithImpl<$Res>
           ? _value.methodTypeId
           : methodTypeId // ignore: cast_nullable_to_non_nullable
               as int?,
+      costingMethodTypeName: costingMethodTypeName == freezed
+          ? _value.costingMethodTypeName
+          : costingMethodTypeName // ignore: cast_nullable_to_non_nullable
+              as String?,
       methodCode: methodCode == freezed
           ? _value.methodCode
           : methodCode // ignore: cast_nullable_to_non_nullable
@@ -468,6 +484,7 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
       {this.description,
       this.id,
       @JsonKey(name: "method_type_id") this.methodTypeId,
+      @JsonKey(name: "costing_method_type_name") this.costingMethodTypeName,
       @JsonKey(name: "method_code") this.methodCode,
       @JsonKey(name: "method_name") this.methodName,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
@@ -483,6 +500,9 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
   @JsonKey(name: "method_type_id")
   final int? methodTypeId;
   @override
+  @JsonKey(name: "costing_method_type_name")
+  final String? costingMethodTypeName;
+  @override
   @JsonKey(name: "method_code")
   final String? methodCode;
   @override
@@ -494,7 +514,7 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
 
   @override
   String toString() {
-    return 'CostingCreatePostModel(description: $description, id: $id, methodTypeId: $methodTypeId, methodCode: $methodCode, methodName: $methodName, isActive: $isActive)';
+    return 'CostingCreatePostModel(description: $description, id: $id, methodTypeId: $methodTypeId, costingMethodTypeName: $costingMethodTypeName, methodCode: $methodCode, methodName: $methodName, isActive: $isActive)';
   }
 
   @override
@@ -509,6 +529,9 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
             (identical(other.methodTypeId, methodTypeId) ||
                 const DeepCollectionEquality()
                     .equals(other.methodTypeId, methodTypeId)) &&
+            (identical(other.costingMethodTypeName, costingMethodTypeName) ||
+                const DeepCollectionEquality().equals(
+                    other.costingMethodTypeName, costingMethodTypeName)) &&
             (identical(other.methodCode, methodCode) ||
                 const DeepCollectionEquality()
                     .equals(other.methodCode, methodCode)) &&
@@ -526,6 +549,7 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(methodTypeId) ^
+      const DeepCollectionEquality().hash(costingMethodTypeName) ^
       const DeepCollectionEquality().hash(methodCode) ^
       const DeepCollectionEquality().hash(methodName) ^
       const DeepCollectionEquality().hash(isActive);
@@ -544,13 +568,18 @@ class _$_CostingCreatePostModel implements _CostingCreatePostModel {
 
 abstract class _CostingCreatePostModel implements CostingCreatePostModel {
   const factory _CostingCreatePostModel(
-          {String? description,
-          int? id,
-          @JsonKey(name: "method_type_id") int? methodTypeId,
-          @JsonKey(name: "method_code") String? methodCode,
-          @JsonKey(name: "method_name") String? methodName,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_CostingCreatePostModel;
+      {String? description,
+      int? id,
+      @JsonKey(name: "method_type_id")
+          int? methodTypeId,
+      @JsonKey(name: "costing_method_type_name")
+          String? costingMethodTypeName,
+      @JsonKey(name: "method_code")
+          String? methodCode,
+      @JsonKey(name: "method_name")
+          String? methodName,
+      @JsonKey(name: "is_active", defaultValue: false)
+          bool? isActive}) = _$_CostingCreatePostModel;
 
   factory _CostingCreatePostModel.fromJson(Map<String, dynamic> json) =
       _$_CostingCreatePostModel.fromJson;
@@ -562,6 +591,9 @@ abstract class _CostingCreatePostModel implements CostingCreatePostModel {
   @override
   @JsonKey(name: "method_type_id")
   int? get methodTypeId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "costing_method_type_name")
+  String? get costingMethodTypeName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "method_code")
   String? get methodCode => throw _privateConstructorUsedError;

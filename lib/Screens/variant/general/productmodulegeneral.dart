@@ -509,7 +509,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                             ),
                                           ),
                                           // Expanded(child: NewInputCard(controller: controller,title: "Varients"),),
-                                          Expanded(child: NewInputCard(controller: variantFrameWorkController,title: "Variant Frame Work"),)
+                                          Expanded(child: NewInputCard(readOnly: true,
+                                              controller: variantFrameWorkController,title: "Variant Frame Work"),)
                                         ],
                                       ),
                                     ),

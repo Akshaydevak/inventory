@@ -30,8 +30,12 @@ import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'Screens/logi/login.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
+import 'Screens/variant/channel_alloction/cubit/channelread/channelread_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
+import 'Screens/variant/channel_costing_allocation/cubits/cubit/unicost_costing_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
+import 'Screens/variant/channel_stockAllocation/cubit/channelstockvertical/channelstockvertical_cubit.dart';
+import 'Screens/variant/channels2allocation/cubits/channellistread/channel_list_read_cubit.dart';
 import 'Screens/variant/channels2allocation/cubits/data_assign/allocationdata_assign_cubit.dart';
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
@@ -139,6 +143,18 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => AllocationdataAssignCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChannelListReadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChannelstockverticalCubit(),
+        ),
+        BlocProvider(
+          create: (context) => UnicostCostingCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ChannelreadCubit(),
         ),
       ],
       child: MaterialApp(

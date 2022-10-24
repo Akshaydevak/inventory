@@ -13,6 +13,7 @@ class AllocationStockStableTable extends StatefulWidget {
   final TextEditingController channelTypeAllocationRatio;
   final TextEditingController purchaseBlockQuantity;
   final TextEditingController salesBlockQuantity;
+  final TextEditingController safetyStock;
 
   final TextEditingController reOrderPoint;
   final TextEditingController reLOrderQuantity;
@@ -45,6 +46,7 @@ class AllocationStockStableTable extends StatefulWidget {
 
   AllocationStockStableTable({
     required this.stockWarning,
+    required this.safetyStock,
     required this.purchaseBlock,
     required this.trueOrFalseChange,
     required this.addVirtualStock,
@@ -165,15 +167,22 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               controller: widget.salesBlockQuantity, title: "Sales Block Quantity"),
                           SizedBox(
                             height: height * .030,
+                          ),  NewInputCard(
+                              readOnly: true,
+
+
+                              controller: widget.safetyStock, title: "Safety Stock "),
+                          SizedBox(
+                            height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
 
 
                               controller: widget.purchaseBlockQuantity, title: "Purchase Block Quantity"),
-                          SizedBox(
-                            height: height * .120,
-                          ),
+                          // SizedBox(
+                          //   height: height * .120,
+                          // ),
 
 
 
@@ -340,7 +349,7 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .06,
+                          height: height * .05,
                         ),
 
 

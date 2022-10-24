@@ -15,11 +15,13 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 
 import '../../../core/uttils/variable.dart';
 import 'cubits/generateqrcode/qrgenerating_cubit.dart';
 import 'model/screesns/variant tables.dart';
+import 'model/vendormodel.dart';
 
 class Identification extends StatefulWidget {
   final TextEditingController barCode;
@@ -150,13 +152,24 @@ class _IdentificationState extends State<Identification> {
                               child: Column(
                                 children: [
                                   NewInputCreateCard(
-                                    height: 37,
+                                    fontColors: Colors.lightBlue,
+
+                                    height: 55,
+                                      onChange: () async {
+                                      print("akshahahahha");
+
+
+                                        await launch(widget.qrCode.text);
+
+
+                                      },
                                       subTitle: "Generate Qr Code",
                                       ontap: () {
                                         context.read<QrgeneratingCubit>().getQrCodeRead(widget.veritiaclid);
 
 
                                       },
+
                                       controller: widget.qrCode, title: "Qr code"),
                                 ],
                               ),
@@ -1790,11 +1803,36 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           height: height * .030,
                         ),
 
-                        NewInputCard(
+                        SelectableDropDownpopUp(
+
+                          controller: widget.producedCountry,
+                          label: "Produced Country",
+                          type: "ProducedCountryPopUpCall",
+                          id: base_uom ?? 0,
+                          value: widget.producedCountry.text,
+                          onchange: (vale) {
+                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                          },
+                          enable: true,
+                          onSelection: (BrandListModel? va) {
+                            setState(() {
+                              widget.producedCountry.text =
+                                  va?.name.toString() ?? "";
+
+                              setState(() {
+
+                              });
 
 
-                            controller: widget.producedCountry,
-                            title: "Produced Country"),
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+                          },
+
+                        ),
+
+
+
                         SizedBox(
                           height: height * .030,
                         ),
@@ -1951,7 +1989,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         ),
                         NewInputCard(
                             formatter: true,
-                            controller: widget.maxSalesOrderLimit,
+                            controller: widget.maximumGp,
                             title: "Maximum Gp"),
                         SizedBox(
                           height: height * .030,
@@ -2845,6 +2883,7 @@ class VendorDetailsVarient extends StatefulWidget {
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails = [];
+  String vendoeCode="";
   TextEditingController code = TextEditingController();
   TextEditingController refCode = TextEditingController();
 
@@ -3054,6 +3093,27 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                   UnderLinedInput(
                     formatter: false,
                     controller: code,
+                    onComplete: (){
+                      showDailogPopUp(
+                        context,
+                        ConfigurePopup(
+                          listAssign:(VendorDetailsModel model){
+                            print("akkk");
+                            print(model.toString());
+                            setState(() {
+                              onChange=true;
+                              code.text=model.manuFactureName??"";
+                              vendoeCode=model.manuFactureuserCode??"";
+
+                            });
+
+                          },
+                          type: "vendorDetailList_popup",
+                        ),
+
+
+                      );
+                    },
                   ),
                 ),
                 TableCell(
@@ -3068,6 +3128,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                   VendorDetails model = VendorDetails(
                     vendorName: code.text ?? "",
                     vendorReerenceCode: refCode.text ?? "",
+                    vendorCode:vendoeCode
                   );
                   onChange = true;
                   setState(() {

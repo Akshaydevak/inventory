@@ -42,6 +42,7 @@ import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpatch.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variantpost.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/commonWidget/appurl.dart';
 import 'package:inventory/commonWidget/sharedpreference.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -301,6 +302,10 @@ abstract class PurchaseSourceAbstract {
     int? id,
   );
   Future<DoubleResponse> getQrCodeRead(int? id);
+  Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
+    String? code,
+  );
+  Future<List<VariantReadModel>> getProducedCountry();
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -2729,8 +2734,18 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     } else {
       code = code == null ? "" : code;
 
-      if (code == "")
-        path = listGroupApi + Variable.categoryId.toString();
+      if (code == ""){
+        if(Variable.subCategorycategory!=0){
+          print("entered in subcategoryBased");
+          path = listGroupApi + Variable.subCategorycategory.toString();
+
+        }
+        else{
+          print("entered in cate");
+          path = listGroupApi + Variable.categoryId.toString();}
+      }
+
+
       else
         path = listGroupApi + Variable.categoryId.toString() + "?name=$code";
     }
@@ -3502,7 +3517,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           item.toString();
     else
       path =
-          "http://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
+          "https://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
 
     print(path);
     final response = await client.get(path,
@@ -3525,6 +3540,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<VariantCreationReadModel> getVariantCreationRead(int? id) async {
     String path = variantCreationReadApi + id.toString();
+    print("the searchin path"+path.toString());
 
     try {
       print("ppppath" + path.toString());
@@ -3652,6 +3668,30 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     print("option" + code.toString());
     print("option" + option.toString());
 
+    try {
+      final response = await client.post(path,
+          data: {
+            "channel_code": code,
+            "inventory_id": Variable.inventory_ID,
+            "selected_option": option,
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }));
+
+      List<ChannelTypeModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(ChannelTypeModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<ChannelTypeModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString());
+    } catch (e) {
+      print(e);
+    }
     final response = await client.post(path,
         data: {
           "channel_code": code,
@@ -4180,9 +4220,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "channel_status_crucial_point": model.channelStatusCrucialPoint,
           "channel_status_medium_point": model.channelStatusMediumPoint,
           "purchase_blocked": model.purchaseBlocked,
-              "purchase_blocked_qty":model.purchaseBlockQuantity,
-              "sales_blocked_qty":model.salesblockQuantity,
-
+          "purchase_blocked_qty": model.purchaseBlockQuantity,
+          "sales_blocked_qty": model.salesblockQuantity,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4249,11 +4288,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       path = costingCreateApi;
 
     print("the costinf Api");
+    print(id);
+    print(description);
+    print(typeName);
     print(path);
     try {
       final response = await client.post(path,
           data: {
-            "method_name":typeName,
+            "method_name": typeName,
             "type_name": typeName,
             "description": description,
             "created_by": createdBy,
@@ -4277,7 +4319,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
     final response = await client.post(path,
         data: {
-          "method_name":typeName,
+          "method_name": typeName,
           "type_name": typeName,
           "description": description,
           "created_by": createdBy,
@@ -5656,5 +5698,100 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['data']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
+      String? code) async {
+    String path = vendorDetailsApi;
+
+    UserPreferences().getUser().then((value) {
+      token = value.token;
+      print("token is here222 exist" + token.toString());
+    });
+
+    try {
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'token $token'
+          }));
+      print(response);
+
+      List<VendorDetailsModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(VendorDetailsModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<VendorDetailsModel>>(
+          items,
+          response.data['data']['next'],
+          response.data['data']['count'].toString());
+    } catch (e) {
+      print("the mistake is");
+    }
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'token $token'
+        }));
+    print(response);
+
+    List<VendorDetailsModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(VendorDetailsModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<VendorDetailsModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<List<VariantReadModel>> getProducedCountry() async {
+    String path =
+        "https://api-inventory-software-staging.rgcdynamics.org/country-list?value=list";
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<VariantReadModel> items = [];
+      (response.data['data'] as List).forEach((element) {
+        items.add(VariantReadModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    List<VariantReadModel> items = [];
+    (response.data['data'] as List).forEach((element) {
+      items.add(VariantReadModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return items;
   }
 }

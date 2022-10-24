@@ -22,12 +22,17 @@ class _$ChannelTypeModelTearOff {
   const _$ChannelTypeModelTearOff();
 
   _ChannelTypeModel call(
-      {int? id, String? code, String? name, Barcode? barcode}) {
+      {int? id,
+      String? code,
+      String? name,
+      Barcode? barcode,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
     return _ChannelTypeModel(
       id: id,
       code: code,
       name: name,
       barcode: barcode,
+      isActive: isActive,
     );
   }
 
@@ -45,6 +50,8 @@ mixin _$ChannelTypeModel {
   String? get code => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   Barcode? get barcode => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -57,7 +64,12 @@ abstract class $ChannelTypeModelCopyWith<$Res> {
   factory $ChannelTypeModelCopyWith(
           ChannelTypeModel value, $Res Function(ChannelTypeModel) then) =
       _$ChannelTypeModelCopyWithImpl<$Res>;
-  $Res call({int? id, String? code, String? name, Barcode? barcode});
+  $Res call(
+      {int? id,
+      String? code,
+      String? name,
+      Barcode? barcode,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 
   $BarcodeCopyWith<$Res>? get barcode;
 }
@@ -77,6 +89,7 @@ class _$ChannelTypeModelCopyWithImpl<$Res>
     Object? code = freezed,
     Object? name = freezed,
     Object? barcode = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -95,6 +108,10 @@ class _$ChannelTypeModelCopyWithImpl<$Res>
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 
@@ -117,7 +134,12 @@ abstract class _$ChannelTypeModelCopyWith<$Res>
           _ChannelTypeModel value, $Res Function(_ChannelTypeModel) then) =
       __$ChannelTypeModelCopyWithImpl<$Res>;
   @override
-  $Res call({int? id, String? code, String? name, Barcode? barcode});
+  $Res call(
+      {int? id,
+      String? code,
+      String? name,
+      Barcode? barcode,
+      @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 
   @override
   $BarcodeCopyWith<$Res>? get barcode;
@@ -140,6 +162,7 @@ class __$ChannelTypeModelCopyWithImpl<$Res>
     Object? code = freezed,
     Object? name = freezed,
     Object? barcode = freezed,
+    Object? isActive = freezed,
   }) {
     return _then(_ChannelTypeModel(
       id: id == freezed
@@ -158,6 +181,10 @@ class __$ChannelTypeModelCopyWithImpl<$Res>
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
+      isActive: isActive == freezed
+          ? _value.isActive
+          : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -165,7 +192,12 @@ class __$ChannelTypeModelCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_ChannelTypeModel implements _ChannelTypeModel {
-  const _$_ChannelTypeModel({this.id, this.code, this.name, this.barcode});
+  const _$_ChannelTypeModel(
+      {this.id,
+      this.code,
+      this.name,
+      this.barcode,
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
 
   factory _$_ChannelTypeModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChannelTypeModelFromJson(json);
@@ -178,10 +210,13 @@ class _$_ChannelTypeModel implements _ChannelTypeModel {
   final String? name;
   @override
   final Barcode? barcode;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  final bool? isActive;
 
   @override
   String toString() {
-    return 'ChannelTypeModel(id: $id, code: $code, name: $name, barcode: $barcode)';
+    return 'ChannelTypeModel(id: $id, code: $code, name: $name, barcode: $barcode, isActive: $isActive)';
   }
 
   @override
@@ -195,7 +230,11 @@ class _$_ChannelTypeModel implements _ChannelTypeModel {
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality().equals(other.barcode, barcode)));
+                const DeepCollectionEquality()
+                    .equals(other.barcode, barcode)) &&
+            (identical(other.isActive, isActive) ||
+                const DeepCollectionEquality()
+                    .equals(other.isActive, isActive)));
   }
 
   @override
@@ -204,7 +243,8 @@ class _$_ChannelTypeModel implements _ChannelTypeModel {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(barcode);
+      const DeepCollectionEquality().hash(barcode) ^
+      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -219,10 +259,12 @@ class _$_ChannelTypeModel implements _ChannelTypeModel {
 
 abstract class _ChannelTypeModel implements ChannelTypeModel {
   const factory _ChannelTypeModel(
-      {int? id,
-      String? code,
-      String? name,
-      Barcode? barcode}) = _$_ChannelTypeModel;
+          {int? id,
+          String? code,
+          String? name,
+          Barcode? barcode,
+          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
+      _$_ChannelTypeModel;
 
   factory _ChannelTypeModel.fromJson(Map<String, dynamic> json) =
       _$_ChannelTypeModel.fromJson;
@@ -235,6 +277,9 @@ abstract class _ChannelTypeModel implements ChannelTypeModel {
   String? get name => throw _privateConstructorUsedError;
   @override
   Barcode? get barcode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "is_active", defaultValue: false)
+  bool? get isActive => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ChannelTypeModelCopyWith<_ChannelTypeModel> get copyWith =>

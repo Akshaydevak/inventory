@@ -83,6 +83,11 @@ class _VariantChannelAllocationScreenState
       paginated = data;
     });
   }
+  tableAssign(List<ChannelTypeModel>table1) {
+    setState(() {
+      table = table1;
+    });
+  }
 
   appiCheckingTrue(bool val,String type) {
     print("GAssali"+type);
@@ -327,6 +332,7 @@ class _VariantChannelAllocationScreenState
                                   ),
                                   ChannelAllocationBottomTable(
                                     table: table,
+                                      tableAssign:tableAssign,
                                   ),
                                   tablePagination(
                                         () {
@@ -423,15 +429,16 @@ class _VariantChannelAllocationScreenState
 
                                               }
                                               if(table.isNotEmpty==true){
-                                                for(var i=0;i<table.length;i++)
+                                                for(var i=0;i<table.length;i++) {
+                                                  if(table[i].isActive==true)
                                                   selectedData.add(SelectedData(
 
-                                                  code  : table[i].code.toString(),
-                                                    id:table[i].id
+                                                      code: table[i].code
+                                                          .toString(),
+                                                      id: table[i].id
 
                                                   ));
-
-                                              }
+                                                }}
                                               ChannelPostModel model=ChannelPostModel(
                                                 inventoryId: Variable.inventory_ID,
                                                 selectionType:apiChecking?choosenValue2: choosenValue,

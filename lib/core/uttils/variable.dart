@@ -37,11 +37,13 @@ class Variable{
 
 
   static int  tableindex=0;
+  static double?  unitCostCosting;
   static bool  tableedit=false;
   static int? verticalid=0;
   static int? divisionId=0;
   static int? uomGroupId=0;
   static int? categoryId=0;
+  static int? subCategorycategory=0;
   static int? uomId=0;
   static int? verticalid2;
   static bool? tableClear=false;

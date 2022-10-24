@@ -737,7 +737,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onCreate: true,
                               label: "item catalog2"),
                           SizedBox(
-                            height: height * .092,
+                            height: height * .097,
                           ),
 
                         ],))
@@ -803,14 +803,14 @@ class _TableBottomState extends State<TableBottom> {
                 ),
               ),
 
-              Expanded(
-                child: Column(
-                  children: [
-                    NewInputCard(
-                        controller: widget.rfId, title: "RF Id"),
-                  ],
-                ),
-              ),
+              // Expanded(
+              //   child: Column(
+              //     children: [
+              //       NewInputCard(
+              //           controller: widget.rfId, title: "RF Id"),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
 
@@ -997,14 +997,44 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
   bool onChange=false;
 
   List<String>values=[];
+  List<String>values1=[];
 
   @override
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
     if(onChange==false){
+      table=[];
+      values1=[];
 
         table=widget.table;
+        if(table.isNotEmpty){
+          for(var i =0;i<table.length;i++){
+            values1.add("");}
+          print("values1"+values1.toString());
+
+          for(var i =0;i<table.length;i++){
+
+
+
+              if(table[i].values![i].isNotEmpty) {
+                String str="";
+                for(var j=0;j<table[i].values!.length;j++) {
+
+
+                  String value = table[i].values![j];
+                  str = str + " " + value.toString();
+                  print("str"+str.toString());
+                }
+                values1[i]=str;
+                print("values1"+values1.toString());
+
+
+
+              }
+
+          }
+        }
         print("tablesssssssssssss"+table.toString());
 
 
@@ -1168,48 +1198,49 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
-                            child:
+                            child:textPadding(values1[i]??"")
 
-                            SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-
-    child: Container(
-      color: Colors.green,
-    width: 230,
-    // // height: 40,
-    child: Wrap(
-    direction : Axis.horizontal,
-    children: [
-    if (table[i].values?.isNotEmpty==true )
-
-
-    for (var k = 0; i < table[i].values!.length; k++)...[
-
-    Container(
-      color: Colors.yellow,
-    // height: 30,
-    width: 50,
-    child: UnderLinedInput(
-    formatter: false,
-    initialCheck: true,
-    last: "5",
-    onChanged: (va){
-    print(va);
-
-    setState(() {
-   // t values[i]=va;
-    });
-
-    },
-    ),
-    ),
-
-    ] ,
-
-    ],
-    ),
-    ),
-    ),),
+   //                          SingleChildScrollView(
+   //  scrollDirection: Axis.horizontal,
+   //
+   //  child: Container(
+   //    color: Colors.green,
+   //  width: 230,
+   //  // // height: 40,
+   //  child: Wrap(
+   //  direction : Axis.horizontal,
+   //  children: [
+   //  if (values?.isNotEmpty==true )
+   //
+   //
+   //  for (var k = 0; i < values!.length; k++)...[
+   //
+   //  Container(
+   //    color: Colors.yellow,
+   //  // height: 30,
+   //  width: 50,
+   //  child: UnderLinedInput(
+   //  formatter: false,
+   //  initialCheck: true,
+   //  last: "5",
+   //  onChanged: (va){
+   //  print(va);
+   //
+   //  setState(() {
+   // // t values[i]=va;
+   //  });
+   //
+   //  },
+   //  ),
+   //  ),
+   //
+   //  ] ,
+   //
+   //  ],
+   //  ),
+   //  ),
+   //  ),
+                        ),
    //                          // Container(
    //                          //   width: 230,
    //                          //   child:
@@ -1303,6 +1334,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
 
     setState(() {
+      onChange=true;
       name.text=va?.attributeName??"";
       type.text=va?.attributeType??"";
       attributeid=va?.id;
@@ -1356,6 +1388,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
         initialCheck: true,
         last: values[i],
         onChanged: (va){
+          onChange=true;
             print(va);
 
             setState(() {
@@ -1372,6 +1405,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
         controller: val,
       onComplete: (){
          setState(() {
+           onChange=true;
              values.add(val.text);
              print(values.length);
              val.text='';
@@ -1390,6 +1424,17 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                       designCheck: true,
                       onPress: (){
                         onChange=true;
+                        if(values.isNotEmpty) {
+                          String str="";
+                          for(var j=0;j<values.length;j++) {
+
+
+                            String value = values[j].isEmpty?"": values[j];
+                            str = str + " " + value.toString();
+                          }
+                          values1.add(str);
+
+                        }
                         // setState(() {
                           table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
                           print(table.length);

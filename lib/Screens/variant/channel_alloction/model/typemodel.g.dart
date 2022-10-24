@@ -14,6 +14,7 @@ _$_ChannelTypeModel _$$_ChannelTypeModelFromJson(Map<String, dynamic> json) =>
       barcode: json['barcode'] == null
           ? null
           : Barcode.fromJson(json['barcode'] as Map<String, dynamic>),
+      isActive: json['is_active'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_ChannelTypeModelToJson(_$_ChannelTypeModel instance) =>
@@ -22,4 +23,5 @@ Map<String, dynamic> _$$_ChannelTypeModelToJson(_$_ChannelTypeModel instance) =>
       'code': instance.code,
       'name': instance.name,
       'barcode': instance.barcode,
+      'is_active': instance.isActive,
     };

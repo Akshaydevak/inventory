@@ -60,6 +60,13 @@ class _StockScreenState extends State<StockScreen> {
   var list;
   int? veritiaclid = 0;
   List<StockTableReadModel> data=[];
+  bool addVirtualLimit=false;
+  addCheckLimit(bool val){
+    setState(() {
+      addVirtualLimit=val;
+    });
+
+  }
 
   @override
   void initState() {
@@ -81,6 +88,101 @@ class _StockScreenState extends State<StockScreen> {
     }else{
       check=false;
     }
+
+  }
+
+
+  minMaxRatioCalculation(){
+    print(minMaxRatioController.text);
+    double sum = 0;
+    if(minMaxRatioController.text.isNotEmpty){
+      print("entered MIN");
+      var minMax = minMaxRatioController.text.split(":");
+      print(minMax);
+      if(minMax.length>2){
+        context.showSnackBarError("the ratio range is in 2");
+
+      }
+      else{
+        for (var ratio in minMax) {
+
+
+          sum = sum + double.parse(ratio.isEmpty?"0":ratio);
+        }
+        print(sum);
+        if(sum!=10) {
+          context.showSnackBarError("the Min Max Ratio is in 10");
+
+        }
+        else{
+          print("aaaaaaaa"+totalQuantityController.text.toString());
+          if(totalQuantityController.text.isNotEmpty==true &&totalQuantityController.text!="0" ){
+            print("entered totAL");
+            double? total=double.tryParse(totalQuantityController?.text??"0");
+            print(total);
+            if(total!=null &&total!=0){
+              double? dividedvalue=total/10;
+              double? minimum=double.tryParse(minMax[0]);
+              double? maximum=double.tryParse(minMax[1]);
+              if(minimum!=null && minimum!=0){
+                setState(() {
+                  minimumQuantityController.text=(dividedvalue*minimum).round().toString();
+                });
+
+              }    if(maximum!=null && maximum!=0){
+                setState(() {
+                  maximumQuantityController.text=(dividedvalue*maximum).round().toString();
+                });
+
+              }
+
+            }
+
+
+          }
+          else{
+            print("entered virtual");
+            double? virtual=double.tryParse(virtualStockController?.text??"0");
+            double? addVirtual=double.tryParse(addVirtualStockController?.text??"0");
+            if(addVirtual==null){
+              addVirtual=0;
+            }
+            if(virtual==null){
+              virtual=0;
+            }
+
+            print(virtual);
+            print(addVirtual);
+            double? total=virtual!+addVirtual!;
+            print(total);
+
+            if(total!=0 && total!=null){
+              double? dividedvalue=total/10;
+              double? minimum=double.tryParse(minMax[0]);
+              double? maximum=double.tryParse(minMax[1]);
+              if(minimum!=null && minimum!=0){
+                setState(() {
+                  minimumQuantityController.text=(dividedvalue*minimum).round().toString();
+                });
+
+              }    if(maximum!=null && maximum!=0){
+                setState(() {
+                  maximumQuantityController.text=(dividedvalue*maximum).round().toString();
+                });
+
+              }
+
+            }
+
+          }
+        }
+
+
+
+      }
+
+    }
+
 
   }
   trueOrFalseChange({String? type, bool val = false}) {
@@ -176,7 +278,7 @@ class _StockScreenState extends State<StockScreen> {
                             stockwarning=data.stockData?.stockWarning??false;
                             salesBlock=data.stockData?.salesBlocked??false;
                             purchaseBlock=data.stockData?.purchaseBlocked??false;
-                            virtualStockTypeController.text=data.stockData?.virtualType.toString()??"";
+                            virtualStockTypeController.text=data?.stockData?.virtualType.toString()??"";
                             virtualStockController.text=data.stockData?.virtualStock.toString()??"";
                             addVirtualStockController.text=data.stockData?.addVirtualStock.toString()??"";
 
@@ -333,6 +435,7 @@ class _StockScreenState extends State<StockScreen> {
                                 setState(() {
                                   selectedVertical = index;
                                   check=false;
+                                  addVirtualLimit=false;
 
                                   // select=false;
                                   // clear();
@@ -373,9 +476,12 @@ class _StockScreenState extends State<StockScreen> {
                             Expanded(child: Column(
                               children: [
                                 VAriantStockStableTable(
+                                  addCheckLimit: addCheckLimit,
+                                  check: addVirtualLimit,
                                   salesUomName: salesUomNameController,
                                   purchaseUomName: purchaseUomNameController,
                                   baseUomName: baseUomName,
+                                  minMaxRatioCalculation:minMaxRatioCalculation,
 
                                   stockWarning: stockwarning,
                                   purchaseBlock: purchaseBlock,

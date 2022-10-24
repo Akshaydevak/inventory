@@ -889,12 +889,13 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
 
 
 class BrandVerticalList extends StatefulWidget {
+  final  PaginatedResponse<dynamic>? list;
   final TextEditingController itemsearch;
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  BrandVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  BrandVerticalList({ required this.list,required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _BrandVerticalListState createState() => _BrandVerticalListState();
 }
@@ -1028,10 +1029,31 @@ class _BrandVerticalListState extends State<BrandVerticalList> {
                                               ));
                                         },
                                         itemCount: widget.result.length,
-                                      )
+                                      ),
 
 
-                                  ))
+
+                                  )),
+                              tablePagination(
+                                    () => context
+                                    .read<Listbrand2Cubit>()
+                                    .refresh(),
+                                back: widget.list?.previousUrl == null
+                                    ? null
+                                    : () {
+                                  context
+                                      .read<Listbrand2Cubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                                next: widget.list?.nextPageUrl == null
+                                    ? null
+                                    : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<Listbrand2Cubit>()
+                                      .nextslotSectionPageList();
+                                },
+                              )
                             ],
                           ),
                         ),
@@ -1047,12 +1069,13 @@ class _BrandVerticalListState extends State<BrandVerticalList> {
   }
 }
 class MaterialVerticalList extends StatefulWidget {
+  final  PaginatedResponse<dynamic>? list;
   final TextEditingController itemsearch;
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  MaterialVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  MaterialVerticalList({ required this.list,required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _MaterialVerticalListState createState() => _MaterialVerticalListState();
 }
@@ -1189,7 +1212,27 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<MaterialListCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<MaterialListCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<MaterialListCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -1208,12 +1251,13 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
 
 
 class DebvisionVerticalList extends StatefulWidget {
+  final  PaginatedResponse<dynamic>? list;
   final TextEditingController itemsearch;
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  DebvisionVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  DebvisionVerticalList({ required this.list,required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _DebvisionVerticalListState createState() => _DebvisionVerticalListState();
 }
@@ -1350,7 +1394,27 @@ class _DebvisionVerticalListState extends State<DebvisionVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<DevisionListCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<DevisionListCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<DevisionListCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -2539,13 +2603,14 @@ class _LinkedItemVerticalList extends State<LinkedItemVerticalList> {
 
 
 class StaticVerticalList extends StatefulWidget {
+  final  PaginatedResponse<dynamic>? list;
   final TextEditingController itemsearch;
   final String type;
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  StaticVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.type});
+  StaticVerticalList({ required this.list,required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.type});
   @override
   _StaticVerticalListState createState() => _StaticVerticalListState();
 }
@@ -2690,7 +2755,27 @@ class _StaticVerticalListState extends State<StaticVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<ListstaticCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<ListstaticCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<ListstaticCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -2711,12 +2796,13 @@ class _StaticVerticalListState extends State<StaticVerticalList> {
 
 class UomGroupVerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
+  final  PaginatedResponse<dynamic>? list;
 
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  UomGroupVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  UomGroupVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _UomGroupVerticalListState createState() => _UomGroupVerticalListState();
 }
@@ -2861,7 +2947,27 @@ class _UomGroupVerticalListState extends State<UomGroupVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<UomgruoplistCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<UomgruoplistCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<UomgruoplistCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
                         ],
                       ),
                     ),

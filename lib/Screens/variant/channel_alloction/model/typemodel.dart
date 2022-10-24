@@ -12,7 +12,7 @@ class ChannelTypeModel with _$ChannelTypeModel {
     final String? name,
     final Barcode? barcode,
 
-
+    @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
 
 
 

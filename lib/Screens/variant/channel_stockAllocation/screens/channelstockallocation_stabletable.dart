@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 
@@ -28,9 +29,12 @@ class ChannelStockStableTable extends StatefulWidget {
   final TextEditingController minimumQuantity;
 
   final Function trueOrFalseChange;
+  final Function minMaxRatioCalculation;
+  final Function addCheckLimit;
   final bool stockWarning;
   final bool salesBolck;
   final bool purchaseBlock;
+  final bool addCheck;
 
   final TextEditingController totalQuantity;
 
@@ -42,11 +46,14 @@ class ChannelStockStableTable extends StatefulWidget {
 
 
 
-  ChannelStockStableTable({
+    ChannelStockStableTable({
+      required this.addCheckLimit,
+    required this.minMaxRatioCalculation,
     required this.stockWarning,
     required this.purchaseBlock,
     required this.trueOrFalseChange,
     required this.minMaxRatio,
+      required this.addCheck,
 
     required this.reOrderPoint,
     required this.variantCode,
@@ -88,6 +95,8 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
   String imageName7="";
   String imageName8="";
   String imageEncode="";
+
+  bool onChane=false;
 
   @override
   Widget build(BuildContext context) {
@@ -259,23 +268,47 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                       Expanded(child: Column(children: [
 
                         NewInputCard(
+                          readOnly: widget.addCheck,
                           formatter: true,
+                            onChange: (va){
+                            if(widget.addVirtualStock.text.length>21){
+                              setState(() {
+                                widget.addCheckLimit(true);
+                              });
+
+                              (widget.addVirtualStock.text.substring(0, 21));
+                              context.showSnackBarError("the limit is finished");
+
+                            }else{
+                              widget.minMaxRatioCalculation();
+                            }
+
+                            },
 
                             controller: widget.addVirtualStock, title: " Add Virtual Stock"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        NewInputCard(
-                            formatter: true,
 
 
-                            controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
 
-
-                        NewInputCard(
+                        NewInputCreateCard(
+                          subTitle: "Calculate",
+                          ontap: (){
+                            widget.minMaxRatioCalculation();
+                          },
                           formatter: true,
 
                             controller: widget.minMaxRatio, title: "Min Max Ratio"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+
+
+                        NewInputCard(
+                            readOnly: true,
+
+                            controller: widget.minimumQuantity, title: "Minimum Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -286,11 +319,11 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                         SizedBox(
                           height: height * .030,
                         ),
-
                         NewInputCard(
-                            readOnly: true,
+                            formatter: true,
 
-                            controller: widget.minimumQuantity, title: "Minimum Quantity"),
+
+                            controller: widget.channelTypeAllocationRatio, title: "channel Allocation Ratio"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -339,7 +372,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .08,
+                          height: height * .04,
                         ),
 
 

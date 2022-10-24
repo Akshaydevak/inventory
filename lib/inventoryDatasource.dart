@@ -64,6 +64,7 @@ abstract class LogisticDataSource {
   Future<PaginatedResponse<List<InventoryListModel>>> getInventoryListRead(
     String? code,
   );
+  Future<double> getUnitcost(int? variantId);
 }
 
 class InventoryDataSourceImpl extends LogisticDataSource {
@@ -1354,5 +1355,61 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         items,
         response.data['data']['next'],
         response.data['data']['count'].toString());
+  }
+
+  @override
+  Future<double> getUnitcost(int? variantId) async {
+    String path = unicostGetApi + variantId.toString();
+    // try {
+    //
+    //   print("ppppath" + path.toString());
+    //   print(path);
+    //   final response = await client.get(
+    //     path,
+    //     // data:
+    //     // // {"payment_status": "completed", "order_status": "completed"},
+    //     // {
+    //     //
+    //     // },
+    //     options: Options(
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         'Accept': 'application/json'
+    //       },
+    //     ),
+    //   );
+    //   print("responsesssssd" + response.toString());
+    //   double dataa =response.data['data']['unit_cost'];
+    //   // Data.fromJson(response.data['data']);
+    //   // print("responsessssaaaaaaasd $dataa");
+    //
+    //   return dataa;
+    // } catch (e) {
+    //   print("error" + e.toString());
+    // }
+
+
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    // print("responsesssssd" + response.toString());
+
+    double dataa =response.data['data']['unit_cost'];
+    print("responses DATA ssssd" + dataa.toString());
+    Variable.unitCostCosting=dataa;
+
+    return dataa;
   }
 }

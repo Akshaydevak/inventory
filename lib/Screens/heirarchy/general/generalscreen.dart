@@ -27,6 +27,7 @@ import 'package:inventory/widgets/searchTextfield.dart';
 import '../../../commonWidget/Textwidget.dart';
 import '../../../commonWidget/commonutils.dart';
 import '../../../commonWidget/popupinputfield.dart';
+import '../../../commonWidget/tableConfiguration.dart';
 import '../../../core/uttils/variable.dart';
 import '../../../widgets/customtable.dart';
 import '../../sales/general/model/customeridlistmodel.dart';
@@ -83,6 +84,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   TextEditingController barCodeController=TextEditingController();
   TextEditingController qrCodeController=TextEditingController();
   TextEditingController rfIdController=TextEditingController();
+  int divisionId=0;
+  int categoryId=0;
+  int subCategory=0;
+
   bool active=false;
   bool select=false;
   ItemReadModel? group;
@@ -96,6 +101,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   clear(){
 itemCodeController.text="";
 itemNameController.text="";
+staticNameController.clear();
 searchNameController.text="";
 displayNameController.text="";
 discriptionNameController.text="";
@@ -106,6 +112,8 @@ statusCodeNameController.text="";
 image1Controller.text="";
 image2Controller.text="";
 image3Controller.text="";
+uomGroupNameController.text="";
+divisionNameController.clear();
 itemCatelog1Controller.text="";
 itemCatelog2Controller.text="";
 itemCatelog3Controller.text="";
@@ -113,15 +121,24 @@ itemCatelog4Controller.text="";
 itemCatelog5Controller.text="";
 devisionController.text="";
 categoryController.text="";
+categoryNameController.text="";
 subCategoryController.text="";
+subCategoryNameController.text="";
 GroupController.text="";
+GroupNameController.text="";
 materialController.text="";
+materialNameController.text="";
 variantFrameworkController.text="";
+variantNameController.text="";
 staticController.text="";
 barCodeController.text="";
 BrandController.text="";
+BrandNameController.text="";
 qrCodeController.text="";
 rfIdController.text="";
+Variable.divisionId=0;
+Variable.categoryId=0;
+Variable.subCategorycategory=0;
 img1=false;
 img2=false;
 img3=false;
@@ -178,11 +195,12 @@ active=false;
   var list;
 
   activeChange(bool active1){
-    active=active1;
+  if(select!=true) {
+    active = active1;
     setState(() {
 
     });
-  }
+  }}
   @override
   void initState() {
     context.read<ItemcreationListCubit>().getItemListList();
@@ -255,23 +273,54 @@ active=false;
             success: (data) {
               print("ansawww" + data.toString());
               group=data;
-              uomCategoryController.text=data?.uomCode??'';
+              uomCategoryController.text=data?.uomGroupCode??'';
+              subCategoryController.text=data?.subCategoryCode??'';
+              subCategoryNameController.text=data?.subCategoryName??'';
+
               GroupController.text=data?.groupCode??'';
-              // uomGroupNameController.text=data.??'';
+              GroupNameController.text=data?.groupName??'';
+              uomGroupNameController.text=data.uomGroupName??'';
               BrandController.text=data?.brandCode??'';
+              BrandNameController.text=data?.brandName??'';
+              staticController.text=data?.staticGroupCode??'';
+              staticNameController.text=data?.staticGroupName??'';
+              oldSystemCodeNameController.text=data?.oldSystemCode??'';
+              baseUomGroupName.text=data?.uomName??'';
+              uomCategoryController.clear();
+
+            Variable.divisionId=data.divisionId;
+            Variable.categoryId=data.categoryId;
+            Variable.subCategorycategory=data.subCategoryId;
+            Variable.uomGroupId=data.subCategoryId;
+
+
               materialController.text=data?.materialCode??'';
+              materialNameController.text=data?.materialName??'';
               devisionController.text=data?.divisionCode??'';
+              divisionNameController.text=data?.divisionName??'';
+              uomCategoryController.text=data?.divisionName??'';
               categoryController.text=data?.categoryCode??'';
+              categoryNameController.text=data?.categoryName??'';
               subCategoryController.text=data?.subCategoryCode??'';
               itemCodeController.text=data?.code??'';
               itemNameController.text=data?.name??'';
+              subCategoryNameController.text=data?.subCategoryName??'';
               barCodeController.text=data?.barcode?.barcodeNumber??'';
               qrCodeController.text=data?.qrCode?.content??'';
               image1Controller.text=data?.image1??'';
+              image2Controller.text=data?.image2??'';
+              image3Controller.text=data?.image3??'';
+              itemCatelog1Controller.text=data?.itemCatelog1??'';
+              itemCatelog2Controller.text=data?.itemCatelog2??'';
+              itemCatelog3Controller.text=data?.itemCatelog3??'';
+              itemCatelog4Controller.text=data?.itemCatelog4??'';
               searchNameController.text=data?.searchName??'';
               displayNameController.text=data?.displayname??'';
               active=data?.isActive??false;
               discriptionNameController.text=data?.itemMeta?.description??"";
+              variantFrameworkController.text=data?.variantFrameWork??"";
+              variantNameController.text=data?.variantFrameWorkName??"";
+
               setState(() {
 
               });
@@ -367,6 +416,8 @@ active=false;
                         itemsearch: itemsearch,ontap: (int index){
                         setState(() {
                           selectedVertical=index;
+                          active=false;
+
 
                           // select=false;
                           // updateCheck=false;
@@ -401,6 +452,7 @@ active=false;
                                     setState(() {
                                       select = true;
                                       clear();
+                                      active=true;
 
 
 
@@ -755,46 +807,77 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
             // }, controller:widget.division,
             //   type:"DivisionListPopUpCall",
             // ),
-            SelectableDropDownpopUp(
-              controller:widget.divisionName,
-              label: "Division",
-              type:"Division_ListPopUpCall",
-              value:  widget.divisionName.text,
-              onchange: (vale){
-                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-              },
-              enable: true,
-              onSelection: (BrandListModel? va) {
-                setState(() {
+            // SelectableDropDownpopUp(
+            //   controller:widget.divisionName,
+            //   label: "Division",
+            //   type:"Division_ListPopUpCall",
+            //   value:  widget.divisionName.text,
+            //   onchange: (vale){
+            //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+            //   },
+            //   enable: true,
+            //   onSelection: (BrandListModel? va) {
+            //     setState(() {
+            //
+            //
+            //       print(va?.id??"");
+            //       divisionid=va?.id;
+            //       Variable.divisionId=va?.id;
+            //
+            //       widget.division.text=va?.code??"";
+            //       widget.divisionName.text=va?.name??"";
+            //       setState(() {
+            //
+            //       });
+            //
+            //
+            //       // onChange = true;
+            //       // orderType.text = va!;
+            //     });
+            //   },
+            //   onAddNew: () {
+            //
+            //     showDailogPopUp(
+            //       context,
+            //       ConfigurePopup(
+            //         type: "devision-group",
+            //       ),
+            //
+            //
+            //     );
+            //   },
+            // ),
+            NewInputCard(controller: widget.divisionName, title: "Division",ontap: (){
+              showDailogPopUp(
+                context,
+                TableConfigurePopup(
+                  type: "division-TablePopup", valueSelect: (BrandListModel va){
+
+                      setState(() {
 
 
-                  print(va?.id??"");
-                  divisionid=va?.id;
-                  Variable.divisionId=va?.id;
+                        print(va?.id??"");
+                        divisionid=va?.id;
+                        Variable.divisionId=va?.id;
 
-                  widget.division.text=va?.code??"";
-                  widget.divisionName.text=va?.name??"";
-                  setState(() {
+                        widget.division.text=va?.code??"";
+                        widget.divisionName.text=va?.name??"";
+                        setState(() {
 
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "devision-group",
-                  ),
+                        });
 
 
-                );
-              },
-            ),
+                        // onChange = true;
+                        // orderType.text = va!;
+                      });
+
+                },
+                ),
+
+
+              );
+
+            },),
             SizedBox(
               height: height * .030,
             ),
@@ -802,6 +885,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 
             SelectableDropDownpopUp(
               id:divisionid,
+
               controller:widget.categoryName,
               label: "category",
               type:"Category_PopUpCall",
@@ -1118,7 +1202,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               },
             ),
             SizedBox(
-              height: height * .130,
+              height: height * .148,
             ),
 
 

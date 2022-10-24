@@ -31,14 +31,30 @@ class _$ItemReadModelTearOff {
       String? image3,
       Barcode? barcode,
       @JsonKey(name: "uom_code") String? uomCode,
+      @JsonKey(name: "uom_group_code") String? uomGroupCode,
+      @JsonKey(name: "uom_group_name") String? uomGroupName,
+      @JsonKey(name: "uom_group_id") int? uomGroupId,
+      @JsonKey(name: "uom_name") String? uomName,
+      @JsonKey(name: "division_id") int? divisionId,
+      @JsonKey(name: "category_id") int? categoryId,
+      @JsonKey(name: "sub_category_id") int? subCategoryId,
       @JsonKey(name: "group_code") String? groupCode,
+      @JsonKey(name: "group_name") String? groupName,
       @JsonKey(name: "brand_code") String? brandCode,
+      @JsonKey(name: "brand_name") String? brandName,
       @JsonKey(name: "material_code") String? materialCode,
+      @JsonKey(name: "material_name") String? materialName,
+      @JsonKey(name: "old_system_code") String? oldSystemCode,
       @JsonKey(name: "static_group_code") String? staticGroupCode,
       @JsonKey(name: "division_code") String? divisionCode,
+      @JsonKey(name: "division_name") String? divisionName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "sub_category_code") String? subCategoryCode,
+      @JsonKey(name: "sub_category_name") String? subCategoryName,
+      @JsonKey(name: "static_group_name") String? staticGroupName,
       @JsonKey(name: "variant_framework_code") String? variantFrameWork,
+      @JsonKey(name: "variant_framwork_name") String? variantFrameWorkName,
       @JsonKey(name: "item_meta") ItemMeta? itemMeta,
       @JsonKey(name: "qr_code") QrCode? qrCode,
       @JsonKey(name: "search_name") String? searchName,
@@ -60,14 +76,30 @@ class _$ItemReadModelTearOff {
       image3: image3,
       barcode: barcode,
       uomCode: uomCode,
+      uomGroupCode: uomGroupCode,
+      uomGroupName: uomGroupName,
+      uomGroupId: uomGroupId,
+      uomName: uomName,
+      divisionId: divisionId,
+      categoryId: categoryId,
+      subCategoryId: subCategoryId,
       groupCode: groupCode,
+      groupName: groupName,
       brandCode: brandCode,
+      brandName: brandName,
       materialCode: materialCode,
+      materialName: materialName,
+      oldSystemCode: oldSystemCode,
       staticGroupCode: staticGroupCode,
       divisionCode: divisionCode,
+      divisionName: divisionName,
       categoryCode: categoryCode,
+      categoryName: categoryName,
       subCategoryCode: subCategoryCode,
+      subCategoryName: subCategoryName,
+      staticGroupName: staticGroupName,
       variantFrameWork: variantFrameWork,
+      variantFrameWorkName: variantFrameWorkName,
       itemMeta: itemMeta,
       qrCode: qrCode,
       searchName: searchName,
@@ -102,22 +134,54 @@ mixin _$ItemReadModel {
   Barcode? get barcode => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_group_code")
+  String? get uomGroupCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_group_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_group_id")
+  int? get uomGroupId => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_name")
+  String? get uomName => throw _privateConstructorUsedError;
+  @JsonKey(name: "division_id")
+  int? get divisionId => throw _privateConstructorUsedError;
+  @JsonKey(name: "category_id")
+  int? get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "sub_category_id")
+  int? get subCategoryId => throw _privateConstructorUsedError;
   @JsonKey(name: "group_code")
   String? get groupCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "group_name")
+  String? get groupName => throw _privateConstructorUsedError;
   @JsonKey(name: "brand_code")
   String? get brandCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "brand_name")
+  String? get brandName => throw _privateConstructorUsedError;
   @JsonKey(name: "material_code")
   String? get materialCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "material_name")
+  String? get materialName => throw _privateConstructorUsedError;
+  @JsonKey(name: "old_system_code")
+  String? get oldSystemCode => throw _privateConstructorUsedError;
   @JsonKey(name: "static_group_code")
   String? get staticGroupCode => throw _privateConstructorUsedError;
   @JsonKey(name: "division_code")
   String? get divisionCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "division_name")
+  String? get divisionName => throw _privateConstructorUsedError;
   @JsonKey(name: "category_code")
   String? get categoryCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "category_name")
+  String? get categoryName => throw _privateConstructorUsedError;
   @JsonKey(name: "sub_category_code")
   String? get subCategoryCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "sub_category_name")
+  String? get subCategoryName => throw _privateConstructorUsedError;
+  @JsonKey(name: "static_group_name")
+  String? get staticGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "variant_framework_code")
   String? get variantFrameWork => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_framwork_name")
+  String? get variantFrameWorkName => throw _privateConstructorUsedError;
   @JsonKey(name: "item_meta")
   ItemMeta? get itemMeta => throw _privateConstructorUsedError;
   @JsonKey(name: "qr_code")
@@ -162,14 +226,30 @@ abstract class $ItemReadModelCopyWith<$Res> {
       String? image3,
       Barcode? barcode,
       @JsonKey(name: "uom_code") String? uomCode,
+      @JsonKey(name: "uom_group_code") String? uomGroupCode,
+      @JsonKey(name: "uom_group_name") String? uomGroupName,
+      @JsonKey(name: "uom_group_id") int? uomGroupId,
+      @JsonKey(name: "uom_name") String? uomName,
+      @JsonKey(name: "division_id") int? divisionId,
+      @JsonKey(name: "category_id") int? categoryId,
+      @JsonKey(name: "sub_category_id") int? subCategoryId,
       @JsonKey(name: "group_code") String? groupCode,
+      @JsonKey(name: "group_name") String? groupName,
       @JsonKey(name: "brand_code") String? brandCode,
+      @JsonKey(name: "brand_name") String? brandName,
       @JsonKey(name: "material_code") String? materialCode,
+      @JsonKey(name: "material_name") String? materialName,
+      @JsonKey(name: "old_system_code") String? oldSystemCode,
       @JsonKey(name: "static_group_code") String? staticGroupCode,
       @JsonKey(name: "division_code") String? divisionCode,
+      @JsonKey(name: "division_name") String? divisionName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "sub_category_code") String? subCategoryCode,
+      @JsonKey(name: "sub_category_name") String? subCategoryName,
+      @JsonKey(name: "static_group_name") String? staticGroupName,
       @JsonKey(name: "variant_framework_code") String? variantFrameWork,
+      @JsonKey(name: "variant_framwork_name") String? variantFrameWorkName,
       @JsonKey(name: "item_meta") ItemMeta? itemMeta,
       @JsonKey(name: "qr_code") QrCode? qrCode,
       @JsonKey(name: "search_name") String? searchName,
@@ -207,14 +287,30 @@ class _$ItemReadModelCopyWithImpl<$Res>
     Object? image3 = freezed,
     Object? barcode = freezed,
     Object? uomCode = freezed,
+    Object? uomGroupCode = freezed,
+    Object? uomGroupName = freezed,
+    Object? uomGroupId = freezed,
+    Object? uomName = freezed,
+    Object? divisionId = freezed,
+    Object? categoryId = freezed,
+    Object? subCategoryId = freezed,
     Object? groupCode = freezed,
+    Object? groupName = freezed,
     Object? brandCode = freezed,
+    Object? brandName = freezed,
     Object? materialCode = freezed,
+    Object? materialName = freezed,
+    Object? oldSystemCode = freezed,
     Object? staticGroupCode = freezed,
     Object? divisionCode = freezed,
+    Object? divisionName = freezed,
     Object? categoryCode = freezed,
+    Object? categoryName = freezed,
     Object? subCategoryCode = freezed,
+    Object? subCategoryName = freezed,
+    Object? staticGroupName = freezed,
     Object? variantFrameWork = freezed,
+    Object? variantFrameWorkName = freezed,
     Object? itemMeta = freezed,
     Object? qrCode = freezed,
     Object? searchName = freezed,
@@ -264,17 +360,61 @@ class _$ItemReadModelCopyWithImpl<$Res>
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      uomGroupCode: uomGroupCode == freezed
+          ? _value.uomGroupCode
+          : uomGroupCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupId: uomGroupId == freezed
+          ? _value.uomGroupId
+          : uomGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uomName: uomName == freezed
+          ? _value.uomName
+          : uomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      divisionId: divisionId == freezed
+          ? _value.divisionId
+          : divisionId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subCategoryId: subCategoryId == freezed
+          ? _value.subCategoryId
+          : subCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
       groupCode: groupCode == freezed
           ? _value.groupCode
           : groupCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupName: groupName == freezed
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
       brandCode: brandCode == freezed
           ? _value.brandCode
           : brandCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      brandName: brandName == freezed
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String?,
       materialCode: materialCode == freezed
           ? _value.materialCode
           : materialCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      materialName: materialName == freezed
+          ? _value.materialName
+          : materialName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      oldSystemCode: oldSystemCode == freezed
+          ? _value.oldSystemCode
+          : oldSystemCode // ignore: cast_nullable_to_non_nullable
               as String?,
       staticGroupCode: staticGroupCode == freezed
           ? _value.staticGroupCode
@@ -284,17 +424,37 @@ class _$ItemReadModelCopyWithImpl<$Res>
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionName: divisionName == freezed
+          ? _value.divisionName
+          : divisionName // ignore: cast_nullable_to_non_nullable
+              as String?,
       categoryCode: categoryCode == freezed
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryName: categoryName == freezed
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
       subCategoryCode: subCategoryCode == freezed
           ? _value.subCategoryCode
           : subCategoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      subCategoryName: subCategoryName == freezed
+          ? _value.subCategoryName
+          : subCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      staticGroupName: staticGroupName == freezed
+          ? _value.staticGroupName
+          : staticGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
       variantFrameWork: variantFrameWork == freezed
           ? _value.variantFrameWork
           : variantFrameWork // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantFrameWorkName: variantFrameWorkName == freezed
+          ? _value.variantFrameWorkName
+          : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
               as String?,
       itemMeta: itemMeta == freezed
           ? _value.itemMeta
@@ -394,14 +554,30 @@ abstract class _$ItemReadModelCopyWith<$Res>
       String? image3,
       Barcode? barcode,
       @JsonKey(name: "uom_code") String? uomCode,
+      @JsonKey(name: "uom_group_code") String? uomGroupCode,
+      @JsonKey(name: "uom_group_name") String? uomGroupName,
+      @JsonKey(name: "uom_group_id") int? uomGroupId,
+      @JsonKey(name: "uom_name") String? uomName,
+      @JsonKey(name: "division_id") int? divisionId,
+      @JsonKey(name: "category_id") int? categoryId,
+      @JsonKey(name: "sub_category_id") int? subCategoryId,
       @JsonKey(name: "group_code") String? groupCode,
+      @JsonKey(name: "group_name") String? groupName,
       @JsonKey(name: "brand_code") String? brandCode,
+      @JsonKey(name: "brand_name") String? brandName,
       @JsonKey(name: "material_code") String? materialCode,
+      @JsonKey(name: "material_name") String? materialName,
+      @JsonKey(name: "old_system_code") String? oldSystemCode,
       @JsonKey(name: "static_group_code") String? staticGroupCode,
       @JsonKey(name: "division_code") String? divisionCode,
+      @JsonKey(name: "division_name") String? divisionName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "sub_category_code") String? subCategoryCode,
+      @JsonKey(name: "sub_category_name") String? subCategoryName,
+      @JsonKey(name: "static_group_name") String? staticGroupName,
       @JsonKey(name: "variant_framework_code") String? variantFrameWork,
+      @JsonKey(name: "variant_framwork_name") String? variantFrameWorkName,
       @JsonKey(name: "item_meta") ItemMeta? itemMeta,
       @JsonKey(name: "qr_code") QrCode? qrCode,
       @JsonKey(name: "search_name") String? searchName,
@@ -444,14 +620,30 @@ class __$ItemReadModelCopyWithImpl<$Res>
     Object? image3 = freezed,
     Object? barcode = freezed,
     Object? uomCode = freezed,
+    Object? uomGroupCode = freezed,
+    Object? uomGroupName = freezed,
+    Object? uomGroupId = freezed,
+    Object? uomName = freezed,
+    Object? divisionId = freezed,
+    Object? categoryId = freezed,
+    Object? subCategoryId = freezed,
     Object? groupCode = freezed,
+    Object? groupName = freezed,
     Object? brandCode = freezed,
+    Object? brandName = freezed,
     Object? materialCode = freezed,
+    Object? materialName = freezed,
+    Object? oldSystemCode = freezed,
     Object? staticGroupCode = freezed,
     Object? divisionCode = freezed,
+    Object? divisionName = freezed,
     Object? categoryCode = freezed,
+    Object? categoryName = freezed,
     Object? subCategoryCode = freezed,
+    Object? subCategoryName = freezed,
+    Object? staticGroupName = freezed,
     Object? variantFrameWork = freezed,
+    Object? variantFrameWorkName = freezed,
     Object? itemMeta = freezed,
     Object? qrCode = freezed,
     Object? searchName = freezed,
@@ -501,17 +693,61 @@ class __$ItemReadModelCopyWithImpl<$Res>
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      uomGroupCode: uomGroupCode == freezed
+          ? _value.uomGroupCode
+          : uomGroupCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupId: uomGroupId == freezed
+          ? _value.uomGroupId
+          : uomGroupId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uomName: uomName == freezed
+          ? _value.uomName
+          : uomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      divisionId: divisionId == freezed
+          ? _value.divisionId
+          : divisionId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subCategoryId: subCategoryId == freezed
+          ? _value.subCategoryId
+          : subCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
       groupCode: groupCode == freezed
           ? _value.groupCode
           : groupCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      groupName: groupName == freezed
+          ? _value.groupName
+          : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
       brandCode: brandCode == freezed
           ? _value.brandCode
           : brandCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      brandName: brandName == freezed
+          ? _value.brandName
+          : brandName // ignore: cast_nullable_to_non_nullable
+              as String?,
       materialCode: materialCode == freezed
           ? _value.materialCode
           : materialCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      materialName: materialName == freezed
+          ? _value.materialName
+          : materialName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      oldSystemCode: oldSystemCode == freezed
+          ? _value.oldSystemCode
+          : oldSystemCode // ignore: cast_nullable_to_non_nullable
               as String?,
       staticGroupCode: staticGroupCode == freezed
           ? _value.staticGroupCode
@@ -521,17 +757,37 @@ class __$ItemReadModelCopyWithImpl<$Res>
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionName: divisionName == freezed
+          ? _value.divisionName
+          : divisionName // ignore: cast_nullable_to_non_nullable
+              as String?,
       categoryCode: categoryCode == freezed
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryName: categoryName == freezed
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
       subCategoryCode: subCategoryCode == freezed
           ? _value.subCategoryCode
           : subCategoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      subCategoryName: subCategoryName == freezed
+          ? _value.subCategoryName
+          : subCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      staticGroupName: staticGroupName == freezed
+          ? _value.staticGroupName
+          : staticGroupName // ignore: cast_nullable_to_non_nullable
+              as String?,
       variantFrameWork: variantFrameWork == freezed
           ? _value.variantFrameWork
           : variantFrameWork // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantFrameWorkName: variantFrameWorkName == freezed
+          ? _value.variantFrameWorkName
+          : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
               as String?,
       itemMeta: itemMeta == freezed
           ? _value.itemMeta
@@ -594,14 +850,30 @@ class _$_ItemReadModel implements _ItemReadModel {
       this.image3,
       this.barcode,
       @JsonKey(name: "uom_code") this.uomCode,
+      @JsonKey(name: "uom_group_code") this.uomGroupCode,
+      @JsonKey(name: "uom_group_name") this.uomGroupName,
+      @JsonKey(name: "uom_group_id") this.uomGroupId,
+      @JsonKey(name: "uom_name") this.uomName,
+      @JsonKey(name: "division_id") this.divisionId,
+      @JsonKey(name: "category_id") this.categoryId,
+      @JsonKey(name: "sub_category_id") this.subCategoryId,
       @JsonKey(name: "group_code") this.groupCode,
+      @JsonKey(name: "group_name") this.groupName,
       @JsonKey(name: "brand_code") this.brandCode,
+      @JsonKey(name: "brand_name") this.brandName,
       @JsonKey(name: "material_code") this.materialCode,
+      @JsonKey(name: "material_name") this.materialName,
+      @JsonKey(name: "old_system_code") this.oldSystemCode,
       @JsonKey(name: "static_group_code") this.staticGroupCode,
       @JsonKey(name: "division_code") this.divisionCode,
+      @JsonKey(name: "division_name") this.divisionName,
       @JsonKey(name: "category_code") this.categoryCode,
+      @JsonKey(name: "category_name") this.categoryName,
       @JsonKey(name: "sub_category_code") this.subCategoryCode,
+      @JsonKey(name: "sub_category_name") this.subCategoryName,
+      @JsonKey(name: "static_group_name") this.staticGroupName,
       @JsonKey(name: "variant_framework_code") this.variantFrameWork,
+      @JsonKey(name: "variant_framwork_name") this.variantFrameWorkName,
       @JsonKey(name: "item_meta") this.itemMeta,
       @JsonKey(name: "qr_code") this.qrCode,
       @JsonKey(name: "search_name") this.searchName,
@@ -637,14 +909,47 @@ class _$_ItemReadModel implements _ItemReadModel {
   @JsonKey(name: "uom_code")
   final String? uomCode;
   @override
+  @JsonKey(name: "uom_group_code")
+  final String? uomGroupCode;
+  @override
+  @JsonKey(name: "uom_group_name")
+  final String? uomGroupName;
+  @override
+  @JsonKey(name: "uom_group_id")
+  final int? uomGroupId;
+  @override
+  @JsonKey(name: "uom_name")
+  final String? uomName;
+  @override
+  @JsonKey(name: "division_id")
+  final int? divisionId;
+  @override
+  @JsonKey(name: "category_id")
+  final int? categoryId;
+  @override
+  @JsonKey(name: "sub_category_id")
+  final int? subCategoryId;
+  @override
   @JsonKey(name: "group_code")
   final String? groupCode;
+  @override
+  @JsonKey(name: "group_name")
+  final String? groupName;
   @override
   @JsonKey(name: "brand_code")
   final String? brandCode;
   @override
+  @JsonKey(name: "brand_name")
+  final String? brandName;
+  @override
   @JsonKey(name: "material_code")
   final String? materialCode;
+  @override
+  @JsonKey(name: "material_name")
+  final String? materialName;
+  @override
+  @JsonKey(name: "old_system_code")
+  final String? oldSystemCode;
   @override
   @JsonKey(name: "static_group_code")
   final String? staticGroupCode;
@@ -652,14 +957,29 @@ class _$_ItemReadModel implements _ItemReadModel {
   @JsonKey(name: "division_code")
   final String? divisionCode;
   @override
+  @JsonKey(name: "division_name")
+  final String? divisionName;
+  @override
   @JsonKey(name: "category_code")
   final String? categoryCode;
+  @override
+  @JsonKey(name: "category_name")
+  final String? categoryName;
   @override
   @JsonKey(name: "sub_category_code")
   final String? subCategoryCode;
   @override
+  @JsonKey(name: "sub_category_name")
+  final String? subCategoryName;
+  @override
+  @JsonKey(name: "static_group_name")
+  final String? staticGroupName;
+  @override
   @JsonKey(name: "variant_framework_code")
   final String? variantFrameWork;
+  @override
+  @JsonKey(name: "variant_framwork_name")
+  final String? variantFrameWorkName;
   @override
   @JsonKey(name: "item_meta")
   final ItemMeta? itemMeta;
@@ -696,7 +1016,7 @@ class _$_ItemReadModel implements _ItemReadModel {
 
   @override
   String toString() {
-    return 'ItemReadModel(id: $id, code: $code, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, uomCode: $uomCode, groupCode: $groupCode, brandCode: $brandCode, materialCode: $materialCode, staticGroupCode: $staticGroupCode, divisionCode: $divisionCode, categoryCode: $categoryCode, subCategoryCode: $subCategoryCode, variantFrameWork: $variantFrameWork, itemMeta: $itemMeta, qrCode: $qrCode, searchName: $searchName, displayname: $displayname, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'ItemReadModel(id: $id, code: $code, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, uomCode: $uomCode, uomGroupCode: $uomGroupCode, uomGroupName: $uomGroupName, uomGroupId: $uomGroupId, uomName: $uomName, divisionId: $divisionId, categoryId: $categoryId, subCategoryId: $subCategoryId, groupCode: $groupCode, groupName: $groupName, brandCode: $brandCode, brandName: $brandName, materialCode: $materialCode, materialName: $materialName, oldSystemCode: $oldSystemCode, staticGroupCode: $staticGroupCode, divisionCode: $divisionCode, divisionName: $divisionName, categoryCode: $categoryCode, categoryName: $categoryName, subCategoryCode: $subCategoryCode, subCategoryName: $subCategoryName, staticGroupName: $staticGroupName, variantFrameWork: $variantFrameWork, variantFrameWorkName: $variantFrameWorkName, itemMeta: $itemMeta, qrCode: $qrCode, searchName: $searchName, displayname: $displayname, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
   }
 
   @override
@@ -724,53 +1044,69 @@ class _$_ItemReadModel implements _ItemReadModel {
             (identical(other.uomCode, uomCode) ||
                 const DeepCollectionEquality()
                     .equals(other.uomCode, uomCode)) &&
+            (identical(other.uomGroupCode, uomGroupCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomGroupCode, uomGroupCode)) &&
+            (identical(other.uomGroupName, uomGroupName) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomGroupName, uomGroupName)) &&
+            (identical(other.uomGroupId, uomGroupId) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomGroupId, uomGroupId)) &&
+            (identical(other.uomName, uomName) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomName, uomName)) &&
+            (identical(other.divisionId, divisionId) ||
+                const DeepCollectionEquality()
+                    .equals(other.divisionId, divisionId)) &&
+            (identical(other.categoryId, categoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.categoryId, categoryId)) &&
+            (identical(other.subCategoryId, subCategoryId) ||
+                const DeepCollectionEquality()
+                    .equals(other.subCategoryId, subCategoryId)) &&
             (identical(other.groupCode, groupCode) ||
                 const DeepCollectionEquality()
                     .equals(other.groupCode, groupCode)) &&
+            (identical(other.groupName, groupName) ||
+                const DeepCollectionEquality()
+                    .equals(other.groupName, groupName)) &&
             (identical(other.brandCode, brandCode) ||
                 const DeepCollectionEquality()
                     .equals(other.brandCode, brandCode)) &&
+            (identical(other.brandName, brandName) ||
+                const DeepCollectionEquality()
+                    .equals(other.brandName, brandName)) &&
             (identical(other.materialCode, materialCode) ||
                 const DeepCollectionEquality()
                     .equals(other.materialCode, materialCode)) &&
+            (identical(other.materialName, materialName) ||
+                const DeepCollectionEquality()
+                    .equals(other.materialName, materialName)) &&
+            (identical(other.oldSystemCode, oldSystemCode) ||
+                const DeepCollectionEquality()
+                    .equals(other.oldSystemCode, oldSystemCode)) &&
             (identical(other.staticGroupCode, staticGroupCode) ||
                 const DeepCollectionEquality()
                     .equals(other.staticGroupCode, staticGroupCode)) &&
             (identical(other.divisionCode, divisionCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.divisionCode, divisionCode)) &&
-            (identical(other.categoryCode, categoryCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryCode, categoryCode)) &&
-            (identical(other.subCategoryCode, subCategoryCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.subCategoryCode, subCategoryCode)) &&
-            (identical(other.variantFrameWork, variantFrameWork) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantFrameWork, variantFrameWork)) &&
-            (identical(other.itemMeta, itemMeta) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemMeta, itemMeta)) &&
-            (identical(other.qrCode, qrCode) ||
-                const DeepCollectionEquality().equals(other.qrCode, qrCode)) &&
-            (identical(other.searchName, searchName) ||
-                const DeepCollectionEquality()
-                    .equals(other.searchName, searchName)) &&
-            (identical(other.displayname, displayname) ||
-                const DeepCollectionEquality()
-                    .equals(other.displayname, displayname)) &&
-            (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)) &&
-            (identical(other.salesBlock, salesBlock) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesBlock, salesBlock)) &&
-            (identical(other.purchaseBlock, purchaseBlock) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseBlock, purchaseBlock)) &&
-            (identical(other.itemCatelog1, itemCatelog1) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog1, itemCatelog1)) &&
+                const DeepCollectionEquality().equals(other.divisionCode, divisionCode)) &&
+            (identical(other.divisionName, divisionName) || const DeepCollectionEquality().equals(other.divisionName, divisionName)) &&
+            (identical(other.categoryCode, categoryCode) || const DeepCollectionEquality().equals(other.categoryCode, categoryCode)) &&
+            (identical(other.categoryName, categoryName) || const DeepCollectionEquality().equals(other.categoryName, categoryName)) &&
+            (identical(other.subCategoryCode, subCategoryCode) || const DeepCollectionEquality().equals(other.subCategoryCode, subCategoryCode)) &&
+            (identical(other.subCategoryName, subCategoryName) || const DeepCollectionEquality().equals(other.subCategoryName, subCategoryName)) &&
+            (identical(other.staticGroupName, staticGroupName) || const DeepCollectionEquality().equals(other.staticGroupName, staticGroupName)) &&
+            (identical(other.variantFrameWork, variantFrameWork) || const DeepCollectionEquality().equals(other.variantFrameWork, variantFrameWork)) &&
+            (identical(other.variantFrameWorkName, variantFrameWorkName) || const DeepCollectionEquality().equals(other.variantFrameWorkName, variantFrameWorkName)) &&
+            (identical(other.itemMeta, itemMeta) || const DeepCollectionEquality().equals(other.itemMeta, itemMeta)) &&
+            (identical(other.qrCode, qrCode) || const DeepCollectionEquality().equals(other.qrCode, qrCode)) &&
+            (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
+            (identical(other.displayname, displayname) || const DeepCollectionEquality().equals(other.displayname, displayname)) &&
+            (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
+            (identical(other.salesBlock, salesBlock) || const DeepCollectionEquality().equals(other.salesBlock, salesBlock)) &&
+            (identical(other.purchaseBlock, purchaseBlock) || const DeepCollectionEquality().equals(other.purchaseBlock, purchaseBlock)) &&
+            (identical(other.itemCatelog1, itemCatelog1) || const DeepCollectionEquality().equals(other.itemCatelog1, itemCatelog1)) &&
             (identical(other.itemCatelog2, itemCatelog2) || const DeepCollectionEquality().equals(other.itemCatelog2, itemCatelog2)) &&
             (identical(other.itemCatelog3, itemCatelog3) || const DeepCollectionEquality().equals(other.itemCatelog3, itemCatelog3)) &&
             (identical(other.itemCatelog4, itemCatelog4) || const DeepCollectionEquality().equals(other.itemCatelog4, itemCatelog4)));
@@ -788,14 +1124,30 @@ class _$_ItemReadModel implements _ItemReadModel {
       const DeepCollectionEquality().hash(image3) ^
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(uomCode) ^
+      const DeepCollectionEquality().hash(uomGroupCode) ^
+      const DeepCollectionEquality().hash(uomGroupName) ^
+      const DeepCollectionEquality().hash(uomGroupId) ^
+      const DeepCollectionEquality().hash(uomName) ^
+      const DeepCollectionEquality().hash(divisionId) ^
+      const DeepCollectionEquality().hash(categoryId) ^
+      const DeepCollectionEquality().hash(subCategoryId) ^
       const DeepCollectionEquality().hash(groupCode) ^
+      const DeepCollectionEquality().hash(groupName) ^
       const DeepCollectionEquality().hash(brandCode) ^
+      const DeepCollectionEquality().hash(brandName) ^
       const DeepCollectionEquality().hash(materialCode) ^
+      const DeepCollectionEquality().hash(materialName) ^
+      const DeepCollectionEquality().hash(oldSystemCode) ^
       const DeepCollectionEquality().hash(staticGroupCode) ^
       const DeepCollectionEquality().hash(divisionCode) ^
+      const DeepCollectionEquality().hash(divisionName) ^
       const DeepCollectionEquality().hash(categoryCode) ^
+      const DeepCollectionEquality().hash(categoryName) ^
       const DeepCollectionEquality().hash(subCategoryCode) ^
+      const DeepCollectionEquality().hash(subCategoryName) ^
+      const DeepCollectionEquality().hash(staticGroupName) ^
       const DeepCollectionEquality().hash(variantFrameWork) ^
+      const DeepCollectionEquality().hash(variantFrameWorkName) ^
       const DeepCollectionEquality().hash(itemMeta) ^
       const DeepCollectionEquality().hash(qrCode) ^
       const DeepCollectionEquality().hash(searchName) ^
@@ -831,22 +1183,54 @@ abstract class _ItemReadModel implements ItemReadModel {
       Barcode? barcode,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "uom_group_code")
+          String? uomGroupCode,
+      @JsonKey(name: "uom_group_name")
+          String? uomGroupName,
+      @JsonKey(name: "uom_group_id")
+          int? uomGroupId,
+      @JsonKey(name: "uom_name")
+          String? uomName,
+      @JsonKey(name: "division_id")
+          int? divisionId,
+      @JsonKey(name: "category_id")
+          int? categoryId,
+      @JsonKey(name: "sub_category_id")
+          int? subCategoryId,
       @JsonKey(name: "group_code")
           String? groupCode,
+      @JsonKey(name: "group_name")
+          String? groupName,
       @JsonKey(name: "brand_code")
           String? brandCode,
+      @JsonKey(name: "brand_name")
+          String? brandName,
       @JsonKey(name: "material_code")
           String? materialCode,
+      @JsonKey(name: "material_name")
+          String? materialName,
+      @JsonKey(name: "old_system_code")
+          String? oldSystemCode,
       @JsonKey(name: "static_group_code")
           String? staticGroupCode,
       @JsonKey(name: "division_code")
           String? divisionCode,
+      @JsonKey(name: "division_name")
+          String? divisionName,
       @JsonKey(name: "category_code")
           String? categoryCode,
+      @JsonKey(name: "category_name")
+          String? categoryName,
       @JsonKey(name: "sub_category_code")
           String? subCategoryCode,
+      @JsonKey(name: "sub_category_name")
+          String? subCategoryName,
+      @JsonKey(name: "static_group_name")
+          String? staticGroupName,
       @JsonKey(name: "variant_framework_code")
           String? variantFrameWork,
+      @JsonKey(name: "variant_framwork_name")
+          String? variantFrameWorkName,
       @JsonKey(name: "item_meta")
           ItemMeta? itemMeta,
       @JsonKey(name: "qr_code")
@@ -893,14 +1277,47 @@ abstract class _ItemReadModel implements ItemReadModel {
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "uom_group_code")
+  String? get uomGroupCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uom_group_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uom_group_id")
+  int? get uomGroupId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uom_name")
+  String? get uomName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "division_id")
+  int? get divisionId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "category_id")
+  int? get categoryId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "sub_category_id")
+  int? get subCategoryId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "group_code")
   String? get groupCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "group_name")
+  String? get groupName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "brand_code")
   String? get brandCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "brand_name")
+  String? get brandName => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "material_code")
   String? get materialCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "material_name")
+  String? get materialName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "old_system_code")
+  String? get oldSystemCode => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "static_group_code")
   String? get staticGroupCode => throw _privateConstructorUsedError;
@@ -908,14 +1325,29 @@ abstract class _ItemReadModel implements ItemReadModel {
   @JsonKey(name: "division_code")
   String? get divisionCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "division_name")
+  String? get divisionName => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "category_code")
   String? get categoryCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "category_name")
+  String? get categoryName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "sub_category_code")
   String? get subCategoryCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "sub_category_name")
+  String? get subCategoryName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "static_group_name")
+  String? get staticGroupName => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "variant_framework_code")
   String? get variantFrameWork => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "variant_framwork_name")
+  String? get variantFrameWorkName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "item_meta")
   ItemMeta? get itemMeta => throw _privateConstructorUsedError;
