@@ -34,6 +34,7 @@ class CostingtypeCubit extends Cubit<CostingtypeState> {
 
   Future postPatchCostingCreate(
     int? verticalId,
+      int? typeId,
     String typeName,
     String description,
     String createdBy,
@@ -43,6 +44,7 @@ class CostingtypeCubit extends Cubit<CostingtypeState> {
     print("assa");
     final result = await repo.postPatchCostingCreate(
       verticalId,
+      typeId,
       typeName,
       description,
       createdBy,

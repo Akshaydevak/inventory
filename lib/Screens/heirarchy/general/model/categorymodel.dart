@@ -11,7 +11,7 @@ class CategoryCreationtModel with _$CategoryCreationtModel {
     final String? description,
     final String? name,
     final String? code,
-    final int? image,
+    final String? image,
 
     @JsonKey(name: "alternative_name") final String? alternativeName,
     @JsonKey(name: "parent_code") final String? parentCode,

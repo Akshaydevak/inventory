@@ -123,7 +123,7 @@ class _TableTextButtonState extends State<TableTextButton> {
       ):
 
       Container(
-        margin: EdgeInsets.all(4),
+        margin: EdgeInsets.symmetric(vertical: 9,horizontal: 5),
         child: TextButton(
             style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Pellet.tableBlueHeaderPrint)),
 

@@ -31,6 +31,27 @@ print(user);
     //
     // prefs.setString("mobile", user.mobile);
     return prefs.commit();
+  }  Future<bool> SaveInventoryList(InventoryListModel user) async {
+    print("prefs.getString(username) in Saving :");
+print(user);
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(
+        "inventory",
+        user.businessUnitCode.toString());
+    prefs.setString("inventory_name",
+        user.name.toString());
+
+    // prefs.setString("token", user.t);
+    // prefs.setString("role", user.role);
+    // prefs.setString("firstname", user.firstname);
+    // prefs.setString("lastname", user.lastname);
+    // prefs.setString(" email", user. email);
+    // prefs.setString("password", user.password);
+    // prefs.setString("msg", user.msg);
+    // prefs.setString("address", user.address);
+    //
+    // prefs.setString("mobile", user.mobile);
+    return prefs.commit();
   }
 
   // Future<bool> saveInventry(List<InventoryListModel> buisness) async {

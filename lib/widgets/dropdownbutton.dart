@@ -150,7 +150,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
             ),
             SizedBox(height:3),
             Container(
-              height: 39,
+              height: 46,
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,

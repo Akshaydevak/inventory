@@ -124,7 +124,7 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> brandDelete(int? id);
   Future<DoubleResponse> postBrandPatch(BrandCreationtModel model, int? id);
   Future<PaginatedResponse<List<BrandListModel>>> searchMaterialList(
-      String? code);
+      String? code,{String ? page});
   Future<DoubleResponse> postCreateMaterial(MaterialCreationtModel model);
   Future<MaterialReadModel> getMaterialRead(int? id);
   Future<DoubleResponse> postmaterialPatch(MaterialReadModel model, int? id);
@@ -241,6 +241,7 @@ abstract class PurchaseSourceAbstract {
       String? code);
   Future<DoubleResponse> postPatchpostPatchCostingCreateCostingType(
     int? verticalId,
+      int? typeId,
     String typeName,
     String description,
     String createdBy,
@@ -1852,7 +1853,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listBrandApi;
     else
-      path = listBrandApi + "?name=$code";
+      path = listBrandApi + "?$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1867,7 +1868,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
@@ -1958,19 +1961,27 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> searchMaterialList(
-      String? code) async {
+      String? code,{String ? page}) async {
     print("avavava");
+    print(page);
     code = code == null ? "" : code;
-    String path;
-    if (code == "")
-      path = listMaterialGroupApi;
-    else
-      path = listMaterialGroupApi + "?name=$code";
+
+
+      String path;
+
+
+
+      if (code == "")
+        path = listMaterialGroupApi;
+      else
+        path = listMaterialGroupApi + "?$code";
+
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }));
+    print("material"+path.toString());
 
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
@@ -1980,7 +1991,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+
+    );
   }
 
   @override
@@ -2177,7 +2191,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listDevisionApi;
     else
-      path = listDevisionApi + "?name=$code";
+      path = listDevisionApi + "?$code";
 
     print(path);
 
@@ -2197,7 +2211,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+
+    );
   }
 
   @override
@@ -2367,7 +2384,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listStaticApi;
     else
-      path = listStaticApi + "?name=$code";
+      path = listStaticApi + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -2384,7 +2401,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
+
   }
 
   @override
@@ -2446,7 +2465,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listUomGroupApi;
     else
-      path = listUomGroupApi + "?name=$code";
+      path = listUomGroupApi + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -2508,7 +2527,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
-      {String? type}) async {
+      {String? type,int ?id}) async {
     print(code);
     print("akakka" + type.toString());
     String path = "";
@@ -2521,14 +2540,14 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       else
         path = listCategoryGroupApi +
             Variable.divisionId.toString() +
-            "?name=$code";
+            "?$code";
     } else if (type == "all") {
       print("entered to All case");
       print(code);
       if (code == "")
         path = listCategoryAllGroupApi;
       else
-        path = listCategoryAllGroupApi + "?name=$code";
+        path = listCategoryAllGroupApi + "?$code";
     }
     print("Searching path" + path.toString());
     final response = await client.get(path,
@@ -2546,7 +2565,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+
   }
 
   @override
@@ -2655,6 +2677,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getSubCategoryList(
       String? code) async {
+    print("enterdAAAAAAAAAAAAAAA");
     String path = "";
 
     code = code == null ? "" : code;
@@ -2662,7 +2685,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listSubCategoryGroupApi + Variable.categoryId.toString();
     else
-      path = listStaticApi + Variable.categoryId.toString() + "?name=$code";
+      path = listSubCategoryGroupApi + Variable.categoryId.toString() +"?$code";
+
+
+    print("the existing path"+path.toString());
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2677,12 +2703,15 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
   Future<DoubleResponse> postCreateGroup(MaterialCreationtModel model) async {
     String path = createGroupApi;
+    print(path);
     try {
       final response = await client.post(path,
           data: model.toJson(),
@@ -2730,26 +2759,35 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       if (code == "")
         path = listAllGroupApi;
       else
-        path = listAllGroupApi + "?name=$code";
+        path = listAllGroupApi + "?$code";
     } else {
       code = code == null ? "" : code;
 
       if (code == ""){
         if(Variable.subCategorycategory!=0){
-          print("entered in subcategoryBased");
+
           path = listGroupApi + Variable.subCategorycategory.toString();
 
         }
         else{
-          print("entered in cate");
+
           path = listGroupApi + Variable.categoryId.toString();}
       }
 
 
-      else
-        path = listGroupApi + Variable.categoryId.toString() + "?name=$code";
+      else {
+        if(Variable.subCategorycategory!=0){
+
+          path = listGroupApi + Variable.subCategorycategory.toString() + "?$code";
+
+        }
+        else{
+
+          path = listGroupApi + Variable.categoryId.toString() + "?$code";}
+
+      }
     }
-    print(path);
+    print("patheeeeeeeeeeeeeeee"+path.toString());
 
     final response = await client.get(path,
         options: Options(headers: {
@@ -2897,7 +2935,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       if (code == "")
         path = listBaseAllUomGroupApi;
       else
-        path = listBaseAllUomGroupApi + "?name=$code";
+        path = listBaseAllUomGroupApi + "?$code";
     } else {
       code = code == null ? "" : code;
 
@@ -2906,7 +2944,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       else
         path = listBaseUomGroupApi +
             Variable.uomGroupId.toString() +
-            "?name=$code";
+            "?$code";
     }
     print(path);
     final response = await client.get(path,
@@ -2998,7 +3036,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listItemVerticalListApi;
     else
-      path = listItemVerticalListApi + "?name=$code";
+      path = listItemVerticalListApi + "?$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3013,7 +3051,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override
@@ -3158,26 +3197,26 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     //   print("erroe" + e.toString());
     // }
     final response = await client.patch(path,
-        // data: model.toJson(),
-        data: {
-          "name": model.name,
-          "material_code": model.materialCode,
-          "static_group_code": model.staticGroupCode,
-          "uom_code": model.uomCode,
-          "brand_code": model.brandCode,
-          "variant_framework_code": model.variantFrameWork,
-          "search_name": model.searchName,
-          "display_name": model.displayname,
-          "is_active": model.isActive,
-          "description": model.description,
-          "image1": model.image1,
-          "image2": model.image2,
-          "image3": model.image3,
-          "item_cateloge1": model.itemCatelog1,
-          "item_cateloge2": model.itemCatelog2,
-          "item_cateloge3": model.itemCatelog3,
-          "item_cateloge4": model.itemCatelog4
-        },
+        data: model.toJson(),
+        // data: {
+        //   "name": model.name,
+        //   "material_code": model.materialCode,
+        //   "static_group_code": model.staticGroupCode,
+        //   "uom_code": model.uomCode,
+        //   "brand_code": model.brandCode,
+        //   "variant_framework_code": model.variantFrameWork,
+        //   "search_name": model.searchName,
+        //   "display_name": model.displayname,
+        //   "is_active": model.isActive,
+        //   "description": model.description,
+        //   "image1": model.image1,
+        //   "image2": model.image2,
+        //   "image3": model.image3,
+        //   "item_cataloge1": model.itemCatelog1,
+        //   "item_cataloge2": model.itemCatelog2,
+        //   "item_cataloge3": model.itemCatelog3,
+        //   "item_cataloge4": model.itemCatelog4
+        // },
         options: Options(headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -3272,7 +3311,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = salesListApi + Variable.uomId.toString();
     else
-      path = salesListApi + Variable.uomId.toString() + "?name=$code";
+      path = salesListApi + Variable.uomId.toString() + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -3280,6 +3319,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }));
+
+
 
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
@@ -3326,6 +3367,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> postVariant(VariantPost model, int? id) async {
     String path = variantCreatetApi + id.toString();
     print(path);
+    print("sasasaassss"+model.inventoryName.toString());
     try {
       final response = await client.post(path,
           data: model.toJson(),
@@ -3364,7 +3406,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> patchVariant(VariantPatch model, int? id) async {
     String path = variantPatchApi + id.toString();
     print(path);
-    print("variant name${model.itemImage}");
+    print("variant name${model.variantName}");
 
     final response = await client.post(path,
         data: model.toJson(),
@@ -3514,7 +3556,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       path = variantCreationSearchListApi +
           Variable.inventory_ID.toString() +
           "/" +
-          item.toString();
+          Variable.variantSearchId.toString();
     else
       path =
           "https://api-inventory-software-staging.rgcdynamics.org/inventory-product/list-division?name=$code";
@@ -4488,16 +4530,26 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<DoubleResponse> postPatchpostPatchCostingCreateCostingType(
       int? verticalId,
+      int? typeId,
       String typeName,
       String description,
       String createdBy,
       bool? isActive) async {
     String path = costingCreateDeleteApi + verticalId.toString();
 
+
+    print("details");
+    print(typeName);
+    print(typeId);
+    print(verticalId);
+    print(createdBy);
+    print(isActive);
+    print(path);
+
     try {
       final response = await client.patch(path,
           data: {
-            "method_type_id": verticalId,
+            "method_type_id": typeId,
             "method_name": typeName,
             "description": description,
             "created_by": createdBy,
@@ -5217,6 +5269,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<DoubleResponse> postPatchFrameWork(
       VariantFrameWorkPostModel model, int? id) async {
     String path = VariantFrameWorkPatchApi + id.toString();
+    print(path);
+    print(model);
     try {
       final response = await client.patch(path,
           data: model.toJson(),
@@ -5264,14 +5318,17 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     print("i" + itemCode.toString());
     print("v" + variantCode.toString());
     print("u" + uomCode.toString());
+    print(Variable.inventory_Name);
     try {
       final response = await client.post(path,
           data: {
             "item_code": itemCode,
 
             "variant_framework_code": variantCode,
+            "inventory_name":Variable.inventory_Name,
 
             "uom_code": uomCode,
+
 
             "inventory_id": Variable.inventory_ID,
 
@@ -5303,6 +5360,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "uom_code": uomCode,
 
           "inventory_id": Variable.inventory_ID,
+          "inventory_name":Variable.inventory_Name,
 
           "variant_list": variantlist
           // [[{"key":"color","value":"red"},{"key":"size","value":"large"}],[{"key":"color","value":"yellow"},{"key":"size","value":"small"}]]

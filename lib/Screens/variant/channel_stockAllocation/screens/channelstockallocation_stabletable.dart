@@ -372,7 +372,7 @@ class _ChannelStockStableTableState extends State<ChannelStockStableTable> {
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .04,
+                          height: height * .063,
                         ),
 
 

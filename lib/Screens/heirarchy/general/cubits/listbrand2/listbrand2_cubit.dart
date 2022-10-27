@@ -28,7 +28,7 @@ class Listbrand2Cubit extends Cubit<Listbrand2State> {
 
   Future searchSlotSectionPageList(String filter) async {
     emit(Listbrand2State.initial());
-    final result = await repo.getlistBrand(filter);
+    final result = await repo.getlistBrand("name="+filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

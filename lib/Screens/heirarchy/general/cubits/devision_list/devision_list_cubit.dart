@@ -27,7 +27,7 @@ class DevisionListCubit extends Cubit<DevisionListState> {
 
   Future searchDevisionList(String filter) async {
     emit(DevisionListState.initial());
-    final result = await repo.getDevisionList(filter);
+    final result = await repo.getDevisionList("name="+filter.toString());
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

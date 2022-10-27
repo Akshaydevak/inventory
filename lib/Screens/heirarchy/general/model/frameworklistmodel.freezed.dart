@@ -1022,13 +1022,15 @@ class _$VariantLinesLiostModelTearOff {
   const _$VariantLinesLiostModelTearOff();
 
   _VariantLinesLiostModel call(
-      {List<String>? values,
+      {int? id,
+      List<String>? values,
       @JsonKey(name: "attribute_id") int? attributeId,
       @JsonKey(name: "attribute_name") String? name,
       @JsonKey(name: "attribute_type") String? type,
       @JsonKey(name: "attribute_code") String? attributeCode,
       @JsonKey(name: "is_active") bool? isActive}) {
     return _VariantLinesLiostModel(
+      id: id,
       values: values,
       attributeId: attributeId,
       name: name,
@@ -1048,6 +1050,7 @@ const $VariantLinesLiostModel = _$VariantLinesLiostModelTearOff();
 
 /// @nodoc
 mixin _$VariantLinesLiostModel {
+  int? get id => throw _privateConstructorUsedError;
   List<String>? get values => throw _privateConstructorUsedError;
   @JsonKey(name: "attribute_id")
   int? get attributeId => throw _privateConstructorUsedError;
@@ -1072,7 +1075,8 @@ abstract class $VariantLinesLiostModelCopyWith<$Res> {
           $Res Function(VariantLinesLiostModel) then) =
       _$VariantLinesLiostModelCopyWithImpl<$Res>;
   $Res call(
-      {List<String>? values,
+      {int? id,
+      List<String>? values,
       @JsonKey(name: "attribute_id") int? attributeId,
       @JsonKey(name: "attribute_name") String? name,
       @JsonKey(name: "attribute_type") String? type,
@@ -1091,6 +1095,7 @@ class _$VariantLinesLiostModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? values = freezed,
     Object? attributeId = freezed,
     Object? name = freezed,
@@ -1099,6 +1104,10 @@ class _$VariantLinesLiostModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       values: values == freezed
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
@@ -1135,7 +1144,8 @@ abstract class _$VariantLinesLiostModelCopyWith<$Res>
       __$VariantLinesLiostModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<String>? values,
+      {int? id,
+      List<String>? values,
       @JsonKey(name: "attribute_id") int? attributeId,
       @JsonKey(name: "attribute_name") String? name,
       @JsonKey(name: "attribute_type") String? type,
@@ -1156,6 +1166,7 @@ class __$VariantLinesLiostModelCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? id = freezed,
     Object? values = freezed,
     Object? attributeId = freezed,
     Object? name = freezed,
@@ -1164,6 +1175,10 @@ class __$VariantLinesLiostModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_VariantLinesLiostModel(
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
       values: values == freezed
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
@@ -1196,7 +1211,8 @@ class __$VariantLinesLiostModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_VariantLinesLiostModel implements _VariantLinesLiostModel {
   const _$_VariantLinesLiostModel(
-      {this.values,
+      {this.id,
+      this.values,
       @JsonKey(name: "attribute_id") this.attributeId,
       @JsonKey(name: "attribute_name") this.name,
       @JsonKey(name: "attribute_type") this.type,
@@ -1206,6 +1222,8 @@ class _$_VariantLinesLiostModel implements _VariantLinesLiostModel {
   factory _$_VariantLinesLiostModel.fromJson(Map<String, dynamic> json) =>
       _$$_VariantLinesLiostModelFromJson(json);
 
+  @override
+  final int? id;
   @override
   final List<String>? values;
   @override
@@ -1226,13 +1244,15 @@ class _$_VariantLinesLiostModel implements _VariantLinesLiostModel {
 
   @override
   String toString() {
-    return 'VariantLinesLiostModel(values: $values, attributeId: $attributeId, name: $name, type: $type, attributeCode: $attributeCode, isActive: $isActive)';
+    return 'VariantLinesLiostModel(id: $id, values: $values, attributeId: $attributeId, name: $name, type: $type, attributeCode: $attributeCode, isActive: $isActive)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _VariantLinesLiostModel &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.values, values) ||
                 const DeepCollectionEquality().equals(other.values, values)) &&
             (identical(other.attributeId, attributeId) ||
@@ -1253,6 +1273,7 @@ class _$_VariantLinesLiostModel implements _VariantLinesLiostModel {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(values) ^
       const DeepCollectionEquality().hash(attributeId) ^
       const DeepCollectionEquality().hash(name) ^
@@ -1274,7 +1295,8 @@ class _$_VariantLinesLiostModel implements _VariantLinesLiostModel {
 
 abstract class _VariantLinesLiostModel implements VariantLinesLiostModel {
   const factory _VariantLinesLiostModel(
-      {List<String>? values,
+      {int? id,
+      List<String>? values,
       @JsonKey(name: "attribute_id") int? attributeId,
       @JsonKey(name: "attribute_name") String? name,
       @JsonKey(name: "attribute_type") String? type,
@@ -1284,6 +1306,8 @@ abstract class _VariantLinesLiostModel implements VariantLinesLiostModel {
   factory _VariantLinesLiostModel.fromJson(Map<String, dynamic> json) =
       _$_VariantLinesLiostModel.fromJson;
 
+  @override
+  int? get id => throw _privateConstructorUsedError;
   @override
   List<String>? get values => throw _privateConstructorUsedError;
   @override

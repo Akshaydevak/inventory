@@ -10,6 +10,7 @@ import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
@@ -39,12 +40,14 @@ class HeirarchySalesStableTable extends StatefulWidget {
   final TextEditingController itemCatelog3;
   final TextEditingController itemCatelog4;
   final TextEditingController itemCatelog5;
+  final int? uomGroupid;
   final bool active;
   final Function activeChange;
   final Function({String type}) imagePostCheck;
 
   HeirarchySalesStableTable({
     required this.baseuomNameController,
+    required this.uomGroupid,
     required this.uomGroupNameController,
     required this.uomGroupController,
     required this.uomController,
@@ -205,89 +208,154 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           SizedBox(
                             height: height * .030,
                           ),
-                          SelectableDropDownpopUp(
+                          NewInputCard(controller: widget.uomGroupNameController,
+                            icondrop:true,title: "Uom Group",ontap: (){
+                            showDailogPopUp(
+                              context,
+                              TableConfigurePopup(
+                                type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
 
-                            controller:widget.uomGroupNameController,
-                            label: "Uom Group",
-                            type:"Uomgroup_PopUpCall",
-                            value:  widget.uomGroupNameController.text,
-                            onchange: (vale){
-                              print("Akkk"+vale.toString());
-                              context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
-                                widget.uomGroupController.text=va?.code??"";
-                              widget.uomGroupNameController.text=va?.name??"";
-                              Variable.uomGroupId=va?.id;
-
-
-                              });
+                                setState(() {
 
 
 
+                                  widget.uomGroupController.text=va?.code??"";
+                                  widget.uomGroupNameController.text=va?.name??"";
+                                  Variable.uomGroupId=va?.id;
+                                  setState(() {
+
+                                  });
 
 
+                                  // onChange = true;
+                                  // orderType.text = va!;
+                                });
+
+                              },
+                              ),
 
 
+                            );
 
-                                // onChange = true;
-                                // orderType.text = va!;
-
-                            },
-                            onAddNew: () {
-
-                              showDailogPopUp(
-                                context,
-                                ConfigurePopup(
-                                  type: "uomgroup",
-
-                                ),
-
-
-                              );
-                            },
-                          ),
+                          },),
+                          // SelectableDropDownpopUp(
+                          //
+                          //   controller:widget.uomGroupNameController,
+                          //   label: "Uom Group",
+                          //   type:"Uomgroup_PopUpCall",
+                          //   value:  widget.uomGroupNameController.text,
+                          //   onchange: (vale){
+                          //     print("Akkk"+vale.toString());
+                          //     context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                          //   },
+                          //   enable: true,
+                          //   onSelection: (BrandListModel? va) {
+                          //     setState(() {
+                          //       widget.uomGroupController.text=va?.code??"";
+                          //     widget.uomGroupNameController.text=va?.name??"";
+                          //     Variable.uomGroupId=va?.id;
+                          //
+                          //
+                          //     });
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //
+                          //       // onChange = true;
+                          //       // orderType.text = va!;
+                          //
+                          //   },
+                          //   onAddNew: () {
+                          //
+                          //     showDailogPopUp(
+                          //       context,
+                          //       ConfigurePopup(
+                          //         type: "uomgroup",
+                          //
+                          //       ),
+                          //
+                          //
+                          //     );
+                          //   },
+                          // ),
                           SizedBox(
                             height: height * .030,
                           ),
-                          SelectableDropDownpopUp(
 
-                            controller:widget.baseuomNameController,
-                            label: "base uom",
-                            type:"Uom_PopUpCall",
-                            value:  widget.baseuomNameController.text,
-                            onchange: (vale){
-                              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
 
-                                widget.uomController.text=va?.uomCode??"";
-                                widget.baseuomNameController.text=va?.name??"";
+
+                          NewInputCard(controller: widget.baseuomNameController,
+                            icondrop:true,
+                            title: "Base UOM",ontap: (){
+                            showDailogPopUp(
+                              context,
+                              TableConfigurePopup(
+                                type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
+
                                 setState(() {
+                                  print(va?.uomCode);
+                                  print(va);
 
+
+
+                                  widget.uomController.text=va?.uomCode??"";
+                                  widget.baseuomNameController.text=va?.name??"";
+                                  setState(() {
+
+                                  });
+
+
+                                  // onChange = true;
+                                  // orderType.text = va!;
                                 });
 
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-                            onAddNew: () {
-
-                              showDailogPopUp(
-                                context,
-                                ConfigurePopup(
-                                  type: "base_uom",
-                                ),
+                              },
+                              ),
 
 
-                              );
-                            },
-                          ),
+                            );
+
+                          },),
+                          // SelectableDropDownpopUp(
+                          //
+                          //   controller:widget.baseuomNameController,
+                          //   label: "base uom",
+                          //   type:"Uom_PopUpCall",
+                          //   value:  widget.baseuomNameController.text,
+                          //   onchange: (vale){
+                          //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                          //   },
+                          //   enable: true,
+                          //   onSelection: (BrandListModel? va) {
+                          //     setState(() {
+                          //
+                          //       widget.uomController.text=va?.uomCode??"";
+                          //       widget.baseuomNameController.text=va?.name??"";
+                          //       setState(() {
+                          //
+                          //       });
+                          //
+                          //
+                          //       // onChange = true;
+                          //       // orderType.text = va!;
+                          //     });
+                          //   },
+                          //   onAddNew: () {
+                          //
+                          //     showDailogPopUp(
+                          //       context,
+                          //       ConfigurePopup(
+                          //         type: "base_uom",
+                          //       ),
+                          //
+                          //
+                          //     );
+                          //   },
+                          // ),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -758,10 +826,11 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
 
 class TableBottom extends StatefulWidget {
+  final bool select;
   final TextEditingController barCode;
   final TextEditingController qrCode;
   final TextEditingController rfId;
-  TableBottom({required this.barCode,required this.qrCode,required this.rfId});
+  TableBottom({required this.barCode,required this.qrCode,required this.rfId,required this.select});
 
   @override
   _TableBottomState createState() => _TableBottomState();
@@ -787,6 +856,8 @@ class _TableBottomState extends State<TableBottom> {
 
                   children: [
                     NewInputCard(
+                      formatter: true,
+                        readOnly: widget.select?false:true,
                         controller: widget.barCode, title: "Barcode"),
                   ],
                 ),
@@ -1012,30 +1083,36 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
           for(var i =0;i<table.length;i++){
             values1.add("");}
           print("values1"+values1.toString());
+          print("length"+values1.length.toString());
 
           for(var i =0;i<table.length;i++){
 
 
 
-              if(table[i].values![i].isNotEmpty) {
-                String str="";
-                for(var j=0;j<table[i].values!.length;j++) {
 
-
-                  String value = table[i].values![j];
-                  str = str + " " + value.toString();
-                  print("str"+str.toString());
-                }
-                values1[i]=str;
-                print("values1"+values1.toString());
-
-
-
+          if(table[i].values?.isNotEmpty==true) {
+            if (table[i].values?.isNotEmpty==true) {
+              print("not empty");
+              String str = "";
+              for (var j = 0; j < table[i].values!.length; j++) {
+                String value = table[i].values![j];
+                str = str + " " + value.toString();
+                print("str" + str.toString());
               }
+              values1[i] = str.isEmpty ? "" : str;
+              print("values1" + values1.toString());
+            }
+            else {
+              print("eeeeeekkk");
+              values1[i] = "no value";
+              print(values1);
+            }
+          }
 
           }
         }
         print("tablesssssssssssss"+table.toString());
+        print("tablesssssssssssss"+values1.toString());
 
 
       }
@@ -1174,7 +1251,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                                       .solid))),
                       children: [
 
-                        TableCell(
+                             TableCell(
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
                             child:textPadding(table[i].name??"")
@@ -1182,7 +1259,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
 
                         ),
-                        TableCell(
+                 TableCell(
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
                             child:textPadding(table[i].type??"")
@@ -1194,11 +1271,12 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
 
 
-                        TableCell(
+
+                     values1.isNotEmpty?   TableCell(
 
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
-                            child:textPadding(values1[i]??"")
+                            child:textPadding(values1?[i]??"")
 
    //                          SingleChildScrollView(
    //  scrollDirection: Axis.horizontal,
@@ -1240,7 +1318,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
    //  ),
    //  ),
    //  ),
-                        ),
+                        ):textPadding(""),
    //                          // Container(
    //                          //   width: 230,
    //                          //   child:

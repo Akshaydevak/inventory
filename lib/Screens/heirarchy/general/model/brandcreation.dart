@@ -10,7 +10,7 @@ class BrandCreationtModel with _$BrandCreationtModel {
 
     final String? description,
     final String? name,
-    final int? image,
+    final String? image,
 
     @JsonKey(name: "brand_identifier_url") final String? brandIdentifierUrl,
     @JsonKey(name: "parent_code") final String? parentCode,

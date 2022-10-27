@@ -27,7 +27,7 @@ class MaterialListCubit extends Cubit<MaterialListState> {
 
   Future searchMaterialList(String filter) async {
     emit(MaterialListState.initial());
-    final result = await repo.searchMaterialList( filter);
+    final result = await repo.searchMaterialList("name=" + filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -37,8 +37,9 @@ class MaterialListCubit extends Cubit<MaterialListState> {
     });
   }
 
-  Future nextslotSectionPageList() async {
-    final result = await repo.searchMaterialList(next);
+  Future nextslotSectionPageList(String nextURL) async {
+    print(next);
+    final result = await repo.searchMaterialList(next==null?nextURL:next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

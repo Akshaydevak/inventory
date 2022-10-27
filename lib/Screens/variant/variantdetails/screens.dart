@@ -11,12 +11,12 @@ import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 
 import '../../../core/uttils/variable.dart';
 import 'cubits/generateqrcode/qrgenerating_cubit.dart';
@@ -33,7 +33,13 @@ class Identification extends StatefulWidget {
   final Function barQrCodeTableAssign;
 
   Identification(
-      {required this.barCode,required this.veritiaclid, required this.qrCode, required this.rfId, required this.alternativeBarcode, required this.alternativeQrCode, required this.barQrCodeTableAssign});
+      {required this.barCode,
+      required this.veritiaclid,
+      required this.qrCode,
+      required this.rfId,
+      required this.alternativeBarcode,
+      required this.alternativeQrCode,
+      required this.barQrCodeTableAssign});
 
   @override
   _IdentificationState createState() => _IdentificationState();
@@ -41,38 +47,29 @@ class Identification extends StatefulWidget {
 
 class _IdentificationState extends State<Identification> {
   TextEditingController controller = TextEditingController();
-  List<AlternativeBarcode>alternativeBarcode = [];
+  List<AlternativeBarcode> alternativeBarcode = [];
   TextEditingController barCodeTextEditingController = TextEditingController();
   TextEditingController barCode2TextEditingController = TextEditingController();
   TextEditingController qrCodeTextEditingController = TextEditingController();
-  List<TextEditingController>bacCodeListTextEditing = [];
+  List<TextEditingController> bacCodeListTextEditing = [];
   bool barActive = false;
   bool qrActive = false;
 
-
-  List<AlternativeBarcode>alterNativeQrCode = [];
+  List<AlternativeBarcode> alterNativeQrCode = [];
   bool onChange = false;
 
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     if (!onChange) {
       alternativeBarcode = [];
       bacCodeListTextEditing = [];
 
-
       if (widget.alternativeBarcode?.isNotEmpty == true) {
         for (var i = 0; i < widget.alternativeBarcode.length; i++) {
           var value = widget.alternativeBarcode[i].barcode;
-          if (value == null)
-            value = "";
+          if (value == null) value = "";
           bacCodeListTextEditing.add(TextEditingController(text: value));
         }
 
@@ -81,11 +78,8 @@ class _IdentificationState extends State<Identification> {
       if (widget.alternativeBarcode?.isNotEmpty == true) {
         alterNativeQrCode = widget?.alternativeQrCode ?? [];
       }
-      setState(() {
-
-      });
+      setState(() {});
     }
-
 
     onChange = false;
     return MultiBlocProvider(
@@ -93,668 +87,590 @@ class _IdentificationState extends State<Identification> {
         BlocProvider(
           create: (context) => QrgeneratingCubit(),
         ),
-
       ],
-      child: Builder(
-          builder: (context) {
-            return
-              BlocListener<QrgeneratingCubit, QrgeneratingState>(
-              listener: (context, state) {
-                print("postssssssss" + state.toString());
-                state.maybeWhen(orElse: () {
-                  // context.
-                  context.showSnackBarError("Loadingggg");
-                }, error: () {
-                  context.showSnackBarError(Variable.errorMessege);
-                }, success: (data) {
-                  print("Akshayaaaaaaaaaaaa");
-                  print(data.data1);
-                  print(data.data2);
-                  if (data.data1) {
-                    setState(() {
-                      widget.qrCode.text=data.data2;
-                    });
-
-                    // Timer(Duration(seconds: 5), () {
-                    //   setState(() {
-                    //     context.read<ListvraiantCubit>().getVariantList();
-                    //     // select=false;
-                    //   });
-                    // });
-                  } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
-                  }
-                  ;
+      child: Builder(builder: (context) {
+        return BlocListener<QrgeneratingCubit, QrgeneratingState>(
+          listener: (context, state) {
+            print("postssssssss" + state.toString());
+            state.maybeWhen(orElse: () {
+              // context.
+              context.showSnackBarError("Loadingggg");
+            }, error: () {
+              context.showSnackBarError(Variable.errorMessege);
+            }, success: (data) {
+              print("Akshayaaaaaaaaaaaa");
+              print(data.data1);
+              print(data.data2);
+              if (data.data1) {
+                setState(() {
+                  widget.qrCode.text = data.data2;
                 });
-              },
-              child: Builder(
-                builder: (context) {
-                  return Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Row(
+
+                // Timer(Duration(seconds: 5), () {
+                //   setState(() {
+                //     context.read<ListvraiantCubit>().getVariantList();
+                //     // select=false;
+                //   });
+                // });
+              } else {
+                context.showSnackBarError(data.data2);
+                print(data.data1);
+              }
+              ;
+            });
+          },
+          child: Builder(builder: (context) {
+            return Container(
+              color: Colors.white,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Column(
                           children: [
+                            NewInputCard(
+                                controller: widget.barCode, title: "Barcode"),
+                          ],
+                        ),
+                      ),
+                      // Expanded(
+                      //   child: Column(
+                      //     children: [
+                      //       NewInputCreateCard(
+                      //           fontColors: Colors.lightBlue,
+                      //           height: 55,
+                      //           onChange: () async {
+                      //             print("akshahahahha");
+                      //
+                      //             await launch(widget.qrCode.text);
+                      //           },
+                      //           subTitle: "Generate Qr Code",
+                      //           ontap: () {
+                      //             context
+                      //                 .read<QrgeneratingCubit>()
+                      //                 .getQrCodeRead(widget.veritiaclid);
+                      //           },
+                      //           controller: widget.qrCode,
+                      //           title: "Qr code"),
+                      //     ],
+                      //   ),
+                      // ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            NewInputCard(
+                                controller: widget.rfId, title: "RF Id"),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
 
-                            Expanded(
-                              child: Column(
+                  SizedBox(
+                    height: h * .05,
+                  ),
+                  Container(
+                    width: 2200,
+                    margin: EdgeInsets.symmetric(horizontal: w * .02),
+                    child: customTable(
+                      border: const TableBorder(
+                        verticalInside: BorderSide(
+                            width: .5,
+                            color: Colors.black45,
+                            style: BorderStyle.solid),
+                        horizontalInside: BorderSide(
+                            width: .3,
+                            color: Colors.black45,
+                            // color: Colors.blue,
+                            style: BorderStyle.solid),
+                      ),
+                      tableWidth: .5,
+                      childrens: [
+                        TableRow(
+                          // decoration: BoxDecoration(
 
-                                children: [
-                                  NewInputCard(
-                                      controller: widget.barCode, title: "Barcode"),
-                                ],
-                              ),
+                          //     color: Colors.green.shade200,
+
+                          //     shape: BoxShape.rectangle,
+
+                          //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                          children: [
+                            tableHeadtext(
+                              'ID',
+
+                              padding: EdgeInsets.all(7),
+
+                              height: 46,
+                              textColor: Colors.white,
+                              // color: Color(0xffE5E5E5),
+
+                              size: 13,
                             ),
-
-                            Expanded(
-
-                              child: Column(
-                                children: [
-                                  NewInputCreateCard(
-                                    fontColors: Colors.lightBlue,
-
-                                    height: 55,
-                                      onChange: () async {
-                                      print("akshahahahha");
-
-
-                                        await launch(widget.qrCode.text);
-
-
-                                      },
-                                      subTitle: "Generate Qr Code",
-                                      ontap: () {
-                                        context.read<QrgeneratingCubit>().getQrCodeRead(widget.veritiaclid);
-
-
-                                      },
-
-                                      controller: widget.qrCode, title: "Qr code"),
-                                ],
-                              ),
+                            tableHeadtext(
+                              'Alternative Barcode',
+                              textColor: Colors.white,
+                              padding: EdgeInsets.all(7),
+                              height: 46,
+                              size: 13,
+                              // color: Color(0xffE5E5E5),
                             ),
-
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  NewInputCard(
-                                      controller: widget.rfId, title: "RF Id"),
-                                ],
-                              ),
+                            tableHeadtext(
+                              'isActive',
+                              textColor: Colors.white,
+                              padding: EdgeInsets.all(7),
+                              height: 46,
+                              size: 13,
+                              // color: Color(0xffE5E5E5),
+                            ),
+                            tableHeadtext(
+                              '',
+                              textColor: Colors.white,
+                              padding: EdgeInsets.all(7),
+                              height: 46,
+                              size: 13,
+                              // color: Color(0xffE5E5E5),
                             ),
                           ],
                         ),
-
-
-                        SizedBox(height: h * .03,),
-                        Container(
-                          width: 2200,
-                          margin: EdgeInsets.symmetric(horizontal: w * .02),
-                          child: customTable(
-
-                            border: const TableBorder(
-
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),),
-
-                            tableWidth: .5,
-
-                            childrens: [
-                              TableRow(
-
-                                // decoration: BoxDecoration(
-
-                                //     color: Colors.green.shade200,
-
-                                //     shape: BoxShape.rectangle,
-
-                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-
+                        if (alternativeBarcode != null) ...[
+                          for (var i = 0; i < alternativeBarcode!.length; i++)
+                            TableRow(
+                                decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    shape: BoxShape.rectangle,
+                                    border: const Border(
+                                        left: BorderSide(
+                                            width: .5,
+                                            color: Colors.grey,
+                                            style: BorderStyle.solid),
+                                        bottom: BorderSide(
+                                            width: .5,
+                                            color: Colors.grey,
+                                            style: BorderStyle.solid),
+                                        right: BorderSide(
+                                            color: Colors.grey,
+                                            width: .5,
+                                            style: BorderStyle.solid))),
                                 children: [
+                                  TableCell(
+                                    verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
 
-                                  tableHeadtext(
-
-                                    'ID',
-
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
-                                    textColor: Colors.white,
-                                    // color: Color(0xffE5E5E5),
-
-                                    size: 13,
-
-
+                                    child: textPadding((i + 1).toString()),
+                                    // UnderLinedInput(),
                                   ),
-
-
-                                  tableHeadtext(
-                                    'Alternative Barcode',
-                                    textColor: Colors.white,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-
-                                  tableHeadtext(
-                                    'isActive',
-                                    textColor: Colors.white,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-                                  tableHeadtext(
-                                    '',
-                                    textColor: Colors.white,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
-                                    size: 13,
-                                    // color: Color(0xffE5E5E5),
-                                  ),
-
-
-                                ],
-
-                              ),
-                              if (alternativeBarcode != null) ...[
-                                for (var i = 0; i < alternativeBarcode!.length; i++)
-                                  TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey
-                                              .shade200,
-                                          shape: BoxShape
-                                              .rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors
-                                                      .grey,
-                                                  style: BorderStyle
-                                                      .solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors
-                                                      .grey,
-                                                  style: BorderStyle
-                                                      .solid),
-                                              right: BorderSide(
-                                                  color: Colors
-                                                      .grey,
-                                                  width: .5,
-                                                  style: BorderStyle
-                                                      .solid))),
-                                      children: [
-
-
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment
-                                              .middle,
-
-                                          child: textPadding((i + 1).toString()),
-                                          // UnderLinedInput(),
-
-
-                                        ),
-                                        TableCell(
-                                            verticalAlignment: TableCellVerticalAlignment
-                                                .middle,
-
-                                            child: UnderLinedInput(
-                                              controller: bacCodeListTextEditing[i],
-                                              // initialCheck: true,
-                                              // last:alternativeBarcode?[i].barcode??"",
-                                              onChanged: (va) {
-                                                alternativeBarcode[i] =
-                                                    alternativeBarcode[i].copyWith(
-                                                        barcode: va.toString());
-                                              },
-
-                                            )),
-                                        TableCell(
-                                          verticalAlignment: TableCellVerticalAlignment
-                                              .middle,
-
-                                          child: CheckedBoxs(
-                                              valueChanger: alternativeBarcode[i]
-                                                  .isActive,
-                                              onSelection: (va) {
-                                                bool? isActive =
-                                                    alternativeBarcode[i].isActive;
-                                                setState(() {
-                                                  setState(() {});
-                                                  isActive = !isActive!;
-                                                  alternativeBarcode[i] =
-                                                      alternativeBarcode[i]
-                                                          .copyWith(
-                                                          isActive: isActive);
-                                                });
-                                              }
-
-                                          ),),
-                                        TableTextButton(
-
-                                          label: "upadte",
-                                          onPress: () {
-                                            widget.barQrCodeTableAssign(
-                                                type: "1",
-                                                list: alternativeBarcode);
-                                          },
-
-
-                                        ),
-
-
-                                      ]),
-                              ],
-
-                              TableRow(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey
-                                          .shade200,
-                                      shape: BoxShape
-                                          .rectangle,
-                                      border: const Border(
-                                          left: BorderSide(
-                                              width: .5,
-                                              color: Colors
-                                                  .grey,
-                                              style: BorderStyle
-                                                  .solid),
-                                          bottom: BorderSide(
-                                              width: .5,
-                                              color: Colors
-                                                  .grey,
-                                              style: BorderStyle
-                                                  .solid),
-                                          right: BorderSide(
-                                              color: Colors
-                                                  .grey,
-                                              width: .5,
-                                              style: BorderStyle
-                                                  .solid))),
-                                  children: [
-
-
-                                    TableCell(
+                                  TableCell(
                                       verticalAlignment:
+                                          TableCellVerticalAlignment.middle,
+                                      child: UnderLinedInput(
+                                        controller: bacCodeListTextEditing[i],
+                                        // initialCheck: true,
+                                        // last:alternativeBarcode?[i].barcode??"",
+                                        onChanged: (va) {
+                                          alternativeBarcode[i] =
+                                              alternativeBarcode[i].copyWith(
+                                                  barcode: va.toString());
+                                        },
+                                      )),
+                                  TableCell(
+                                    verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                    child: CheckedBoxs(
+                                        valueChanger:
+                                            alternativeBarcode[i].isActive,
+                                        onSelection: (va) {
+                                          bool? isActive =
+                                              alternativeBarcode[i].isActive;
+                                          setState(() {
+                                            setState(() {});
+                                            isActive = !isActive!;
+                                            alternativeBarcode[i] =
+                                                alternativeBarcode[i].copyWith(
+                                                    isActive: isActive);
+                                          });
+                                        }),
+                                  ),
+                                  TableTextButton(
+                                    label: "upadte",
+                                    onPress: () {
+                                      widget.barQrCodeTableAssign(
+                                          type: "1", list: alternativeBarcode);
+                                    },
+                                  ),
+                                ]),
+                        ],
+                        TableRow(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200,
+                                shape: BoxShape.rectangle,
+                                border: const Border(
+                                    left: BorderSide(
+                                        width: .5,
+                                        color: Colors.grey,
+                                        style: BorderStyle.solid),
+                                    bottom: BorderSide(
+                                        width: .5,
+                                        color: Colors.grey,
+                                        style: BorderStyle.solid),
+                                    right: BorderSide(
+                                        color: Colors.grey,
+                                        width: .5,
+                                        style: BorderStyle.solid))),
+                            children: [
+                              TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                child: textPadding(
+                                    (alternativeBarcode.length + 1)
+                                            .toString() ??
+                                        "",
+                                    fontSize: 12,
+                                    padding:
+                                        EdgeInsets.only(left: 11.5, top: 1.5),
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              TableCell(
+                                  verticalAlignment:
                                       TableCellVerticalAlignment.middle,
-                                      child: textPadding(
-                                          (alternativeBarcode.length + 1)
-                                              .toString() ?? "",
-                                          fontSize: 12,
-                                          padding: EdgeInsets.only(
-                                              left: 11.5, top: 1.5),
-                                          fontWeight: FontWeight.w500),
-                                    ),
-                                    TableCell(
-                                        verticalAlignment: TableCellVerticalAlignment
-                                            .middle,
+                                  child: UnderLinedInput(
+                                    controller: barCodeTextEditingController,
+                                    onChanged: (va) {},
+                                  )),
+                              TableCell(
+                                verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
+                                child: CheckedBoxs(
+                                    valueChanger: barActive,
+                                    onSelection: (va) {
+                                      onChange = true;
+                                      setState(() {
+                                        barActive = !barActive!;
+                                      });
+                                    }),
+                              ),
+                              TableTextButton(
+                                label: "Save",
+                                onPress: () {
+                                  setState(() {
+                                    onChange = true;
+                                    bacCodeListTextEditing.add(
+                                        TextEditingController(
+                                            text: barCodeTextEditingController
+                                                    ?.text ??
+                                                ""));
+                                    AlternativeBarcode model =
+                                        AlternativeBarcode(
+                                            barcode:
+                                                barCodeTextEditingController
+                                                        .text ??
+                                                    "",
+                                            isActive: barActive);
+                                    alternativeBarcode.add(model);
 
-                                        child: UnderLinedInput(
-                                          controller: barCodeTextEditingController,
-
-
-                                          onChanged: (va) {
-
-                                          },
-
-                                        )),
-                                    TableCell(
-                                      verticalAlignment: TableCellVerticalAlignment
-                                          .middle,
-
-                                      child: CheckedBoxs(
-                                          valueChanger: barActive,
-                                          onSelection: (va) {
-                                            onChange=true;
-                                            setState(() {
-
-                                              barActive = !barActive!;
-                                            });
-                                          }
-
-                                      ),),
-                                    TableTextButton(
-
-                                      label: "Save",
-                                      onPress: () {
-                                        setState(() {
-                                          onChange = true;
-                                          bacCodeListTextEditing.add(
-                                              TextEditingController(
-                                                  text: barCodeTextEditingController
-                                                      ?.text ?? ""));
-                                          AlternativeBarcode model = AlternativeBarcode(
-                                              barcode: barCodeTextEditingController
-                                                  .text ?? "",
-                                              isActive: barActive
-                                          );
-                                          alternativeBarcode.add(model);
-
-                                          widget.barQrCodeTableAssign(
-                                              type: "1", list: alternativeBarcode);
-                                          barCodeTextEditingController.text = "";
-                                          barActive = false;
-                                        });
-                                      },
-
-
-                                    ),
-
-
-                                  ]),
-
-
-                            ],
-                            widths: {
-                              0: FlexColumnWidth(5),
-                              1: FlexColumnWidth(5),
-                              2: FlexColumnWidth(5),
-                              3: FlexColumnWidth(2),
-
-
-                            },
-
-                          ),
-
-
-                        ),
-                        SizedBox(height: h * .03,),
-                        // Container(
-                        //   width: 2200,
-                        //   margin: EdgeInsets.symmetric(horizontal: w*.02),
-                        //   child: customTable(
-                        //
-                        //     border: const TableBorder(
-                        //
-                        //       verticalInside: BorderSide(
-                        //           width:.5,
-                        //           color: Colors.black45,
-                        //           style: BorderStyle.solid),
-                        //       horizontalInside: BorderSide(
-                        //           width:.3,
-                        //           color: Colors.black45,
-                        //           // color: Colors.blue,
-                        //           style: BorderStyle.solid),),
-                        //
-                        //     tableWidth: .5,
-                        //
-                        //     childrens:[
-                        //       TableRow(
-                        //
-                        //         // decoration: BoxDecoration(
-                        //
-                        //         //     color: Colors.green.shade200,
-                        //
-                        //         //     shape: BoxShape.rectangle,
-                        //
-                        //         //     border: const Border(bottom: BorderSide(color: Colors.grey))),
-                        //
-                        //         children: [
-                        //
-                        //           tableHeadtext(
-                        //
-                        //             'ID',
-                        //
-                        //             padding: EdgeInsets.all(7),
-                        //
-                        //             height: 46,
-                        //             textColor: Colors.white,
-                        //             // color: Color(0xffE5E5E5),
-                        //
-                        //             size: 13,
-                        //
-                        //
-                        //           ),
-                        //
-                        //
-                        //           tableHeadtext(
-                        //             'Alternative QR code',
-                        //             textColor: Colors.white,
-                        //             padding: EdgeInsets.all(7),
-                        //             height: 46,
-                        //             size: 13,
-                        //             // color: Color(0xffE5E5E5),
-                        //           ),
-                        //
-                        //           tableHeadtext(
-                        //             'isActive',
-                        //             textColor: Colors.white,
-                        //             padding: EdgeInsets.all(7),
-                        //             height: 46,
-                        //             size: 13,
-                        //             // color: Color(0xffE5E5E5),
-                        //           ),
-                        //           tableHeadtext(
-                        //             '',
-                        //             textColor: Colors.white,
-                        //             padding: EdgeInsets.all(7),
-                        //             height: 46,
-                        //             size: 13,
-                        //             // color: Color(0xffE5E5E5),
-                        //           ),
-                        //
-                        //
-                        //         ],
-                        //
-                        //       ),
-                        //           if (alterNativeQrCode != null) ...[
-                        //           for (var i = 0; i < alterNativeQrCode!.length; i++)
-                        //             TableRow(
-                        //                 decoration: BoxDecoration(
-                        //                     color: Colors.grey
-                        //                         .shade200,
-                        //                     shape: BoxShape
-                        //                         .rectangle,
-                        //                     border:const  Border(
-                        //                         left: BorderSide(
-                        //                             width: .5,
-                        //                             color: Colors
-                        //                                 .grey,
-                        //                             style: BorderStyle
-                        //                                 .solid),
-                        //                         bottom: BorderSide(
-                        //                             width: .5,
-                        //                             color: Colors
-                        //                                 .grey,
-                        //                             style: BorderStyle
-                        //                                 .solid),
-                        //                         right: BorderSide(
-                        //                             color: Colors
-                        //                                 .grey,
-                        //                             width: .5,
-                        //                             style: BorderStyle
-                        //                                 .solid))),
-                        //                 children: [
-                        //
-                        //
-                        //
-                        //                   TableCell(
-                        //                     verticalAlignment: TableCellVerticalAlignment.middle,
-                        //
-                        //                     child: UnderLinedInput(
-                        //                       initialCheck: true,
-                        //                       last:alterNativeQrCode?[i].id.toString()??"" ,
-                        //                     ),
-                        //                     // UnderLinedInput(),
-                        //
-                        //
-                        //                   ),
-                        //                   TableCell(
-                        //                       verticalAlignment: TableCellVerticalAlignment.middle,
-                        //
-                        //                       child: UnderLinedInput(
-                        //                         initialCheck: true,
-                        //                         last:        alterNativeQrCode?[i].qrcode??"",
-                        //                         onChanged: (va){
-                        //
-                        //                           alterNativeQrCode[i]=alterNativeQrCode[i].copyWith(qrcode: va.toString());
-                        //                         },
-                        //
-                        //                       )),
-                        //                   TableCell(
-                        //                     verticalAlignment: TableCellVerticalAlignment.middle,
-                        //
-                        //                     child:   CheckedBoxs(
-                        //                         valueChanger:   alterNativeQrCode[i].isActive??false,
-                        //                         onSelection:(va){
-                        //
-                        //
-                        //                           bool? isActive =
-                        //                               alterNativeQrCode[i].isActive;
-                        //                           setState(() {
-                        //                             setState(() {});
-                        //                             isActive = !isActive!;
-                        //                             alterNativeQrCode[i] = alterNativeQrCode[i]
-                        //                                 .copyWith(
-                        //                                 isActive: isActive);
-                        //                           });
-                        //
-                        //                         }
-                        //
-                        //                     ),),
-                        //                   TableTextButton(
-                        //
-                        //                     label: "upadte",
-                        //                     onPress: (){
-                        //
-                        //
-                        //                       widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
-                        //                     },
-                        //
-                        //
-                        //
-                        //                   ),
-                        //
-                        //
-                        //
-                        //                 ]),],
-                        //       TableRow(
-                        //           decoration: BoxDecoration(
-                        //               color: Colors.grey
-                        //                   .shade200,
-                        //               shape: BoxShape
-                        //                   .rectangle,
-                        //               border:const  Border(
-                        //                   left: BorderSide(
-                        //                       width: .5,
-                        //                       color: Colors
-                        //                           .grey,
-                        //                       style: BorderStyle
-                        //                           .solid),
-                        //                   bottom: BorderSide(
-                        //                       width: .5,
-                        //                       color: Colors
-                        //                           .grey,
-                        //                       style: BorderStyle
-                        //                           .solid),
-                        //                   right: BorderSide(
-                        //                       color: Colors
-                        //                           .grey,
-                        //                       width: .5,
-                        //                       style: BorderStyle
-                        //                           .solid))),
-                        //           children: [
-                        //
-                        //
-                        //
-                        //             TableCell(
-                        //               verticalAlignment:
-                        //               TableCellVerticalAlignment.middle,
-                        //               child: textPadding(
-                        //                   (alterNativeQrCode.length+1).toString()?? "",
-                        //                   fontSize: 12,
-                        //                   padding: EdgeInsets.only(
-                        //                       left: 11.5, top: 1.5),
-                        //                   fontWeight: FontWeight.w500),
-                        //             ),
-                        //             TableCell(
-                        //                 verticalAlignment: TableCellVerticalAlignment.middle,
-                        //
-                        //                 child: UnderLinedInput(
-                        //                   controller: qrCodeTextEditingController,
-                        //
-                        //
-                        //                   onChanged: (va){
-                        //
-                        //                   },
-                        //
-                        //                 )),
-                        //             TableCell(
-                        //               verticalAlignment: TableCellVerticalAlignment.middle,
-                        //
-                        //               child:   CheckedBoxs(
-                        //                   valueChanger: qrActive,
-                        //                   onSelection:(va){
-                        //
-                        //
-                        //
-                        //                     setState(() {
-                        //
-                        //                       qrActive = !qrActive!;
-                        //
-                        //                     });
-                        //
-                        //                   }
-                        //
-                        //               ),),
-                        //             TableTextButton(
-                        //
-                        //               label: "Save",
-                        //               onPress: (){
-                        //                 setState(() {
-                        //                   AlternativeBarcode model=AlternativeBarcode(
-                        //                       qrcode: qrCodeTextEditingController.text??"",
-                        //                       isActive: qrActive
-                        //                   );
-                        //                   alternativeBarcode.add(model);
-                        //
-                        //                   widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
-                        //                   qrCodeTextEditingController.text="";
-                        //                   qrActive=false;
-                        //
-                        //
-                        //                 });
-                        //
-                        //
-                        //
-                        //               },
-                        //
-                        //
-                        //
-                        //             ),
-                        //
-                        //
-                        //
-                        //           ]),
-                        //
-                        //
-                        //     ],
-                        //
-                        //   ),
-                        //
-                        //
-                        // ),
+                                    widget.barQrCodeTableAssign(
+                                        type: "1", list: alternativeBarcode);
+                                    barCodeTextEditingController.text = "";
+                                    barActive = false;
+                                  });
+                                },
+                              ),
+                            ]),
                       ],
+                      widths: {
+                        0: FlexColumnWidth(1),
+                        1: FlexColumnWidth(5),
+                        2: FlexColumnWidth(5),
+                        3: FlexColumnWidth(2),
+                      },
                     ),
-                  );
-                }
+                  ),
+                  SizedBox(
+                    height: h * .03,
+                  ),
+                  // Container(
+                  //   width: 2200,
+                  //   margin: EdgeInsets.symmetric(horizontal: w*.02),
+                  //   child: customTable(
+                  //
+                  //     border: const TableBorder(
+                  //
+                  //       verticalInside: BorderSide(
+                  //           width:.5,
+                  //           color: Colors.black45,
+                  //           style: BorderStyle.solid),
+                  //       horizontalInside: BorderSide(
+                  //           width:.3,
+                  //           color: Colors.black45,
+                  //           // color: Colors.blue,
+                  //           style: BorderStyle.solid),),
+                  //
+                  //     tableWidth: .5,
+                  //
+                  //     childrens:[
+                  //       TableRow(
+                  //
+                  //         // decoration: BoxDecoration(
+                  //
+                  //         //     color: Colors.green.shade200,
+                  //
+                  //         //     shape: BoxShape.rectangle,
+                  //
+                  //         //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                  //
+                  //         children: [
+                  //
+                  //           tableHeadtext(
+                  //
+                  //             'ID',
+                  //
+                  //             padding: EdgeInsets.all(7),
+                  //
+                  //             height: 46,
+                  //             textColor: Colors.white,
+                  //             // color: Color(0xffE5E5E5),
+                  //
+                  //             size: 13,
+                  //
+                  //
+                  //           ),
+                  //
+                  //
+                  //           tableHeadtext(
+                  //             'Alternative QR code',
+                  //             textColor: Colors.white,
+                  //             padding: EdgeInsets.all(7),
+                  //             height: 46,
+                  //             size: 13,
+                  //             // color: Color(0xffE5E5E5),
+                  //           ),
+                  //
+                  //           tableHeadtext(
+                  //             'isActive',
+                  //             textColor: Colors.white,
+                  //             padding: EdgeInsets.all(7),
+                  //             height: 46,
+                  //             size: 13,
+                  //             // color: Color(0xffE5E5E5),
+                  //           ),
+                  //           tableHeadtext(
+                  //             '',
+                  //             textColor: Colors.white,
+                  //             padding: EdgeInsets.all(7),
+                  //             height: 46,
+                  //             size: 13,
+                  //             // color: Color(0xffE5E5E5),
+                  //           ),
+                  //
+                  //
+                  //         ],
+                  //
+                  //       ),
+                  //           if (alterNativeQrCode != null) ...[
+                  //           for (var i = 0; i < alterNativeQrCode!.length; i++)
+                  //             TableRow(
+                  //                 decoration: BoxDecoration(
+                  //                     color: Colors.grey
+                  //                         .shade200,
+                  //                     shape: BoxShape
+                  //                         .rectangle,
+                  //                     border:const  Border(
+                  //                         left: BorderSide(
+                  //                             width: .5,
+                  //                             color: Colors
+                  //                                 .grey,
+                  //                             style: BorderStyle
+                  //                                 .solid),
+                  //                         bottom: BorderSide(
+                  //                             width: .5,
+                  //                             color: Colors
+                  //                                 .grey,
+                  //                             style: BorderStyle
+                  //                                 .solid),
+                  //                         right: BorderSide(
+                  //                             color: Colors
+                  //                                 .grey,
+                  //                             width: .5,
+                  //                             style: BorderStyle
+                  //                                 .solid))),
+                  //                 children: [
+                  //
+                  //
+                  //
+                  //                   TableCell(
+                  //                     verticalAlignment: TableCellVerticalAlignment.middle,
+                  //
+                  //                     child: UnderLinedInput(
+                  //                       initialCheck: true,
+                  //                       last:alterNativeQrCode?[i].id.toString()??"" ,
+                  //                     ),
+                  //                     // UnderLinedInput(),
+                  //
+                  //
+                  //                   ),
+                  //                   TableCell(
+                  //                       verticalAlignment: TableCellVerticalAlignment.middle,
+                  //
+                  //                       child: UnderLinedInput(
+                  //                         initialCheck: true,
+                  //                         last:        alterNativeQrCode?[i].qrcode??"",
+                  //                         onChanged: (va){
+                  //
+                  //                           alterNativeQrCode[i]=alterNativeQrCode[i].copyWith(qrcode: va.toString());
+                  //                         },
+                  //
+                  //                       )),
+                  //                   TableCell(
+                  //                     verticalAlignment: TableCellVerticalAlignment.middle,
+                  //
+                  //                     child:   CheckedBoxs(
+                  //                         valueChanger:   alterNativeQrCode[i].isActive??false,
+                  //                         onSelection:(va){
+                  //
+                  //
+                  //                           bool? isActive =
+                  //                               alterNativeQrCode[i].isActive;
+                  //                           setState(() {
+                  //                             setState(() {});
+                  //                             isActive = !isActive!;
+                  //                             alterNativeQrCode[i] = alterNativeQrCode[i]
+                  //                                 .copyWith(
+                  //                                 isActive: isActive);
+                  //                           });
+                  //
+                  //                         }
+                  //
+                  //                     ),),
+                  //                   TableTextButton(
+                  //
+                  //                     label: "upadte",
+                  //                     onPress: (){
+                  //
+                  //
+                  //                       widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
+                  //                     },
+                  //
+                  //
+                  //
+                  //                   ),
+                  //
+                  //
+                  //
+                  //                 ]),],
+                  //       TableRow(
+                  //           decoration: BoxDecoration(
+                  //               color: Colors.grey
+                  //                   .shade200,
+                  //               shape: BoxShape
+                  //                   .rectangle,
+                  //               border:const  Border(
+                  //                   left: BorderSide(
+                  //                       width: .5,
+                  //                       color: Colors
+                  //                           .grey,
+                  //                       style: BorderStyle
+                  //                           .solid),
+                  //                   bottom: BorderSide(
+                  //                       width: .5,
+                  //                       color: Colors
+                  //                           .grey,
+                  //                       style: BorderStyle
+                  //                           .solid),
+                  //                   right: BorderSide(
+                  //                       color: Colors
+                  //                           .grey,
+                  //                       width: .5,
+                  //                       style: BorderStyle
+                  //                           .solid))),
+                  //           children: [
+                  //
+                  //
+                  //
+                  //             TableCell(
+                  //               verticalAlignment:
+                  //               TableCellVerticalAlignment.middle,
+                  //               child: textPadding(
+                  //                   (alterNativeQrCode.length+1).toString()?? "",
+                  //                   fontSize: 12,
+                  //                   padding: EdgeInsets.only(
+                  //                       left: 11.5, top: 1.5),
+                  //                   fontWeight: FontWeight.w500),
+                  //             ),
+                  //             TableCell(
+                  //                 verticalAlignment: TableCellVerticalAlignment.middle,
+                  //
+                  //                 child: UnderLinedInput(
+                  //                   controller: qrCodeTextEditingController,
+                  //
+                  //
+                  //                   onChanged: (va){
+                  //
+                  //                   },
+                  //
+                  //                 )),
+                  //             TableCell(
+                  //               verticalAlignment: TableCellVerticalAlignment.middle,
+                  //
+                  //               child:   CheckedBoxs(
+                  //                   valueChanger: qrActive,
+                  //                   onSelection:(va){
+                  //
+                  //
+                  //
+                  //                     setState(() {
+                  //
+                  //                       qrActive = !qrActive!;
+                  //
+                  //                     });
+                  //
+                  //                   }
+                  //
+                  //               ),),
+                  //             TableTextButton(
+                  //
+                  //               label: "Save",
+                  //               onPress: (){
+                  //                 setState(() {
+                  //                   AlternativeBarcode model=AlternativeBarcode(
+                  //                       qrcode: qrCodeTextEditingController.text??"",
+                  //                       isActive: qrActive
+                  //                   );
+                  //                   alternativeBarcode.add(model);
+                  //
+                  //                   widget.barQrCodeTableAssign(type:"2",list:alterNativeQrCode);
+                  //                   qrCodeTextEditingController.text="";
+                  //                   qrActive=false;
+                  //
+                  //
+                  //                 });
+                  //
+                  //
+                  //
+                  //               },
+                  //
+                  //
+                  //
+                  //             ),
+                  //
+                  //
+                  //
+                  //           ]),
+                  //
+                  //
+                  //     ],
+                  //
+                  //   ),
+                  //
+                  //
+                  // ),
+                ],
               ),
             );
-          }
-      ),
-    )
-    ;
+          }),
+        );
+      }),
+    );
   }
 }
 
@@ -768,19 +684,29 @@ class ProductTables extends StatefulWidget {
   ProductFeatures? imPorantInfo;
   Storage? ingredians;
   final Storage? usageDirection;
-  final Storage?storage;
-  final List<productBehaviour>?inforMationList;
+  final Storage? storage;
+  final List<productBehaviour>? inforMationList;
   final Function storageTableEdit;
   final Function productTableEdit;
   final Function productFeaturesableAssign;
 
   // final TextEditingController qrCode;
   // final TextEditingController rfId;
-  ProductTables({required this.aboutProducts,
-    required this.imPorantInfo, required this.
-    ingredians, required this.productDetails,
-
-    required this.productFeatures, required this.additionalInfo, required this.usageDirection, required this.nutriantsFacts, required this.storage, required this.storageTableEdit, required this.productTableEdit, required this.addNew, this.inforMationList, required this.productFeaturesableAssign});
+  ProductTables(
+      {required this.aboutProducts,
+      required this.imPorantInfo,
+      required this.ingredians,
+      required this.productDetails,
+      required this.productFeatures,
+      required this.additionalInfo,
+      required this.usageDirection,
+      required this.nutriantsFacts,
+      required this.storage,
+      required this.storageTableEdit,
+      required this.productTableEdit,
+      required this.addNew,
+      this.inforMationList,
+      required this.productFeaturesableAssign});
 
   @override
   ProductTablesState createState() => ProductTablesState();
@@ -794,14 +720,8 @@ class ProductTablesState extends State<ProductTables> {
 
   @override
   Widget build(BuildContext context) {
-    double h = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double w = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
 
     return Container(
         color: Colors.white,
@@ -815,99 +735,88 @@ class ProductTablesState extends State<ProductTables> {
                     storageTableEdit: widget.storageTableEdit,
                     key: widget.key,
                     addNew: widget.addNew,
-
-
                   ),
                 ),
-
                 Expanded(
                   child: VariantProductDetails(
                     productDetails: widget.productDetails,
                     productTableEdit: widget.productTableEdit,
-
                   ),
                 )
-
-
               ],
             ),
-            SizedBox(height: h * .02,),
+            SizedBox(
+              height: h * .05,
+            ),
             Row(
               children: [
                 Expanded(
                   child: PrtoductFeatures(
                     productFeatures: widget.productFeatures,
                     productTableEdit: widget.productTableEdit,
-
                   ),
                 ),
-
                 Expanded(
                   child: AdditionaslInfo(
                     additionalInfo: widget.additionalInfo,
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
-
-
               ],
             ),
-            SizedBox(height: h * .02,),
+            SizedBox(
+              height: h * .05,
+            ),
             Row(
               children: [
-
                 Expanded(
                   child: NeutrialFacts(
                     nutriantsFacts: widget.nutriantsFacts,
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
-
                 Expanded(
                   child: Ingredians(
                     ingredians: widget.ingredians,
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
-
-
               ],
             ),
 
-
-            SizedBox(height: h * .02,),
+            SizedBox(
+              height: h * .05,
+            ),
             Row(
               children: [
-
                 Expanded(
                   child: UsageDirection(
                     usageDirection: widget.usageDirection,
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
-
                 Expanded(
                   child: StoragesWidget(
                     storage: widget.storage,
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 )
-
-
               ],
             ),
-            SizedBox(height: h * .02,),
-            Row(
-                children: [
-
-                  Expanded(
-                    child: ImportantInfo(
-                      importantInfo: widget.imPorantInfo,
-                      productTableEdit: widget.productTableEdit,
-                    ),
-                  ),
-                ]),
-            SizedBox(height: h * .03,),
+            SizedBox(
+              height: h * .05,
+            ),
+            Row(children: [
+              Expanded(
+                child: ImportantInfo(
+                  importantInfo: widget.imPorantInfo,
+                  productTableEdit: widget.productTableEdit,
+                ),
+              ),
+            ]),
+            SizedBox(
+              height: h * .05,
+            ),
             //
             //
             //     // Container(
@@ -1323,22 +1232,17 @@ class ProductTablesState extends State<ProductTables> {
             Row(
               children: [
                 Expanded(
-
                   child: ProductBehaviour(
                       inforMationList: widget.inforMationList,
-                      productFeaturesableAssign: widget
-                          .productFeaturesableAssign
-
-                  ),
+                      productFeaturesableAssign:
+                          widget.productFeaturesableAssign),
                 ),
               ],
             ),
-
           ],
         ));
   }
 }
-
 
 class VariantStabletable extends StatefulWidget {
   final TextEditingController itemId;
@@ -1416,7 +1320,6 @@ class VariantStabletable extends StatefulWidget {
   final Function({String type}) imagePostCheck;
   final Function({String type, bool val}) trueOrFalseChange;
 
-
   VariantStabletable({
     required this.imagePostCheck,
     required this.itemId,
@@ -1477,9 +1380,21 @@ class VariantStabletable extends StatefulWidget {
     required this.exciseTax,
     required this.returnType,
     required this.returnTime,
-    required this.status, required this.trueOrFalseChange, required this.catalog1, required this.catalog2, required this.catalog3, required this.catalog4, required this.catalog5, required this.catalog6, required this.catalog7, required this.catalog8, required this.veritiaclid, required this.uomGroupName, required this.baseGroupName, required this.salesUomName, required this.purchaseUomName,
-
-
+    required this.status,
+    required this.trueOrFalseChange,
+    required this.catalog1,
+    required this.catalog2,
+    required this.catalog3,
+    required this.catalog4,
+    required this.catalog5,
+    required this.catalog6,
+    required this.catalog7,
+    required this.catalog8,
+    required this.veritiaclid,
+    required this.uomGroupName,
+    required this.baseGroupName,
+    required this.salesUomName,
+    required this.purchaseUomName,
   });
 
   @override
@@ -1508,1366 +1423,1454 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    return
-      Builder(
-          builder: (context) {
-            return Column(
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return Builder(builder: (context) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Container(
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(child: Column(
-                        children: [
-
-                          NewInputCard(
-                              readOnly: true,
-                              controller: widget.itemId,
-                              title: "Item Id"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              readOnly: true,
-                              controller: widget.variantCode,
-                              title: "Variant Code"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              readOnly: true,
-                              controller: widget.variantName,
-                              title: "Variant Name"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              readOnly: true,
-                              controller: widget.variantValue,
-                              title: "Variant value"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              readOnly: true,
-
-
-                              controller: widget.variantFrameWork,
-                              title: "Variant freamework"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.searchName,
-                              title: "Search Name"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.displayName,
-                              title: "Display Name"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.description,
-                              title: "Description"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.arabicDescription,
-                              title: " ArabicDescription"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.additionDescription,
-                              title: "Addition Description"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.posName, title: "Pos Name"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          SelectableDropDownpopUp(
-
-                            controller: widget.uomGroupName,
-                            label: "Uom Group",
-                            type: "Uomgroup_PopUpCall",
-                            value: widget.uomGroupName.text,
-                            onchange: (vale) {
-                              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
-                                widget.uomGroup.text = va?.id.toString() ?? "";
-                                widget.uomGroupName.text =
-                                    va?.name.toString() ?? "";
-                                Variable.uomGroupId = va?.id;
-                                setState(() {
-
-                                });
-
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-                            onAddNew: () {
-
-
-                            },
-                          ),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          SelectableDropDownpopUp(
-
-                            controller: widget.baseGroupName,
-                            label: "Base Uom",
-                            type: "Uom_PopUpCall",
-                            value: widget.baseGroupName.text,
-                            onchange: (vale) {
-                              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
-                                widget.baseuom.text = va?.id.toString() ?? "";
-                                widget.baseGroupName.text =
-                                    va?.name.toString() ?? "";
-                                base_uom = va?.id;
-                                Variable.uomId = va?.id;
-                                setState(() {
-
-                                });
-
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-
-                          ),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-
-                          SelectableDropDownpopUp(
-
-                            controller: widget.salesUomName,
-                            label: "Sales Uom",
-                            type: "SalesUom_PopUpCall",
-                            id: base_uom ?? 0,
-                            value: widget.salesUomName.text,
-                            onchange: (vale) {
-                              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
-                                widget.salesUom.text = va?.id.toString() ?? "";
-                                widget.salesUomName.text =
-                                    va?.name.toString() ?? "";
-                                setState(() {
-
-                                });
-
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-
-                          ),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-
-                          SelectableDropDownpopUp(
-
-                            controller: widget.purchaseUomName,
-                            label: "Purchase Uom",
-                            type: "SalesUom_PopUpCall",
-                            id: base_uom ?? 0,
-                            value: widget.purchaseUomName.text,
-                            onchange: (vale) {
-                              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                            },
-                            enable: true,
-                            onSelection: (BrandListModel? va) {
-                              setState(() {
-                                widget.purchaseUom.text =
-                                    va?.id.toString() ?? "";
-                                widget.purchaseUomName.text =
-                                    va?.name.toString() ?? "";
-                                setState(() {
-
-                                });
-
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-
-                          ),
-
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-
-
-                              controller: widget.grossWeight,
-                              title: "Gross Weight"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(formatter: true,
-
-
-                              controller: widget.netWeight,
-                              title: "Net Weight"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              formatter: true,
-
-
-                              controller: widget.unitCost, title: "Unit Cost"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
-                          NewInputCard(
-                              formatter: true,
-
-
-                              controller: widget.landingCost,
-                              title: "Landing Cost"),
-
-                          SizedBox(
-                            height: height * .229,
-                          ),
-
-
-                        ],
-                      )),
-                      Expanded(child: Column(children: [
-
-                        NewInputCard(
-                            formatter: true,
-
-
-                            controller: widget.actualCost,
-                            title: "Actual Cost"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        NewInputCard(
-                            formatter: true,
-
-
-                            controller: widget.basePrize, title: "Base Prize"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        SelectableDropDownpopUp(
-
-                          controller: widget.producedCountry,
-                          label: "Produced Country",
-                          type: "ProducedCountryPopUpCall",
-                          id: base_uom ?? 0,
-                          value: widget.producedCountry.text,
-                          onchange: (vale) {
-                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                          },
-                          enable: true,
-                          onSelection: (BrandListModel? va) {
-                            setState(() {
-                              widget.producedCountry.text =
-                                  va?.name.toString() ?? "";
-
-                              setState(() {
-
-                              });
-
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-                          },
-
-                        ),
-
-
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.manuFactureId,
-                            title: "Manufacture Id"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.manuFactureName,
-                            title: "Manufacture Name"),
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.saftyStock,
-                            title: "Safety Stock"),
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                          formatter: true,
-                            controller: widget.reorderPoint,
-                            title: "Reorder Point"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.reorderQuantity,
-                            title: "Reorder  qty"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        NewInputCard(
-                            controller: widget.ratioEccomerce,
-                            title: "Ratio to Ecommerce"),
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                          formatter: true,
-                            controller: widget.minMax, title: "Min Max ratio"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.wholeSaleStock,
-                            title: "Whole Sale Stock"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.reorderQuantity,
-                            title: "Min Order Sale Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.maxSalesOrderLimit,
-                            title: "Max Sales Order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        SelectableDropDownpopUp(
-
-
-                          controller: widget.sellingId,
-                          label: "Sebling Id",
-                          type: "Sebling_ListPopUpCall",
-                          value: widget.sellingId.text,
-                          onchange: (vale) {
-                            print(vale);
-                            context.read<ListvraiantCubit>()
-                                .getSearchVariantList(vale);
-                          },
-                          enable: true,
-
-                          onSelection: (BrandListModel? va) {
-                            setState(() {
-                              widget.sellingId.text = va?.code ?? "";
-
-                              setState(() {
-
-                              });
-
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-                          },
-                          onAddNew: () {
-
-
-                          },
-                        ),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCreateCard(title: "Linked Item",
-                          controller: widget.linkedItem,
-                          ontap: () {
-                            showDailogPopUp(
-                              context,
-                              ConfigurePopup(
-                                veritiaclid: widget.veritiaclid,
-                                type: "LinkedItemCreatePopUp",
-                              ),
-
-
-                            );
-                          },),
-                        // SelectableDropDownpopUp(
-                        //
-                        //   controller: widget.linkedItem,
-                        //   label: "Linked Item",
-                        //   // type: "Pricing_PopUpCall",
-                        //   value: widget.linkedItem.text,
-                        //
-                        //   onchange: (vale) {
-                        //
-                        //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                        //   },
-                        //   enable: true,
-                        //   onSelection: (PricingTypeListModel? va) {
-                        //
-                        //   },
-                        //   onAddNew: () {
-                        //
-                        //   },
-                        // ),
-
-
-                        // NewInputCard(
-                        //     controller: widget.linkedItem, title: "Linked Item"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.minimumGp, title: "Minimum Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.maximumGp,
-                            title: "Maximum Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.averageGp, title: "Average Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.targetedgp,
-                            title: "targeted Gp"),
-
-                        SizedBox(
-                          height: height * .205,
-                        ),
-
-
-                      ],)),
-                      Expanded(child: Column(children: [
-
-
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.minPurchaseOrderLimit,
-                            title: "Min purchase  order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.maxPurchaseOrderLimit,
-                            title: "Max Purchase order Limit"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.vat, title: "vat"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.exciseTax, title: "Excise Tax"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.returnType,
-                            title: "Return type"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.returnTime,
-                            title: "Return time"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        FileUploadField(
-                            fileName: widget.image1.text,
-                            fileUrl: widget.image1.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "1");
-                              widget.image1.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode,
-                                  type: "image1");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "image1"),
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        FileUploadField(
-                            fileName: widget.image2.text,
-                            fileUrl: widget.image2.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "2");
-                              widget.image2.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode,
-                                  type: "image2");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "image2"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        FileUploadField(
-                            fileName: widget.image3.text,
-                            fileUrl: widget.image3.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "3");
-                              widget.image3.text = myFile?.fileName ?? "";
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode,
-                                  type: "image3");
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "image3"),
-
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-                        FileUploadField(
-                            fileName: widget.image4.text,
-                            fileUrl: widget.image4.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "4");
-                              widget.image4.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode,
-                                  type: "image4");
-
-
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "Image4"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        FileUploadField(
-                            fileName: widget.image5.text,
-                            fileUrl: widget.image5.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "5");
-                              widget.image5.text = myFile?.fileName ?? "";
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode,
-                                  type: "image5");
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "Image5"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.videoUrl, title: "Video Url"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog1.text,
-                            fileUrl: widget.catalog1.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "6");
-                              widget.catalog1.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "1");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog1"),
-
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        FileUploadField(
-                            fileName: widget.catalog2.text,
-                            fileUrl: widget.catalog2.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "7");
-                              widget.catalog2.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "2");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog2"),
-
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog3.text,
-                            fileUrl: widget.catalog3.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "8");
-                              widget.catalog3.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "3");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog3"),
-
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog4.text,
-                            fileUrl: widget.catalog4.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "9");
-                              widget.catalog4.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "4");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog4"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog5.text,
-                            fileUrl: widget.catalog5.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "10");
-                              widget.catalog5.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "5");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog5"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog6.text,
-                            fileUrl: widget.catalog6.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "11");
-                              widget.catalog6.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "6");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog6"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog7.text,
-                            fileUrl: widget.catalog7.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "12");
-                              widget.catalog7.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "7");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog7"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-                        FileUploadField(
-                            fileName: widget.catalog8.text,
-                            fileUrl: widget.catalog8.text,
-                            onChangeTap: (p0) {
-                              // loading = true;
-                              setState(() {});
-                            },
-                            onChange: (myFile) {
-                              widget.imagePostCheck(type: "13");
-                              widget.catalog8.text = myFile?.fileName ?? "";
-                              // Variable.mobileBannerImage = myFile.toUint8List();
-                              var imageEncode =
-                              myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              context
-                                  .read<ImagepostCubit>().postImage(
-                                  Variable.imageName, imageEncode, type: "8");
-                              // Variable.bannerEncodedMobileBannerImage =
-                              //     myFile.toBase64();
-                              // widget.fileMobileNameCtrl.text =
-                              //     myFile.fileName ?? "";
-                              // if (Variable.bannerimage!.length <= 240000)
-                              //   context
-                              //       .read<CreateWebImageCubit>()
-                              //       .createMobImage();
-                              // else
-                              //   context.showSnackBarError(
-                              //       "Please upload Banner of size Lesser than 230kb");
-                            },
-                            onImageChange: (newFile) async {
-                              // Variable.popUp = false;
-
-                              if (newFile.length <= 240000) {
-                                // loading
-                                //     ? showDailogPopUp(context, DialoguePopUp())
-                                //     : Navigator.pop(context);
-                                // context
-                                //     .read<CreateWebImageCubit>()
-                                //     .createMobImage();
-                              } else
-                                context.showSnackBarError(
-                                    "Please upload Banner of size Lesser than 230kb");
-                              setState(() {});
-                            },
-                            onCreate: true,
-                            label: "catalog8"),
-
-                        SizedBox(
-                          height: height * .12,
-                        ),
-
-                      ],))
-
-                    ],
-                  ),
-                ),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                Expanded(
+                    child: Column(
                   children: [
-                    PopUpSwitchTile(
-                        value: widget?.salesBlock ?? false,
-                        title: "Sales Block",
-                        onClick: (gg) {
-                          bool val = widget.salesBlock;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Sales", val: val);
-
-                          // widget.activeChange(!widget.active);
-
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
-
-                    PopUpSwitchTile(
-                        value: widget?.purchaseBlock ?? false,
-                        title: "Purchase Block",
-                        onClick: (gg) {
-                          bool val = widget.purchaseBlock;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Purchase", val: val);
-
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
-
-                    PopUpSwitchTile(
-                        value: widget?.stockWarning ?? false,
-                        title: "Stock Warning",
-                        onClick: (gg) {
-                          bool val = widget.stockWarning;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Stock", val: val);
-
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
-
-                    PopUpSwitchTile(
-                        value: widget?.itmCatelog ?? false,
-                        title: "itm catelog",
-                        onClick: (gg) {
-                          bool val = widget.itmCatelog;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Catalog", val: val);
-
-
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
-
-                    PopUpSwitchTile(
-                        value: widget?.itmImage ?? false,
-                        title: "itm Image",
-                        onClick: (gg) {
-                          bool val = widget.itmImage;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Image", val: val);
+                    NewInputCard(
+                        readOnly: true,
+                        controller: widget.itemId,
+                        title: "Item"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        readOnly: true,
+                        controller: widget.variantCode,
+                        title: "Variant Code"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        readOnly: true,
+                        controller: widget.variantName,
+                        title: "Variant Name"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        readOnly: true,
+                        controller: widget.variantValue,
+                        title: "Variant Value"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        readOnly: true,
+                        controller: widget.variantFrameWork,
+                        title: "Variant Framework"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.searchName, title: "Search Name"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.displayName, title: "Display Name"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.description, title: "Description"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.arabicDescription,
+                        title: " Arabic Description"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.additionDescription,
+                        title: "Addition Description"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(controller: widget.posName, title: "Pos Name"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
 
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
+                    NewInputCard(
+                      readOnly: true,
+                      controller: widget.uomGroupName,
+                      // icondrop: true,
+                      title: "Uom Group",
+                      // ontap: () {
+                      //   showDailogPopUp(
+                      //     context,
+                      //     TableConfigurePopup(
+                      //
+                      //       type: "UOMPopup",
+                      //       valueSelect: (BrandListModel va) {
+                      //         setState(() {
+                      //           print(va?.id ?? "");
+                      //           widget.uomGroup.text = va?.id.toString() ?? "";
+                      //           widget.uomGroupName.text = va?.name.toString() ?? "";
+                      //           Variable.uomGroupId = va?.id;
+                      //           setState(() {});
+                      //           setState(() {});
+                      //
+                      //           // onChange = true;
+                      //           // orderType.text = va!;
+                      //         });
+                      //       },
+                      //     ),
+                      //   );
+                      // },
+                    ),
+                    // SelectableDropDownpopUp(
+                    //   controller: widget.uomGroupName,
+                    //   label: "Uom Group",
+                    //   type: "Uomgroup_PopUpCall",
+                    //   value: widget.uomGroupName.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (BrandListModel? va) {
+                    //     setState(() {
+                    //       widget.uomGroup.text = va?.id.toString() ?? "";
+                    //       widget.uomGroupName.text = va?.name.toString() ?? "";
+                    //       Variable.uomGroupId = va?.id;
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    //   onAddNew: () {},
+                    // ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
-                    PopUpSwitchTile(
-                        value: widget.active ?? false,
-                        title: "Active",
-                        onClick: (gg) {
-                          bool val = widget.active;
-                          val = !val;
-                          widget.trueOrFalseChange(type: "Active", val: val);
-                          // widget.activeChange(!widget.active);
+                    NewInputCard(controller: widget.baseGroupName,
+                      readOnly: true,
+                      // icondrop:true,
+                      title: "Base UOM",
+                      // ontap: (){
+                      //   showDailogPopUp(
+                      //     context,
+                      //     TableConfigurePopup(
+                      //       type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
+                      //
+                      //       setState(() {
+                      //         print(va?.uomCode);
+                      //         print(va);
+                      //
+                      //
+                      //
+                      //         widget.baseuom.text = va?.id.toString() ?? "";
+                      //         widget.baseGroupName.text = va?.name.toString() ?? "";
+                      //         base_uom = va?.id;
+                      //         Variable.uomId = va?.id;
+                      //         setState(() {
+                      //
+                      //         });
+                      //
+                      //
+                      //         // onChange = true;
+                      //         // orderType.text = va!;
+                      //       });
+                      //
+                      //     },
+                      //     ),
+                      //
+                      //
+                      //   );
+                      //
+                      // },
+                    ),
+                    // SelectableDropDownpopUp(
+                    //   controller: widget.baseGroupName,
+                    //   label: "Base Uom",
+                    //   type: "Uom_PopUpCall",
+                    //   value: widget.baseGroupName.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (BrandListModel? va) {
+                    //     setState(() {
+                    //       widget.baseuom.text = va?.id.toString() ?? "";
+                    //       widget.baseGroupName.text = va?.name.toString() ?? "";
+                    //       base_uom = va?.id;
+                    //       Variable.uomId = va?.id;
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    // ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
 
-                          // extendedWarranty = gg;
-                          // widget.changeExtendedWarranty(gg);
-                          // onChangeExtWarranty = gg;
-                          setState(() {});
-                        }),
+                    NewInputCard(controller: widget.salesUomName,
+                      icondrop:true,
+                      title: "Sales Uom",ontap: (){
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+                            type: "SalesUomTabalePopup", valueSelect: (BrandListModel va){
 
+                            setState(() {
+                              print(va?.uomCode);
+                              print(va);
+
+
+
+                              widget.salesUom.text = va?.id.toString() ?? "";
+                              widget.salesUomName.text = va?.name.toString() ?? "";
+                              base_uom = va?.id;
+                              Variable.uomId = va?.id;
+                              setState(() {
+
+                              });
+
+
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+
+                          },
+                          ),
+
+
+                        );
+
+                      },),
+                    // SelectableDropDownpopUp(
+                    //   controller: widget.salesUomName,
+                    //   label: "Sales Uom",
+                    //   type: "SalesUom_PopUpCall",
+                    //   id: base_uom ?? 0,
+                    //   value: widget.salesUomName.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (BrandListModel? va) {
+                    //     setState(() {
+                    //       widget.salesUom.text = va?.id.toString() ?? "";
+                    //       widget.salesUomName.text = va?.name.toString() ?? "";
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    // ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+
+                    NewInputCard(controller: widget.purchaseUomName,
+                      icondrop:true,
+                      title: "Purchase UOM",ontap: (){
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+                            type: "SalesUomTabalePopup", valueSelect: (BrandListModel va){
+
+                            setState(() {
+                              print(va?.uomCode);
+                              print(va);
+
+
+
+                              widget.purchaseUom.text = va?.id.toString() ?? "";
+                              widget.purchaseUomName.text =
+                                  va?.name.toString() ?? "";
+                              setState(() {
+
+                              });
+
+
+                              // onChange = true;
+                              // orderType.text = va!;
+                            });
+
+                          },
+                          ),
+
+
+                        );
+
+                      },),
+                    // SelectableDropDownpopUp(
+                    //   controller: widget.purchaseUomName,
+                    //   label: "Purchase Uom",
+                    //   type: "SalesUom_PopUpCall",
+                    //   id: base_uom ?? 0,
+                    //   value: widget.purchaseUomName.text,
+                    //   onchange: (vale) {
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (BrandListModel? va) {
+                    //     setState(() {
+                    //       widget.purchaseUom.text = va?.id.toString() ?? "";
+                    //       widget.purchaseUomName.text =
+                    //           va?.name.toString() ?? "";
+                    //       setState(() {});
+                    //
+                    //       // onChange = true;
+                    //       // orderType.text = va!;
+                    //     });
+                    //   },
+                    // ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.grossWeight, title: "Gross Weight"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.netWeight,
+                        title: "Net Weight"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.unitCost,
+                        title: "Unit Cost"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.landingCost,
+                        title: "Landing Cost"),
+                    SizedBox(
+                      height: height * .229,
+                    ),
                   ],
-                )
+                )),
+                Expanded(
+                    child: Column(
+                  children: [
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.actualCost,
+                        title: "Actual Cost"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.basePrize,
+                        title: "Base Prize"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+                    SelectableDropDownpopUp(
+                      controller: widget.producedCountry,
+                      label: "Produced Country",
+                      type: "ProducedCountryPopUpCall",
+                      id: base_uom ?? 0,
+                      value: widget.producedCountry.text,
+                      onchange: (vale) {
+                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                      },
+                      enable: true,
+                      onSelection: (VariantReadModel? va) {
+                        setState(() {
+                          widget.producedCountry.text =
+                              va?.name.toString() ?? "";
+
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller: widget.manuFactureId,
+                    //     title: "Manufacture Id"),
+
+
+
+                    NewInputCard(
+                      readOnly: true,
+                      controller: widget.manuFactureId,
+                      // icondrop: true,
+                      title: "Manufacture Id",
+                      ontap: () {
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+
+                            type: "ManuFacturedPopup",
+                            valueSelect: (VendorDetailsModel va) {
+                              setState(() {
+                                print(va?.id ?? "");
+                                widget.manuFactureId.text = va?.id.toString() ?? "";
+
+                                setState(() {});
+                                setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    // NewInputCard(
+                    //     controller: widget.manuFactureName,
+                    //     title: "Manufacture Name"),
+                    NewInputCard(
+                      readOnly: true,
+                      controller: widget.manuFactureName,
+                      // icondrop: true,
+                      title: "Manufacture Name",
+                      ontap: () {
+                        showDailogPopUp(
+                          context,
+                          TableConfigurePopup(
+
+                            type: "ManuFacturedPopup",
+                            valueSelect: (VendorDetailsModel va) {
+                              setState(() {
+                                print(va?.id ?? "");
+                                widget.manuFactureName.text = va?.manuFactureName.toString() ?? "";
+
+                                setState(() {});
+                                setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                      formatter: true,
+                        controller: widget.saftyStock, title: "Safety Stock"),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.reorderPoint,
+                        title: "Reorder Point"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.reorderQuantity,
+                        title: "Reorder  QTY"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+                    NewInputCard(
+                        controller: widget.ratioEccomerce,
+                        title: "Ratio to Ecommerce"),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minMax,
+                        title: "Min Max Ratio"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                      formatter: true,
+                        controller: widget.wholeSaleStock,
+                        title: "Whole Sale Stock"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.reorderQuantity,
+                        title: "Min Order Sale Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.maxSalesOrderLimit,
+                        title: "Max Sales Order Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    SelectableDropDownpopUp(
+                      controller: widget.sellingId,
+                      label: "Sebling Id",
+                      type: "Sebling_ListPopUpCall",
+                      value: widget.sellingId.text,
+                      onchange: (vale) {
+                        print(vale);
+                        context
+                            .read<ListvraiantCubit>()
+                            .getSearchVariantList(vale);
+                      },
+                      enable: true,
+                      onSelection: (BrandListModel? va) {
+                        setState(() {
+                          widget.sellingId.text = va?.code ?? "";
+
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                      onAddNew: () {},
+                    ),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCreateCard(
+                      title: "Linked Item",
+                      controller: widget.linkedItem,
+                      ontap: () {
+                        showDailogPopUp(
+                          context,
+                          ConfigurePopup(
+                            veritiaclid: widget.veritiaclid,
+                            type: "LinkedItemCreatePopUp",
+                          ),
+                        );
+                      },
+                    ),
+                    // SelectableDropDownpopUp(
+                    //
+                    //   controller: widget.linkedItem,
+                    //   label: "Linked Item",
+                    //   // type: "Pricing_PopUpCall",
+                    //   value: widget.linkedItem.text,
+                    //
+                    //   onchange: (vale) {
+                    //
+                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                    //   },
+                    //   enable: true,
+                    //   onSelection: (PricingTypeListModel? va) {
+                    //
+                    //   },
+                    //   onAddNew: () {
+                    //
+                    //   },
+                    // ),
+
+                    // NewInputCard(
+                    //     controller: widget.linkedItem, title: "Linked Item"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minimumGp,
+                        title: "Minimum Gp"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.maximumGp,
+                        title: "Maximum Gp"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.averageGp,
+                        title: "Average Gp"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.targetedgp,
+                        title: "Targeted Gp"),
+
+                    SizedBox(
+                      height: height * .208,
+                    ),
+                  ],
+                )),
+                Expanded(
+                    child: Column(
+                  children: [
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minPurchaseOrderLimit,
+                        title: "Min purchase  Order Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.maxPurchaseOrderLimit,
+                        title: "Max Purchase Order Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true, controller: widget.vat, title: "VAT"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.exciseTax,
+                        title: "Excise Tax"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+
+
+                    SelectableDropDownpopUp(
+                      id: widget.veritiaclid,
+                      label: "Return Type",
+                      type:"ReturnTypePopupCall",
+                      value:widget. returnType.text,
+                      onSelection: (String? va) {
+                        print(
+                            "+++++++++++++++++++++++");
+                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        setState(() {
+                         widget.returnType.text=va??"";
+                        });
+                      },
+
+                      restricted: true,
+                    ),
+                    // NewInputCard(
+                    //     controller: widget.returnType, title: "Return Type"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.returnTime, title: "Return Time"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.image1.text,
+                        fileUrl: widget.image1.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "1");
+                          widget.image1.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "image1");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Image1"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.image2.text,
+                        fileUrl: widget.image2.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "2");
+                          widget.image2.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "image2");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Image2"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.image3.text,
+                        fileUrl: widget.image3.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "3");
+                          widget.image3.text = myFile?.fileName ?? "";
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "image3");
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Image3"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.image4.text,
+                        fileUrl: widget.image4.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "4");
+                          widget.image4.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "image4");
+
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Image4"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.image5.text,
+                        fileUrl: widget.image5.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "5");
+                          widget.image5.text = myFile?.fileName ?? "";
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "image5");
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Image5"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        controller: widget.videoUrl, title: "Video Url"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog1.text,
+                        fileUrl: widget.catalog1.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "6");
+                          widget.catalog1.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "1");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog1"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog2.text,
+                        fileUrl: widget.catalog2.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "7");
+                          widget.catalog2.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "2");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog2"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog3.text,
+                        fileUrl: widget.catalog3.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "8");
+                          widget.catalog3.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "3");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog3"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog4.text,
+                        fileUrl: widget.catalog4.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "9");
+                          widget.catalog4.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "4");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog4"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog5.text,
+                        fileUrl: widget.catalog5.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "10");
+                          widget.catalog5.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "5");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog5"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog6.text,
+                        fileUrl: widget.catalog6.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "11");
+                          widget.catalog6.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "6");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog6"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog7.text,
+                        fileUrl: widget.catalog7.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "12");
+                          widget.catalog7.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "7");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog7"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    FileUploadField(
+                        fileName: widget.catalog8.text,
+                        fileUrl: widget.catalog8.text,
+                        onChangeTap: (p0) {
+                          // loading = true;
+                          setState(() {});
+                        },
+                        onChange: (myFile) {
+                          widget.imagePostCheck(type: "13");
+                          widget.catalog8.text = myFile?.fileName ?? "";
+                          // Variable.mobileBannerImage = myFile.toUint8List();
+                          var imageEncode = myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          context.read<ImagepostCubit>().postImage(
+                              Variable.imageName, imageEncode,
+                              type: "8");
+                          // Variable.bannerEncodedMobileBannerImage =
+                          //     myFile.toBase64();
+                          // widget.fileMobileNameCtrl.text =
+                          //     myFile.fileName ?? "";
+                          // if (Variable.bannerimage!.length <= 240000)
+                          //   context
+                          //       .read<CreateWebImageCubit>()
+                          //       .createMobImage();
+                          // else
+                          //   context.showSnackBarError(
+                          //       "Please upload Banner of size Lesser than 230kb");
+                        },
+                        onImageChange: (newFile) async {
+                          // Variable.popUp = false;
+
+                          if (newFile.length <= 240000) {
+                            // loading
+                            //     ? showDailogPopUp(context, DialoguePopUp())
+                            //     : Navigator.pop(context);
+                            // context
+                            //     .read<CreateWebImageCubit>()
+                            //     .createMobImage();
+                          } else
+                            context.showSnackBarError(
+                                "Please upload Banner of size Lesser than 230kb");
+                          setState(() {});
+                        },
+                        onCreate: true,
+                        label: "Catalog8"),
+                    SizedBox(
+                      height: height * .11,
+                    ),
+                  ],
+                ))
+              ],
+            ),
+          ),
+          SizedBox(height: 10,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              PopUpSwitchTile(
+                  value: widget?.salesBlock ?? false,
+                  title: "Sales Block",
+                  onClick: (gg) {
+                    bool val = widget.salesBlock;
+                    val = !val;
+                    widget.trueOrFalseChange(type: "Sales", val: val);
+
+                    // widget.activeChange(!widget.active);
+
+                    // extendedWarranty = gg;
+                    // widget.changeExtendedWarranty(gg);
+                    // onChangeExtWarranty = gg;
+                    setState(() {});
+                  }),
+              PopUpSwitchTile(
+                  value: widget?.purchaseBlock ?? false,
+                  title: "Purchase Block",
+                  onClick: (gg) {
+                    bool val = widget.purchaseBlock;
+                    val = !val;
+                    widget.trueOrFalseChange(type: "Purchase", val: val);
+
+                    // extendedWarranty = gg;
+                    // widget.changeExtendedWarranty(gg);
+                    // onChangeExtWarranty = gg;
+                    setState(() {});
+                  }),
+              PopUpSwitchTile(
+                  value: widget?.stockWarning ?? false,
+                  title: "Stock Warning",
+                  onClick: (gg) {
+                    bool val = widget.stockWarning;
+                    val = !val;
+                    widget.trueOrFalseChange(type: "Stock", val: val);
+
+                    // extendedWarranty = gg;
+                    // widget.changeExtendedWarranty(gg);
+                    // onChangeExtWarranty = gg;
+                    setState(() {});
+                  }),
+              PopUpSwitchTile(
+                  value: widget?.itmCatelog ?? false,
+                  title: "Itemm Catalog",
+                  onClick: (gg) {
+                    bool val = widget.itmCatelog;
+                    val = !val;
+                    widget.trueOrFalseChange(type: "Catalog", val: val);
+
+                    // extendedWarranty = gg;
+                    // widget.changeExtendedWarranty(gg);
+                    // onChangeExtWarranty = gg;
+                    setState(() {});
+                  }),
+
+
+
+            ],
+          ),
+          SizedBox(height: height*.035,),
+
+          Container(
+              width: MediaQuery.of(context).size.width/3.5,
+            alignment: Alignment.topLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+
+                PopUpSwitchTile(
+                    value: widget?.itmImage ?? false,
+                    title: "Item Image",
+                    onClick: (gg) {
+                      bool val = widget.itmImage;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "Image", val: val);
+
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
+                PopUpSwitchTile(
+                    value: widget.active ?? false,
+                    title: "Active",
+                    onClick: (gg) {
+                      bool val = widget.active;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "Active", val: val);
+                      // widget.activeChange(!widget.active);
+
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
 
               ],
-            );
-          }
+            ),
+          )
+
+        ],
       );
+    });
   }
 }
-
 
 class VendorDetailsVarient extends StatefulWidget {
   final List<VendorDetails>? vendorDetails;
@@ -2883,26 +2886,19 @@ class VendorDetailsVarient extends StatefulWidget {
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails = [];
-  String vendoeCode="";
+  String vendoeCode = "";
   TextEditingController code = TextEditingController();
   TextEditingController refCode = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     if (!onChange) {
       print("welcome to the entire place");
       setState(() {
         vendorDetails.clear();
       });
-
 
       if (widget.vendorDetails?.isNotEmpty == true) {
         vendorDetails = widget.vendorDetails ?? [];
@@ -2910,27 +2906,22 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
     }
     onChange = false;
     return Container(
-      width: width / 2,
+      // width: width / 2,
       margin: EdgeInsets.symmetric(horizontal: width * .02),
       child: customTable(
-
         border: const TableBorder(
-
           verticalInside: BorderSide(
-              width: .5,
-              color: Colors.black45,
-              style: BorderStyle.solid),
+              width: .5, color: Colors.black45, style: BorderStyle.solid),
           horizontalInside: BorderSide(
               width: .3,
               color: Colors.black45,
               // color: Colors.blue,
-              style: BorderStyle.solid),),
-
+              style: BorderStyle.solid),
+        ),
         tableWidth: .5,
-
-        childrens: [
+        childrens:
+        [
           TableRow(
-
             // decoration: BoxDecoration(
 
             //     color: Colors.green.shade200,
@@ -2940,10 +2931,8 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
             //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
             children: [
-
               tableHeadtext(
-
-                ' Vendor ID',
+                'Sl No',
 
                 padding: EdgeInsets.all(7),
 
@@ -2952,11 +2941,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                 // color: Color(0xffE5E5E5),
 
                 size: 13,
-
-
               ),
-
-
               tableHeadtext(
                 'Vendor Name',
                 textColor: Colors.white,
@@ -2981,66 +2966,49 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
-
-
             ],
-
           ),
-          if (vendorDetails?.isNotEmpty == true ) ...[
-
-
+          if (vendorDetails?.isNotEmpty == true) ...[
             for (var i = 0; i < vendorDetails!.length; i++)
               TableRow(
                   decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
+                      color: Colors.grey.shade200,
+                      shape: BoxShape.rectangle,
                       border: const Border(
                           left: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           bottom: BorderSide(
                               width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
+                              color: Colors.grey,
+                              style: BorderStyle.solid),
                           right: BorderSide(
-                              color: Colors
-                                  .grey,
+                              color: Colors.grey,
                               width: .5,
-                              style: BorderStyle
-                                  .solid))),
+                              style: BorderStyle.solid))),
                   children: [
-
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-
-                      child: textPadding((i + 1).toString()),),
+                      child: textPadding((i + 1).toString()),
+                    ),
                     TableCell(
-
                         verticalAlignment: TableCellVerticalAlignment.middle,
-
                         child:
-                        // Text(keys[i].value??"",)
-                        UnderLinedInput(
+                            // Text(keys[i].value??"",)
+                            UnderLinedInput(
                           initialCheck: true,
-                          last: vendorDetails ? [i].vendorName ?? "" ?? "",
+                          last: vendorDetails?[i].vendorName ?? "" ?? "",
                           formatter: false,
                           onChanged: (va) {
                             print(va);
                             vendorDetails[i] =
                                 vendorDetails[i].copyWith(vendorCode: va);
                           },
-                        )
-                    ),
+                        )),
                     UnderLinedInput(
                       initialCheck: true,
-                      last: vendorDetails ? [i].vendorReerenceCode ?? "" ?? "",
+                      last: vendorDetails?[i].vendorReerenceCode ?? "" ?? "",
                       formatter: false,
                       onChanged: (va) {
                         print(va);
@@ -3048,110 +3016,98 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                             vendorDetails[i].copyWith(vendorReerenceCode: va);
                       },
                     ),
-
-                    TableTextButton(onPress: () {
-                      widget.vendorTableEdit(list: vendorDetails);
-                    }, label: "",)
-
-
+                    TableTextButton(
+                      onPress: () {
+                        onChange=true;
+                        widget.vendorTableEdit(list: vendorDetails);
+                      },
+                      label: "",
+                    )
                   ])
           ],
           TableRow(
               decoration: BoxDecoration(
-                  color: Colors.grey
-                      .shade200,
-                  shape: BoxShape
-                      .rectangle,
+                  color: Colors.grey.shade200,
+                  shape: BoxShape.rectangle,
                   border: const Border(
                       left: BorderSide(
                           width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+                          color: Colors.grey,
+                          style: BorderStyle.solid),
                       bottom: BorderSide(
                           width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+                          color: Colors.grey,
+                          style: BorderStyle.solid),
                       right: BorderSide(
-                          color: Colors
-                              .grey,
+                          color: Colors.grey,
                           width: .5,
-                          style: BorderStyle
-                              .solid))),
+                          style: BorderStyle.solid))),
               children: [
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child: textPadding((vendorDetails.length + 1).toString()),),
+                  child: textPadding((vendorDetails.length + 1).toString()),
+                ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-
-                  child:
-                  UnderLinedInput(
+                  child: UnderLinedInput(
+                    suffixIconEnable: true,
                     formatter: false,
                     controller: code,
-                    onComplete: (){
+
+                    onComplete: () {
                       showDailogPopUp(
                         context,
                         ConfigurePopup(
-                          listAssign:(VendorDetailsModel model){
+                          listAssign: (VendorDetailsModel model) {
                             print("akkk");
                             print(model.toString());
                             setState(() {
-                              onChange=true;
-                              code.text=model.manuFactureName??"";
-                              vendoeCode=model.manuFactureuserCode??"";
-
+                              onChange = true;
+                              code.text = model.manuFactureName ?? "";
+                              vendoeCode = model.manuFactureuserCode ?? "";
                             });
-
                           },
                           type: "vendorDetailList_popup",
                         ),
-
-
                       );
                     },
                   ),
                 ),
                 TableCell(
                     verticalAlignment: TableCellVerticalAlignment.middle,
-
                     child: UnderLinedInput(
                       formatter: false,
                       controller: refCode,
                     )),
-                TableTextButton(onPress: () {
-                  widget.vendorTableEdit(list: vendorDetails);
-                  VendorDetails model = VendorDetails(
-                    vendorName: code.text ?? "",
-                    vendorReerenceCode: refCode.text ?? "",
-                    vendorCode:vendoeCode
-                  );
-                  onChange = true;
-                  setState(() {
-                    vendorDetails.add(model);
+                TableTextButton(
+                  onPress: () {
                     widget.vendorTableEdit(list: vendorDetails);
-                    code.text = "";
-                    refCode.text = "";
-                  });
-                }, label: "Save",)
-
-
+                    VendorDetails model = VendorDetails(
+                        vendorName: code.text ?? "",
+                        vendorReerenceCode: refCode.text ?? "",
+                        vendorCode: vendoeCode);
+                    onChange = true;
+                    setState(() {
+                      vendorDetails.add(model);
+                      widget.vendorTableEdit(list: vendorDetails);
+                      code.text = "";
+                      refCode.text = "";
+                    });
+                  },
+                  label: "Save",
+                )
               ]),
-
-
         ],
-
+        widths: {
+          0: FlexColumnWidth(1),
+          1: FlexColumnWidth(5),
+          2: FlexColumnWidth(5),
+          3: FlexColumnWidth(2),
+        },
       ),
-
-
     );
   }
 }
-
 
 class InformationClass {
   String? gender;
@@ -3161,7 +3117,9 @@ class InformationClass {
   String? purpose;
 
   InformationClass(
-      {required this.gender, required this.age, required this.countries, required this.purpose, required this.ethlink});
-
-
+      {required this.gender,
+      required this.age,
+      required this.countries,
+      required this.purpose,
+      required this.ethlink});
 }

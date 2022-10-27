@@ -40,6 +40,7 @@ class NewInputCard extends StatefulWidget {
   final String? hint;
 
   final bool password;
+  final bool icondrop;
   final  bool direction;
   const NewInputCard({
     Key? key,
@@ -52,11 +53,12 @@ class NewInputCard extends StatefulWidget {
     this.formatter=false,
     this.readOnly=false,
     this.password = false,
+    this.icondrop = false,
     this.direction=false,
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 40,
+    this.height = 45.6,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -203,7 +205,7 @@ class _NewInputCardState extends State<NewInputCard> {
                     setState(() {});
                   },
                 )
-                    : null,
+                    : widget.icondrop?IconButton(onPressed:(){}, icon: Icon(Icons.more_horiz_rounded)):null,
                 labelStyle: const TextStyle(
                   fontSize: 13,
                   //fontStyle: FontStyle.italic,
@@ -323,7 +325,7 @@ class NewInputCreateCard extends StatefulWidget {
     required this.title,
     this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 40,
+    this.height = 45,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -656,6 +658,7 @@ class UnderLinedInput extends StatefulWidget {
   final bool restricted;
   final String hintText;
   final bool formatter;
+  final bool suffixIconEnable;
   // final String? tileName;
   final int maxLines;
   final TextEditingController? controller;
@@ -666,9 +669,10 @@ class UnderLinedInput extends StatefulWidget {
   UnderLinedInput(
       {Key? key,
         this.last="",
+        this.suffixIconEnable=false,
         this.enable = true,
         this.initial='',
-        this.hintText = "",
+        this.hintText = "type..",
         this.maxLines = 1,
         this.controller,
         this.onChanged,
@@ -743,6 +747,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
 
                 controller: widget.controller,
                 enabled: widget.enable,
+
                 keyboardType: widget.formatter? TextInputType.number:null ,
               inputFormatters:widget.formatter?
               <TextInputFormatter>[
@@ -752,6 +757,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 onChanged: widget.onChanged,
                 decoration: InputDecoration(
                   isCollapsed: true,
+                  suffixIcon: widget.suffixIconEnable?Icon(Icons.arrow_downward_outlined):null,
 
 
                   contentPadding: EdgeInsets.all(20),
@@ -1063,7 +1069,10 @@ class _FileUploadFieldState extends State<FileUploadField> {
           SizedBox(height:3),
      Container(
 
+
+
           child: TextFormField(
+
             onTap: () {
               widget.onChangeTap!(true);
               filePicker();
@@ -1099,7 +1108,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
                       : null,
                   icon: Icon(Icons.attach_file)),
               contentPadding:
-              EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              EdgeInsets.symmetric(horizontal: 10, vertical: 17),
               isDense: true,
               hintStyle: TextStyle(fontSize: 10),
               enabledBorder:OutlineInputBorder(
@@ -1336,7 +1345,7 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
       children: [
         Container(
 
-            padding: EdgeInsets.only(top: 10,left: 22),
+            padding: EdgeInsets.only(top: 3,left: 22),
             child: Text(
               widget.title,
               style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),

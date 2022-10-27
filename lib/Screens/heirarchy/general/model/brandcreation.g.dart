@@ -11,7 +11,7 @@ _$_BrandCreationtModel _$$_BrandCreationtModelFromJson(
     _$_BrandCreationtModel(
       description: json['description'] as String?,
       name: json['name'] as String?,
-      image: json['image'] as int?,
+      image: json['image'] as String?,
       brandIdentifierUrl: json['brand_identifier_url'] as String?,
       parentCode: json['parent_code'] as String?,
       isActive: json['is_active'] as bool? ?? false,

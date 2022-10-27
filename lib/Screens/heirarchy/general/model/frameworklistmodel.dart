@@ -62,6 +62,7 @@ final String? code ,
 }@freezed
 class VariantLinesLiostModel with _$VariantLinesLiostModel {
   const factory VariantLinesLiostModel({
+    final int? id,
 
 
 

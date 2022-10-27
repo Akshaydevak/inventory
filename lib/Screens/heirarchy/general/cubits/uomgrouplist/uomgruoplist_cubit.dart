@@ -30,7 +30,7 @@ class UomgruoplistCubit extends Cubit<UomgruoplistState> {
   Future searchUomgroupList(String filter) async {
     print("filter"+filter.toString());
     emit(UomgruoplistState.initial());
-    final result = await repo.getUomGroupist( filter);
+    final result = await repo.getUomGroupist("name="+ filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

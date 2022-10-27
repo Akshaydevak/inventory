@@ -32,6 +32,7 @@ class _$MaterialReadModelTearOff {
       @JsonKey(name: "search_name") String? searchNmae,
       @JsonKey(name: "display_name") String? displayName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
     return _MaterialReadModel(
       description: description,
@@ -44,6 +45,7 @@ class _$MaterialReadModelTearOff {
       searchNmae: searchNmae,
       displayName: displayName,
       categoryCode: categoryCode,
+      categoryName: categoryName,
       isActive: isActive,
     );
   }
@@ -71,6 +73,8 @@ mixin _$MaterialReadModel {
   String? get displayName => throw _privateConstructorUsedError;
   @JsonKey(name: "category_code")
   String? get categoryCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "category_name")
+  String? get categoryName => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
 
@@ -96,6 +100,7 @@ abstract class $MaterialReadModelCopyWith<$Res> {
       @JsonKey(name: "search_name") String? searchNmae,
       @JsonKey(name: "display_name") String? displayName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -120,6 +125,7 @@ class _$MaterialReadModelCopyWithImpl<$Res>
     Object? searchNmae = freezed,
     Object? displayName = freezed,
     Object? categoryCode = freezed,
+    Object? categoryName = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
@@ -163,6 +169,10 @@ class _$MaterialReadModelCopyWithImpl<$Res>
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryName: categoryName == freezed
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -189,6 +199,7 @@ abstract class _$MaterialReadModelCopyWith<$Res>
       @JsonKey(name: "search_name") String? searchNmae,
       @JsonKey(name: "display_name") String? displayName,
       @JsonKey(name: "category_code") String? categoryCode,
+      @JsonKey(name: "category_name") String? categoryName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -215,6 +226,7 @@ class __$MaterialReadModelCopyWithImpl<$Res>
     Object? searchNmae = freezed,
     Object? displayName = freezed,
     Object? categoryCode = freezed,
+    Object? categoryName = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_MaterialReadModel(
@@ -258,6 +270,10 @@ class __$MaterialReadModelCopyWithImpl<$Res>
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      categoryName: categoryName == freezed
+          ? _value.categoryName
+          : categoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: isActive == freezed
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -280,6 +296,7 @@ class _$_MaterialReadModel implements _MaterialReadModel {
       @JsonKey(name: "search_name") this.searchNmae,
       @JsonKey(name: "display_name") this.displayName,
       @JsonKey(name: "category_code") this.categoryCode,
+      @JsonKey(name: "category_name") this.categoryName,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
 
   factory _$_MaterialReadModel.fromJson(Map<String, dynamic> json) =>
@@ -309,12 +326,15 @@ class _$_MaterialReadModel implements _MaterialReadModel {
   @JsonKey(name: "category_code")
   final String? categoryCode;
   @override
+  @JsonKey(name: "category_name")
+  final String? categoryName;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
 
   @override
   String toString() {
-    return 'MaterialReadModel(description: $description, status: $status, updated: $updated, code: $code, name: $name, image: $image, id: $id, searchNmae: $searchNmae, displayName: $displayName, categoryCode: $categoryCode, isActive: $isActive)';
+    return 'MaterialReadModel(description: $description, status: $status, updated: $updated, code: $code, name: $name, image: $image, id: $id, searchNmae: $searchNmae, displayName: $displayName, categoryCode: $categoryCode, categoryName: $categoryName, isActive: $isActive)';
   }
 
   @override
@@ -346,6 +366,9 @@ class _$_MaterialReadModel implements _MaterialReadModel {
             (identical(other.categoryCode, categoryCode) ||
                 const DeepCollectionEquality()
                     .equals(other.categoryCode, categoryCode)) &&
+            (identical(other.categoryName, categoryName) ||
+                const DeepCollectionEquality()
+                    .equals(other.categoryName, categoryName)) &&
             (identical(other.isActive, isActive) ||
                 const DeepCollectionEquality()
                     .equals(other.isActive, isActive)));
@@ -364,6 +387,7 @@ class _$_MaterialReadModel implements _MaterialReadModel {
       const DeepCollectionEquality().hash(searchNmae) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(categoryCode) ^
+      const DeepCollectionEquality().hash(categoryName) ^
       const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
@@ -389,6 +413,7 @@ abstract class _MaterialReadModel implements MaterialReadModel {
           @JsonKey(name: "search_name") String? searchNmae,
           @JsonKey(name: "display_name") String? displayName,
           @JsonKey(name: "category_code") String? categoryCode,
+          @JsonKey(name: "category_name") String? categoryName,
           @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
       _$_MaterialReadModel;
 
@@ -418,6 +443,9 @@ abstract class _MaterialReadModel implements MaterialReadModel {
   @override
   @JsonKey(name: "category_code")
   String? get categoryCode => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "category_name")
+  String? get categoryName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;

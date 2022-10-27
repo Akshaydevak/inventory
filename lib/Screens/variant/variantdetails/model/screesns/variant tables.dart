@@ -99,14 +99,14 @@ class ProductTableState extends State<ProductTable> {
                   tableHeadtext(
                     'About the Product',
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                   height: 41,
                     textColor: Colors.white,
                     size: 13,
                   ),
                   tableHeadtext(
                     '',
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     size: 13,
                   ),
@@ -309,7 +309,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -319,7 +319,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     'Technical details',
                     textColor: Colors.white,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -327,7 +327,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     '',
                     textColor: Colors.white,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -548,7 +548,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -558,7 +558,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     'Features',
                     textColor: Colors.white,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -566,7 +566,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     '',
                     textColor: Colors.black,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -788,7 +788,7 @@ ProductFeatures? productFeatures ;
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     // textColor: Colors.black,
                     // color: Color(0xffE5E5E5),
 
@@ -798,7 +798,7 @@ ProductFeatures? productFeatures ;
                     '',
                     textColor: Colors.black,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -806,7 +806,7 @@ ProductFeatures? productFeatures ;
                     '',
                     textColor: Colors.black,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -1024,7 +1024,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.black,
                     // color: Color(0xffE5E5E5),
 
@@ -1034,7 +1034,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     'NutrianFacts',
                     // textColor: Colors.black,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -1042,7 +1042,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     '',
                     textColor: Colors.black,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -1265,7 +1265,7 @@ class IngrediansState extends State<Ingredians> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -1276,7 +1276,7 @@ class IngrediansState extends State<Ingredians> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.black,
                     // color: Color(0xffE5E5E5),
 
@@ -1476,7 +1476,7 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -1487,7 +1487,7 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.black,
                     // color: Color(0xffE5E5E5),
 
@@ -1686,7 +1686,7 @@ class _StoragesWidgetState extends State<StoragesWidget> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -1697,7 +1697,7 @@ class _StoragesWidgetState extends State<StoragesWidget> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.black,
                     // color: Color(0xffE5E5E5),
 
@@ -1901,7 +1901,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
 
                     padding: EdgeInsets.all(7),
 
-                    height: 46,
+                    height: 41,
                     textColor: Colors.white,
                     // color: Color(0xffE5E5E5),
 
@@ -1911,7 +1911,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
                     '',
                     textColor: Colors.white,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -1919,7 +1919,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
                     '',
                     textColor: Colors.white,
                     padding: EdgeInsets.all(7),
-                    height: 46,
+                    height: 41,
                     size: 13,
                     // color: Color(0xffE5E5E5),
                   ),
@@ -2125,7 +2125,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
 
                 padding: EdgeInsets.all(7),
 
-                height: 46,
+                height: 41,
                 textColor: Colors.white,
                 // color: Color(0xffE5E5E5),
 
@@ -2135,7 +2135,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 'Age Group',
                 textColor: Colors.white,
                 padding: EdgeInsets.all(7),
-                height: 46,
+                height: 41,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
@@ -2143,7 +2143,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 'Ethinik',
                 textColor: Colors.white,
                 padding: EdgeInsets.all(7),
-                height: 46,
+                height: 41,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
@@ -2151,7 +2151,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 'Countries',
                 // textColor: Colors.white,
                 padding: EdgeInsets.all(7),
-                height: 46,
+                height: 41,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
@@ -2159,7 +2159,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 'Purpose',
                 textColor: Colors.white,
                 padding: EdgeInsets.all(7),
-                height: 46,
+                height: 41,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
@@ -2167,7 +2167,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 '',
                 textColor: Colors.white,
                 padding: EdgeInsets.all(7),
-                height: 46,
+                height: 41,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),

@@ -12,7 +12,7 @@ _$_CategoryCreationtModel _$$_CategoryCreationtModelFromJson(
       description: json['description'] as String?,
       name: json['name'] as String?,
       code: json['code'] as String?,
-      image: json['image'] as int?,
+      image: json['image'] as String?,
       alternativeName: json['alternative_name'] as String?,
       parentCode: json['parent_code'] as String?,
       divisionCode: json['division_code'] as String?,

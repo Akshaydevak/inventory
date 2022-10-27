@@ -1208,7 +1208,7 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
                                             },
                                           ));
                                     },
-                                    itemCount: result.length,
+                                    itemCount: result.length+1,
                                   )
 
 
@@ -1230,7 +1230,7 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
                               // print(data.nextPageUrl);
                               context
                                   .read<MaterialListCubit>()
-                                  .nextslotSectionPageList();
+                                  .nextslotSectionPageList("");
                             },
                           )
                         ],
@@ -3418,7 +3418,7 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
         // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
         child: Builder(
             builder: (context) {
-              return BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
+              return BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
                 listener: (context, state) {
                   print("this portion is working");
                   state.maybeWhen(orElse:(){},
@@ -3523,13 +3523,13 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                                 )),
                             tablePagination(
                                   () => context
-                                  .read<Listbrand2Cubit>()
+                                  .read<ItemcreationListCubit>()
                                   .refresh(),
                               back: widget.list?.previousUrl == null
                                   ? null
                                   : () {
                                 context
-                                    .read<Listbrand2Cubit>()
+                                    .read<ItemcreationListCubit>()
                                     .previuosslotSectionPageList();
                               },
                               next: widget.list?.nextPageUrl == null
@@ -3537,7 +3537,7 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                                   : () {
                                 // print(data.nextPageUrl);
                                 context
-                                    .read<Listbrand2Cubit>()
+                                    .read<ItemcreationListCubit>()
                                     .nextslotSectionPageList();
                               },
                             )

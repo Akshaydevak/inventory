@@ -89,6 +89,7 @@ Map<String, dynamic> _$$_VariantFrameWorkPostModelToJson(
 _$_VariantLinesLiostModel _$$_VariantLinesLiostModelFromJson(
         Map<String, dynamic> json) =>
     _$_VariantLinesLiostModel(
+      id: json['id'] as int?,
       values:
           (json['values'] as List<dynamic>?)?.map((e) => e as String).toList(),
       attributeId: json['attribute_id'] as int?,
@@ -101,6 +102,7 @@ _$_VariantLinesLiostModel _$$_VariantLinesLiostModelFromJson(
 Map<String, dynamic> _$$_VariantLinesLiostModelToJson(
         _$_VariantLinesLiostModel instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'values': instance.values,
       'attribute_id': instance.attributeId,
       'attribute_name': instance.name,

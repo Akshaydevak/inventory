@@ -27,7 +27,7 @@ class ListstaticCubit extends Cubit<ListstaticState> {
 
   Future searchStaticPageList(String filter) async {
     emit(ListstaticState.initial());
-    final result = await repo.getStaticList(filter);
+    final result = await repo.getStaticList("name="+filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

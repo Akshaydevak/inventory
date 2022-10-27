@@ -27,7 +27,7 @@ class SalesListCubit extends Cubit<SalesListState> {
 
   Future searchSalesList(String filter, {String? type,int ? id}) async {
     emit(SalesListState.initial());
-    final result = await repo.getSalesList(filter,id:id);
+    final result = await repo.getSalesList("name="+filter,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

@@ -4218,11 +4218,16 @@ class GeneralSavePage extends StatelessWidget {
   final bool onCreate;
   final bool onPopUp;
   final Widget child;
+  final bool? buttonNameOption;
   final VoidCallback? onApply;
   final VoidCallback? onEdit;
+  final String? buttonName;
+
   final VoidCallback? onCancel;
   const GeneralSavePage(
       {Key? key,
+        this.buttonNameOption=false,
+        this.buttonName="save",
         required this.child,
          this.onApply,
         this.onCancel,
@@ -4258,7 +4263,7 @@ class GeneralSavePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(),
-                    if (onCreate) save(context),
+                    if (onCreate) save(context,buttonName: buttonName),
                     if (onEdit != null && !onCreate) edit()
                   ],
                 ),
@@ -4307,7 +4312,7 @@ class GeneralSavePage extends StatelessWidget {
     );
   }
 
-  Widget save(BuildContext context) {
+  Widget save(BuildContext context,{String? buttonName="Save"} ) {
     return Container(
       alignment: Alignment.centerRight,
       child: Row(
@@ -4326,7 +4331,7 @@ class GeneralSavePage extends StatelessWidget {
                     ),
                     SizedBox(width: 3),
                     Text(
-                      "Save",
+                      buttonName.toString(),
                     )
                   ],
                 )),

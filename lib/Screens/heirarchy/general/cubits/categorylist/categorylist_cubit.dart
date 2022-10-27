@@ -11,14 +11,14 @@ class CategorylistCubit extends Cubit<CategorylistState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getCategoryist({String? type}) async {
+  Future getCategoryist({String? type,int? id}) async {
     next = null;
     prev = null;
     print("enterd");
     // items = [];
     emit(CategorylistState.initial());
     final result = await repo.getCategoryist(
-      null,type:type
+      null,type:type,id:id
     );
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -30,7 +30,7 @@ class CategorylistCubit extends Cubit<CategorylistState> {
   Future searchCategoryist(String filter,{String? type}) async {
     print(filter);
     emit(CategorylistState.initial());
-    final result = await repo.getCategoryist( filter,type: type);
+    final result = await repo.getCategoryist( "name="+filter.toString(),type: type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -52,7 +52,7 @@ class CategorylistCubit extends Cubit<CategorylistState> {
 
   Future previuosslotSectionPageList({String? type}) async {
     // print(previous);
-    final result = await repo.getCategoryist(null);
+    final result = await repo.getCategoryist(prev,type: type);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

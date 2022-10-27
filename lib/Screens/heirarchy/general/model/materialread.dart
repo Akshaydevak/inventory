@@ -16,6 +16,7 @@ class MaterialReadModel with _$MaterialReadModel {
     @JsonKey(name: "search_name") final String? searchNmae,
     @JsonKey(name: "display_name") final String? displayName,
     @JsonKey(name: "category_code") final String? categoryCode,
+    @JsonKey(name: "category_name") final String? categoryName,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
   }) = _MaterialReadModel;
   factory MaterialReadModel.fromJson(Map<String, dynamic> json) =>

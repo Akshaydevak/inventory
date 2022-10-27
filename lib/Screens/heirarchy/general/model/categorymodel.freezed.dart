@@ -26,7 +26,7 @@ class _$CategoryCreationtModelTearOff {
       {String? description,
       String? name,
       String? code,
-      int? image,
+      String? image,
       @JsonKey(name: "alternative_name") String? alternativeName,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
@@ -56,7 +56,7 @@ mixin _$CategoryCreationtModel {
   String? get description => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
-  int? get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_name")
   String? get alternativeName => throw _privateConstructorUsedError;
   @JsonKey(name: "parent_code")
@@ -81,7 +81,7 @@ abstract class $CategoryCreationtModelCopyWith<$Res> {
       {String? description,
       String? name,
       String? code,
-      int? image,
+      String? image,
       @JsonKey(name: "alternative_name") String? alternativeName,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
@@ -124,7 +124,7 @@ class _$CategoryCreationtModelCopyWithImpl<$Res>
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       alternativeName: alternativeName == freezed
           ? _value.alternativeName
           : alternativeName // ignore: cast_nullable_to_non_nullable
@@ -156,7 +156,7 @@ abstract class _$CategoryCreationtModelCopyWith<$Res>
       {String? description,
       String? name,
       String? code,
-      int? image,
+      String? image,
       @JsonKey(name: "alternative_name") String? alternativeName,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
@@ -201,7 +201,7 @@ class __$CategoryCreationtModelCopyWithImpl<$Res>
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       alternativeName: alternativeName == freezed
           ? _value.alternativeName
           : alternativeName // ignore: cast_nullable_to_non_nullable
@@ -245,7 +245,7 @@ class _$_CategoryCreationtModel implements _CategoryCreationtModel {
   @override
   final String? code;
   @override
-  final int? image;
+  final String? image;
   @override
   @JsonKey(name: "alternative_name")
   final String? alternativeName;
@@ -320,7 +320,7 @@ abstract class _CategoryCreationtModel implements CategoryCreationtModel {
           {String? description,
           String? name,
           String? code,
-          int? image,
+          String? image,
           @JsonKey(name: "alternative_name") String? alternativeName,
           @JsonKey(name: "parent_code") String? parentCode,
           @JsonKey(name: "division_code") String? divisionCode,
@@ -337,7 +337,7 @@ abstract class _CategoryCreationtModel implements CategoryCreationtModel {
   @override
   String? get code => throw _privateConstructorUsedError;
   @override
-  int? get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "alternative_name")
   String? get alternativeName => throw _privateConstructorUsedError;

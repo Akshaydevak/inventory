@@ -45,538 +45,494 @@ class HeirarchyGeneralScreen extends StatefulWidget {
 }
 
 class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
-  TextEditingController controller=TextEditingController();
-  TextEditingController BrandController=TextEditingController();
-  TextEditingController divisionNameController=TextEditingController();
-  TextEditingController categoryNameController=TextEditingController();
-  TextEditingController subCategoryNameController=TextEditingController();
-  TextEditingController materialNameController=TextEditingController();
-  TextEditingController variantNameController=TextEditingController();
-  TextEditingController staticNameController=TextEditingController();
-  TextEditingController BrandNameController=TextEditingController();
-  TextEditingController uomGroupNameController=TextEditingController();
-  TextEditingController baseUomGroupName=TextEditingController();
-  TextEditingController GroupController=TextEditingController();
-  TextEditingController GroupNameController=TextEditingController();
-  TextEditingController materialController=TextEditingController();
-  TextEditingController devisionController=TextEditingController();
-  TextEditingController staticController=TextEditingController();
-  TextEditingController categoryController=TextEditingController();
-  TextEditingController uomGroupController=TextEditingController();
-  TextEditingController subCategoryController=TextEditingController();
-  TextEditingController uomCategoryController=TextEditingController();
-  TextEditingController itemCodeController=TextEditingController();
-  TextEditingController itemNameController=TextEditingController();
-  TextEditingController searchNameController=TextEditingController();
-  TextEditingController displayNameController=TextEditingController();
-  TextEditingController discriptionNameController=TextEditingController();
-  TextEditingController oldSystemCodeNameController=TextEditingController();
-  TextEditingController statusCodeNameController=TextEditingController();
-  TextEditingController image1Controller=TextEditingController();
-  TextEditingController image2Controller=TextEditingController();
-  TextEditingController image3Controller=TextEditingController();
-  TextEditingController itemCatelog1Controller=TextEditingController();
-  TextEditingController itemCatelog2Controller=TextEditingController();
-  TextEditingController itemCatelog3Controller=TextEditingController();
-  TextEditingController itemCatelog4Controller=TextEditingController();
-  TextEditingController itemCatelog5Controller=TextEditingController();
-  TextEditingController variantFrameworkController=TextEditingController();
-  TextEditingController barCodeController=TextEditingController();
-  TextEditingController qrCodeController=TextEditingController();
-  TextEditingController rfIdController=TextEditingController();
-  int divisionId=0;
-  int categoryId=0;
-  int subCategory=0;
+  TextEditingController controller = TextEditingController();
+  TextEditingController BrandController = TextEditingController();
+  TextEditingController divisionNameController = TextEditingController();
+  TextEditingController categoryNameController = TextEditingController();
+  TextEditingController subCategoryNameController = TextEditingController();
+  TextEditingController materialNameController = TextEditingController();
+  TextEditingController variantNameController = TextEditingController();
+  TextEditingController staticNameController = TextEditingController();
+  TextEditingController BrandNameController = TextEditingController();
+  TextEditingController uomGroupNameController = TextEditingController();
+  TextEditingController baseUomGroupName = TextEditingController();
+  TextEditingController GroupController = TextEditingController();
+  TextEditingController GroupNameController = TextEditingController();
+  TextEditingController materialController = TextEditingController();
+  TextEditingController devisionController = TextEditingController();
+  TextEditingController staticController = TextEditingController();
+  TextEditingController categoryController = TextEditingController();
+  TextEditingController uomGroupController = TextEditingController();
+  TextEditingController subCategoryController = TextEditingController();
+  TextEditingController uomCategoryController = TextEditingController();
+  TextEditingController itemCodeController = TextEditingController();
+  TextEditingController itemNameController = TextEditingController();
+  TextEditingController searchNameController = TextEditingController();
+  TextEditingController displayNameController = TextEditingController();
+  TextEditingController discriptionNameController = TextEditingController();
+  TextEditingController oldSystemCodeNameController = TextEditingController();
+  TextEditingController statusCodeNameController = TextEditingController();
+  TextEditingController image1Controller = TextEditingController();
+  TextEditingController image2Controller = TextEditingController();
+  TextEditingController image3Controller = TextEditingController();
+  TextEditingController itemCatelog1Controller = TextEditingController();
+  TextEditingController itemCatelog2Controller = TextEditingController();
+  TextEditingController itemCatelog3Controller = TextEditingController();
+  TextEditingController itemCatelog4Controller = TextEditingController();
+  TextEditingController itemCatelog5Controller = TextEditingController();
+  TextEditingController variantFrameworkController = TextEditingController();
+  TextEditingController barCodeController = TextEditingController();
+  TextEditingController qrCodeController = TextEditingController();
+  TextEditingController rfIdController = TextEditingController();
+  int? divisionId = 0;
+  int? categoryId = 0;
+  int? subCategoryId = 0;
+  int? uomGroupId = 0;
 
-  bool active=false;
-  bool select=false;
+  bool active = false;
+  bool select = false;
   ItemReadModel? group;
-  bool img1=false;
-  bool img2=false;
-  bool img3=false;
-  bool img4=false;
-  bool img5=false;
-  bool img6=false;
-  bool img7=false;
-  clear(){
-itemCodeController.text="";
-itemNameController.text="";
-staticNameController.clear();
-searchNameController.text="";
-displayNameController.text="";
-discriptionNameController.text="";
-oldSystemCodeNameController.text="";
-uomGroupController.text="";
-uomCategoryController.text="";
-statusCodeNameController.text="";
-image1Controller.text="";
-image2Controller.text="";
-image3Controller.text="";
-uomGroupNameController.text="";
-divisionNameController.clear();
-itemCatelog1Controller.text="";
-itemCatelog2Controller.text="";
-itemCatelog3Controller.text="";
-itemCatelog4Controller.text="";
-itemCatelog5Controller.text="";
-devisionController.text="";
-categoryController.text="";
-categoryNameController.text="";
-subCategoryController.text="";
-subCategoryNameController.text="";
-GroupController.text="";
-GroupNameController.text="";
-materialController.text="";
-materialNameController.text="";
-variantFrameworkController.text="";
-variantNameController.text="";
-staticController.text="";
-barCodeController.text="";
-BrandController.text="";
-BrandNameController.text="";
-qrCodeController.text="";
-rfIdController.text="";
-Variable.divisionId=0;
-Variable.categoryId=0;
-Variable.subCategorycategory=0;
-img1=false;
-img2=false;
-img3=false;
-img4=false;
-img5=false;
-img6=false;
-img7=false;
-active=false;
-
-
-
+  bool img1 = false;
+  bool img2 = false;
+  bool img3 = false;
+  bool img4 = false;
+  bool img5 = false;
+  bool img6 = false;
+  bool img7 = false;
+  clear() {
+    itemCodeController.text = "";
+    itemNameController.text = "";
+    staticNameController.clear();
+    searchNameController.text = "";
+    displayNameController.text = "";
+    discriptionNameController.text = "";
+    oldSystemCodeNameController.text = "";
+    uomGroupController.text = "";
+    uomCategoryController.text = "";
+    statusCodeNameController.text = "";
+    image1Controller.text = "";
+    image2Controller.text = "";
+    image3Controller.text = "";
+    uomGroupNameController.text = "";
+    baseUomGroupName.clear();
+    divisionNameController.clear();
+    itemCatelog1Controller.text = "";
+    itemCatelog2Controller.text = "";
+    itemCatelog3Controller.text = "";
+    itemCatelog4Controller.text = "";
+    itemCatelog5Controller.text = "";
+    devisionController.text = "";
+    categoryController.text = "";
+    categoryNameController.text = "";
+    subCategoryController.text = "";
+    subCategoryNameController.text = "";
+    GroupController.text = "";
+    GroupNameController.text = "";
+    materialController.text = "";
+    materialNameController.text = "";
+    variantFrameworkController.text = "";
+    variantNameController.text = "";
+    staticController.text = "";
+    barCodeController.text = "";
+    BrandController.text = "";
+    BrandNameController.text = "";
+    qrCodeController.text = "";
+    rfIdController.text = "";
+     categoryId=0;
+     subCategoryId=0;
+     divisionId=0;
+     uomGroupId=0;
+    Variable.divisionId = 0;
+    Variable.categoryId = 0;
+    Variable.subCategorycategory = 0;
+    img1 = false;
+    img2 = false;
+    img3 = false;
+    img4 = false;
+    img5 = false;
+    img6 = false;
+    img7 = false;
+    active = false;
   }
 
-  imagePostCheck({String? type}){
+  imagePostCheck({String? type}) {
+    switch (type) {
+      case '1':
+        img1 = true;
+        break;
 
+      case '2':
+        img2 = true;
+        break;
 
-
-
-      switch(type){
-
-        case '1' :
-          img1=true;
-          break;
-
-        case '2' :
-          img2=true;
-          break;
-
-        case '3' :
-          img3=true;
-          break;
-        case '4' :
-          img4=true;
-          break;
-        case '5' :
-          img5=true;
-          break;
-        case '6' :
-          img6=true;
-          break;
-
-
-
-      }
-
-
+      case '3':
+        img3 = true;
+        break;
+      case '4':
+        img4 = true;
+        break;
+      case '5':
+        img5 = true;
+        break;
+      case '6':
+        img6 = true;
+        break;
+    }
   }
 
-
-  int? veritiaclid=0;
+  int? veritiaclid = 0;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
-  int selectedVertical=0;
+  int selectedVertical = 0;
   var list;
 
-  activeChange(bool active1){
-  if(select!=true) {
-    active = active1;
-    setState(() {
+  activeChange(bool active1) {
+    if (select != true) {
+      active = active1;
+      setState(() {});
+    }
+  }
 
-    });
-  }}
   @override
   void initState() {
     context.read<ItemcreationListCubit>().getItemListList();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    double h=MediaQuery.of(context).size.height;
-    double w=MediaQuery.of(context).size.width;
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return MultiBlocProvider(
-  providers: [
-    BlocProvider(
-  create: (context) => CreatebrandCubit(),
-),
-    BlocProvider(
-      create: (context) => Listbrand2Cubit(),
-    ),
-    BlocProvider(
-      create: (context) => ItemcreatinCubit(),
-    ),
-    BlocProvider(
-      create: (context) => ItemreadCubit(),
-    ),
-    BlocProvider(
-      create: (context) => MaterialdeleteCubit(),
-    ),
+      providers: [
+        BlocProvider(
+          create: (context) => CreatebrandCubit(),
+        ),
+        BlocProvider(
+          create: (context) => Listbrand2Cubit(),
+        ),
+        BlocProvider(
+          create: (context) => ItemcreatinCubit(),
+        ),
+        BlocProvider(
+          create: (context) => ItemreadCubit(),
+        ),
+        BlocProvider(
+          create: (context) => MaterialdeleteCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<ItemcreatinCubit, ItemcreatinState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    Timer(Duration(seconds: 5), () {
+                      setState(() {
+                      select?  context.read<ItemcreationListCubit>().getItemListList():
+                      context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        // select=false;
+                      });
+                    });
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<ItemreadCubit, ItemreadState>(
+              listener: (context, state) {
+                print("state++++++++++++++++++++++++++++++++");
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      print("ansawww" + data.toString());
+                      group = data;
+                      uomCategoryController.text = data?.uomGroupCode ?? '';
+                      subCategoryController.text = data?.subCategoryCode ?? '';
+                      subCategoryNameController.text = data?.subCategoryName ?? '';
+                      uomGroupController.text = data?.uomGroupCode ?? '';
 
+                      GroupController.text = data?.groupCode ?? '';
+                      GroupNameController.text = data?.groupName ?? '';
+                      uomGroupNameController.text = data.uomGroupName ?? '';
+                      BrandController.text = data?.brandCode ?? '';
+                      BrandNameController.text = data?.brandName ?? '';
+                      staticController.text = data?.staticGroupCode ?? '';
+                      staticNameController.text = data?.staticGroupName ?? '';
+                      oldSystemCodeNameController.text =
+                          data?.oldSystemCode ?? '';
+                      baseUomGroupName.text = data?.uomName ?? '';
+                      uomCategoryController.clear();
 
+                      Variable.divisionId = data.divisionId;
+                      divisionId = data.divisionId;
+                      Variable.categoryId = data.categoryId;
+                     categoryId = data.categoryId;
+                      Variable.subCategorycategory = data.subCategoryId;
+                      subCategoryId= data.subCategoryId;
+                      Variable.uomGroupId = data.uomGroupId;
+                      uomGroupId = data.uomGroupId;
 
+                      materialController.text = data?.materialCode ?? '';
+                      materialNameController.text = data?.materialName ?? '';
+                      devisionController.text = data?.divisionCode ?? '';
+                      divisionNameController.text = data?.divisionName ?? '';
+                      uomCategoryController.text = data?.uomCode ?? '';
+                      categoryController.text = data?.categoryCode ?? '';
+                      categoryNameController.text = data?.categoryName ?? '';
+                      subCategoryController.text = data?.subCategoryCode ?? '';
+                      itemCodeController.text = data?.code ?? '';
+                      itemNameController.text = data?.name ?? '';
+                      subCategoryNameController.text =
+                          data?.subCategoryName ?? '';
+                      barCodeController.text =
+                          data?.barcode?.barcodeNumber ?? '';
+                      qrCodeController.text = data?.qrCode?.qrCodeNumber ?? '';
+                      image1Controller.text = data?.image1 ?? '';
+                      image2Controller.text = data?.image2 ?? '';
+                      image3Controller.text = data?.image3 ?? '';
+                      itemCatelog1Controller.text = data?.itemCatelog1 ?? '';
+                      itemCatelog2Controller.text = data?.itemCatelog2 ?? '';
+                      itemCatelog3Controller.text = data?.itemCatelog3 ?? '';
+                      itemCatelog4Controller.text = data?.itemCatelog4 ?? '';
+                      searchNameController.text = data?.searchName ?? '';
+                      displayNameController.text = data?.displayname ?? '';
+                      active = data?.isActive ?? false;
+                      discriptionNameController.text = data?.itemMeta?.description ?? "";
+                      variantFrameworkController.text = data?.variantFrameWork ?? "";
+                      variantNameController.text = data?.variantFrameWorkName ?? "";
 
+                      setState(() {});
+                    });
+              },
+            ),
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+                    context.showSnackBarSuccess(data.data2);
+                    context.read<ItemcreationListCubit>().getItemListList();
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    print(data.data1);
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+                    list = list;
 
-  ],
-  child: Builder(
-    builder: (context) {
-      return MultiBlocListener(
-  listeners: [
-    BlocListener<ItemcreatinCubit, ItemcreatinState>(
-      listener: (context, state) {
-        print("postssssssss" + state.toString());
-        state.maybeWhen(orElse: () {
-          // context.
-          context.showSnackBarError("Loading");
-        }, error: () {
-          context.showSnackBarError(Variable.errorMessege);
-        }, success: (data) {
-          if (data.data1) {
-            context.showSnackBarSuccess(data.data2);
-            Timer(Duration(seconds: 5), () {
-              setState(() {
-                context.read<ItemcreationListCubit>().getItemListList();
-                // select=false;
-              });
-            });
-          } else {
-            context.showSnackBarError(data.data2);
-            print(data.data1);
-          }
-          ;
-        });
-      },
-),
-    BlocListener<ItemreadCubit, ItemreadState>(
-      listener: (context, state) {
-        print("state++++++++++++++++++++++++++++++++");
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (data) {
-              print("ansawww" + data.toString());
-              group=data;
-              uomCategoryController.text=data?.uomGroupCode??'';
-              subCategoryController.text=data?.subCategoryCode??'';
-              subCategoryNameController.text=data?.subCategoryName??'';
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        select = true;
+                        setState(() {});
+                      }
 
-              GroupController.text=data?.groupCode??'';
-              GroupNameController.text=data?.groupName??'';
-              uomGroupNameController.text=data.uomGroupName??'';
-              BrandController.text=data?.brandCode??'';
-              BrandNameController.text=data?.brandName??'';
-              staticController.text=data?.staticGroupCode??'';
-              staticNameController.text=data?.staticGroupName??'';
-              oldSystemCodeNameController.text=data?.oldSystemCode??'';
-              baseUomGroupName.text=data?.uomName??'';
-              uomCategoryController.clear();
-
-            Variable.divisionId=data.divisionId;
-            Variable.categoryId=data.categoryId;
-            Variable.subCategorycategory=data.subCategoryId;
-            Variable.uomGroupId=data.subCategoryId;
-
-
-              materialController.text=data?.materialCode??'';
-              materialNameController.text=data?.materialName??'';
-              devisionController.text=data?.divisionCode??'';
-              divisionNameController.text=data?.divisionName??'';
-              uomCategoryController.text=data?.divisionName??'';
-              categoryController.text=data?.categoryCode??'';
-              categoryNameController.text=data?.categoryName??'';
-              subCategoryController.text=data?.subCategoryCode??'';
-              itemCodeController.text=data?.code??'';
-              itemNameController.text=data?.name??'';
-              subCategoryNameController.text=data?.subCategoryName??'';
-              barCodeController.text=data?.barcode?.barcodeNumber??'';
-              qrCodeController.text=data?.qrCode?.content??'';
-              image1Controller.text=data?.image1??'';
-              image2Controller.text=data?.image2??'';
-              image3Controller.text=data?.image3??'';
-              itemCatelog1Controller.text=data?.itemCatelog1??'';
-              itemCatelog2Controller.text=data?.itemCatelog2??'';
-              itemCatelog3Controller.text=data?.itemCatelog3??'';
-              itemCatelog4Controller.text=data?.itemCatelog4??'';
-              searchNameController.text=data?.searchName??'';
-              displayNameController.text=data?.displayname??'';
-              active=data?.isActive??false;
-              discriptionNameController.text=data?.itemMeta?.description??"";
-              variantFrameworkController.text=data?.variantFrameWork??"";
-              variantNameController.text=data?.variantFrameWorkName??"";
-
-              setState(() {
-
-              });
-
-
-
-
-
-
-
-
-
-            });
-      },
-    ),
-    BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
-      listener: (context, state) {
-        print("delete" + state.toString());
-        state.maybeWhen(orElse: () {
-          // context.
-          context.showSnackBarError("Loading");
-        }, error: () {
-          context.showSnackBarError(Variable.errorMessege);
-        }, success: (data) {
-          if (data.data1) {
-            context.showSnackBarSuccess(data.data2);
-            context.read<ItemcreationListCubit>().getItemListList();
-
-
-          }
-          else {
-            context.showSnackBarError(data.data2);
-            print(data.data1);
-          }
-          ;
-        });
-      },
-    ),
-  ],
-  child: BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
-      listener: (context, state) {
-        print("state"+state.toString());
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (list) {
-              print("aaaaayyyiram"+list.data.toString());
-              list=list;
-
-              result = list.data;
-              print("seee"+result.toString());
-              setState(() {
-                if(result.isNotEmpty){
-
-                  veritiaclid=result[0].id;
-                  // Variable.verticalid=result[0].id;
-                  print("Variable.ak"+Variable.verticalid.toString());
-                  context.read<ItemreadCubit>().getItemRead(veritiaclid!);
-                }
-                else{
-                  print("common");
-                  select=true;
-                  setState(() {
+                      setState(() {});
+                    });
                   });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return Scaffold(
+                  backgroundColor: Colors.white,
+                  body: SingleChildScrollView(
+                    child: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          BaseUomVerticalList(
+                            list: list,
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,
+                            ontap: (int index) {
+                              setState(() {
+                                selectedVertical = index;
+                                active = false;
 
-                }
+                                // select=false;
+                                // updateCheck=false;
 
+                                veritiaclid = result[index].id;
+                                clear();
+                                select = false;
 
-                setState(() {});
+                                context
+                                    .read<ItemreadCubit>()
+                                    .getItemRead(veritiaclid!);
 
-              });
-            });
-      },
-      builder: (context, state) {
-        return Builder(
-        builder: (context) {
-          return Scaffold(
-              backgroundColor: Colors.white,
-              body:SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      BaseUomVerticalList(
-                        list: list,
-
-
-
-                        selectedVertical: selectedVertical,
-                        itemsearch: itemsearch,ontap: (int index){
-                        setState(() {
-                          selectedVertical=index;
-                          active=false;
-
-
-                          // select=false;
-                          // updateCheck=false;
-
-
-                          veritiaclid = result[index].id;
-                          clear();
-                          select=false;
-
-
-                          context.read<ItemreadCubit>().getItemRead(veritiaclid!);
-
-
-
-
-                          setState(() {
-
-                          });
-                        });
-                      },result: result,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
+                                setState(() {});
+                              });
+                            },
+                            result: result,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                TextButtonLarge(
-                                  onPress: () {
-                                    setState(() {
-                                      select = true;
-                                      clear();
-                                      active=true;
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButtonLarge(
+                                      onPress: () {
+                                        setState(() {
+                                          select = true;
+                                          clear();
+                                          active = true;
 
+                                          // updateCheck=false;
+                                          // currentStock.clear();
+                                          //
+                                          //
+                                          // table.clear();
+                                          // clear();
+                                        });
+                                      },
+                                      // icon: Icon(Icons.refresh),
+                                      // label: Text("Clear")
+                                      text: "CREATE",
+                                    ),
 
-
-
-                                      // updateCheck=false;
-                                      // currentStock.clear();
-                                      //
-                                      //
-                                      // table.clear();
-                                      // clear();
-                                    });
-                                  },
-                                  // icon: Icon(Icons.refresh),
-                                  // label: Text("Clear")
-                                  text: "CREATE",
+                                  ],
                                 ),
-                                TextButtonLarge(
-                                  text: "PREVIEW",
-                                  onPress: (){
-                                    print("Akshay");
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(builder: (context) =>
-                                    //       SalePrintScreen(
-                                    //         note: noteController.text,
-                                    //         select: select,
-                                    //         // vendorCode:vend.text,
-                                    //         // orderCode:ordereCodeController.text ,
-                                    //         orderDate: orderDateController.text,
-                                    //         table:table,
-                                    //         vat: double.tryParse( vatController.text),
-                                    //         sellingPrice:double.tryParse( sellingPriceController.text),
-                                    //         taxableAmount:double.tryParse( taxableAmountController.text) ,
-                                    //         discount:double.tryParse( discountController.text) ,
-                                    //         unitCost:double.tryParse( unitCostController.text) ,
-                                    //         excisetax:double.tryParse( exciseTAxController.text) ,
-                                    //         remarks: remarksController.text ,
-                                    //
-                                    //
-                                    //
-                                    //
-                                    //
-                                    //       )),
-                                    // );
-
-
-                                  },
+                                HeirarchySalesStableTable(
+                                  uomGroupid: uomGroupId,
+                                  uomGroupController: uomGroupController,
+                                  uomController: uomCategoryController,
+                                  displayName: displayNameController,
+                                  discription: discriptionNameController,
+                                  image1: image1Controller,
+                                  image2: image2Controller,
+                                  image3: image3Controller,
+                                  itemCatelog1: itemCatelog1Controller,
+                                  itemCatelog2: itemCatelog2Controller,
+                                  itemCatelog3: itemCatelog3Controller,
+                                  itemCatelog4: itemCatelog4Controller,
+                                  itemCatelog5: itemCatelog5Controller,
+                                  itemCode: itemCodeController,
+                                  itemName: itemNameController,
+                                  oldSystemCode: oldSystemCodeNameController,
+                                  searchName: searchNameController,
+                                  status: statusCodeNameController,
+                                  active: active,
+                                  activeChange: activeChange,
+                                  imagePostCheck: imagePostCheck,
+                                  baseuomNameController: baseUomGroupName,
+                                  uomGroupNameController:
+                                      uomGroupNameController,
                                 ),
-                              ],
-                            ),
-                            HeirarchySalesStableTable(
-
-                              uomGroupController: uomGroupController,
-                              uomController: uomCategoryController,
-                              displayName: displayNameController,
-                              discription: discriptionNameController,
-                              image1: image1Controller,
-                              image2: image2Controller,
-                              image3:image3Controller,
-                              itemCatelog1: itemCatelog1Controller,
-                              itemCatelog2: itemCatelog2Controller,
-                              itemCatelog3: itemCatelog3Controller,
-                              itemCatelog4: itemCatelog4Controller,
-                              itemCatelog5: itemCatelog5Controller,
-                              itemCode: itemCodeController,
-                              itemName: itemNameController,
-                              oldSystemCode: oldSystemCodeNameController,
-                              searchName: searchNameController,
-                              status: statusCodeNameController,
-                              active:active,
-                              activeChange:activeChange,
-                              imagePostCheck:imagePostCheck, baseuomNameController: baseUomGroupName, uomGroupNameController: uomGroupNameController,
-                            ),
-                            SizedBox(height: 40,),
-                            Container(
-                              margin:   EdgeInsets.only(right:w *.02,left: w *.02),
-                              color: Colors.white,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text("Item heirarchy",textAlign:TextAlign.left,style: TextStyle(color: Colors.black,fontSize: 22,fontWeight: FontWeight.w400),),
-                                ],
-                              ),
-                            ),
-                            ItemHeirarchyStableTable(
-                              brandName: BrandNameController,
-                              categoryName: categoryNameController,
-                              divisionName: divisionNameController,
-                              groupName: GroupNameController,
-                              materialName: materialNameController,
-                              staticName: staticNameController,
-                              subCategoryName: subCategoryNameController,
-                              variantFrameworkName: variantNameController,
-                              group:GroupController,
-                              variantFramework: variantFrameworkController,
-                              brand: BrandController,
-                              division: devisionController,
-                              material: materialController,
-                              static: staticController,
-                              category:categoryController,
-                              subCategory:subCategoryController ,
-
-                            ),
-                            Row(children: [
-                              TextWidget(text: "Identification"),
-                            ],),
-                            Divider(color: Colors.grey,thickness: 2,),
-                            Container(height: h/15,color: Colors.white,),
-                            TableBottom(
-                              barCode: barCodeController,
-                              qrCode: qrCodeController,
-                              rfId: rfIdController,
-
-                            ),
-                            Container(
-                              color: Colors.white,
-                              height: 50,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Button(Icons.delete, Colors.red,
-                                    ctx: context,
-                                    text: "Discard", onApply: () {
+                                SizedBox(
+                                  height: 40,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      right: w * .02, left: w * .02),
+                                  color: Colors.white,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Item heirarchy",
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.w400),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                ItemHeirarchyStableTable(
+                                  categoryid: categoryId,
+                                  subCategoryId: subCategoryId,
+                                  divisionId: divisionId,
+                                  brandName: BrandNameController,
+                                  categoryName: categoryNameController,
+                                  divisionName: divisionNameController,
+                                  groupName: GroupNameController,
+                                  materialName: materialNameController,
+                                  staticName: staticNameController,
+                                  subCategoryName: subCategoryNameController,
+                                  variantFrameworkName: variantNameController,
+                                  group: GroupController,
+                                  variantFramework: variantFrameworkController,
+                                  brand: BrandController,
+                                  division: devisionController,
+                                  material: materialController,
+                                  static: staticController,
+                                  category: categoryController,
+                                  subCategory: subCategoryController,
+                                ),
+                                Row(
+                                  children: [
+                                    TextWidget(text: "Identification"),
+                                  ],
+                                ),
+                                Divider(
+                                  color: Colors.grey,
+                                  thickness: 2,
+                                ),
+                                Container(
+                                  height: h / 15,
+                                  color: Colors.white,
+                                ),
+                                TableBottom(
+                                  select:select,
+                                  barCode: barCodeController,
+                                  qrCode: qrCodeController,
+                                  rfId: rfIdController,
+                                ),
+                                Container(
+                                  color: Colors.white,
+                                  height: 50,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Button(Icons.delete, Colors.red,
+                                        ctx: context,
+                                        text: "Discard", onApply: () {
                                       // if(updateCheck){
                                       //   // clears();
                                       //
@@ -594,7 +550,8 @@ active=false;
 
                                               context
                                                   .read<MaterialdeleteCubit>()
-                                                  .materialDelete(veritiaclid,"item_create");
+                                                  .materialDelete(veritiaclid,
+                                                      "item_create");
                                               // context
                                               //     .read<
                                               //     SalesgeneraldeleteCubit>()
@@ -603,118 +560,148 @@ active=false;
                                             },
                                           ));
                                     },
-                                    height: 29,
-                                    width: 90,
-                                    labelcolor: Colors.red,
-                                    iconColor: Colors.red,
-                                    bdr: true),
-                                SizedBox(
-                                  width: w * .008,
-                                ),
-                                Button(Icons.check, Colors.grey,
-                                    ctx: context,
-                                    text: select? "Save":"update" ,
-                                    height: 29,
-                                    Color: Color(0xff3E4F5B),
-                                    width: 90,
-                                    labelcolor: Colors.white,
-                                    iconColor: Colors.white,
-                                    onApply: () {
-
-
-                                      ItemCreationModel model = ItemCreationModel(
-                                        name: itemNameController?.text??'',
-                                        barcode: barCodeController?.text??"",
-                                        qrCode: qrCodeController?.text??"",
-                                        materialCode: materialController?.text??"",
-                                        uomGroupCode: uomGroupController?.text??"",
-                                        uomCode: uomCategoryController?.text??"",
-                                        groupCode: GroupController.text??"",
-                                        brandCode: BrandController.text??"",
-                                        staticGroupCode: staticController.text??"",
-                                        variantFrameWorkCode: variantFrameworkController.text??"",
-                                        image1:Variable.img1,
-                                        searchName:searchNameController.text??"",
-                                        displayName: displayNameController?.text??"",
-                                        itemCatelog1:img4?Variable.img4:int.tryParse(""),
-                                        itemCatelog2:img5?Variable.img5:int.tryParse(""),
-                                        itemCatelog3:img6?Variable.img6:int.tryParse(""),
-                                        itemCatelog4:img7?Variable.img7:int.tryParse(""),
-                                        image2:img2?Variable.img2:int.tryParse(""),
-                                        image3:img3?Variable.img3:int.tryParse(""),
-                                        description: discriptionNameController?.text??"",
-                                        oldsystemCode: oldSystemCodeNameController?.text??"",
+                                        height: 29,
+                                        width: 90,
+                                        labelcolor: Colors.red,
+                                        iconColor: Colors.red,
+                                        bdr: true),
+                                    SizedBox(
+                                      width: w * .008,
+                                    ),
+                                    Button(Icons.check, Colors.grey,
+                                        ctx: context,
+                                        text: select ? "Save" : "update",
+                                        height: 29,
+                                        Color: Color(0xff3E4F5B),
+                                        width: 90,
+                                        labelcolor: Colors.white,
+                                        iconColor: Colors.white, onApply: () {
+                                      ItemCreationModel model =
+                                          ItemCreationModel(
+                                        name: itemNameController?.text ?? '',
+                                        barcode: barCodeController?.text ?? "",
+                                        qrCode: qrCodeController?.text ?? "",
+                                        materialCode:
+                                            materialController?.text ?? "",
+                                        uomGroupCode:
+                                            uomGroupController?.text ?? "",
+                                        uomCode:
+                                            uomCategoryController?.text ?? "",
+                                        groupCode: GroupController.text ?? "",
+                                        brandCode: BrandController.text ?? "",
+                                        staticGroupCode:
+                                            staticController.text ?? "",
+                                        variantFrameWorkCode:
+                                            variantFrameworkController.text ??
+                                                "",
+                                        image1: Variable.img1,
+                                        searchName:
+                                            searchNameController.text ?? "",
+                                        displayName:
+                                            displayNameController?.text ?? "",
+                                        itemCatelog1: img4
+                                            ? Variable.img4
+                                            : int.tryParse(""),
+                                        itemCatelog2: img5
+                                            ? Variable.img5
+                                            : int.tryParse(""),
+                                        itemCatelog3: img6
+                                            ? Variable.img6
+                                            : int.tryParse(""),
+                                        itemCatelog4: img7
+                                            ? Variable.img7
+                                            : int.tryParse(""),
+                                        image2: img2
+                                            ? Variable.img2
+                                            : int.tryParse(""),
+                                        image3: img3
+                                            ? Variable.img3
+                                            : int.tryParse(""),
+                                        description:
+                                            discriptionNameController?.text ??
+                                                "",
+                                        oldsystemCode:
+                                            oldSystemCodeNameController?.text ??
+                                                "",
                                         salesBlock: false,
                                         purchaseBlock: false,
                                       );
-                                      ItemReadModel model1=ItemReadModel(
-                                        name: itemNameController?.text??"",
-                                        materialCode: materialController?.text??"",
-                                        staticGroupCode: staticController?.text??"",
-                                        uomCode: uomCategoryController?.text??"",
-                                        brandCode: BrandController?.text??"",
-                                       variantFrameWork : variantFrameworkController?.text??"",
-                                       searchName : searchNameController?.text??"",
-                                       displayname : displayNameController?.text??"",
-                                       isActive : active,
-                                       description: discriptionNameController.text??"",
-                                       image1:img1?Variable.img1.toString(): image1Controller.text??"",
-                                          image2:img2?Variable.img2.toString(): image2Controller.text,
-                                        image3:img3?Variable.img3.toString():image3Controller.text,
-                                        itemCatelog1:img4?Variable.img4.toString(): itemCatelog1Controller.text,
-                                        itemCatelog2:img5?Variable.img1.toString(): itemCatelog2Controller.text,
-                                        itemCatelog3: img6?Variable.img1.toString():itemCatelog3Controller.text,
-                                        itemCatelog4:img7?Variable.img1.toString(): itemCatelog4Controller.text,
-
-
-
+                                      ItemReadModel model1 = ItemReadModel(
+                                        name: itemNameController?.text ?? "",
+                                        materialCode:
+                                            materialController?.text ?? "",
+                                        staticGroupCode:
+                                            staticController?.text ?? "",
+                                        uomCode:
+                                            uomCategoryController?.text ?? "",
+                                        brandCode: BrandController?.text ?? "",
+                                        variantFrameWork:
+                                            variantFrameworkController?.text ??
+                                                "",
+                                        searchName:
+                                            searchNameController?.text ?? "",
+                                        displayname:
+                                            displayNameController?.text ?? "",
+                                        isActive: active,
+                                        description:
+                                            discriptionNameController.text ??
+                                                "",
+                                        image1: img1
+                                            ? Variable.img1.toString()
+                                            : image1Controller.text ?? "",
+                                        image2: img2
+                                            ? Variable.img2.toString()
+                                            : image2Controller.text,
+                                        image3: img3
+                                            ? Variable.img3.toString()
+                                            : image3Controller.text,
+                                        itemCatelog1: img4
+                                            ? Variable.img4.toString()
+                                            : itemCatelog1Controller.text,
+                                        itemCatelog2: img5
+                                            ? Variable.img1.toString()
+                                            : itemCatelog2Controller.text,
+                                        itemCatelog3: img6
+                                            ? Variable.img1.toString()
+                                            : itemCatelog3Controller.text,
+                                        itemCatelog4: img7
+                                            ? Variable.img1.toString()
+                                            : itemCatelog4Controller.text,
                                       );
                                       print(model);
 
-                                      select? context.read<ItemcreatinCubit>().postCreateItem(model):
-                                      context.read<ItemcreatinCubit>().postItemPatch(veritiaclid,model1);
-
-
+                                      select
+                                          ? context
+                                              .read<ItemcreatinCubit>()
+                                              .postCreateItem(model)
+                                          : context
+                                              .read<ItemcreatinCubit>()
+                                              .postItemPatch(
+                                                  veritiaclid, model1);
                                     }),
-                                SizedBox(
-                                  width: w * .008,
+                                    SizedBox(
+                                      width: w * .008,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-
-
-
-                          ],
-                        ),
-                      )
-
-                    ],
+                          )
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ) ,
-            );
-        }
-      );
-      },
-),
-);
-    }
-  ),
-);
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
   }
 }
 
-
-
-
-
-
-
-
-
-
 class ItemHeirarchyStableTable extends StatefulWidget {
-
   final TextEditingController brand;
   final TextEditingController brandName;
   final TextEditingController group;
@@ -731,497 +718,646 @@ class ItemHeirarchyStableTable extends StatefulWidget {
   final TextEditingController subCategoryName;
   final TextEditingController variantFramework;
   final TextEditingController variantFrameworkName;
+  final int? divisionId;
+  final int? categoryid;
+  final int? subCategoryId;
 
-  ItemHeirarchyStableTable({required this.brand,
-    required this.brandName,
-required this.variantFramework,
-    required this.variantFrameworkName,
-    required this.material,
-    required this.materialName,
-
-    required this.division,
-    required this.divisionName,
-
-    required this.static,
-    required this.staticName,
-    required this.group,
-    required this.groupName,
-
-    required this.category,
-    required this.categoryName,
-    required this.subCategory,
-    required this.subCategoryName
-
-  });
+  ItemHeirarchyStableTable(
+      {required this.brand,
+        required this.subCategoryId,
+        required this.divisionId,
+        required this.categoryid,
+      required this.brandName,
+      required this.variantFramework,
+      required this.variantFrameworkName,
+      required this.material,
+      required this.materialName,
+      required this.division,
+      required this.divisionName,
+      required this.static,
+      required this.staticName,
+      required this.group,
+      required this.groupName,
+      required this.category,
+      required this.categoryName,
+      required this.subCategory,
+      required this.subCategoryName});
   @override
-  _ItemHeirarchyStableTableState createState() => _ItemHeirarchyStableTableState();
+  _ItemHeirarchyStableTableState createState() =>
+      _ItemHeirarchyStableTableState();
 }
 
 class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
-  TextEditingController  controller=TextEditingController();
-  TextEditingController  codecontroller=TextEditingController();
-  TextEditingController  namecontroller=TextEditingController();
-  TextEditingController  imagecontroller=TextEditingController();
-  TextEditingController  parentIdcontroller=TextEditingController();
-  TextEditingController  descriptioncontroller=TextEditingController();
-  TextEditingController  brandIdentifiercontroller=TextEditingController();
-  TextEditingController  brandcontroller=TextEditingController();
+  TextEditingController controller = TextEditingController();
+  TextEditingController codecontroller = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+  TextEditingController imagecontroller = TextEditingController();
+  TextEditingController parentIdcontroller = TextEditingController();
+  TextEditingController descriptioncontroller = TextEditingController();
+  TextEditingController brandIdentifiercontroller = TextEditingController();
+  TextEditingController brandcontroller = TextEditingController();
 
+  TextEditingController divisionNameController = TextEditingController();
+  TextEditingController categoryNameController = TextEditingController();
+  TextEditingController subCategoryNameController = TextEditingController();
+  TextEditingController groupNameController = TextEditingController();
+  TextEditingController materialNameController = TextEditingController();
+  TextEditingController variantFrameworkNameController =
+      TextEditingController();
+  TextEditingController staticNameController = TextEditingController();
+  TextEditingController brandNameController = TextEditingController();
 
-
-
-  TextEditingController  divisionNameController=TextEditingController();
-  TextEditingController  categoryNameController=TextEditingController();
-  TextEditingController  subCategoryNameController=TextEditingController();
-  TextEditingController  groupNameController=TextEditingController();
-  TextEditingController  materialNameController=TextEditingController();
-  TextEditingController  variantFrameworkNameController=TextEditingController();
-  TextEditingController  staticNameController=TextEditingController();
-  TextEditingController  brandNameController=TextEditingController();
-
-
-
-
-
-
-  int?  divisionid;
+  int? divisionid;
 
   @override
   Widget build(BuildContext context) {
-    print("prabha"+widget.division.text);
+    print("prabha" + widget.division.text);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return  Container(
+    return Container(
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
-
         children: [
-          Expanded(child: Column(children: [
+          Expanded(
+              child: Column(
+            children: [
+              SizedBox(
+                height: height * .030,
+              ),
+              // SelectableDropDownpopUp(label: "ssss", onSelection: (){
+              //
+              // }, controller:widget.division,
+              //   type:"DivisionListPopUpCall",
+              // ),
+              // SelectableDropDownpopUp(
+              //   controller:widget.divisionName,
+              //   label: "Division",
+              //   type:"Division_ListPopUpCall",
+              //   value:  widget.divisionName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //
+              //       print(va?.id??"");
+              //       divisionid=va?.id;
+              //       Variable.divisionId=va?.id;
+              //
+              //       widget.division.text=va?.code??"";
+              //       widget.divisionName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "devision-group",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+              NewInputCard(
+                controller: widget.divisionName,
+                icondrop: true,
+                title: "Division",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
 
-            SizedBox(
-              height: height * .030,
-            ),
-            // SelectableDropDownpopUp(label: "ssss", onSelection: (){
-            //
-            // }, controller:widget.division,
-            //   type:"DivisionListPopUpCall",
-            // ),
-            // SelectableDropDownpopUp(
-            //   controller:widget.divisionName,
-            //   label: "Division",
-            //   type:"Division_ListPopUpCall",
-            //   value:  widget.divisionName.text,
-            //   onchange: (vale){
-            //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-            //   },
-            //   enable: true,
-            //   onSelection: (BrandListModel? va) {
-            //     setState(() {
-            //
-            //
-            //       print(va?.id??"");
-            //       divisionid=va?.id;
-            //       Variable.divisionId=va?.id;
-            //
-            //       widget.division.text=va?.code??"";
-            //       widget.divisionName.text=va?.name??"";
-            //       setState(() {
-            //
-            //       });
-            //
-            //
-            //       // onChange = true;
-            //       // orderType.text = va!;
-            //     });
-            //   },
-            //   onAddNew: () {
-            //
-            //     showDailogPopUp(
-            //       context,
-            //       ConfigurePopup(
-            //         type: "devision-group",
-            //       ),
-            //
-            //
-            //     );
-            //   },
-            // ),
-            NewInputCard(controller: widget.divisionName, title: "Division",ontap: (){
-              showDailogPopUp(
-                context,
-                TableConfigurePopup(
-                  type: "division-TablePopup", valueSelect: (BrandListModel va){
+                      type: "division-TablePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          print(va?.id ?? "");
+                          divisionid = va?.id;
+                          Variable.divisionId = va?.id;
 
-                      setState(() {
+                          widget.division.text = va?.code ?? "";
+                          widget.divisionName.text = va?.name ?? "";
+                          setState(() {});
 
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+              SizedBox(
+                height: height * .030,
+              ),
 
-                        print(va?.id??"");
-                        divisionid=va?.id;
-                        Variable.divisionId=va?.id;
+              NewInputCard(
+                controller: widget.categoryName,
+                icondrop: true,
+                title: "category",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "category-TablePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.category.text = va?.code ?? "";
+                          widget.categoryName.text = va?.name ?? "";
+                          Variable.categoryId = va?.id;
+                          setState(() {});
 
-                        widget.division.text=va?.code??"";
-                        widget.divisionName.text=va?.name??"";
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+
+              // SelectableDropDownpopUp(
+              //   id:divisionid,
+              //
+              //   controller:widget.categoryName,
+              //   label: "category",
+              //   type:"Category_PopUpCall",
+              //   value:  widget.categoryName.text,
+              //   onchange: (vale){
+              //     print("searching for search"+vale.toString());
+              //     context.read<CategorylistCubit>().searchCategoryist(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.category.text=va?.code??"";
+              //       widget.categoryName.text=va?.name??"";
+              //       Variable.categoryId=va?.id;
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "category_group",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                controller: widget.subCategoryName,
+                icondrop: true,
+                title: "Sub category",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "SubcategoryTabalePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.subCategory.text = va?.code ?? "";
+                          widget.subCategoryName.text = va?.name ?? "";
+                          Variable.subCategorycategory = va?.id;
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+
+              //   SelectableDropDownpopUp(
+              //   id:divisionid,
+              //   controller:widget.subCategoryName,
+              //   label: "Sub category",
+              //   type:"SubCategory_PopUpCall",
+              //   value:  widget.subCategoryName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.subCategory.text=va?.code??"";
+              //       widget.subCategoryName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "Subcategory_group",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+
+              SizedBox(
+                height: height * .030,
+              ),
+              SizedBox(
+                height: height * .030,
+              ),
+            ],
+          )),
+          Expanded(
+              child: Column(
+            children: [
+              //   SelectableDropDownpopUp(
+              //
+              //   controller:widget.groupName,
+              //   label: "Group",
+              //   type:"Group_PopUpCall",
+              //   value:  widget.groupName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.group.text=va?.code??"";
+              //       widget.groupName.text=va?.name??"";
+              //
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "Group_PopUp",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+
+              NewInputCard(
+                controller: widget.groupName,
+                icondrop: true,
+                title: "Group",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "GroupTabalePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.group.text = va?.code ?? "";
+                          widget.groupName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+
+              SizedBox(
+                height: height * .030,
+              ),
+
+              NewInputCard(
+                controller: widget.materialName,
+                icondrop: true,
+                title: "Material",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "MaterialTabalePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.material.text = va?.code ?? "";
+                          widget.materialName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+              // SelectableDropDownpopUp(
+              //   controller:widget.materialName,
+              //   label: "Material",
+              //   type:"MaterialPopUpCall",
+              //   value:  widget.materialName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.material.text=va?.code??"";
+              //       widget.materialName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "uom-group",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+
+              SizedBox(
+                height: height * .030,
+              ),
+
+              NewInputCard(
+                controller: widget.variantFrameworkName,
+                icondrop: true,
+                title: "Variant Framework",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "FrameWorkTabalePopup",
+                      valueSelect: (FrameWorkListModel va) {
+                        setState(() {
+                          widget.variantFramework.text = va?.code ?? "";
+                          widget.variantFrameworkName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+              // SelectableDropDownpopUp(
+              //
+              //   controller:widget.variantFrameworkName,
+              //   label: "Variant Framework",
+              //   type:"FrameWorkPopUpCall",
+              //   value:  widget.variantFrameworkName.text,
+              //   onchange: (vale){
+              //     setState(() {
+              //       costingTypeMethodeCheck = true;
+              //     });
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (FrameWorkListModel? va) {
+              //     setState(() {
+              //
+              //       widget.variantFramework.text=va?.code??"";
+              //       widget.variantFrameworkName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //     setState(() {
+              //       costingTypeMethodeCheck = true;
+              //     });
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "create_framework",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+              SizedBox(
+                height: height * .030,
+              ),
+            ],
+          )),
+          Expanded(
+              child: Column(
+            children: [
+              NewInputCard(
+                controller: widget.staticName,
+                icondrop: true,
+                title: "Static Group",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "StaticTabalePopup",
+                      valueSelect: (BrandListModel va) {
+                        setState(() {
+                          widget.static.text = va?.code ?? "";
+                          widget.staticName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
+                        });
+                      },
+                    ),
+                  );
+                },
+              ),
+              // SelectableDropDownpopUp(
+              //   bindType: "static",
+              //   controller:widget.staticName,
+              //   label: "Static Group",
+              //   type:"StaticListPopUpCall",
+              //   value:  widget.staticName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.static.text=va?.code??"";
+              //       widget.staticName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //       context,
+              //       ConfigurePopup(
+              //         type: "Static-group",
+              //       ),
+              //
+              //
+              //     );
+              //   },
+              // ),
+              SizedBox(
+                height: height * .030,
+              ),
+              // GestureDetector(
+              //   onTap: (){
+              //     showDailogPopUp(
+              //       context,
+              //       BlockPageIdTable(
+              //         onApply: (int? a,String? b){},
+              //       ),);
+              //
+              //   },
+              //   child: NewInputCard(
+              //       controller: controller, title: "Brand"),
+              // ),
+
+              NewInputCard(
+                controller: widget.brandName,
+                icondrop: true,
+                title: "Brand",
+                ontap: () {
+                  showDailogPopUp(
+                    context,
+                    TableConfigurePopup(
+                      type: "BrandTabalePopup",
+                      valueSelect: (BrandListModel va) {
                         setState(() {
 
+                          widget.brand.text = va?.code ?? "";
+                          widget.brandName.text = va?.name ?? "";
+                          setState(() {});
+
+                          // onChange = true;
+                          // orderType.text = va!;
                         });
-
-
-                        // onChange = true;
-                        // orderType.text = va!;
-                      });
-
-                },
-                ),
-
-
-              );
-
-            },),
-            SizedBox(
-              height: height * .030,
-            ),
-
-
-            SelectableDropDownpopUp(
-              id:divisionid,
-
-              controller:widget.categoryName,
-              label: "category",
-              type:"Category_PopUpCall",
-              value:  widget.categoryName.text,
-              onchange: (vale){
-                print("searching for search"+vale.toString());
-                context.read<CategorylistCubit>().searchCategoryist(vale);
-              },
-              enable: true,
-              onSelection: (BrandListModel? va) {
-                setState(() {
-
-                  widget.category.text=va?.code??"";
-                  widget.categoryName.text=va?.name??"";
-                  Variable.categoryId=va?.id;
-                  setState(() {
-
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "category_group",
-                  ),
-
-
-                );
-              },
-            ),
-            SizedBox(
-              height: height * .030,
-            ),
-
-
-
-
-
-      SelectableDropDownpopUp(
-      id:divisionid,
-      controller:widget.subCategoryName,
-      label: "Sub category",
-      type:"SubCategory_PopUpCall",
-      value:  widget.subCategoryName.text,
-      onchange: (vale){
-        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-      },
-      enable: true,
-      onSelection: (BrandListModel? va) {
-        setState(() {
-
-          widget.subCategory.text=va?.code??"";
-          widget.subCategoryName.text=va?.name??"";
-          setState(() {
-
-          });
-
-
-          // onChange = true;
-          // orderType.text = va!;
-        });
-      },
-      onAddNew: () {
-
-        showDailogPopUp(
-          context,
-          ConfigurePopup(
-            type: "Subcategory_group",
-          ),
-
-
-        );
-      },
-    ),
-    SizedBox(
-    height: height * .030,
-    ),
-            SizedBox(
-              height: height * .030,
-            ),
-
-          ],)),
-          Expanded(child: Column(children: [
-
-            SelectableDropDownpopUp(
-
-            controller:widget.groupName,
-            label: "Group",
-            type:"Group_PopUpCall",
-            value:  widget.groupName.text,
-            onchange: (vale){
-              // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-            },
-            enable: true,
-            onSelection: (BrandListModel? va) {
-              setState(() {
-
-                widget.group.text=va?.code??"";
-                widget.groupName.text=va?.name??"";
-
-                setState(() {
-
-                });
-
-
-                // onChange = true;
-                // orderType.text = va!;
-              });
-            },
-            onAddNew: () {
-
-              showDailogPopUp(
-                context,
-                ConfigurePopup(
-                  type: "Group_PopUp",
-                ),
-
-
-              );
-            },
-          ),
-            SizedBox(
-              height: height * .030,
-            ),
-            SelectableDropDownpopUp(
-              controller:widget.materialName,
-              label: "Material",
-              type:"MaterialPopUpCall",
-              value:  widget.materialName.text,
-              onchange: (vale){
-                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-              },
-              enable: true,
-              onSelection: (BrandListModel? va) {
-                setState(() {
-
-                  widget.material.text=va?.code??"";
-                  widget.materialName.text=va?.name??"";
-                  setState(() {
-
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "uom-group",
-                  ),
-
-
-                );
-              },
-            ),
-
-            SizedBox(
-              height: height * .030,
-            ),
-            SelectableDropDownpopUp(
-
-              controller:widget.variantFrameworkName,
-              label: "Variant Framework",
-              type:"FrameWorkPopUpCall",
-              value:  widget.variantFrameworkName.text,
-              onchange: (vale){
-                setState(() {
-                  costingTypeMethodeCheck = true;
-                });
-                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-              },
-              enable: true,
-              onSelection: (FrameWorkListModel? va) {
-                setState(() {
-
-                  widget.variantFramework.text=va?.code??"";
-                  widget.variantFrameworkName.text=va?.name??"";
-                  setState(() {
-
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-                setState(() {
-                  costingTypeMethodeCheck = true;
-                });
-
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "create_framework",
-                  ),
-
-
-                );
-              },
-            ),
-            SizedBox(
-              height: height * .030,
-            ),
-
-          ],)),
-          Expanded(child: Column(children: [
-
-            SelectableDropDownpopUp(
-              bindType: "static",
-              controller:widget.staticName,
-              label: "Static Group",
-              type:"StaticListPopUpCall",
-              value:  widget.staticName.text,
-              onchange: (vale){
-                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-              },
-              enable: true,
-              onSelection: (BrandListModel? va) {
-                setState(() {
-
-                  widget.static.text=va?.code??"";
-                  widget.staticName.text=va?.name??"";
-                  setState(() {
-
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "Static-group",
-                  ),
-
-
-                );
-              },
-            ),
-            SizedBox(
-              height: height * .030,
-            ),
-            // GestureDetector(
-            //   onTap: (){
-            //     showDailogPopUp(
-            //       context,
-            //       BlockPageIdTable(
-            //         onApply: (int? a,String? b){},
-            //       ),);
-            //
-            //   },
-            //   child: NewInputCard(
-            //       controller: controller, title: "Brand"),
-            // ),
-
-            SelectableDropDownpopUp(
-              controller:widget.brandName,
-              label: "Brand",
-              type:"BrandPopUpCall",
-              value:  widget.brandName.text,
-              onchange: (vale){
-                // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-              },
-              enable: true,
-              onSelection: (BrandListModel? va) {
-                setState(() {
-
-                  widget.brand.text=va?.code??"";
-                  widget.brandName.text=va?.name??"";
-                  setState(() {
-
-                  });
-
-
-                  // onChange = true;
-                  // orderType.text = va!;
-                });
-              },
-              onAddNew: () {
-
-                showDailogPopUp(
-                    context,
-                    // ConfigurePopup(
-                    //   type: "uom-group",
-                    // )
-                    ConfigurePopup(
-                      type: "brand-group",
+                      },
                     ),
-
-
-
-
-
-
-
-
-                    );
-
-              },
-            ),
-            SizedBox(
-              height: height * .148,
-            ),
-
-
-          ],)),
+                  );
+                },
+              ),
+              // SelectableDropDownpopUp(
+              //   controller:widget.brandName,
+              //   label: "Brand",
+              //   type:"BrandPopUpCall",
+              //   value:  widget.brandName.text,
+              //   onchange: (vale){
+              //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+              //   },
+              //   enable: true,
+              //   onSelection: (BrandListModel? va) {
+              //     setState(() {
+              //
+              //       widget.brand.text=va?.code??"";
+              //       widget.brandName.text=va?.name??"";
+              //       setState(() {
+              //
+              //       });
+              //
+              //
+              //       // onChange = true;
+              //       // orderType.text = va!;
+              //     });
+              //   },
+              //   onAddNew: () {
+              //
+              //     showDailogPopUp(
+              //         context,
+              //         // ConfigurePopup(
+              //         //   type: "uom-group",
+              //         // )
+              //         ConfigurePopup(
+              //           type: "brand-group",
+              //         ),
+              //
+              //
+              //
+              //
+              //
+              //
+              //
+              //
+              //         );
+              //
+              //   },
+              // ),
+              SizedBox(
+                height: height * .148,
+              ),
+            ],
+          )),
         ],
       ),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 // class CreateBrandPopUp extends StatefulWidget {
 //   TextEditingController codeController;
@@ -1659,8 +1795,6 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
 //   }
 // }
 
-
-
 class BlockPageIdTable extends StatefulWidget {
   final Function(int?, String?) onApply;
   const BlockPageIdTable({Key? key, required this.onApply}) : super(key: key);
@@ -1674,25 +1808,24 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
 
   int? list;
   String? name;
-  bool addNew=false;
+  bool addNew = false;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
         content: PopUpHeader(
-            onTap: () { addNew=!addNew;
-            setState(() {
-
-            });},
+            onTap: () {
+              addNew = !addNew;
+              setState(() {});
+            },
             onApply: () {
               widget.onApply(list, name);
             },
             label: "Contents",
             dataField: BlocProvider<Listbrand2Cubit>(
-                create: (context) =>Listbrand2Cubit()..getSlotSectionPage()
-                   ,
+                create: (context) => Listbrand2Cubit()..getSlotSectionPage(),
                 child: Builder(builder: (context) {
-                  return BlocBuilder<Listbrand2Cubit,
-                      Listbrand2State>(builder: (context, state) {
+                  return BlocBuilder<Listbrand2Cubit, Listbrand2State>(
+                      builder: (context, state) {
                     return Column(children: [
                       state.maybeWhen(
                           orElse: () =>
@@ -1705,17 +1838,14 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
                                 SearchTextfiled(
                                   color: Color(0xffFAFAFA),
                                   hintText: "Search...",
-                                  ctrlr:search,
+                                  ctrlr: search,
                                   onChanged: (va) {
-                                    print("searching case"+va.toString());
+                                    print("searching case" + va.toString());
                                     context
                                         .read<Listbrand2Cubit>()
                                         .searchSlotSectionPageList(search.text);
-
-
                                   },
                                 ),
-
                                 customTable(
                                   tableWidth: .5,
                                   childrens: [
@@ -1759,24 +1889,23 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
                                   },
                                 ),
                                 tablePagination(
-                                      () => context
-                                      .read<Listbrand2Cubit>()
-                                      .refresh(),
+                                  () =>
+                                      context.read<Listbrand2Cubit>().refresh(),
                                   back: data.previousUrl == null
                                       ? null
                                       : () {
-                                    context
-                                        .read<Listbrand2Cubit>()
-                                        .previuosslotSectionPageList();
-                                  },
+                                          context
+                                              .read<Listbrand2Cubit>()
+                                              .previuosslotSectionPageList();
+                                        },
                                   next: data.nextPageUrl == null
                                       ? null
                                       : () {
-                                    // print(data.nextPageUrl);
-                                    context
-                                        .read<Listbrand2Cubit>()
-                                        .nextslotSectionPageList();
-                                  },
+                                          // print(data.nextPageUrl);
+                                          context
+                                              .read<Listbrand2Cubit>()
+                                              .nextslotSectionPageList();
+                                        },
                                 )
                               ]),
                             );
@@ -1786,42 +1915,29 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
                 }))));
   }
 }
+
 Widget tablePagination(VoidCallback reset,
-
-    {VoidCallback? next, VoidCallback? back}) =>
-
+        {VoidCallback? next, VoidCallback? back}) =>
     Transform.scale(
-
       scale: 0.7,
-
       child: Row(
-
         mainAxisAlignment: MainAxisAlignment.start,
-
         children: [
-
-
-
           Spacer(),
-
           TextButton.icon(
-
               onPressed: back,
-
-              icon: Icon(Icons.arrow_back_ios,size: 18,),
-
+              icon: Icon(
+                Icons.arrow_back_ios,
+                size: 18,
+              ),
               label: Text("Back")),
-
           TextButton.icon(
-
               onPressed: next,
-
-              label: Icon(Icons.arrow_forward_ios,size: 18,),
-
+              label: Icon(
+                Icons.arrow_forward_ios,
+                size: 18,
+              ),
               icon: Text("Next")),
-
         ],
-
       ),
-
     );

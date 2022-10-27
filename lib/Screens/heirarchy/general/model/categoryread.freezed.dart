@@ -29,6 +29,8 @@ class _$CategoryReadModelTearOff {
       String? image,
       int? id,
       @JsonKey(name: "alternative_name") String? alternativename,
+      @JsonKey(name: "division_name") String? divisionName,
+      @JsonKey(name: "parent_name") String? parentname,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
@@ -40,6 +42,8 @@ class _$CategoryReadModelTearOff {
       image: image,
       id: id,
       alternativename: alternativename,
+      divisionName: divisionName,
+      parentname: parentname,
       parentCode: parentCode,
       divisionCode: divisionCode,
       isActive: isActive,
@@ -64,6 +68,10 @@ mixin _$CategoryReadModel {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_name")
   String? get alternativename => throw _privateConstructorUsedError;
+  @JsonKey(name: "division_name")
+  String? get divisionName => throw _privateConstructorUsedError;
+  @JsonKey(name: "parent_name")
+  String? get parentname => throw _privateConstructorUsedError;
   @JsonKey(name: "parent_code")
   String? get parentCode => throw _privateConstructorUsedError;
   @JsonKey(name: "division_code")
@@ -90,6 +98,8 @@ abstract class $CategoryReadModelCopyWith<$Res> {
       String? image,
       int? id,
       @JsonKey(name: "alternative_name") String? alternativename,
+      @JsonKey(name: "division_name") String? divisionName,
+      @JsonKey(name: "parent_name") String? parentname,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -113,6 +123,8 @@ class _$CategoryReadModelCopyWithImpl<$Res>
     Object? image = freezed,
     Object? id = freezed,
     Object? alternativename = freezed,
+    Object? divisionName = freezed,
+    Object? parentname = freezed,
     Object? parentCode = freezed,
     Object? divisionCode = freezed,
     Object? isActive = freezed,
@@ -146,6 +158,14 @@ class _$CategoryReadModelCopyWithImpl<$Res>
           ? _value.alternativename
           : alternativename // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionName: divisionName == freezed
+          ? _value.divisionName
+          : divisionName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentname: parentname == freezed
+          ? _value.parentname
+          : parentname // ignore: cast_nullable_to_non_nullable
+              as String?,
       parentCode: parentCode == freezed
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
@@ -177,6 +197,8 @@ abstract class _$CategoryReadModelCopyWith<$Res>
       String? image,
       int? id,
       @JsonKey(name: "alternative_name") String? alternativename,
+      @JsonKey(name: "division_name") String? divisionName,
+      @JsonKey(name: "parent_name") String? parentname,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -202,6 +224,8 @@ class __$CategoryReadModelCopyWithImpl<$Res>
     Object? image = freezed,
     Object? id = freezed,
     Object? alternativename = freezed,
+    Object? divisionName = freezed,
+    Object? parentname = freezed,
     Object? parentCode = freezed,
     Object? divisionCode = freezed,
     Object? isActive = freezed,
@@ -235,6 +259,14 @@ class __$CategoryReadModelCopyWithImpl<$Res>
           ? _value.alternativename
           : alternativename // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionName: divisionName == freezed
+          ? _value.divisionName
+          : divisionName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      parentname: parentname == freezed
+          ? _value.parentname
+          : parentname // ignore: cast_nullable_to_non_nullable
+              as String?,
       parentCode: parentCode == freezed
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
@@ -262,6 +294,8 @@ class _$_CategoryReadModel implements _CategoryReadModel {
       this.image,
       this.id,
       @JsonKey(name: "alternative_name") this.alternativename,
+      @JsonKey(name: "division_name") this.divisionName,
+      @JsonKey(name: "parent_name") this.parentname,
       @JsonKey(name: "parent_code") this.parentCode,
       @JsonKey(name: "division_code") this.divisionCode,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
@@ -285,6 +319,12 @@ class _$_CategoryReadModel implements _CategoryReadModel {
   @JsonKey(name: "alternative_name")
   final String? alternativename;
   @override
+  @JsonKey(name: "division_name")
+  final String? divisionName;
+  @override
+  @JsonKey(name: "parent_name")
+  final String? parentname;
+  @override
   @JsonKey(name: "parent_code")
   final String? parentCode;
   @override
@@ -296,7 +336,7 @@ class _$_CategoryReadModel implements _CategoryReadModel {
 
   @override
   String toString() {
-    return 'CategoryReadModel(description: $description, code: $code, status: $status, name: $name, image: $image, id: $id, alternativename: $alternativename, parentCode: $parentCode, divisionCode: $divisionCode, isActive: $isActive)';
+    return 'CategoryReadModel(description: $description, code: $code, status: $status, name: $name, image: $image, id: $id, alternativename: $alternativename, divisionName: $divisionName, parentname: $parentname, parentCode: $parentCode, divisionCode: $divisionCode, isActive: $isActive)';
   }
 
   @override
@@ -319,6 +359,12 @@ class _$_CategoryReadModel implements _CategoryReadModel {
             (identical(other.alternativename, alternativename) ||
                 const DeepCollectionEquality()
                     .equals(other.alternativename, alternativename)) &&
+            (identical(other.divisionName, divisionName) ||
+                const DeepCollectionEquality()
+                    .equals(other.divisionName, divisionName)) &&
+            (identical(other.parentname, parentname) ||
+                const DeepCollectionEquality()
+                    .equals(other.parentname, parentname)) &&
             (identical(other.parentCode, parentCode) ||
                 const DeepCollectionEquality()
                     .equals(other.parentCode, parentCode)) &&
@@ -340,6 +386,8 @@ class _$_CategoryReadModel implements _CategoryReadModel {
       const DeepCollectionEquality().hash(image) ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(alternativename) ^
+      const DeepCollectionEquality().hash(divisionName) ^
+      const DeepCollectionEquality().hash(parentname) ^
       const DeepCollectionEquality().hash(parentCode) ^
       const DeepCollectionEquality().hash(divisionCode) ^
       const DeepCollectionEquality().hash(isActive);
@@ -364,6 +412,8 @@ abstract class _CategoryReadModel implements CategoryReadModel {
           String? image,
           int? id,
           @JsonKey(name: "alternative_name") String? alternativename,
+          @JsonKey(name: "division_name") String? divisionName,
+          @JsonKey(name: "parent_name") String? parentname,
           @JsonKey(name: "parent_code") String? parentCode,
           @JsonKey(name: "division_code") String? divisionCode,
           @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
@@ -387,6 +437,12 @@ abstract class _CategoryReadModel implements CategoryReadModel {
   @override
   @JsonKey(name: "alternative_name")
   String? get alternativename => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "division_name")
+  String? get divisionName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "parent_name")
+  String? get parentname => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "parent_code")
   String? get parentCode => throw _privateConstructorUsedError;

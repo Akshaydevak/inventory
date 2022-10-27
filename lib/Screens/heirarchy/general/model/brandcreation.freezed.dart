@@ -24,7 +24,7 @@ class _$BrandCreationtModelTearOff {
   _BrandCreationtModel call(
       {String? description,
       String? name,
-      int? image,
+      String? image,
       @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
@@ -50,7 +50,7 @@ const $BrandCreationtModel = _$BrandCreationtModelTearOff();
 mixin _$BrandCreationtModel {
   String? get description => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  int? get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: "brand_identifier_url")
   String? get brandIdentifierUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "parent_code")
@@ -72,7 +72,7 @@ abstract class $BrandCreationtModelCopyWith<$Res> {
   $Res call(
       {String? description,
       String? name,
-      int? image,
+      String? image,
       @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -108,7 +108,7 @@ class _$BrandCreationtModelCopyWithImpl<$Res>
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       brandIdentifierUrl: brandIdentifierUrl == freezed
           ? _value.brandIdentifierUrl
           : brandIdentifierUrl // ignore: cast_nullable_to_non_nullable
@@ -135,7 +135,7 @@ abstract class _$BrandCreationtModelCopyWith<$Res>
   $Res call(
       {String? description,
       String? name,
-      int? image,
+      String? image,
       @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -173,7 +173,7 @@ class __$BrandCreationtModelCopyWithImpl<$Res>
       image: image == freezed
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       brandIdentifierUrl: brandIdentifierUrl == freezed
           ? _value.brandIdentifierUrl
           : brandIdentifierUrl // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$_BrandCreationtModel implements _BrandCreationtModel {
   @override
   final String? name;
   @override
-  final int? image;
+  final String? image;
   @override
   @JsonKey(name: "brand_identifier_url")
   final String? brandIdentifierUrl;
@@ -273,7 +273,7 @@ abstract class _BrandCreationtModel implements BrandCreationtModel {
   const factory _BrandCreationtModel(
           {String? description,
           String? name,
-          int? image,
+          String? image,
           @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
           @JsonKey(name: "parent_code") String? parentCode,
           @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
@@ -287,7 +287,7 @@ abstract class _BrandCreationtModel implements BrandCreationtModel {
   @override
   String? get name => throw _privateConstructorUsedError;
   @override
-  int? get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "brand_identifier_url")
   String? get brandIdentifierUrl => throw _privateConstructorUsedError;

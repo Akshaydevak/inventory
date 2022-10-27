@@ -106,13 +106,23 @@ List<  InventoryListModel> inventoryList=[];
               context.showSnackBarNormal("Loading");
             },
             success: (data)  {
-              print("welcome ther is something happening ");
+              print("welcome ther is something happening "+data.data.toString());
               inventoryList=data.data;
 
               if(inventoryList.isNotEmpty==true){
                 setState(()   {
                   Variable.inventory_ID=inventoryList[0]?.businessUnitCode??"";
                   Variable.inventory_Name=inventoryList[0]?.name??"";
+                  InventoryListModel model=InventoryListModel(
+                    businessUnitCode: inventoryList[0]?.businessUnitCode??"",
+                    name: inventoryList[0]?.name??""
+                  );
+                  UserPreferences().SaveInventoryList(model);
+
+
+
+                  print("Variable.inventory_Name"+Variable.inventory_Name.toString());
+
                   // final SharedPreferences prefs = await SharedPreferences.getInstance();
                   // prefs.setString("inventory", inventoryList![0].businessUnitCode.toString());
                   // prefs.setString("inventory_name", inventoryList![0].name.toString());

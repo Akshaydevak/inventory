@@ -450,7 +450,7 @@ class _TitleScreenState extends State<TitleScreen> {
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                       Text(
-                        "Purchase return",
+                        "Purchase Return",
                         style: TextStyle(fontSize: height * 00.022),
                       ),
                       Text(

@@ -366,7 +366,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                               // setState(() {});
                             }),
                         SizedBox(
-                          height: height * .15,
+                          height: height * .195,
                         ),
 
 

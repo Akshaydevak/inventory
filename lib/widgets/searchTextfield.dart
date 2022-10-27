@@ -5,10 +5,13 @@ class SearchTextfiled extends StatefulWidget {
   final String hintText;
   final double h;
   final double w;
+  final bool suffiXCheck;
   final Function(String )? onChanged;
+
   final VoidCallback? onComplete;
+  final VoidCallback? suffixOnComplete;
   final TextEditingController ctrlr;
-  SearchTextfiled({required this.color,required this.hintText,required this.ctrlr,this.onComplete, this.onChanged,this.h=32,this.w=600});
+  SearchTextfiled({required this.color,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=600});
 
   @override
   State<SearchTextfiled> createState() => _SearchTextfiledState();
@@ -58,7 +61,25 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
 
               // border: InputBorder.none,
               hintText: widget.hintText,
-              suffixIcon: Padding(
+              suffixIcon: widget.suffiXCheck?Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: GestureDetector(
+                    onTap: (){
+                      if(widget.suffixOnComplete!=null){
+                        widget.suffixOnComplete;
+                      }
+
+                    },
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      color: Colors.blue,
+                      height: 10,
+                      width: 15,
+                      child: const Text(
+                        "Search",style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  )):Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: GestureDetector(
                     child: const Icon(

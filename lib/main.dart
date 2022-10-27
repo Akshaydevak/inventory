@@ -25,6 +25,7 @@ import 'Screens/heirarchy/general/cubits/itemverticallist/itemcreation_list_cubi
 import 'Screens/heirarchy/general/cubits/listStatic/liststatic_cubit.dart';
 import 'Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import 'Screens/heirarchy/general/cubits/material/material_list_cubit.dart';
+import 'Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart';
 import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 
 import 'Screens/logi/login.dart';
@@ -38,6 +39,7 @@ import 'Screens/variant/channel_stockAllocation/cubit/channelstockvertical/chann
 import 'Screens/variant/channels2allocation/cubits/channellistread/channel_list_read_cubit.dart';
 import 'Screens/variant/channels2allocation/cubits/data_assign/allocationdata_assign_cubit.dart';
 import 'Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
+import 'Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import 'Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'commonWidget/Navigationprovider.dart';
 import 'commonWidget/sharedpreference.dart';
@@ -155,6 +157,10 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider(
           create: (context) => ChannelreadCubit(),
+        ),   BlocProvider(
+          create: (context) => SubcategoryCubit(),
+        ),BlocProvider(
+          create: (context) => VariantselectionCubit(),
         ),
       ],
       child: MaterialApp(
@@ -186,7 +192,7 @@ class _MyHomeState extends State<MyHome> {
     // Variable.subIndex = list.map(int.parse).toList();
 
     print(
-        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" + Variable.subIndex.toString());
+        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" + Variable.inventory_Name.toString());
 
     index = prefs.getInt('index') ?? 1;
     print("index after caching $index");

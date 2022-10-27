@@ -27,6 +27,7 @@ class _$BaseUomCreationtModelTearOff {
       @JsonKey(name: "base_equivalent") String? baseEquivalent,
       @JsonKey(name: "uomgroup_code") String? uomGroupCode,
       @JsonKey(name: "short_name") String? shortName,
+      @JsonKey(name: "uomgroup_name") String? uomGroupName,
       @JsonKey(name: "uom_code") String? uomCode,
       @JsonKey(name: "standard_code") String? standardCode,
       @JsonKey(name: "conversion_factor") int? conversionFactor,
@@ -36,6 +37,7 @@ class _$BaseUomCreationtModelTearOff {
       baseEquivalent: baseEquivalent,
       uomGroupCode: uomGroupCode,
       shortName: shortName,
+      uomGroupName: uomGroupName,
       uomCode: uomCode,
       standardCode: standardCode,
       conversionFactor: conversionFactor,
@@ -60,6 +62,8 @@ mixin _$BaseUomCreationtModel {
   String? get uomGroupCode => throw _privateConstructorUsedError;
   @JsonKey(name: "short_name")
   String? get shortName => throw _privateConstructorUsedError;
+  @JsonKey(name: "uomgroup_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
   @JsonKey(name: "standard_code")
@@ -85,6 +89,7 @@ abstract class $BaseUomCreationtModelCopyWith<$Res> {
       @JsonKey(name: "base_equivalent") String? baseEquivalent,
       @JsonKey(name: "uomgroup_code") String? uomGroupCode,
       @JsonKey(name: "short_name") String? shortName,
+      @JsonKey(name: "uomgroup_name") String? uomGroupName,
       @JsonKey(name: "uom_code") String? uomCode,
       @JsonKey(name: "standard_code") String? standardCode,
       @JsonKey(name: "conversion_factor") int? conversionFactor,
@@ -106,6 +111,7 @@ class _$BaseUomCreationtModelCopyWithImpl<$Res>
     Object? baseEquivalent = freezed,
     Object? uomGroupCode = freezed,
     Object? shortName = freezed,
+    Object? uomGroupName = freezed,
     Object? uomCode = freezed,
     Object? standardCode = freezed,
     Object? conversionFactor = freezed,
@@ -127,6 +133,10 @@ class _$BaseUomCreationtModelCopyWithImpl<$Res>
       shortName: shortName == freezed
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
       uomCode: uomCode == freezed
           ? _value.uomCode
@@ -160,6 +170,7 @@ abstract class _$BaseUomCreationtModelCopyWith<$Res>
       @JsonKey(name: "base_equivalent") String? baseEquivalent,
       @JsonKey(name: "uomgroup_code") String? uomGroupCode,
       @JsonKey(name: "short_name") String? shortName,
+      @JsonKey(name: "uomgroup_name") String? uomGroupName,
       @JsonKey(name: "uom_code") String? uomCode,
       @JsonKey(name: "standard_code") String? standardCode,
       @JsonKey(name: "conversion_factor") int? conversionFactor,
@@ -183,6 +194,7 @@ class __$BaseUomCreationtModelCopyWithImpl<$Res>
     Object? baseEquivalent = freezed,
     Object? uomGroupCode = freezed,
     Object? shortName = freezed,
+    Object? uomGroupName = freezed,
     Object? uomCode = freezed,
     Object? standardCode = freezed,
     Object? conversionFactor = freezed,
@@ -204,6 +216,10 @@ class __$BaseUomCreationtModelCopyWithImpl<$Res>
       shortName: shortName == freezed
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
       uomCode: uomCode == freezed
           ? _value.uomCode
@@ -233,6 +249,7 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
       @JsonKey(name: "base_equivalent") this.baseEquivalent,
       @JsonKey(name: "uomgroup_code") this.uomGroupCode,
       @JsonKey(name: "short_name") this.shortName,
+      @JsonKey(name: "uomgroup_name") this.uomGroupName,
       @JsonKey(name: "uom_code") this.uomCode,
       @JsonKey(name: "standard_code") this.standardCode,
       @JsonKey(name: "conversion_factor") this.conversionFactor,
@@ -253,6 +270,9 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
   @JsonKey(name: "short_name")
   final String? shortName;
   @override
+  @JsonKey(name: "uomgroup_name")
+  final String? uomGroupName;
+  @override
   @JsonKey(name: "uom_code")
   final String? uomCode;
   @override
@@ -267,7 +287,7 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
 
   @override
   String toString() {
-    return 'BaseUomCreationtModel(name: $name, baseEquivalent: $baseEquivalent, uomGroupCode: $uomGroupCode, shortName: $shortName, uomCode: $uomCode, standardCode: $standardCode, conversionFactor: $conversionFactor, isActive: $isActive)';
+    return 'BaseUomCreationtModel(name: $name, baseEquivalent: $baseEquivalent, uomGroupCode: $uomGroupCode, shortName: $shortName, uomGroupName: $uomGroupName, uomCode: $uomCode, standardCode: $standardCode, conversionFactor: $conversionFactor, isActive: $isActive)';
   }
 
   @override
@@ -285,6 +305,9 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
             (identical(other.shortName, shortName) ||
                 const DeepCollectionEquality()
                     .equals(other.shortName, shortName)) &&
+            (identical(other.uomGroupName, uomGroupName) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomGroupName, uomGroupName)) &&
             (identical(other.uomCode, uomCode) ||
                 const DeepCollectionEquality()
                     .equals(other.uomCode, uomCode)) &&
@@ -306,6 +329,7 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
       const DeepCollectionEquality().hash(baseEquivalent) ^
       const DeepCollectionEquality().hash(uomGroupCode) ^
       const DeepCollectionEquality().hash(shortName) ^
+      const DeepCollectionEquality().hash(uomGroupName) ^
       const DeepCollectionEquality().hash(uomCode) ^
       const DeepCollectionEquality().hash(standardCode) ^
       const DeepCollectionEquality().hash(conversionFactor) ^
@@ -329,6 +353,7 @@ abstract class _BaseUomCreationtModel implements BaseUomCreationtModel {
           @JsonKey(name: "base_equivalent") String? baseEquivalent,
           @JsonKey(name: "uomgroup_code") String? uomGroupCode,
           @JsonKey(name: "short_name") String? shortName,
+          @JsonKey(name: "uomgroup_name") String? uomGroupName,
           @JsonKey(name: "uom_code") String? uomCode,
           @JsonKey(name: "standard_code") String? standardCode,
           @JsonKey(name: "conversion_factor") int? conversionFactor,
@@ -349,6 +374,9 @@ abstract class _BaseUomCreationtModel implements BaseUomCreationtModel {
   @override
   @JsonKey(name: "short_name")
   String? get shortName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uomgroup_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;

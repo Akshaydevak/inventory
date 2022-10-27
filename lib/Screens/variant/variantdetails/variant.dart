@@ -23,6 +23,9 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'cubits/generateqrcode/qrgenerating_cubit.dart';
 
 class VariantDetailScreen extends StatefulWidget {
   @override
@@ -363,7 +366,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
   }
   clear(){
-    setState(() {
+
+
+      setState(() {
       // aboutProducts?.clear();
       // importantInfo=[];
       // productDetails=[];
@@ -373,46 +378,84 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       // storage=[];
       // Ingrediants=[];
       // importantInfo=[];
-      variantNameController.text="";
-      variantNameController.text="";
-      salesUomController.text="";
-      purchaseUomController.text="";
-      searchNAmeController.text="";
-      posNameController.text="";
-      displayNAmeController.text="";
-      descriptionController.text="";
-      arabicDescriptionController.text="";
-      additionalDescriptionController.text="";
-      image1Controller.text="";
-      image2Controller.text="";
-      image3Controller.text="";
-      image4Controller.text="";
-      image5Controller.text="";
-      grossWeightController.text="";
-      netWeightController.text="";
-      unitCostController.text="";
-      landingCostController.text="";
-      actualCostController.text="";
-      producedCountryController.text="";
-      videoUrlController.text="";
-      salesBolock=false;
+      baseUomNameController.clear();
+      purchaseUomNameController.clear();
+      salesUomNameController.clear();
+      uomGroupNameController.clear();
+
+      catalog1.clear();
+      catalog2.clear();
+      catalog3.clear();
+      catalog4.clear();
+      catalog5.clear();
+      catalog6.clear();
+      catalog7.clear();
+      catalog8.clear();
+      searchNAmeController.clear();
+      image2Controller.clear();
+      image3Controller.clear();
+      image1Controller.clear();
+      displayNAmeController.clear();
+      image4Controller.clear();
+      image5Controller.clear();
+      itemCodeController.clear();
+      manuFactreIdController.clear();
+      manuFactreNameController.clear();
+      reorederPointController.clear();
+      saftyStockController.clear();
+       salesBolock=false;
+       variantCodeController.clear();
+       variantFrameWorkController.clear();
+       variantNameController.clear();
+      variantValueController.clear();
+       descriptionController.clear();
+       arabicDescriptionController.clear();
+      additionalDescriptionController.clear();
+      posNameController.clear();
+      uomGroupController.clear();
+     baseUomController.clear();
+      salesUomController.clear();
+      purchaseUomController.clear();
+     grossWeightController.clear();
+       netWeightController.clear();
+      unitCostController.clear();
+    landingCostController.clear();
+      actualCostController.clear();
+       unitPrizeController.clear();
+       basePrizePrizeController.clear();
+       producedCountryController.clear();
       purchaseBolock=false;
-      stockWarning=false;
+      ratioEcommerceController.clear();
+      minMaxController.clear();
+       wholeSaleStockController.clear();
+       minSalesOrderLimitController.clear();
+    maxSalesOrderLimitController.clear();
+       stockWarning=false;
       itmcatelog=false;
-      itmImage=false;
-      active=false;
-      vatController.text="";
-      exciseTaxController.text="";
-      minimumGpController.text="";
-      maximumGpController.text="";
-      targetedGpController.text="";
+     itmImage=false;
+    active=false;
+       seblingController.clear();
+      linkedItemController.clear();
+     videoUrlController.clear();
+      minimumGpController.clear();
+      maximumGpController.clear();
+     averageGpController.clear();
+    targetedGpController.clear();
+      minPurchaseOrderLimitController.clear()
+;      maxPurchaseOrderLimitController.clear();
+      vatController.clear();
+     exciseTaxController.clear();
+     returnTypeController.clear();
+     returnTimeController.clear();
 
-      uomGroupNameController.text="";
-      purchaseUomNameController.text="";
-      salesUomNameController.text="";
-      baseUomNameController.text="";
 
-    });
+
+      Variable.uomId=0;
+      });
+
+
+
+
 
 
 
@@ -445,6 +488,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         ),
         BlocProvider(
           create: (context) => VariantpostCubit(),
+        ),  BlocProvider(
+          create: (context) => QrgeneratingCubit(),
         ),
 
         
@@ -453,6 +498,39 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         builder: (context) {
           return MultiBlocListener(
   listeners: [
+    BlocListener<QrgeneratingCubit, QrgeneratingState>(
+  listener: (context, state) {
+    print("postssssssss" + state.toString());
+    state.maybeWhen(orElse: () {
+      // context.
+      context.showSnackBarError("Loadingggg");
+    }, error: () {
+      context.showSnackBarError(Variable.errorMessege);
+    }, success: (data) {
+      print("Akshayaaaaaaaaaaaa");
+      print(data.data1);
+      print(data.data2);
+      if (data.data1) {
+        setState(() async {
+
+          qrCodeController.text = data.data2;
+          await launch(qrCodeController.text);
+        });
+
+        // Timer(Duration(seconds: 5), () {
+        //   setState(() {
+        //     context.read<ListvraiantCubit>().getVariantList();
+        //     // select=false;
+        //   });
+        // });
+      } else {
+        context.showSnackBarError(data.data2);
+        print(data.data1);
+      }
+      ;
+    });
+  },
+),
     BlocListener<VariantreadCubit, VariantreadState>(
   listener: (context, state) {
     print("state++++++++++++++++++++++++++++++++");
@@ -467,6 +545,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           // group=data;
 
           variantNameController.text=data.name??"";
+          itemCodeController.text=data.itemData?.itemName??"";
           variantNameController.text=data.name??"";
           salesUomController.text=data.SalesUom??"";
           salesUomNameController.text=data.salesUomData?.salesUomName??"";
@@ -476,6 +555,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
           descriptionController.text=data?.description??"";
+          variantFrameWorkController.text=data?.variantframeWork?.variantFrameWork??"";
+          baseUomNameController.text=data?.uomNameData?.uomName??"";
           arabicDescriptionController.text=data?.arabicDescription??"";
           additionalDescriptionController.text=data?.additionalDescription??"";
           image1Controller.text=data?.image1??"";
@@ -484,6 +565,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           image4Controller.text=data?.variantMeta?.image?.keyValues?.image4??"";
           image5Controller.text=data?.variantMeta?.image?.keyValues?.image5??"";
           grossWeightController.text=data.grossWeight??"";
+          baseUomController.text=data.uomId??"";
+          uomGroupNameController.text=data.uomGroupName??"";
+          Variable.uomId=int.tryParse(data.uomId.toString())??0;
           netWeightController.text=data.netWeight??"";
           // maxSalesOrderLimitController.text=data.max
           unitCostController.text=data.unitCost.toString()??"";
@@ -497,6 +581,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           itmcatelog=data.itemCatalog??false;
           itmImage=data.itemImage??false;
           active=data.isActive??false;
+          returnTypeController.text=data?.return2Type??"";
+          returnTimeController.text=data?.returnTime.toString()??"";
           vatController.text=data.vat.toString()??"";
           exciseTaxController.text=data.vat.toString()??"";
           minimumGpController.text=data.minGap.toString()??"";
@@ -714,12 +800,16 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                               margin: EdgeInsets.only(
                                                   left: width * .02),
                                               child: SearchTextfiled(
+                                                // suffiXCheck: true,
+                                                // suffixOnComplete: (){
+                                                //   context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
+                                                // },
                                                 w: width * .3,
                                                 h: 48,
 
                                                 // h: h,
                                                 color: Color(0xffFAFAFA),
-                                                hintText: "Search...",
+                                                hintText: "Search....",
                                                 ctrlr: searchController,
                                                 onChanged: (va) {
 
@@ -733,7 +823,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 ctx: context,
                                                 text: "Search",
                                                 height: 32,
-                                                Color: Color(0xff3E4F5B),
+                                                Color:exportCheck? Color(0xff3E4F5B):Colors.red,
                                                 width: 90,
                                                 labelcolor: Colors.white,
                                                 iconColor: Colors.white,
@@ -759,6 +849,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   iconColor: Colors.white,
                                                   onApply: () {
                                                 setState(() {
+                                                  clear();
                                                   print(checkIdid);
                                                   select=true;
                                                   context.read<VariantreadCubit>().getVariantRead(checkIdid!);
@@ -854,20 +945,20 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
                                       ),
-                                      SizedBox(height: height * .04,),
+                                      SizedBox(height: height * .07,),
                                       Row(mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
-                                          TextWidget(text: "Vendor details"),
+                                          TextWidget(text: "Vendor Details"),
                                         ],
                                       ),
                                       Divider(color: Colors.grey,thickness: 1,),
-                                      SizedBox(height: height * .04,),
+                                      SizedBox(height: height * .07,),
 
                                       VendorDetailsVarient(
                                           vendorDetails:vendorDetails,
                                         vendorTableEdit:vendorDetailsTableAssign,
                                       ),
-                                      SizedBox(height:height * .10,),
+                                      SizedBox(height:height * .11,),
                                       Row(mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           TextWidget(text: "Identification"),
@@ -911,197 +1002,237 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
                                       ),
                                       SizedBox(height: height * .13,),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Button(Icons.delete, Colors.red,
-                                              ctx: context,
-                                              text: "Discard",
-                                              onApply: () {
-                                                // if(updateCheck){
-                                                //   // clears();
-                                                //
-                                                //
-                                                // }
+                                      Container(
+                                        margin:EdgeInsets.only(right: width*.004) ,
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
 
-                                              },
-                                              height: 29,
-                                              width: 90,
-                                              labelcolor: Colors.red,
-                                              iconColor: Colors.red,
-                                              bdr: true),
-                                          SizedBox(
-                                            width: width * .008,
-                                          ),
-                                          Button(Icons.check, Colors.grey,
-                                              ctx: context,
-                                              text: select?"Save":"update",
-                                              height: 29,
-                                              Color: Color(0xff3E4F5B),
-                                              width: 90,
-                                              labelcolor: Colors.white,
-                                              iconColor: Colors.white,
-                                              onApply: () {
-                                            if(select){
-                                              VariantPost model = VariantPost(
-                                                inventoryId: Variable.inventory_ID,
-                                                inventoryName: Variable.inventory_Name,
-                                                searchName:searchNAmeController?.text??"",
-                                                posName:posNameController?.text??"",
-                                                displayName:displayNAmeController?.text??"",
-                                                arabicDescription:arabicDescriptionController?.text??"",
-                                                additionalDescription:additionalDescriptionController?.text??"",
-                                                salesUom: int.tryParse(salesUomController?.text??""),
-                                                seblingId: int.tryParse(seblingController.text),
-                                                purchaseUom: int.tryParse(purchaseUomController?.text??""),
-                                                grossWeight:double.tryParse( grossWeightController.text??""),
-                                                actualCost:double.tryParse( actualCostController.text??""),
-                                                safetyStock: int.tryParse(saftyStockController?.text??""),
-                                                reOrderPoint: int.tryParse(reorederPointController?.text??""),
-                                                reorderQuantity: int.tryParse(reorederQuaintityController?.text??""),
-                                                salesBolock: salesBolock,
-                                                purchaseBlock: purchaseBolock,
-                                                ratioToEcommerce: ratioEcommerceController.text??"",
-                                                itemCatelog: itmcatelog,
-                                                itemImage: itmImage,
-                                                vendorDetails: vendorDetails,
+                                            Button(Icons.delete,  Colors.grey,
+                                                ctx: context,
+                                                text: "Generate QR Code",
+                                                onApply: () {
+                                                  context
+                                                      .read<QrgeneratingCubit>()
+                                                      .getQrCodeRead(veritiaclid);
 
-                                                minMaxRatio: minMaxController?.text??"",
-                                                wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
-                                                minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
-                                                maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
-                                                minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
-                                                maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
-                                                stockWarning:stockWarning,
-                                                retailSellingPricePercentage:2,
-                                                wholeSellingPricePercentage: 2,
-                                                onlineSellingPercenage: 2,
-                                                producedCountry: producedCountryController?.text??"",
-                                                basePrize: double.tryParse(basePrizePrizeController.text),
-                                                vat: double.tryParse(vatController.text??""),
-                                                excessTax: double.tryParse(exciseTaxController.text??""),
-                                                minGap: double.tryParse(minimumGpController.text??""),
-                                                maxGp: double.tryParse(maximumGpController.text??""),
-                                                avgGp: double.tryParse(averageGpController.text??""),
-                                                targetedGp: double.tryParse(targetedGpController.text??""),
-                                                vedioUrl: videoUrlController.text.isEmpty?null:videoUrlController.text,
-                                                alternativeBarcode:alternativeBarcode,
-                                                alternativeQrCodeBarcode: alternativeQrCode,
-                                                returnType: returnTypeController.text,
-                                                returnTime: int.tryParse(returnTimeController.text),
-                                                variantStatus: "va",
-                                                isActive: active,
-                                                image2:img2?Variable.img2:  int.tryParse(image2Controller?.text??""),
-                                                image3:img3?Variable.img3: int.tryParse(image3Controller?.text??""),
-                                                image4:img4?Variable.img4: int.tryParse(image4Controller?.text??""),
-                                                image5:img5?Variable.img5: int.tryParse(image5Controller?.text??""),
-                                                catalog1:cata1?Variable.catalog1:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog1??""),
-                                                catalog2:cata2?Variable.catalog2:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog2??""),
-                                                catalog3:cata3?Variable.catalog3:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog3??""),
-                                                catalog4:cata4?Variable.catalog4:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog4??""),
-                                                catalog5:cata5?Variable.catalog5:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog5??""),
-                                                catalog6:cata6?Variable.catalog6:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog6??""),
-                                                catalog7:cata7?Variable.catalog7:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog7??""),
-                                                catalog8:cata8?Variable.catalog8:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog8??""),
-                                                aboutProducts: aboutProducts,
-                                                productDetails: productDetails,
-                                                productFeatures:productFeatures,
-                                                additionalInfo: additionalInfo,
-                                                nutriantsFacts:nutriantsFacts,
-                                                Ingrediants: Ingrediants,
-                                                usageDirection: usageDirection,
-                                                storage:storage,
-                                                importantInfo:importantInfo,
-                                                productBehavior:   inforMationList,
+                                                },
+                                                height: 29,
+                                                width: 190,
+                                                Color:  Color(0xff3E4F5B),
+                                                labelcolor: Colors.white,
+                                                iconColor: Colors.white,
+                                                bdr: true),
+                                            SizedBox(
+                                              width: width * .008,
+                                            ),
+                                            Button(Icons.delete, Colors.red,
+                                                ctx: context,
+                                                text: "Discard",
+                                                onApply: () {
+                                                  // if(updateCheck){
+                                                  //   // clears();
+                                                  //
+                                                  //
+                                                  // }
 
-                                              );
-                                              print("model"+  model.productBehavior.toString());
-                                              context.read<VariantpostCubit>().postVariant(checkIdid, model);
-                                              setState(() {
-
-                                              });
-                                            }
-                                            else{
-                                              VariantPatch model=VariantPatch (
-                                                variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
-                                                salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
-                                                // "1",
-
-                                                purchaseUom:purchaseUomController.text,
-                                                itemImage: itmImage,
-                                                itemCatelog: itmcatelog,
-                                                vendorDetails: vendorDetails,
-                                                // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
-                                                barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
-                                                qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,
-                                                alternativeBarcode: alternativeBarcode.isEmpty?null: alternativeBarcode,
-                                                alternativeQrCodeBarcode: alternativeQrCode.isEmpty?null:alternativeQrCode,
-                                                searchName: searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
-                                                displayName: displayNAmeController!.text.isEmpty?null:displayNAmeController?.text,
-                                                description: descriptionController.text.isEmpty?null:descriptionController?.text,
-                                                arabicDescription: arabicDescriptionController.text.isEmpty?null: arabicDescriptionController?.text,
-                                                additionalDescription: additionalDescriptionController.text.isEmpty?null:additionalDescriptionController?.text,
-                                                posName: posNameController.text.isEmpty?null:posNameController?.text,
-                                                grossWeight: grossWeightController.text.isEmpty?null:grossWeightController?.text,
-                                                netWeight: netWeightController.text.isEmpty?null:netWeightController?.text,
-                                                unitCost: double.tryParse( unitCostController?.text??""),
-                                                landingCost:double.tryParse( landingCostController?.text??""),
-                                                actualCost:double.tryParse( actualCostController?.text??""),
-                                                basePrize:double.tryParse( basePrizePrizeController?.text??""),
-                                                manuFacturedId:int.tryParse( manuFactreIdController?.text??""),
-                                                manuFacturedName: manuFactreNameController.text.isEmpty?null:manuFactreNameController?.text,
-                                                safetyStock:int.tryParse(saftyStockController?.text??""),
-                                                reOrderPoint:int.tryParse(reorederPointController?.text??""),
-                                                reorderQuantity:int.tryParse(reorederQuaintityController?.text??""),
-                                                salesBolock: salesBolock,
-                                                purchaseBlock: purchaseBolock,
-                                                isActive: active,
-                                                ratioToEcommerce: ratioEcommerceController!.text.isEmpty?null: ratioEcommerceController?.text,
-                                                minMaxRatio: minMaxController!.text.isEmpty?null:minMaxController?.text,
-                                                minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
-                                                maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
-                                                wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
-                                                onlineSellingPercenage:double.tryParse( ""),
-                                                minGap:double.tryParse( minimumGpController?.text??""),
-                                                maxGp:double.tryParse( maximumGpController?.text??""),
-                                                avgGp:double.tryParse( averageGpController?.text??""),
-                                                targetedGp:double.tryParse( targetedGpController?.text??""),
-                                                minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
-                                                returnTime:int.tryParse( returnTimeController?.text??""),
-                                                maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
-                                                vat:double.tryParse( vatController?.text??""),
-                                                excessTax:double.tryParse( exciseTaxController?.text??""),
-                                                vedioUrl: videoUrlController!.text.isEmpty?null:videoUrlController?.text,
-                                                returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
-                                                status: statusController.text.isEmpty?null:statusController?.text,
-                                                variantStatus:null,
-                                                stockWarning: stockWarning,
-                                                aboutProducts: aboutProducts,
-                                                productDetails:productDetails,
-                                                productFeatures:productFeatures,
-                                                additionalInfo: additionalInfo,
-                                                nutriantsFacts:nutriantsFacts,
-                                                Ingrediants: Ingrediants,
-                                                usageDirection: usageDirection,
-                                                storage:storage,
-                                                importantInfo:importantInfo,
-                                                productBehavior: inforMationList,
-
-                                              );
-                                              print("the searching model is here"+model.toString());
-                                              context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
-
-                                            }
+                                                },
+                                                height: 29,
+                                                width: 90,
+                                                labelcolor: Colors.red,
+                                                iconColor: Colors.red,
+                                                bdr: true),
+                                            SizedBox(
+                                              width: width * .008,
+                                            ),
 
 
 
 
 
-                                              }),
-                                          SizedBox(
-                                            width: width * .008,
-                                          ),
-                                        ],
+                                            Button(Icons.check, Colors.grey,
+                                                ctx: context,
+                                                text: select?"Save":"update",
+                                                height: 29,
+                                                Color: Color(0xff3E4F5B),
+                                                width: 90,
+                                                labelcolor: Colors.white,
+                                                iconColor: Colors.white,
+                                                onApply: () {
+                                              if(select){
+                                                VariantPost model = VariantPost(
+                                                  inventoryId: Variable.inventory_ID,
+                                                  inventoryName: Variable.inventory_Name,
+                                                  searchName:searchNAmeController?.text??"",
+                                                  posName:posNameController?.text??"",
+                                                  displayName:displayNAmeController?.text??"",
+                                                  arabicDescription:arabicDescriptionController?.text??"",
+                                                  additionalDescription:additionalDescriptionController?.text??"",
+                                                  salesUom: int.tryParse(salesUomController?.text??""),
+                                                  seblingId: int.tryParse(seblingController.text),
+                                                  purchaseUom: int.tryParse(purchaseUomController?.text??""),
+                                                  grossWeight:double.tryParse( grossWeightController.text??""),
+                                                  actualCost:double.tryParse( actualCostController.text??""),
+                                                  safetyStock: int.tryParse(saftyStockController?.text??""),
+                                                  reOrderPoint: int.tryParse(reorederPointController?.text??""),
+                                                  reorderQuantity: int.tryParse(reorederQuaintityController?.text??""),
+                                                  salesBolock: salesBolock,
+                                                  purchaseBlock: purchaseBolock,
+                                                  ratioToEcommerce: ratioEcommerceController.text??"",
+                                                  itemCatelog: itmcatelog,
+                                                  itemImage: itmImage,
+                                                  vendorDetails: vendorDetails,
+
+                                                  minMaxRatio: minMaxController?.text??"",
+                                                  wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
+                                                  minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
+                                                  maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
+                                                  minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
+                                                  maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
+                                                  stockWarning:stockWarning,
+                                                  retailSellingPricePercentage:2,
+                                                  wholeSellingPricePercentage: 2,
+                                                  onlineSellingPercenage: 2,
+                                                  producedCountry:alternativeQrCode.isEmpty?null: producedCountryController?.text??"",
+                                                  basePrize: double.tryParse(basePrizePrizeController.text),
+                                                  vat: double.tryParse(vatController.text??""),
+                                                  excessTax: double.tryParse(exciseTaxController.text??""),
+                                                  minGap: double.tryParse(minimumGpController.text??""),
+                                                  maxGp: double.tryParse(maximumGpController.text??""),
+                                                  avgGp: double.tryParse(averageGpController.text??""),
+                                                  targetedGp: double.tryParse(targetedGpController.text??""),
+                                                  vedioUrl: videoUrlController.text.isEmpty?null:videoUrlController.text,
+                                                  alternativeBarcode:alternativeBarcode,
+                                                  alternativeQrCodeBarcode: alternativeQrCode,
+                                                  returnType: returnTypeController.text,
+                                                  returnTime: int.tryParse(returnTimeController.text),
+                                                  variantStatus: "va",
+                                                  isActive: active,
+                                                  image2:img2?Variable.img2:  int.tryParse(image2Controller?.text??""),
+                                                  image3:img3?Variable.img3: int.tryParse(image3Controller?.text??""),
+                                                  image4:img4?Variable.img4: int.tryParse(image4Controller?.text??""),
+                                                  image5:img5?Variable.img5: int.tryParse(image5Controller?.text??""),
+                                                  catalog1:cata1?Variable.catalog1:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog1??""),
+                                                  catalog2:cata2?Variable.catalog2:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog2??""),
+                                                  catalog3:cata3?Variable.catalog3:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog3??""),
+                                                  catalog4:cata4?Variable.catalog4:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog4??""),
+                                                  catalog5:cata5?Variable.catalog5:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog5??""),
+                                                  catalog6:cata6?Variable.catalog6:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog6??""),
+                                                  catalog7:cata7?Variable.catalog7:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog7??""),
+                                                  catalog8:cata8?Variable.catalog8:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog8??""),
+                                                  aboutProducts: aboutProducts,
+                                                  productDetails: productDetails,
+                                                  productFeatures:productFeatures,
+                                                  additionalInfo: additionalInfo,
+                                                  nutriantsFacts:nutriantsFacts,
+                                                  Ingrediants: Ingrediants,
+                                                  usageDirection: usageDirection,
+                                                  storage:storage,
+                                                  importantInfo:importantInfo,
+                                                  productBehavior:   inforMationList,
+
+                                                );
+                                                print("shifasssss"+  model.productBehavior.toString());
+                                                context.read<VariantpostCubit>().postVariant(checkIdid, model);
+                                                setState(() {
+
+                                                });
+                                              }
+                                              else{
+                                                VariantPatch model=VariantPatch (
+                                                  variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
+                                                  salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
+                                                  // "1",
+
+                                                  purchaseUom:purchaseUomController.text,
+                                                  itemImage: itmImage,
+                                                  itemCatelog: itmcatelog,
+                                                  vendorDetails: vendorDetails,
+                                                  // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
+                                                  barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
+                                                  qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,
+                                                  alternativeBarcode: alternativeBarcode.isEmpty?null: alternativeBarcode,
+                                                  alternativeQrCodeBarcode: alternativeQrCode.isEmpty?null:alternativeQrCode,
+                                                  searchName: searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
+                                                  displayName: displayNAmeController!.text.isEmpty?null:displayNAmeController?.text,
+                                                  description: descriptionController.text.isEmpty?null:descriptionController?.text,
+                                                  arabicDescription: arabicDescriptionController.text.isEmpty?null: arabicDescriptionController?.text,
+                                                  additionalDescription: additionalDescriptionController.text.isEmpty?null:additionalDescriptionController?.text,
+                                                  posName: posNameController.text.isEmpty?null:posNameController?.text,
+                                                  grossWeight: grossWeightController.text.isEmpty?null:grossWeightController?.text,
+                                                  netWeight: netWeightController.text.isEmpty?null:netWeightController?.text,
+                                                  unitCost: double.tryParse( unitCostController?.text??""),
+                                                  landingCost:double.tryParse( landingCostController?.text??""),
+                                                  actualCost:double.tryParse( actualCostController?.text??""),
+                                                  basePrize:double.tryParse( basePrizePrizeController?.text??""),
+                                                  manuFacturedId:int.tryParse( manuFactreIdController?.text??""),
+                                                  manuFacturedName: manuFactreNameController.text.isEmpty?null:manuFactreNameController?.text,
+                                                  safetyStock:int.tryParse(saftyStockController?.text??""),
+                                                  reOrderPoint:int.tryParse(reorederPointController?.text??""),
+                                                  reorderQuantity:int.tryParse(reorederQuaintityController?.text??""),
+                                                  salesBolock: salesBolock,
+                                                  purchaseBlock: purchaseBolock,
+                                                  isActive: active,
+                                                  ratioToEcommerce: ratioEcommerceController!.text.isEmpty?null: ratioEcommerceController?.text,
+                                                  minMaxRatio: minMaxController!.text.isEmpty?null:minMaxController?.text,
+                                                  minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
+                                                  maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
+                                                  wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
+                                                  onlineSellingPercenage:double.tryParse( ""),
+                                                  minGap:double.tryParse( minimumGpController?.text??""),
+                                                  maxGp:double.tryParse( maximumGpController?.text??""),
+                                                  avgGp:double.tryParse( averageGpController?.text??""),
+                                                  targetedGp:double.tryParse( targetedGpController?.text??""),
+                                                  minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
+                                                  returnTime:int.tryParse( returnTimeController?.text??""),
+                                                  maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
+                                                  vat:double.tryParse( vatController?.text??""),
+                                                  excessTax:double.tryParse( exciseTaxController?.text??""),
+                                                  vedioUrl: videoUrlController!.text.isEmpty?null:videoUrlController?.text,
+                                                  returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
+                                                  status: statusController.text.isEmpty?null:statusController?.text,
+                                                  image1: image1Controller.text.isEmpty?null:int.tryParse(image1Controller.text),
+                                                  image2: image2Controller.text.isEmpty?null:image2Controller.text,
+                                                  image3: image3Controller.text.isEmpty?null:image3Controller.text,
+                                                  image5: image5Controller.text.isEmpty?null:image5Controller.text,
+                                                  image4: image4Controller.text.isEmpty?null:image4Controller.text,
+                                                  catalog1: catalog1.text.isEmpty?null:catalog1.text,
+                                                  catalog2: catalog2.text.isEmpty?null:catalog2.text,
+                                                  catalog3: catalog3.text.isEmpty?null:catalog3.text,
+                                                  catalog4: catalog4.text.isEmpty?null:catalog4.text,
+                                                  catalog5: catalog5.text.isEmpty?null:catalog5.text,
+                                                  catalog6: catalog6.text.isEmpty?null:catalog6.text,
+                                                  catalog7: catalog7.text.isEmpty?null:catalog7.text,
+                                                  catalog8: catalog8.text.isEmpty?null:catalog8.text,
+                                                  variantStatus:null,
+                                                  stockWarning: stockWarning,
+                                                  aboutProducts: aboutProducts,
+                                                  productDetails:productDetails,
+                                                  productFeatures:productFeatures,
+                                                  additionalInfo: additionalInfo,
+                                                  nutriantsFacts:nutriantsFacts,
+                                                  Ingrediants: Ingrediants,
+                                                  usageDirection: usageDirection,
+                                                  storage:storage,
+                                                  importantInfo:importantInfo,
+                                                  productBehavior: inforMationList,
+
+                                                );
+                                                print("the searching model is here"+model.toString());
+                                                context.read<VariantpostCubit>().patchVariant(veritiaclid, model);
+
+                                              }
+
+
+
+
+
+                                                }),
+                                            SizedBox(
+                                              width: width * .008,
+                                            ),
+                                          ],
+                                        ),
                                       ),
 
                                     ],

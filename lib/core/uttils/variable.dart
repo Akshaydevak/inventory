@@ -12,7 +12,7 @@ class Variable{
   static String  created_by="";
   static String  username="";
   static String  loginLeage="";
-  static int  variantSearchId=0;
+  static int?  variantSearchId=0;
  static List<List<Map<String,dynamic>>> combinationArray=[];
   static String  token="test";
   static String?  imageName="";

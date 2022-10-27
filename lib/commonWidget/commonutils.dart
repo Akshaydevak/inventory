@@ -23,6 +23,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/material/material_lis
 import 'package:inventory/Screens/heirarchy/general/cubits/materialRead/materialread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/materialcreation/materialcraetion_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/readFrameWork/frameworkread_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgroupread/uomgroupread_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
@@ -57,6 +58,7 @@ import 'package:inventory/commonWidget/buttons.dart';
 
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/cubit/cubit/cubit/purchaseorderdelete_cubit.dart';
@@ -84,7 +86,6 @@ import '../Screens/variant/channel_costing_allocation/cubits/pricingrouplist/pri
 import '../Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import '../Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
-
 
 void showDailogPopUp(BuildContext context, Widget child) {
   showDialog(
@@ -179,12 +180,21 @@ class _OpenSettingsState extends State<OpenSettings> {
                                     Variable.inventory_ID.toString());
                                 // print(inventoryList?[index]
                                 //     .inventoryCode);
-                                Variable.inventory_ID = inventoryList![index].businessUnitCode.toString();
-                                Variable.inventory_Name = inventoryList![index].name.toString();
+                                Variable.inventory_ID = inventoryList![index]
+                                    .businessUnitCode
+                                    .toString();
+                                Variable.inventory_Name =
+                                    inventoryList![index].name.toString();
 
-                                final SharedPreferences prefs = await SharedPreferences.getInstance();
-                                prefs.setString("inventory", inventoryList![index].businessUnitCode.toString());
-                                prefs.setString("inventory_name", inventoryList![index].name.toString());
+                                final SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString(
+                                    "inventory",
+                                    inventoryList![index]
+                                        .businessUnitCode
+                                        .toString());
+                                prefs.setString("inventory_name",
+                                    inventoryList![index].name.toString());
                                 Navigator.pop(context);
 
                                 // print("Value");
@@ -543,76 +553,68 @@ class _ConfirmationPopupState extends State<ConfirmationPopup> {
   }
 }
 
-
-
-
 class SuccessPopup extends StatefulWidget {
+  final String content;
 
-final String content;
-
-
-
-  SuccessPopup(
-      { required this.content  });
+  SuccessPopup({required this.content});
 
   @override
   State<SuccessPopup> createState() => _SuccessPopupState();
 }
 
 class _SuccessPopupState extends State<SuccessPopup> {
-
-
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      return AlertDialog(actions: [
-
-        TextButton(
-          child: Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-      ], content: Text(widget.content,style: TextStyle(color: Colors.green),));
+      return AlertDialog(
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+          content: Text(
+            widget.content,
+            style: TextStyle(color: Colors.green),
+          ));
     });
   }
 }
 
-
-
 class FailiurePopup extends StatefulWidget {
-
   final String content;
 
-
-
-  FailiurePopup(
-      { required this.content  });
+  FailiurePopup({required this.content});
 
   @override
   State<FailiurePopup> createState() => FailiurePopupState();
 }
 
 class FailiurePopupState extends State<FailiurePopup> {
-
-
   // List inventoryIdList = ["BSNU1000", "BSNU1007"];
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      return AlertDialog(actions: [
-
-        TextButton(
-          child: Text("Cancel"),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
-      ], content: Text(widget.content,style: TextStyle(color: Colors.red),));
+      return AlertDialog(
+          actions: [
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
+          content: Text(
+            widget.content,
+            style: TextStyle(color: Colors.red),
+          ));
     });
   }
 }
+
 class CommonIcon extends StatelessWidget {
   final double size;
   final VoidCallback? onTap;
@@ -675,7 +677,12 @@ class ConfigurePopup extends StatelessWidget {
   final VoidCallback? onBack;
 
   ConfigurePopup(
-      {Key? key, required this.type, this.onBack, this.onAddNew = false,this.listAssign,this.veritiaclid})
+      {Key? key,
+      required this.type,
+      this.onBack,
+      this.onAddNew = false,
+      this.listAssign,
+      this.veritiaclid})
       : super(key: key);
   late Widget data;
 
@@ -702,7 +709,7 @@ class ConfigurePopup extends StatelessWidget {
       case "CreateSearchLinkedItem-group":
         {
           data = CreateSearchLinkedItem(
-            listAssign:listAssign,
+            listAssign: listAssign,
             type: type,
           );
         }
@@ -710,7 +717,7 @@ class ConfigurePopup extends StatelessWidget {
       case "vendorDetailList_popup":
         {
           data = VendorDetailsList(
-            listAssign:listAssign,
+            listAssign: listAssign,
             type: type,
           );
         }
@@ -774,7 +781,8 @@ class ConfigurePopup extends StatelessWidget {
             type: type,
           );
         }
-        break;    case "Subcategory_group":
+        break;
+      case "Subcategory_group":
         {
           data = SubCategoryCreatePopUp(
             type: type,
@@ -846,7 +854,8 @@ class ConfigurePopup extends StatelessWidget {
             type: type,
           );
         }
-        break; case "costingCreate":
+        break;
+      case "costingCreate":
         {
           data = CreateCosting(
             type: type,
@@ -880,10 +889,11 @@ class ConfigurePopup extends StatelessWidget {
             type: type,
           );
         }
-        break; case "LinkedItemCreatePopUp":
+        break;
+      case "LinkedItemCreatePopUp":
         {
           data = LinkedItemCreatePopUp(
-            veritiaclid:veritiaclid,
+            veritiaclid: veritiaclid,
             type: type,
           );
         }
@@ -936,6 +946,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
 
   TextEditingController imageController = TextEditingController();
   TextEditingController parentIdController = TextEditingController();
+  TextEditingController parentNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController brandIdentifierUrl = TextEditingController();
   List<BrandListModel> result = [];
@@ -983,17 +994,23 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                 }, success: (data) {
                   Navigator.pop(context);
                   if (data.data1) {
-
-
                     setState(() {
                       context.read<Listbrand2Cubit>().getSlotSectionPage();
                     });
-                    context.showSnackBarSuccess(data.data2);
-
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   } else {
-                    context.showSnackBarError(data.data2);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     print(data.data1);
-
                   }
                   ;
                 });
@@ -1069,7 +1086,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                       BrandCreationtModel model = BrandCreationtModel(
                         name: nameController?.text ?? "",
                         description: descriptionController?.text ?? "",
-                        image: int.tryParse(imageController.text),
+                        image: imageController.text,
                         brandIdentifierUrl: brandIdentifierUrl?.text ?? "",
                         parentCode: parentIdController.text ?? "",
                       );
@@ -1151,24 +1168,49 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                             Expanded(
                                 child: Column(
                               children: [
-                                SelectableDropDownpopUp(
-                                  label: "Parent Id",
-                                  // row: true,
+                                NewInputCard(
+                                  controller: parentNameController,
+                                  icondrop: true,
+                                  title: "Parent Id",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "BrandTabalePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            parentNameController.text =
+                                                va?.name ?? "";
+                                            parentIdController.text =
+                                                va?.code ?? "";
+                                            setState(() {});
 
-                                  type: "BrandPopUpCall",
-                                  value: parentName,
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
-                                      parentName = va?.name ?? "";
-                                      parentIdController.text = va?.code ?? "";
-
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
+                                // SelectableDropDownpopUp(
+                                //   label: "Parent Id",
+                                //   // row: true,
+                                //
+                                //   type: "BrandPopUpCall",
+                                //   value: parentName,
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //       parentName = va?.name ?? "";
+                                //       parentIdController.text = va?.code ?? "";
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -1243,6 +1285,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
 
   TextEditingController imageController = TextEditingController();
   TextEditingController parentIdController = TextEditingController();
+  TextEditingController parendNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController brandIdentifierUrl = TextEditingController();
   List<BrandListModel> result = [];
@@ -1327,6 +1370,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                         descriptionController.text = data.description ?? "";
                         brandIdentifierUrl.text = data.brandIdentifierUrl ?? "";
                         parentName = data.parentCode ?? "";
+                        parendNameController.text = data.name ?? "";
                         active = data.isActive ?? false;
                       });
                     });
@@ -1360,7 +1404,6 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -1388,7 +1431,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                   },
                   success: (list) {
                     print("aaaaayyyiram" + list.data.toString());
-                    list1=list;
+                    list1 = list;
 
                     result = list.data;
                     setState(() {
@@ -1427,7 +1470,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                         parentCode: parentIdController?.text ?? "",
                         name: nameController.text ?? "",
                         brandIdentifierUrl: brandIdentifierUrl.text ?? "",
-                        image: int.tryParse(imageController.text),
+                        image: imageController.text,
                         description: descriptionController.text,
                         isActive: active,
                       );
@@ -1455,7 +1498,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             BrandVerticalList(
-                              list:list1,
+                              list: list1,
                               selectedVertical: selectedVertical,
                               itemsearch: itemsearch,
                               ontap: (int index) {
@@ -1536,23 +1579,48 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                             Expanded(
                                 child: Column(
                               children: [
-                                SelectableDropDownpopUp(
-                                  label: "Parent Id",
-                                  // row: true,
+                                NewInputCard(
+                                  controller: parendNameController,
+                                  icondrop: true,
+                                  title: "Parent Id",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "BrandTabalePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            parendNameController.text =
+                                                va?.name ?? "";
+                                            parentIdController.text =
+                                                va?.code ?? "";
+                                            setState(() {});
 
-                                  type: "BrandPopUpCall",
-                                  value: parentName,
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      parentName = va?.name ?? "";
-                                      parentIdController.text = va?.code ?? "";
-
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
+                                // SelectableDropDownpopUp(
+                                //   label: "Parent Id",
+                                //   // row: true,
+                                //
+                                //   type: "BrandPopUpCall",
+                                //   value: parentName,
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       parentName = va?.name ?? "";
+                                //       parentIdController.text = va?.code ?? "";
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -1692,13 +1760,23 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     context.read<MaterialListCubit>().getMaterialList();
-                    Navigator.pop(context);
+                    ;
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -1905,8 +1983,6 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
   }
 }
 
-
-
 class CreateSearchLinkedItem extends StatefulWidget {
   final String type;
   final Function? listAssign;
@@ -1941,12 +2017,13 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController searchNamecontroller = TextEditingController();
   TextEditingController imageContollercontroller = TextEditingController();
-  TextEditingController descriptionContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   TextEditingController searchContoller = TextEditingController();
   bool addNew = false;
-  List<LinkedItemListIdModel>table=[];
-  List<int>list=[];
-  List<LinkedItemListIdModel>list1=[];
+  List<LinkedItemListIdModel> table = [];
+  List<int> list = [];
+  List<LinkedItemListIdModel> list1 = [];
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -1976,7 +2053,8 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
           create: (context) => MaterialcraetionCubit(),
         ),
         BlocProvider(
-          create: (context) => LinkeditemlistreadCubit()..getLinkedItemListRead("code"),
+          create: (context) =>
+              LinkeditemlistreadCubit()..getLinkedItemListRead("code"),
         ),
         BlocProvider(
           create: (context) => MaterialdeleteCubit(),
@@ -1994,16 +2072,14 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  print("the real Akshay"+data.toString());
-                  if(data.isNotEmpty){
+                  print("the real Akshay" + data.toString());
+                  if (data.isNotEmpty) {
                     setState(() {
-                      table=data;
+                      table = data;
                     });
-
                   }
 
-
-                    // context.showSnackBarSuccess(data.data2);
+                  // context.showSnackBarSuccess(data.data2);
 
                   ;
                 });
@@ -2117,14 +2193,13 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                       // height: 500,
                       child: Column(
                         children: [
-
                           Container(
                               margin: EdgeInsets.all(5),
                               child: SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 h: 40,
                                 hintText: "Search...",
-                                ctrlr:searchContoller,
+                                ctrlr: searchContoller,
                                 onChanged: (va) {
                                   // print("searching case"+va.toString());
                                   // context
@@ -2136,31 +2211,26 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                                   //       .getInventorySearch("code",tab: widget.tab);
 
                                   // }
-
                                 },
                               )),
                           Container(
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: customTable(
-
                               border: const TableBorder(
-
                                 verticalInside: BorderSide(
-                                    width:.5,
+                                    width: .5,
                                     color: Colors.black45,
                                     style: BorderStyle.solid),
                                 horizontalInside: BorderSide(
-                                    width:.3,
+                                    width: .3,
                                     color: Colors.black45,
                                     // color: Colors.blue,
-                                    style: BorderStyle.solid),),
-
+                                    style: BorderStyle.solid),
+                              ),
                               tableWidth: .5,
-
-                              childrens:[
+                              childrens: [
                                 TableRow(
-
                                   // decoration: BoxDecoration(
 
                                   //     color: Colors.green.shade200,
@@ -2170,9 +2240,7 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                                   //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                                   children: [
-
                                     tableHeadtext(
-
                                       '',
 
                                       padding: EdgeInsets.all(7),
@@ -2182,10 +2250,7 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                                       // color: Color(0xffE5E5E5),
 
                                       size: 13,
-
-
                                     ),
-
 
                                     tableHeadtext(
                                       'Item Name',
@@ -2203,84 +2268,64 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                                     //   size: 13,
                                     //   // color: Color(0xffE5E5E5),
                                     // ),
-
-
-
                                   ],
-
                                 ),
-                                if (table?.isNotEmpty==true ) ...[
-
-
-                                  for (var i = 0; i <table.length; i++)
-
-
-
+                                if (table?.isNotEmpty == true) ...[
+                                  for (var i = 0; i < table.length; i++)
                                     TableRow(
                                         decoration: BoxDecoration(
-                                            color: Colors.grey
-                                                .shade200,
-                                            shape: BoxShape
-                                                .rectangle,
-                                            border:const  Border(
+                                            color: Colors.grey.shade200,
+                                            shape: BoxShape.rectangle,
+                                            border: const Border(
                                                 left: BorderSide(
                                                     width: .5,
-                                                    color: Colors
-                                                        .grey,
-                                                    style: BorderStyle
-                                                        .solid),
+                                                    color: Colors.grey,
+                                                    style: BorderStyle.solid),
                                                 bottom: BorderSide(
                                                     width: .5,
-                                                    color: Colors
-                                                        .grey,
-                                                    style: BorderStyle
-                                                        .solid),
+                                                    color: Colors.grey,
+                                                    style: BorderStyle.solid),
                                                 right: BorderSide(
-                                                    color: Colors
-                                                        .grey,
+                                                    color: Colors.grey,
                                                     width: .5,
-                                                    style: BorderStyle
-                                                        .solid))),
+                                                    style: BorderStyle.solid))),
                                         children: [
-
                                           TableCell(
-                                            verticalAlignment: TableCellVerticalAlignment.middle,
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
 
-                                            child:CustomCheckBox(
+                                            child: CustomCheckBox(
                                               key: UniqueKey(),
                                               value: list1.contains(table![i]),
                                               onChange: (p0) {
                                                 if (p0)
-                                                  list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
+                                                  list1.add(
+                                                      LinkedItemListIdModel(
+                                                          id: table![i].id,
+                                                          name: table[i].name));
                                                 else
-                                                  list1.removeWhere((element) => element == list1[i]);
-                                                  // list1.remove(table![i]);
+                                                  list1.removeWhere((element) =>
+                                                      element == list1[i]);
+                                                // list1.remove(table![i]);
 
-                                                  widget.listAssign!(list1);
-
+                                                widget.listAssign!(list1);
 
                                                 print(list1);
                                               },
-
-
                                             ),
                                             // Text(keys[i].key??"")
-
-
-
                                           ),
                                           TableCell(
-
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                              child:textPadding(table[i].name??"",
-                                              height: 45)
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+                                              child: textPadding(
+                                                  table[i].name ?? "",
+                                                  height: 45)
                                               // Text(keys[i].value??"",)
 
-                                          ),
-
-
-
+                                              ),
                                         ]),
                                 ],
                                 //
@@ -2371,17 +2416,12 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                                 //
                                 //
                                 //     ])
-
                               ],
                               widths: {
-
                                 0: FlexColumnWidth(2),
                                 1: FlexColumnWidth(5),
-
-
-                              },),
-
-
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -2396,9 +2436,6 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
     );
   }
 }
-
-
-
 
 class VendorDetailsList extends StatefulWidget {
   final String type;
@@ -2432,9 +2469,9 @@ class _VendorDetailsList extends State<VendorDetailsList> {
   bool changer = false;
 
   bool addNew = false;
-  List<VendorDetailsModel>table=[];
-  List<int>list=[];
-  List<LinkedItemListIdModel>list1=[];
+  List<VendorDetailsModel> table = [];
+  List<int> list = [];
+  List<LinkedItemListIdModel> list1 = [];
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -2463,7 +2500,6 @@ class _VendorDetailsList extends State<VendorDetailsList> {
         BlocProvider(
           create: (context) => VendordetailslistCubit()..getVendorDetailList(),
         ),
-
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
@@ -2478,24 +2514,17 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   setState(() {
-
-
-                    table=data.data;
-
-
+                    table = data.data;
                   });
 
-                   print("the vendor Akshay"+table.toString());
-
-
+                  print("the vendor Akshay" + table.toString());
 
                   // context.showSnackBarSuccess(data.data2);
 
-                      ;
+                  ;
                 });
               },
             ),
-
           ],
           child: BlocConsumer<MaterialListCubit, MaterialListState>(
             listener: (context, state) {
@@ -2533,18 +2562,12 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                   content: PopUpHeader(
                     functionChane: true,
                     buttonCheck: true,
-                    onTap: () {
-
-                    },
+                    onTap: () {},
                     isDirectCreate: true,
                     addNew: addNew,
                     // label: "Linked Item",
-                    onApply: () {
-
-                    },
-                    onEdit: () {
-
-                    },
+                    onApply: () {},
+                    onEdit: () {},
                     onCancel: () {
                       // context
                       //     .read<MaterialdeleteCubit>()
@@ -2561,7 +2584,6 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                       // height: 500,
                       child: Column(
                         children: [
-
                           // Container(
                           //     margin: EdgeInsets.all(5),
                           //     child: SearchTextfiled(
@@ -2587,24 +2609,20 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: customTable(
-
                               border: const TableBorder(
-
                                 verticalInside: BorderSide(
-                                    width:.5,
+                                    width: .5,
                                     color: Colors.black45,
                                     style: BorderStyle.solid),
                                 horizontalInside: BorderSide(
-                                    width:.3,
+                                    width: .3,
                                     color: Colors.black45,
                                     // color: Colors.blue,
-                                    style: BorderStyle.solid),),
-
+                                    style: BorderStyle.solid),
+                              ),
                               tableWidth: .5,
-
-                              childrens:[
+                              childrens: [
                                 TableRow(
-
                                   // decoration: BoxDecoration(
 
                                   //     color: Colors.green.shade200,
@@ -2614,10 +2632,6 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                                   //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                                   children: [
-
-
-
-
                                     tableHeadtext(
                                       'Vendors',
                                       // textColor: Colors.black,
@@ -2634,68 +2648,55 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                                     //   size: 13,
                                     //   // color: Color(0xffE5E5E5),
                                     // ),
-
-
-
                                   ],
-
                                 ),
-                                if (table?.isNotEmpty==true ) ...[
-
-
-                                  for (var i = 0; i <table.length; i++)
-
-
-
+                                if (table?.isNotEmpty == true) ...[
+                                  for (var i = 0; i < table.length; i++)
                                     TableRow(
                                         decoration: BoxDecoration(
-                                            color: Colors.grey
-                                                .shade200,
-                                            shape: BoxShape
-                                                .rectangle,
-                                            border:const  Border(
+                                            color: Colors.grey.shade200,
+                                            shape: BoxShape.rectangle,
+                                            border: const Border(
                                                 left: BorderSide(
                                                     width: .5,
-                                                    color: Colors
-                                                        .grey,
-                                                    style: BorderStyle
-                                                        .solid),
+                                                    color: Colors.grey,
+                                                    style: BorderStyle.solid),
                                                 bottom: BorderSide(
                                                     width: .5,
-                                                    color: Colors
-                                                        .grey,
-                                                    style: BorderStyle
-                                                        .solid),
+                                                    color: Colors.grey,
+                                                    style: BorderStyle.solid),
                                                 right: BorderSide(
-                                                    color: Colors
-                                                        .grey,
+                                                    color: Colors.grey,
                                                     width: .5,
-                                                    style: BorderStyle
-                                                        .solid))),
+                                                    style: BorderStyle.solid))),
                                         children: [
                                           TableCell(
-
-                                              verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                              child:InkWell(
-                                                onTap: (){
-                                                  VendorDetailsModel model=VendorDetailsModel(
+                                              verticalAlignment:
+                                                  TableCellVerticalAlignment
+                                                      .middle,
+                                              child: InkWell(
+                                                onTap: () {
+                                                  VendorDetailsModel model =
+                                                      VendorDetailsModel(
                                                     id: table[i].id,
-                                                    manuFactureName: table[i].manuFactureName,
-                                                    manuFactureuserCode: table[i].manuFactureuserCode,
+                                                    manuFactureName: table[i]
+                                                        .manuFactureName,
+                                                    manuFactureuserCode: table[
+                                                            i]
+                                                        .manuFactureuserCode,
                                                   );
                                                   widget.listAssign!(model);
                                                   Navigator.pop(context);
                                                 },
-                                                child: Container(child: Text(table[i].manuFactureName??""),
+                                                child: Container(
+                                                    child: Text(table[i]
+                                                            .manuFactureName ??
+                                                        ""),
                                                     height: 45),
                                               )
-                                            // Text(keys[i].value??"",)
+                                              // Text(keys[i].value??"",)
 
-                                          ),
-
-
-
+                                              ),
                                         ]),
                                 ],
                                 //
@@ -2786,17 +2787,12 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                                 //
                                 //
                                 //     ])
-
                               ],
                               widths: {
-
                                 0: FlexColumnWidth(2),
                                 1: FlexColumnWidth(5),
-
-
-                              },),
-
-
+                              },
+                            ),
                           ),
                         ],
                       ),
@@ -2811,27 +2807,6 @@ class _VendorDetailsList extends State<VendorDetailsList> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // patch material
 class PatchMaterialPopUp extends StatefulWidget {
@@ -2861,7 +2836,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
   TextEditingController itemsearch = TextEditingController();
   String parentName = "";
   bool changer = false;
-   var list1;
+  var list1;
 
   TextEditingController codeController = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
@@ -2940,7 +2915,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                       setState(() {
                         group = data;
                         codeController.text = data.code ?? "";
-                        imageName= data.image ?? "";
+                        imageName = data.image ?? "";
                         namecontroller.text = data.name ?? "";
                         descriptionContollercontroller.text =
                             data.description ?? "";
@@ -3003,7 +2978,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                   },
                   success: (list) {
                     print("aaaaayyyiram" + list.data.toString());
-                    list1=list;
+                    list1 = list;
 
                     result = list.data;
                     setState(() {
@@ -3807,7 +3782,8 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
   TextEditingController searchNamecontroller = TextEditingController();
   TextEditingController imageContollercontroller = TextEditingController();
   TextEditingController displayContollercontroller = TextEditingController();
-  TextEditingController descriptionContollercontroller = TextEditingController();
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
   TextEditingController statuscontroller = TextEditingController();
   bool addNew = false;
 
@@ -3847,13 +3823,14 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
                     print("dataAkshay" + data.data2.toString());
                     imageContollercontroller.text = data.data2.toString();
+                    print("dataAkshay" +
+                        imageContollercontroller.text.toString());
 
                     // context.showSnackBarSuccess(data.data2);
 
@@ -3874,15 +3851,28 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    print("success case");
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     context.read<DevisionListCubit>().getDevisionList();
-                    Navigator.pop(context);
 
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    print("else case");
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
+                    setState(() {});
                   }
                   ;
                 });
@@ -4213,10 +4203,11 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                       setState(() {
                         group = data;
                         codeController.text = data.code ?? "";
-                        displayContollercontroller.text = data.displayName ?? "";
+                        displayContollercontroller.text =
+                            data.displayName ?? "";
                         namecontroller.text = data.name ?? "";
                         imageContollercontroller.text = data.image ?? "";
-                       imageName = data.image ?? "";
+                        imageName = data.image ?? "";
                         descriptionContollercontroller.text =
                             data.description ?? "";
                         searchNamecontroller.text = data.searchNmae ?? "";
@@ -4279,7 +4270,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                     print("error");
                   },
                   success: (list) {
-                    list1=list;
+                    list1 = list;
                     print("aaaaayyyiram" + list.data.toString());
 
                     result = list.data;
@@ -4601,14 +4592,25 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
                     context.read<ListstaticCubit>().getStaticList();
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
                   }
                   ;
                 });
@@ -4672,6 +4674,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                       context
                           .read<DivisioncreateCubit>()
                           .postCreateDevision(model, "static");
+                      print("the model is"+model.toString());
 
                       // widget.onTap();
                     },
@@ -4697,7 +4700,6 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                   height: 10,
                                 ),
                                 NewInputCard(
-
                                   height: 60,
                                   controller: namecontroller,
                                   title: "Name",
@@ -4828,7 +4830,6 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
   String parentName = "";
   bool changer = false;
 
-
   TextEditingController codeController = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
 
@@ -4854,10 +4855,11 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
     addNew = va;
     onChange = false;
   }
+
   @override
   void initState() {
-    // if (costingTypeMethodeCheck != true)
-      context.read<FrameworklistCubit>().getFrameWorklist();
+    if (costingTypeMethodeCheck != true)
+    context.read<FrameworklistCubit>().getFrameWorklist();
     super.initState();
   }
 
@@ -4875,7 +4877,8 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
       providers: [
         BlocProvider(
           create: (context) => VariantframeworkpostCubit(),
-        ),   BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => FrameworkreadCubit(),
         ),
         BlocProvider(
@@ -4895,17 +4898,25 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   } else {
                     context.showSnackBarError(data.data2);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
               },
             ),
-
-
             BlocListener<FrameworkreadCubit, FrameworkreadState>(
               listener: (context, state) {
                 print("nnnnop" + state.toString());
@@ -4916,15 +4927,18 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                     },
                     success: (data) {
                       setState(() {
-                        print("the frame work read"+data.toString());
+                        print("the frame work read" + data.toString());
                         group = data;
                         codeController.text = data.code ?? "";
                         namecontroller.text = data.name ?? "";
-                        table=data.lines??[];
+                        table = data.lines ?? [];
 
                         descriptionContollercontroller.text =
                             data.description ?? "";
-
+                        categoryNameController.text = data.categoryName ?? "";
+                        print(data.categoryId);
+                        categoryid = data.categoryId;
+                        print(categoryid);
 
                         active = data.isActive ?? false;
                       });
@@ -4940,21 +4954,30 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
                     print("here after  creation");
 
                     setState(() {
-                      context.showSnackBarSuccess(data.data2);
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+
                       context.read<FrameworklistCubit>().getFrameWorklist();
                       print("here after  creation next call");
-
                     });
 
-                    Navigator.pop(context);
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -4981,7 +5004,9 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         // if (costingTypeMethodeCheck != true)
-                        // context.read<FrameworkreadCubit>().getFrameWorkRead(veritiaclid!);
+                        context
+                            .read<FrameworkreadCubit>()
+                            .getFrameWorkRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -5034,6 +5059,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                         isActive: active,
                         name: namecontroller?.text ?? "",
                       );
+                      print(model);
                       context
                           .read<VariantframeworkpostCubit>()
                           .postPatchFrameWork(model, veritiaclid);
@@ -5063,6 +5089,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                       ontap: (int index) {
                                         setState(() {
                                           selectedVertical = index;
+                                          table.clear();
 
                                           // select=false;
                                           // clear();
@@ -5080,7 +5107,9 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                           //
 
                                           setState(() {
-                                            context.read<FrameworkreadCubit>().getFrameWorkRead(veritiaclid!);
+                                            context
+                                                .read<FrameworkreadCubit>()
+                                                .getFrameWorkRead(veritiaclid!);
                                             // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                                           });
                                         });
@@ -5100,120 +5129,175 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                     ),
                                   Expanded(
                                     child: Container(
-                                        // height: 400,
+                                      // height: 400,
                                       // width: 400,
                                       child: Column(
-                                          children: [
-                                            Container(
+                                        children: [
+                                          Container(
                                               // width: 400,
-                                                height: 200,
-                                                child:Row(
-                                                  children: [
-                                                    Expanded(
-
-                                                      child: Column(
-                                                        children: [
-                                                          Expanded(
-                                                              child: Column(
-                                                                children: [
-                                                                  NewInputCard(
-                                                                      readOnly: true,
-                                                                      controller: codeController,
-                                                                      title: "Code"),
-                                                                  SizedBox(
-                                                                    height: 10,
-                                                                  ),
-                                                                  NewInputCard(
-                                                                    height: 60,
-                                                                    controller: namecontroller,
-                                                                    title: "Name",
-                                                                  ),
-                                                                ],
-                                                              )),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Expanded(
-                                                        child: Column(
+                                              height: 250,
+                                              child: Row(
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                            child: Column(
                                                           children: [
                                                             NewInputCard(
-                                                              height: 60,
-                                                              controller:
-                                                              descriptionContollercontroller,
-                                                              title: "Description",
-                                                            ),
+                                                                readOnly: true,
+                                                                controller:
+                                                                    codeController,
+                                                                title: "Code"),
                                                             SizedBox(
                                                               height: 10,
                                                             ),
-                                                            SelectableDropDownpopUp(
+                                                            NewInputCard(
+                                                              height: 60,
+                                                              controller:
+                                                                  namecontroller,
+                                                              title: "Name",
+                                                            ),
+                                                          ],
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                      child: Column(
+                                                    children: [
+                                                      NewInputCard(
+                                                        height: 60,
+                                                        controller:
+                                                            descriptionContollercontroller,
+                                                        title: "Description",
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+
+                                                      NewInputCard(
+                                                        controller:
+                                                            categoryNameController,
+                                                        icondrop: true,
+                                                        title: "Category ",
+                                                        ontap: () {
+                                                          showDailogPopUp(
+                                                            context,
+                                                            TableConfigurePopup(
                                                               apiType: "all",
-                                                              controller: categoryNameController,
-                                                              label: "category",
-                                                              type: "Category_PopUpCall",
-                                                              value: categoryNameController.text,
-                                                              onchange: (vale) {
-                                                                // print("searching for search"+vale.toString());
-                                                                // context.read<CategorylistCubit>().searchCategoryist(vale);
-                                                              },
-                                                              enable: true,
-                                                              onSelection: (BrandListModel? va) {
+                                                              type:
+                                                                  "category-TablePopup",
+                                                              valueSelect:
+                                                                  (BrandListModel
+                                                                      va) {
                                                                 setState(() {
-                                                                  categoryNameController.text = va?.name ?? "";
-                                                                  categoryController.text = va?.code ?? "";
-                                                                  categoryid = va?.id;
-                                                                  Variable.categoryId = va?.id;
-                                                                  setState(() {});
+                                                                  onChange =
+                                                                      true;
+                                                                  categoryNameController
+                                                                          .text =
+                                                                      va?.name ??
+                                                                          "";
+                                                                  categoryController
+                                                                          .text =
+                                                                      va?.code ??
+                                                                          "";
+                                                                  categoryid =
+                                                                      va?.id;
+                                                                  // Variable.categoryId = va?.id;
+                                                                  setState(
+                                                                      () {});
 
                                                                   // onChange = true;
                                                                   // orderType.text = va!;
                                                                 });
                                                               },
-                                                              // onAddNew: () {
-                                                              //   showDailogPopUp(
-                                                              //     context,
-                                                              //     ConfigurePopup(
-                                                              //       type: "category_group",
-                                                              //     ),
-                                                              //   );
-                                                              // },
                                                             ),
-                                                            SizedBox(
-                                                              height: 10,
-                                                            ),
-                                                            PopUpSwitchTile(
-                                                                value: active ?? false,
-                                                                title: "isActive",
-                                                                onClick: (gg) {
-                                                                  onChange = true;
-                                                                  if (!addNew) active = !active!;
+                                                          );
+                                                        },
+                                                      ),
+                                                      // SelectableDropDownpopUp(
+                                                      //   apiType: "all",
+                                                      //   controller:
+                                                      //       categoryNameController,
+                                                      //   label: "category",
+                                                      //   type:
+                                                      //       "Category_PopUpCall",
+                                                      //   value:
+                                                      //       categoryNameController
+                                                      //           .text,
+                                                      //   onchange: (vale) {
+                                                      //     // print("searching for search"+vale.toString());
+                                                      //     // context.read<CategorylistCubit>().searchCategoryist(vale);
+                                                      //   },
+                                                      //   enable: true,
+                                                      //   onSelection:
+                                                      //       (BrandListModel?
+                                                      //           va) {
+                                                      //     setState(() {
+                                                      //       categoryNameController
+                                                      //               .text =
+                                                      //           va?.name ?? "";
+                                                      //       categoryController
+                                                      //               .text =
+                                                      //           va?.code ?? "";
+                                                      //       categoryid = va?.id;
+                                                      //       Variable.categoryId =
+                                                      //           va?.id;
+                                                      //       setState(() {});
+                                                      //
+                                                      //       // onChange = true;
+                                                      //       // orderType.text = va!;
+                                                      //     });
+                                                      //   },
+                                                      //   // onAddNew: () {
+                                                      //   //   showDailogPopUp(
+                                                      //   //     context,
+                                                      //   //     ConfigurePopup(
+                                                      //   //       type: "category_group",
+                                                      //   //     ),
+                                                      //   //   );
+                                                      //   // },
+                                                      // ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      PopUpSwitchTile(
+                                                          value:
+                                                              active ?? false,
+                                                          title: "isActive",
+                                                          onClick: (gg) {
+                                                            onChange = true;
+                                                            if (!addNew)
+                                                              active = !active!;
 
-                                                                  // extendedWarranty = gg;
-                                                                  // widget.changeExtendedWarranty(gg);
-                                                                  // onChangeExtWarranty = gg;
-                                                                  setState(() {});
-                                                                }),
-                                                          ],
-                                                        )),
-
-                                                  ],
-                                                )
-
-
-                                            ),
-                                            SizedBox(height: 10,),
-
-                                            SingleChildScrollView(
-                                              child: Column(
-                                                children: [
-                                                  Container(
-                                                    height:200,
-                                                      // color: Colors.red,
-                                                      child: VariantFrameWorkBottomTable(listAssign:listAssign,table:table)),
+                                                            // extendedWarranty = gg;
+                                                            // widget.changeExtendedWarranty(gg);
+                                                            // onChangeExtWarranty = gg;
+                                                            setState(() {});
+                                                          }),
+                                                    ],
+                                                  )),
                                                 ],
-                                              ),
+                                              )),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                          SingleChildScrollView(
+                                            child: Column(
+                                              children: [
+                                                Container(
+                                                    height: 180,
+                                                    // color: Colors.red,
+                                                    child:
+                                                        VariantFrameWorkBottomTable(
+                                                            listAssign:
+                                                                listAssign,
+                                                            table: table)),
+                                              ],
                                             ),
-
-                                          ],
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -5302,9 +5386,6 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                 ],
                               ),
                             ),
-
-
-
                           ],
                         ),
                       ),
@@ -5337,7 +5418,7 @@ bool costingTypeMethodeCheck = true;
 
 class _CreateCostingMethodeTypePopUpState
     extends State<CreateCostingMethodeTypePopUp> {
-  bool? active = costingTypeMethodeCheck != true?false:true;
+  bool? active = costingTypeMethodeCheck != true ? false : true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -5379,8 +5460,9 @@ class _CreateCostingMethodeTypePopUpState
   }
 
   void initState() {
-    if (costingTypeMethodeCheck != true){ context.read<CostingtypelistCubit>().getCostingTypeList();}
-
+    if (costingTypeMethodeCheck != true) {
+      context.read<CostingtypelistCubit>().getCostingTypeList();
+    }
 
     super.initState();
   }
@@ -5464,30 +5546,21 @@ class _CreateCostingMethodeTypePopUpState
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    setState(() {
-
-                    });
+                    setState(() {});
                     context.showSnackBarSuccess(data.data2);
-
-
-
 
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        SuccessPopup(content: data.data2,
+                        SuccessPopup(
+                          content: data.data2,
                           // table:table,
-                    ));
-
-
-
-
-
-
+                        ));
                   } else {
                     showDailogPopUp(
                         context,
-                        FailiurePopup(content: data.data2,
+                        FailiurePopup(
+                          content: data.data2,
                           // table:table,
                         ));
                     Navigator.pop(context);
@@ -5521,9 +5594,9 @@ class _CreateCostingMethodeTypePopUpState
                         // // Variable.verticalid=result[0].id;
                         // print("Variable.ak"+Variable.verticalid.toString());
                         if (costingTypeMethodeCheck != true)
-                        context
-                            .read<ReadcostingtypeCubit>()
-                            .getCostMethodTypeRead(veritiaclid!);
+                          context
+                              .read<ReadcostingtypeCubit>()
+                              .getCostMethodTypeRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -5563,11 +5636,10 @@ class _CreateCostingMethodeTypePopUpState
                       //   name: namecontroller?.text??"",
                       // );
                       context.read<CostingtypeCubit>().postCreateCostingType(
-
-
-                          namecontroller.text,
-                          descriptionContollercontroller.text,
-                          "afy",);
+                            namecontroller.text,
+                            descriptionContollercontroller.text,
+                            "afy",
+                          );
 
                       // widget.onTap();
                     },
@@ -5691,7 +5763,8 @@ class _CreateCostingMethodeTypePopUpState
                                         title: "is active",
                                         onClick: (gg) {
                                           onChange = true;
-                                          if (costingTypeMethodeCheck != true) active = !active!;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
 
                                           // extendedWarranty = gg;
                                           // widget.changeExtendedWarranty(gg);
@@ -5721,9 +5794,6 @@ class _CreateCostingMethodeTypePopUpState
   }
 }
 
-
-
-
 class CreateCosting extends StatefulWidget {
   final String type;
 
@@ -5733,14 +5803,10 @@ class CreateCosting extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  CreateCostingState createState() =>
-      CreateCostingState();
+  CreateCostingState createState() => CreateCostingState();
 }
 
-
-
-class CreateCostingState
-    extends State<CreateCosting> {
+class CreateCostingState extends State<CreateCosting> {
   bool? active = true;
 
   bool onChange = false;
@@ -5783,8 +5849,9 @@ class CreateCostingState
   }
 
   void initState() {
-    if (costingTypeMethodeCheck != true){ context.read<CostingtypelistCubit>().getCostingTypeList();}
-
+    if (costingTypeMethodeCheck != true) {
+      context.read<CostingtypelistCubit>().getCostingTypeList();
+    }
 
     super.initState();
   }
@@ -5807,12 +5874,10 @@ class CreateCostingState
         BlocProvider(
           create: (context) => CostingtypeCubit(),
         ),
-
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
-
             BlocListener<CostingtypeCubit, CostingtypeState>(
               listener: (context, state) {
                 print("postssssssss" + state.toString());
@@ -5823,30 +5888,20 @@ class CreateCostingState
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    setState(() {
-
-                    });
-
-
-
-
+                    setState(() {});
 
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        SuccessPopup(content: data.data2,
+                        SuccessPopup(
+                          content: data.data2,
                           // table:table,
-                    ));
-
-
-
-
-
-
+                        ));
                   } else {
                     showDailogPopUp(
                         context,
-                        FailiurePopup(content: data.data2,
+                        FailiurePopup(
+                          content: data.data2,
                           // table:table,
                         ));
                     Navigator.pop(context);
@@ -5880,9 +5935,9 @@ class CreateCostingState
                         // // Variable.verticalid=result[0].id;
                         // print("Variable.ak"+Variable.verticalid.toString());
                         if (costingTypeMethodeCheck != true)
-                        context
-                            .read<ReadcostingtypeCubit>()
-                            .getCostMethodTypeRead(veritiaclid!);
+                          context
+                              .read<ReadcostingtypeCubit>()
+                              .getCostMethodTypeRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -5922,20 +5977,15 @@ class CreateCostingState
                       //   name: namecontroller?.text??"",
                       // );
                       context.read<CostingtypeCubit>().postCreateCostingType(
-
-
-                          namecontroller.text,
-                          descriptionContollercontroller.text,
-                          "afy",);
+                            namecontroller.text,
+                            descriptionContollercontroller.text,
+                            "afy",
+                          );
 
                       // widget.onTap();
                     },
-                    onEdit: () {
-
-                    },
-                    onCancel: () {
-
-                    },
+                    onEdit: () {},
+                    onCancel: () {},
 
                     onAddNew: (v) {},
                     dataField: Expanded(
@@ -5954,8 +6004,6 @@ class CreateCostingState
 
                                 // if(costingTypeMethodeCheck==true)
                                 //
-
-
 
                                 Expanded(
                                     child: Column(
@@ -5994,8 +6042,6 @@ class CreateCostingState
                                         value: active ?? false,
                                         title: "is active",
                                         onClick: (gg) {
-
-
                                           // extendedWarranty = gg;
                                           // widget.changeExtendedWarranty(gg);
                                           // onChangeExtWarranty = gg;
@@ -6024,19 +6070,6 @@ class CreateCostingState
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 class CreateCostingMethodeCreatePopUp extends StatefulWidget {
   final String type;
 
@@ -6052,7 +6085,7 @@ class CreateCostingMethodeCreatePopUp extends StatefulWidget {
 
 class _CreateCostingMethodeCreatePopUpState
     extends State<CreateCostingMethodeCreatePopUp> {
-  bool? active = costingTypeMethodeCheck != true?false:true;
+  bool? active = costingTypeMethodeCheck != true ? false : true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -6132,11 +6165,12 @@ class _CreateCostingMethodeCreatePopUpState
                     },
                     success: (data) {
                       setState(() {
-                        print("dataaaaaaaaaaaa"+data.toString());
+                        print("dataaaaaaaaaaaa" + data.toString());
                         group = data;
-                        typeId=data.id;
+                        typeId = data.methodTypeId;
                         codeController.text = data.methodCode ?? "";
-                        costingMethodcontroller.text = data.costingMethodTypeName ?? "";
+                        costingMethodcontroller.text =
+                            data.costingMethodTypeName ?? "";
                         namecontroller.text = data.methodName ?? "";
 
                         descriptionContollercontroller.text =
@@ -6156,14 +6190,26 @@ class _CreateCostingMethodeCreatePopUpState
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
+                  Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<CostingcreatelistCubit>().getCostingCreateList();
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context
+                        .read<CostingcreatelistCubit>()
+                        .getCostingCreateList();
+
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -6188,9 +6234,10 @@ class _CreateCostingMethodeCreatePopUpState
                         veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true)   context
-                            .read<ReadcostingCubit>()
-                            .getCostMethodRead(veritiaclid!);
+                        if (costingTypeMethodeCheck != true)
+                          context
+                              .read<ReadcostingCubit>()
+                              .getCostMethodRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -6227,11 +6274,11 @@ class _CreateCostingMethodeCreatePopUpState
                       //   // image:int.tryParse(imageContollercontroller.text),
                       //   // searchNmae: searchNamecontroller?.text??"",
                       //   name: namecontroller?.text??"",
-                      if(typeId==null){
+                      if (typeId == null) {
                         Navigator.pop(context);
-                        context.showSnackBarError("plaease select costing type");
-                      }
-                      else{
+                        context
+                            .showSnackBarError("plaease select costing type");
+                      } else {
                         context.read<CostingtypeCubit>().postCreateCostingType(
                             namecontroller.text,
                             descriptionContollercontroller.text,
@@ -6240,15 +6287,15 @@ class _CreateCostingMethodeCreatePopUpState
                       }
                       // );
 
-
                       // widget.onTap();
                     },
                     onEdit: () {
                       context.read<CostingtypeCubit>().postPatchCostingCreate(
+                          veritiaclid,
                           typeId,
                           namecontroller.text,
                           descriptionContollercontroller.text,
-                          "afy",
+                          Variable.created_by,
                           active);
                     },
                     onCancel: () {
@@ -6320,6 +6367,31 @@ class _CreateCostingMethodeCreatePopUpState
                                 Expanded(
                                     child: Column(
                                   children: [
+                                    NewInputCard(
+                                      controller: costingMethodcontroller,
+                                      icondrop: true,
+                                      title: "Costing Method Type Id",
+                                      ontap: () {
+                                        showDailogPopUp(
+                                          context,
+                                          TableConfigurePopup(
+                                            type: "CostingTypeTabalePopup",
+                                            valueSelect:
+                                                (CostingMetodTypePostModel va) {
+                                              setState(() {
+                                                costingMethodcontroller.text =
+                                                    va?.typeName ?? "";
+                                                typeId = va?.id;
+                                                setState(() {});
+
+                                                // onChange = true;
+                                                // orderType.text = va!;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      },
+                                    ),
                                     SelectableDropDownpopUp(
                                       // bindType: "static",
                                       controller: costingMethodcontroller,
@@ -6352,7 +6424,7 @@ class _CreateCostingMethodeCreatePopUpState
                                       },
                                     ),
                                     NewInputCard(
-                                      height: 60,
+                                        height: 60,
                                         readOnly: true,
                                         controller: codeController,
                                         title: "Code"),
@@ -6386,7 +6458,8 @@ class _CreateCostingMethodeCreatePopUpState
                                         title: "is active",
                                         onClick: (gg) {
                                           onChange = true;
-                                          if (costingTypeMethodeCheck != true) active = !active!;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
 
                                           // extendedWarranty = gg;
                                           // widget.changeExtendedWarranty(gg);
@@ -6429,7 +6502,7 @@ class PricingGroupCreatePopUp extends StatefulWidget {
 }
 
 class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
-  bool? active =costingTypeMethodeCheck != true? false:true;
+  bool? active = costingTypeMethodeCheck != true ? false : true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -6537,29 +6610,26 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-
                   // Navigator.pop(context);
 
                   if (data.data1) {
-
                     setState(() {
                       Navigator.pop(context);
                       showDailogPopUp(
                           context,
-                          SuccessPopup(content: data.data2,
+                          SuccessPopup(
+                            content: data.data2,
                             // table:table,
                           ));
                     });
-
-
                   } else {
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        FailiurePopup(content: data.data2,
+                        FailiurePopup(
+                          content: data.data2,
                           // table:table,
                         ));
-
                   }
                   ;
                 });
@@ -6574,20 +6644,19 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-
                   if (data.data1) {
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        SuccessPopup(content: data.data2,
+                        SuccessPopup(
+                          content: data.data2,
                           // table:table,
                         ));
                   } else {
                     Navigator.pop(context);
                     showDailogPopUp(
-                        context,
-                        FailiurePopup(content: data.data2));
-                        //
+                        context, FailiurePopup(content: data.data2));
+                    //
                   }
                   ;
                 });
@@ -6612,9 +6681,10 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                         veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true) context
-                            .read<ReadpricingroupreadCubit>()
-                            .getPricingRead(veritiaclid);
+                        if (costingTypeMethodeCheck != true)
+                          context
+                              .read<ReadpricingroupreadCubit>()
+                              .getPricingRead(veritiaclid);
                       } else {
                         print("common");
                         // select=true;
@@ -6744,7 +6814,6 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                                   children: [
                                     NewInputCard(
                                         readOnly: true,
-
                                         controller: codeController,
                                         title: "Code"),
                                     SizedBox(
@@ -6777,7 +6846,8 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                                         title: "is active",
                                         onClick: (gg) {
                                           onChange = true;
-                                         if( costingTypeMethodeCheck != true) active = !active!;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
 
                                           // extendedWarranty = gg;
                                           // widget.changeExtendedWarranty(gg);
@@ -6807,8 +6877,6 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
   }
 }
 
-
-
 class CreatePricingPopUp extends StatefulWidget {
   final String type;
 
@@ -6822,7 +6890,7 @@ class CreatePricingPopUp extends StatefulWidget {
 }
 
 class _CreatePricingPopUp extends State<CreatePricingPopUp> {
-  bool? active =true;
+  bool? active = true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -6845,7 +6913,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
   TextEditingController customerGroupcontroller = TextEditingController();
 
   TextEditingController descriptionContollercontroller =
-  TextEditingController();
+      TextEditingController();
   bool addNew = false;
   List<VariantLinesLiostModel> table = [];
 
@@ -6857,7 +6925,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
   }
 
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
-  GlobalKey<_CreateStaticPopUpState>();
+      GlobalKey<_CreateStaticPopUpState>();
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -6865,8 +6933,6 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
   }
 
   void initState() {
-
-
     super.initState();
   }
 
@@ -6882,19 +6948,16 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return MultiBlocProvider(
       providers: [
-
         BlocProvider(
           create: (context) => PricinggrouppostCubit(),
-        ),    BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => PricinggrouppatchCubit(),
         ),
-
-
       ],
       child: Builder(builder: (context) {
         return MultiBlocListener(
           listeners: [
-
             BlocListener<PricinggrouppostCubit, PricinggrouppostState>(
               listener: (context, state) {
                 print("chaps" + state.toString());
@@ -6904,30 +6967,29 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-
                   // Navigator.pop(context);
 
                   if (data.data1) {
-
                     setState(() {
-                      context.read<PricingroupcreateCubit>().getPricingGroupList();
+                      context
+                          .read<PricingroupcreateCubit>()
+                          .getPricingGroupList();
                       Navigator.pop(context);
                       showDailogPopUp(
                           context,
-                          SuccessPopup(content: data.data2,
+                          SuccessPopup(
+                            content: data.data2,
                             // table:table,
                           ));
                     });
-
-
                   } else {
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        FailiurePopup(content: data.data2,
+                        FailiurePopup(
+                          content: data.data2,
                           // table:table,
                         ));
-
                   }
                   ;
                 });
@@ -6942,19 +7004,18 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-
                   if (data.data1) {
                     Navigator.pop(context);
                     showDailogPopUp(
                         context,
-                        SuccessPopup(content: data.data2,
+                        SuccessPopup(
+                          content: data.data2,
                           // table:table,
                         ));
                   } else {
                     Navigator.pop(context);
                     showDailogPopUp(
-                        context,
-                        FailiurePopup(content: data.data2));
+                        context, FailiurePopup(content: data.data2));
                     //
                   }
                   ;
@@ -6980,9 +7041,10 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                         veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        if (costingTypeMethodeCheck != true) context
-                            .read<ReadpricingroupreadCubit>()
-                            .getPricingRead(veritiaclid);
+                        if (costingTypeMethodeCheck != true)
+                          context
+                              .read<ReadpricingroupreadCubit>()
+                              .getPricingRead(veritiaclid);
                       } else {
                         print("common");
                         // select=true;
@@ -7030,12 +7092,8 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
 
                       // widget.onTap();
                     },
-                    onEdit: () {
-
-                    },
-                    onCancel: () {
-
-                    },
+                    onEdit: () {},
+                    onCancel: () {},
 
                     onAddNew: (v) {},
                     dataField: Expanded(
@@ -7047,53 +7105,49 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-
                                 Expanded(
                                     child: Column(
-                                      children: [
-                                        NewInputCard(
-                                            readOnly: true,
-
-                                            controller: codeController,
-                                            title: "Code"),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        NewInputCard(
-                                          height: 60,
-                                          controller: namecontroller,
-                                          title: "Name",
-                                        ),
-                                      ],
-                                    )),
+                                  children: [
+                                    NewInputCard(
+                                        readOnly: true,
+                                        controller: codeController,
+                                        title: "Code"),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    NewInputCard(
+                                      height: 60,
+                                      controller: namecontroller,
+                                      title: "Name",
+                                    ),
+                                  ],
+                                )),
                                 Expanded(
                                     child: Column(
-                                      children: [
-                                        NewInputCard(
-                                          height: 60,
-                                          controller:
+                                  children: [
+                                    NewInputCard(
+                                      height: 60,
+                                      controller:
                                           descriptionContollercontroller,
-                                          title: "Description",
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        PopUpSwitchTile(
-                                            value: active ?? false,
-                                            title: "is active",
-                                            onClick: (gg) {
-
-
-                                              // extendedWarranty = gg;
-                                              // widget.changeExtendedWarranty(gg);
-                                              // onChangeExtWarranty = gg;
-                                              setState(() {});
-                                            }),
-                                      ],
-                                    )),
+                                      title: "Description",
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    PopUpSwitchTile(
+                                        value: active ?? false,
+                                        title: "is active",
+                                        onClick: (gg) {
+                                          // extendedWarranty = gg;
+                                          // widget.changeExtendedWarranty(gg);
+                                          // onChangeExtWarranty = gg;
+                                          setState(() {});
+                                        }),
+                                  ],
+                                )),
                               ],
                             ),
                             SizedBox(
@@ -7115,14 +7169,6 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
   }
 }
 
-
-
-
-
-
-
-
-
 class PricingCreatePopUp extends StatefulWidget {
   final String type;
 
@@ -7136,7 +7182,7 @@ class PricingCreatePopUp extends StatefulWidget {
 }
 
 class _PricingCreatePopUp extends State<PricingCreatePopUp> {
-  bool? active =   costingTypeMethodeCheck != true? false:true;
+  bool? active = costingTypeMethodeCheck != true ? false : true;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -7229,8 +7275,10 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                         group = data;
                         codeController.text = data.pricingCroupCode ?? "";
                         namecontroller.text = data.pricingGroupName ?? "";
-                        pricingTypecontroller.text = data.pricingTypeId.toString() ?? "";
-                        pricingTypeNamecontroller.text = data.pricingGroupName.toString() ?? "";
+                        pricingTypecontroller.text =
+                            data.pricingTypeId.toString() ?? "";
+                        pricingTypeNamecontroller.text =
+                            data.pricingGroupName.toString() ?? "";
 
                         descriptionContollercontroller.text =
                             data.description ?? "";
@@ -7438,39 +7486,69 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                                 Expanded(
                                     child: Column(
                                   children: [
-                                    SelectableDropDownpopUp(
+                                    NewInputCard(
                                       controller: pricingTypeNamecontroller,
-                                      label: "Pricing Type Id",
-                                      type: "Pricing_GroupPopUpCall",
-                                      value: pricingTypeNamecontroller.text,
-                                      onchange: (vale) {
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (PricingGroupListModel? va) {
-                                        setState(() {
-                                          costingTypeMethodeCheck = true;
-                                        });
-                                        setState(() {
-                                          pricingTypecontroller.text = va?.id.toString() ?? "";
-                                          pricingTypeNamecontroller.text = va?.pricingTypeName.toString() ?? "";
-                                          setState(() {});
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                      onAddNew: () {
-
-
+                                      icondrop: true,
+                                      title: "Pricing Type Id",
+                                      ontap: () {
                                         showDailogPopUp(
                                           context,
-                                          ConfigurePopup(
-                                            type: "pricingCreate",
+                                          TableConfigurePopup(
+                                            type: "Pricing2TabalePopup",
+                                            valueSelect:
+                                                (PricingGroupListModel va) {
+                                              onChange = true;
+                                              setState(() {
+                                                pricingTypecontroller.text =
+                                                    va?.id.toString() ?? "";
+                                                pricingTypeNamecontroller.text =
+                                                    va?.pricingTypeName
+                                                            .toString() ??
+                                                        "";
+                                                setState(() {});
+
+                                                // onChange = true;
+                                                // orderType.text = va!;
+                                              });
+                                            },
                                           ),
                                         );
                                       },
                                     ),
+                                    // SelectableDropDownpopUp(
+                                    //   controller: pricingTypeNamecontroller,
+                                    //   label: "Pricing Type Id",
+                                    //   type: "Pricing_GroupPopUpCall",
+                                    //   value: pricingTypeNamecontroller.text,
+                                    //   onchange: (vale) {
+                                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                    //   },
+                                    //   enable: true,
+                                    //   onSelection: (PricingGroupListModel? va) {
+                                    //     setState(() {
+                                    //       costingTypeMethodeCheck = true;
+                                    //     });
+                                    //     setState(() {
+                                    //       pricingTypecontroller.text =
+                                    //           va?.id.toString() ?? "";
+                                    //       pricingTypeNamecontroller.text =
+                                    //           va?.pricingTypeName.toString() ??
+                                    //               "";
+                                    //       setState(() {});
+
+                                    //       // onChange = true;
+                                    //       // orderType.text = va!;
+                                    //     });
+                                    //   },
+                                    //   onAddNew: () {
+                                    //     showDailogPopUp(
+                                    //       context,
+                                    //       ConfigurePopup(
+                                    //         type: "pricingCreate",
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    // ),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -7488,7 +7566,6 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                                     SizedBox(
                                       height: 10,
                                     ),
-
                                   ],
                                 )),
                                 Expanded(
@@ -7506,13 +7583,13 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                                     SizedBox(
                                       height: 10,
                                     ),
-
                                     PopUpSwitchTile(
                                         value: active ?? false,
                                         title: "is active",
                                         onClick: (gg) {
                                           onChange = true;
-                                          if (costingTypeMethodeCheck != true)active = !active!;
+                                          if (costingTypeMethodeCheck != true)
+                                            active = !active!;
 
                                           // extendedWarranty = gg;
                                           // widget.changeExtendedWarranty(gg);
@@ -7542,16 +7619,12 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
   }
 }
 
-
 class LinkedItemCreatePopUp extends StatefulWidget {
   final String type;
   final int? veritiaclid;
 
-  LinkedItemCreatePopUp({
-    Key? key,
-    required this.type,
-    this.veritiaclid
-  }) : super(key: key);
+  LinkedItemCreatePopUp({Key? key, required this.type, this.veritiaclid})
+      : super(key: key);
 
   @override
   _LinkedItemCreatePopUp createState() => _LinkedItemCreatePopUp();
@@ -7584,28 +7657,28 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
   TextEditingController customerGroupcontroller = TextEditingController();
   TextEditingController pricingTypecontroller = TextEditingController();
 
-  TextEditingController descriptionContollercontroller = TextEditingController();
-  List<LinkedItemListModel>?table=[];
+  TextEditingController descriptionContollercontroller =
+      TextEditingController();
+  List<LinkedItemListModel>? table = [];
   bool addNew = false;
-
 
   listAssign(List<LinkedItemListIdModel> list) {
     table!.clear();
     // onChange = true;
     setState(() {
-      print("the list is here"+list.toString());
-      if(list.isNotEmpty){
-        for(var i=0;i<list.length;i++){
-          table?.add(LinkedItemListModel(id: list[i].id,code: list[i].code,name:  list[i].name
-          ));
+      print("the list is here" + list.toString());
+      if (list.isNotEmpty) {
+        for (var i = 0; i < list.length; i++) {
+          table?.add(LinkedItemListModel(
+              id: list[i].id, code: list[i].code, name: list[i].name));
         }
       }
-    //
+      //
     });
   }
 
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
-  GlobalKey<_CreateStaticPopUpState>();
+      GlobalKey<_CreateStaticPopUpState>();
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -7661,8 +7734,9 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                         group = data;
                         // codeController.text = data.pricingCroupCode ?? "";
                         titleController.text = data.title ?? "";
-                        descriptionContollercontroller.text = data.description ?? "";
-                        table=data.linkedItemListModel;
+                        descriptionContollercontroller.text =
+                            data.description ?? "";
+                        table = data.linkedItemListModel;
 
                         // pricingTypecontroller.text =
                         //     data.pricingTypeId.toString() ?? "";
@@ -7718,7 +7792,8 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
               },
             ),
           ],
-          child: BlocConsumer<LinkedlistverticallistCubit, LinkedlistverticallistState>(
+          child: BlocConsumer<LinkedlistverticallistCubit,
+              LinkedlistverticallistState>(
             listener: (context, state) {
               print("state" + state.toString());
               state.maybeWhen(
@@ -7771,15 +7846,13 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                       print("save");
 
                       LinkedItemPostModel model = LinkedItemPostModel(
-                        variantId:widget.veritiaclid,
+                        variantId: widget.veritiaclid,
                         inventoryId: Variable.inventory_ID,
-                        title: titleController.text
-                        ,
-                        linkedItemListModel:table ,
+                        title: titleController.text,
+                        linkedItemListModel: table,
                         description: descriptionContollercontroller.text,
-
                       );
-                      print("the model is"+model.toString());
+                      print("the model is" + model.toString());
                       context
                           .read<CreatelinkeditemCubit>()
                           .postLinkedItem(model);
@@ -7790,15 +7863,13 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                       LinkedItemPostModel model = LinkedItemPostModel(
                         title: titleController.text,
                         linkedItemListModel: table,
-
                         description: descriptionContollercontroller.text,
-
                         isActive: active,
                       );
-                      print("the model is"+model.toString());
+                      print("the model is" + model.toString());
                       context
                           .read<CreatelinkeditemCubit>()
-                          .patchLinkedItem(veritiaclid,model);
+                          .patchLinkedItem(veritiaclid, model);
                     },
                     onCancel: () {
                       context
@@ -7807,8 +7878,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                     },
 
                     onAddNew: (v) {},
-                    dataField:
-                    Expanded(
+                    dataField: Expanded(
                       // height: MediaQuery.of(context).size.height * .6,
                       child: IntrinsicHeight(
                         child: Column(
@@ -7838,8 +7908,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                           // print("rijina" +
                                           //     // result[index].id.toString());
 
-                                          veritiaclid =
-                                              result[index].id;
+                                          veritiaclid = result[index].id;
                                           // clear();
                                           // select=true;
                                           //
@@ -7871,71 +7940,68 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                   child: Column(
                                     children: [
                                       Container(
-
                                         // height: 300,
-                                        width:  costingTypeMethodeCheck != true? MediaQuery.of(context).size.width/3.15: MediaQuery.of(context).size.width/3.15,
+                                        width: costingTypeMethodeCheck != true
+                                            ? MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                3.15
+                                            : MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                3.15,
                                         child: Row(
                                           children: [
                                             Expanded(
                                                 child: Column(
-                                                  children: [
+                                              children: [
+                                                NewInputCard(
+                                                    controller: titleController,
+                                                    title: "title"),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                PopUpSwitchTile(
+                                                    value: active ?? false,
+                                                    title: "isActive",
+                                                    onClick: (gg) {
+                                                      onChange = true;
+                                                      if (!addNew)
+                                                        active = !active!;
 
-
-                                                    NewInputCard(
-
-                                                        controller: titleController,
-                                                        title: "title"),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-
-                                                    PopUpSwitchTile(
-                                                        value: active ?? false,
-                                                        title: "isActive",
-                                                        onClick: (gg) {
-                                                          onChange = true;
-                                                          if (!addNew) active = !active!;
-
-                                                          // extendedWarranty = gg;
-                                                          // widget.changeExtendedWarranty(gg);
-                                                          // onChangeExtWarranty = gg;
-                                                          setState(() {});
-                                                        }),
-
-
-                                                  ],
-                                                )),
+                                                      // extendedWarranty = gg;
+                                                      // widget.changeExtendedWarranty(gg);
+                                                      // onChangeExtWarranty = gg;
+                                                      setState(() {});
+                                                    }),
+                                              ],
+                                            )),
                                             Expanded(
                                                 child: Column(
-                                                  children: [
-                                                    NewInputCard(
-                                                      controller:
+                                              children: [
+                                                NewInputCard(
+                                                  controller:
                                                       descriptionContollercontroller,
-                                                      title: "Description",
-                                                    ),
-                                                    SizedBox(
-                                                      height: 10,
-                                                    ),
-                                                    TextButtonLarge(onPress: (){
-
-                                                      showDailogPopUp(
-                                                        context,
-                                                        ConfigurePopup(
-                                                          listAssign:listAssign,
-                                                          type: "CreateSearchLinkedItem-group",
-                                                        ),
-
-
-                                                      );
-
-
-
-
-
-                                                    },text: "choose",)
-
-                                                  ],
-                                                )),
+                                                  title: "Description",
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                TextButtonLarge(
+                                                  onPress: () {
+                                                    showDailogPopUp(
+                                                      context,
+                                                      ConfigurePopup(
+                                                        listAssign: listAssign,
+                                                        type:
+                                                            "CreateSearchLinkedItem-group",
+                                                      ),
+                                                    );
+                                                  },
+                                                  text: "choose",
+                                                )
+                                              ],
+                                            )),
                                           ],
                                         ),
                                       ),
@@ -7943,28 +8009,26 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                         height: 10,
                                       ),
                                       Container(
-                                        width: MediaQuery.of(context).size.width/3.15,
+                                        width:
+                                            MediaQuery.of(context).size.width /
+                                                3.15,
                                         // width: w/7,
                                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                                         child: customTable(
-
                                           border: const TableBorder(
-
                                             verticalInside: BorderSide(
-                                                width:.5,
+                                                width: .5,
                                                 color: Colors.black45,
                                                 style: BorderStyle.solid),
                                             horizontalInside: BorderSide(
-                                                width:.3,
+                                                width: .3,
                                                 color: Colors.black45,
                                                 // color: Colors.blue,
-                                                style: BorderStyle.solid),),
-
+                                                style: BorderStyle.solid),
+                                          ),
                                           tableWidth: .5,
-
-                                          childrens:[
+                                          childrens: [
                                             TableRow(
-
                                               // decoration: BoxDecoration(
 
                                               //     color: Colors.green.shade200,
@@ -7974,10 +8038,6 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                               //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                                               children: [
-
-
-
-
                                                 tableHeadtext(
                                                   'Item Name',
                                                   // textColor: Colors.black,
@@ -7987,7 +8047,6 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                   // color: Color(0xffE5E5E5),
                                                 ),
                                                 tableHeadtext(
-
                                                   '',
 
                                                   padding: EdgeInsets.all(7),
@@ -7997,8 +8056,6 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                   // color: Color(0xffE5E5E5),
 
                                                   size: 13,
-
-
                                                 ),
                                                 // tableHeadtext(
                                                 //   '',
@@ -8008,142 +8065,50 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                 //   size: 13,
                                                 //   // color: Color(0xffE5E5E5),
                                                 // ),
-
-
-
                                               ],
-
                                             ),
-                                            if(table!.isEmpty)...[
+                                            if (table!.isEmpty) ...[
                                               TableRow(
                                                   decoration: BoxDecoration(
-                                                      color: Colors.grey
-                                                          .shade200,
-                                                      shape: BoxShape
-                                                          .rectangle,
-                                                      border:const  Border(
+                                                      color:
+                                                          Colors.grey.shade200,
+                                                      shape: BoxShape.rectangle,
+                                                      border: const Border(
                                                           left: BorderSide(
                                                               width: .5,
-                                                              color: Colors
-                                                                  .grey,
+                                                              color:
+                                                                  Colors.grey,
                                                               style: BorderStyle
                                                                   .solid),
                                                           bottom: BorderSide(
                                                               width: .5,
-                                                              color: Colors
-                                                                  .grey,
+                                                              color:
+                                                                  Colors.grey,
                                                               style: BorderStyle
                                                                   .solid),
                                                           right: BorderSide(
-                                                              color: Colors
-                                                                  .grey,
+                                                              color:
+                                                                  Colors.grey,
                                                               width: .5,
                                                               style: BorderStyle
                                                                   .solid))),
                                                   children: [
                                                     TableCell(
-
-                                                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                        child:Container(
+                                                        verticalAlignment:
+                                                            TableCellVerticalAlignment
+                                                                .middle,
+                                                        child: Container(
                                                           height: 44,
                                                         )
 
-                                                      // Text(keys[i].value??"",)
-
-                                                    ),
-
-                                                    TableCell(
-                                                        verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                        child:textPadding("")
-                                                      // CustomCheckBox(
-                                                      //   key: UniqueKey(),
-                                                      //   value: list1.contains(table![i]),
-                                                      //   onChange: (p0) {
-                                                      //     if (p0)
-                                                      //       list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
-                                                      //     else
-                                                      //       list1.removeWhere((element) => element == list1[i]);
-                                                      //     list1.remove(table![i]);
-                                                      //
-                                                      //     widget.listAssign!(list1);
-                                                      //
-                                                      //
-                                                      //     print(list1);
-                                                      //   },
-                                                      //
-                                                      //
-                                                      // ),
-                                                      // Text(keys[i].key??"")
-
-
-
-                                                    ),
-
-
-
-
-                                                  ]),
-
-                                            ],
-
-
-                                            if (table?.isNotEmpty==true ) ...[
-
-
-                                              for (var i = 0; i <table!.length; i++)
-
-
-
-                                                TableRow(
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.grey
-                                                            .shade200,
-                                                        shape: BoxShape
-                                                            .rectangle,
-                                                        border:const  Border(
-                                                            left: BorderSide(
-                                                                width: .5,
-                                                                color: Colors
-                                                                    .grey,
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            bottom: BorderSide(
-                                                                width: .5,
-                                                                color: Colors
-                                                                    .grey,
-                                                                style: BorderStyle
-                                                                    .solid),
-                                                            right: BorderSide(
-                                                                color: Colors
-                                                                    .grey,
-                                                                width: .5,
-                                                                style: BorderStyle
-                                                                    .solid))),
-                                                    children: [
-                                                      TableCell(
-
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                          child:textPadding(table?[i].name??"",
-                                                              height: 45)
                                                         // Text(keys[i].value??"",)
 
-                                                      ),
-
-                                                      TableCell(
-                                                          verticalAlignment: TableCellVerticalAlignment.middle,
-
-                                                          child:TableTextButton(onPress: (){
-                                                            setState(() {
-                                                              table?.removeWhere((element) => element == table?[i]);
-                                                            });
-
-
-                                                          },
-                                                            label: "",
-                                                          )
+                                                        ),
+                                                    TableCell(
+                                                        verticalAlignment:
+                                                            TableCellVerticalAlignment
+                                                                .middle,
+                                                        child: textPadding("")
                                                         // CustomCheckBox(
                                                         //   key: UniqueKey(),
                                                         //   value: list1.contains(table![i]),
@@ -8164,13 +8129,91 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                         // ),
                                                         // Text(keys[i].key??"")
 
+                                                        ),
+                                                  ]),
+                                            ],
 
+                                            if (table?.isNotEmpty == true) ...[
+                                              for (var i = 0;
+                                                  i < table!.length;
+                                                  i++)
+                                                TableRow(
+                                                    decoration: BoxDecoration(
+                                                        color: Colors
+                                                            .grey.shade200,
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                        border: const Border(
+                                                            left: BorderSide(
+                                                                width: .5,
+                                                                color:
+                                                                    Colors.grey,
+                                                                style:
+                                                                    BorderStyle
+                                                                        .solid),
+                                                            bottom: BorderSide(
+                                                                width: .5,
+                                                                color:
+                                                                    Colors.grey,
+                                                                style:
+                                                                    BorderStyle
+                                                                        .solid),
+                                                            right: BorderSide(
+                                                                color:
+                                                                    Colors.grey,
+                                                                width: .5,
+                                                                style: BorderStyle
+                                                                    .solid))),
+                                                    children: [
+                                                      TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child: textPadding(
+                                                              table?[i].name ??
+                                                                  "",
+                                                              height: 45)
+                                                          // Text(keys[i].value??"",)
 
-                                                      ),
+                                                          ),
+                                                      TableCell(
+                                                          verticalAlignment:
+                                                              TableCellVerticalAlignment
+                                                                  .middle,
+                                                          child:
+                                                              TableTextButton(
+                                                            onPress: () {
+                                                              setState(() {
+                                                                table?.removeWhere(
+                                                                    (element) =>
+                                                                        element ==
+                                                                        table?[
+                                                                            i]);
+                                                              });
+                                                            },
+                                                            label: "Delete",
+                                                          )
+                                                          // CustomCheckBox(
+                                                          //   key: UniqueKey(),
+                                                          //   value: list1.contains(table![i]),
+                                                          //   onChange: (p0) {
+                                                          //     if (p0)
+                                                          //       list1.add(LinkedItemListIdModel(id:table![i].id,name: table[i].name ));
+                                                          //     else
+                                                          //       list1.removeWhere((element) => element == list1[i]);
+                                                          //     list1.remove(table![i]);
+                                                          //
+                                                          //     widget.listAssign!(list1);
+                                                          //
+                                                          //
+                                                          //     print(list1);
+                                                          //   },
+                                                          //
+                                                          //
+                                                          // ),
+                                                          // Text(keys[i].key??"")
 
-
-
-
+                                                          ),
                                                     ]),
                                             ],
 
@@ -8262,22 +8305,14 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                             //
                                             //
                                             //     ])
-
                                           ],
                                           widths: {
-
                                             0: FlexColumnWidth(5),
                                             1: FlexColumnWidth(2),
-
-
-                                          },),
-
-
+                                          },
+                                        ),
                                       ),
-
                                     ],
-
-
                                   ),
                                 ),
                                 // Expanded(
@@ -8343,7 +8378,6 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                               ],
                             ),
 
-                            
                             // VariantFrameWorkBottomTable(listAssign:listAssign),
                           ],
                         ),
@@ -8359,45 +8393,6 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class PatchStaticPopUp extends StatefulWidget {
   final String type;
@@ -8574,7 +8569,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                   },
                   success: (list) {
                     print("aaaaayyyiram" + list.data.toString());
-                    list1=list;
+                    list1 = list;
 
                     result = list.data;
                     print("seee" + result.toString());
@@ -9275,7 +9270,6 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                     });
               },
             ),
-
             BlocListener<UomgroupCreationCubit, UomgroupCreationState>(
               listener: (context, state) {
                 print("postssssssss" + state.toString());
@@ -9286,17 +9280,24 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-
+                  Navigator.pop(context);
                   if (data.data1) {
                     setState(() {
                       context.read<UomgruoplistCubit>().getUomGroupist();
                     });
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -9400,12 +9401,16 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                                     readOnly: true,
                                     controller: codeController,
                                     title: "Code"),
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 NewInputCard(
                                   controller: namecontroller,
                                   title: "Name",
                                 ),
-                                SizedBox(height: 10,),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 NewInputCard(
                                   controller: shortNamecontroller,
                                   title: "Short Name",
@@ -9586,7 +9591,6 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                   print(data.data1);
                   Navigator.pop(context);
                   if (data.data1) {
-
                     context.showSnackBarSuccess(data.data2);
                     context.read<UomgruoplistCubit>().getUomGroupist();
                     setState(() {});
@@ -9632,7 +9636,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                   },
                   success: (list) {
                     print("aaaaayyyiram" + list.data.toString());
-                    list1=list;
+                    list1 = list;
 
                     result = list.data;
                     print("seee" + result.toString());
@@ -9722,7 +9726,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             UomGroupVerticalList(
-                              list:list1,
+                              list: list1,
                               selectedVertical: selectedVertical,
                               itemsearch: itemsearch,
                               ontap: (int index) {
@@ -9885,14 +9889,22 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-
+                  Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                     context.read<BaseuomlistCubit>().getUomist();
-                    Navigator.pop(context);
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -10054,7 +10066,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                                   height: 10,
                                 ),
                                 NewInputCard(
-                                 formatter: true,
+                                  formatter: true,
                                   controller: conversionfactorcontroller,
                                   title: "Conversion Factor",
                                 ),
@@ -10190,6 +10202,7 @@ class _UomPopUpState extends State<UomPopUp> {
                         codeController.text = data.uomCode ?? "";
                         namecontroller.text = data.name ?? "";
                         uomGroupController.text = data.uomGroupCode ?? "";
+                        uomGroupNameController.text = data.uomGroupName ?? "";
                         shortNamecontroller.text = data.shortName ?? "";
                         conversionfactorcontroller.text =
                             data.conversionFactor.toString() ?? "";
@@ -10383,28 +10396,57 @@ class _UomPopUpState extends State<UomPopUp> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
+                                NewInputCard(
                                   controller: uomGroupNameController,
-                                  label: "Uom Group Code",
-                                  type: "Uomgroup_PopUpCall",
-                                  value: uomGroupNameController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
+                                  icondrop: true,
+                                  title: "Uom Group Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "UomGroupTabalePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
 
-                                      uomGroupController.text = va?.code ?? "";
-                                      uomGroupNameController.text = va?.code ?? "";
-                                      setState(() {});
+                                            uomGroupController.text =
+                                                va?.code ?? "";
+                                            uomGroupNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
+
+                                // SelectableDropDownpopUp(
+                                //   controller: uomGroupNameController,
+                                //   label: "Uom Group Code",
+                                //   type: "Uomgroup_PopUpCall",
+                                //   value: uomGroupNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //
+                                //       uomGroupController.text = va?.code ?? "";
+                                //       uomGroupNameController.text =
+                                //           va?.code ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                                 NewInputCard(
                                   controller: namecontroller,
                                   title: "Name",
@@ -10430,7 +10472,6 @@ class _UomPopUpState extends State<UomPopUp> {
                                 ),
                                 NewInputCard(
                                   formatter: true,
-
                                   controller: conversionfactorcontroller,
                                   title: "Conversion Factor",
                                 ),
@@ -10563,7 +10604,6 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -10596,8 +10636,10 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                         namecontroller.text = data.name ?? "";
                         parentCodeController.text = data.parentCode ?? '';
                         divisionCodeController.text = data.divisionCode ?? '';
+                        divisionNameController.text = data.divisionName ?? '';
+                        parentNameController.text = data.parentname ?? '';
                         imageCodeController.text = data.image ?? '';
-                        imageName= data.image ?? '';
+                        imageName = data.image ?? '';
                         alternativeController.text = data.alternativename ?? "";
                         // shortNamecontroller.text=data.shortName??"";
 
@@ -10647,7 +10689,9 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 }, success: (data) {
                   if (data.data1) {
                     setState(() {
-                      context.read<CategorylistCubit>().getCategoryist(type: "all");
+                      context
+                          .read<CategorylistCubit>()
+                          .getCategoryist(type: "all");
                     });
 
                     context.showSnackBarSuccess(data.data2);
@@ -10730,7 +10774,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                         parentCode: parentCodeController?.text ?? "",
                         divisionCode: divisionCodeController?.text ?? "",
                         code: codeController?.text ?? "",
-                        image: int.tryParse(imageCodeController.text),
+                        image: imageCodeController.text,
                         isActive: active,
                         description: descriptionContollercontroller?.text ?? "",
                       );
@@ -10799,58 +10843,118 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                                   height: 10,
                                 ),
 
-                                SelectableDropDownpopUp(
+                                NewInputCard(
                                   controller: divisionNameController,
-                                  label: "Division code",
-                                  type: "Division_ListPopUpCall",
-                                  value: divisionNameController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
+                                  icondrop: true,
+                                  title: "Division code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "division-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
 
-                                      print(va?.id ?? "");
-                                      // divisionid=va?.id;
-                                      Variable.divisionId = va?.id;
+                                            print(va?.id ?? "");
+                                            // divisionid=va?.id;
+                                            Variable.divisionId = va?.id;
 
-                                      divisionCodeController.text = va?.code ?? "";
-                                      divisionNameController.text = va?.name ?? "";
-                                      setState(() {});
+                                            divisionCodeController.text =
+                                                va?.code ?? "";
+                                            divisionNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
+                                // SelectableDropDownpopUp(
+                                //   controller: divisionNameController,
+                                //   label: "Division code",
+                                //   type: "Division_ListPopUpCall",
+                                //   value: divisionNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //
+                                //       print(va?.id ?? "");
+                                //       // divisionid=va?.id;
+                                //       Variable.divisionId = va?.id;
+                                //
+                                //       divisionCodeController.text =
+                                //           va?.code ?? "";
+                                //       divisionNameController.text =
+                                //           va?.name ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
 
+                                NewInputCard(
                                   controller: parentNameController,
-                                  label: "Parent Code",
-                                  type: "Category_PopUpCall",
-                                  value: parentNameController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
-                                      parentCodeController.text = va?.code ?? "";
-                                      parentNameController.text = va?.name ?? "";
-                                      setState(() {});
+                                  icondrop: true,
+                                  title: "Parent Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "category-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+                                            parentCodeController.text =
+                                                va?.code ?? "";
+                                            parentNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
-
+                                // SelectableDropDownpopUp(
+                                //   controller: parentNameController,
+                                //   label: "Parent Code",
+                                //   type: "Category_PopUpCall",
+                                //   value: parentNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //       parentCodeController.text =
+                                //           va?.code ?? "";
+                                //       parentNameController.text =
+                                //           va?.name ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                               ],
                             )),
                             Expanded(
@@ -11051,15 +11155,25 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                   print(data.data1);
                   Navigator.pop(context);
                   if (data.data1) {
-
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
 
                     setState(() {});
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<CategorylistCubit>().getCategoryist(type:Variable.divisionId.toString());
 
+                    context
+                        .read<CategorylistCubit>()
+                        .getCategoryist(type: Variable.divisionId.toString());
                   } else {
-                    context.showSnackBarError(data.data2);
-
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -11139,7 +11253,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                           parentCode: parentCodeController?.text ?? "",
                           divisionCode: divisionCodeController?.text ?? "",
                           name: namecontroller?.text ?? '',
-                          image: int.tryParse(imageCodeController.text));
+                          image: imageCodeController.text);
                       context
                           .read<CreatecategoryCubit>()
                           .postCreateCategory(model!);
@@ -11195,79 +11309,134 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                   title: "Name",
                                 ),
 
-
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
-                                  controller:divisionCodeNameController,
-                                  label: "Division",
-                                  type:"Division_ListPopUpCall",
-                                  value: divisionCodeNameController.text,
-                                  onchange: (vale){
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+
+                                NewInputCard(
+                                  controller: divisionCodeNameController,
+                                  icondrop: true,
+                                  title: "Division code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "division-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+
+                                            print(va?.id ?? "");
+                                            // divisionid=va?.id;
+
+                                            divisionCodeController.text =
+                                                va?.code ?? "";
+                                            Variable.divisionId = va?.id;
+                                            divisionCodeNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-
-
-                                      // print(va?.id??"");
-                                      // divisionid=va?.id;
-                                      // Variable.divisionId=va?.id;
-
-                                      divisionCodeController.text=va?.code??"";
-                                      Variable.divisionId=va?.id;
-                                      divisionCodeNameController.text=va?.name??"";
-                                      // widget.divisionName.text=va?.name??"";
-                                      setState(() {
-
-                                      });
-
-
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
-                                  },
-                                  // onAddNew: () {
-                                  //
-                                  //   showDailogPopUp(
-                                  //     context,
-                                  //     ConfigurePopup(
-                                  //       type: "devision-group",
-                                  //     ),
-                                  //
-                                  //
-                                  //   );
-                                  // },
                                 ),
+
+                                // SelectableDropDownpopUp(
+                                //   controller: divisionCodeNameController,
+                                //   label: "Division",
+                                //   type: "Division_ListPopUpCall",
+                                //   value: divisionCodeNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       // print(va?.id??"");
+                                //       // divisionid=va?.id;
+                                //       // Variable.divisionId=va?.id;
+                                //
+                                //       divisionCodeController.text =
+                                //           va?.code ?? "";
+                                //       Variable.divisionId = va?.id;
+                                //       divisionCodeNameController.text =
+                                //           va?.name ?? "";
+                                //       // widget.divisionName.text=va?.name??"";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                //   // onAddNew: () {
+                                //   //
+                                //   //   showDailogPopUp(
+                                //   //     context,
+                                //   //     ConfigurePopup(
+                                //   //       type: "devision-group",
+                                //   //     ),
+                                //   //
+                                //   //
+                                //   //   );
+                                //   // },
+                                // ),
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
 
+                                NewInputCard(
                                   controller: parentCodeNameController,
-                                  label: "Parent Code",
-                                  type: "Category_PopUpCall",
-                                  value: parentCodeNameController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
-                                      parentCodeController.text = va?.code ?? "";
-                                      parentCodeNameController.text = va?.name ?? "";
-                                      setState(() {});
+                                  icondrop: true,
+                                  title: "Parent Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "category-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+                                            parentCodeController.text =
+                                                va?.code ?? "";
+                                            parentCodeNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
-
-
+                                // SelectableDropDownpopUp(
+                                //   controller: parentCodeNameController,
+                                //   label: "Parent Code",
+                                //   type: "Category_PopUpCall",
+                                //   value: parentCodeNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //       parentCodeController.text =
+                                //           va?.code ?? "";
+                                //       parentCodeNameController.text =
+                                //           va?.name ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
 
                                 // SelectableDropDownpopUp(
                                 //   controller: divisionCodeController,
@@ -11391,9 +11560,6 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
   }
 }
 
-
-
-
 class SubCategoryCreatePopUp extends StatefulWidget {
   final String type;
 
@@ -11431,12 +11597,12 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
   TextEditingController imageCodeController = TextEditingController();
   TextEditingController alternativeController = TextEditingController();
   TextEditingController descriptionContollercontroller =
-  TextEditingController();
+      TextEditingController();
   bool addNew = false;
   var list;
 
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
-  GlobalKey<_CreateStaticPopUpState>();
+      GlobalKey<_CreateStaticPopUpState>();
 
   void changeAddNew(bool va) {
     addNew = va;
@@ -11502,16 +11668,24 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-
+                  Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    context.read<CategorylistCubit>().getCategoryist(type:Variable.divisionId.toString());
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    context.read<SubcategoryCubit>().getSubCategoryList();
 
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -11586,12 +11760,12 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
 
                       CategoryCreationtModel model = CategoryCreationtModel(
                           description:
-                          descriptionContollercontroller?.text ?? "",
+                              descriptionContollercontroller?.text ?? "",
                           alternativeName: alternativeController?.text ?? "",
                           parentCode: parentCodeController?.text ?? "",
                           divisionCode: divisionCodeController?.text ?? "",
                           name: namecontroller?.text ?? '',
-                          image: int.tryParse(imageCodeController.text));
+                          image: imageCodeController.text);
                       context
                           .read<CreatecategoryCubit>()
                           .postCreateCategory(model!);
@@ -11633,201 +11807,252 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                           children: [
                             Expanded(
                                 child: Column(
-                                  children: [
-                                    NewInputCard(
-                                        readOnly: true,
-                                        controller: codeController,
-                                        title: "Code"),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    NewInputCard(
-                                      height: 60,
-                                      controller: namecontroller,
-                                      title: "Name",
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    SelectableDropDownpopUp(
-                                      controller:divisionCodeNameController,
-                                      label: "Division",
-                                      type:"Division_ListPopUpCall",
-                                      value: divisionCodeNameController.text,
-                                      onchange: (vale){
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
+                              children: [
+                                NewInputCard(
+                                    readOnly: true,
+                                    controller: codeController,
+                                    title: "Code"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  height: 60,
+                                  controller: namecontroller,
+                                  title: "Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
 
-
-                                          // print(va?.id??"");
-                                          // divisionid=va?.id;
-                                          // Variable.divisionId=va?.id;
-
-                                          divisionCodeController.text=va?.code??"";
-                                          Variable.divisionId=va?.id;
-                                          divisionCodeNameController.text=va?.name??"";
-                                          // widget.divisionName.text=va?.name??"";
+                                NewInputCard(
+                                  controller: divisionCodeNameController,
+                                  icondrop: true,
+                                  title: "Division code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "division-TablePopup",
+                                        valueSelect: (BrandListModel va) {
                                           setState(() {
+                                            onChange = true;
 
+                                            print(va?.id ?? "");
+                                            divisionCodeController.text =
+                                                va?.code ?? "";
+                                            Variable.divisionId = va?.id;
+                                            divisionCodeNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
                                           });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                // SelectableDropDownpopUp(
+                                //   controller: divisionCodeNameController,
+                                //   label: "Division",
+                                //   type: "Division_ListPopUpCall",
+                                //   value: divisionCodeNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       // print(va?.id??"");
+                                //       // divisionid=va?.id;
+                                //       // Variable.divisionId=va?.id;
+                                //
+                                //       divisionCodeController.text =
+                                //           va?.code ?? "";
+                                //       Variable.divisionId = va?.id;
+                                //       divisionCodeNameController.text =
+                                //           va?.name ?? "";
+                                //       // widget.divisionName.text=va?.name??"";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                //   // onAddNew: () {
+                                //   //
+                                //   //   showDailogPopUp(
+                                //   //     context,
+                                //   //     ConfigurePopup(
+                                //   //       type: "devision-group",
+                                //   //     ),
+                                //   //
+                                //   //
+                                //   //   );
+                                //   // },
+                                // ),
+                                SizedBox(
+                                  height: 10,
+                                ),
 
+                                NewInputCard(
+                                  controller: parentCodeNameController,
+                                  icondrop: true,
+                                  title: "Parent Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        type: "category-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+                                            parentCodeController.text =
+                                                va?.code ?? "";
+                                            parentCodeNameController.text =
+                                                va?.name ?? "";
+                                            setState(() {});
 
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                      // onAddNew: () {
-                                      //
-                                      //   showDailogPopUp(
-                                      //     context,
-                                      //     ConfigurePopup(
-                                      //       type: "devision-group",
-                                      //     ),
-                                      //
-                                      //
-                                      //   );
-                                      // },
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    SelectableDropDownpopUp(
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  },
+                                ),
+                                // SelectableDropDownpopUp(
+                                //   controller: parentCodeNameController,
+                                //   label: "Parent Code",
+                                //   type: "Category_PopUpCall",
+                                //   value: parentCodeNameController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //       parentCodeController.text =
+                                //           va?.code ?? "";
+                                //       parentCodeNameController.text =
+                                //           va?.name ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
 
-                                      controller: parentCodeNameController,
-                                      label: "Parent Code",
-                                      type: "Category_PopUpCall",
-                                      value: parentCodeNameController.text,
-                                      onchange: (vale) {
-                                        // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                      },
-                                      enable: true,
-                                      onSelection: (BrandListModel? va) {
-                                        setState(() {
-                                          onChange = true;
-                                          parentCodeController.text = va?.code ?? "";
-                                          parentCodeNameController.text = va?.name ?? "";
-                                          setState(() {});
-
-                                          // onChange = true;
-                                          // orderType.text = va!;
-                                        });
-                                      },
-                                    ),
-
-
-
-
-
-                                    // SelectableDropDownpopUp(
-                                    //   controller: divisionCodeController,
-                                    //   label: "Division code",
-                                    //   type: "DivisionListPopUpCall",
-                                    //   value: divisionCodeController.text,
-                                    //   onchange: (vale) {
-                                    //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                    //   },
-                                    //   enable: true,
-                                    //   onSelection: (BrandListModel? va) {
-                                    //     setState(() {
-                                    //       onChange = true;
-                                    //
-                                    //       print("divv${divisionCodeController.text}");
-                                    //       // divisionid=va?.id;
-                                    //       Variable.divisionId = va?.id;
-                                    //
-                                    //       divisionCodeController.text =
-                                    //           va?.code ?? "";
-                                    //       setState(() {});
-                                    //
-                                    //       // onChange = true;
-                                    //       // orderType.text = va!;
-                                    //     });
-                                    //   },
-                                    // ),
-                                  ],
-                                )),
+                                // SelectableDropDownpopUp(
+                                //   controller: divisionCodeController,
+                                //   label: "Division code",
+                                //   type: "DivisionListPopUpCall",
+                                //   value: divisionCodeController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //
+                                //       print("divv${divisionCodeController.text}");
+                                //       // divisionid=va?.id;
+                                //       Variable.divisionId = va?.id;
+                                //
+                                //       divisionCodeController.text =
+                                //           va?.code ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
+                              ],
+                            )),
                             Expanded(
                                 child: Column(
-                                  children: [
-                                    FileUploadField(
-                                        fileName: imageName,
-                                        fileUrl: imageName,
-                                        onChangeTap: (p0) {
-                                          onChange = true;
-                                          // loading = true;
-                                          setState(() {});
-                                        },
-                                        onChange: (myFile) {
-                                          onChange = true;
-                                          imageName = myFile?.fileName ?? "";
+                              children: [
+                                FileUploadField(
+                                    fileName: imageName,
+                                    fileUrl: imageName,
+                                    onChangeTap: (p0) {
+                                      onChange = true;
+                                      // loading = true;
+                                      setState(() {});
+                                    },
+                                    onChange: (myFile) {
+                                      onChange = true;
+                                      imageName = myFile?.fileName ?? "";
 
-                                          // Variable.mobileBannerImage = myFile.toUint8List();
+                                      // Variable.mobileBannerImage = myFile.toUint8List();
 
-                                          imageEncode = myFile.toBase64();
-                                          // widget.fileMobileNameCtrl.text =
-                                          //     myFile.fileName ?? "";
-                                          // if (Variable.bannerimage!.length <= 240000)
-                                          context.read<ImagepostCubit>().postImage(
-                                              Variable.imageName, imageEncode);
-                                          // else
-                                          //   context.showSnackBarError(
-                                          //       "Please upload Banner of size Lesser than 230kb");
-                                        },
-                                        onImageChange: (newFile) async {
-                                          onChange = true;
-                                          // Variable.popUp = false;
+                                      imageEncode = myFile.toBase64();
+                                      // widget.fileMobileNameCtrl.text =
+                                      //     myFile.fileName ?? "";
+                                      // if (Variable.bannerimage!.length <= 240000)
+                                      context.read<ImagepostCubit>().postImage(
+                                          Variable.imageName, imageEncode);
+                                      // else
+                                      //   context.showSnackBarError(
+                                      //       "Please upload Banner of size Lesser than 230kb");
+                                    },
+                                    onImageChange: (newFile) async {
+                                      onChange = true;
+                                      // Variable.popUp = false;
 
-                                          if (newFile.length <= 240000) {
-                                            // loading
-                                            //     ? showDailogPopUp(context, DialoguePopUp())
-                                            //     : Navigator.pop(context);
-                                            // context
-                                            //     .read<CreateWebImageCubit>()
-                                            //     .createMobImage();
-                                          } else
-                                            context.showSnackBarError(
-                                                "Please upload Banner of size Lesser than 230kb");
-                                          setState(() {});
-                                        },
-                                        onCreate: true,
-                                        label: "Image"),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    NewInputCard(
-                                      height: 60,
-                                      controller: descriptionContollercontroller,
-                                      title: "Description",
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    NewInputCard(
-                                      height: 60,
-                                      controller: alternativeController,
-                                      title: "Alternative Name",
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    // PopUpSwitchTile(
-                                    //     value: active ?? false,
-                                    //     title: "isActive",
-                                    //     onClick: (gg) {
-                                    //       onChange = true;
-                                    //       // if(!addNew)
-                                    //       //   active=!active!;
-                                    //
-                                    //       // extendedWarranty = gg;
-                                    //       // widget.changeExtendedWarranty(gg);
-                                    //       // onChangeExtWarranty = gg;
-                                    //       setState(() {});
-                                    //     }),
-                                  ],
-                                )),
+                                      if (newFile.length <= 240000) {
+                                        // loading
+                                        //     ? showDailogPopUp(context, DialoguePopUp())
+                                        //     : Navigator.pop(context);
+                                        // context
+                                        //     .read<CreateWebImageCubit>()
+                                        //     .createMobImage();
+                                      } else
+                                        context.showSnackBarError(
+                                            "Please upload Banner of size Lesser than 230kb");
+                                      setState(() {});
+                                    },
+                                    onCreate: true,
+                                    label: "Image"),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  height: 60,
+                                  controller: descriptionContollercontroller,
+                                  title: "Description",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                NewInputCard(
+                                  height: 60,
+                                  controller: alternativeController,
+                                  title: "Alternative Name",
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                // PopUpSwitchTile(
+                                //     value: active ?? false,
+                                //     title: "isActive",
+                                //     onClick: (gg) {
+                                //       onChange = true;
+                                //       // if(!addNew)
+                                //       //   active=!active!;
+                                //
+                                //       // extendedWarranty = gg;
+                                //       // widget.changeExtendedWarranty(gg);
+                                //       // onChangeExtWarranty = gg;
+                                //       setState(() {});
+                                //     }),
+                              ],
+                            )),
                           ],
                         ),
                       ),
@@ -11877,6 +12102,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController imageCodeController = TextEditingController();
   TextEditingController categoryCodeController = TextEditingController();
+  TextEditingController categoryNameController = TextEditingController();
   TextEditingController descriptionContollercontroller =
       TextEditingController();
   TextEditingController searchNameContollercontroller = TextEditingController();
@@ -11950,13 +12176,22 @@ class _GroupPopUpState extends State<GroupPopUp> {
                   print(data.data1);
                   Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
 
                     context.read<GrouplistCubit>().getGroupListList();
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    print(data.data1);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
                   }
                   ;
                 });
@@ -12026,6 +12261,8 @@ class _GroupPopUpState extends State<GroupPopUp> {
                           displayName:
                               displayNameContollercontroller?.text ?? "",
                           categoryCode: categoryCodeController.text ?? "");
+
+                      print(model);
                       context
                           .read<GroupcreationCubit>()
                           .postCreateGroup(model!);
@@ -12111,24 +12348,51 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
-                                  apiType: "all",
-                                  controller: categoryCodeController,
-                                  label: "Category Code",
-                                  type: "Category_PopUpCall",
-                                  value: categoryCodeController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    // onChange=true;
-                                    categoryCodeController.text =
-                                        va?.code ?? "";
-                                    setState(() {});
+                                // SelectableDropDownpopUp(
+                                //   apiType: "all",
+                                //   controller: categoryCodeController,
+                                //   label: "Category Code",
+                                //   type: "Category_PopUpCall",
+                                //   value: categoryCodeController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     // onChange=true;
+                                //     categoryCodeController.text =
+                                //         va?.code ?? "";
+                                //     setState(() {});
+                                //
+                                //     // onChange = true;
+                                //     // orderType.text = va!;
+                                //   },
+                                // ),
 
-                                    // onChange = true;
-                                    // orderType.text = va!;
+                                NewInputCard(
+                                  controller: categoryNameController,
+                                  icondrop: true,
+                                  title: "Category Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        apiType: "all",
+                                        type: "category-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+                                            categoryCodeController.text =va?.code??"";
+                                                categoryNameController.text =
+                                                    va?.name ?? "";
+                                            setState(() {});
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
                               ],
@@ -12215,6 +12479,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
   TextEditingController namecontroller = TextEditingController();
   TextEditingController imageCodeController = TextEditingController();
   TextEditingController categoryCodeController = TextEditingController();
+  TextEditingController categoryNameController = TextEditingController();
   TextEditingController descriptionContollercontroller =
       TextEditingController();
   TextEditingController searchNameContollercontroller = TextEditingController();
@@ -12297,11 +12562,14 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                         group = data;
                         codeController.text = data.code ?? "";
                         namecontroller.text = data.name ?? "";
-                        displayNameContollercontroller.text = data.displayName ?? "";
-                        searchNameContollercontroller.text = data.displayName ?? "";
+                        displayNameContollercontroller.text =
+                            data.displayName ?? "";
+                        searchNameContollercontroller.text =
+                            data.displayName ?? "";
                         imageCodeController.text = data.image ?? '';
                         imageName = data.image ?? '';
                         categoryCodeController.text = data.categoryCode ?? "";
+                        categoryNameController.text = data.categoryName ?? "";
                         // // shortNamecontroller.text=data.shortName??"";
 
                         descriptionContollercontroller.text =
@@ -12348,7 +12616,9 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    context.read<GrouplistCubit>().getGroupListList(type: "all");
+                    context
+                        .read<GrouplistCubit>()
+                        .getGroupListList(type: "all");
                     context.showSnackBarSuccess(data.data2);
                   } else {
                     context.showSnackBarError(data.data2);
@@ -12530,27 +12800,57 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                SelectableDropDownpopUp(
-                                  controller: categoryCodeController,
-                                  label: "Category Code",
-                                  type: "Category_PopUpCall",
-                                  value: categoryCodeController.text,
-                                  onchange: (vale) {
-                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                                  },
-                                  enable: true,
-                                  onSelection: (BrandListModel? va) {
-                                    setState(() {
-                                      onChange = true;
-                                      categoryCodeController.text =
-                                          va?.code ?? "";
-                                      setState(() {});
 
-                                      // onChange = true;
-                                      // orderType.text = va!;
-                                    });
+                                NewInputCard(
+                                  controller: categoryNameController,
+                                  icondrop: true,
+                                  title: "Category Code",
+                                  ontap: () {
+                                    showDailogPopUp(
+                                      context,
+                                      TableConfigurePopup(
+                                        apiType: "all",
+                                        type: "category-TablePopup",
+                                        valueSelect: (BrandListModel va) {
+                                          setState(() {
+                                            onChange = true;
+                                            categoryCodeController.text =
+                                                va?.code ?? "";
+                                            categoryNameController.text =
+                                                va?.name ?? "";
+                                            // Variable.categoryId = va?.id;
+                                            setState(() {});
+
+                                            // onChange = true;
+                                            // orderType.text = va!;
+                                          });
+                                        },
+                                      ),
+                                    );
                                   },
                                 ),
+                                // SelectableDropDownpopUp(
+                                //   apiType: "all",
+                                //   controller: categoryCodeController,
+                                //   label: "Category Code",
+                                //   type: "Category_PopUpCall",
+                                //   value: categoryCodeController.text,
+                                //   onchange: (vale) {
+                                //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                //   },
+                                //   enable: true,
+                                //   onSelection: (BrandListModel? va) {
+                                //     setState(() {
+                                //       onChange = true;
+                                //       categoryCodeController.text =
+                                //           va?.code ?? "";
+                                //       setState(() {});
+                                //
+                                //       // onChange = true;
+                                //       // orderType.text = va!;
+                                //     });
+                                //   },
+                                // ),
                               ],
                             )),
                             Expanded(
@@ -13954,8 +14254,8 @@ class PopUpHeader extends StatefulWidget {
 
   const PopUpHeader({
     Key? key,
-    this.buttonNameOption=false,
-    this.buttonName="save",
+    this.buttonNameOption = false,
+    this.buttonName = "save",
     this.buttonCheck = false,
     this.functionChane = false,
     this.label,
@@ -13989,6 +14289,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
       width: 640,
       child: GeneralSavePage(
         onEdit: widget.onEdit,
+        buttonName: widget.buttonName,
         onPopUp: true,
         onApply: widget.onApply,
         onCreate: widget.isDirectCreate ? true : widget.addNew!,

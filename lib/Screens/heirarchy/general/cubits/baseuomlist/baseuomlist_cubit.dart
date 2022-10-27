@@ -29,7 +29,7 @@ class BaseuomlistCubit extends Cubit<BaseuomlistState> {
 
   Future searchUomList(String filter,{String? type}) async {
     emit(BaseuomlistState.initial());
-    final result = await repo.getUomist(filter);
+    final result = await repo.getUomist("name="+filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

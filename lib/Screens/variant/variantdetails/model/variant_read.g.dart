@@ -23,7 +23,10 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
           ? null
           : QrCode.fromJson(json['qrcode'] as Map<String, dynamic>),
       uomCode: json['uom_code'] as String?,
+      variantFrameWorkId: json['variantframework_id'] as int?,
+      uomId: json['uom_id'] as String?,
       inventoryId: json['inventory_id'] as String?,
+      uomGroupName: json['uom_group_name'] as String?,
       alterNativeBarcode: (json['var_alternative_barcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -32,7 +35,12 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
           .toList(),
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
       actualCost: (json['actual_cost'] as num?)?.toDouble(),
+      returType: (json['return_type_options'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       avgGp: (json['avrg_gp'] as num?)?.toDouble(),
+      return2Type: json['return_type'] as String?,
+      returnTime: json['return_time'] as int?,
       maxGp: (json['max_gp'] as num?)?.toDouble(),
       minGap: (json['min_gp'] as num?)?.toDouble(),
       targetedGp: (json['targeted_gp'] as num?)?.toDouble(),
@@ -99,12 +107,18 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'barcode': instance.barcode,
       'qrcode': instance.qrcode,
       'uom_code': instance.uomCode,
+      'variantframework_id': instance.variantFrameWorkId,
+      'uom_id': instance.uomId,
       'inventory_id': instance.inventoryId,
+      'uom_group_name': instance.uomGroupName,
       'var_alternative_barcode': instance.alterNativeBarcode,
       'var_alternative_qrcode': instance.alterNativeQrCode,
       'unit_cost': instance.unitCost,
       'actual_cost': instance.actualCost,
+      'return_type_options': instance.returType,
       'avrg_gp': instance.avgGp,
+      'return_type': instance.return2Type,
+      'return_time': instance.returnTime,
       'max_gp': instance.maxGp,
       'min_gp': instance.minGap,
       'targeted_gp': instance.targetedGp,

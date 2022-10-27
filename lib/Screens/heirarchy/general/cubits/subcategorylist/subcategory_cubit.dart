@@ -14,7 +14,7 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
   Future getSubCategoryList() async {
     next = null;
     prev = null;
-    print("enterd");
+    print("enterdAAAAAAAAAAAAAAA");
     // items = [];
     emit(SubcategoryState.initial());
     final result = await repo.getSubCategoryList(null);
@@ -27,7 +27,7 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
 
   Future searchSubCategoryList(String filter) async {
     emit(SubcategoryState.initial());
-    final result = await repo.getSubCategoryList("name=" + filter);
+    final result = await repo.getSubCategoryList("name="+ filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

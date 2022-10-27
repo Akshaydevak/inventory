@@ -20,12 +20,18 @@ class VariantReadModel with _$VariantReadModel {
 
 
     @JsonKey(name: "uom_code") final String? uomCode,
+    @JsonKey(name: "variantframework_id") final int? variantFrameWorkId,
+    @JsonKey(name: "uom_id") final String? uomId,
     @JsonKey(name: "inventory_id") final String? inventoryId,
+    @JsonKey(name: "uom_group_name") final String? uomGroupName,
     @JsonKey(name: "var_alternative_barcode") final List<AlternativeBarcode>? alterNativeBarcode,
     @JsonKey(name: "var_alternative_qrcode") final List<AlternativeBarcode>? alterNativeQrCode,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "actual_cost") final double? actualCost,
+    @JsonKey(name: "return_type_options") final List<String>? returType,
     @JsonKey(name: "avrg_gp") final double? avgGp,
+    @JsonKey(name: "return_type") final String ? return2Type,
+    @JsonKey(name: "return_time") final int ? returnTime,
     @JsonKey(name: "max_gp") final double? maxGp,
     @JsonKey(name: "min_gp") final double? minGap,
     @JsonKey(name: "targeted_gp") final double? targetedGp,

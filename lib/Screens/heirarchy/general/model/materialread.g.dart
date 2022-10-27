@@ -18,6 +18,7 @@ _$_MaterialReadModel _$$_MaterialReadModelFromJson(Map<String, dynamic> json) =>
       searchNmae: json['search_name'] as String?,
       displayName: json['display_name'] as String?,
       categoryCode: json['category_code'] as String?,
+      categoryName: json['category_name'] as String?,
       isActive: json['is_active'] as bool? ?? false,
     );
 
@@ -34,5 +35,6 @@ Map<String, dynamic> _$$_MaterialReadModelToJson(
       'search_name': instance.searchNmae,
       'display_name': instance.displayName,
       'category_code': instance.categoryCode,
+      'category_name': instance.categoryName,
       'is_active': instance.isActive,
     };

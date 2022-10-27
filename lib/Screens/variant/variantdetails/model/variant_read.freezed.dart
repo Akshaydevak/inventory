@@ -34,8 +34,14 @@ class _$VariantReadModelTearOff {
       QrCode? qrcode,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "variantframework_id")
+          int? variantFrameWorkId,
+      @JsonKey(name: "uom_id")
+          String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "uom_group_name")
+          String? uomGroupName,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -44,8 +50,14 @@ class _$VariantReadModelTearOff {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "return_type_options")
+          List<String>? returType,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "return_type")
+          String? return2Type,
+      @JsonKey(name: "return_time")
+          int? returnTime,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -126,12 +138,18 @@ class _$VariantReadModelTearOff {
       barcode: barcode,
       qrcode: qrcode,
       uomCode: uomCode,
+      variantFrameWorkId: variantFrameWorkId,
+      uomId: uomId,
       inventoryId: inventoryId,
+      uomGroupName: uomGroupName,
       alterNativeBarcode: alterNativeBarcode,
       alterNativeQrCode: alterNativeQrCode,
       unitCost: unitCost,
       actualCost: actualCost,
+      returType: returType,
       avgGp: avgGp,
+      return2Type: return2Type,
+      returnTime: returnTime,
       maxGp: maxGp,
       minGap: minGap,
       targetedGp: targetedGp,
@@ -191,8 +209,14 @@ mixin _$VariantReadModel {
   QrCode? get qrcode => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "variantframework_id")
+  int? get variantFrameWorkId => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_id")
+  String? get uomId => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: "uom_group_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "var_alternative_barcode")
   List<AlternativeBarcode>? get alterNativeBarcode =>
       throw _privateConstructorUsedError;
@@ -203,8 +227,14 @@ mixin _$VariantReadModel {
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "return_type_options")
+  List<String>? get returType => throw _privateConstructorUsedError;
   @JsonKey(name: "avrg_gp")
   double? get avgGp => throw _privateConstructorUsedError;
+  @JsonKey(name: "return_type")
+  String? get return2Type => throw _privateConstructorUsedError;
+  @JsonKey(name: "return_time")
+  int? get returnTime => throw _privateConstructorUsedError;
   @JsonKey(name: "max_gp")
   double? get maxGp => throw _privateConstructorUsedError;
   @JsonKey(name: "min_gp")
@@ -298,8 +328,14 @@ abstract class $VariantReadModelCopyWith<$Res> {
       QrCode? qrcode,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "variantframework_id")
+          int? variantFrameWorkId,
+      @JsonKey(name: "uom_id")
+          String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "uom_group_name")
+          String? uomGroupName,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -308,8 +344,14 @@ abstract class $VariantReadModelCopyWith<$Res> {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "return_type_options")
+          List<String>? returType,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "return_type")
+          String? return2Type,
+      @JsonKey(name: "return_time")
+          int? returnTime,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -411,12 +453,18 @@ class _$VariantReadModelCopyWithImpl<$Res>
     Object? barcode = freezed,
     Object? qrcode = freezed,
     Object? uomCode = freezed,
+    Object? variantFrameWorkId = freezed,
+    Object? uomId = freezed,
     Object? inventoryId = freezed,
+    Object? uomGroupName = freezed,
     Object? alterNativeBarcode = freezed,
     Object? alterNativeQrCode = freezed,
     Object? unitCost = freezed,
     Object? actualCost = freezed,
+    Object? returType = freezed,
     Object? avgGp = freezed,
+    Object? return2Type = freezed,
+    Object? returnTime = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
     Object? targetedGp = freezed,
@@ -497,9 +545,21 @@ class _$VariantReadModelCopyWithImpl<$Res>
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      variantFrameWorkId: variantFrameWorkId == freezed
+          ? _value.variantFrameWorkId
+          : variantFrameWorkId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uomId: uomId == freezed
+          ? _value.uomId
+          : uomId // ignore: cast_nullable_to_non_nullable
+              as String?,
       inventoryId: inventoryId == freezed
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
       alterNativeBarcode: alterNativeBarcode == freezed
           ? _value.alterNativeBarcode
@@ -517,10 +577,22 @@ class _$VariantReadModelCopyWithImpl<$Res>
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      returType: returType == freezed
+          ? _value.returType
+          : returType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       avgGp: avgGp == freezed
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
               as double?,
+      return2Type: return2Type == freezed
+          ? _value.return2Type
+          : return2Type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      returnTime: returnTime == freezed
+          ? _value.returnTime
+          : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       maxGp: maxGp == freezed
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
@@ -769,8 +841,14 @@ abstract class _$VariantReadModelCopyWith<$Res>
       QrCode? qrcode,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "variantframework_id")
+          int? variantFrameWorkId,
+      @JsonKey(name: "uom_id")
+          String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "uom_group_name")
+          String? uomGroupName,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -779,8 +857,14 @@ abstract class _$VariantReadModelCopyWith<$Res>
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "return_type_options")
+          List<String>? returType,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "return_type")
+          String? return2Type,
+      @JsonKey(name: "return_time")
+          int? returnTime,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -892,12 +976,18 @@ class __$VariantReadModelCopyWithImpl<$Res>
     Object? barcode = freezed,
     Object? qrcode = freezed,
     Object? uomCode = freezed,
+    Object? variantFrameWorkId = freezed,
+    Object? uomId = freezed,
     Object? inventoryId = freezed,
+    Object? uomGroupName = freezed,
     Object? alterNativeBarcode = freezed,
     Object? alterNativeQrCode = freezed,
     Object? unitCost = freezed,
     Object? actualCost = freezed,
+    Object? returType = freezed,
     Object? avgGp = freezed,
+    Object? return2Type = freezed,
+    Object? returnTime = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
     Object? targetedGp = freezed,
@@ -978,9 +1068,21 @@ class __$VariantReadModelCopyWithImpl<$Res>
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      variantFrameWorkId: variantFrameWorkId == freezed
+          ? _value.variantFrameWorkId
+          : variantFrameWorkId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      uomId: uomId == freezed
+          ? _value.uomId
+          : uomId // ignore: cast_nullable_to_non_nullable
+              as String?,
       inventoryId: inventoryId == freezed
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      uomGroupName: uomGroupName == freezed
+          ? _value.uomGroupName
+          : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
       alterNativeBarcode: alterNativeBarcode == freezed
           ? _value.alterNativeBarcode
@@ -998,10 +1100,22 @@ class __$VariantReadModelCopyWithImpl<$Res>
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      returType: returType == freezed
+          ? _value.returType
+          : returType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       avgGp: avgGp == freezed
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
               as double?,
+      return2Type: return2Type == freezed
+          ? _value.return2Type
+          : return2Type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      returnTime: returnTime == freezed
+          ? _value.returnTime
+          : returnTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       maxGp: maxGp == freezed
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
@@ -1157,12 +1271,18 @@ class _$_VariantReadModel implements _VariantReadModel {
       this.barcode,
       this.qrcode,
       @JsonKey(name: "uom_code") this.uomCode,
+      @JsonKey(name: "variantframework_id") this.variantFrameWorkId,
+      @JsonKey(name: "uom_id") this.uomId,
       @JsonKey(name: "inventory_id") this.inventoryId,
+      @JsonKey(name: "uom_group_name") this.uomGroupName,
       @JsonKey(name: "var_alternative_barcode") this.alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode") this.alterNativeQrCode,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "actual_cost") this.actualCost,
+      @JsonKey(name: "return_type_options") this.returType,
       @JsonKey(name: "avrg_gp") this.avgGp,
+      @JsonKey(name: "return_type") this.return2Type,
+      @JsonKey(name: "return_time") this.returnTime,
       @JsonKey(name: "max_gp") this.maxGp,
       @JsonKey(name: "min_gp") this.minGap,
       @JsonKey(name: "targeted_gp") this.targetedGp,
@@ -1225,8 +1345,17 @@ class _$_VariantReadModel implements _VariantReadModel {
   @JsonKey(name: "uom_code")
   final String? uomCode;
   @override
+  @JsonKey(name: "variantframework_id")
+  final int? variantFrameWorkId;
+  @override
+  @JsonKey(name: "uom_id")
+  final String? uomId;
+  @override
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
+  @override
+  @JsonKey(name: "uom_group_name")
+  final String? uomGroupName;
   @override
   @JsonKey(name: "var_alternative_barcode")
   final List<AlternativeBarcode>? alterNativeBarcode;
@@ -1240,8 +1369,17 @@ class _$_VariantReadModel implements _VariantReadModel {
   @JsonKey(name: "actual_cost")
   final double? actualCost;
   @override
+  @JsonKey(name: "return_type_options")
+  final List<String>? returType;
+  @override
   @JsonKey(name: "avrg_gp")
   final double? avgGp;
+  @override
+  @JsonKey(name: "return_type")
+  final String? return2Type;
+  @override
+  @JsonKey(name: "return_time")
+  final int? returnTime;
   @override
   @JsonKey(name: "max_gp")
   final double? maxGp;
@@ -1347,7 +1485,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, uomCode: $uomCode, inventoryId: $inventoryId, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, actualCost: $actualCost, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, manufacturedName: $manufacturedName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, actualCost: $actualCost, returType: $returType, avgGp: $avgGp, return2Type: $return2Type, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, manufacturedName: $manufacturedName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
   }
 
   @override
@@ -1379,9 +1517,17 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.uomCode, uomCode) ||
                 const DeepCollectionEquality()
                     .equals(other.uomCode, uomCode)) &&
+            (identical(other.variantFrameWorkId, variantFrameWorkId) ||
+                const DeepCollectionEquality()
+                    .equals(other.variantFrameWorkId, variantFrameWorkId)) &&
+            (identical(other.uomId, uomId) ||
+                const DeepCollectionEquality().equals(other.uomId, uomId)) &&
             (identical(other.inventoryId, inventoryId) ||
                 const DeepCollectionEquality()
                     .equals(other.inventoryId, inventoryId)) &&
+            (identical(other.uomGroupName, uomGroupName) ||
+                const DeepCollectionEquality()
+                    .equals(other.uomGroupName, uomGroupName)) &&
             (identical(other.alterNativeBarcode, alterNativeBarcode) ||
                 const DeepCollectionEquality()
                     .equals(other.alterNativeBarcode, alterNativeBarcode)) &&
@@ -1394,8 +1540,17 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.actualCost, actualCost) ||
                 const DeepCollectionEquality()
                     .equals(other.actualCost, actualCost)) &&
+            (identical(other.returType, returType) ||
+                const DeepCollectionEquality()
+                    .equals(other.returType, returType)) &&
             (identical(other.avgGp, avgGp) ||
                 const DeepCollectionEquality().equals(other.avgGp, avgGp)) &&
+            (identical(other.return2Type, return2Type) ||
+                const DeepCollectionEquality()
+                    .equals(other.return2Type, return2Type)) &&
+            (identical(other.returnTime, returnTime) ||
+                const DeepCollectionEquality()
+                    .equals(other.returnTime, returnTime)) &&
             (identical(other.maxGp, maxGp) ||
                 const DeepCollectionEquality().equals(other.maxGp, maxGp)) &&
             (identical(other.minGap, minGap) ||
@@ -1407,23 +1562,12 @@ class _$_VariantReadModel implements _VariantReadModel {
                 const DeepCollectionEquality()
                     .equals(other.excessTax, excessTax)) &&
             (identical(other.landingCost, landingCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.landingCost, landingCost)) &&
-            (identical(other.uomNameData, uomNameData) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomNameData, uomNameData)) &&
-            (identical(other.salesUomData, salesUomData) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesUomData, salesUomData)) &&
-            (identical(other.vendorDetails, vendorDetails) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorDetails, vendorDetails)) &&
-            (identical(other.purchaseUomdata, purchaseUomdata) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseUomdata, purchaseUomdata)) &&
-            (identical(other.variantframeWork, variantframeWork) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantframeWork, variantframeWork)) &&
+                const DeepCollectionEquality().equals(other.landingCost, landingCost)) &&
+            (identical(other.uomNameData, uomNameData) || const DeepCollectionEquality().equals(other.uomNameData, uomNameData)) &&
+            (identical(other.salesUomData, salesUomData) || const DeepCollectionEquality().equals(other.salesUomData, salesUomData)) &&
+            (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
+            (identical(other.purchaseUomdata, purchaseUomdata) || const DeepCollectionEquality().equals(other.purchaseUomdata, purchaseUomdata)) &&
+            (identical(other.variantframeWork, variantframeWork) || const DeepCollectionEquality().equals(other.variantframeWork, variantframeWork)) &&
             (identical(other.variantMeta, variantMeta) || const DeepCollectionEquality().equals(other.variantMeta, variantMeta)) &&
             (identical(other.itemData, itemData) || const DeepCollectionEquality().equals(other.itemData, itemData)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
@@ -1464,12 +1608,18 @@ class _$_VariantReadModel implements _VariantReadModel {
       const DeepCollectionEquality().hash(barcode) ^
       const DeepCollectionEquality().hash(qrcode) ^
       const DeepCollectionEquality().hash(uomCode) ^
+      const DeepCollectionEquality().hash(variantFrameWorkId) ^
+      const DeepCollectionEquality().hash(uomId) ^
       const DeepCollectionEquality().hash(inventoryId) ^
+      const DeepCollectionEquality().hash(uomGroupName) ^
       const DeepCollectionEquality().hash(alterNativeBarcode) ^
       const DeepCollectionEquality().hash(alterNativeQrCode) ^
       const DeepCollectionEquality().hash(unitCost) ^
       const DeepCollectionEquality().hash(actualCost) ^
+      const DeepCollectionEquality().hash(returType) ^
       const DeepCollectionEquality().hash(avgGp) ^
+      const DeepCollectionEquality().hash(return2Type) ^
+      const DeepCollectionEquality().hash(returnTime) ^
       const DeepCollectionEquality().hash(maxGp) ^
       const DeepCollectionEquality().hash(minGap) ^
       const DeepCollectionEquality().hash(targetedGp) ^
@@ -1530,8 +1680,14 @@ abstract class _VariantReadModel implements VariantReadModel {
       QrCode? qrcode,
       @JsonKey(name: "uom_code")
           String? uomCode,
+      @JsonKey(name: "variantframework_id")
+          int? variantFrameWorkId,
+      @JsonKey(name: "uom_id")
+          String? uomId,
       @JsonKey(name: "inventory_id")
           String? inventoryId,
+      @JsonKey(name: "uom_group_name")
+          String? uomGroupName,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -1540,8 +1696,14 @@ abstract class _VariantReadModel implements VariantReadModel {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "return_type_options")
+          List<String>? returType,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
+      @JsonKey(name: "return_type")
+          String? return2Type,
+      @JsonKey(name: "return_time")
+          int? returnTime,
       @JsonKey(name: "max_gp")
           double? maxGp,
       @JsonKey(name: "min_gp")
@@ -1638,8 +1800,17 @@ abstract class _VariantReadModel implements VariantReadModel {
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "variantframework_id")
+  int? get variantFrameWorkId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uom_id")
+  String? get uomId => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "inventory_id")
   String? get inventoryId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "uom_group_name")
+  String? get uomGroupName => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "var_alternative_barcode")
   List<AlternativeBarcode>? get alterNativeBarcode =>
@@ -1655,8 +1826,17 @@ abstract class _VariantReadModel implements VariantReadModel {
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "return_type_options")
+  List<String>? get returType => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "avrg_gp")
   double? get avgGp => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "return_type")
+  String? get return2Type => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "return_time")
+  int? get returnTime => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "max_gp")
   double? get maxGp => throw _privateConstructorUsedError;

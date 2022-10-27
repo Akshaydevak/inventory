@@ -143,7 +143,7 @@ abstract class PurchaseReturnRepoAbstract {
       BrandCreationtModel model, int? id);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       searchMaterialList(
-    String? code,
+    String? code,{String? page}
   );
   Future<Either<Failure, DoubleResponse>> postCreateMaterial(
       MaterialCreationtModel model);
@@ -172,7 +172,7 @@ abstract class PurchaseReturnRepoAbstract {
     int? id,
   );
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type});
+      getCategoryist(String? code, {String? type,int ? id});
   Future<Either<Failure, DoubleResponse>> postCreateCategory(
       CategoryCreationtModel model);
   Future<Either<Failure, CategoryReadModel>> getCategoryRead(
@@ -293,6 +293,7 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, DoubleResponse>> postPatchCostingCreate(
     int? verticalId,
+      int? typeId,
     String typeName,
     String description,
     String createdBy,
@@ -679,9 +680,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchMaterialList(String? code) {
+      searchMaterialList(String? code,{String ? page}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.searchMaterialList(code));
+        () async => remoteDataSource.searchMaterialList(code,page:page));
   }
 
   @override
@@ -772,9 +773,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type}) {
+      getCategoryist(String? code, {String? type,int ? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getCategoryist(code, type: type));
+        () async => remoteDataSource.getCategoryist(code, type: type,id:id));
   }
 
   @override
@@ -802,6 +803,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getSubCategoryList(String? code) {
+    print("enterdAAAAAAAAAAAAAAA");
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
         () async => remoteDataSource.getSubCategoryList(code));
   }
@@ -1130,6 +1132,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, DoubleResponse>> postPatchCostingCreate(
       int? verticalId,
+      int? typeId,
       String typeName,
       String description,
       String createdBy,
@@ -1137,6 +1140,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
     return repoExecute<DoubleResponse>(
         () async => remoteDataSource.postPatchpostPatchCostingCreateCostingType(
               verticalId,
+              typeId,
               typeName,
               description,
               createdBy,

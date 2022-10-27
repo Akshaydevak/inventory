@@ -13,6 +13,8 @@ class CategoryReadModel with _$CategoryReadModel {
     final String? image,
     final int? id,
     @JsonKey(name: "alternative_name") final String? alternativename,
+    @JsonKey(name: "division_name") final String? divisionName,
+    @JsonKey(name: "parent_name") final String? parentname,
     @JsonKey(name: "parent_code") final String? parentCode,
     @JsonKey(name: "division_code") final String? divisionCode,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,

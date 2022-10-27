@@ -56,8 +56,8 @@ class _AttributeScreenState extends State<AttributeScreen> {
 // };
 // attributes.add(maps);
             graphArray[i].add({
-              "key": attribute[i].attributeName,
-              "attributeId": attribute[i].attributeId,
+              "attribute_name": attribute[i].attributeName,
+              "attribute_id": attribute[i].attributeId,
               "attributeCode": attribute[i].attributeCode,
               "flag": false,
               "value": attribute[i].values?[j]
