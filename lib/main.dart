@@ -34,6 +34,7 @@ import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'Screens/variant/channel_alloction/cubit/channelread/channelread_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/cubit/unicost_costing_cubit.dart';
+import 'Screens/variant/channel_costing_allocation/cubits/deletion/deletioncosting_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
 import 'Screens/variant/channel_stockAllocation/cubit/channelstockvertical/channelstockvertical_cubit.dart';
 import 'Screens/variant/channels2allocation/cubits/channellistread/channel_list_read_cubit.dart';
@@ -161,6 +162,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => SubcategoryCubit(),
         ),BlocProvider(
           create: (context) => VariantselectionCubit(),
+        ),BlocProvider(
+          create: (context) => DeletioncostingCubit(),
         ),
       ],
       child: MaterialApp(
@@ -188,6 +191,7 @@ class _MyHomeState extends State<MyHome> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     Variable.inventory_ID = prefs.getString("inventory").toString();
     Variable.inventory_Name = prefs.getString("inventory_name").toString();
+    Variable.created_by = prefs.getString("empcode").toString();
 
     // Variable.subIndex = list.map(int.parse).toList();
 

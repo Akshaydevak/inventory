@@ -1246,6 +1246,9 @@ class ProductTablesState extends State<ProductTables> {
 
 class VariantStabletable extends StatefulWidget {
   final TextEditingController itemId;
+  final TextEditingController length;
+  final TextEditingController width;
+  final TextEditingController height;
   final TextEditingController variantCode;
   final TextEditingController variantName;
   final TextEditingController variantValue;
@@ -1302,6 +1305,7 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController videoUrl;
   final TextEditingController minimumGp;
   final TextEditingController maximumGp;
+  final TextEditingController seblingNameController;
   final TextEditingController averageGp;
   final TextEditingController targetedgp;
   final TextEditingController minPurchaseOrderLimit;
@@ -1321,9 +1325,12 @@ class VariantStabletable extends StatefulWidget {
   final Function({String type, bool val}) trueOrFalseChange;
 
   VariantStabletable({
+
     required this.imagePostCheck,
     required this.itemId,
     required this.image3,
+    required this.seblingNameController,
+
     required this.image2,
     required this.actualCost,
     required this.landingCost,
@@ -1394,7 +1401,7 @@ class VariantStabletable extends StatefulWidget {
     required this.uomGroupName,
     required this.baseGroupName,
     required this.salesUomName,
-    required this.purchaseUomName,
+    required this.purchaseUomName, required this.length, required this.width, required this.height,
   });
 
   @override
@@ -1764,6 +1771,16 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         formatter: true,
                         controller: widget.landingCost,
                         title: "Landing Cost"),
+
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+
+                        controller: widget.length,
+                        title: "Length"),
+
                     SizedBox(
                       height: height * .229,
                     ),
@@ -1772,6 +1789,21 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
+
+
+                    NewInputCard(
+                        formatter: true, controller: widget.height,
+                        title: "Height"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+
+                        controller: widget.width,
+                        title: "Width"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
                     NewInputCard(
                         formatter: true,
                         controller: widget.actualCost,
@@ -1822,36 +1854,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
 
 
-                    NewInputCard(
-                      readOnly: true,
-                      controller: widget.manuFactureId,
-                      // icondrop: true,
-                      title: "Manufacture Id",
-                      ontap: () {
-                        showDailogPopUp(
-                          context,
-                          TableConfigurePopup(
 
-                            type: "ManuFacturedPopup",
-                            valueSelect: (VendorDetailsModel va) {
-                              setState(() {
-                                print(va?.id ?? "");
-                                widget.manuFactureId.text = va?.id.toString() ?? "";
-
-                                setState(() {});
-                                setState(() {});
-
-                                // onChange = true;
-                                // orderType.text = va!;
-                              });
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: height * .030,
-                    ),
                     // NewInputCard(
                     //     controller: widget.manuFactureName,
                     //     title: "Manufacture Name"),
@@ -1869,6 +1872,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             valueSelect: (VendorDetailsModel va) {
                               setState(() {
                                 print(va?.id ?? "");
+                                widget.manuFactureId.text = va?.id.toString() ?? "";
                                 widget.manuFactureName.text = va?.manuFactureName.toString() ?? "";
 
                                 setState(() {});
@@ -1915,20 +1919,20 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.minMax,
-                        title: "Min Max Ratio"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
-                    NewInputCard(
-                      formatter: true,
-                        controller: widget.wholeSaleStock,
-                        title: "Whole Sale Stock"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller: widget.minMax,
+                    //     title: "Min Max Ratio"),
+                    // SizedBox(
+                    //   height: height * .030,
+                    // ),
+                    // NewInputCard(
+                    //   formatter: true,
+                    //     controller: widget.wholeSaleStock,
+                    //     title: "Whole Sale Stock"),
+                    // SizedBox(
+                    //   height: height * .030,
+                    // ),
                     NewInputCard(
                         formatter: true,
                         controller: widget.reorderQuantity,
@@ -1944,10 +1948,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     SelectableDropDownpopUp(
-                      controller: widget.sellingId,
+                      controller: widget.seblingNameController,
                       label: "Sebling Id",
                       type: "Sebling_ListPopUpCall",
-                      value: widget.sellingId.text,
+                      value: widget.seblingNameController.text,
                       onchange: (vale) {
                         print(vale);
                         context
@@ -1958,6 +1962,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       onSelection: (BrandListModel? va) {
                         setState(() {
                           widget.sellingId.text = va?.code ?? "";
+                          widget.seblingNameController.text = va?.name ?? "";
 
                           setState(() {});
 
@@ -1974,6 +1979,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       title: "Linked Item",
                       controller: widget.linkedItem,
                       ontap: () {
+                        // costingTypeMethodeCheck=true;
                         showDailogPopUp(
                           context,
                           ConfigurePopup(
@@ -2030,26 +2036,35 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+
                     NewInputCard(
                         formatter: true,
                         controller: widget.targetedgp,
                         title: "Targeted Gp"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
                     SizedBox(
-                      height: height * .208,
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minPurchaseOrderLimit,
+                        title: "Min purchase  Order Limit"),
+
+
+
+                    SizedBox(
+                      height: height * .307,
                     ),
                   ],
                 )),
                 Expanded(
                     child: Column(
                   children: [
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.minPurchaseOrderLimit,
-                        title: "Min purchase  Order Limit"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+
+
                     NewInputCard(
                         formatter: true,
                         controller: widget.maxPurchaseOrderLimit,
@@ -2094,6 +2109,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
+                      formatter: true,
                         controller: widget.returnTime, title: "Return Time"),
                     SizedBox(
                       height: height * .030,
@@ -2754,7 +2770,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCreate: true,
                         label: "Catalog8"),
                     SizedBox(
-                      height: height * .11,
+                      height: height * .362     ,
                     ),
                   ],
                 ))

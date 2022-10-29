@@ -254,6 +254,17 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
 
             );
+          },),DrawerCared(label: "Linked Item ",ontap: (){
+            costingTypeMethodeCheck = false;
+
+            showDailogPopUp(
+              context,
+              ConfigurePopup(
+                type: "LinkedItemCreatePopUp",
+              ),
+
+
+            );
           },),
           // DrawerCared(label: "Linked Item ",ontap: (){
           //   costingTypeMethodeCheck = false;

@@ -1208,7 +1208,7 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
                                             },
                                           ));
                                     },
-                                    itemCount: result.length+1,
+                                    itemCount: result.length,
                                   )
 
 
@@ -3411,147 +3411,144 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
     double width = MediaQuery.of(context).size.width;
 
     vm = Provider.of<NavigationProvider>(context);
-    return BlocProvider(
-      create: (context) => BaseuomlistCubit(),
-      child: Container(
-        //     child: BlocProvider(
-        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
-        child: Builder(
-            builder: (context) {
-              return BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
-                listener: (context, state) {
-                  print("this portion is working");
-                  state.maybeWhen(orElse:(){},
-                      error: (){
-                        print("error");
-                      },
-                      success: (list){
-                        print("listtt"+list.toString());
-                        result=list.data;setState(() {
-                          print("Here is the result");
-                          print(result);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
+              listener: (context, state) {
+                print("this portion is working");
+                state.maybeWhen(orElse:(){},
+                    error: (){
+                      print("error");
+                    },
+                    success: (list){
+                      print("listtt"+list.toString());
+                      result=list.data;setState(() {
+                        print("Here is the result");
+                        print(result);
 
-                        });
+                      });
 
-                      }
-                  );
-                },
-                builder: (context, state) {
-                  return Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.all(10),
-                    child:
-                    Visibility(
-                      visible:  !vm.isCollapsed,
-                      child: Container(
-                        height: height,
-                        // height: double.minPositive,
-                        width:  width * .112,
-                        //width: 232,
-                        color: Color(0xffEDF1F2),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(5),
-                                child:
-                                SearchTextfiled(
-                                  color: Color(0xffFAFAFA),
-                                  hintText: "Search...",
-                                  ctrlr:widget. itemsearch,
-                                  onChanged: (va) {
-                                    print("searching case"+va.toString());
+                    }
+                );
+              },
+              builder: (context, state) {
+                return Container(
+                  height: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  child:
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width:  width * .112,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  context
+                                      .read<ItemcreationListCubit>()
+                                      .searchItemList(widget.itemsearch.text);
+                                  if(va==""){
                                     context
-                                        .read<BaseuomlistCubit>()
-                                        .searchUomList(widget.itemsearch.text,type: "all");
-                                    if(va==""){
-                                      context
-                                          .read<BaseuomlistCubit>()
-                                          .getUomist();
+                                        .read<ItemcreationListCubit>()
+                                        .getItemListList();
 
-                                    }
+                                  }
 
-                                  },
-                                )
-                            ),
-                            SizedBox(
-                              height:
-                              MediaQuery.of(context).size.height * .008,
-                            ),
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
 
 
-                            Expanded(
-                                child: Container(
-                                    height: 0,
-                                    child: ListView.separated(
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
 
 
 
-                                      separatorBuilder: (context, index) {
+                                    separatorBuilder: (context, index) {
 
-                                        return Divider(
-                                          height: 0,
-                                          color: Color(0xff2B3944)
-                                              .withOpacity(0.3),
-                                          // thickness: 1,
-                                        );
-                                      },
-                                      physics: ScrollPhysics(),
-                                      controller: controller,
-                                      itemBuilder: (context, index) {
-                                        return AutoScrollTag(
-                                            highlightColor: Colors.red,
-                                            controller: controller,
-                                            key: ValueKey(index),
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
                                             index: index,
-                                            child: ItemCard(
-                                              index: index,
-                                              selectedVertical:widget. selectedVertical,
-                                              item: widget.result[index].name,
-                                              id:widget. result[index]
-                                                  .id
-                                                  .toString(),
-                                              onClick: () {
-                                                widget.ontap( index);
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
 
-                                              },
-                                            ));
-                                      },
-                                      itemCount: widget.result.length,
-                                    )
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
 
 
-                                )),
-                            tablePagination(
-                                  () => context
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<ItemcreationListCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<ItemcreationListCubit>()
-                                  .refresh(),
-                              back: widget.list?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<ItemcreationListCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next: widget.list?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<ItemcreationListCubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            )
-                          ],
-                        ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<ItemcreationListCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            }
-        ),
-
+                  ),
+                );
+              },
+            );
+          }
       ),
+
     );
 
   }

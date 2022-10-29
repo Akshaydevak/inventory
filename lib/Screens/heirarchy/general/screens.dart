@@ -163,12 +163,12 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.itemCode,
-                                title: "Item code"),
+                                title: "Item Code"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
-                                controller: widget.itemName, title: "Item name"),
+                                controller: widget.itemName, title: "Item Name"),
                             SizedBox(
                               height: height * .030,
                             ),
@@ -361,7 +361,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           ),
                           PopUpSwitchTile(
                               value:widget. active??false,
-                              title: "isActive",
+                              title: "Is Active",
                               onClick: (gg) {
                                 widget.activeChange(!widget.active);
 
@@ -477,7 +477,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "image2"),
+                              label: "Image2"),
 
 
 
@@ -545,7 +545,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "image3"),
+                              label: "Image3"),
 
 
                           SizedBox(
@@ -600,7 +600,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "item catalog1"),
+                              label: "Item Catalog1"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -651,7 +651,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "item catalog2"),
+                              label: "Item Catalog2"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -702,7 +702,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "item catalog3"),
+                              label: "Item Catalog3"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -772,7 +772,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
                                 context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
+                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -803,7 +803,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "item catalog2"),
+                              label: "Item catalog5"),
                           SizedBox(
                             height: height * .097,
                           ),
@@ -1512,6 +1512,9 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                           }
                           values1.add(str);
 
+                        }
+                        else{
+                          values1.add("");
                         }
                         // setState(() {
                           table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));

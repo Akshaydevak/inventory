@@ -58,6 +58,7 @@ _$_ItemReadModel _$$_ItemReadModelFromJson(Map<String, dynamic> json) =>
       itemCatelog2: json['item_cataloge2'] as String?,
       itemCatelog3: json['item_cataloge3'] as String?,
       itemCatelog4: json['item_cataloge4'] as String?,
+      itemCatelog5: json['item_cataloge5'] as String?,
     );
 
 Map<String, dynamic> _$$_ItemReadModelToJson(_$_ItemReadModel instance) =>
@@ -106,6 +107,7 @@ Map<String, dynamic> _$$_ItemReadModelToJson(_$_ItemReadModel instance) =>
       'item_cataloge2': instance.itemCatelog2,
       'item_cataloge3': instance.itemCatelog3,
       'item_cataloge4': instance.itemCatelog4,
+      'item_cataloge5': instance.itemCatelog5,
     };
 
 _$_Barcode _$$_BarcodeFromJson(Map<String, dynamic> json) => _$_Barcode(

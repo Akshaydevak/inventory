@@ -42,12 +42,12 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
       graphArray.clear();
 
-      for (var i = 0; i < attribute.length; i++) {
+      for (var i = 0; i < attribute.length-1; i++) {
         graphArray.add([]);
       }
       // if
 
-      for (var i = 0; i < attribute.length; i++) {
+      for (var i = 0; i < attribute.length-1; i++) {
         if (attribute[i].values?.isNotEmpty == true) {
           for (var j = 0; j < attribute[i].values!.length; j++) {
 // maps={
@@ -58,7 +58,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
             graphArray[i].add({
               "attribute_name": attribute[i].attributeName,
               "attribute_id": attribute[i].attributeId,
-              "attributeCode": attribute[i].attributeCode,
+              "attribute_code": attribute[i].attributeCode,
               "flag": false,
               "value": attribute[i].values?[j]
             });
@@ -204,7 +204,70 @@ class _AttributeScreenState extends State<AttributeScreen> {
                                           print("the changing array is" +
                                               graphArray.toString());
 
-                                          // newGraphArray =[...graphArray];
+                                          List<List<Map<String,dynamic>>> newGraphArray = [];
+
+
+
+                                          for (var i = 0; i < graphArray.length; i++) {
+                                            newGraphArray.add([]);
+                                            print("newGraphArray"+newGraphArray.length.toString());
+                                          }
+                                          print("newGraphArray"+newGraphArray.length.toString());
+                                          // if
+
+                                          for (var i = 0; i < graphArray.length; i++) {
+                                            if (graphArray[i]?.isNotEmpty == true) {
+                                              for (var j = 0; j < graphArray[i].length; j++) {
+                                                print("aaaaaaaaaaaaaaaaaaaaaa${graphArray}");
+// maps={
+//   "flag":false,
+//   "value":attribute[i].values?[j]
+// };
+// attributes.add(maps);
+                                                newGraphArray[i].add({
+                                                  "attribute_name": graphArray[i][j]['attribute_name'],
+
+                                                  "attribute_id": graphArray[i][j]["attribute_id"],
+                                                  "attribute_code":graphArray[i][j]["attribute_code"],
+                                                  "flag":graphArray[i][j]["flag"],
+                                                  "value": graphArray[i][j]["value"]
+                                                });
+
+
+                                              }
+                                              print("ppppppppppppppp" + newGraphArray.toString());
+
+                                              // attribute[i].values?.forEach((element) {
+                                              //   print(element);
+                                              //   print(i);
+                                              //   maps={
+                                              //     "flag":false,
+                                              //     "value":element
+                                              //   };
+                                              //
+                                              //
+                                              //   print("rgc"+maps.toString());
+                                              //
+                                              //   print("rgc"+attributes.toString());
+                                              //   attributes.add(maps);
+                                              //   graphArray[i].add(attributes);
+                                              //
+                                              //   // graphArray.add(attributes);
+                                              //
+                                              // }
+                                              // );
+
+                                            }
+                                            print("garray  0" + graphArray[0].toString());
+                                            print("garray   1" + graphArray[1].toString());
+                                          }
+
+
+
+
+                                          print(graphArray);
+                                          print("++++++++++++++++");
+                                          print(newGraphArray);
 
 
 
@@ -219,7 +282,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
 
 
-                                          widget.combination(graphArray);
+                                          widget.combination(newGraphArray);
                                         });
 
                                         print("akskks");

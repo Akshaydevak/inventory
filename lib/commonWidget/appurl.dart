@@ -192,8 +192,8 @@ const createLinkedItemtApi =
     inventoryBaseUrl + "inventory-product/create-linkitem";
 const readLinkedItemtApi =
     inventoryBaseUrl + "inventory-product/read-linkitem/";
-const readLinkedItemVerticalApi =
-    inventoryBaseUrl + "inventory-product/list-variant-under-variants";
+const readLinkedItemVerticalApi = inventoryBaseUrl + "inventory-product/list-variant-under-variants";
+const deleteVariantApi = inventoryBaseUrl + "inventory-product/variant-update/";
 const listVariantApi =
     inventoryBaseUrl + "inventory-product/list-variant-by-inventory/";
 const listLinkedItemApi =

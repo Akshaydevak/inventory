@@ -23,6 +23,9 @@ class _$VariantReadModelTearOff {
 
   _VariantReadModel call(
       {int? id,
+      int? height,
+      int? width,
+      int? length,
       String? code,
       double? vat,
       String? description,
@@ -52,6 +55,10 @@ class _$VariantReadModelTearOff {
           double? actualCost,
       @JsonKey(name: "return_type_options")
           List<String>? returType,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
       @JsonKey(name: "return_type")
@@ -84,8 +91,6 @@ class _$VariantReadModelTearOff {
           ItemData? itemData,
       @JsonKey(name: "search_name")
           String? searchName,
-      @JsonKey(name: "manufacture_name")
-          String? manufacturedName,
       @JsonKey(name: "sales_uom")
           String? SalesUom,
       @JsonKey(name: "gross_weight")
@@ -128,6 +133,9 @@ class _$VariantReadModelTearOff {
           String? itemCatelog4}) {
     return _VariantReadModel(
       id: id,
+      height: height,
+      width: width,
+      length: length,
       code: code,
       vat: vat,
       description: description,
@@ -147,6 +155,8 @@ class _$VariantReadModelTearOff {
       unitCost: unitCost,
       actualCost: actualCost,
       returType: returType,
+      manuFacturedId: manuFacturedId,
+      manuFacturedName: manuFacturedName,
       avgGp: avgGp,
       return2Type: return2Type,
       returnTime: returnTime,
@@ -163,7 +173,6 @@ class _$VariantReadModelTearOff {
       variantMeta: variantMeta,
       itemData: itemData,
       searchName: searchName,
-      manufacturedName: manufacturedName,
       SalesUom: SalesUom,
       grossWeight: grossWeight,
       producedCountry: producedCountry,
@@ -198,6 +207,9 @@ const $VariantReadModel = _$VariantReadModelTearOff();
 /// @nodoc
 mixin _$VariantReadModel {
   int? get id => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
+  int? get width => throw _privateConstructorUsedError;
+  int? get length => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
   double? get vat => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
@@ -229,6 +241,10 @@ mixin _$VariantReadModel {
   double? get actualCost => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type_options")
   List<String>? get returType => throw _privateConstructorUsedError;
+  @JsonKey(name: "manufacture_id")
+  int? get manuFacturedId => throw _privateConstructorUsedError;
+  @JsonKey(name: "manufacture_name")
+  String? get manuFacturedName => throw _privateConstructorUsedError;
   @JsonKey(name: "avrg_gp")
   double? get avgGp => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type")
@@ -260,9 +276,8 @@ mixin _$VariantReadModel {
   @JsonKey(name: "item_data")
   ItemData? get itemData => throw _privateConstructorUsedError;
   @JsonKey(name: "search_name")
-  String? get searchName => throw _privateConstructorUsedError;
-  @JsonKey(name: "manufacture_name")
-  String? get manufacturedName => throw _privateConstructorUsedError;
+  String? get searchName =>
+      throw _privateConstructorUsedError; // @JsonKey(name: "manufacture_name") final String? manufacturedName,
   @JsonKey(name: "sales_uom")
   String? get SalesUom => throw _privateConstructorUsedError;
   @JsonKey(name: "gross_weight")
@@ -317,6 +332,9 @@ abstract class $VariantReadModelCopyWith<$Res> {
       _$VariantReadModelCopyWithImpl<$Res>;
   $Res call(
       {int? id,
+      int? height,
+      int? width,
+      int? length,
       String? code,
       double? vat,
       String? description,
@@ -346,6 +364,10 @@ abstract class $VariantReadModelCopyWith<$Res> {
           double? actualCost,
       @JsonKey(name: "return_type_options")
           List<String>? returType,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
       @JsonKey(name: "return_type")
@@ -378,8 +400,6 @@ abstract class $VariantReadModelCopyWith<$Res> {
           ItemData? itemData,
       @JsonKey(name: "search_name")
           String? searchName,
-      @JsonKey(name: "manufacture_name")
-          String? manufacturedName,
       @JsonKey(name: "sales_uom")
           String? SalesUom,
       @JsonKey(name: "gross_weight")
@@ -443,6 +463,9 @@ class _$VariantReadModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? height = freezed,
+    Object? width = freezed,
+    Object? length = freezed,
     Object? code = freezed,
     Object? vat = freezed,
     Object? description = freezed,
@@ -462,6 +485,8 @@ class _$VariantReadModelCopyWithImpl<$Res>
     Object? unitCost = freezed,
     Object? actualCost = freezed,
     Object? returType = freezed,
+    Object? manuFacturedId = freezed,
+    Object? manuFacturedName = freezed,
     Object? avgGp = freezed,
     Object? return2Type = freezed,
     Object? returnTime = freezed,
@@ -478,7 +503,6 @@ class _$VariantReadModelCopyWithImpl<$Res>
     Object? variantMeta = freezed,
     Object? itemData = freezed,
     Object? searchName = freezed,
-    Object? manufacturedName = freezed,
     Object? SalesUom = freezed,
     Object? grossWeight = freezed,
     Object? producedCountry = freezed,
@@ -504,6 +528,18 @@ class _$VariantReadModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      length: length == freezed
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
               as int?,
       code: code == freezed
           ? _value.code
@@ -581,6 +617,14 @@ class _$VariantReadModelCopyWithImpl<$Res>
           ? _value.returType
           : returType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      manuFacturedId: manuFacturedId == freezed
+          ? _value.manuFacturedId
+          : manuFacturedId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      manuFacturedName: manuFacturedName == freezed
+          ? _value.manuFacturedName
+          : manuFacturedName // ignore: cast_nullable_to_non_nullable
+              as String?,
       avgGp: avgGp == freezed
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
@@ -644,10 +688,6 @@ class _$VariantReadModelCopyWithImpl<$Res>
       searchName: searchName == freezed
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      manufacturedName: manufacturedName == freezed
-          ? _value.manufacturedName
-          : manufacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
       SalesUom: SalesUom == freezed
           ? _value.SalesUom
@@ -830,6 +870,9 @@ abstract class _$VariantReadModelCopyWith<$Res>
   @override
   $Res call(
       {int? id,
+      int? height,
+      int? width,
+      int? length,
       String? code,
       double? vat,
       String? description,
@@ -859,6 +902,10 @@ abstract class _$VariantReadModelCopyWith<$Res>
           double? actualCost,
       @JsonKey(name: "return_type_options")
           List<String>? returType,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
       @JsonKey(name: "return_type")
@@ -891,8 +938,6 @@ abstract class _$VariantReadModelCopyWith<$Res>
           ItemData? itemData,
       @JsonKey(name: "search_name")
           String? searchName,
-      @JsonKey(name: "manufacture_name")
-          String? manufacturedName,
       @JsonKey(name: "sales_uom")
           String? SalesUom,
       @JsonKey(name: "gross_weight")
@@ -966,6 +1011,9 @@ class __$VariantReadModelCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? height = freezed,
+    Object? width = freezed,
+    Object? length = freezed,
     Object? code = freezed,
     Object? vat = freezed,
     Object? description = freezed,
@@ -985,6 +1033,8 @@ class __$VariantReadModelCopyWithImpl<$Res>
     Object? unitCost = freezed,
     Object? actualCost = freezed,
     Object? returType = freezed,
+    Object? manuFacturedId = freezed,
+    Object? manuFacturedName = freezed,
     Object? avgGp = freezed,
     Object? return2Type = freezed,
     Object? returnTime = freezed,
@@ -1001,7 +1051,6 @@ class __$VariantReadModelCopyWithImpl<$Res>
     Object? variantMeta = freezed,
     Object? itemData = freezed,
     Object? searchName = freezed,
-    Object? manufacturedName = freezed,
     Object? SalesUom = freezed,
     Object? grossWeight = freezed,
     Object? producedCountry = freezed,
@@ -1027,6 +1076,18 @@ class __$VariantReadModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
+              as int?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      length: length == freezed
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
               as int?,
       code: code == freezed
           ? _value.code
@@ -1104,6 +1165,14 @@ class __$VariantReadModelCopyWithImpl<$Res>
           ? _value.returType
           : returType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      manuFacturedId: manuFacturedId == freezed
+          ? _value.manuFacturedId
+          : manuFacturedId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      manuFacturedName: manuFacturedName == freezed
+          ? _value.manuFacturedName
+          : manuFacturedName // ignore: cast_nullable_to_non_nullable
+              as String?,
       avgGp: avgGp == freezed
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
@@ -1167,10 +1236,6 @@ class __$VariantReadModelCopyWithImpl<$Res>
       searchName: searchName == freezed
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
-              as String?,
-      manufacturedName: manufacturedName == freezed
-          ? _value.manufacturedName
-          : manufacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
       SalesUom: SalesUom == freezed
           ? _value.SalesUom
@@ -1261,6 +1326,9 @@ class __$VariantReadModelCopyWithImpl<$Res>
 class _$_VariantReadModel implements _VariantReadModel {
   const _$_VariantReadModel(
       {this.id,
+      this.height,
+      this.width,
+      this.length,
       this.code,
       this.vat,
       this.description,
@@ -1280,6 +1348,8 @@ class _$_VariantReadModel implements _VariantReadModel {
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "actual_cost") this.actualCost,
       @JsonKey(name: "return_type_options") this.returType,
+      @JsonKey(name: "manufacture_id") this.manuFacturedId,
+      @JsonKey(name: "manufacture_name") this.manuFacturedName,
       @JsonKey(name: "avrg_gp") this.avgGp,
       @JsonKey(name: "return_type") this.return2Type,
       @JsonKey(name: "return_time") this.returnTime,
@@ -1296,7 +1366,6 @@ class _$_VariantReadModel implements _VariantReadModel {
       @JsonKey(name: "variant_meta") this.variantMeta,
       @JsonKey(name: "item_data") this.itemData,
       @JsonKey(name: "search_name") this.searchName,
-      @JsonKey(name: "manufacture_name") this.manufacturedName,
       @JsonKey(name: "sales_uom") this.SalesUom,
       @JsonKey(name: "gross_weight") this.grossWeight,
       @JsonKey(name: "produced_country") this.producedCountry,
@@ -1323,6 +1392,12 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   final int? id;
+  @override
+  final int? height;
+  @override
+  final int? width;
+  @override
+  final int? length;
   @override
   final String? code;
   @override
@@ -1372,6 +1447,12 @@ class _$_VariantReadModel implements _VariantReadModel {
   @JsonKey(name: "return_type_options")
   final List<String>? returType;
   @override
+  @JsonKey(name: "manufacture_id")
+  final int? manuFacturedId;
+  @override
+  @JsonKey(name: "manufacture_name")
+  final String? manuFacturedName;
+  @override
   @JsonKey(name: "avrg_gp")
   final double? avgGp;
   @override
@@ -1419,10 +1500,7 @@ class _$_VariantReadModel implements _VariantReadModel {
   @override
   @JsonKey(name: "search_name")
   final String? searchName;
-  @override
-  @JsonKey(name: "manufacture_name")
-  final String? manufacturedName;
-  @override
+  @override // @JsonKey(name: "manufacture_name") final String? manufacturedName,
   @JsonKey(name: "sales_uom")
   final String? SalesUom;
   @override
@@ -1485,7 +1563,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, actualCost: $actualCost, returType: $returType, avgGp: $avgGp, return2Type: $return2Type, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, manufacturedName: $manufacturedName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'VariantReadModel(id: $id, height: $height, width: $width, length: $length, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, actualCost: $actualCost, returType: $returType, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, avgGp: $avgGp, return2Type: $return2Type, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
   }
 
   @override
@@ -1494,6 +1572,12 @@ class _$_VariantReadModel implements _VariantReadModel {
         (other is _VariantReadModel &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.height, height) ||
+                const DeepCollectionEquality().equals(other.height, height)) &&
+            (identical(other.width, width) ||
+                const DeepCollectionEquality().equals(other.width, width)) &&
+            (identical(other.length, length) ||
+                const DeepCollectionEquality().equals(other.length, length)) &&
             (identical(other.code, code) ||
                 const DeepCollectionEquality().equals(other.code, code)) &&
             (identical(other.vat, vat) ||
@@ -1543,6 +1627,12 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.returType, returType) ||
                 const DeepCollectionEquality()
                     .equals(other.returType, returType)) &&
+            (identical(other.manuFacturedId, manuFacturedId) ||
+                const DeepCollectionEquality()
+                    .equals(other.manuFacturedId, manuFacturedId)) &&
+            (identical(other.manuFacturedName, manuFacturedName) ||
+                const DeepCollectionEquality()
+                    .equals(other.manuFacturedName, manuFacturedName)) &&
             (identical(other.avgGp, avgGp) ||
                 const DeepCollectionEquality().equals(other.avgGp, avgGp)) &&
             (identical(other.return2Type, return2Type) ||
@@ -1551,18 +1641,11 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.returnTime, returnTime) ||
                 const DeepCollectionEquality()
                     .equals(other.returnTime, returnTime)) &&
-            (identical(other.maxGp, maxGp) ||
-                const DeepCollectionEquality().equals(other.maxGp, maxGp)) &&
-            (identical(other.minGap, minGap) ||
-                const DeepCollectionEquality().equals(other.minGap, minGap)) &&
-            (identical(other.targetedGp, targetedGp) ||
-                const DeepCollectionEquality()
-                    .equals(other.targetedGp, targetedGp)) &&
-            (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
-            (identical(other.landingCost, landingCost) ||
-                const DeepCollectionEquality().equals(other.landingCost, landingCost)) &&
+            (identical(other.maxGp, maxGp) || const DeepCollectionEquality().equals(other.maxGp, maxGp)) &&
+            (identical(other.minGap, minGap) || const DeepCollectionEquality().equals(other.minGap, minGap)) &&
+            (identical(other.targetedGp, targetedGp) || const DeepCollectionEquality().equals(other.targetedGp, targetedGp)) &&
+            (identical(other.excessTax, excessTax) || const DeepCollectionEquality().equals(other.excessTax, excessTax)) &&
+            (identical(other.landingCost, landingCost) || const DeepCollectionEquality().equals(other.landingCost, landingCost)) &&
             (identical(other.uomNameData, uomNameData) || const DeepCollectionEquality().equals(other.uomNameData, uomNameData)) &&
             (identical(other.salesUomData, salesUomData) || const DeepCollectionEquality().equals(other.salesUomData, salesUomData)) &&
             (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
@@ -1571,7 +1654,6 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.variantMeta, variantMeta) || const DeepCollectionEquality().equals(other.variantMeta, variantMeta)) &&
             (identical(other.itemData, itemData) || const DeepCollectionEquality().equals(other.itemData, itemData)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
-            (identical(other.manufacturedName, manufacturedName) || const DeepCollectionEquality().equals(other.manufacturedName, manufacturedName)) &&
             (identical(other.SalesUom, SalesUom) || const DeepCollectionEquality().equals(other.SalesUom, SalesUom)) &&
             (identical(other.grossWeight, grossWeight) || const DeepCollectionEquality().equals(other.grossWeight, grossWeight)) &&
             (identical(other.producedCountry, producedCountry) || const DeepCollectionEquality().equals(other.producedCountry, producedCountry)) &&
@@ -1598,6 +1680,9 @@ class _$_VariantReadModel implements _VariantReadModel {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(height) ^
+      const DeepCollectionEquality().hash(width) ^
+      const DeepCollectionEquality().hash(length) ^
       const DeepCollectionEquality().hash(code) ^
       const DeepCollectionEquality().hash(vat) ^
       const DeepCollectionEquality().hash(description) ^
@@ -1617,6 +1702,8 @@ class _$_VariantReadModel implements _VariantReadModel {
       const DeepCollectionEquality().hash(unitCost) ^
       const DeepCollectionEquality().hash(actualCost) ^
       const DeepCollectionEquality().hash(returType) ^
+      const DeepCollectionEquality().hash(manuFacturedId) ^
+      const DeepCollectionEquality().hash(manuFacturedName) ^
       const DeepCollectionEquality().hash(avgGp) ^
       const DeepCollectionEquality().hash(return2Type) ^
       const DeepCollectionEquality().hash(returnTime) ^
@@ -1633,7 +1720,6 @@ class _$_VariantReadModel implements _VariantReadModel {
       const DeepCollectionEquality().hash(variantMeta) ^
       const DeepCollectionEquality().hash(itemData) ^
       const DeepCollectionEquality().hash(searchName) ^
-      const DeepCollectionEquality().hash(manufacturedName) ^
       const DeepCollectionEquality().hash(SalesUom) ^
       const DeepCollectionEquality().hash(grossWeight) ^
       const DeepCollectionEquality().hash(producedCountry) ^
@@ -1669,6 +1755,9 @@ class _$_VariantReadModel implements _VariantReadModel {
 abstract class _VariantReadModel implements VariantReadModel {
   const factory _VariantReadModel(
       {int? id,
+      int? height,
+      int? width,
+      int? length,
       String? code,
       double? vat,
       String? description,
@@ -1698,6 +1787,10 @@ abstract class _VariantReadModel implements VariantReadModel {
           double? actualCost,
       @JsonKey(name: "return_type_options")
           List<String>? returType,
+      @JsonKey(name: "manufacture_id")
+          int? manuFacturedId,
+      @JsonKey(name: "manufacture_name")
+          String? manuFacturedName,
       @JsonKey(name: "avrg_gp")
           double? avgGp,
       @JsonKey(name: "return_type")
@@ -1730,8 +1823,6 @@ abstract class _VariantReadModel implements VariantReadModel {
           ItemData? itemData,
       @JsonKey(name: "search_name")
           String? searchName,
-      @JsonKey(name: "manufacture_name")
-          String? manufacturedName,
       @JsonKey(name: "sales_uom")
           String? SalesUom,
       @JsonKey(name: "gross_weight")
@@ -1778,6 +1869,12 @@ abstract class _VariantReadModel implements VariantReadModel {
 
   @override
   int? get id => throw _privateConstructorUsedError;
+  @override
+  int? get height => throw _privateConstructorUsedError;
+  @override
+  int? get width => throw _privateConstructorUsedError;
+  @override
+  int? get length => throw _privateConstructorUsedError;
   @override
   String? get code => throw _privateConstructorUsedError;
   @override
@@ -1829,6 +1926,12 @@ abstract class _VariantReadModel implements VariantReadModel {
   @JsonKey(name: "return_type_options")
   List<String>? get returType => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: "manufacture_id")
+  int? get manuFacturedId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "manufacture_name")
+  String? get manuFacturedName => throw _privateConstructorUsedError;
+  @override
   @JsonKey(name: "avrg_gp")
   double? get avgGp => throw _privateConstructorUsedError;
   @override
@@ -1876,10 +1979,7 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "search_name")
   String? get searchName => throw _privateConstructorUsedError;
-  @override
-  @JsonKey(name: "manufacture_name")
-  String? get manufacturedName => throw _privateConstructorUsedError;
-  @override
+  @override // @JsonKey(name: "manufacture_name") final String? manufacturedName,
   @JsonKey(name: "sales_uom")
   String? get SalesUom => throw _privateConstructorUsedError;
   @override

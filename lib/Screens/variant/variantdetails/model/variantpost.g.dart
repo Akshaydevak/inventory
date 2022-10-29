@@ -26,6 +26,9 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       catalog6: json['catalog6'] as int?,
       catalog7: json['catalog7'] as int?,
       catalog8: json['catalog8'] as int?,
+      length: json['length'] as int?,
+      width: json['width'] as int?,
+      height: json['height'] as int?,
       Ingrediants: json['Ingrediants'] == null
           ? null
           : Storage.fromJson(json['Ingrediants'] as Map<String, dynamic>),
@@ -143,6 +146,9 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'catalog6': instance.catalog6,
       'catalog7': instance.catalog7,
       'catalog8': instance.catalog8,
+      'length': instance.length,
+      'width': instance.width,
+      'height': instance.height,
       'Ingrediants': instance.Ingrediants,
       'storage': instance.storage,
       'inventory_id': instance.inventoryId,

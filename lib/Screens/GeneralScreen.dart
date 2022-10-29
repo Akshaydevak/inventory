@@ -1138,9 +1138,6 @@ else{
                                                       height: height * .028,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .008,
-                                                    ),
-                                                    SizedBox(
                                                       height: height * .080,
                                                     ),
                                                   ],

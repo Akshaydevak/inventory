@@ -58,7 +58,7 @@ class NewInputCard extends StatefulWidget {
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 45.6,
+    this.height = 47.6,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -325,7 +325,7 @@ class NewInputCreateCard extends StatefulWidget {
     required this.title,
     this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 45,
+    this.height = 47,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -1020,7 +1020,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
               decoration: InputDecoration(
                 prefixIcon: IconButton(
                     onPressed: widget.fileUrl != null
-                        ? () async {
+                        ? ()  {
                       // imageFile!=null?dispalyImage( imageFile,context):null;
                       // print("file url is ${widget.fileUrl}");
                       widget.isFile
@@ -1108,7 +1108,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
                       : null,
                   icon: Icon(Icons.attach_file)),
               contentPadding:
-              EdgeInsets.symmetric(horizontal: 10, vertical: 17),
+              EdgeInsets.symmetric(horizontal: 10, vertical: 18),
               isDense: true,
               hintStyle: TextStyle(fontSize: 10),
               enabledBorder:OutlineInputBorder(

@@ -36,6 +36,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   TextEditingController variantController = TextEditingController();
+  TextEditingController variantNameController = TextEditingController();
   VariantCreationReadModel group = VariantCreationReadModel();
   int selectedVertical = 0;
   String itemCode = "";
@@ -51,6 +52,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
       vals.clear();
       variantList.clear();
     });
+    print(combinationArrays);
     // print("arrived");
     // if(combinationArrays.isNotEmpty){
     //   for(var i =0;i<combinationArrays.length;i++){
@@ -95,29 +97,33 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 
     combinationArray = combinationArrays;
     print("Starting combination Array" + combinationArray.toString());
-    // if(combinationArray.isNotEmpty) {
-    //   print("enterd to the condition");
-    //   for (var n = 0; n < combinationArray.length; n++) {
-    //     // print(combinationArray[n]);
-    //     // var l1=combinationArray[k];
-    //     if (combinationArray[n].isNotEmpty) {
-    //       print("enterd to 2nd the condition");
-    //       combinationArray[n].removeWhere((element) {
-    //         print("the element is"+element.toString());
-    //         return
-    //           element['flag'] == false;
-    //       });
-    //       // for(var s=0;s<combinationArray[n].length;s++){
-    //       //   if(combinationArray[n][s]["flag"]==false){
-    //       //     combinationArray[n].remove(combinationArray[n][s]);
-    //       //
-    //       //   }
-    //       // }
-    //     }
-    //   }
-    // }
+    if(combinationArray.isNotEmpty) {
+      print("enterd to the condition");
+      for (var n = 0; n < combinationArray.length; n++) {
+        // print(combinationArray[n]);
+        // var l1=combinationArray[k];
+        if (combinationArray[n].isNotEmpty) {
+          print("enterd to 2nd the condition");
+          combinationArray[n].removeWhere((element) {
+            print("the element is"+element.toString());
+            return
+              element['flag'] == false;
+          });
+          // for(var s=0;s<combinationArray[n].length;s++){
+          //   if(combinationArray[n][s]["flag"]==false){
+          //     combinationArray[n].remove(combinationArray[n][s]);
+          //
+          //   }
+          // }
+        }
+      }
+    }
 
     print("the combination Array is" + combinationArray.toString());
+
+
+
+
 
     //
     //  combinationArray.retainWhere((countryone) {
@@ -144,67 +150,67 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 
     //
     //
-    if (combinationArray.isNotEmpty) {
-      for (var i = 0; i < combinationArray.length - 1; i++) {
-        var firstList = combinationArray[i];
-        // firstList.retainWhere((element) {
-        //   return element["flag"]==true;
-        // });
-
-        print("the first list====" + firstList.toString());
-        print("the first list====" + firstList.toString());
-        for (var m = i + 1; m < combinationArray.length; m++) {
-          var secondList = combinationArray[m];
-          print("the first list====" + secondList.toString());
-          if (firstList.isNotEmpty) print("entered2");
-          for (var j = 0; j < firstList.length; j++) {
-            print("entered1");
-            if (secondList.isNotEmpty)
-              for (var k = 0; k < secondList.length; k++) {
-                if (firstList[j]["flag"] == true &&
-                    secondList[k]["flag"] == true) {
-                  setState(() {
-                    var val = firstList[j]["value"] + secondList[k]["value"];
-                    if (vals.contains(val) == false) {
-                      List<Map<String, dynamic>> mapList = [];
-                      mapList.add(firstList[j]);
-                      mapList.add(secondList[k]);
-                      variantList.add(mapList);
-                      print("the maplist" + variantList.toString());
-
-                      vals.add(firstList[j]["value"] + secondList[k]["value"]);
-                    }
-                  });
-                  // break;
-                } else if (firstList[j]["flag"] == true) {
-                  setState(() {
-                    var val = firstList[j]["value"];
-                    if (vals.contains(val) == false) {
-                      List<Map<String, dynamic>> mapList = [];
-                      mapList.add(firstList[j]);
-                      variantList.add(mapList);
-
-                      print("the maplist" + variantList.toString());
-                      vals.add(firstList[j]["value"]);
-                    }
-                  });
-                } else if (secondList[k]["flag"] == true) {
-                  setState(() {
-                    var val = secondList[k]["value"];
-                    if (vals.contains(val) == false) {
-                      List<Map<String, dynamic>> mapList = [];
-                      mapList.add(secondList[k]);
-                      variantList.add(mapList);
-                      print("else if" + variantList.toString());
-                      vals.add(secondList[k]["value"]);
-                    }
-                  });
-                }
-              }
-          }
-        }
-      }
-    }
+    // if (combinationArray.isNotEmpty) {
+    //   for (var i = 0; i < combinationArray.length - 1; i++) {
+    //     var firstList = combinationArray[i];
+    //     // firstList.retainWhere((element) {
+    //     //   return element["flag"]==true;
+    //     // });
+    //
+    //     print("the first list====" + firstList.toString());
+    //     print("the first list====" + firstList.toString());
+    //     for (var m = i + 1; m < combinationArray.length; m++) {
+    //       var secondList = combinationArray[m];
+    //       print("the first list====" + secondList.toString());
+    //       if (firstList.isNotEmpty) print("entered2");
+    //       for (var j = 0; j < firstList.length; j++) {
+    //         print("entered1");
+    //         if (secondList.isNotEmpty)
+    //           for (var k = 0; k < secondList.length; k++) {
+    //             if (firstList[j]["flag"] == true &&
+    //                 secondList[k]["flag"] == true) {
+    //               setState(() {
+    //                 var val = firstList[j]["value"] + secondList[k]["value"];
+    //                 if (vals.contains(val) == false) {
+    //                   List<Map<String, dynamic>> mapList = [];
+    //                   mapList.add(firstList[j]);
+    //                   mapList.add(secondList[k]);
+    //                   variantList.add(mapList);
+    //                   print("the maplist" + variantList.toString());
+    //
+    //                   vals.add(firstList[j]["value"] + secondList[k]["value"]);
+    //                 }
+    //               });
+    //               // break;
+    //             } else if (firstList[j]["flag"] == true) {
+    //               setState(() {
+    //                 var val = firstList[j]["value"];
+    //                 if (vals.contains(val) == false) {
+    //                   List<Map<String, dynamic>> mapList = [];
+    //                   mapList.add(firstList[j]);
+    //                   variantList.add(mapList);
+    //
+    //                   print("the maplist" + variantList.toString());
+    //                   vals.add(firstList[j]["value"]);
+    //                 }
+    //               });
+    //             } else if (secondList[k]["flag"] == true) {
+    //               setState(() {
+    //                 var val = secondList[k]["value"];
+    //                 if (vals.contains(val) == false) {
+    //                   List<Map<String, dynamic>> mapList = [];
+    //                   mapList.add(secondList[k]);
+    //                   variantList.add(mapList);
+    //                   print("else if" + variantList.toString());
+    //                   vals.add(secondList[k]["value"]);
+    //                 }
+    //               });
+    //             }
+    //           }
+    //       }
+    //     }
+    //   }
+    // }
 
 //second case ++++++++++++++++++++
 
@@ -392,6 +398,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                               ontap: (int index) {
                                 setState(() {
                                   selectedVertical = index;
+                                  variantController.clear();
+                                  variantNameController.clear();
 
                                   // select=false;
                                   // clear();
@@ -443,7 +451,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                       children: [
                                         Expanded(
                                           child: NewInputCard(
-                                            controller: variantController,
+                                            controller: variantNameController,
                                             icondrop: true,
                                             title: "Variant",
                                             ontap: () {
@@ -455,8 +463,8 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
                                                       (BrandListModel va) {
                                                     setState(() {
                                                       print(va?.id ?? "");
-                                                      variantController.text =
-                                                          va.code.toString();
+                                                      variantController.text = va.code.toString();
+                                                      variantNameController.text = va.name.toString();
                                                       setState(() {});
 
                                                       // onChange = true;

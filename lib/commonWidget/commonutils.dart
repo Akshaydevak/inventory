@@ -186,6 +186,8 @@ class _OpenSettingsState extends State<OpenSettings> {
                                 Variable.inventory_Name =
                                     inventoryList![index].name.toString();
 
+
+
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 prefs.setString(
@@ -4473,7 +4475,21 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                     label: "Image"),
                                 SizedBox(
                                   height: 10,
-                                ),
+
+                                  ),
+                                  PopUpSwitchTile(
+                                      value: active ?? false,
+                                      title: "isActive",
+                                      onClick: (gg) {
+                                        onChange = true;
+                                     active = !active!;
+
+                                        // extendedWarranty = gg;
+                                        // widget.changeExtendedWarranty(gg);
+                                        // onChangeExtWarranty = gg;
+                                        setState(() {});
+                                      }),
+
                               ],
                             )),
                           ],
@@ -4813,7 +4829,7 @@ class CreateFrameWorkPopUp extends StatefulWidget {
 }
 
 class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
-  bool? active = true;
+  bool? active = costingTypeMethodeCheck?true:false;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -4858,8 +4874,10 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
 
   @override
   void initState() {
-    if (costingTypeMethodeCheck != true)
-    context.read<FrameworklistCubit>().getFrameWorklist();
+    if (costingTypeMethodeCheck != true){
+      context.read<FrameworklistCubit>().getFrameWorklist();
+    }
+
     super.initState();
   }
 
@@ -5004,7 +5022,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         // if (costingTypeMethodeCheck != true)
-                        context
+                     if( costingTypeMethodeCheck != true)   context
                             .read<FrameworkreadCubit>()
                             .getFrameWorkRead(veritiaclid!);
                       } else {
@@ -5268,7 +5286,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                           title: "isActive",
                                                           onClick: (gg) {
                                                             onChange = true;
-                                                            if (!addNew)
+                                                           if( costingTypeMethodeCheck!=true)
                                                               active = !active!;
 
                                                             // extendedWarranty = gg;
@@ -6744,9 +6762,9 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                           .patchPricingGroupType(model, veritiaclid, type: 1);
                     },
                     onCancel: () {
-                      context
-                          .read<DeletioncostingCubit>()
-                          .CostingDelete(veritiaclid, type: "3");
+                        context
+                            .read<DeletioncostingCubit>()
+                            .CostingDelete(veritiaclid, type: "3");
                     },
 
                     onAddNew: (v) {},
@@ -7631,7 +7649,7 @@ class LinkedItemCreatePopUp extends StatefulWidget {
 }
 
 class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
-  bool? active = true;
+  bool? active =costingTypeMethodeCheck? true:false;
 
   bool onChange = false;
   bool onChangeWarranty = false;
@@ -7715,6 +7733,8 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
         ),
         BlocProvider(
           create: (context) => ReadlinkeditemCubit(),
+        ),   BlocProvider(
+          create: (context) => DeletioncostingCubit(),
         ),
       ],
       child: Builder(builder: (context) {
@@ -7966,7 +7986,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                     title: "isActive",
                                                     onClick: (gg) {
                                                       onChange = true;
-                                                      if (!addNew)
+                                                      if (costingTypeMethodeCheck==false)
                                                         active = !active!;
 
                                                       // extendedWarranty = gg;

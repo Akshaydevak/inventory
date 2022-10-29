@@ -8,6 +8,9 @@ part 'variant_read.freezed.dart';
 class VariantReadModel with _$VariantReadModel {
   const factory VariantReadModel({
     final int? id,
+    final int? height,
+    final int? width,
+    final int? length,
     final String? code,
     final double? vat,
     final String? description,
@@ -29,6 +32,8 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "return_type_options") final List<String>? returType,
+    @JsonKey(name: "manufacture_id") final int? manuFacturedId,
+    @JsonKey(name: "manufacture_name") final String? manuFacturedName,
     @JsonKey(name: "avrg_gp") final double? avgGp,
     @JsonKey(name: "return_type") final String ? return2Type,
     @JsonKey(name: "return_time") final int ? returnTime,
@@ -45,7 +50,7 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "variant_meta") final VariantMeta? variantMeta,
     @JsonKey(name: "item_data") final ItemData? itemData,
     @JsonKey(name: "search_name") final String? searchName,
-    @JsonKey(name: "manufacture_name") final String? manufacturedName,
+    // @JsonKey(name: "manufacture_name") final String? manufacturedName,
     @JsonKey(name: "sales_uom") final String? SalesUom,
     @JsonKey(name: "gross_weight") final String? grossWeight,
     @JsonKey(name: "produced_country") final String? producedCountry,

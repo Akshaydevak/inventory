@@ -150,7 +150,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
             ),
             SizedBox(height:3),
             Container(
-              height: 46,
+              height: 48,
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,
@@ -183,6 +183,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                       controller: TextEditingController(text: widget.value),
                       onTap: () {},
                       decoration: InputDecoration(
+
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 

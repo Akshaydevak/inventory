@@ -65,7 +65,8 @@ class _$ItemReadModelTearOff {
       @JsonKey(name: "item_cataloge1") String? itemCatelog1,
       @JsonKey(name: "item_cataloge2") String? itemCatelog2,
       @JsonKey(name: "item_cataloge3") String? itemCatelog3,
-      @JsonKey(name: "item_cataloge4") String? itemCatelog4}) {
+      @JsonKey(name: "item_cataloge4") String? itemCatelog4,
+      @JsonKey(name: "item_cataloge5") String? itemCatelog5}) {
     return _ItemReadModel(
       id: id,
       code: code,
@@ -111,6 +112,7 @@ class _$ItemReadModelTearOff {
       itemCatelog2: itemCatelog2,
       itemCatelog3: itemCatelog3,
       itemCatelog4: itemCatelog4,
+      itemCatelog5: itemCatelog5,
     );
   }
 
@@ -204,6 +206,8 @@ mixin _$ItemReadModel {
   String? get itemCatelog3 => throw _privateConstructorUsedError;
   @JsonKey(name: "item_cataloge4")
   String? get itemCatelog4 => throw _privateConstructorUsedError;
+  @JsonKey(name: "item_cataloge5")
+  String? get itemCatelog5 => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -260,7 +264,8 @@ abstract class $ItemReadModelCopyWith<$Res> {
       @JsonKey(name: "item_cataloge1") String? itemCatelog1,
       @JsonKey(name: "item_cataloge2") String? itemCatelog2,
       @JsonKey(name: "item_cataloge3") String? itemCatelog3,
-      @JsonKey(name: "item_cataloge4") String? itemCatelog4});
+      @JsonKey(name: "item_cataloge4") String? itemCatelog4,
+      @JsonKey(name: "item_cataloge5") String? itemCatelog5});
 
   $BarcodeCopyWith<$Res>? get barcode;
   $ItemMetaCopyWith<$Res>? get itemMeta;
@@ -322,6 +327,7 @@ class _$ItemReadModelCopyWithImpl<$Res>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? itemCatelog5 = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -500,6 +506,10 @@ class _$ItemReadModelCopyWithImpl<$Res>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
+      itemCatelog5: itemCatelog5 == freezed
+          ? _value.itemCatelog5
+          : itemCatelog5 // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 
@@ -588,7 +598,8 @@ abstract class _$ItemReadModelCopyWith<$Res>
       @JsonKey(name: "item_cataloge1") String? itemCatelog1,
       @JsonKey(name: "item_cataloge2") String? itemCatelog2,
       @JsonKey(name: "item_cataloge3") String? itemCatelog3,
-      @JsonKey(name: "item_cataloge4") String? itemCatelog4});
+      @JsonKey(name: "item_cataloge4") String? itemCatelog4,
+      @JsonKey(name: "item_cataloge5") String? itemCatelog5});
 
   @override
   $BarcodeCopyWith<$Res>? get barcode;
@@ -655,6 +666,7 @@ class __$ItemReadModelCopyWithImpl<$Res>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? itemCatelog5 = freezed,
   }) {
     return _then(_ItemReadModel(
       id: id == freezed
@@ -833,6 +845,10 @@ class __$ItemReadModelCopyWithImpl<$Res>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
+      itemCatelog5: itemCatelog5 == freezed
+          ? _value.itemCatelog5
+          : itemCatelog5 // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -884,7 +900,8 @@ class _$_ItemReadModel implements _ItemReadModel {
       @JsonKey(name: "item_cataloge1") this.itemCatelog1,
       @JsonKey(name: "item_cataloge2") this.itemCatelog2,
       @JsonKey(name: "item_cataloge3") this.itemCatelog3,
-      @JsonKey(name: "item_cataloge4") this.itemCatelog4});
+      @JsonKey(name: "item_cataloge4") this.itemCatelog4,
+      @JsonKey(name: "item_cataloge5") this.itemCatelog5});
 
   factory _$_ItemReadModel.fromJson(Map<String, dynamic> json) =>
       _$$_ItemReadModelFromJson(json);
@@ -1013,10 +1030,13 @@ class _$_ItemReadModel implements _ItemReadModel {
   @override
   @JsonKey(name: "item_cataloge4")
   final String? itemCatelog4;
+  @override
+  @JsonKey(name: "item_cataloge5")
+  final String? itemCatelog5;
 
   @override
   String toString() {
-    return 'ItemReadModel(id: $id, code: $code, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, uomCode: $uomCode, uomGroupCode: $uomGroupCode, uomGroupName: $uomGroupName, uomGroupId: $uomGroupId, uomName: $uomName, divisionId: $divisionId, categoryId: $categoryId, subCategoryId: $subCategoryId, groupCode: $groupCode, groupName: $groupName, brandCode: $brandCode, brandName: $brandName, materialCode: $materialCode, materialName: $materialName, oldSystemCode: $oldSystemCode, staticGroupCode: $staticGroupCode, divisionCode: $divisionCode, divisionName: $divisionName, categoryCode: $categoryCode, categoryName: $categoryName, subCategoryCode: $subCategoryCode, subCategoryName: $subCategoryName, staticGroupName: $staticGroupName, variantFrameWork: $variantFrameWork, variantFrameWorkName: $variantFrameWorkName, itemMeta: $itemMeta, qrCode: $qrCode, searchName: $searchName, displayname: $displayname, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'ItemReadModel(id: $id, code: $code, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, uomCode: $uomCode, uomGroupCode: $uomGroupCode, uomGroupName: $uomGroupName, uomGroupId: $uomGroupId, uomName: $uomName, divisionId: $divisionId, categoryId: $categoryId, subCategoryId: $subCategoryId, groupCode: $groupCode, groupName: $groupName, brandCode: $brandCode, brandName: $brandName, materialCode: $materialCode, materialName: $materialName, oldSystemCode: $oldSystemCode, staticGroupCode: $staticGroupCode, divisionCode: $divisionCode, divisionName: $divisionName, categoryCode: $categoryCode, categoryName: $categoryName, subCategoryCode: $subCategoryCode, subCategoryName: $subCategoryName, staticGroupName: $staticGroupName, variantFrameWork: $variantFrameWork, variantFrameWorkName: $variantFrameWorkName, itemMeta: $itemMeta, qrCode: $qrCode, searchName: $searchName, displayname: $displayname, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, itemCatelog5: $itemCatelog5)';
   }
 
   @override
@@ -1109,7 +1129,8 @@ class _$_ItemReadModel implements _ItemReadModel {
             (identical(other.itemCatelog1, itemCatelog1) || const DeepCollectionEquality().equals(other.itemCatelog1, itemCatelog1)) &&
             (identical(other.itemCatelog2, itemCatelog2) || const DeepCollectionEquality().equals(other.itemCatelog2, itemCatelog2)) &&
             (identical(other.itemCatelog3, itemCatelog3) || const DeepCollectionEquality().equals(other.itemCatelog3, itemCatelog3)) &&
-            (identical(other.itemCatelog4, itemCatelog4) || const DeepCollectionEquality().equals(other.itemCatelog4, itemCatelog4)));
+            (identical(other.itemCatelog4, itemCatelog4) || const DeepCollectionEquality().equals(other.itemCatelog4, itemCatelog4)) &&
+            (identical(other.itemCatelog5, itemCatelog5) || const DeepCollectionEquality().equals(other.itemCatelog5, itemCatelog5)));
   }
 
   @override
@@ -1158,7 +1179,8 @@ class _$_ItemReadModel implements _ItemReadModel {
       const DeepCollectionEquality().hash(itemCatelog1) ^
       const DeepCollectionEquality().hash(itemCatelog2) ^
       const DeepCollectionEquality().hash(itemCatelog3) ^
-      const DeepCollectionEquality().hash(itemCatelog4);
+      const DeepCollectionEquality().hash(itemCatelog4) ^
+      const DeepCollectionEquality().hash(itemCatelog5);
 
   @JsonKey(ignore: true)
   @override
@@ -1252,7 +1274,9 @@ abstract class _ItemReadModel implements ItemReadModel {
       @JsonKey(name: "item_cataloge3")
           String? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          String? itemCatelog4}) = _$_ItemReadModel;
+          String? itemCatelog4,
+      @JsonKey(name: "item_cataloge5")
+          String? itemCatelog5}) = _$_ItemReadModel;
 
   factory _ItemReadModel.fromJson(Map<String, dynamic> json) =
       _$_ItemReadModel.fromJson;
@@ -1381,6 +1405,9 @@ abstract class _ItemReadModel implements ItemReadModel {
   @override
   @JsonKey(name: "item_cataloge4")
   String? get itemCatelog4 => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "item_cataloge5")
+  String? get itemCatelog5 => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$ItemReadModelCopyWith<_ItemReadModel> get copyWith =>

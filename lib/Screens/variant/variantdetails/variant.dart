@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/deletion/deletioncosting_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/varaintRead/variantread_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/variant_post/variantpost_cubit.dart';
@@ -87,8 +88,12 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController minSalesOrderLimitController = TextEditingController();
   TextEditingController maxSalesOrderLimitController = TextEditingController();
   TextEditingController seblingController = TextEditingController();
+  TextEditingController seblingNameController = TextEditingController();
   TextEditingController linkedItemController = TextEditingController();
   TextEditingController videoUrlController = TextEditingController();
+  TextEditingController heightController = TextEditingController();
+  TextEditingController widthController = TextEditingController();
+  TextEditingController lengthController = TextEditingController();
   TextEditingController minimumGpController = TextEditingController();
   TextEditingController relatedController = TextEditingController();
   TextEditingController maximumGpController = TextEditingController();
@@ -415,6 +420,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       uomGroupController.clear();
      baseUomController.clear();
       salesUomController.clear();
+      variantCodeController.clear();
       purchaseUomController.clear();
      grossWeightController.clear();
        netWeightController.clear();
@@ -425,6 +431,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
        basePrizePrizeController.clear();
        producedCountryController.clear();
       purchaseBolock=false;
+      lengthController.clear();
+      widthController.clear();
+      heightController.clear();
       ratioEcommerceController.clear();
       minMaxController.clear();
        wholeSaleStockController.clear();
@@ -447,6 +456,23 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
      exciseTaxController.clear();
      returnTypeController.clear();
      returnTimeController.clear();
+
+
+      img1=false;
+      img2=false;
+      img3=false;
+      img4=false;
+      img5=false;
+      img5=false;
+      cata1=false;
+      cata2=false;
+      cata3=false;
+      cata4=false;
+      cata5=false;
+      cata6=false;
+      cata7=false;
+      cata8=false;
+
 
 
 
@@ -554,7 +580,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           searchNAmeController.text=data?.searchName??"";
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
+          heightController.text=data?.height.toString()??"";
+          widthController.text=data?.width.toString()??"";
+          lengthController.text=data?.length.toString()??"";
           descriptionController.text=data?.description??"";
+          variantCodeController.text=data?.code??"";
+
           variantFrameWorkController.text=data?.variantframeWork?.variantFrameWork??"";
           baseUomNameController.text=data?.uomNameData?.uomName??"";
           arabicDescriptionController.text=data?.arabicDescription??"";
@@ -574,6 +605,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           landingCostController.text=data.landingCost.toString()??"";
           actualCostController.text=data.actualCost.toString()??"";
           producedCountryController.text=data?.producedCountry??"";
+          manuFactreNameController.text=data?.manuFacturedName??"";
+          manuFactreIdController.text=data?.manuFacturedId.toString()??"";
           videoUrlController.text=data?.vdeioUrl??"";
           salesBolock=data.salesBlock??false;
           purchaseBolock=data.purchaseBlock??false;
@@ -642,6 +675,25 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         });
       },
     ),
+    BlocListener<DeletioncostingCubit, DeletioncostingState>(
+      listener: (context, state) {
+        print("delete" + state.toString());
+        state.maybeWhen(orElse: () {
+          // context.
+          context.showSnackBarError("Loading");
+        }, error: () {
+          context.showSnackBarError(Variable.errorMessege);
+        }, success: (data) {
+          if (data.data1) {
+            context.showSnackBarSuccess(data.data2);
+          } else {
+            context.showSnackBarError(data.data2);
+            print(data.data1);
+          }
+          ;
+        });
+      },
+    ),
     BlocListener<VariantsearchCubit, VariantsearchState>(
       listener: (context, state) {
         print("state++++++++++++++++++++++++++++++++");
@@ -654,18 +706,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
               if(data.data.length==0){
                 exportCheck=false;
                 context.showSnackBarError("Does not exist");
-                setState(() {
 
-                });
 
               }
               else{
                 print("aaaayyiram"+data.data.toString());
                 exportCheck=true;
                 checkIdid=data.data[0].id;
-                setState(() {
 
-                });
               }
 
 
@@ -679,9 +727,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
 
-              setState(() {
 
-              });
 
 
 
@@ -722,11 +768,11 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                       else {
                         print("common");
                         // select=true;
-                        setState(() {});
+
                       }
 
 
-                      setState(() {});
+
                     });
                   });
             },
@@ -867,6 +913,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       ),
                                       SizedBox(height: height * .10,),
                                       VariantStabletable(
+                                        seblingNameController: searchNAmeController,
+                                        height: heightController,
+                                        width: widthController,
+                                        length: lengthController,
                                         baseGroupName: baseUomNameController,
                                           purchaseUomName: purchaseUomNameController,
                                           salesUomName: salesUomNameController,
@@ -1030,6 +1080,26 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 ctx: context,
                                                 text: "Discard",
                                                 onApply: () {
+
+
+                                                  showDailogPopUp(
+                                                      context,
+                                                      ConfirmationPopup(
+                                                        // table:table,
+                                                        // clear:clear(),
+                                                        verticalId:veritiaclid ,
+                                                        onPressed:(){
+                                                          print("akshay");
+                                                          Navigator.pop(context);
+                                                          context
+                                                              .read<DeletioncostingCubit>()
+                                                              .CostingDelete(veritiaclid, type: "6");;
+
+                                                        },
+
+
+                                                      ));
+
                                                   // if(updateCheck){
                                                   //   // clears();
                                                   //
@@ -1063,11 +1133,11 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 VariantPost model = VariantPost(
                                                   inventoryId: Variable.inventory_ID,
                                                   inventoryName: Variable.inventory_Name,
-                                                  searchName:searchNAmeController?.text??"",
-                                                  posName:posNameController?.text??"",
-                                                  displayName:displayNAmeController?.text??"",
-                                                  arabicDescription:arabicDescriptionController?.text??"",
-                                                  additionalDescription:additionalDescriptionController?.text??"",
+                                                  searchName:searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
+                                                  posName:posNameController.text.isEmpty?null:posNameController?.text,
+                                                  displayName:displayNAmeController.text.isEmpty?null:displayNAmeController?.text,
+                                                  arabicDescription:arabicDescriptionController.text.isEmpty?null:arabicDescriptionController?.text,
+                                                  additionalDescription:additionalDescriptionController.text.isEmpty?null:additionalDescriptionController?.text??"",
                                                   salesUom: int.tryParse(salesUomController?.text??""),
                                                   seblingId: int.tryParse(seblingController.text),
                                                   purchaseUom: int.tryParse(purchaseUomController?.text??""),
@@ -1078,21 +1148,19 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   reorderQuantity: int.tryParse(reorederQuaintityController?.text??""),
                                                   salesBolock: salesBolock,
                                                   purchaseBlock: purchaseBolock,
-                                                  ratioToEcommerce: ratioEcommerceController.text??"",
+                                                  ratioToEcommerce:ratioEcommerceController.text.isEmpty?null: ratioEcommerceController.text,
                                                   itemCatelog: itmcatelog,
                                                   itemImage: itmImage,
                                                   vendorDetails: vendorDetails,
 
-                                                  minMaxRatio: minMaxController?.text??"",
+                                                  minMaxRatio:minMaxController.text.isEmpty?null: minMaxController?.text,
                                                   wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
                                                   minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
                                                   maxSalesOrderLimit:int.tryParse( maxSalesOrderLimitController?.text??""),
                                                   minPurchaseOrderLimit:int.tryParse( minPurchaseOrderLimitController?.text??""),
                                                   maxPurchaseOrderLimit:int.tryParse( maxPurchaseOrderLimitController?.text??""),
                                                   stockWarning:stockWarning,
-                                                  retailSellingPricePercentage:2,
-                                                  wholeSellingPricePercentage: 2,
-                                                  onlineSellingPercenage: 2,
+
                                                   producedCountry:alternativeQrCode.isEmpty?null: producedCountryController?.text??"",
                                                   basePrize: double.tryParse(basePrizePrizeController.text),
                                                   vat: double.tryParse(vatController.text??""),
@@ -1140,11 +1208,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                               }
                                               else{
                                                 VariantPatch model=VariantPatch (
+                                                  length: int.tryParse(lengthController.text),
+                                                  width: int.tryParse(widthController.text),
+                                                  height: int.tryParse(heightController.text),
                                                   variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
                                                   salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
                                                   // "1",
 
-                                                  purchaseUom:purchaseUomController.text,
+                                                  purchaseUom:purchaseUomController.text.isEmpty?null:purchaseUomController.text,
                                                   itemImage: itmImage,
                                                   itemCatelog: itmcatelog,
                                                   vendorDetails: vendorDetails,
@@ -1173,6 +1244,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   salesBolock: salesBolock,
                                                   purchaseBlock: purchaseBolock,
                                                   isActive: active,
+                                                  producedCountry: producedCountryController.text.isEmpty?null:producedCountryController.text,
                                                   ratioToEcommerce: ratioEcommerceController!.text.isEmpty?null: ratioEcommerceController?.text,
                                                   minMaxRatio: minMaxController!.text.isEmpty?null:minMaxController?.text,
                                                   minSalesOrderLimit:int.tryParse( minSalesOrderLimitController?.text??""),
@@ -1191,19 +1263,19 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   vedioUrl: videoUrlController!.text.isEmpty?null:videoUrlController?.text,
                                                   returnType: returnTypeController!.text.isEmpty?null:returnTypeController?.text,
                                                   status: statusController.text.isEmpty?null:statusController?.text,
-                                                  image1: image1Controller.text.isEmpty?null:int.tryParse(image1Controller.text),
-                                                  image2: image2Controller.text.isEmpty?null:image2Controller.text,
-                                                  image3: image3Controller.text.isEmpty?null:image3Controller.text,
-                                                  image5: image5Controller.text.isEmpty?null:image5Controller.text,
-                                                  image4: image4Controller.text.isEmpty?null:image4Controller.text,
-                                                  catalog1: catalog1.text.isEmpty?null:catalog1.text,
-                                                  catalog2: catalog2.text.isEmpty?null:catalog2.text,
-                                                  catalog3: catalog3.text.isEmpty?null:catalog3.text,
-                                                  catalog4: catalog4.text.isEmpty?null:catalog4.text,
-                                                  catalog5: catalog5.text.isEmpty?null:catalog5.text,
-                                                  catalog6: catalog6.text.isEmpty?null:catalog6.text,
-                                                  catalog7: catalog7.text.isEmpty?null:catalog7.text,
-                                                  catalog8: catalog8.text.isEmpty?null:catalog8.text,
+                                                  image2:img2?Variable.img2.toString().isEmpty?null:Variable.img2.toString():  image2Controller.text.isEmpty?null:image2Controller.text,
+                                                  image3:img3?Variable.img3.toString():image3Controller?.text,
+                                                  image4:img4?Variable.img4.toString(): image4Controller?.text,
+                                                  image5:img5?Variable.img5.toString():image5Controller?.text,
+                                                  catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1,
+                                                  catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2,
+                                                  catalog3:cata3?Variable.catalog3.toString(): group.variantMeta?.catelog?.keyValues?.catelog3,
+                                                  catalog4:cata4?Variable.catalog4.toString():group.variantMeta?.catelog?.keyValues?.catelog4,
+                                                  catalog5:cata5?Variable.catalog5.toString(): group.variantMeta?.catelog?.keyValues?.catelog5,
+                                                  catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6,
+                                                  catalog7:cata7?Variable.catalog7.toString(): group.variantMeta?.catelog?.keyValues?.catelog7,
+                                                  catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8,
+
                                                   variantStatus:null,
                                                   stockWarning: stockWarning,
                                                   aboutProducts: aboutProducts,

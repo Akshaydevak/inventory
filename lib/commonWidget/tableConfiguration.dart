@@ -272,7 +272,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -561,7 +561,7 @@ class _UOMPopup extends State<UOMPopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -1131,7 +1131,7 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -1417,7 +1417,7 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -1991,7 +1991,7 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -2277,7 +2277,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -2654,17 +2654,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                 //     border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                                 children: [
-                                  tableHeadtext(
-                                    'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
-
-                                    size: 13,
-                                  ),
 
                                   tableHeadtext(
                                     'Manufacture name',
@@ -2704,15 +2694,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                                   width: .5,
                                                   style: BorderStyle.solid))),
                                       children: [
-                                        TableCell(
-                                            verticalAlignment:
-                                                TableCellVerticalAlignment
-                                                    .middle,
-                                            child:
-                                                textPadding((i + 1).toString())
-                                            // Text(keys[i].key??"")
 
-                                            ),
                                         TableCell(
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
@@ -2861,7 +2843,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3144,7 +3126,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3426,7 +3408,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3711,7 +3693,7 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3992,7 +3974,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4274,7 +4256,7 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4558,7 +4540,7 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5122,7 +5104,7 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5404,14 +5386,17 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "AddNew",
+                buttonName: "Add New",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
                 label: "Frame  Work Popup",
-                onApply: () {
-                  costingTypeMethodeCheck = true;
-                  showDailogPopUp(
+                onApply: () {setState(() {
+
+
+
+                });
+                  costingTypeMethodeCheck = true; showDailogPopUp(
                     context,
                     ConfigurePopup(
                       type: "create_framework",

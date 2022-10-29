@@ -51,6 +51,7 @@ class ItemReadModel with _$ItemReadModel {
     @JsonKey(name: "item_cataloge2") final String? itemCatelog2,
     @JsonKey(name: "item_cataloge3") final String? itemCatelog3,
     @JsonKey(name: "item_cataloge4") final String? itemCatelog4,
+    @JsonKey(name: "item_cataloge5") final String? itemCatelog5,
 
 
   }) = _ItemReadModel;

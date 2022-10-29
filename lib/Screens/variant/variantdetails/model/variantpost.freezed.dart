@@ -40,6 +40,9 @@ class _$VariantPostTearOff {
       int? catalog6,
       int? catalog7,
       int? catalog8,
+      int? length,
+      int? width,
+      int? height,
       Storage? Ingrediants,
       Storage? storage,
       @JsonKey(name: "inventory_id")
@@ -177,6 +180,9 @@ class _$VariantPostTearOff {
       catalog6: catalog6,
       catalog7: catalog7,
       catalog8: catalog8,
+      length: length,
+      width: width,
+      height: height,
       Ingrediants: Ingrediants,
       storage: storage,
       inventoryId: inventoryId,
@@ -268,6 +274,9 @@ mixin _$VariantPost {
   int? get catalog6 => throw _privateConstructorUsedError;
   int? get catalog7 => throw _privateConstructorUsedError;
   int? get catalog8 => throw _privateConstructorUsedError;
+  int? get length => throw _privateConstructorUsedError;
+  int? get width => throw _privateConstructorUsedError;
+  int? get height => throw _privateConstructorUsedError;
   Storage? get Ingrediants => throw _privateConstructorUsedError;
   Storage? get storage => throw _privateConstructorUsedError;
   @JsonKey(name: "inventory_id")
@@ -421,6 +430,9 @@ abstract class $VariantPostCopyWith<$Res> {
       int? catalog6,
       int? catalog7,
       int? catalog8,
+      int? length,
+      int? width,
+      int? height,
       Storage? Ingrediants,
       Storage? storage,
       @JsonKey(name: "inventory_id")
@@ -579,6 +591,9 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
     Object? catalog6 = freezed,
     Object? catalog7 = freezed,
     Object? catalog8 = freezed,
+    Object? length = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
     Object? Ingrediants = freezed,
     Object? storage = freezed,
     Object? inventoryId = freezed,
@@ -712,6 +727,18 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
       catalog8: catalog8 == freezed
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      length: length == freezed
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
+              as int?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
               as int?,
       Ingrediants: Ingrediants == freezed
           ? _value.Ingrediants
@@ -1082,6 +1109,9 @@ abstract class _$VariantPostCopyWith<$Res>
       int? catalog6,
       int? catalog7,
       int? catalog8,
+      int? length,
+      int? width,
+      int? height,
       Storage? Ingrediants,
       Storage? storage,
       @JsonKey(name: "inventory_id")
@@ -1251,6 +1281,9 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
     Object? catalog6 = freezed,
     Object? catalog7 = freezed,
     Object? catalog8 = freezed,
+    Object? length = freezed,
+    Object? width = freezed,
+    Object? height = freezed,
     Object? Ingrediants = freezed,
     Object? storage = freezed,
     Object? inventoryId = freezed,
@@ -1384,6 +1417,18 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
       catalog8: catalog8 == freezed
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
+              as int?,
+      length: length == freezed
+          ? _value.length
+          : length // ignore: cast_nullable_to_non_nullable
+              as int?,
+      width: width == freezed
+          ? _value.width
+          : width // ignore: cast_nullable_to_non_nullable
+              as int?,
+      height: height == freezed
+          ? _value.height
+          : height // ignore: cast_nullable_to_non_nullable
               as int?,
       Ingrediants: Ingrediants == freezed
           ? _value.Ingrediants
@@ -1651,6 +1696,9 @@ class _$_VariantPost implements _VariantPost {
       this.catalog6,
       this.catalog7,
       this.catalog8,
+      this.length,
+      this.width,
+      this.height,
       this.Ingrediants,
       this.storage,
       @JsonKey(name: "inventory_id")
@@ -1809,6 +1857,12 @@ class _$_VariantPost implements _VariantPost {
   final int? catalog7;
   @override
   final int? catalog8;
+  @override
+  final int? length;
+  @override
+  final int? width;
+  @override
+  final int? height;
   @override
   final Storage? Ingrediants;
   @override
@@ -1990,7 +2044,7 @@ class _$_VariantPost implements _VariantPost {
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
   }
 
   @override
@@ -2042,6 +2096,12 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.catalog8, catalog8) ||
                 const DeepCollectionEquality()
                     .equals(other.catalog8, catalog8)) &&
+            (identical(other.length, length) ||
+                const DeepCollectionEquality().equals(other.length, length)) &&
+            (identical(other.width, width) ||
+                const DeepCollectionEquality().equals(other.width, width)) &&
+            (identical(other.height, height) ||
+                const DeepCollectionEquality().equals(other.height, height)) &&
             (identical(other.Ingrediants, Ingrediants) ||
                 const DeepCollectionEquality()
                     .equals(other.Ingrediants, Ingrediants)) &&
@@ -2061,11 +2121,8 @@ class _$_VariantPost implements _VariantPost {
                 const DeepCollectionEquality()
                     .equals(other.varAlternativeRfid, varAlternativeRfid)) &&
             (identical(other.alternativeBarcode, alternativeBarcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.alternativeBarcode, alternativeBarcode)) &&
-            (identical(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode)) &&
+                const DeepCollectionEquality().equals(other.alternativeBarcode, alternativeBarcode)) &&
+            (identical(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode) || const DeepCollectionEquality().equals(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode)) &&
             (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
             (identical(other.vedioUrl, vedioUrl) || const DeepCollectionEquality().equals(other.vedioUrl, vedioUrl)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
@@ -2141,6 +2198,9 @@ class _$_VariantPost implements _VariantPost {
       const DeepCollectionEquality().hash(catalog6) ^
       const DeepCollectionEquality().hash(catalog7) ^
       const DeepCollectionEquality().hash(catalog8) ^
+      const DeepCollectionEquality().hash(length) ^
+      const DeepCollectionEquality().hash(width) ^
+      const DeepCollectionEquality().hash(height) ^
       const DeepCollectionEquality().hash(Ingrediants) ^
       const DeepCollectionEquality().hash(storage) ^
       const DeepCollectionEquality().hash(inventoryId) ^
@@ -2233,6 +2293,9 @@ abstract class _VariantPost implements VariantPost {
       int? catalog6,
       int? catalog7,
       int? catalog8,
+      int? length,
+      int? width,
+      int? height,
       Storage? Ingrediants,
       Storage? storage,
       @JsonKey(name: "inventory_id")
@@ -2391,6 +2454,12 @@ abstract class _VariantPost implements VariantPost {
   int? get catalog7 => throw _privateConstructorUsedError;
   @override
   int? get catalog8 => throw _privateConstructorUsedError;
+  @override
+  int? get length => throw _privateConstructorUsedError;
+  @override
+  int? get width => throw _privateConstructorUsedError;
+  @override
+  int? get height => throw _privateConstructorUsedError;
   @override
   Storage? get Ingrediants => throw _privateConstructorUsedError;
   @override

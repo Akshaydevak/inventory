@@ -231,7 +231,7 @@ class _PopUpDateFormFieldState extends State<PopUpDateFormField> {
             validator: (value) => value == null ? "* required" : null,
             decoration: InputDecoration(
               suffixIcon: Icon(Icons.calendar_today_outlined),
-              contentPadding: null,
+              contentPadding:  EdgeInsets.symmetric(horizontal: 10, vertical: 20),
               labelStyle: TextStyle(color: Colors.black),
               // labelText: widget.initialValue?.toString().split(" ")[0],
               isDense: true,

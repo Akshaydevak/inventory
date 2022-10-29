@@ -9,6 +9,9 @@ part of 'variant_read.dart';
 _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
     _$_VariantReadModel(
       id: json['id'] as int?,
+      height: json['height'] as int?,
+      width: json['width'] as int?,
+      length: json['length'] as int?,
       code: json['code'] as String?,
       vat: (json['vat'] as num?)?.toDouble(),
       description: json['description'] as String?,
@@ -38,6 +41,8 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       returType: (json['return_type_options'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      manuFacturedId: json['manufacture_id'] as int?,
+      manuFacturedName: json['manufacture_name'] as String?,
       avgGp: (json['avrg_gp'] as num?)?.toDouble(),
       return2Type: json['return_type'] as String?,
       returnTime: json['return_time'] as int?,
@@ -71,7 +76,6 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ItemData.fromJson(json['item_data'] as Map<String, dynamic>),
       searchName: json['search_name'] as String?,
-      manufacturedName: json['manufacture_name'] as String?,
       SalesUom: json['sales_uom'] as String?,
       grossWeight: json['gross_weight'] as String?,
       producedCountry: json['produced_country'] as String?,
@@ -97,6 +101,9 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'height': instance.height,
+      'width': instance.width,
+      'length': instance.length,
       'code': instance.code,
       'vat': instance.vat,
       'description': instance.description,
@@ -116,6 +123,8 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'unit_cost': instance.unitCost,
       'actual_cost': instance.actualCost,
       'return_type_options': instance.returType,
+      'manufacture_id': instance.manuFacturedId,
+      'manufacture_name': instance.manuFacturedName,
       'avrg_gp': instance.avgGp,
       'return_type': instance.return2Type,
       'return_time': instance.returnTime,
@@ -132,7 +141,6 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'variant_meta': instance.variantMeta,
       'item_data': instance.itemData,
       'search_name': instance.searchName,
-      'manufacture_name': instance.manufacturedName,
       'sales_uom': instance.SalesUom,
       'gross_weight': instance.grossWeight,
       'produced_country': instance.producedCountry,

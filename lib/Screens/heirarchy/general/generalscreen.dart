@@ -176,6 +176,8 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
         break;
       case '6':
         img6 = true;
+        break;case '7':
+        img7 = true;
         break;
     }
   }
@@ -578,19 +580,17 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                         iconColor: Colors.white, onApply: () {
                                       ItemCreationModel model =
                                           ItemCreationModel(
-                                        name: itemNameController?.text ?? '',
-                                        barcode: barCodeController?.text ?? "",
-                                        qrCode: qrCodeController?.text ?? "",
-                                        materialCode:
-                                            materialController?.text ?? "",
-                                        uomGroupCode:
-                                            uomGroupController?.text ?? "",
-                                        uomCode:
-                                            uomCategoryController?.text ?? "",
-                                        groupCode: GroupController.text ?? "",
-                                        brandCode: BrandController.text ?? "",
+                                        name: itemNameController.text .isEmpty?null:itemNameController?.text,
+                                        barcode:barCodeController.text.isEmpty?null: barCodeController?.text ,
+                                        qrCode:qrCodeController.text.isEmpty?null: qrCodeController?.text ,
+                                        materialCode:materialController.text.isEmpty?null: materialController?.text ,
+
+                                        uomGroupCode:uomGroupController.text.isEmpty?null: uomGroupController?.text ,
+                                        uomCode:uomCategoryController.text.isEmpty?null: uomCategoryController?.text ,
+                                        groupCode:GroupController.text.isEmpty?null: GroupController.text,
+                                        brandCode:BrandController.text.isEmpty?null: BrandController.text ,
                                         staticGroupCode:
-                                            staticController.text ?? "",
+                                        staticController.text ?? "",
                                         variantFrameWorkCode:
                                             variantFrameworkController.text ??
                                                 "",
@@ -665,10 +665,11 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                             ? Variable.img1.toString()
                                             : itemCatelog3Controller.text,
                                         itemCatelog4: img7
-                                            ? Variable.img1.toString()
+                                            ? Variable.img7.toString()
                                             : itemCatelog4Controller.text,
+
                                       );
-                                      print(model);
+                                      print(model1);
 
                                       select
                                           ? context
