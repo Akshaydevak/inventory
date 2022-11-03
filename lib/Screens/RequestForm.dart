@@ -820,7 +820,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
-                                                              SizedBox(height: height*.030,),
+                                                              SizedBox(height: height*.045,),
                                                               SizedBox(height: height*.035,),
 
                                                             ],
@@ -861,8 +861,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                 readOnly: true,
                                                                   controller: grandTotalController, title: "grand total"),
                                                               SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.030,),
+
+
                                                             ],
                                                                           ),),
 

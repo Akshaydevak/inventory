@@ -265,13 +265,17 @@ class _IdentificationState extends State<Identification> {
                                       verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
-                                        controller: bacCodeListTextEditing[i],
+                                        // controller: bacCodeListTextEditing[i],
+                                        formatter: false,
+                                        controller: TextEditingController(text:alternativeBarcode?[i].barcode??"" ),
                                         // initialCheck: true,
                                         // last:alternativeBarcode?[i].barcode??"",
                                         onChanged: (va) {
                                           alternativeBarcode[i] =
                                               alternativeBarcode[i].copyWith(
                                                   barcode: va.toString());
+                                          widget.barQrCodeTableAssign(
+                                              type: "1", list: alternativeBarcode);
                                         },
                                       )),
                                   TableCell(
@@ -289,14 +293,24 @@ class _IdentificationState extends State<Identification> {
                                             alternativeBarcode[i] =
                                                 alternativeBarcode[i].copyWith(
                                                     isActive: isActive);
+                                            widget.barQrCodeTableAssign(
+                                                type: "1", list: alternativeBarcode);
                                           });
                                         }),
                                   ),
                                   TableTextButton(
-                                    label: "upadte",
+                                    label: "",
+                                    icon: Icons.delete,
                                     onPress: () {
-                                      widget.barQrCodeTableAssign(
-                                          type: "1", list: alternativeBarcode);
+                                      onChange=true;
+                                      setState(() {
+                                        alternativeBarcode?.removeAt(
+                                            i);
+                                        widget.barQrCodeTableAssign(
+                                            type: "1", list: alternativeBarcode);
+
+                                      });
+
                                     },
                                   ),
                                 ]),
@@ -351,7 +365,8 @@ class _IdentificationState extends State<Identification> {
                                     }),
                               ),
                               TableTextButton(
-                                label: "Save",
+                                label: "",
+                                icon: Icons.add,
                                 onPress: () {
                                   setState(() {
                                     onChange = true;
@@ -371,7 +386,7 @@ class _IdentificationState extends State<Identification> {
 
                                     widget.barQrCodeTableAssign(
                                         type: "1", list: alternativeBarcode);
-                                    barCodeTextEditingController.text = "";
+                                    barCodeTextEditingController.clear();
                                     barActive = false;
                                   });
                                 },
@@ -1307,6 +1322,8 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController maximumGp;
   final TextEditingController seblingNameController;
   final TextEditingController averageGp;
+  final TextEditingController weightUom;
+  final TextEditingController weight;
   final TextEditingController targetedgp;
   final TextEditingController minPurchaseOrderLimit;
   final TextEditingController maxPurchaseOrderLimit;
@@ -1325,9 +1342,11 @@ class VariantStabletable extends StatefulWidget {
   final Function({String type, bool val}) trueOrFalseChange;
 
   VariantStabletable({
+    required this.weightUom,
 
     required this.imagePostCheck,
     required this.itemId,
+    required this.weight,
     required this.image3,
     required this.seblingNameController,
 
@@ -1632,6 +1651,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
                     NewInputCard(controller: widget.salesUomName,
                       icondrop:true,
+                      readOnly: true,
                       title: "Sales Uom",ontap: (){
                         showDailogPopUp(
                           context,
@@ -1692,6 +1712,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
                     NewInputCard(controller: widget.purchaseUomName,
                       icondrop:true,
+                      readOnly: true,
                       title: "Purchase UOM",ontap: (){
                         showDailogPopUp(
                           context,
@@ -1782,7 +1803,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         title: "Length"),
 
                     SizedBox(
-                      height: height * .229,
+                      height: height * .259,
                     ),
                   ],
                 )),
@@ -1805,6 +1826,20 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
+                        formatter: true, controller: widget.weight,
+                        title: "Weight"),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true, controller: widget.weightUom,
+                        title: "Weight UOM Id"),
+
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
                         formatter: true,
                         controller: widget.actualCost,
                         title: "Actual Cost"),
@@ -1815,7 +1850,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     NewInputCard(
                         formatter: true,
                         controller: widget.basePrize,
-                        title: "Base Prize"),
+                        title: "Base Price"),
                     SizedBox(
                       height: height * .030,
                     ),
@@ -1861,7 +1896,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     NewInputCard(
                       readOnly: true,
                       controller: widget.manuFactureName,
-                      // icondrop: true,
+                      icondrop: true,
                       title: "Manufacture Name",
                       ontap: () {
                         showDailogPopUp(
@@ -1935,7 +1970,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     // ),
                     NewInputCard(
                         formatter: true,
-                        controller: widget.reorderQuantity,
+                        controller: widget.minSalesOrderLimit,
                         title: "Min Order Sale Limit"),
                     SizedBox(
                       height: height * .030,
@@ -1949,7 +1984,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     SelectableDropDownpopUp(
                       controller: widget.seblingNameController,
-                      label: "Sebling Id",
+                      label: "Sebling Name",
                       type: "Sebling_ListPopUpCall",
                       value: widget.seblingNameController.text,
                       onchange: (vale) {
@@ -1970,7 +2005,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // orderType.text = va!;
                         });
                       },
-                      onAddNew: () {},
+
                     ),
                     SizedBox(
                       height: height * .030,
@@ -1985,6 +2020,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           ConfigurePopup(
                             veritiaclid: widget.veritiaclid,
                             type: "LinkedItemCreatePopUp",
+                            listAssign: (String va){
+                              setState(() {
+
+
+                              widget.linkedItem.text=va;
+                              });
+                            },
                           ),
                         );
                       },
@@ -2045,24 +2087,26 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-                    SizedBox(
-                      height: height * .030,
-                    ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.minPurchaseOrderLimit,
-                        title: "Min purchase  Order Limit"),
+
 
 
 
                     SizedBox(
-                      height: height * .307,
+                      height: height * .209,
                     ),
                   ],
                 )),
                 Expanded(
                     child: Column(
                   children: [
+
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minPurchaseOrderLimit,
+                        title: "Min purchase  Order Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
 
 
                     NewInputCard(
@@ -2125,13 +2169,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           widget.imagePostCheck(type: "1");
                           widget.image1.text = myFile?.fileName ?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                          var imageEncode = myFile.toBase64();
+                           imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "image1");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2147,7 +2189,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "image1");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2156,7 +2201,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 130kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2179,9 +2224,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "image2");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2197,7 +2240,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "image2");
+
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2206,7 +2253,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 130kb");;
                           setState(() {});
                         },
                         onCreate: true,
@@ -2228,9 +2275,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "image3");
+
                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                           // Variable.bannerEncodedMobileBannerImage =
@@ -2248,7 +2293,12 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "image3");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2257,7 +2307,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2280,9 +2330,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "image4");
+
 
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
@@ -2299,7 +2347,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "image4");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2308,7 +2359,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2330,9 +2381,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "image5");
+
                           // Variable.mobileBannerImage = myFile.toUint8List();
 
                           // Variable.bannerEncodedMobileBannerImage =
@@ -2350,7 +2399,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "image5");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2359,7 +2412,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2387,9 +2440,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "1");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2405,7 +2456,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "1");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2414,7 +2469,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2437,9 +2492,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "2");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2455,7 +2508,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "2");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2464,7 +2520,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2487,9 +2543,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "3");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2505,7 +2559,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "3");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2514,7 +2572,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2537,9 +2595,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "4");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2555,7 +2611,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "4");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2564,7 +2624,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2587,9 +2647,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "5");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2605,7 +2663,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "5");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2614,7 +2676,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2637,9 +2699,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "6");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2655,7 +2715,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "6");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2664,7 +2727,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2687,9 +2750,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "7");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2705,7 +2766,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "7");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2714,7 +2778,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2737,9 +2801,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-                          context.read<ImagepostCubit>().postImage(
-                              Variable.imageName, imageEncode,
-                              type: "8");
+
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
@@ -2755,7 +2817,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onImageChange: (newFile) async {
                           // Variable.popUp = false;
 
-                          if (newFile.length <= 240000) {
+                          if (newFile.length <= 150000) {
+                            context.read<ImagepostCubit>().postImage(
+                                Variable.imageName, imageEncode,
+                                type: "8");
                             // loading
                             //     ? showDailogPopUp(context, DialoguePopUp())
                             //     : Navigator.pop(context);
@@ -2764,13 +2829,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 230kb");
+                                "Please upload Banner of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
                         label: "Catalog8"),
                     SizedBox(
-                      height: height * .362     ,
+                      height: height * .262     ,
                     ),
                   ],
                 ))
@@ -2910,10 +2975,10 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    if (!onChange) {
+    if (onChange==false) {
       print("welcome to the entire place");
       setState(() {
-        vendorDetails.clear();
+        // vendorDetails.clear();
       });
 
       if (widget.vendorDetails?.isNotEmpty == true) {
@@ -3013,29 +3078,59 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                         child:
                             // Text(keys[i].value??"",)
                             UnderLinedInput(
-                          initialCheck: true,
-                          last: vendorDetails?[i].vendorName ?? "" ?? "",
+                              controller: TextEditingController(text:vendorDetails?[i].vendorName ?? "" ),
+                          // initialCheck: true,
+                          // last: vendorDetails?[i].vendorName ?? "" ?? "",
                           formatter: false,
+                              onComplete: () {
+                                // showDailogPopUp(
+                                //   context,
+                                //   ConfigurePopup(
+                                //     listAssign: (VendorDetailsModel model) {
+                                //       print("akkk");
+                                //       print(model.toString());
+                                //       setState(() {
+                                //         onChange = true;
+                                //         vendorDetails[i] =
+                                //             vendorDetails[i].copyWith(vendorCode: model.manuFactureuserCode,vendorName: model.manuFactureName);
+                                //         widget.vendorTableEdit(list: vendorDetails);
+                                //       });
+                                //     },
+                                //     type: "vendorDetailList_popup",
+                                //   ),
+                                // );
+                              },
                           onChanged: (va) {
+                            onChange=true;
                             print(va);
                             vendorDetails[i] =
                                 vendorDetails[i].copyWith(vendorCode: va);
+                            widget.vendorTableEdit(list: vendorDetails);
                           },
                         )),
                     UnderLinedInput(
-                      initialCheck: true,
-                      last: vendorDetails?[i].vendorReerenceCode ?? "" ?? "",
+                      controller: TextEditingController(text:vendorDetails?[i].vendorReerenceCode ?? "" ),
+                      // initialCheck: true,
+                      // last: vendorDetails?[i].vendorReerenceCode ?? "" ?? "",
                       formatter: false,
                       onChanged: (va) {
+                        onChange=true;
                         print(va);
                         vendorDetails[i] =
                             vendorDetails[i].copyWith(vendorReerenceCode: va);
+                        widget.vendorTableEdit(list: vendorDetails);
                       },
                     ),
                     TableTextButton(
+                      icon: Icons.delete,
                       onPress: () {
                         onChange=true;
+                        setState(() {
+                          vendorDetails?.removeAt(
+                              i);
+
                         widget.vendorTableEdit(list: vendorDetails);
+                        });
                       },
                       label: "",
                     )
@@ -3070,7 +3165,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     formatter: false,
                     controller: code,
 
-                    onComplete: () {
+                    onClick: () {
                       showDailogPopUp(
                         context,
                         ConfigurePopup(
@@ -3110,7 +3205,8 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                       refCode.text = "";
                     });
                   },
-                  label: "Save",
+                  label: "",
+                  icon: Icons.add,
                 )
               ]),
         ],

@@ -3376,6 +3376,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
             "inventory_id": model.inventoryId,
             "search_name": model.searchName,
+            "weight_uom_id":model.weightUomId,
+            "weight":model.weight,
             "inventory_name":model.inventoryName,
             "pos_name": model.posName,
             "display_name": model.displayName,
@@ -3475,7 +3477,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         "inventory_id": model.inventoryId,
         "search_name": model.searchName,
         "inventory_name":model.inventoryName,
+          "weight":model.weight,
         "pos_name": model.posName,
+          "weight_uom_id":model.weightUomId,
         "display_name": model.displayName,
         "arabic_description": model.arabicDescription,
         "additional_description": model.additionalInfo,
@@ -3574,6 +3578,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         // data: model.toJson(),
 
         data: {
+
           "variant_name": model.variantName,
           "sales_uom": model.salesUom,
           "purchase_uom": model.purchaseUom,
@@ -3581,6 +3586,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "height":model.height,
           "width":model.width,
           "length":model.length,
+          "weight":model.weight,
+          "weight_uom_id":model.weightUomId,
 
           "barcode": model.barcode,
           "qrcode": model.qrcode,
@@ -5721,6 +5728,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       if (response.data['status'] == 'failed') {
         Variable.errorMessege = response.data['message'];
       }
+      else {
+        Variable.linkedVaue = response.data['data'];
+
+      }
       return DoubleResponse(
           response.data['status'] == 'success', response.data['message']);
     } catch (e) {
@@ -5737,8 +5748,12 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     print(response);
     print(response.data['message']);
     if (response.data['status'] == 'failed') {
-      Variable.errorMessege = response.data['message'];
+      Variable.errorMessege = response.data['message'];}
+    else {
+      Variable.linkedVaue = response.data['data'];
+
     }
+
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
   }
@@ -5842,6 +5857,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
+     else if (response.data['status'] == 'success') {
+       print("the error  cacaccac"+response.data['data']);
+      Variable.linkedVaue = response.data['data'];
+    }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
   }
@@ -5920,6 +5939,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (response.data['status'] == 'failed') {
       Variable.errorMessege = response.data['message'];
     }
+    else{
+      Variable.successMessege=response.data['message'];
+    }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['data']);
   }
@@ -5927,7 +5949,17 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   @override
   Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
       String? code) async {
-    String path = vendorDetailsApi;
+    print(""""""""""""""""""+code.toString());
+    String path;
+    code=code==null?"":code;
+    if(code==""){
+       path = vendorDetailsApi;
+    }
+    else{
+      path=vendorDetailsApi+"?"+code.toString();
+    }
+    print(path);
+
 
     UserPreferences().getUser().then((value) {
       token = value.token;
@@ -5953,7 +5985,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           response.data['data']['next'],
           response.data['data']['count'].toString());
     } catch (e) {
-      print("the mistake is");
+      print("the mistake is"+e.toString());
     }
     final response = await client.get(path,
         options: Options(headers: {

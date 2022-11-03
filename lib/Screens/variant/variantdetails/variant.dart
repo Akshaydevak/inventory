@@ -82,6 +82,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController unitPrizeController = TextEditingController();
   TextEditingController basePrizePrizeController = TextEditingController();
   TextEditingController producedCountryController = TextEditingController();
+  TextEditingController weightUomIdController = TextEditingController();
   TextEditingController ratioEcommerceController = TextEditingController();
   TextEditingController minMaxController = TextEditingController();
   TextEditingController wholeSaleStockController = TextEditingController();
@@ -109,6 +110,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController barCodeController = TextEditingController();
   TextEditingController qrCodeController = TextEditingController();
   TextEditingController rfIdController = TextEditingController();
+  TextEditingController weightController = TextEditingController();
   bool salesBolock = false;
   bool purchaseBolock = false;
   bool stockWarning = false;
@@ -192,7 +194,7 @@ ProductFeatures? importantInfo;
         });
         break;
       case 'Active' :
-        itmImage=val;
+        active=val;
         setState(() {
 
         });
@@ -214,6 +216,7 @@ ProductFeatures? importantInfo;
     });
   }
 barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
+    print("list"+list.toString());
   switch(type){
 
     case '1' :
@@ -383,10 +386,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       // storage=[];
       // Ingrediants=[];
       // importantInfo=[];
-      baseUomNameController.clear();
+
+        baseUomNameController.clear();
       purchaseUomNameController.clear();
       salesUomNameController.clear();
       uomGroupNameController.clear();
+      saftyStockController.clear();
+      minPurchaseOrderLimitController.clear();
+      maxPurchaseOrderLimitController.clear();
 
       catalog1.clear();
       catalog2.clear();
@@ -409,6 +416,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
       reorederPointController.clear();
       saftyStockController.clear();
        salesBolock=false;
+      weightUomIdController.clear();
        variantCodeController.clear();
        variantFrameWorkController.clear();
        variantNameController.clear();
@@ -456,6 +464,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
      exciseTaxController.clear();
      returnTypeController.clear();
      returnTimeController.clear();
+     weightController.clear();
 
 
       img1=false;
@@ -550,7 +559,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         //   });
         // });
       } else {
-        context.showSnackBarError(data.data2);
+        context.showSnackBarError(Variable.errorMessege);
         print(data.data1);
       }
       ;
@@ -573,6 +582,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           variantNameController.text=data.name??"";
           itemCodeController.text=data.itemData?.itemName??"";
           variantNameController.text=data.name??"";
+          minSalesOrderLimitController.text=data?.minSaleOrderLimit.toString()??"";
+          maxSalesOrderLimitController.text=data?.maxSaleOrderLimit.toString()??"";
           salesUomController.text=data.SalesUom??"";
           salesUomNameController.text=data.salesUomData?.salesUomName??"";
           purchaseUomController.text=data.purchaseuom??"";
@@ -580,11 +591,20 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           searchNAmeController.text=data?.searchName??"";
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
-          heightController.text=data?.height.toString()??"";
-          widthController.text=data?.width.toString()??"";
-          lengthController.text=data?.length.toString()??"";
+          heightController.text=data?.dimension?.height.toString()??"";
+          widthController.text=data?.dimension?.width.toString()??"";
+          lengthController.text=data?.dimension?.length.toString()??"";
           descriptionController.text=data?.description??"";
           variantCodeController.text=data?.code??"";
+          catalog1.text=data?.variantMeta?.catelog?.keyValues?.catelog1??"";
+          catalog2.text=data?.variantMeta?.catelog?.keyValues?.catelog2??"";
+          catalog3.text=data?.variantMeta?.catelog?.keyValues?.catelog3??"";
+          catalog4.text=data?.variantMeta?.catelog?.keyValues?.catelog4??"";
+          catalog5.text=data?.variantMeta?.catelog?.keyValues?.catelog5??"";
+          catalog6.text=data?.variantMeta?.catelog?.keyValues?.catelog6??"";
+          catalog7.text=data?.variantMeta?.catelog?.keyValues?.catelog7??"";
+          catalog8.text=data?.variantMeta?.catelog?.keyValues?.catelog8??"";
+
 
           variantFrameWorkController.text=data?.variantframeWork?.variantFrameWork??"";
           baseUomNameController.text=data?.uomNameData?.uomName??"";
@@ -595,11 +615,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           image3Controller.text=data?.variantMeta?.image?.keyValues?.image3??"";
           image4Controller.text=data?.variantMeta?.image?.keyValues?.image4??"";
           image5Controller.text=data?.variantMeta?.image?.keyValues?.image5??"";
+
           grossWeightController.text=data.grossWeight??"";
           baseUomController.text=data.uomId??"";
           uomGroupNameController.text=data.uomGroupName??"";
           Variable.uomId=int.tryParse(data.uomId.toString())??0;
           netWeightController.text=data.netWeight??"";
+          weightController.text=data.dimension?.weight.toString()??"";
+
           // maxSalesOrderLimitController.text=data.max
           unitCostController.text=data.unitCost.toString()??"";
           landingCostController.text=data.landingCost.toString()??"";
@@ -614,7 +637,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           itmcatelog=data.itemCatalog??false;
           itmImage=data.itemImage??false;
           active=data.isActive??false;
-          returnTypeController.text=data?.return2Type??"";
+          weightUomIdController.text=data.weightUomId.toString();
+          returnTypeController.text=data?.returnType.toString()??"";
           returnTimeController.text=data?.returnTime.toString()??"";
           vatController.text=data.vat.toString()??"";
           exciseTaxController.text=data.vat.toString()??"";
@@ -629,6 +653,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           importantInfo=data.variantMeta?.importantInfo;
           productDetails=data.variantMeta?.productDetails;
           nutriantsFacts=data.variantMeta?.nutriantFacts;
+          reorederPointController.text=data.reOrderPoint.toString();
+          averageGpController.text=data.avgGp.toString();
+          saftyStockController.text=data.safetyStock.toString();
+          minPurchaseOrderLimitController.text=data.minPurchaseOrderLimit.toString();
+          maxPurchaseOrderLimitController.text=data.maxPurchaseOrderLimit.toString();
+
           usageDirection=data.variantMeta?.usageDirection;
           vendorDetails=data.vendorDetails??[];
           print("vendor detailse"+vendorDetails.toString());
@@ -913,6 +943,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       ),
                                       SizedBox(height: height * .10,),
                                       VariantStabletable(
+                                        weightUom:weightUomIdController,
+                                          weight:weightController,
                                         seblingNameController: searchNAmeController,
                                         height: heightController,
                                         width: widthController,
@@ -1131,8 +1163,13 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 onApply: () {
                                               if(select){
                                                 VariantPost model = VariantPost(
+                                                  weight:double.tryParse( weightController.text),
                                                   inventoryId: Variable.inventory_ID,
+                                                  height: double.tryParse(heightController.text),
+                                                  width: double.tryParse(widthController.text),
+                                                  length: double.tryParse(lengthController.text),
                                                   inventoryName: Variable.inventory_Name,
+                                                  weightUomId: int.tryParse(weightUomIdController.text),
                                                   searchName:searchNAmeController.text.isEmpty?null:searchNAmeController?.text,
                                                   posName:posNameController.text.isEmpty?null:posNameController?.text,
                                                   displayName:displayNAmeController.text.isEmpty?null:displayNAmeController?.text,
@@ -1208,9 +1245,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                               }
                                               else{
                                                 VariantPatch model=VariantPatch (
-                                                  length: int.tryParse(lengthController.text),
-                                                  width: int.tryParse(widthController.text),
-                                                  height: int.tryParse(heightController.text),
+                                                  weight:double.tryParse( weightController.text),
+                                                  length: double.tryParse(lengthController.text),
+                                                  width: double.tryParse(widthController.text),
+                                                  height: double.tryParse(heightController.text),
                                                   variantName: variantNameController!.text.isEmpty?null:variantNameController?.text,
                                                   salesUom:  salesUomController!.text.isEmpty?null:salesUomController?.text,
                                                   // "1",
@@ -1219,6 +1257,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   itemImage: itmImage,
                                                   itemCatelog: itmcatelog,
                                                   vendorDetails: vendorDetails,
+                                                  weightUomId: int.tryParse(weightUomIdController.text),
                                                   // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
                                                   barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
                                                   qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,

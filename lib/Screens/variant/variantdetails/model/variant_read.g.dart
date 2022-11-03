@@ -9,9 +9,6 @@ part of 'variant_read.dart';
 _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
     _$_VariantReadModel(
       id: json['id'] as int?,
-      height: json['height'] as int?,
-      width: json['width'] as int?,
-      length: json['length'] as int?,
       code: json['code'] as String?,
       vat: (json['vat'] as num?)?.toDouble(),
       description: json['description'] as String?,
@@ -25,11 +22,16 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       qrcode: json['qrcode'] == null
           ? null
           : QrCode.fromJson(json['qrcode'] as Map<String, dynamic>),
+      dimension: json['dimension'] == null
+          ? null
+          : Dimension.fromJson(json['dimension'] as Map<String, dynamic>),
       uomCode: json['uom_code'] as String?,
       variantFrameWorkId: json['variantframework_id'] as int?,
       uomId: json['uom_id'] as String?,
       inventoryId: json['inventory_id'] as String?,
       uomGroupName: json['uom_group_name'] as String?,
+      reOrderPoint: json['reorder_point'] as int?,
+      reOrderQuantity: json['reorder_quantity'] as int?,
       alterNativeBarcode: (json['var_alternative_barcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -37,14 +39,20 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
       unitCost: (json['unit_cost'] as num?)?.toDouble(),
+      weightUomId: json['weight_uom_id'] as int?,
+      maxSaleOrderLimit: json['max_sales_order_limit'] as int?,
+      minSaleOrderLimit: json['min_sales_order_limit'] as int?,
       actualCost: (json['actual_cost'] as num?)?.toDouble(),
       returType: (json['return_type_options'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      safetyStock: json['safty_stock'] as int?,
+      minPurchaseOrderLimit: json['min_purchase_order_limit'] as int?,
+      maxPurchaseOrderLimit: json['max_purchase_order_limit'] as int?,
       manuFacturedId: json['manufacture_id'] as int?,
       manuFacturedName: json['manufacture_name'] as String?,
       avgGp: (json['avrg_gp'] as num?)?.toDouble(),
-      return2Type: json['return_type'] as String?,
+      returnType: json['return_type'] as String?,
       returnTime: json['return_time'] as int?,
       maxGp: (json['max_gp'] as num?)?.toDouble(),
       minGap: (json['min_gp'] as num?)?.toDouble(),
@@ -101,9 +109,6 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'height': instance.height,
-      'width': instance.width,
-      'length': instance.length,
       'code': instance.code,
       'vat': instance.vat,
       'description': instance.description,
@@ -113,20 +118,29 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'image3': instance.image3,
       'barcode': instance.barcode,
       'qrcode': instance.qrcode,
+      'dimension': instance.dimension,
       'uom_code': instance.uomCode,
       'variantframework_id': instance.variantFrameWorkId,
       'uom_id': instance.uomId,
       'inventory_id': instance.inventoryId,
       'uom_group_name': instance.uomGroupName,
+      'reorder_point': instance.reOrderPoint,
+      'reorder_quantity': instance.reOrderQuantity,
       'var_alternative_barcode': instance.alterNativeBarcode,
       'var_alternative_qrcode': instance.alterNativeQrCode,
       'unit_cost': instance.unitCost,
+      'weight_uom_id': instance.weightUomId,
+      'max_sales_order_limit': instance.maxSaleOrderLimit,
+      'min_sales_order_limit': instance.minSaleOrderLimit,
       'actual_cost': instance.actualCost,
       'return_type_options': instance.returType,
+      'safty_stock': instance.safetyStock,
+      'min_purchase_order_limit': instance.minPurchaseOrderLimit,
+      'max_purchase_order_limit': instance.maxPurchaseOrderLimit,
       'manufacture_id': instance.manuFacturedId,
       'manufacture_name': instance.manuFacturedName,
       'avrg_gp': instance.avgGp,
-      'return_type': instance.return2Type,
+      'return_type': instance.returnType,
       'return_time': instance.returnTime,
       'max_gp': instance.maxGp,
       'min_gp': instance.minGap,
@@ -175,6 +189,21 @@ Map<String, dynamic> _$$_SalesUomDataToJson(_$_SalesUomData instance) =>
       'key': instance.key,
       'sales_uom_name': instance.salesUomName,
       'sales_uom_code': instance.salesUomCode,
+    };
+
+_$_Dimension _$$_DimensionFromJson(Map<String, dynamic> json) => _$_Dimension(
+      height: (json['height'] as num?)?.toDouble(),
+      width: (json['width'] as num?)?.toDouble(),
+      length: (json['length'] as num?)?.toDouble(),
+      weight: (json['weight'] as num?)?.toDouble(),
+    );
+
+Map<String, dynamic> _$$_DimensionToJson(_$_Dimension instance) =>
+    <String, dynamic>{
+      'height': instance.height,
+      'width': instance.width,
+      'length': instance.length,
+      'weight': instance.weight,
     };
 
 _$_VendorDetails _$$_VendorDetailsFromJson(Map<String, dynamic> json) =>

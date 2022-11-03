@@ -42,12 +42,12 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
       graphArray.clear();
 
-      for (var i = 0; i < attribute.length-1; i++) {
+      for (var i = 0; i < attribute.length; i++) {
         graphArray.add([]);
       }
       // if
 
-      for (var i = 0; i < attribute.length-1; i++) {
+      for (var i = 0; i < attribute.length; i++) {
         if (attribute[i].values?.isNotEmpty == true) {
           for (var j = 0; j < attribute[i].values!.length; j++) {
 // maps={
@@ -135,7 +135,8 @@ class _AttributeScreenState extends State<AttributeScreen> {
             });
       },
       child: Container(
-        height: 400,
+        height: 200,
+        alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
         child: attribute.isNotEmpty == true
             ? ListView.builder(

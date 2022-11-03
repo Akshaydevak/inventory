@@ -120,6 +120,73 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
     }
 
     print("the combination Array is" + combinationArray.toString());
+    List<List<Map<String, dynamic>>> combinationArray1=[];
+    combinationArray.forEach((element) {
+      if(element.isNotEmpty){
+        combinationArray1.add(element);
+      }
+      print("the combination Array is" + combinationArray1.toString());
+
+    });
+
+
+
+
+    if(combinationArray1.isNotEmpty){
+      if(combinationArray1.length==1){
+        print("entered");
+
+        var list=combinationArray1[0];
+        for(var i=0;i<list.length;i++){
+          var val = list[i]["value"];
+          if (vals.contains(val) == false) {
+            List<Map<String, dynamic>> mapList = [];
+            mapList.add(list[i]);
+
+            variantList.add(mapList);
+            print("the maplist" + variantList.toString());
+
+            vals.add(val);
+          }
+
+
+        }
+        print(list);
+      }
+
+
+  for(var i=0;i<combinationArray1.length-1;i++){
+        var firstList = combinationArray1[i];
+        print("the first list"+firstList.toString());
+
+
+        for(var m =i+1;m<combinationArray1.length;m++){
+          var secondList = combinationArray1[m];
+          print("the first list====" + secondList.toString());
+
+        if (firstList.isNotEmpty){
+            for (var j = 0; j < firstList.length; j++) {if (secondList.isNotEmpty)
+              for (var k = 0; k < secondList.length; k++) {
+                var val = firstList[j]["value"] + secondList[k]["value"];   if (vals.contains(val) == false) {
+                                    List<Map<String, dynamic>> mapList = [];
+                                    mapList.add(firstList[j]);
+                                    mapList.add(secondList[k]);
+                                    variantList.add(mapList);
+                                    print("the maplist" + variantList.toString());
+
+                                    vals.add(firstList[j]["value"] +" "+ secondList[k]["value"]);
+                                  }
+
+              }
+
+            }
+
+          }
+
+        }
+      }
+
+    }
 
 
 

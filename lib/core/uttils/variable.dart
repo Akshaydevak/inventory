@@ -2,6 +2,7 @@ import 'package:inventory/Screens/heirarchy/general/model/images.dart';
 
 class Variable{
   static String  errorMessege="";
+  static String  successMessege="";
   static String  email="";
   static String  trn="";
   static String  address="";
@@ -12,6 +13,7 @@ class Variable{
   static String  created_by="";
   static String  username="";
   static String  loginLeage="";
+  static String  linkedVaue="";
   static int?  variantSearchId=0;
  static List<List<Map<String,dynamic>>> combinationArray=[];
   static String  token="test";

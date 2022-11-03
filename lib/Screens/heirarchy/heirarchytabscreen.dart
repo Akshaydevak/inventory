@@ -12,6 +12,8 @@ import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'customizeddata/screens/main_customized.dart';
+
 
 
 
@@ -27,7 +29,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 1, vsync: this,initialIndex: Variable.subIndex[4]??0);
+    TabController _tabController = TabController(length: 2, vsync: this,initialIndex: Variable.subIndex[4]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -50,7 +52,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                         SizedBox(
                           height: height * 0.02,
                         ),
-                        TextWidget(text: "Heirarchy")
+                        TextWidget(text: "Heirarchy"),
                       ],
                     ),
                   ),
@@ -114,7 +116,8 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
 
                                     controller: _tabController,
                                     tabs: [
-                                      Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                      Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                      Text("Customize Data",style: TextStyle(color: Colors.black,fontSize: 13),),
 
                                     ]),
                               ),
@@ -141,6 +144,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                             controller: _tabController,
                             children: [
                               HeirarchyGeneralScreen(),
+                              CustomisedMainScreen(),
 
 
 

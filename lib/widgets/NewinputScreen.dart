@@ -205,7 +205,10 @@ class _NewInputCardState extends State<NewInputCard> {
                     setState(() {});
                   },
                 )
-                    : widget.icondrop?IconButton(onPressed:(){}, icon: Icon(Icons.more_horiz_rounded)):null,
+                    : widget.icondrop?IconButton(onPressed:(){
+                  widget.ontap!=null?widget.ontap!():null;
+
+                }, icon: Icon(Icons.more_horiz_rounded)):null,
                 labelStyle: const TextStyle(
                   fontSize: 13,
                   //fontStyle: FontStyle.italic,
@@ -313,7 +316,7 @@ class NewInputCreateCard extends StatefulWidget {
     this.onChange,
     this.fontColors=Colors.black,
     required this.ontap,
-    this.subTitle="creaet New",
+    this.subTitle="Create New",
     required this.controller,
     this.label,
     this.keyboardType,

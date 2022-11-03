@@ -101,8 +101,9 @@ class TableTextButton extends StatefulWidget {
   final Function onPress;
   final bool actionCheck;
   final bool designCheck;
+  final IconData? icon;
 
-  TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.designCheck=false});
+  TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.designCheck=false,this.icon});
 
   @override
   _TableTextButtonState createState() => _TableTextButtonState();
@@ -134,7 +135,7 @@ class _TableTextButtonState extends State<TableTextButton> {
 
 
             },
-            child: Text(widget.label,style: TextStyle(color: Colors.white),)
+            child: widget.icon!=null?Icon(widget.icon,color: Colors.white,):Text(widget.label,style: TextStyle(color: Colors.white),)
 
         ),
       ),

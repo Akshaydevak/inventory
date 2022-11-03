@@ -28,10 +28,14 @@ class ProductTableState extends State<ProductTable> {
   TextEditingController name = TextEditingController();
   TextEditingController key = TextEditingController();
   TextEditingController headingController = TextEditingController();
+  TextEditingController newNameController = TextEditingController();
+
   List<TextEditingController> nameListTextEditingController = [];
   bool onChange = false;
   Storage? aboutProducts;
   List<dynamic> keys = [];
+
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -58,6 +62,7 @@ class ProductTableState extends State<ProductTable> {
         }
       }
     }
+    print("keysssssssssssssssssssss"+keys.toString());
     onChange = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,22 +142,46 @@ class ProductTableState extends State<ProductTable> {
                           child:
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
+
                             formatter: false,
-                            controller: nameListTextEditingController[i],
+                            initialCheck: false,
+                            // last: keys[i]["name"].toString(),
+                            controller: TextEditingController(text:keys[i]["name"].toString()),
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
+                              aboutProducts = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "1", list: aboutProducts);
                               print(keys);
                             },
                           ),
                         ),
                         TableTextButton(
-                          label: "upadte",
+                          label: "",
+                          icon: Icons.delete,
                           onPress: () {
+                            onChange=true;
+
+                            setState(() {
+
+                              print(keys);
+                              print(i);
+
+
+                            keys?.removeAt(i);
+                            print(keys);
+
                             aboutProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
                                 type: "1", list: aboutProducts);
+                          });
+                            setState(() {
+
+                            });
+
                           },
                         ),
                       ]),
@@ -178,6 +207,8 @@ class ProductTableState extends State<ProductTable> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller:newNameController,
+                          initialCheck: false,
                           formatter: false,
                           onChanged: (va) {
                             print(va);
@@ -185,7 +216,8 @@ class ProductTableState extends State<ProductTable> {
                             name.text = va;
                             setState(() {});
                           },
-                        )
+                        ),
+
                         // UnderLinedInput(
                         //   formatter: false,
                         // ),
@@ -195,7 +227,7 @@ class ProductTableState extends State<ProductTable> {
                       label: "",
                       onPress: () {
                         onChange = true;
-
+newNameController.clear();
                         setState(() {
                           if (name.text.isNotEmpty == true) {
                             Map map = {
@@ -358,14 +390,20 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                           child:
                               // Text(keys[i].key??"")
                               UnderLinedInput(
-                            last: keys[i].key ?? "",
-                            initialCheck: true,
+                            // last: keys[i].key ?? "",
+                            // initialCheck: true,
+                                controller: TextEditingController(text:keys[i].key ?? "" ),
                             formatter: false,
                             onChanged: (va) {
                               print(va);
                               keys[i] = keys[i].copyWith(
                                 key: va,
                               );
+                              productDetails = ProductFeatures(
+                                  name: heading.text, keyValues: keys);
+                              // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "1", list: productDetails);
                             },
                           ),
                         ),
@@ -375,22 +413,35 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                             child:
                                 // Text(keys[i].value??"",)
                                 UnderLinedInput(
-                              initialCheck: true,
-                              last: keys[i].value ?? "" ?? "",
+                              // initialCheck: true,
+                              // last: keys[i].value ?? "" ?? "",
+                                  controller: TextEditingController(text: keys[i].value ?? "" ),
                               formatter: false,
                               onChanged: (va) {
                                 print(va);
                                 keys[i] = keys[i].copyWith(value: va);
+                                productDetails = ProductFeatures(
+                                    name: heading.text, keyValues: keys);
+                                // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
+                                widget.productTableEdit(
+                                    type: "1", list: productDetails);
                               },
                             )),
                         TableTextButton(
                           onPress: () {
+                            onChange=true;
+                            setState(() {
+
+
+                            keys?.removeAt(i);
                             productDetails = ProductFeatures(
                                 name: heading.text, keyValues: keys);
                             // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
                             widget.productTableEdit(
                                 type: "1", list: productDetails);
+                          });
                           },
+                          icon: Icons.delete,
                           label: "",
                         )
                       ])
@@ -416,8 +467,9 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: key,
                         onChanged: (va) {
-                          key.text = va;
+                          // key.text = va;
                         },
                         formatter: false,
                       ),
@@ -425,8 +477,9 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: value,
                         onChanged: (va) {
-                          value.text = va;
+                          // value.text = va;
                         },
                         formatter: false,
                       ),
@@ -597,14 +650,19 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                           child:
                               // Text(keys[i].key??"")
                               UnderLinedInput(
-                            last: keys[i].key ?? "",
-                            initialCheck: true,
+                            // last: keys[i].key ?? "",
+                            // initialCheck: true,
+                                controller: TextEditingController(text: keys[i].key ?? ""),
                             formatter: false,
                             onChanged: (va) {
                               print(va);
                               keys[i] = keys[i].copyWith(
                                 key: va,
                               );
+                              productFeatures = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "2", list: productFeatures);
                             },
                           ),
                         ),
@@ -614,22 +672,35 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                             child:
                                 // Text(keys[i].value??"",)
                                 UnderLinedInput(
-                              initialCheck: true,
-                              last: keys[i].value ?? "" ?? "",
+                              // initialCheck: true,
+                              // last: keys[i].value ?? "" ?? "",
+                                  controller: TextEditingController(text: keys[i].value ?? "" ),
                               formatter: false,
                               onChanged: (va) {
                                 print(va);
                                 keys[i] = keys[i].copyWith(value: va);
+                                productFeatures = ProductFeatures(
+                                    name: headingController.text, keyValues: keys);
+                                widget.productTableEdit(
+                                    type: "2", list: productFeatures);
                               },
                             )),
                         TableTextButton(
                           onPress: () {
+                            onChange=true;
+                            setState(() {
+                              keys?.removeAt(i
+                                  );
+
+
                             productFeatures = ProductFeatures(
                                 name: headingController.text, keyValues: keys);
                             widget.productTableEdit(
                                 type: "2", list: productFeatures);
+                            });
                           },
                           label: "",
+                          icon: Icons.delete,
                         )
                       ]),
               ],
@@ -654,8 +725,9 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: key,
                         onChanged: (va) {
-                          key.text = va;
+                          // key.text = va;
                         },
                         formatter: false,
                       ),
@@ -663,8 +735,9 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: value,
                         onChanged: (va) {
-                          value.text = va;
+                          // value.text = va;
                         },
                         formatter: false,
                       ),
@@ -688,8 +761,8 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                                   name: headingController.text, keyValues: keys);
                               widget.productTableEdit(
                                   type: "2", list: productFeatures);
-                              key.text = "";
-                              value.text = "";
+                              key.clear();
+                              value.clear() ;
                             });
                           }
                         })
@@ -837,14 +910,19 @@ ProductFeatures? productFeatures ;
                           child:
                               // Text(keys[i].key??"")
                               UnderLinedInput(
-                            last: keys[i].key ?? "",
-                            initialCheck: true,
+                            // last: keys[i].key ?? "",
+                            // initialCheck: true,
+                                controller: TextEditingController(text:keys[i].key ?? "" ),
                             formatter: false,
                             onChanged: (va) {
                               print(va);
                               keys[i] = keys[i].copyWith(
                                 key: va,
                               );
+                              productFeatures = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "3", list: productFeatures);
                             },
                           ),
                         ),
@@ -854,20 +932,34 @@ ProductFeatures? productFeatures ;
                             child:
                                 // Text(keys[i].value??"",)
                                 UnderLinedInput(
-                              initialCheck: true,
-                              last: keys[i].value ?? "" ?? "",
+                              // initialCheck: true,
+                              // last: keys[i].value ?? "" ?? "",
+                                  controller: TextEditingController(text:keys[i].value ?? "" ),
                               formatter: false,
                               onChanged: (va) {
                                 print(va);
                                 keys[i] = keys[i].copyWith(value: va);
+                                productFeatures = ProductFeatures(
+                                    name: headingController.text, keyValues: keys);
+                                widget.productTableEdit(
+                                    type: "3", list: productFeatures);
                               },
                             )),
                         TableTextButton(
+                          icon: Icons.delete,
                           onPress: () {
+                            onChange=true;
+
+                            setState(() {
+
+
+                              keys?.removeAt(i
+                             );
                             productFeatures = ProductFeatures(
                                 name: headingController.text, keyValues: keys);
                             widget.productTableEdit(
                                 type: "3", list: productFeatures);
+                            });
                           },
                           label: "",
                         )
@@ -894,8 +986,9 @@ ProductFeatures? productFeatures ;
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: key,
                         onChanged: (va) {
-                          key.text = va;
+                          // key.text = va;
                         },
                         formatter: false,
                       ),
@@ -903,8 +996,9 @@ ProductFeatures? productFeatures ;
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: value,
                         onChanged: (va) {
-                          value.text = va;
+                          // value.text = va;
                         },
                         formatter: false,
                       ),
@@ -1073,14 +1167,19 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                           child:
                               // Text(keys[i].key??"")
                               UnderLinedInput(
-                            last: keys[i].key ?? "",
-                            initialCheck: true,
+                                controller: TextEditingController(text: keys[i].key ?? ""),
+                            // last: keys[i].key ?? "",
+                            // initialCheck: true,
                             formatter: false,
                             onChanged: (va) {
                               print(va);
                               keys[i] = keys[i].copyWith(
                                 key: va,
                               );
+                              productFeatures = ProductFeatures(
+                                  name: heading.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "4", list: productFeatures);
                             },
                           ),
                         ),
@@ -1090,20 +1189,37 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                             child:
                                 // Text(keys[i].value??"",)
                                 UnderLinedInput(
-                              initialCheck: true,
-                              last: keys[i].value ?? "" ?? "",
+                                  controller: TextEditingController(text: keys[i].value ?? ""),
+                              // initialCheck: true,
+                              // last: keys[i].value ?? "" ?? "",
                               formatter: false,
                               onChanged: (va) {
                                 print(va);
+
                                 keys[i] = keys[i].copyWith(value: va);
+                                productFeatures = ProductFeatures(
+                                    name: heading.text, keyValues: keys);
+                                widget.productTableEdit(
+                                    type: "4", list: productFeatures);
                               },
                             )),
                         TableTextButton(
+                          icon: Icons.delete,
                           onPress: () {
+                            setState(() {
+
+
+
+                            onChange=true;
+
+
+                            keys?.removeAt(i
+                                   );
                             productFeatures = ProductFeatures(
                                 name: heading.text, keyValues: keys);
                             widget.productTableEdit(
                                 type: "4", list: productFeatures);
+                            });
                           },
                           label: "",
                         )
@@ -1130,9 +1246,10 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller: key,
                           formatter: false,
                           onChanged: (va) {
-                            values.text = va;
+                            // values.text = va;
                           },
                         )
                         // UnderLinedInput(
@@ -1143,9 +1260,11 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller: values,
                           formatter: false,
                           onChanged: (va) {
-                            key.text = va;
+                            // key.text = va;
+
                           },
                         )
                         // UnderLinedInput(
@@ -1310,22 +1429,35 @@ class IngrediansState extends State<Ingredians> {
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
                             formatter: false,
-                            initialCheck: true,
-                            last: keys?[i]["name"] ?? "",
+                            // initialCheck: true,
+                            // last: keys?[i]["name"] ?? "",
+                            controller: TextEditingController(text: keys?[i]["name"]  ),
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
                               print(keys);
+                              ingriansProduct = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "2", list: ingriansProduct);
                             },
                           ),
                         ),
                         TableTextButton(
-                          label: "upadte",
+                          label: "",
+                          icon: Icons.delete,
                           onPress: () {
+                            onChange=true;
+                            setState(() {
+
+                              keys?.removeAt(i);
+
+
                             ingriansProduct = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
                                 type: "2", list: ingriansProduct);
+                          });
                           },
                         ),
                       ]),
@@ -1351,11 +1483,12 @@ class IngrediansState extends State<Ingredians> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller: name,
                           formatter: false,
                           onChanged: (va) {
                             onChange=true;
                             print(va);
-                            name.text = va;
+                            // name.text = va;
                             setState(() {});
                           },
                         )
@@ -1521,22 +1654,33 @@ class _UsageDirectionState extends State<UsageDirection> {
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
                             formatter: false,
-                            initialCheck: true,
-                            last: keys?[i]["name"] ?? "",
+                            // initialCheck: true,
+                            // last: keys?[i]["name"] ?? "",
+                                controller: TextEditingController(text:keys?[i]["name"] ?? "" ),
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
+                              usageProducts = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "3", list: usageProducts);
                               print(keys);
                             },
                           ),
                         ),
                         TableTextButton(
-                          label: "upadte",
+                          label: "",
+                          icon: Icons.delete,
                           onPress: () {
+                            onChange=true;setState(() {
+                              keys?.removeAt(i
+                                    );
+
                             usageProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
                                 type: "3", list: usageProducts);
+                            });
                           },
                         ),
                       ]),
@@ -1562,11 +1706,12 @@ class _UsageDirectionState extends State<UsageDirection> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller: name,
                           formatter: false,
                           onChanged: (va) {
                             onChange=true;
                             print(va);
-                            name.text = va;
+                            // name.text = va;
                             setState(() {});
                           },
                         )
@@ -1682,7 +1827,7 @@ class _StoragesWidgetState extends State<StoragesWidget> {
 
                 children: [
                   tableHeadtext(
-                    'Importand Info',
+                    'Storage',
 
                     padding: EdgeInsets.all(7),
 
@@ -1731,22 +1876,34 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
                             formatter: false,
-                            initialCheck: true,
-                            last: keys?[i]["name"] ?? "",
+                            controller: TextEditingController(text: keys?[i]["name"] ?? "" ),
+                            // initialCheck: true,
+                            // last: keys?[i]["name"] ?? "",
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
+                              aboutProducts = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "4", list: aboutProducts);
                               print(keys);
                             },
                           ),
                         ),
                         TableTextButton(
                           label: "upadte",
+                          icon: Icons.delete,
                           onPress: () {
+                            setState(() {
+
+
+                            keys?.removeAt(
+                                 i);
                             aboutProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
                                 type: "4", list: aboutProducts);
+                            });
                           },
                         ),
                       ]),
@@ -1772,11 +1929,12 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                     TableCell(
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child: UnderLinedInput(
+                          controller: name,
                           formatter: false,
                           onChanged: (va) {
                             onChange=true;
                             print(va);
-                            name.text = va;
+                            // name.text = va;
                             setState(() {});
                           },
                         )
@@ -1950,14 +2108,19 @@ class _ImportantInfoState extends State<ImportantInfo> {
                           child:
                               // Text(keys[i].key??"")
                               UnderLinedInput(
-                            last: keys[i].key ?? "",
-                            initialCheck: true,
+                            // last: keys[i].key ?? "",
+                            // initialCheck: true,
+                                controller: TextEditingController(text: keys[i].key ),
                             formatter: false,
                             onChanged: (va) {
                               print(va);
                               keys[i] = keys[i].copyWith(
                                 key: va,
                               );
+                              importandInfo = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "5", list: importandInfo);
                             },
                           ),
                         ),
@@ -1967,20 +2130,32 @@ class _ImportantInfoState extends State<ImportantInfo> {
                             child:
                                 // Text(keys[i].value??"",)
                                 UnderLinedInput(
-                              initialCheck: true,
-                              last: keys[i].value ?? "" ?? "",
+                              // initialCheck: true,
+                              // last: keys[i].value ?? "" ?? "",
+                                  controller: TextEditingController(text: keys[i].value ?? ""  ),
                               formatter: false,
                               onChanged: (va) {
                                 print(va);
                                 keys[i] = keys[i].copyWith(value: va);
+                                importandInfo = ProductFeatures(
+                                    name: headingController.text, keyValues: keys);
+                                widget.productTableEdit(
+                                    type: "5", list: importandInfo);
                               },
                             )),
                         TableTextButton(
+                          icon: Icons.delete,
                           onPress: () {
-                            importandInfo = ProductFeatures(
-                                name: headingController.text, keyValues: keys);
-                            widget.productTableEdit(
-                                type: "5", list: importandInfo);
+                            onChange=true;
+                            setState(() {
+                              keys?.removeAt(i);
+                              importandInfo = ProductFeatures(
+                                  name: headingController.text, keyValues: keys);
+                              widget.productTableEdit(
+                                  type: "5", list: importandInfo);
+
+                            });
+
                           },
                           label: "",
                         )
@@ -2007,8 +2182,9 @@ class _ImportantInfoState extends State<ImportantInfo> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: key,
                         onChanged: (va) {
-                          key.text = va;
+                          // key.text = va;
                         },
                         formatter: false,
                       ),
@@ -2016,8 +2192,9 @@ class _ImportantInfoState extends State<ImportantInfo> {
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
+                        controller: value,
                         onChanged: (va) {
-                          value.text = va;
+                          // value.text = va;
                         },
                         formatter: false,
                       ),
@@ -2198,8 +2375,12 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       child: CustomDropDown(
                           choosenValue: inforMationList?[i].genderGroup ?? "",
                           onChange: (val) {
-                            // inforMationList?[i]=.gender=val;
-                            //      print(inforMationList);
+                            onChange=true;
+
+                            inforMationList?[i]=inforMationList[i].copyWith(genderGroup: val);
+                                 print(inforMationList);
+                            widget.productFeaturesableAssign(
+                                list: inforMationList);
                           },
                           items: items),
                     ),
@@ -2210,20 +2391,47 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                         last: inforMationList[i].ageGroup,
                         formatter: false,
                         onChanged: (val) {
-                          // inforMationList[i].age=val;
+                          onChange=true;
+
+                          inforMationList?[i]=inforMationList[i].copyWith(ageGroup: val);
+                          print(inforMationList);
+                          widget.productFeaturesableAssign(
+                              list: inforMationList);
                         },
                       ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: UnderLinedInput(
-                        formatter: false,
-                        initialCheck: true,
-                        last: inforMationList[i].ethinik,
-                        onChanged: (val) {
-                          // inforMationList[i].ethlink=val;
-                        },
-                      ),
+                      child:CustomDropDown(
+                          choosenValue:inforMationList[i].ethinik,
+                          onChange: (val) {
+                            onChange=true;
+                            setState(() {
+
+
+
+                                inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
+                                print(inforMationList);
+                                widget.productFeaturesableAssign(
+                                    list: inforMationList);
+                            });
+                          },
+                          items: ethinikItem),
+
+
+                      // UnderLinedInput(
+                      //   formatter: false,
+                      //   initialCheck: true,
+                      //   last: inforMationList[i].ethinik,
+                      //   onChanged: (val) {
+                      //     onChange=true;
+                      //
+                      //     inforMationList?[i]=inforMationList[i].copyWith(ethinik: val);
+                      //     print(inforMationList);
+                      //     widget.productFeaturesableAssign(
+                      //         list: inforMationList);
+                      //   },
+                      // ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2252,7 +2460,12 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                           // label: "Country",
                           onChanged: (String? va) {
                             print(va);
-                            // inforMationList[i].countries=va;
+                            onChange=true;
+
+                            inforMationList?[i]=inforMationList[i].copyWith(countries: va);
+                            print(inforMationList);
+                            widget.productFeaturesableAssign(
+                                list: inforMationList);
                           },
                           //show selected item
                           selectedItem: inforMationList[i].countries ?? "",
@@ -2266,15 +2479,30 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                         initialCheck: true,
                         last: inforMationList[i].purpose,
                         onChanged: (val) {
-                          // inforMationList[i].purpose=val;
+                          onChange=true;
+
+                          inforMationList?[i]=inforMationList[i].copyWith(purpose: val);
+                          print(inforMationList);
+                          widget.productFeaturesableAssign(
+                              list: inforMationList);
                         },
                       ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: TableTextButton(
-                        label: "Add",
+                        label: "",
+                        icon: Icons.delete,
                         onPress: () {
+                          onChange=true;
+
+
+
+                          inforMationList?.removeWhere(
+                                  (element) =>
+                              element ==
+                                  inforMationList?[
+                                i]);
                           widget.productFeaturesableAssign(
                               list: inforMationList);
                           // inforMationList?.add(InformationClass(

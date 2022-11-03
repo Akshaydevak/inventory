@@ -576,7 +576,7 @@ child: IntrinsicHeight(
                       NewInputCard(
                           readOnly: true,
                           controller: invoiceStatusController, title: "invoice status"),
-                      SizedBox(height: height*.030,),
+                      SizedBox(height: height*.040,),
                     ],)),
                     Expanded(child:
                     Column(children: [
@@ -663,9 +663,9 @@ child: IntrinsicHeight(
                       NewInputCard(
                           controller: remarksController, title: "remarks",height: 90,maxLines: 3,),
 
-                      SizedBox(height: height*.035,),
+                      SizedBox(height: height*.075,),
 
-                      SizedBox(height: height*.052,),
+                      SizedBox(height: height*.072,),
 
 
 

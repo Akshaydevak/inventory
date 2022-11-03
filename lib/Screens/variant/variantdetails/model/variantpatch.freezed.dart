@@ -32,9 +32,10 @@ class _$VariantPatchTearOff {
       String? status,
       int? image1,
       String? image2,
-      int? height,
-      int? width,
-      int? length,
+      double? height,
+      double? width,
+      double? length,
+      double? weight,
       String? image3,
       String? image4,
       String? image5,
@@ -54,6 +55,8 @@ class _$VariantPatchTearOff {
           double? maxGp,
       @JsonKey(name: "minimum_gp")
           double? minGap,
+      @JsonKey(name: "weight_uom_id")
+          int? weightUomId,
       @JsonKey(name: "sales_uom")
           String? salesUom,
       @JsonKey(name: "purchase_uom")
@@ -184,6 +187,7 @@ class _$VariantPatchTearOff {
       height: height,
       width: width,
       length: length,
+      weight: weight,
       image3: image3,
       image4: image4,
       image5: image5,
@@ -200,6 +204,7 @@ class _$VariantPatchTearOff {
       variantName: variantName,
       maxGp: maxGp,
       minGap: minGap,
+      weightUomId: weightUomId,
       salesUom: salesUom,
       purchaseUom: purchaseUom,
       searchName: searchName,
@@ -281,9 +286,10 @@ mixin _$VariantPatch {
   String? get status => throw _privateConstructorUsedError;
   int? get image1 => throw _privateConstructorUsedError;
   String? get image2 => throw _privateConstructorUsedError;
-  int? get height => throw _privateConstructorUsedError;
-  int? get width => throw _privateConstructorUsedError;
-  int? get length => throw _privateConstructorUsedError;
+  double? get height => throw _privateConstructorUsedError;
+  double? get width => throw _privateConstructorUsedError;
+  double? get length => throw _privateConstructorUsedError;
+  double? get weight => throw _privateConstructorUsedError;
   String? get image3 => throw _privateConstructorUsedError;
   String? get image4 => throw _privateConstructorUsedError;
   String? get image5 => throw _privateConstructorUsedError;
@@ -303,6 +309,8 @@ mixin _$VariantPatch {
   double? get maxGp => throw _privateConstructorUsedError;
   @JsonKey(name: "minimum_gp")
   double? get minGap => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_uom_id")
+  int? get weightUomId => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_uom")
   String? get salesUom => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_uom")
@@ -446,9 +454,10 @@ abstract class $VariantPatchCopyWith<$Res> {
       String? status,
       int? image1,
       String? image2,
-      int? height,
-      int? width,
-      int? length,
+      double? height,
+      double? width,
+      double? length,
+      double? weight,
       String? image3,
       String? image4,
       String? image5,
@@ -468,6 +477,8 @@ abstract class $VariantPatchCopyWith<$Res> {
           double? maxGp,
       @JsonKey(name: "minimum_gp")
           double? minGap,
+      @JsonKey(name: "weight_uom_id")
+          int? weightUomId,
       @JsonKey(name: "sales_uom")
           String? salesUom,
       @JsonKey(name: "purchase_uom")
@@ -619,6 +630,7 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
     Object? height = freezed,
     Object? width = freezed,
     Object? length = freezed,
+    Object? weight = freezed,
     Object? image3 = freezed,
     Object? image4 = freezed,
     Object? image5 = freezed,
@@ -635,6 +647,7 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
     Object? variantName = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
+    Object? weightUomId = freezed,
     Object? salesUom = freezed,
     Object? purchaseUom = freezed,
     Object? searchName = freezed,
@@ -738,15 +751,19 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       width: width == freezed
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       length: length == freezed
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
+      weight: weight == freezed
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
       image3: image3 == freezed
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
@@ -811,6 +828,10 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUomId: weightUomId == freezed
+          ? _value.weightUomId
+          : weightUomId // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesUom: salesUom == freezed
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
@@ -1164,9 +1185,10 @@ abstract class _$VariantPatchCopyWith<$Res>
       String? status,
       int? image1,
       String? image2,
-      int? height,
-      int? width,
-      int? length,
+      double? height,
+      double? width,
+      double? length,
+      double? weight,
       String? image3,
       String? image4,
       String? image5,
@@ -1186,6 +1208,8 @@ abstract class _$VariantPatchCopyWith<$Res>
           double? maxGp,
       @JsonKey(name: "minimum_gp")
           double? minGap,
+      @JsonKey(name: "weight_uom_id")
+          int? weightUomId,
       @JsonKey(name: "sales_uom")
           String? salesUom,
       @JsonKey(name: "purchase_uom")
@@ -1348,6 +1372,7 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
     Object? height = freezed,
     Object? width = freezed,
     Object? length = freezed,
+    Object? weight = freezed,
     Object? image3 = freezed,
     Object? image4 = freezed,
     Object? image5 = freezed,
@@ -1364,6 +1389,7 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
     Object? variantName = freezed,
     Object? maxGp = freezed,
     Object? minGap = freezed,
+    Object? weightUomId = freezed,
     Object? salesUom = freezed,
     Object? purchaseUom = freezed,
     Object? searchName = freezed,
@@ -1467,15 +1493,19 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
       height: height == freezed
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       width: width == freezed
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
       length: length == freezed
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as double?,
+      weight: weight == freezed
+          ? _value.weight
+          : weight // ignore: cast_nullable_to_non_nullable
+              as double?,
       image3: image3 == freezed
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
@@ -1540,6 +1570,10 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUomId: weightUomId == freezed
+          ? _value.weightUomId
+          : weightUomId // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesUom: salesUom == freezed
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
@@ -1793,6 +1827,7 @@ class _$_VariantPatch implements _VariantPatch {
       this.height,
       this.width,
       this.length,
+      this.weight,
       this.image3,
       this.image4,
       this.image5,
@@ -1812,6 +1847,8 @@ class _$_VariantPatch implements _VariantPatch {
           this.maxGp,
       @JsonKey(name: "minimum_gp")
           this.minGap,
+      @JsonKey(name: "weight_uom_id")
+          this.weightUomId,
       @JsonKey(name: "sales_uom")
           this.salesUom,
       @JsonKey(name: "purchase_uom")
@@ -1953,11 +1990,13 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   final String? image2;
   @override
-  final int? height;
+  final double? height;
   @override
-  final int? width;
+  final double? width;
   @override
-  final int? length;
+  final double? length;
+  @override
+  final double? weight;
   @override
   final String? image3;
   @override
@@ -1993,6 +2032,9 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   @JsonKey(name: "minimum_gp")
   final double? minGap;
+  @override
+  @JsonKey(name: "weight_uom_id")
+  final int? weightUomId;
   @override
   @JsonKey(name: "sales_uom")
   final String? salesUom;
@@ -2170,7 +2212,7 @@ class _$_VariantPatch implements _VariantPatch {
 
   @override
   String toString() {
-    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
+    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
   }
 
   @override
@@ -2205,6 +2247,8 @@ class _$_VariantPatch implements _VariantPatch {
                 const DeepCollectionEquality().equals(other.width, width)) &&
             (identical(other.length, length) ||
                 const DeepCollectionEquality().equals(other.length, length)) &&
+            (identical(other.weight, weight) ||
+                const DeepCollectionEquality().equals(other.weight, weight)) &&
             (identical(other.image3, image3) ||
                 const DeepCollectionEquality().equals(other.image3, image3)) &&
             (identical(other.image4, image4) ||
@@ -2248,8 +2292,8 @@ class _$_VariantPatch implements _VariantPatch {
                 const DeepCollectionEquality().equals(other.maxGp, maxGp)) &&
             (identical(other.minGap, minGap) ||
                 const DeepCollectionEquality().equals(other.minGap, minGap)) &&
-            (identical(other.salesUom, salesUom) ||
-                const DeepCollectionEquality().equals(other.salesUom, salesUom)) &&
+            (identical(other.weightUomId, weightUomId) || const DeepCollectionEquality().equals(other.weightUomId, weightUomId)) &&
+            (identical(other.salesUom, salesUom) || const DeepCollectionEquality().equals(other.salesUom, salesUom)) &&
             (identical(other.purchaseUom, purchaseUom) || const DeepCollectionEquality().equals(other.purchaseUom, purchaseUom)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
             (identical(other.displayName, displayName) || const DeepCollectionEquality().equals(other.displayName, displayName)) &&
@@ -2325,6 +2369,7 @@ class _$_VariantPatch implements _VariantPatch {
       const DeepCollectionEquality().hash(height) ^
       const DeepCollectionEquality().hash(width) ^
       const DeepCollectionEquality().hash(length) ^
+      const DeepCollectionEquality().hash(weight) ^
       const DeepCollectionEquality().hash(image3) ^
       const DeepCollectionEquality().hash(image4) ^
       const DeepCollectionEquality().hash(image5) ^
@@ -2341,6 +2386,7 @@ class _$_VariantPatch implements _VariantPatch {
       const DeepCollectionEquality().hash(variantName) ^
       const DeepCollectionEquality().hash(maxGp) ^
       const DeepCollectionEquality().hash(minGap) ^
+      const DeepCollectionEquality().hash(weightUomId) ^
       const DeepCollectionEquality().hash(salesUom) ^
       const DeepCollectionEquality().hash(purchaseUom) ^
       const DeepCollectionEquality().hash(searchName) ^
@@ -2423,9 +2469,10 @@ abstract class _VariantPatch implements VariantPatch {
       String? status,
       int? image1,
       String? image2,
-      int? height,
-      int? width,
-      int? length,
+      double? height,
+      double? width,
+      double? length,
+      double? weight,
       String? image3,
       String? image4,
       String? image5,
@@ -2445,6 +2492,8 @@ abstract class _VariantPatch implements VariantPatch {
           double? maxGp,
       @JsonKey(name: "minimum_gp")
           double? minGap,
+      @JsonKey(name: "weight_uom_id")
+          int? weightUomId,
       @JsonKey(name: "sales_uom")
           String? salesUom,
       @JsonKey(name: "purchase_uom")
@@ -2586,11 +2635,13 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   String? get image2 => throw _privateConstructorUsedError;
   @override
-  int? get height => throw _privateConstructorUsedError;
+  double? get height => throw _privateConstructorUsedError;
   @override
-  int? get width => throw _privateConstructorUsedError;
+  double? get width => throw _privateConstructorUsedError;
   @override
-  int? get length => throw _privateConstructorUsedError;
+  double? get length => throw _privateConstructorUsedError;
+  @override
+  double? get weight => throw _privateConstructorUsedError;
   @override
   String? get image3 => throw _privateConstructorUsedError;
   @override
@@ -2626,6 +2677,9 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   @JsonKey(name: "minimum_gp")
   double? get minGap => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "weight_uom_id")
+  int? get weightUomId => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "sales_uom")
   String? get salesUom => throw _privateConstructorUsedError;

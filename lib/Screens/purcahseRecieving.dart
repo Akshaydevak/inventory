@@ -884,7 +884,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                           ),
                                                                           SizedBox(
                                                                             height: height *
-                                                                                .030,
+                                                                                .056,
                                                                           ),
                                                                           SizedBox(
                                                                             height: height *
@@ -4219,6 +4219,7 @@ class GeneralSavePage extends StatelessWidget {
   final bool onPopUp;
   final Widget child;
   final bool? buttonNameOption;
+  final bool buttonVisible;
   final VoidCallback? onApply;
   final VoidCallback? onEdit;
   final String? buttonName;
@@ -4226,6 +4227,7 @@ class GeneralSavePage extends StatelessWidget {
   final VoidCallback? onCancel;
   const GeneralSavePage(
       {Key? key,
+        this.buttonVisible=true,
         this.buttonNameOption=false,
         this.buttonName="save",
         required this.child,
@@ -4238,6 +4240,7 @@ class GeneralSavePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     print("wwww"+onCreate.toString());
     return Container(
       height: MediaQuery.of(context).size.height * 58,
@@ -4253,7 +4256,7 @@ class GeneralSavePage extends StatelessWidget {
                       ? 40
                       : 20),
               child: child),
-          Positioned(
+        if(buttonVisible)  Positioned(
               bottom: 0,
               left: 0,
               right: 0,

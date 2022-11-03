@@ -8,9 +8,7 @@ part 'variant_read.freezed.dart';
 class VariantReadModel with _$VariantReadModel {
   const factory VariantReadModel({
     final int? id,
-    final int? height,
-    final int? width,
-    final int? length,
+
     final String? code,
     final double? vat,
     final String? description,
@@ -20,6 +18,7 @@ class VariantReadModel with _$VariantReadModel {
     final String? image3,
     final Barcode? barcode,
     final QrCode? qrcode,
+    final Dimension? dimension,
 
 
     @JsonKey(name: "uom_code") final String? uomCode,
@@ -27,15 +26,23 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "uom_id") final String? uomId,
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "uom_group_name") final String? uomGroupName,
+    @JsonKey(name: "reorder_point") final int? reOrderPoint,
+    @JsonKey(name: "reorder_quantity") final int? reOrderQuantity,
     @JsonKey(name: "var_alternative_barcode") final List<AlternativeBarcode>? alterNativeBarcode,
     @JsonKey(name: "var_alternative_qrcode") final List<AlternativeBarcode>? alterNativeQrCode,
     @JsonKey(name: "unit_cost") final double? unitCost,
+    @JsonKey(name: "weight_uom_id") final int? weightUomId,
+    @JsonKey(name: "max_sales_order_limit") final int? maxSaleOrderLimit,
+    @JsonKey(name: "min_sales_order_limit") final int? minSaleOrderLimit,
     @JsonKey(name: "actual_cost") final double? actualCost,
     @JsonKey(name: "return_type_options") final List<String>? returType,
+    @JsonKey(name: "safty_stock") final int? safetyStock,
+    @JsonKey(name: "min_purchase_order_limit") final int? minPurchaseOrderLimit,
+    @JsonKey(name: "max_purchase_order_limit") final int? maxPurchaseOrderLimit,
     @JsonKey(name: "manufacture_id") final int? manuFacturedId,
     @JsonKey(name: "manufacture_name") final String? manuFacturedName,
     @JsonKey(name: "avrg_gp") final double? avgGp,
-    @JsonKey(name: "return_type") final String ? return2Type,
+    @JsonKey(name: "return_type") final String ? returnType,
     @JsonKey(name: "return_time") final int ? returnTime,
     @JsonKey(name: "max_gp") final double? maxGp,
     @JsonKey(name: "min_gp") final double? minGap,
@@ -98,6 +105,21 @@ class SalesUomData with _$SalesUomData {
   }) = _SalesUomData;
   factory SalesUomData.fromJson(Map<String, dynamic> json) =>
       _$SalesUomDataFromJson(json);
+}
+@freezed
+class Dimension with _$Dimension{
+  const factory Dimension({
+    final double? height,
+    final double? width,
+    final double? length,
+    final double? weight,
+
+
+
+
+  }) = _Dimension;
+  factory Dimension.fromJson(Map<String, dynamic> json) =>
+      _$DimensionFromJson(json);
 }
 @freezed
 class VendorDetails with _$VendorDetails {

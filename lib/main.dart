@@ -193,6 +193,7 @@ class _MyHomeState extends State<MyHome> {
     Variable.inventory_Name = prefs.getString("inventory_name").toString();
     Variable.created_by = prefs.getString("empcode").toString();
 
+
     // Variable.subIndex = list.map(int.parse).toList();
 
     print(
@@ -204,8 +205,10 @@ class _MyHomeState extends State<MyHome> {
     await userPref.getUser().then((user) {
       print("user.isLoggedIn" + user.isLoggedIn.toString());
       if (user.isLoggedIn == true) {
-        print("already logined");
+        prefs.setString('token', user?.token??"");
+
         Variable.loginLeage = user.legalEntiry.toString();
+        Variable.token = user.token.toString();
         Variable.username = user.fname.toString();
         Variable.created_by = user.employeeCode.toString();
         Variable.subIndex = [];

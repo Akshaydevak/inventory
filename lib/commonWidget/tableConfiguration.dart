@@ -2556,9 +2556,12 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                 print("error");
               },
               success: (list) {
-                print("Welcome" + list.toString());
-                table = list.data;
-                list1 = list;
+                setState(() {
+                  print("Welcome" + list.data.toString());
+                  table = list.data;
+                  list1 = list;
+                });
+
               });
         },
         builder: (context, state) {
@@ -2569,11 +2572,12 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
+                buttonVisible: false,
                 buttonName: "AddNew",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Manufacture  Popup",
+                label: "Manufacture",
                 onApply: () {
                   // showDailogPopUp(
                   //   context,
@@ -2610,6 +2614,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                             hintText: "Search...",
                             ctrlr: searchContoller,
                             onChanged: (va) {
+
                               print("searching case" + va.toString());
                               context
                                   .read<VendordetailslistCubit>()
@@ -2620,6 +2625,9 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                     .read<VendordetailslistCubit>()
                                     .getVendorDetailList();
                               }
+                              setState(() {
+
+                              });
                             },
                           )),
                       SizedBox(
@@ -3692,6 +3700,7 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
             return AlertDialog(
               content: PopUpHeader(
                 functionChane: true,
+                buttonVisible: false,
                 buttonCheck: true,
                 buttonName: "Add New",
                 onTap: () {},

@@ -404,8 +404,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
+
                                 // else
                                 //   context.showSnackBarError(
                                 //       "Please upload Banner of size Lesser than 230kb");
@@ -414,7 +413,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // onChange=true;
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image1");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -423,7 +424,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -447,8 +448,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image2");
+
                                 // Variable.bannerEncodedMobileBannerImage =
                                 //     myFile.toBase64();
                                 // widget.fileMobileNameCtrl.text =
@@ -464,7 +464,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image2");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -473,7 +475,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -513,8 +515,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image3");
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -532,7 +533,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image3");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -541,7 +544,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -568,8 +571,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
+
 
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -587,7 +589,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image4");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -596,7 +600,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -619,8 +623,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -638,7 +641,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image5");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -647,7 +652,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -670,8 +675,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image6");
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -689,7 +693,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image6");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -698,7 +704,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -721,8 +727,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -740,7 +745,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image7");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -749,7 +756,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -771,8 +778,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 // widget.fileMobileNameCtrl.text =
                                 //     myFile.fileName ?? "";
                                 // if (Variable.bannerimage!.length <= 240000)
-                                context
-                                    .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
+
                                 // Variable.mobileBannerImage = myFile.toUint8List();
 
                                 // Variable.bannerEncodedMobileBannerImage =
@@ -790,7 +796,9 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                               onImageChange: (newFile) async {
                                 // Variable.popUp = false;
 
-                                if (newFile.length <= 240000) {
+                                if (newFile.length <= 150000) {
+                                  context
+                                      .read<ImagepostCubit>().postImage(Variable.imageName,  imageEncode,type: "image8");
                                   // loading
                                   //     ? showDailogPopUp(context, DialoguePopUp())
                                   //     : Navigator.pop(context);
@@ -799,7 +807,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 230kb");
+                                      "Please upload Banner of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,

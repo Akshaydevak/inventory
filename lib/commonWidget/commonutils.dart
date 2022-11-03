@@ -897,6 +897,7 @@ class ConfigurePopup extends StatelessWidget {
           data = LinkedItemCreatePopUp(
             veritiaclid: veritiaclid,
             type: type,
+            linkedListAssign: listAssign!,
           );
         }
         break;
@@ -1140,9 +1141,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context
-                                          .read<ImagepostCubit>()
-                                          .postImage(imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -1151,7 +1150,10 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context
+                                            .read<ImagepostCubit>()
+                                            .postImage(imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -1160,7 +1162,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -1551,9 +1553,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context
-                                          .read<ImagepostCubit>()
-                                          .postImage(imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -1562,7 +1562,10 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context
+                                            .read<ImagepostCubit>()
+                                            .postImage(imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -1571,7 +1574,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -1920,8 +1923,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -1930,7 +1932,9 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 150000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -1939,7 +1943,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -3105,8 +3109,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -3115,7 +3118,9 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -3124,7 +3129,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -4044,8 +4049,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                       // if (Variable.bannerimage!.length <= 240000)
                                       print("imabbabba" +
                                           Variable.imageName.toString());
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -4054,7 +4058,9 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -4063,7 +4069,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -4449,8 +4455,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                       // if (Variable.bannerimage!.length <= 240000)
                                       print("imabbabba" +
                                           Variable.imageName.toString());
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -4459,7 +4464,9 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -4760,8 +4767,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                       // if (Variable.bannerimage!.length <= 240000)
                                       print("imabbabba" +
                                           Variable.imageName.toString());
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -4770,7 +4776,9 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 240000) {
+                                      if (newFile.length <= 160000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -4779,7 +4787,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                         //     .createMobImage();
                                       } else
                                         context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 230kb");
+                                            "Please upload Banner of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -7640,8 +7648,9 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
 class LinkedItemCreatePopUp extends StatefulWidget {
   final String type;
   final int? veritiaclid;
+  final Function linkedListAssign;
 
-  LinkedItemCreatePopUp({Key? key, required this.type, this.veritiaclid})
+  LinkedItemCreatePopUp({Key? key, required this.type, this.veritiaclid,required this.linkedListAssign})
       : super(key: key);
 
   @override
@@ -7779,6 +7788,9 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
+                    print("here++++++++++++"+   Variable.linkedVaue);
+                    widget.linkedListAssign( Variable.linkedVaue);
+
                     context.showSnackBarSuccess(data.data2);
                     Navigator.pop(context);
                     setState(() {});
@@ -11507,8 +11519,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -11518,6 +11529,8 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                       // Variable.popUp = false;
 
                                       if (newFile.length <= 240000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -12015,8 +12028,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -12026,6 +12038,8 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                       // Variable.popUp = false;
 
                                       if (newFile.length <= 240000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -12341,8 +12355,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -12352,6 +12365,8 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                       // Variable.popUp = false;
 
                                       if (newFile.length <= 240000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -12793,8 +12808,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                       // widget.fileMobileNameCtrl.text =
                                       //     myFile.fileName ?? "";
                                       // if (Variable.bannerimage!.length <= 240000)
-                                      context.read<ImagepostCubit>().postImage(
-                                          Variable.imageName, imageEncode);
+
                                       // else
                                       //   context.showSnackBarError(
                                       //       "Please upload Banner of size Lesser than 230kb");
@@ -12804,6 +12818,8 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                       // Variable.popUp = false;
 
                                       if (newFile.length <= 240000) {
+                                        context.read<ImagepostCubit>().postImage(
+                                            Variable.imageName, imageEncode);
                                         // loading
                                         //     ? showDailogPopUp(context, DialoguePopUp())
                                         //     : Navigator.pop(context);
@@ -14271,12 +14287,14 @@ class PopUpHeader extends StatefulWidget {
   final Function(bool)? onAddNew;
   final bool isDirectCreate;
   final bool changer;
+  final bool buttonVisible;
 
   const PopUpHeader({
     Key? key,
     this.buttonNameOption = false,
     this.buttonName = "save",
     this.buttonCheck = false,
+    this.buttonVisible=true,
     this.functionChane = false,
     this.label,
     this.onEdit,
@@ -14311,6 +14329,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
         onEdit: widget.onEdit,
         buttonName: widget.buttonName,
         onPopUp: true,
+        buttonVisible: widget.buttonVisible,
         onApply: widget.onApply,
         onCreate: widget.isDirectCreate ? true : widget.addNew!,
         onCancel: widget.onCancel,
