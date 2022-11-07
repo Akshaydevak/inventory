@@ -1399,11 +1399,13 @@ class Ingredians extends StatefulWidget {
 class IngrediansState extends State<Ingredians> {
   TextEditingController name = TextEditingController();
   TextEditingController key = TextEditingController();
+  List<bool>upDate=[];
+
+  List<TextEditingController> nameListTextEditingController = [];
   TextEditingController headingController = TextEditingController();
   bool onChange = false;
-  Storage? ingriansProduct ;
+  Storage? usageProducts;
   List<dynamic> keys = [];
-
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -1411,15 +1413,22 @@ class IngrediansState extends State<Ingredians> {
     if (!onChange) {
       setState(() {
         keys = [];
+        upDate.clear();
+        nameListTextEditingController.clear();
       });
 
-        setState(() {
-          headingController.text = widget.ingredians?.name ?? "";
-        });
-        ingriansProduct = widget.ingredians;
-        if (ingriansProduct?.keyValues?.isNotEmpty == true)
-          keys = ingriansProduct?.keyValues ?? [];
+      setState(() {
+        headingController.text = widget.ingredians?.name ?? "";
+      });
+      usageProducts = widget.ingredians;
+      if (usageProducts?.keyValues?.isNotEmpty == true)
+        keys = usageProducts?.keyValues ?? [];
+      for( var i =0;i<keys.length;i++){
+        upDate.add(false);
 
+        var nameValue = new TextEditingController(text: keys[i]["name"]==null?"":keys[i]["name"]);
+        nameListTextEditingController.add(nameValue);
+      }
     }
     onChange = false;
     return Column(
@@ -1428,13 +1437,14 @@ class IngrediansState extends State<Ingredians> {
         underlineTextForm(
           controller: headingController,
           onChange: (va) {
-            ingriansProduct = Storage(name: va);
+            print(va);
+            usageProducts = Storage(name: va);
             widget.storageTableEdit(
-                type: "2", list: ingriansProduct);
+                type: "2", list: usageProducts);
           },
         ),
         Container(
-          // width: w / 7,
+          // width: w/7,
           margin: EdgeInsets.symmetric(horizontal: w * .02),
           child: customTable(
             border: const TableBorder(
@@ -1480,6 +1490,17 @@ class IngrediansState extends State<Ingredians> {
 
                     size: 13,
                   ),
+                  tableHeadtext(
+                    '',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 41,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
+
+                    size: 13,
+                  ),
                 ],
               ),
               if (keys?.isNotEmpty == true) ...[
@@ -1505,38 +1526,62 @@ class IngrediansState extends State<Ingredians> {
                         TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
                           child:
-                              // Text(keys?[i]["name"]??"")
-                              UnderLinedInput(
+                          // Text(keys?[i]["name"]??"")
+                          UnderLinedInput(
                             formatter: false,
+                            readOnly: !upDate[i],
                             // initialCheck: true,
                             // last: keys?[i]["name"] ?? "",
-                            controller: TextEditingController(text: keys?[i]["name"]  ),
+                            controller: TextEditingController(text:keys?[i]["name"] ?? "" ),
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
-                              print(keys);
-                              ingriansProduct = Storage(
+                              usageProducts = Storage(
                                   name: headingController.text, keyValues: keys);
-                              widget.storageTableEdit(
-                                  type: "2", list: ingriansProduct);
+
+                              print(keys);
                             },
                           ),
+                        ),
+
+                        TableTextButton(
+                          label: upDate[i]==true?"Update":"Edit",
+                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                          onPress: () {
+                            onChange=true;
+
+
+                            setState(() {
+                              upDate[i]=!upDate[i];
+                              if( upDate[i]==true){
+                                widget.storageTableEdit(
+                                    type: "2", list: usageProducts);
+                              }
+
+
+                            });
+                            setState(() {
+
+                            });
+
+                          },
                         ),
                         TableTextButton(
                           label: "",
                           icon: Icons.delete,
                           onPress: () {
-                            onChange=true;
-                            setState(() {
+                            onChange=true;setState(() {
+                              keys?.removeAt(i
+                              );
+                              upDate.removeAt(i);
+                              nameListTextEditingController.removeAt(i);
 
-                              keys?.removeAt(i);
-
-
-                            ingriansProduct = Storage(
-                                name: headingController.text, keyValues: keys);
-                            widget.storageTableEdit(
-                                type: "2", list: ingriansProduct);
-                          });
+                              usageProducts = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "2", list: usageProducts);
+                            });
                           },
                         ),
                       ]),
@@ -1571,18 +1616,18 @@ class IngrediansState extends State<Ingredians> {
                             setState(() {});
                           },
                         )
-                        // UnderLinedInput(
-                        //   formatter: false,
-                        // ),
+                      // UnderLinedInput(
+                      //   formatter: false,
+                      // ),
 
-                        ),
+                    ),
                     TableTextButton(
                       label: "Add",
                       onPress: () {
-                        if (name.text.isNotEmpty) {
-                          onChange = true;
+                        onChange = true;
 
-                          setState(() {
+                        setState(() {
+                          if (name.text.isNotEmpty) {
                             Map map = {
                               "name": name.text,
                             };
@@ -1590,16 +1635,26 @@ class IngrediansState extends State<Ingredians> {
                             print(keys);
 
                             print(keys);
-                            print("attata+" + ingriansProduct.toString());
-                            ingriansProduct = Storage(
+                            print("attata+" + usageProducts.toString());
+                            upDate.add(false);
+                            var nameValue = new TextEditingController(text: name.text);
+
+                            nameListTextEditingController.add(nameValue);
+                            usageProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
-                                type: "2", list: ingriansProduct);
+                                type: "2", list: usageProducts);
                             name.text = "";
-                          });
-                        }
+                          }
+                        });
                       },
-                    )
+                    ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+
+                      },
+                    ),
                   ])
             ],
             widths: {
@@ -1625,6 +1680,9 @@ class UsageDirection extends StatefulWidget {
 class _UsageDirectionState extends State<UsageDirection> {
   TextEditingController name = TextEditingController();
   TextEditingController key = TextEditingController();
+  List<bool>upDate=[];
+
+  List<TextEditingController> nameListTextEditingController = [];
   TextEditingController headingController = TextEditingController();
   bool onChange = false;
   Storage? usageProducts;
@@ -1636,6 +1694,8 @@ class _UsageDirectionState extends State<UsageDirection> {
     if (!onChange) {
       setState(() {
         keys = [];
+        upDate.clear();
+        nameListTextEditingController.clear();
       });
 
       setState(() {
@@ -1644,6 +1704,12 @@ class _UsageDirectionState extends State<UsageDirection> {
       usageProducts = widget.usageDirection;
       if (usageProducts?.keyValues?.isNotEmpty == true)
         keys = usageProducts?.keyValues ?? [];
+      for( var i =0;i<keys.length;i++){
+        upDate.add(false);
+
+        var nameValue = new TextEditingController(text: keys[i]["name"]==null?"":keys[i]["name"]);
+        nameListTextEditingController.add(nameValue);
+      }
     }
     onChange = false;
     return Column(
@@ -1705,6 +1771,17 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                     size: 13,
                   ),
+                  tableHeadtext(
+                    '',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 41,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
+
+                    size: 13,
+                  ),
                 ],
               ),
               if (keys?.isNotEmpty == true) ...[
@@ -1733,6 +1810,7 @@ class _UsageDirectionState extends State<UsageDirection> {
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
                             formatter: false,
+                            readOnly: !upDate[i],
                             // initialCheck: true,
                             // last: keys?[i]["name"] ?? "",
                                 controller: TextEditingController(text:keys?[i]["name"] ?? "" ),
@@ -1741,11 +1819,34 @@ class _UsageDirectionState extends State<UsageDirection> {
                               keys[i]["name"] = va;
                               usageProducts = Storage(
                                   name: headingController.text, keyValues: keys);
-                              widget.storageTableEdit(
-                                  type: "3", list: usageProducts);
+
                               print(keys);
                             },
                           ),
+                        ),
+
+                        TableTextButton(
+                          label: upDate[i]==true?"Update":"Edit",
+                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                          onPress: () {
+                            onChange=true;
+
+
+                            setState(() {
+                              upDate[i]=!upDate[i];
+                              if( upDate[i]==true){
+                                widget.storageTableEdit(
+                                    type: "3", list: usageProducts);
+                              }
+
+
+                            });
+                            setState(() {
+
+                            });
+
+                          },
                         ),
                         TableTextButton(
                           label: "",
@@ -1754,6 +1855,8 @@ class _UsageDirectionState extends State<UsageDirection> {
                             onChange=true;setState(() {
                               keys?.removeAt(i
                                     );
+                              upDate.removeAt(i);
+                              nameListTextEditingController.removeAt(i);
 
                             usageProducts = Storage(
                                 name: headingController.text, keyValues: keys);
@@ -1814,6 +1917,10 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                             print(keys);
                             print("attata+" + usageProducts.toString());
+                            upDate.add(false);
+                            var nameValue = new TextEditingController(text: name.text);
+
+                            nameListTextEditingController.add(nameValue);
                             usageProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
@@ -1822,7 +1929,13 @@ class _UsageDirectionState extends State<UsageDirection> {
                           }
                         });
                       },
-                    )
+                    ),
+                    TableTextButton(
+                      label: "Add",
+                      onPress: () {
+
+                      },
+                    ),
                   ])
             ],
             widths: {
@@ -1847,9 +1960,12 @@ class StoragesWidget extends StatefulWidget {
 class _StoragesWidgetState extends State<StoragesWidget> {
   TextEditingController name = TextEditingController();
   TextEditingController key = TextEditingController();
+  List<bool>upDate=[];
+
+  List<TextEditingController> nameListTextEditingController = [];
   TextEditingController headingController = TextEditingController();
   bool onChange = false;
-  Storage? aboutProducts ;
+  Storage? usageProducts;
   List<dynamic> keys = [];
   @override
   Widget build(BuildContext context) {
@@ -1858,14 +1974,22 @@ class _StoragesWidgetState extends State<StoragesWidget> {
     if (!onChange) {
       setState(() {
         keys = [];
+        upDate.clear();
+        nameListTextEditingController.clear();
       });
 
       setState(() {
         headingController.text = widget.storage?.name ?? "";
       });
-      aboutProducts = widget.storage;
-      if (aboutProducts?.keyValues?.isNotEmpty == true)
-        keys = aboutProducts?.keyValues ?? [];
+      usageProducts = widget.storage;
+      if (usageProducts?.keyValues?.isNotEmpty == true)
+        keys = usageProducts?.keyValues ?? [];
+      for( var i =0;i<keys.length;i++){
+        upDate.add(false);
+
+        var nameValue = new TextEditingController(text: keys[i]["name"]==null?"":keys[i]["name"]);
+        nameListTextEditingController.add(nameValue);
+      }
     }
     onChange = false;
     return Column(
@@ -1875,9 +1999,9 @@ class _StoragesWidgetState extends State<StoragesWidget> {
           controller: headingController,
           onChange: (va) {
             print(va);
-            aboutProducts = Storage(name: va);
+            usageProducts = Storage(name: va);
             widget.storageTableEdit(
-                type: "4", list: aboutProducts);
+                type: "4", list: usageProducts);
           },
         ),
         Container(
@@ -1927,6 +2051,17 @@ class _StoragesWidgetState extends State<StoragesWidget> {
 
                     size: 13,
                   ),
+                  tableHeadtext(
+                    '',
+
+                    padding: EdgeInsets.all(7),
+
+                    height: 41,
+                    textColor: Colors.black,
+                    // color: Color(0xffE5E5E5),
+
+                    size: 13,
+                  ),
                 ],
               ),
               if (keys?.isNotEmpty == true) ...[
@@ -1952,36 +2087,61 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                         TableCell(
                           verticalAlignment: TableCellVerticalAlignment.middle,
                           child:
-                              // Text(keys?[i]["name"]??"")
-                              UnderLinedInput(
+                          // Text(keys?[i]["name"]??"")
+                          UnderLinedInput(
                             formatter: false,
-                            controller: TextEditingController(text: keys?[i]["name"] ?? "" ),
+                            readOnly: !upDate[i],
                             // initialCheck: true,
                             // last: keys?[i]["name"] ?? "",
+                            controller: TextEditingController(text:keys?[i]["name"] ?? "" ),
                             onChanged: (va) {
                               print(va);
                               keys[i]["name"] = va;
-                              aboutProducts = Storage(
+                              usageProducts = Storage(
                                   name: headingController.text, keyValues: keys);
-                              widget.storageTableEdit(
-                                  type: "4", list: aboutProducts);
+
                               print(keys);
                             },
                           ),
                         ),
+
                         TableTextButton(
-                          label: "upadte",
-                          icon: Icons.delete,
+                          label: upDate[i]==true?"Update":"Edit",
+                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
                           onPress: () {
+                            onChange=true;
+
+
+                            setState(() {
+                              upDate[i]=!upDate[i];
+                              if( upDate[i]==true){
+                                widget.storageTableEdit(
+                                    type: "4", list: usageProducts);
+                              }
+
+
+                            });
                             setState(() {
 
+                            });
 
-                            keys?.removeAt(
-                                 i);
-                            aboutProducts = Storage(
-                                name: headingController.text, keyValues: keys);
-                            widget.storageTableEdit(
-                                type: "4", list: aboutProducts);
+                          },
+                        ),
+                        TableTextButton(
+                          label: "",
+                          icon: Icons.delete,
+                          onPress: () {
+                            onChange=true;setState(() {
+                              keys?.removeAt(i
+                              );
+                              upDate.removeAt(i);
+                              nameListTextEditingController.removeAt(i);
+
+                              usageProducts = Storage(
+                                  name: headingController.text, keyValues: keys);
+                              widget.storageTableEdit(
+                                  type: "4", list: usageProducts);
                             });
                           },
                         ),
@@ -2017,11 +2177,11 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                             setState(() {});
                           },
                         )
-                        // UnderLinedInput(
-                        //   formatter: false,
-                        // ),
+                      // UnderLinedInput(
+                      //   formatter: false,
+                      // ),
 
-                        ),
+                    ),
                     TableTextButton(
                       label: "Add",
                       onPress: () {
@@ -2036,17 +2196,26 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                             print(keys);
 
                             print(keys);
-                            print("attata+" + aboutProducts.toString());
+                            print("attata+" + usageProducts.toString());
+                            upDate.add(false);
+                            var nameValue = new TextEditingController(text: name.text);
 
-                            aboutProducts = Storage(
+                            nameListTextEditingController.add(nameValue);
+                            usageProducts = Storage(
                                 name: headingController.text, keyValues: keys);
                             widget.storageTableEdit(
-                                type: "4", list: aboutProducts);
+                                type: "4", list: usageProducts);
                             name.text = "";
                           }
                         });
                       },
-                    )
+                    ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+
+                      },
+                    ),
                   ])
             ],
             widths: {
