@@ -117,7 +117,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                                     controller: _tabController,
                                     tabs: [
                                       Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                      Text("Customize Data",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                      Text("Customise Data",style: TextStyle(color: Colors.black,fontSize: 13),),
 
                                     ]),
                               ),

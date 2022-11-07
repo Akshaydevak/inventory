@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
+import 'package:inventory/widgets/dropdownbutton.dart';
 
 class CustomizedStableTable extends StatefulWidget {
   final TextEditingController group;
+  final TextEditingController groupNameController;
   final TextEditingController code;
   final TextEditingController minimumGp;
   final TextEditingController averageGp;
@@ -19,10 +24,13 @@ class CustomizedStableTable extends StatefulWidget {
   final TextEditingController length;
 
   final bool active;
+  final bool select;
+  final bool needMultipleIntegreation;
   final Function activeChange;
 
 
   CustomizedStableTable({
+    required this.groupNameController,required this.needMultipleIntegreation,required this.select,
     required this.group, required this.code, required this.minimumGp, required this.averageGp, required this.maximumGp, required this.targetedGp, required this.vat, required this.excessTax, required this.returnType, required this.returnTime, required this.weightUomId, required this.height, required this.width, required this.length, required this.active, required this.activeChange});
   @override
   _CustomizedStableTableState createState() => _CustomizedStableTableState();
@@ -46,30 +54,64 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                     children: [
                       Expanded(child: Column(
                         children: [
+                          NewInputCard(controller: widget.groupNameController,
+                            icondrop:true,title: "Group",ontap: (){
+                              showDailogPopUp(
+                                context,
+                                TableConfigurePopup(
+                                  type: "GroupAllTabale_Popup", valueSelect: (BrandListModel va){
 
-                          NewInputCard(
-                              readOnly: true,
-                              controller: widget.group,
-                              title: "Group"),
+                                  setState(() {
+
+
+
+                                    widget.groupNameController.text=va?.name??"";
+                                    widget.group.text=va?.id.toString()??"";
+                                    // Variable.uomGroupId=va?.id;
+                                    setState(() {
+
+                                    });
+
+
+                                    // onChange = true;
+                                    // orderType.text = va!;
+                                  });
+
+                                },
+                                ),
+
+
+                              );
+
+                            },),
+
+
+
+
+
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                            readOnly: true,
                               controller: widget.code, title: "Code"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                            formatter: true,
                               controller: widget.minimumGp, title: "Minimum Gp"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                              formatter: true,
                               controller: widget.averageGp, title: "Average Gp"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
+                              formatter: true,
 
                               controller: widget.maximumGp, title: "Maximum Gp"),
                           // SizedBox(
@@ -87,236 +129,110 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                       Expanded(child: Column(children: [
 
 
+
                         NewInputCard(
+                            formatter: true,
                             controller: widget.targetedGp, title: "Targeted Gp"),
                         SizedBox(
                           height: height * .030,
                         ),
-                        // NewInputCard(controller: widget.uomGroupNameController,
-                        //   icondrop:true,title: "Uom Group",ontap: (){
-                        //     showDailogPopUp(
-                        //       context,
-                        //       TableConfigurePopup(
-                        //         type: "UomGroupTabalePopup", valueSelect: (BrandListModel va){
-                        //
-                        //         setState(() {
-                        //
-                        //
-                        //
-                        //           widget.uomGroupController.text=va?.code??"";
-                        //           widget.uomGroupNameController.text=va?.name??"";
-                        //           Variable.uomGroupId=va?.id;
-                        //           setState(() {
-                        //
-                        //           });
-                        //
-                        //
-                        //           // onChange = true;
-                        //           // orderType.text = va!;
-                        //         });
-                        //
-                        //       },
-                        //       ),
-                        //
-                        //
-                        //     );
-                        //
-                        //   },),
-                        // SelectableDropDownpopUp(
-                        //
-                        //   controller:widget.uomGroupNameController,
-                        //   label: "Uom Group",
-                        //   type:"Uomgroup_PopUpCall",
-                        //   value:  widget.uomGroupNameController.text,
-                        //   onchange: (vale){
-                        //     print("Akkk"+vale.toString());
-                        //     context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                        //   },
-                        //   enable: true,
-                        //   onSelection: (BrandListModel? va) {
-                        //     setState(() {
-                        //       widget.uomGroupController.text=va?.code??"";
-                        //     widget.uomGroupNameController.text=va?.name??"";
-                        //     Variable.uomGroupId=va?.id;
-                        //
-                        //
-                        //     });
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //
-                        //       // onChange = true;
-                        //       // orderType.text = va!;
-                        //
-                        //   },
-                        //   onAddNew: () {
-                        //
-                        //     showDailogPopUp(
-                        //       context,
-                        //       ConfigurePopup(
-                        //         type: "uomgroup",
-                        //
-                        //       ),
-                        //
-                        //
-                        //     );
-                        //   },
-                        // ),
+
 
 
 
 
                         NewInputCard(controller: widget.vat,
-                          icondrop:true,
+                          formatter: true,
+
                           title: "VAT",
-                          // ontap: (){
-                          //   showDailogPopUp(
-                          //     context,
-                          //     TableConfigurePopup(
-                          //       type: "baseUomTabalePopup", valueSelect: (BrandListModel va){
-                          //
-                          //       setState(() {
-                          //         print(va?.uomCode);
-                          //         print(va);
-                          //
-                          //
-                          //
-                          //         widget.uomController.text=va?.uomCode??"";
-                          //         widget.baseuomNameController.text=va?.name??"";
-                          //         setState(() {
-                          //
-                          //         });
-                          //
-                          //
-                          //         // onChange = true;
-                          //         // orderType.text = va!;
-                          //       });
-                          //
-                          //     },
-                          //     ),
-                          //
-                          //
-                          //   );
-                          //
-                          // },
-
-
                         ),
-                        // SelectableDropDownpopUp(
-                        //
-                        //   controller:widget.baseuomNameController,
-                        //   label: "base uom",
-                        //   type:"Uom_PopUpCall",
-                        //   value:  widget.baseuomNameController.text,
-                        //   onchange: (vale){
-                        //     // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
-                        //   },
-                        //   enable: true,
-                        //   onSelection: (BrandListModel? va) {
-                        //     setState(() {
-                        //
-                        //       widget.uomController.text=va?.uomCode??"";
-                        //       widget.baseuomNameController.text=va?.name??"";
-                        //       setState(() {
-                        //
-                        //       });
-                        //
-                        //
-                        //       // onChange = true;
-                        //       // orderType.text = va!;
-                        //     });
-                        //   },
-                        //   onAddNew: () {
-                        //
-                        //     showDailogPopUp(
-                        //       context,
-                        //       ConfigurePopup(
-                        //         type: "base_uom",
-                        //       ),
-                        //
-                        //
-                        //     );
-                        //   },
-                        // ),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-                        NewInputCard(
-                            controller: widget.excessTax, title: "Excess  Tax"),
-
 
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.returnType, title: "Return Type"),
+                          formatter: true,
+                            controller: widget.excessTax, title: "Excess Tax"),
+
+
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        SelectableDropDownpopUp(
+
+                          label: "Return Type",
+                          type:"CustomReturnTypePopupCall",
+                          value: widget.returnType.text,
+                          onSelection: (String? va) {
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
+                              widget.returnType.text=va??"";
+                            });
+                          },
+
+                          restricted: true,
+                        ),
                         SizedBox(
                           height: height * .030,
                         ),
 
                         NewInputCard(
+                            formatter: true,
                             controller: widget.returnTime, title: "Return Time"),
-                        // NewInputCard(
-                        //   controller: widget.status, title: "Status", ),
-                        // SizedBox(
-                        //   height: height * .045,
-                        // ),
-
-
-
-
-                        // SizedBox(
-                        //   height: height * .145,
-                        //
-                        // ),
-                        // SizedBox(
-                        //   height:height*.034,
-                        //
-                        // ),
-
 
                       ],)),
                       Expanded(child: Column(children: [
-                        NewInputCard(
-                            controller: widget.weightUomId, title: "Weight UOM Id"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.height, title: "Height"),
+                          formatter: true,
+                            controller: widget.weightUomId, title: "Weight In Kilogram"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.width, title: "Width"),
+                            formatter: true,
+                            controller: widget.height, title: "Height in Meter"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
-                            controller: widget.length, title: "Length"),
+                            formatter: true,
+                            controller: widget.width, title: "Width in Meter"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.length, title: "Length in Meter"),
                         SizedBox(
                           height: height * .030,
                         ),
                         PopUpSwitchTile(
-                            value:widget. active??false,
+                            value:widget.select?true:widget. active,
                             title: "Is Active",
                             onClick: (gg) {
-                              widget.activeChange(!widget.active);
+                              if(widget.select==false){
+                                widget.activeChange(!widget.active,type:"1");
+                              }
 
-
-
-
-
-                              // extendedWarranty = gg;
-                              // widget.changeExtendedWarranty(gg);
-                              // onChangeExtWarranty = gg;
                               setState(() {});
                             }),
-                        SizedBox(height: height*.030,)
+                        SizedBox(height: height*.030,),
+                        PopUpSwitchTile(
+                            value:widget. needMultipleIntegreation??false,
+                            title: "Need Multiple Integration",
+                            onClick: (gg) {
+                              widget.activeChange(!widget.needMultipleIntegreation,type:"2");
+
+
+
+
+                              setState(() {});
+                            }),
 
 
                       ],))

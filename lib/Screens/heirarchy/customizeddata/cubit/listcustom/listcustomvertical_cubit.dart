@@ -3,22 +3,23 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:inventory/Screens/purchasreturn/pages/repo.dart';
 import 'package:inventory/widgets/responseutils.dart';
 
-part 'grouplist_state.dart';
-part 'grouplist_cubit.freezed.dart';
+part 'listcustomvertical_state.dart';
+part 'listcustomvertical_cubit.freezed.dart';
 
-class GrouplistCubit extends Cubit<GrouplistState> {
-  GrouplistCubit() : super(GrouplistState.initial());
+class ListcustomverticalCubit extends Cubit<ListcustomverticalState> {
+  ListcustomverticalCubit() : super(ListcustomverticalState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
-
   String? prev;
   String? next;
-  Future getGroupListList({String ? type}) async {
+  Future getCustomVerticalList() async {
     next = null;
     prev = null;
     print("enterd");
     // items = [];
-    emit(GrouplistState.initial());
-    final result = await repo.getGroupListList(null,type:type);
+    emit(ListcustomverticalState.initial());
+    final result = await repo.getCustomVerticalList(
+      null,
+    );
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -26,9 +27,9 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future searchGroupList(String filter,{String ? type}) async {
-    emit(GrouplistState.initial());
-    final result = await repo.getGroupListList("name=" + filter,type: type);
+  Future getSearchCustomList(String filter) async {
+    emit(ListcustomverticalState.initial());
+    final result = await repo.getCustomVerticalList("name=" + filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -38,8 +39,8 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future nextslotSectionPageList({String ? type}) async {
-    final result = await repo.getGroupListList(next,type: type);
+  Future nextslotSectionPageList() async {
+    final result = await repo.getCustomVerticalList(next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -48,9 +49,9 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future previuosslotSectionPageList({String ? type}) async {
+  Future previuosslotSectionPageList() async {
     // print(previous);
-    final result = await repo.getGroupListList(prev,type: type);
+    final result = await repo.getCustomVerticalList(prev);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -59,8 +60,8 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future refresh({String ? type}) async {
-    emit(GrouplistState.initial());
-    getGroupListList(type: type);
+  Future refresh() async {
+    emit(ListcustomverticalState.initial());
+    getCustomVerticalList();
   }
 }

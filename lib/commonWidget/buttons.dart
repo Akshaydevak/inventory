@@ -126,7 +126,7 @@ class _TableTextButtonState extends State<TableTextButton> {
       Container(
         margin: EdgeInsets.symmetric(vertical: 9,horizontal: 5),
         child: TextButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Pellet.tableBlueHeaderPrint)),
+            // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Pellet.tableBlueHeaderPrint)),
 
             // style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.red
             // ),
@@ -135,7 +135,7 @@ class _TableTextButtonState extends State<TableTextButton> {
 
 
             },
-            child: widget.icon!=null?Icon(widget.icon,color: Colors.white,):Text(widget.label,style: TextStyle(color: Colors.white),)
+            child: widget.icon!=null?Icon(widget.icon,color: Pellet.tableBlueHeaderPrint,):Text(widget.label,style: TextStyle(color: Colors.white),)
 
         ),
       ),

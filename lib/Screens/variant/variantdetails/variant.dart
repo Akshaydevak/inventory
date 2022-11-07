@@ -716,6 +716,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         }, success: (data) {
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
+            context.read<ListvraiantCubit>().getVariantList();
           } else {
             context.showSnackBarError(data.data2);
             print(data.data1);
@@ -954,14 +955,14 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                           salesUomName: salesUomNameController,
                                           uomGroupName: uomGroupNameController,
                                           veritiaclid:veritiaclid,
-                                        catalog1: catalog1,
-                                        catalog2: catalog2,
-                                        catalog3: catalog3,
-                                        catalog4: catalog4,
-                                        catalog5: catalog5,
-                                        catalog6: catalog6,
-                                        catalog7: catalog7,
-                                        catalog8: catalog8,
+                                         catalog1: catalog1,
+                                          catalog2: catalog2,
+                                          catalog3: catalog3,
+                                         catalog4: catalog4,
+                                         catalog5: catalog5,
+                                         catalog6: catalog6,
+                                         catalog7: catalog7,
+                                         catalog8: catalog8,
                                         searchName: searchNAmeController,
                                         image2: image2Controller,
                                         image3: image3Controller,
@@ -1049,6 +1050,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       Divider(color: Colors.grey,thickness: 1,),
                                       SizedBox(height: height * .04,),
                                       Identification(
+                                        select:select,
                                         veritiaclid:veritiaclid ,
                                         rfId: rfIdController,
                                         qrCode: qrCodeController,
@@ -1161,6 +1163,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 labelcolor: Colors.white,
                                                 iconColor: Colors.white,
                                                 onApply: () {
+                                              print(vendorDetails![0].vendorName.runtimeType);
                                               if(select){
                                                 VariantPost model = VariantPost(
                                                   weight:double.tryParse( weightController.text),

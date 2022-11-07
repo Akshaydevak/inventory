@@ -25,9 +25,9 @@ class StockverticalCubit extends Cubit<StockverticalState> {
     });
   }
 
-  Future searchStockList() async {
+  Future searchStockList( String code) async {
     emit(StockverticalState.initial());
-    final result = await repo.getStockList("");
+    final result = await repo.getStockList("name="+code);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

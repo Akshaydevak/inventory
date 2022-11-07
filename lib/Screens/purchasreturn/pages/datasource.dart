@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandreadmodel.dart';
@@ -307,6 +308,17 @@ abstract class PurchaseSourceAbstract {
     String? code,
   );
   Future<List<VariantReadModel>> getProducedCountry();
+  //Custome Page++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  Future<DoubleResponse> postCreateCustom(CustomCreationtModel model);
+  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model,int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(String? code,
+      );
+  Future<ReadCustomModel> getCustomRead(
+      int? id,
+      );
+  Future<ReadCustomModel> getReturnRead(
+
+      );
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -2803,7 +2815,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override
@@ -2961,7 +2974,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
@@ -3241,7 +3256,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = listVariantApi + Variable.inventory_ID.toString();
     else
-      path = listVariantApi + Variable.inventory_ID.toString() + "?name=$code";
+      path = listVariantApi + Variable.inventory_ID.toString() + "?$code";
 
     print("afffffuu" + path.toString());
     final response = await client.get(path,
@@ -3259,7 +3274,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -3696,7 +3712,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     if (code == "")
       path = variantCreationListApi;
     else
-      path = variantCreationListApi + "?name=$code";
+      path = variantCreationListApi + "?$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3712,7 +3728,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']
+    );
   }
 
   @override
@@ -4654,9 +4672,15 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         {
           url = linkedListDeletionApi;
         }
-        break;    case "6":
+        break;
+      case "6":
         {
           url = deleteVariantApi;
+        }
+        break;
+      case "7":
+        {
+          url = patchCustomApi;
         }
         break;
     }
@@ -5435,7 +5459,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<AttributeListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override
@@ -5818,7 +5843,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<LinkedItemListIdModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override
@@ -6049,5 +6075,174 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       print("itemsAk" + items.toString());
     });
     return items;
+  }
+
+  @override
+  Future<DoubleResponse> postCreateCustom(CustomCreationtModel model) async {
+    String path=createCustomApi;
+    print(path);
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getCustomVerticalList(String? code) async {
+    String path = "";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = listCustomApi;
+    else
+      path = listCustomApi+"?$code";
+
+    print("afffffuu" + path.toString());
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(response);
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<ReadCustomModel> getCustomRead(int? id) async {
+    String path = readCustomApi + id.toString();
+    print(path);
+    try {
+
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      ReadCustomModel dataa =
+      ReadCustomModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    ReadCustomModel dataa =
+    ReadCustomModel.fromJson(response.data['data']);
+
+    return dataa;
+  }
+
+  @override
+  Future<ReadCustomModel> getReturnRead() async {
+ String   path=createCustomApi;
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    ReadCustomModel dataa =
+    ReadCustomModel.fromJson(response.data['data']);
+
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model, int? id) async {
+    String path=patchCustomApi+id.toString();
+    print("updation"+path.toString());
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
   }
 }

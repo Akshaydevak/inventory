@@ -387,6 +387,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
 
                               fileName:widget.image1.text,
                               fileUrl:widget.image1.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.image1.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
 
                                 // loading = true;
@@ -435,6 +442,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName:widget.image2.text,
                               fileUrl:widget.image2.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.image2.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -503,6 +517,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName: widget.image3.text,
                               fileUrl:widget.image3.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.image3.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -558,6 +579,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName: widget.itemCatelog1.text,
                               fileUrl:widget.itemCatelog1.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog1.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -611,6 +639,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName: widget.itemCatelog2.text,
                               fileUrl:widget.itemCatelog2.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog2.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -663,6 +698,14 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName:  widget.itemCatelog3.text,
                               fileUrl:widget.itemCatelog3.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog3.clear();
+                                });
+
+                              },
+
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -715,6 +758,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName:  widget.itemCatelog4.text,
                               fileUrl: widget.itemCatelog4.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog4.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});
@@ -767,6 +817,13 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           FileUploadField(
                               fileName: widget.itemCatelog5.text,
                               fileUrl:widget.itemCatelog5.text,
+                              onCancel: (){
+
+                                setState(() {
+                                  widget.itemCatelog5.clear();
+                                });
+
+                              },
                               onChangeTap: (p0) {
                                 // loading = true;
                                 setState(() {});

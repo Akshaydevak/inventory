@@ -68,6 +68,8 @@ class NewInputCard extends StatefulWidget {
 
 class _NewInputCardState extends State<NewInputCard> {
   bool show = false;
+  bool onChange = false;
+  bool limitOflength=false;
   @override
   void initState() {
     super.initState();
@@ -77,6 +79,11 @@ class _NewInputCardState extends State<NewInputCard> {
 
   @override
   Widget build(BuildContext context) {
+    if(onChange==false){
+      limitOflength=false;
+    }
+    onChange=false;
+
     widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
 
     return Padding(
@@ -170,10 +177,31 @@ class _NewInputCardState extends State<NewInputCard> {
               onTap: (){
                 print("www");
                widget.ontap!=null?widget.ontap!():null;
-              },              onChanged:(va){widget?.onChange!(va);} ,
+              },
+              onChanged:(va){
+                if(widget.formatter==true){
+                  if(widget.controller.text.length>9){
+                    onChange=true;
+
+                    setState(() {
+                      limitOflength=true;
+                    });
+                  }
+
+                }
 
 
-              readOnly: widget.readOnly,
+
+
+                widget?.onChange!(va);
+
+
+
+
+              } ,
+
+
+              readOnly:limitOflength?limitOflength: widget.readOnly,
               maxLines: widget.maxLines,
               controller: widget.controller,
               obscureText: show, keyboardType:
@@ -1042,6 +1070,10 @@ class _FileUploadFieldState extends State<FileUploadField> {
                 border: OutlineInputBorder(),
                 suffixIcon: IconButton(
                     onPressed: () {
+
+
+                      print("""""""""""""shamnaaaaaaaaaaaaaaaaaaa");
+
                       filename = "no attachments";
                       clearedImage = true;
                       widget.onCancel != null ? widget.onCancel!() : null;
@@ -1124,6 +1156,9 @@ class _FileUploadFieldState extends State<FileUploadField> {
                   borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
               suffixIcon: IconButton(
                   onPressed: () {
+                   print("aakkakakkakak");
+
+
                     filename = "no attachments";
                     clearedImage = true;
                     widget.onCancel != null ? widget.onCancel!() : null;

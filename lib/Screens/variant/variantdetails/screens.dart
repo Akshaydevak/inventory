@@ -26,6 +26,7 @@ import 'model/vendormodel.dart';
 class Identification extends StatefulWidget {
   final TextEditingController barCode;
   final int? veritiaclid;
+  final bool select;
   final TextEditingController qrCode;
   final TextEditingController rfId;
   final List<AlternativeBarcode> alternativeBarcode;
@@ -33,7 +34,9 @@ class Identification extends StatefulWidget {
   final Function barQrCodeTableAssign;
 
   Identification(
-      {required this.barCode,
+
+      {required this.select,
+        required this.barCode,
       required this.veritiaclid,
       required this.qrCode,
       required this.rfId,
@@ -78,7 +81,7 @@ class _IdentificationState extends State<Identification> {
       if (widget.alternativeBarcode?.isNotEmpty == true) {
         alterNativeQrCode = widget?.alternativeQrCode ?? [];
       }
-      setState(() {});
+
     }
 
     onChange = false;
@@ -130,6 +133,7 @@ class _IdentificationState extends State<Identification> {
                         child: Column(
                           children: [
                             NewInputCard(
+                              readOnly: widget.select?false:true,
                                 controller: widget.barCode, title: "Barcode"),
                           ],
                         ),
@@ -1770,6 +1774,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
+                      formatter: true,
                         controller: widget.grossWeight, title: "Gross Weight"),
                     SizedBox(
                       height: height * .030,
@@ -2161,6 +2166,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image1.text,
                         fileUrl: widget.image1.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.image1.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2212,6 +2224,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image2.text,
                         fileUrl: widget.image2.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.image2.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2264,6 +2283,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image3.text,
                         fileUrl: widget.image3.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.image3.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2318,6 +2344,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image4.text,
                         fileUrl: widget.image4.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.image4.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2370,6 +2403,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image5.text,
                         fileUrl: widget.image5.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.image5.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2428,6 +2468,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog1.text,
                         fileUrl: widget.catalog1.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog1.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2480,6 +2527,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog2.text,
                         fileUrl: widget.catalog2.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog2.clear();
+                          });
+
+                        },
+
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2531,6 +2586,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog3.text,
                         fileUrl: widget.catalog3.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog3.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2583,6 +2645,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog4.text,
                         fileUrl: widget.catalog4.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog4.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2635,6 +2704,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog5.text,
                         fileUrl: widget.catalog5.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog5.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2687,6 +2763,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog6.text,
                         fileUrl: widget.catalog6.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog6.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2738,6 +2821,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog7.text,
                         fileUrl: widget.catalog7.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog7.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2789,6 +2879,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog8.text,
                         fileUrl: widget.catalog8.text,
+                        onCancel: (){
+
+                          setState(() {
+                            widget.catalog8.clear();
+                          });
+
+                        },
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2967,6 +3064,7 @@ class VendorDetailsVarient extends StatefulWidget {
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails = [];
+
   String vendoeCode = "";
   TextEditingController code = TextEditingController();
   TextEditingController refCode = TextEditingController();
@@ -2977,12 +3075,18 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
     double width = MediaQuery.of(context).size.width;
     if (onChange==false) {
       print("welcome to the entire place");
-      setState(() {
-        // vendorDetails.clear();
-      });
+
 
       if (widget.vendorDetails?.isNotEmpty == true) {
-        vendorDetails = widget.vendorDetails ?? [];
+
+        print(vendorDetails);
+        if(widget.vendorDetails?.isNotEmpty==true){
+          for (var i=0;i<widget.vendorDetails!.length-1;i++){
+            if(vendorDetails[i].vendorName!=null &&vendorDetails[i].vendorCode!=null){
+              vendorDetails.add(widget.vendorDetails![i]);
+            }
+          }
+        }
       }
     }
     onChange = false;

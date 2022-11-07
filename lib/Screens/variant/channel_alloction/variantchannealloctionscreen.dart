@@ -277,7 +277,7 @@ class _VariantChannelAllocationScreenState
                               print(va);
                               context
                                   .read<StockverticalCubit>()
-                                  .searchStockList();
+                                  .searchStockList(va);
                               if (va == "") {
                                 context
                                     .read<StockverticalCubit>()

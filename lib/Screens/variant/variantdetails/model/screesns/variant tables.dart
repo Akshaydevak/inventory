@@ -29,6 +29,7 @@ class ProductTableState extends State<ProductTable> {
   TextEditingController key = TextEditingController();
   TextEditingController headingController = TextEditingController();
   TextEditingController newNameController = TextEditingController();
+  List<bool>upDate=[];
 
   List<TextEditingController> nameListTextEditingController = [];
   bool onChange = false;
@@ -55,6 +56,9 @@ class ProductTableState extends State<ProductTable> {
       aboutProducts = widget.aboutProducts;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys = aboutProducts?.keyValues ?? [];
+        for( var i =0;i<keys.length-1;i++){
+          upDate.add(false);
+        }
         for (var i = 0; i < keys.length; i++) {
           var value = keys?[i]["name"];
           if (value == null) value = "";
@@ -224,7 +228,7 @@ class ProductTableState extends State<ProductTable> {
 
                         ),
                     TableTextButton(
-                      label: "",
+                      label: "Add",
                       onPress: () {
                         onChange = true;
 newNameController.clear();
@@ -743,7 +747,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
                       ),
                     ),
                     TableTextButton(
-                        label: "",
+                        label: "Add",
                         onPress: () {
                           onChange = true;
                           if (key.text.isNotEmpty == true &&
@@ -1004,7 +1008,7 @@ ProductFeatures? productFeatures ;
                       ),
                     ),
                     TableTextButton(
-                        label: "",
+                        label: "Add",
                         onPress: () {
                           if (key.text.isNotEmpty == true &&
                               value.text.isNotEmpty) {
@@ -1221,7 +1225,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
                                 type: "4", list: productFeatures);
                             });
                           },
-                          label: "",
+                          label: "Add",
                         )
                       ]),
               ],
@@ -1273,7 +1277,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
 
                         ),
                     TableTextButton(
-                        label: "",
+                        label: "Add",
                         onPress: () {
                           if (key.text.isNotEmpty == true &&
                               values.text.isNotEmpty) {
@@ -1380,7 +1384,7 @@ class IngrediansState extends State<Ingredians> {
 
                 children: [
                   tableHeadtext(
-                    'Usage Direction',
+                    'Ingrediants',
 
                     padding: EdgeInsets.all(7),
 
@@ -1498,7 +1502,7 @@ class IngrediansState extends State<Ingredians> {
 
                         ),
                     TableTextButton(
-                      label: "",
+                      label: "Add",
                       onPress: () {
                         if (name.text.isNotEmpty) {
                           onChange = true;
@@ -1605,7 +1609,7 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                 children: [
                   tableHeadtext(
-                    '',
+                    'Usage Direction',
 
                     padding: EdgeInsets.all(7),
 
@@ -1721,7 +1725,7 @@ class _UsageDirectionState extends State<UsageDirection> {
 
                         ),
                     TableTextButton(
-                      label: "",
+                      label: "Add",
                       onPress: () {
                         onChange = true;
 
@@ -1944,7 +1948,7 @@ class _StoragesWidgetState extends State<StoragesWidget> {
 
                         ),
                     TableTextButton(
-                      label: "",
+                      label: "Add",
                       onPress: () {
                         onChange = true;
 
@@ -2200,7 +2204,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
                       ),
                     ),
                     TableTextButton(
-                        label: "",
+                        label: "Add",
                         onPress: () {
                           Keys model = Keys(
                             key: key.text ?? "",

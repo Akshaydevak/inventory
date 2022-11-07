@@ -27,7 +27,7 @@ class ListvraiantCubit extends Cubit<ListvraiantState> {
 
   Future getSearchVariantList(String filter, {String? type}) async {
     emit(ListvraiantState.initial());
-    final result = await repo.getVariantList(filter);
+    final result = await repo.getVariantList("name="+filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:inventory/Screens/heirarchy/customizeddata/cubit/readcustom/readcustom_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/attributelist/attributelist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
@@ -113,6 +114,16 @@ class _PopUpCallState extends State<PopUpCall> {
         break;      case "ReturnTypePopupCall":
         {
           data = ReturnTypePopupCall(
+            id: widget.id,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;  case "CustomReturnTypePopupCall":
+        {
+          data = CustomReturnTypePopupCall(
             id: widget.id,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
@@ -658,8 +669,7 @@ class ReturnTypePopupCall extends StatefulWidget {
       _ReturnTypePopupCallState();
 }
 
-class _ReturnTypePopupCallState
-    extends State<ReturnTypePopupCall> {
+class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
   String? label;
   TextEditingController _controller = TextEditingController();
   @override
@@ -764,6 +774,140 @@ class _ReturnTypePopupCallState
     return newList;
   }
 }
+
+
+
+class CustomReturnTypePopupCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CustomReturnTypePopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.id,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+
+  @override
+  _CustomReturnTypePopupCallState createState() =>
+      _CustomReturnTypePopupCallState();
+}
+
+class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<ReadcustomCubit>(
+        create: (context) => ReadcustomCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<ReadcustomCubit>().getReturnRead();
+            return BlocBuilder<ReadcustomCubit,
+                ReadcustomState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.returnType?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.returnType![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    PurchaseOrdertype? newData;
+                    list.forEach((element) {
+                      newData?.orderTypes?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            border: OutlineInputBorder(),
+                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.returnType!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
 
 
 

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandreadmodel.dart';
@@ -142,9 +143,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postBrandPatch(
       BrandCreationtModel model, int? id);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchMaterialList(
-    String? code,{String? page}
-  );
+      searchMaterialList(String? code, {String? page});
   Future<Either<Failure, DoubleResponse>> postCreateMaterial(
       MaterialCreationtModel model);
   Future<Either<Failure, MaterialReadModel>> getMaterialRead(int? id);
@@ -172,7 +171,7 @@ abstract class PurchaseReturnRepoAbstract {
     int? id,
   );
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type,int ? id});
+      getCategoryist(String? code, {String? type, int? id});
   Future<Either<Failure, DoubleResponse>> postCreateCategory(
       CategoryCreationtModel model);
   Future<Either<Failure, CategoryReadModel>> getCategoryRead(
@@ -293,7 +292,7 @@ abstract class PurchaseReturnRepoAbstract {
   );
   Future<Either<Failure, DoubleResponse>> postPatchCostingCreate(
     int? verticalId,
-      int? typeId,
+    int? typeId,
     String typeName,
     String description,
     String createdBy,
@@ -372,6 +371,21 @@ abstract class PurchaseReturnRepoAbstract {
     String? code,
   );
   Future<Either<Failure, List<VariantReadModel>>> getProducedCountry();
+  //Custom page++++++++++++++++++++++++++++++++++++++++++++++
+  Future<Either<Failure, DoubleResponse>> postCreateCustom(
+      CustomCreationtModel model);
+
+  Future<Either<Failure, DoubleResponse>> patchCreateCustom(
+      CustomCreationtModel model,int? id);
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getCustomVerticalList(
+    String? code,
+  );
+  Future<Either<Failure, ReadCustomModel>> getCustomRead(
+    int? id,
+  );  Future<Either<Failure, ReadCustomModel>> getReturnRead(
+
+  );
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -680,9 +694,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      searchMaterialList(String? code,{String ? page}) {
+      searchMaterialList(String? code, {String? page}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.searchMaterialList(code,page:page));
+        () async => remoteDataSource.searchMaterialList(code, page: page));
   }
 
   @override
@@ -773,9 +787,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type,int ? id}) {
+      getCategoryist(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getCategoryist(code, type: type,id:id));
+        () async => remoteDataSource.getCategoryist(code, type: type, id: id));
   }
 
   @override
@@ -1384,5 +1398,43 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, List<VariantReadModel>>> getProducedCountry() {
     return repoExecute<List<VariantReadModel>>(
         () async => remoteDataSource.getProducedCountry());
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreateCustom(
+      CustomCreationtModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postCreateCustom(model));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getCustomVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getCustomVerticalList(
+              code,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, ReadCustomModel>> getCustomRead(int? id) {
+    return repoExecute<ReadCustomModel>(
+        () async => remoteDataSource.getCustomRead(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, ReadCustomModel>> getReturnRead() {
+    return repoExecute<ReadCustomModel>(
+            () async => remoteDataSource.getReturnRead(
+
+        ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchCreateCustom(CustomCreationtModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.patchCreateCustom(model,id));
   }
 }

@@ -306,3 +306,8 @@ const frameworkDeleteApi =
     inventoryBaseUrl + "inventory-product/patch-variantframework/";
 const stockPostkDeleteApi = inventoryBaseUrl + "inventory-stock/create-stock";
 const vendorDetailsApi = hilalBaseUrl + "user-manufacturer_manufactureruserlist";
+//custom api+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+const createCustomApi = inventoryBaseUrl + "inventory-product/create-group-custom-data";
+const listCustomApi = inventoryBaseUrl + "inventory-product/list-group-custom-data";
+const readCustomApi = inventoryBaseUrl + "inventory-product/update-group-custom-data/";
+const patchCustomApi = inventoryBaseUrl + "inventory-product/update-group-custom-data/";

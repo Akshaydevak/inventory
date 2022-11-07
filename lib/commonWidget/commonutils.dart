@@ -672,6 +672,7 @@ class CommonIcon extends StatelessWidget {
 class ConfigurePopup extends StatelessWidget {
   final String type;
   final Function? listAssign;
+  final List<LinkedItemListModel>?linkedListItemTable;
 
   final int? veritiaclid;
 
@@ -680,6 +681,8 @@ class ConfigurePopup extends StatelessWidget {
 
   ConfigurePopup(
       {Key? key,
+         this.linkedListItemTable,
+
       required this.type,
       this.onBack,
       this.onAddNew = false,
@@ -709,8 +712,11 @@ class ConfigurePopup extends StatelessWidget {
         }
         break;
       case "CreateSearchLinkedItem-group":
+
         {
+
           data = CreateSearchLinkedItem(
+            linkedListItemTable:linkedListItemTable,
             listAssign: listAssign,
             type: type,
           );
@@ -895,6 +901,7 @@ class ConfigurePopup extends StatelessWidget {
       case "LinkedItemCreatePopUp":
         {
           data = LinkedItemCreatePopUp(
+            linkedListItemTable:linkedListItemTable,
             veritiaclid: veritiaclid,
             type: type,
             linkedListAssign: listAssign!,
@@ -1992,9 +1999,11 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
 class CreateSearchLinkedItem extends StatefulWidget {
   final String type;
   final Function? listAssign;
+  final List<LinkedItemListModel>?linkedListItemTable;
 
   CreateSearchLinkedItem({
     Key? key,
+    required this.linkedListItemTable,
     required this.type,
     required this.listAssign,
   }) : super(key: key);
@@ -2018,6 +2027,8 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
   TextEditingController itemsearch = TextEditingController();
   String parentName = "";
   bool changer = false;
+  List<String?>additionCheck=[];
+
 
   TextEditingController codeController = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
@@ -2079,10 +2090,47 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print("the real Akshay" + data.toString());
-                  if (data.isNotEmpty) {
+
+
+                  print(widget.linkedListItemTable);
+                  if (data.isNotEmpty==true) {
                     setState(() {
+                      list1.clear();
                       table = data;
-                    });
+                      additionCheck.clear();
+
+                      print("11111111111111111111111");
+                      if(widget.linkedListItemTable?.isNotEmpty==true){
+                        print("entered");
+                        for (var i =0;i<widget.linkedListItemTable!.length;i++){
+                          print("entered1");
+                          additionCheck.add(widget.linkedListItemTable![i].name);
+                          list1.add( LinkedItemListIdModel(
+                              id:widget.linkedListItemTable![i].id,
+                              name:widget.linkedListItemTable![i].name));
+                          print("entered");
+                        }
+                        setState(() {
+print(list1.contains(widget.linkedListItemTable?[0].name));
+                        });
+
+
+
+
+
+                      }
+
+
+
+
+
+
+
+
+
+                    }
+
+                    );
                   }
 
                   // context.showSnackBarSuccess(data.data2);
@@ -2147,6 +2195,7 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
               return Builder(builder: (context) {
                 return AlertDialog(
                   content: PopUpHeader(
+                    buttonVisible: false,
                     functionChane: true,
                     buttonCheck: true,
                     onTap: () {
@@ -2303,7 +2352,7 @@ class _CreateSearchLinkedItem extends State<CreateSearchLinkedItem> {
 
                                             child: CustomCheckBox(
                                               key: UniqueKey(),
-                                              value: list1.contains(table![i]),
+                                              value:additionCheck.contains(table![i].name),
                                               onChange: (p0) {
                                                 if (p0)
                                                   list1.add(
@@ -7648,9 +7697,10 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
 class LinkedItemCreatePopUp extends StatefulWidget {
   final String type;
   final int? veritiaclid;
+  final List<LinkedItemListModel>?linkedListItemTable;
   final Function linkedListAssign;
 
-  LinkedItemCreatePopUp({Key? key, required this.type, this.veritiaclid,required this.linkedListAssign})
+  LinkedItemCreatePopUp({Key? key, required this.linkedListItemTable,required this.type, this.veritiaclid,required this.linkedListAssign})
       : super(key: key);
 
   @override
@@ -7914,6 +7964,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                       // height: MediaQuery.of(context).size.height * .6,
                       child: IntrinsicHeight(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -7981,7 +8032,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                             : MediaQuery.of(context)
                                                     .size
                                                     .width /
-                                                3.15,
+                                                2.4,
                                         child: Row(
                                           children: [
                                             Expanded(
@@ -8024,6 +8075,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                                     showDailogPopUp(
                                                       context,
                                                       ConfigurePopup(
+                                                        linkedListItemTable: table,
                                                         listAssign: listAssign,
                                                         type:
                                                             "CreateSearchLinkedItem-group",
@@ -8041,9 +8093,15 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                                         height: 10,
                                       ),
                                       Container(
-                                        width:
-                                            MediaQuery.of(context).size.width /
-                                                3.15,
+                                        width: costingTypeMethodeCheck != true
+                                            ? MediaQuery.of(context)
+                                            .size
+                                            .width /
+                                            3.15
+                                            : MediaQuery.of(context)
+                                            .size
+                                            .width /
+                                            2.4,
                                         // width: w/7,
                                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                                         child: customTable(

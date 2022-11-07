@@ -52,6 +52,16 @@ class TableConfigurePopup extends StatelessWidget {
           );
         }
         break;
+
+
+        case "GroupAllTabale_Popup":
+        {
+          data = GroupAllTabalePopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
       case "UOMPopup":
         {
           data = UOMPopup(id: id,
@@ -471,6 +481,286 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                                       .read<DevisionListCubit>()
                                       .nextslotSectionPageList();
                                 },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
+  }
+}
+
+
+
+class GroupAllTabalePopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+  GroupAllTabalePopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _GroupAllTabalePopup createState() => _GroupAllTabalePopup();
+}
+
+class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<BrandListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return Builder(builder: (context) {
+      context.read<GrouplistCubit>().getGroupListList(type: "all");
+      return BlocConsumer<GrouplistCubit, GrouplistState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                buttonVisible: false,
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Group  Popup",
+                onApply: () {
+
+
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<GrouplistCubit>()
+                                  .searchGroupList(searchContoller.text,type:"all");
+                              if (va == "") {
+                                context
+                                    .read<GrouplistCubit>()
+                                    .getGroupListList(type: "all");
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            border: const TableBorder(
+                              verticalInside: BorderSide(
+                                  width: .5,
+                                  color: Colors.black45,
+                                  style: BorderStyle.solid),
+                              horizontalInside: BorderSide(
+                                  width: .3,
+                                  color: Colors.black45,
+                                  // color: Colors.blue,
+                                  style: BorderStyle.solid),
+                            ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Groups',
+                                    // textColor: Colors.black,
+                                    padding: EdgeInsets.all(7),
+                                    height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.rectangle,
+                                          border: const Border(
+                                              left: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: .5,
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment
+                                                .middle,
+                                            child:
+                                            textPadding((i + 1).toString())
+                                          // Text(keys[i].key??"")
+
+                                        ),
+                                        TableCell(
+                                            verticalAlignment:
+                                            TableCellVerticalAlignment
+                                                .middle,
+                                            child: InkWell(
+                                              onTap: () {
+                                                BrandListModel model =
+                                                BrandListModel(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              child: Container(
+                                                  alignment: Alignment.center,
+                                                  child:
+                                                  Text(table[i].name ?? ""),
+                                                  height: 45),
+                                            )
+                                          // Text(keys[i].value??"",)
+
+                                        ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                              () => context.read<GrouplistCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                            context
+                                .read<GrouplistCubit>()
+                                .previuosslotSectionPageList(type: "all");
+                          },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                            // print(data.nextPageUrl);
+                            context
+                                .read<GrouplistCubit>()
+                                .nextslotSectionPageList(type: "all");
+                          },
                         )
                     ],
                   ),
