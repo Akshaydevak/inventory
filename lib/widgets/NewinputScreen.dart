@@ -690,6 +690,7 @@ class UnderLinedInput extends StatefulWidget {
   final String hintText;
   final bool formatter;
   final bool suffixIconEnable;
+  final bool readOnly;
   // final String? tileName;
   final int maxLines;
   final TextEditingController? controller;
@@ -700,6 +701,7 @@ class UnderLinedInput extends StatefulWidget {
   UnderLinedInput(
       {Key? key,
         this.last="",
+        this.readOnly=false,
         this.suffixIconEnable=false,
         this.enable = true,
         this.initial='',
@@ -769,6 +771,7 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             alignment: Alignment.center,
             child: Center(
               child: TextFormField(
+                readOnly: widget.readOnly,
 
                 // initialValue:widget.last=="0"?"":widget.last,
                 onTap: () {

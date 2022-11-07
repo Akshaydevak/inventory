@@ -26,6 +26,7 @@ class ProductTable extends StatefulWidget {
 
 class ProductTableState extends State<ProductTable> {
   TextEditingController name = TextEditingController();
+  var nameListControllers = <TextEditingController>[];
   TextEditingController key = TextEditingController();
   TextEditingController headingController = TextEditingController();
   TextEditingController newNameController = TextEditingController();
@@ -45,6 +46,7 @@ class ProductTableState extends State<ProductTable> {
 
       setState(() {
         nameListTextEditingController.clear();
+        nameListControllers.clear();
         keys =[] ;
         nameListTextEditingController.clear();
       });
@@ -56,8 +58,11 @@ class ProductTableState extends State<ProductTable> {
       aboutProducts = widget.aboutProducts;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
         keys = aboutProducts?.keyValues ?? [];
-        for( var i =0;i<keys.length-1;i++){
+        for( var i =0;i<keys.length;i++){
           upDate.add(false);
+
+          var nameValue = new TextEditingController(text: keys[i]["name"]==null?"":keys[i]["name"]);
+          nameListTextEditingController.add(nameValue);
         }
         for (var i = 0; i < keys.length; i++) {
           var value = keys?[i]["name"];
@@ -119,6 +124,13 @@ class ProductTableState extends State<ProductTable> {
                     textColor: Colors.white,
                     size: 13,
                   ),
+                  tableHeadtext(
+                    '',
+                    padding: EdgeInsets.all(7),
+                    height: 41,
+                    textColor: Colors.white,
+                    size: 13,
+                  ),
                 ],
               ),
               if (keys?.isNotEmpty == true) ...[
@@ -146,21 +158,48 @@ class ProductTableState extends State<ProductTable> {
                           child:
                               // Text(keys?[i]["name"]??"")
                               UnderLinedInput(
-
-                            formatter: false,
-                            initialCheck: false,
-                            // last: keys[i]["name"].toString(),
-                            controller: TextEditingController(text:keys[i]["name"].toString()),
+                                readOnly: !upDate[i],
+                                formatter: false,
+                            controller: nameListTextEditingController[i],
                             onChanged: (va) {
+                              onChange=true;
+                              setState(() {
+
+                                keys[i]["name"] = va;
+                                aboutProducts = Storage(
+                                    name: headingController.text, keyValues: keys);
+
+
+                              });
+
                               print(va);
-                              keys[i]["name"] = va;
-                              aboutProducts = Storage(
-                                  name: headingController.text, keyValues: keys);
-                              widget.storageTableEdit(
-                                  type: "1", list: aboutProducts);
+
+
                               print(keys);
                             },
                           ),
+                        ),
+                        TableTextButton(
+                          label: upDate[i]==true?"Update":"Edit",
+                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                          onPress: () {
+
+
+                            setState(() {
+                              upDate[i]=!upDate[i];
+                             if( upDate[i]==true){
+                               widget.storageTableEdit(
+                                   type: "1", list: aboutProducts);
+                             }
+
+
+                            });
+                            setState(() {
+
+                            });
+
+                          },
                         ),
                         TableTextButton(
                           label: "",
@@ -175,6 +214,9 @@ class ProductTableState extends State<ProductTable> {
 
 
                             keys?.removeAt(i);
+                            upDate.removeAt(i);
+                            nameListTextEditingController.removeAt(i);
+
                             print(keys);
 
                             aboutProducts = Storage(
@@ -188,6 +230,7 @@ class ProductTableState extends State<ProductTable> {
 
                           },
                         ),
+
                       ]),
               ],
               TableRow(
@@ -244,6 +287,10 @@ newNameController.clear();
 
                             print(keys);
                             print("attata+" + aboutProducts.toString());
+                            upDate.add(false);
+                            var nameValue = new TextEditingController(text: newNameController.text);
+
+                            nameListControllers.add(nameValue);
 
                             aboutProducts = Storage(
                                 name: headingController.text, keyValues: keys);
@@ -253,12 +300,18 @@ newNameController.clear();
                           }
                         });
                       },
+                    ),
+                    TableTextButton(
+                      label: "",
+                      onPress: () {
+
+                      },
                     )
                   ])
             ],
             widths: {
               0: FlexColumnWidth(5),
-              2: FlexColumnWidth(2),
+              3: FlexColumnWidth(2),
             },
           ),
         ),
@@ -281,6 +334,10 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
   TextEditingController key = TextEditingController();
   TextEditingController value = TextEditingController();
   TextEditingController heading = TextEditingController();
+  List<bool>upDate=[];
+
+  List<TextEditingController> keyListTextEditingController = [];
+  List<TextEditingController> valueListTextEditingController = [];
   bool onChange = false;
   ProductFeatures? productDetails;
   List<Keys> keys = [];
@@ -292,6 +349,10 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
     if (!onChange) {
       setState(() {
         keys = [];
+        upDate.clear();
+
+
+
       });
 
       productDetails = widget.productDetails;
@@ -299,6 +360,17 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
         keys = productDetails?.keyValues ?? [];
+
+        for( var i =0;i<keys.length;i++){
+          upDate.add(false);
+
+          var keyValue = new TextEditingController(text: keys[i].key==null?"":keys[i].key);
+          keyListTextEditingController.add(keyValue);
+          var valueValue = new TextEditingController(text: keys[i].value==null?"":keys[i].value);
+          keyListTextEditingController.add(valueValue);
+        }
+
+
       }
     }
     onChange = false;
@@ -431,6 +503,8 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                     type: "1", list: productDetails);
                               },
                             )),
+
+
                         TableTextButton(
                           onPress: () {
                             onChange=true;
@@ -510,7 +584,8 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                               value.text = "";
                             });
                           }
-                        })
+                        })  ,
+
                   ]),
             ],
             widths: {

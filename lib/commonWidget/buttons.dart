@@ -135,7 +135,7 @@ class _TableTextButtonState extends State<TableTextButton> {
 
 
             },
-            child: widget.icon!=null?Icon(widget.icon,color: Pellet.tableBlueHeaderPrint,):Text(widget.label,style: TextStyle(color: Colors.white),)
+            child: widget.icon!=null?Icon(widget.icon,color: Pellet.tableBlueHeaderPrint,):Text(widget.label,style: TextStyle(color:  Pellet.tableBlueHeaderPrint),)
 
         ),
       ),
