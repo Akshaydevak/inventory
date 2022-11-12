@@ -251,7 +251,7 @@ class CheckedBoxs extends StatefulWidget {
   final bool? valueChanger;
   final Color color;
   final Function(bool?) onSelection;
-  CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.white});
+  CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.transparent});
 
   @override
   _CheckedBoxState createState() => _CheckedBoxState();
@@ -260,10 +260,15 @@ class CheckedBoxs extends StatefulWidget {
 class _CheckedBoxState extends State<CheckedBoxs> {
   @override
   Widget build(BuildContext context) {
-    return Checkbox(
-      activeColor: Color(0xff3E4F5B),
-      value: widget.valueChanger,
-      onChanged: widget.onSelection,
+    return Container(
+      color: widget.color,
+      height: 50,
+      child: Checkbox(
+
+        activeColor: Color(0xff3E4F5B),
+        value: widget.valueChanger,
+        onChanged: widget.onSelection,
+      ),
     );
   }
 }

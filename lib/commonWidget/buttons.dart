@@ -102,8 +102,12 @@ class TableTextButton extends StatefulWidget {
   final bool actionCheck;
   final bool designCheck;
   final IconData? icon;
+  final Color bagroundColor;
+  final Color buttonBagroundColor;
+  final Color textColor;
 
-  TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.designCheck=false,this.icon});
+  TableTextButton({required this.label,required this.onPress,this.actionCheck=false,this.textColor=Pellet.tableBlueHeaderPrint,this.buttonBagroundColor=Colors.transparent,
+    this.designCheck=false,this.icon,this.bagroundColor= const Color(0xffEAEAEA)});
 
   @override
   _TableTextButtonState createState() => _TableTextButtonState();
@@ -113,32 +117,79 @@ class _TableTextButtonState extends State<TableTextButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50,
-      // color: Colors.blue,
+      width: 69,
+      margin: EdgeInsets.symmetric(horizontal:8),
+
+      color: widget.buttonBagroundColor,
 
       child: widget.designCheck?InkWell(
         onTap: (){ widget.onPress();},
         child: Center(
-          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: Colors.red,size: 18,),
+          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: 17,),
         ),
       ):
 
       Container(
-        margin: EdgeInsets.symmetric(vertical: 9,horizontal: 5),
-        child: TextButton(
+
+        decoration: BoxDecoration(
+            color:widget.bagroundColor ,
+            borderRadius:BorderRadius.all(Radius.circular(5))
+
+        ),
+
+
+        padding: EdgeInsets.symmetric(horizontal:12,vertical: 8),
+        child: InkWell(
             // style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Pellet.tableBlueHeaderPrint)),
 
-            // style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.red
+            // style: TextButton.styleFrom(primary: widget.textColor, backgroundColor: widget.bagroundColor
             // ),
-            onPressed: () {
+            onTap: () {
               widget.onPress();
 
 
             },
-            child: widget.icon!=null?Icon(widget.icon,color: Pellet.tableBlueHeaderPrint,):Text(widget.label,style: TextStyle(color:  Pellet.tableBlueHeaderPrint),)
+            child: widget.icon!=null?Icon(widget.icon,color: widget.textColor,):Text(widget.label,style: TextStyle(color: widget.textColor),textAlign:TextAlign.center ,)
 
         ),
       ),
+    );
+  }
+}
+class TableIconTextButton extends StatefulWidget {
+  final String label;
+  final Function onPress;
+  final bool actionCheck;
+  final bool designCheck;
+  final IconData? icon;
+  final Color bagroundColor;
+  final Color buttonBagroundColor;
+  final Color textColor;
+
+  TableIconTextButton({required this.label,required this.onPress,this.actionCheck=false,this.textColor=Pellet.tableBlueHeaderPrint,this.buttonBagroundColor=Colors.transparent,
+    this.designCheck=false,this.icon,this.bagroundColor= const Color(0xffEAEAEA)});
+
+  @override
+  _TableIconTextButtonState createState() => _TableIconTextButtonState();
+}
+
+class _TableIconTextButtonState extends State<TableIconTextButton> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // height: 50,
+
+
+      color: widget.buttonBagroundColor,
+
+      child: InkWell(
+        onTap: (){ widget.onPress();},
+        child: Center(
+          child: Icon(widget.actionCheck?Icons.add:Icons.delete,color:widget.actionCheck?Colors.blue: widget.textColor,size: 18,),
+        ),
+      )
+
+
     );
   }
 }

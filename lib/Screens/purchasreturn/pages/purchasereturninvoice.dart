@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/invoice_read_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/invoicepost_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
@@ -31,6 +32,7 @@ class PurchaseReturnInvoice extends StatefulWidget {
 }
 
 class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
+  var paginatedList;
   TextEditingController returnInvoiceCodeController = TextEditingController();
   TextEditingController purchaseReturnOrderCodeController =
       TextEditingController();
@@ -332,6 +334,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                 },
                 success: (list) {
                   print("aaaaayyyiram" + list.data.toString());
+                  paginatedList=list;
 
                   result = list.data;
                   setState(() {
@@ -376,6 +379,26 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                             });
                           },
                           result: result,
+                          child:     tablePagination(
+                                () => context
+                                .read<VertiacalCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<VertiacalCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<VertiacalCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          ),
                         ),
                         // VerticalList(
                         //   tab:"RF",

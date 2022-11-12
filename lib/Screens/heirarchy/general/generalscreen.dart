@@ -138,10 +138,10 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
     BrandNameController.text = "";
     qrCodeController.text = "";
     rfIdController.text = "";
-     categoryId=0;
-     subCategoryId=0;
-     divisionId=0;
-     uomGroupId=0;
+    categoryId = 0;
+    subCategoryId = 0;
+    divisionId = 0;
+    uomGroupId = 0;
     Variable.divisionId = 0;
     Variable.categoryId = 0;
     Variable.subCategorycategory = 0;
@@ -176,7 +176,8 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
         break;
       case '6':
         img6 = true;
-        break;case '7':
+        break;
+      case '7':
         img7 = true;
         break;
     }
@@ -239,8 +240,13 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                     context.showSnackBarSuccess(data.data2);
                     Timer(Duration(seconds: 5), () {
                       setState(() {
-                      select?  context.read<ItemcreationListCubit>().getItemListList():
-                      context.read<ItemreadCubit>().getItemRead(veritiaclid!);
+                        select
+                            ? context
+                                .read<ItemcreationListCubit>()
+                                .getItemListList()
+                            : context
+                                .read<ItemreadCubit>()
+                                .getItemRead(veritiaclid!);
                         // select=false;
                       });
                     });
@@ -265,7 +271,8 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       group = data;
                       uomCategoryController.text = data?.uomGroupCode ?? '';
                       subCategoryController.text = data?.subCategoryCode ?? '';
-                      subCategoryNameController.text = data?.subCategoryName ?? '';
+                      subCategoryNameController.text =
+                          data?.subCategoryName ?? '';
                       uomGroupController.text = data?.uomGroupCode ?? '';
 
                       GroupController.text = data?.groupCode ?? '';
@@ -283,9 +290,9 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       Variable.divisionId = data.divisionId;
                       divisionId = data.divisionId;
                       Variable.categoryId = data.categoryId;
-                     categoryId = data.categoryId;
+                      categoryId = data.categoryId;
                       Variable.subCategorycategory = data.subCategoryId;
-                      subCategoryId= data.subCategoryId;
+                      subCategoryId = data.subCategoryId;
                       Variable.uomGroupId = data.uomGroupId;
                       uomGroupId = data.uomGroupId;
 
@@ -314,9 +321,12 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       searchNameController.text = data?.searchName ?? '';
                       displayNameController.text = data?.displayname ?? '';
                       active = data?.isActive ?? false;
-                      discriptionNameController.text = data?.itemMeta?.description ?? "";
-                      variantFrameworkController.text = data?.variantFrameWork ?? "";
-                      variantNameController.text = data?.variantFrameWorkName ?? "";
+                      discriptionNameController.text =
+                          data?.itemMeta?.description ?? "";
+                      variantFrameworkController.text =
+                          data?.variantFrameWork ?? "";
+                      variantNameController.text =
+                          data?.variantFrameWorkName ?? "";
 
                       setState(() {});
                     });
@@ -435,7 +445,6 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                       // label: Text("Clear")
                                       text: "CREATE",
                                     ),
-
                                   ],
                                 ),
                                 HeirarchySalesStableTable(
@@ -520,7 +529,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   color: Colors.white,
                                 ),
                                 TableBottom(
-                                  select:select,
+                                  select: select,
                                   barCode: barCodeController,
                                   qrCode: qrCodeController,
                                   rfId: rfIdController,
@@ -580,17 +589,35 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                         iconColor: Colors.white, onApply: () {
                                       ItemCreationModel model =
                                           ItemCreationModel(
-                                        name: itemNameController.text .isEmpty?null:itemNameController?.text,
-                                        barcode:barCodeController.text.isEmpty?null: barCodeController?.text ,
-                                        qrCode:qrCodeController.text.isEmpty?null: qrCodeController?.text ,
-                                        materialCode:materialController.text.isEmpty?null: materialController?.text ,
-
-                                        uomGroupCode:uomGroupController.text.isEmpty?null: uomGroupController?.text ,
-                                        uomCode:uomCategoryController.text.isEmpty?null: uomCategoryController?.text ,
-                                        groupCode:GroupController.text.isEmpty?null: GroupController.text,
-                                        brandCode:BrandController.text.isEmpty?null: BrandController.text ,
+                                        name: itemNameController.text.isEmpty
+                                            ? null
+                                            : itemNameController?.text,
+                                        barcode: barCodeController.text.isEmpty
+                                            ? null
+                                            : barCodeController?.text,
+                                        qrCode: qrCodeController.text.isEmpty
+                                            ? null
+                                            : qrCodeController?.text,
+                                        materialCode:
+                                            materialController.text.isEmpty
+                                                ? null
+                                                : materialController?.text,
+                                        uomGroupCode:
+                                            uomGroupController.text.isEmpty
+                                                ? null
+                                                : uomGroupController?.text,
+                                        uomCode:
+                                            uomCategoryController.text.isEmpty
+                                                ? null
+                                                : uomCategoryController?.text,
+                                        groupCode: GroupController.text.isEmpty
+                                            ? null
+                                            : GroupController.text,
+                                        brandCode: BrandController.text.isEmpty
+                                            ? null
+                                            : BrandController.text,
                                         staticGroupCode:
-                                        staticController.text ?? "",
+                                            staticController.text ?? "",
                                         variantFrameWorkCode:
                                             variantFrameworkController.text ??
                                                 "",
@@ -667,7 +694,6 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                         itemCatelog4: img7
                                             ? Variable.img7.toString()
                                             : itemCatelog4Controller.text,
-
                                       );
                                       print(model1);
 
@@ -725,9 +751,9 @@ class ItemHeirarchyStableTable extends StatefulWidget {
 
   ItemHeirarchyStableTable(
       {required this.brand,
-        required this.subCategoryId,
-        required this.divisionId,
-        required this.categoryid,
+      required this.subCategoryId,
+      required this.divisionId,
+      required this.categoryid,
       required this.brandName,
       required this.variantFramework,
       required this.variantFrameworkName,
@@ -768,11 +794,10 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
   TextEditingController staticNameController = TextEditingController();
   TextEditingController brandNameController = TextEditingController();
 
-  int? divisionid;
+  int divisionid=0;
 
   @override
   Widget build(BuildContext context) {
-    print("prabha" + widget.division.text);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Container(
@@ -838,13 +863,11 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 ontap: () {
                   showDailogPopUp(
                     context,
-                    TableConfigurePopup(
-
-                      type: "division-TablePopup",
+                    TableConfigurePopup(type: "division-TablePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
                           print(va?.id ?? "");
-                          divisionid = va?.id;
+                          divisionid = va?.id??0;
                           Variable.divisionId = va?.id;
 
                           widget.division.text = va?.code ?? "";
@@ -871,6 +894,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
+                      id: divisionid,
                       type: "category-TablePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
@@ -1291,7 +1315,6 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                       type: "BrandTabalePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
-
                           widget.brand.text = va?.code ?? "";
                           widget.brandName.text = va?.name ?? "";
                           setState(() {});

@@ -596,6 +596,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           lengthController.text=data?.dimension?.length.toString()??"";
           descriptionController.text=data?.description??"";
           variantCodeController.text=data?.code??"";
+          linkedItemController.text=data?.linkedItem??"";
           catalog1.text=data?.variantMeta?.catelog?.keyValues?.catelog1??"";
           catalog2.text=data?.variantMeta?.catelog?.keyValues?.catelog2??"";
           catalog3.text=data?.variantMeta?.catelog?.keyValues?.catelog3??"";
@@ -900,7 +901,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 ctx: context,
                                                 text: "Search",
                                                 height: 32,
-                                                Color:exportCheck? Color(0xff3E4F5B):Colors.red,
+                                                Color:exportCheck? Color(0xff3E4F5B):Colors.lightBlue,
                                                 width: 90,
                                                 labelcolor: Colors.white,
                                                 iconColor: Colors.white,

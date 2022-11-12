@@ -32,6 +32,7 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       uomGroupName: json['uom_group_name'] as String?,
       reOrderPoint: json['reorder_point'] as int?,
       reOrderQuantity: json['reorder_quantity'] as int?,
+      linkedItem: json['linked_item'] as String?,
       alterNativeBarcode: (json['var_alternative_barcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -126,6 +127,7 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'uom_group_name': instance.uomGroupName,
       'reorder_point': instance.reOrderPoint,
       'reorder_quantity': instance.reOrderQuantity,
+      'linked_item': instance.linkedItem,
       'var_alternative_barcode': instance.alterNativeBarcode,
       'var_alternative_qrcode': instance.alterNativeQrCode,
       'unit_cost': instance.unitCost,

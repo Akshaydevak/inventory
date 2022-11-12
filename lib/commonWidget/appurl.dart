@@ -61,20 +61,19 @@ const purchaseReturnGeneralPost =
     purchasereturnBaseUrl + "purchase-return/create-purchase-return";
 const purchaseReturnPurchaseInvoiceidReadApi =
     baseUrl + "purchase-order/list-purchase-invoice-for-purchase-return/";
-const purchaseReturnInvoiceRead = purchasereturnBaseUrl +
-    "purchase-return-invoice/read-purchase-return-order-for-invoice/";
+const purchaseReturnInvoiceRead = purchasereturnBaseUrl + "purchase-return-invoice/read-purchase-return-order-for-invoice/";
 const purchaseReturnInvoicelPost = purchasereturnBaseUrl +
     "purchase-return-invoice/create-purchase-return-invoice";
-const purchaseReturnGeneralreadApi =
-    purchasereturnBaseUrl + "purchase-return/read-purchase-return/";
-const purchaseReturnGeneralPatchApi =
-    purchasereturnBaseUrl + "purchase-return/read-purchase-return/";
+const purchaseReturnGeneralreadApi = purchasereturnBaseUrl + "purchase-return/read-purchase-return/";
+const purchaseReturnGeneralPatchApi = purchasereturnBaseUrl + "purchase-return/read-purchase-return/";
+const listpurchaseReturnGeneralApi = purchasereturnBaseUrl + "purchase-return/list-purchase-return-order/";
+
 const purchaseReturnGeneralVerticalListApi =
     purchasereturnBaseUrl + "purchase-return/list-purchase-return-order/";
 
 //sales general..........................................
-const salesOederGeneralPost =
-    salesOrderBaseUrl + "sales-order/create-sales-order";
+const salesOederGeneralPost = salesOrderBaseUrl + "sales-order/create-sales-order";
+const listsalesOederGeneral = salesOrderBaseUrl + "sales-order/list-sales-order/";
 const salesGeneralOrderType =
     salesOrderBaseUrl + "sales-order/create-sales-order";
 const salesGeneralVerticalList =
@@ -93,8 +92,8 @@ const salesInvoicePostApi =
 //sales return tab
 const salesReurnVertcalListApi =
     salesReturnBaseUrl + "sales-return/list-sales-return-by-inventory/";
-const salesReurnPostApi =
-    salesReturnBaseUrl + "sales-return/create-sales-return";
+const salesReurnPostApi = salesReturnBaseUrl + "sales-return/create-sales-return";
+const listsalesReurnApi = salesReturnBaseUrl + "sales-return/list-sales-return-by-inventory/";
 const salesInvoiceCodeApi =
     salesOrderBaseUrl + "sales-invoice/list-sales-invoice/";
 const salesInvoiceRradApi =
@@ -103,8 +102,7 @@ const salesReturnInvoiceRradApi =
     salesReturnBaseUrl + "sales-return/read-sales-return/";
 const salesReturnInvoiceDeletedApi =
     salesReturnBaseUrl + "sales-return/read-sales-return/";
-const salesReturnOrderMode =
-    salesReturnBaseUrl + "sales-return/create-sales-return";
+const salesReturnOrderMode = salesReturnBaseUrl + "sales-return/create-sales-return";
 const salesReturngeneralPAtchApi =
     salesReturnBaseUrl + "sales-return/read-sales-return/";
 //Sales return invoice read

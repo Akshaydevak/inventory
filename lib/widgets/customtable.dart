@@ -30,23 +30,25 @@ Widget tableHeadtext(
     Container(
       alignment: center?Alignment.topLeft:Alignment.topLeft,
       height: height,
-      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
+      padding: padding ?? EdgeInsets.fromLTRB(7, 120, 0, 4),
       color: color,
       child: Text(
         label,
-        textAlign: TextAlign.left,
-        style: TextStyle(fontSize: size, color: textColor),
+        textAlign: TextAlign.center,
+        style: TextStyle(fontSize: size, color: textColor,),
       ),
     );
 Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
       double? height,
+      Color color= const Color(0xffF2F3F5),
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
-      alignment: Alignment.topLeft,
+      height: height,
+      alignment: Alignment.center,
 
-      // color: Colors.green,
+      color: color,
       padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,

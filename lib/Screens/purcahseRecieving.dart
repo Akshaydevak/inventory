@@ -47,6 +47,7 @@ import 'package:inventory/model/purchaseorder.dart';
 
 import '../printScreen.dart';
 import 'Dashboard.dart';
+import 'heirarchy/general/generalscreen.dart';
 
 class PurchaseRecievinScreen extends StatefulWidget {
   @override
@@ -123,7 +124,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
   PurchaseOrderTableModel? purchaseTable;
-
+   var paginatedList;
   int? veritiaclid = 0;
   List<int?> currentStock = [];
   PurchaseCureentStockQty? purchaseCurrentStock;
@@ -563,6 +564,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                       },
                       success: (list) {
                         print("listtt" + list.toString());
+                        paginatedList=list;
                         result = list.data;
                         setState(() {
                           if(result.isNotEmpty){ veritiaclid=result[0].id;
@@ -607,6 +609,26 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                   context.read<PurchaserecievigReadCubit>().getGeneralPurchaseRecievingRead(veritiaclid);
                                 });
                               },result: result,
+                              child:                    tablePagination(
+                                    () => context
+                                    .read<InventorysearchCubit>()
+                                    .refresh(),
+                                back: paginatedList?.previousUrl == null
+                                    ? null
+                                    : () {
+                                  context
+                                      .read<InventorysearchCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                                next:paginatedList?.nextPageUrl == null
+                                    ? null
+                                    : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<InventorysearchCubit>()
+                                      .nextslotSectionPageList("");
+                                },
+                              ),
                             ),
 
                             Expanded(

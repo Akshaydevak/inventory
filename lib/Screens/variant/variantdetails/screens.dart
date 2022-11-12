@@ -5,6 +5,7 @@ import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
@@ -57,9 +58,30 @@ class _IdentificationState extends State<Identification> {
   List<TextEditingController> bacCodeListTextEditing = [];
   bool barActive = false;
   bool qrActive = false;
+  List<bool>upDate=[];
+  List<bool>upDateButton=[];
+  List<TextEditingController> barcodeTextEditingController = [];
 
   List<AlternativeBarcode> alterNativeQrCode = [];
   bool onChange = false;
+  bool onSaveActive = false;
+
+
+  saveButtonActovde(String barcode,bool isActive){
+
+    onChange=true;
+    if(barcode!="" && isActive==true){
+      setState(() {
+        onSaveActive=true;
+      });
+    }
+    else{
+      setState(() {
+        onSaveActive=false;
+      });
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +89,10 @@ class _IdentificationState extends State<Identification> {
     double w = MediaQuery.of(context).size.width;
     if (!onChange) {
       alternativeBarcode = [];
+      upDate.clear();
+      onSaveActive=false;
+      upDateButton.clear();
+
       bacCodeListTextEditing = [];
 
       if (widget.alternativeBarcode?.isNotEmpty == true) {
@@ -74,6 +100,8 @@ class _IdentificationState extends State<Identification> {
           var value = widget.alternativeBarcode[i].barcode;
           if (value == null) value = "";
           bacCodeListTextEditing.add(TextEditingController(text: value));
+          upDate.add(false);
+          upDateButton.add(false);
         }
 
         alternativeBarcode = widget?.alternativeBarcode ?? [];
@@ -242,39 +270,47 @@ class _IdentificationState extends State<Identification> {
                           for (var i = 0; i < alternativeBarcode!.length; i++)
                             TableRow(
                                 decoration: BoxDecoration(
-                                    color: Colors.grey.shade200,
+                                    color: Pellet.tableRowColor,
                                     shape: BoxShape.rectangle,
-                                    border: const Border(
+                                    border:  Border(
                                         left: BorderSide(
-                                            width: .5,
-                                            color: Colors.grey,
+
+                                            color: Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
                                             style: BorderStyle.solid),
                                         bottom: BorderSide(
-                                            width: .5,
-                                            color: Colors.grey,
+
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
                                             style: BorderStyle.solid),
                                         right: BorderSide(
-                                            color: Colors.grey,
-                                            width: .5,
+                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            width: .4,
+
                                             style: BorderStyle.solid))),
                                 children: [
                                   TableCell(
                                     verticalAlignment:
                                         TableCellVerticalAlignment.middle,
 
-                                    child: textPadding((i + 1).toString()),
+                                    child: textPadding((i + 1).toString(),color:upDate[i]?Colors.white:Colors.transparent,height: 48 ),
                                     // UnderLinedInput(),
                                   ),
                                   TableCell(
                                       verticalAlignment:
                                           TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
-                                        // controller: bacCodeListTextEditing[i],
+                                        readOnly: !upDate[i],
+                                        filledColour: upDate[i]?Colors.white:Colors.transparent,
+                                        controller: bacCodeListTextEditing[i],
                                         formatter: false,
-                                        controller: TextEditingController(text:alternativeBarcode?[i].barcode??"" ),
+                                        // controller: TextEditingController(text:alternativeBarcode?[i].barcode??"" ),
                                         // initialCheck: true,
                                         // last:alternativeBarcode?[i].barcode??"",
                                         onChanged: (va) {
+                                          onChange=true;
+                                          setState(() {
+                                            upDateButton[i]=true;
+                                          });
                                           alternativeBarcode[i] =
                                               alternativeBarcode[i].copyWith(
                                                   barcode: va.toString());
@@ -286,12 +322,18 @@ class _IdentificationState extends State<Identification> {
                                     verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                     child: CheckedBoxs(
+                                      color:upDate[i]?Colors.white:Colors.transparent,
                                         valueChanger:
                                             alternativeBarcode[i].isActive,
                                         onSelection: (va) {
+                                        if(upDate[i]==true){
                                           bool? isActive =
                                               alternativeBarcode[i].isActive;
                                           setState(() {
+                                            onChange=true;
+                                            setState(() {
+                                              upDateButton[i]=true;
+                                            });
                                             setState(() {});
                                             isActive = !isActive!;
                                             alternativeBarcode[i] =
@@ -300,42 +342,89 @@ class _IdentificationState extends State<Identification> {
                                             widget.barQrCodeTableAssign(
                                                 type: "1", list: alternativeBarcode);
                                           });
+                                        }
+
                                         }),
                                   ),
-                                  TableTextButton(
-                                    label: "",
-                                    icon: Icons.delete,
-                                    onPress: () {
-                                      onChange=true;
-                                      setState(() {
-                                        alternativeBarcode?.removeAt(
-                                            i);
-                                        widget.barQrCodeTableAssign(
-                                            type: "1", list: alternativeBarcode);
+                                  TableCell(
+                                    verticalAlignment:
+                                    TableCellVerticalAlignment.middle,
 
-                                      });
+                                    child: Row(
+                                      children: [
+                                        TableTextButton(
+                                          buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                                          textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                                          bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                                          label: upDateButton[i]==true?"Update":"Edit",
 
-                                    },
+                                          // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                                          onPress: () {
+                                            onChange=true;
+
+
+                                            setState(() {
+                                              upDate[i]=!upDate[i];
+
+                                              if( upDateButton[i]==true){
+                                                widget.barQrCodeTableAssign(
+                                                    type: "1", list: alternativeBarcode);
+                                                upDateButton[i]=false;
+
+                                              }
+
+
+                                            });
+                                            setState(() {
+
+                                            });
+
+                                          },
+                                        ),
+                                        SizedBox(width: 3,),
+                                        TableIconTextButton(
+                                          label: "",
+                                          icon: Icons.delete,
+                                          onPress: () {
+                                            onChange=true;
+                                            setState(() {
+                                              alternativeBarcode?.removeAt(
+                                                  i);
+                                              upDate.removeAt(i);
+                                              upDateButton.removeAt(i);
+                                              bacCodeListTextEditing.removeAt(i);
+                                              widget.barQrCodeTableAssign(
+                                                  type: "1", list: alternativeBarcode);
+
+                                            });
+
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ]),
                         ],
                         TableRow(
-                            decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                shape: BoxShape.rectangle,
-                                border: const Border(
-                                    left: BorderSide(
-                                        width: .5,
-                                        color: Colors.grey,
-                                        style: BorderStyle.solid),
-                                    bottom: BorderSide(
-                                        width: .5,
-                                        color: Colors.grey,
-                                        style: BorderStyle.solid),
-                                    right: BorderSide(
-                                        color: Colors.grey,
-                                        width: .5,
-                                        style: BorderStyle.solid))),
+            decoration: BoxDecoration(
+            color: Pellet.tableRowColor,
+            shape: BoxShape.rectangle,
+            border:  Border(
+            left: BorderSide(
+
+            color: Color(0xff3E4F5B).withOpacity(.1),
+            width: .4,
+            style: BorderStyle.solid),
+            bottom: BorderSide(
+
+            color:   Color(0xff3E4F5B).withOpacity(.1),
+            style: BorderStyle.solid),
+            right: BorderSide(
+            color:   Color(0xff3E4F5B).withOpacity(.1),
+            width: .4,
+
+            style: BorderStyle.solid))),
                             children: [
                               TableCell(
                                 verticalAlignment:
@@ -354,7 +443,10 @@ class _IdentificationState extends State<Identification> {
                                       TableCellVerticalAlignment.middle,
                                   child: UnderLinedInput(
                                     controller: barCodeTextEditingController,
-                                    onChanged: (va) {},
+                                    onChanged: (va) {
+                                      onChange=true;
+                                      saveButtonActovde(barCodeTextEditingController.text,barActive);
+                                    },
                                   )),
                               TableCell(
                                 verticalAlignment:
@@ -363,37 +455,49 @@ class _IdentificationState extends State<Identification> {
                                     valueChanger: barActive,
                                     onSelection: (va) {
                                       onChange = true;
+                                      saveButtonActovde(barCodeTextEditingController.text,barActive);
                                       setState(() {
                                         barActive = !barActive!;
                                       });
                                     }),
                               ),
-                              TableTextButton(
-                                label: "",
-                                icon: Icons.add,
-                                onPress: () {
-                                  setState(() {
-                                    onChange = true;
-                                    bacCodeListTextEditing.add(
-                                        TextEditingController(
-                                            text: barCodeTextEditingController
-                                                    ?.text ??
-                                                ""));
-                                    AlternativeBarcode model =
-                                        AlternativeBarcode(
-                                            barcode:
-                                                barCodeTextEditingController
-                                                        .text ??
-                                                    "",
-                                            isActive: barActive);
-                                    alternativeBarcode.add(model);
+                              TableCell(
+                                verticalAlignment:
+                                TableCellVerticalAlignment.middle,
 
-                                    widget.barQrCodeTableAssign(
-                                        type: "1", list: alternativeBarcode);
-                                    barCodeTextEditingController.clear();
-                                    barActive = false;
-                                  });
-                                },
+                                child: TableTextButton(
+                                  buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                                  textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                                  bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                                  label: "Save",
+                                  // icon: Icons.add,
+                                  onPress: () {
+                                    setState(() {
+                                      onChange = true;
+                                      bacCodeListTextEditing.add(
+                                          TextEditingController(
+                                              text: barCodeTextEditingController
+                                                      ?.text ??
+                                                  ""));
+                                      upDate.add(false);
+                                      upDateButton.add(false);
+                                      AlternativeBarcode model =
+                                          AlternativeBarcode(
+                                              barcode:
+                                                  barCodeTextEditingController
+                                                          .text ??
+                                                      "",
+                                              isActive: barActive);
+                                      alternativeBarcode.add(model);
+
+                                      widget.barQrCodeTableAssign(
+                                          type: "1", list: alternativeBarcode);
+                                      barCodeTextEditingController.clear();
+                                      barActive = false;
+                                      onSaveActive=false;
+                                    });
+                                  },
+                                ),
                               ),
                             ]),
                       ],
@@ -756,6 +860,14 @@ class ProductTablesState extends State<ProductTables> {
                     addNew: widget.addNew,
                   ),
                 ),
+
+              ],
+            ),
+            SizedBox(
+              height: h * .05,
+            ),
+            Row(
+              children: [
                 Expanded(
                   child: VariantProductDetails(
                     productDetails: widget.productDetails,
@@ -775,6 +887,14 @@ class ProductTablesState extends State<ProductTables> {
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
+
+              ],
+            ),
+            SizedBox(
+              height: h * .05,
+            ),
+            Row(
+              children: [
                 Expanded(
                   child: AdditionaslInfo(
                     additionalInfo: widget.additionalInfo,
@@ -782,9 +902,6 @@ class ProductTablesState extends State<ProductTables> {
                   ),
                 ),
               ],
-            ),
-            SizedBox(
-              height: h * .05,
             ),
             Row(
               children: [
@@ -794,15 +911,24 @@ class ProductTablesState extends State<ProductTables> {
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
+
+              ],
+            ),
+
+            SizedBox(
+              height: h * .05,
+            ),
+            Row(
+              children: [
                 Expanded(
                   child: Ingredians(
                     ingredians: widget.ingredians,
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
+
               ],
             ),
-
             SizedBox(
               height: h * .05,
             ),
@@ -814,6 +940,14 @@ class ProductTablesState extends State<ProductTables> {
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
+
+              ],
+            ),
+            SizedBox(
+              height: h * .05,
+            ),
+            Row(
+              children: [
                 Expanded(
                   child: StoragesWidget(
                     storage: widget.storage,
@@ -821,9 +955,6 @@ class ProductTablesState extends State<ProductTables> {
                   ),
                 )
               ],
-            ),
-            SizedBox(
-              height: h * .05,
             ),
             Row(children: [
               Expanded(
@@ -3064,16 +3195,45 @@ class VendorDetailsVarient extends StatefulWidget {
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails = [];
+  List<bool>upDate=[];
+  List<bool>upDateButton=[];
 
   String vendoeCode = "";
   TextEditingController code = TextEditingController();
   TextEditingController refCode = TextEditingController();
+  List<TextEditingController>codeListTextEditingController = [];
+  List<TextEditingController>refCodeListTextEditingController = [];
+
+  bool onSaveActive = false;
+
+
+  saveButtonActovde(String name,String ref){
+
+    onChange=true;
+    if(name!="" && ref!=""){
+      setState(() {
+        onSaveActive=true;
+      });
+    }
+    else{
+      setState(() {
+        onSaveActive=false;
+      });
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     if (onChange==false) {
+      upDate.clear();
+      upDateButton.clear();
+      onSaveActive=false;
+      codeListTextEditingController.clear();
+      refCodeListTextEditingController.clear();
+
       print("welcome to the entire place");
 
 
@@ -3083,6 +3243,12 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
         if(widget.vendorDetails?.isNotEmpty==true){
           for (var i=0;i<widget.vendorDetails!.length-1;i++){
             if(vendorDetails[i].vendorName!=null &&vendorDetails[i].vendorCode!=null){
+              upDate.add(false);
+              upDateButton.add(false);
+              var nameValue = new TextEditingController(text: vendorDetails[i].vendorName==null?"":vendorDetails[i].vendorName);
+              codeListTextEditingController.add(nameValue);
+              var refValue = new TextEditingController(text: vendorDetails[i].vendorReerenceCode==null?"":vendorDetails[i].vendorReerenceCode);
+              refCodeListTextEditingController.add(refValue);
               vendorDetails.add(widget.vendorDetails![i]);
             }
           }
@@ -3119,7 +3285,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Sl No',
 
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.only(left: 13,top: 13),
 
                 height: 46,
                 textColor: Colors.white,
@@ -3130,7 +3296,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Vendor Name',
                 textColor: Colors.white,
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.only(left: 13,top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3138,7 +3304,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Vendor reference code',
                 textColor: Colors.white,
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.only(left: 13,top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3146,7 +3312,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 '',
                 textColor: Colors.white,
-                padding: EdgeInsets.all(7),
+                padding: EdgeInsets.only(left: 13,top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3156,111 +3322,160 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
           if (vendorDetails?.isNotEmpty == true) ...[
             for (var i = 0; i < vendorDetails!.length; i++)
               TableRow(
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      shape: BoxShape.rectangle,
-                      border: const Border(
-                          left: BorderSide(
-                              width: .5,
-                              color: Colors.grey,
-                              style: BorderStyle.solid),
-                          bottom: BorderSide(
-                              width: .5,
-                              color: Colors.grey,
-                              style: BorderStyle.solid),
-                          right: BorderSide(
-                              color: Colors.grey,
-                              width: .5,
-                              style: BorderStyle.solid))),
+    decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+    left: BorderSide(
+
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
                   children: [
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: textPadding((i + 1).toString()),
+                      child: textPadding((i + 1).toString(),
+                        height: 50,
+                        color:  upDate[i]?Colors.white:Colors.transparent,
+
+                      ),
                     ),
                     TableCell(
+
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child:
                             // Text(keys[i].value??"",)
                             UnderLinedInput(
-                              controller: TextEditingController(text:vendorDetails?[i].vendorName ?? "" ),
+                              readOnly:  !upDate[i],
+                              filledColour: upDate[i]?Colors.white:Colors.transparent,
+                              controller: codeListTextEditingController[i],
                           // initialCheck: true,
                           // last: vendorDetails?[i].vendorName ?? "" ?? "",
                           formatter: false,
                               onComplete: () {
-                                // showDailogPopUp(
-                                //   context,
-                                //   ConfigurePopup(
-                                //     listAssign: (VendorDetailsModel model) {
-                                //       print("akkk");
-                                //       print(model.toString());
-                                //       setState(() {
-                                //         onChange = true;
-                                //         vendorDetails[i] =
-                                //             vendorDetails[i].copyWith(vendorCode: model.manuFactureuserCode,vendorName: model.manuFactureName);
-                                //         widget.vendorTableEdit(list: vendorDetails);
-                                //       });
-                                //     },
-                                //     type: "vendorDetailList_popup",
-                                //   ),
-                                // );
+
                               },
                           onChanged: (va) {
                             onChange=true;
                             print(va);
+                            upDateButton[i]=true;
                             vendorDetails[i] =
                                 vendorDetails[i].copyWith(vendorCode: va);
                             widget.vendorTableEdit(list: vendorDetails);
                           },
                         )),
                     UnderLinedInput(
-                      controller: TextEditingController(text:vendorDetails?[i].vendorReerenceCode ?? "" ),
+                      readOnly: !upDate[i],
+                      filledColour: upDate[i]?Colors.white:Colors.transparent,
+                      controller: refCodeListTextEditingController[i],
                       // initialCheck: true,
                       // last: vendorDetails?[i].vendorReerenceCode ?? "" ?? "",
                       formatter: false,
                       onChanged: (va) {
                         onChange=true;
-                        print(va);
-                        vendorDetails[i] =
-                            vendorDetails[i].copyWith(vendorReerenceCode: va);
-                        widget.vendorTableEdit(list: vendorDetails);
+                        setState(() {
+                          upDateButton[i]=true;
+                          print(va);
+                          vendorDetails[i] =
+                              vendorDetails[i].copyWith(vendorReerenceCode: va);
+                          widget.vendorTableEdit(list: vendorDetails);
+                        });
+
                       },
                     ),
-                    TableTextButton(
-                      icon: Icons.delete,
-                      onPress: () {
-                        onChange=true;
-                        setState(() {
-                          vendorDetails?.removeAt(
-                              i);
+    TableCell(
+    verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: Row(
+                        children: [
+                          TableTextButton(
+                            buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
+                            textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
+                            bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                            label: upDateButton[i]==true?"Update":"Edit",
 
-                        widget.vendorTableEdit(list: vendorDetails);
-                        });
-                      },
-                      label: "",
+                            // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
+
+                            onPress: () {
+                              onChange=true;
+
+
+                              setState(() {
+                                upDate[i]=!upDate[i];
+
+                                if( upDateButton[i]==true){
+                                  widget.vendorTableEdit(list: vendorDetails);
+                                  upDateButton[i]=false;
+
+
+
+
+
+                                }
+
+
+                              });
+                              setState(() {
+
+                              });
+
+                            },
+                          ),
+                          SizedBox(width: 3,),
+
+                          TableIconTextButton(
+                            icon: Icons.delete,
+                            onPress: () {
+                              onChange=true;
+                              setState(() {
+                                vendorDetails?.removeAt(
+                                    i);
+                                upDate.removeAt(i);
+                                upDateButton.removeAt(i);
+                                codeListTextEditingController.removeAt(i);
+                               refCodeListTextEditingController.removeAt(i);
+
+                              widget.vendorTableEdit(list: vendorDetails);
+                              });
+                            },
+                            label: "",
+                          ),
+                        ],
+                      ),
                     )
                   ])
           ],
-          TableRow(
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  shape: BoxShape.rectangle,
-                  border: const Border(
-                      left: BorderSide(
-                          width: .5,
-                          color: Colors.grey,
-                          style: BorderStyle.solid),
-                      bottom: BorderSide(
-                          width: .5,
-                          color: Colors.grey,
-                          style: BorderStyle.solid),
-                      right: BorderSide(
-                          color: Colors.grey,
-                          width: .5,
-                          style: BorderStyle.solid))),
+          TableRow(decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+    left: BorderSide(
+
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
               children: [
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: textPadding((vendorDetails.length + 1).toString()),
+                  child: textPadding((vendorDetails.length + 1).toString(),height: 50,
+                  ),
                 ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3280,6 +3495,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                               onChange = true;
                               code.text = model.manuFactureName ?? "";
                               vendoeCode = model.manuFactureuserCode ?? "";
+                              saveButtonActovde(code.text,refCode.text);
                             });
                           },
                           type: "vendorDetailList_popup",
@@ -3293,24 +3509,42 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     child: UnderLinedInput(
                       formatter: false,
                       controller: refCode,
+                      onChanged: (va){
+                        onChange=true;
+                        saveButtonActovde(code.text,refCode.text);
+                      },
                     )),
-                TableTextButton(
-                  onPress: () {
-                    widget.vendorTableEdit(list: vendorDetails);
-                    VendorDetails model = VendorDetails(
-                        vendorName: code.text ?? "",
-                        vendorReerenceCode: refCode.text ?? "",
-                        vendorCode: vendoeCode);
-                    onChange = true;
-                    setState(() {
-                      vendorDetails.add(model);
+                TableCell(
+                  verticalAlignment: TableCellVerticalAlignment.middle,
+                  child: TableTextButton(
+                    buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
+                    textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
+                    bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                    onPress: () {
                       widget.vendorTableEdit(list: vendorDetails);
-                      code.text = "";
-                      refCode.text = "";
-                    });
-                  },
-                  label: "",
-                  icon: Icons.add,
+                      VendorDetails model = VendorDetails(
+                          vendorName: code.text ?? "",
+                          vendorReerenceCode: refCode.text ?? "",
+                          vendorCode: vendoeCode);
+                      onChange = true;
+                      setState(() {
+                        vendorDetails.add(model);
+                        upDate.add(false);
+                        upDateButton.add(false);
+                        var name = new TextEditingController(text: code.text);
+                        var ref = new TextEditingController(text: refCode.text);
+
+                        codeListTextEditingController.add(name);
+                        refCodeListTextEditingController.add(ref);
+                        widget.vendorTableEdit(list: vendorDetails);
+                        code.text = "";
+                        refCode.text = "";
+                        onSaveActive=false;
+                      });
+                    },
+                    label: "Save",
+
+                  ),
                 )
               ]),
         ],

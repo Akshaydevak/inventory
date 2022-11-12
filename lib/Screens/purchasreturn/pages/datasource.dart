@@ -503,8 +503,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<PurchaseOrder>>> getSearch(String? code) async {
-    String path =
-        "http://invtry-purchase-return.rgcdynamics.org/purchase-return/list-purchase-return-order/test?code=$code";
+    String path =listpurchaseReturnGeneralApi+Variable.inventory_ID.toString()+"?$code";
+
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -519,7 +519,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<PurchaseOrder>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']
+
+    );
   }
 
   @override
@@ -847,7 +850,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
       String? code) async {
     String path =
-        "http://invtry-sales-order-staging.rgcdynamics.org/sales-order/list-sales-order/${Variable.verticalid}?code=$code";
+        listsalesOederGeneral+"${Variable.verticalid}?$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -862,7 +865,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<salesOrderTypeModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']
+    );
   }
 
   @override
@@ -1389,7 +1394,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesReturnSearch(
       String? code) async {
     String path =
-        "https://api-invtry-sales-return.hilalcart.com/sales-return/list-sales-return-by-inventory/${Variable.verticalid}?code=$code";
+        listsalesReurnApi+"${Variable.verticalid}?code=$code";
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -1404,7 +1409,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<salesOrderTypeModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']
+    );
   }
 
   @override

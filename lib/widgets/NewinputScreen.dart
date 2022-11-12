@@ -691,6 +691,7 @@ class UnderLinedInput extends StatefulWidget {
   final bool formatter;
   final bool suffixIconEnable;
   final bool readOnly;
+  final Color filledColour;
   // final String? tileName;
   final int maxLines;
   final TextEditingController? controller;
@@ -702,6 +703,7 @@ class UnderLinedInput extends StatefulWidget {
       {Key? key,
         this.last="",
         this.readOnly=false,
+        this.filledColour=const Color(0xffF2F3F5),
         this.suffixIconEnable=false,
         this.enable = true,
         this.initial='',
@@ -755,13 +757,15 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
               onEditingComplete: widget.onComplete,
               onChanged: widget.onChanged,
               decoration: InputDecoration(
+                filled: true,
+                fillColor: widget.filledColour,
                 isCollapsed: true,
 
 
                 contentPadding: EdgeInsets.all(20),
                 isDense: true,
                 hintText: widget.hintText,
-                hintStyle: TextStyle(fontSize: 10),
+                hintStyle: TextStyle(fontSize: 14),
                 border:InputBorder.none,
               ).copyWith(isDense: true),
             ),
@@ -772,6 +776,8 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
             child: Center(
               child: TextFormField(
                 readOnly: widget.readOnly,
+
+
 
                 // initialValue:widget.last=="0"?"":widget.last,
                 onTap: () {
@@ -791,13 +797,15 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 onChanged: widget.onChanged,
                 decoration: InputDecoration(
                   isCollapsed: true,
+                  filled: true,
+                  fillColor: widget.filledColour,
                   suffixIcon: widget.suffixIconEnable?Icon(Icons.arrow_downward_outlined):null,
 
 
                   contentPadding: EdgeInsets.all(20),
                   isDense: true,
                   hintText: widget.hintText,
-                  hintStyle: TextStyle(fontSize: 10),
+                  hintStyle: TextStyle(fontSize: 14),
                   border:InputBorder.none,
                 ).copyWith(isDense: true),
               ),
@@ -1438,9 +1446,9 @@ class CustomDropDown extends StatefulWidget {
    final Function onChange;
    final List <String>items;
    final bool border;
-   // final Color clr;
+   final Color clr;
 
-  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false});
+  CustomDropDown({required this.choosenValue, required this.onChange,required this.items,this.border=false,this.clr=Colors.transparent});
 
 
 
@@ -1455,10 +1463,10 @@ class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 30,
+      height: 48,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-       // color:   Pellet.tableBlueHeaderPrint,
+       color:   widget.clr,
         border: widget.border?Border.all(
           color: Colors.grey
         ):null
@@ -1466,6 +1474,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       child:Center(child:
    // value?
    DropdownButtonHideUnderline(
+
      child: DropdownButton(
        iconEnabledColor: Colors.black,
        iconDisabledColor: Colors.black,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dropdown/flutter_dropdown.dart';
 import 'package:inventory/Screens/variant/channel_alloction/model/typemodel.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -165,29 +166,23 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                 if(table?.isEmpty==true)...[
                   TableRow(
                       decoration: BoxDecoration(
-                          color: Colors.grey
-                              .shade200,
-                          shape: BoxShape
-                              .rectangle,
-                          border:const  Border(
+                          color: Pellet.tableRowColor,
+                          shape: BoxShape.rectangle,
+                          border:  Border(
                               left: BorderSide(
-                                  width: .5,
-                                  color: Colors
-                                      .grey,
-                                  style: BorderStyle
-                                      .solid),
+
+                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+                                  style: BorderStyle.solid),
                               bottom: BorderSide(
-                                  width: .5,
-                                  color: Colors
-                                      .grey,
-                                  style: BorderStyle
-                                      .solid),
+
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  style: BorderStyle.solid),
                               right: BorderSide(
-                                  color: Colors
-                                      .grey,
-                                  width: .5,
-                                  style: BorderStyle
-                                      .solid))),
+                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                  width: .4,
+
+                                  style: BorderStyle.solid))),
                       children: [
 
 

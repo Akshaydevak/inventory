@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/sales/invoice/model/invoicepostmodel.dart';
 import 'package:inventory/Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'package:inventory/Screens/salesreturn/invoice/cubit/invoicepost/salesreturninvoicepost_cubit.dart';
@@ -31,6 +32,7 @@ class SalesReturnGeneralInvoice extends StatefulWidget {
 }
 
 class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
+  var paginatedList;
   TextEditingController invoicedDateController=TextEditingController();
   TextEditingController invoiceCodeController=TextEditingController();
   TextEditingController paymentIdController=TextEditingController();
@@ -272,6 +274,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                   print("error");
                 },
                 success: (list) {
+                  paginatedList=list;
                   print("appuram" + list.data.toString());
 
                   result = list.data;
@@ -326,6 +329,26 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                 });
                               },
                               result: result,
+                              child:     tablePagination(
+                                    () => context
+                                    .read<SalesreturnverticalCubit>()
+                                    .refresh(),
+                                back: paginatedList?.previousUrl == null
+                                    ? null
+                                    : () {
+                                  context
+                                      .read<SalesreturnverticalCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                                next:paginatedList?.nextPageUrl == null
+                                    ? null
+                                    : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<SalesreturnverticalCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                              ),
                             ),
                             Expanded(child: Column(
                               children: [

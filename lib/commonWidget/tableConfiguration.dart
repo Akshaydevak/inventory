@@ -124,6 +124,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "category-TablePopup":
         {
           data = categoryTabalePopup(
+            id: id,
             apiType: apiType,
             type: type,
             valueSelect: valueSelect,
@@ -3118,7 +3119,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
     return Builder(builder: (context) {
       context
           .read<CategorylistCubit>()
-          .getCategoryist(type: widget.apiType ?? "");
+          .getCategoryist(type: widget.apiType ?? "",id:widget.id);
       return BlocConsumer<CategorylistCubit, CategorylistState>(
         listener: (context, state) {
           print("state" + state.toString());

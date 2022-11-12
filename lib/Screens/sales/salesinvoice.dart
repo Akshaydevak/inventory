@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/sales/invoice/cubits/invoicepost/invoicepost_cubit.dart';
 
 import 'package:inventory/Screens/sales/invoice/cubits/read/invoiceread_cubit.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -31,6 +33,7 @@ class SalesInvoiceScreen extends StatefulWidget {
 }
 
 class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
+  var paginatedList;
   TextEditingController invoiceCodeController=TextEditingController();
   TextEditingController invoiceDateController=TextEditingController();
   TextEditingController paymentIdController=TextEditingController();
@@ -235,6 +238,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                   print("error");
                 },
                 success: (list) {
+                  paginatedList=list;
                   print("appuram"+list.data.toString());
 
                   result = list.data;
@@ -264,6 +268,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
             return Builder(
                 builder: (context) {
                   return Scaffold(
+                    backgroundColor: Pellet.bagroundColor,
                     body: SingleChildScrollView(
                       child: IntrinsicHeight(
                         child: Row(
@@ -289,6 +294,26 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                 });
                               });
                             },result: result,
+                              child:     tablePagination(
+                                    () => context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .refresh(),
+                                back: paginatedList?.previousUrl == null
+                                    ? null
+                                    : () {
+                                  context
+                                      .read<SalesgeneralverticalCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                                next:paginatedList?.nextPageUrl == null
+                                    ? null
+                                    : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<SalesgeneralverticalCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                              ),
                             ),
                             Expanded(
                               child: Column(

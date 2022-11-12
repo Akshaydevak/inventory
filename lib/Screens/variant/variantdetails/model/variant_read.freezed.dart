@@ -47,6 +47,8 @@ class _$VariantReadModelTearOff {
           int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
+      @JsonKey(name: "linked_item")
+          String? linkedItem,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -164,6 +166,7 @@ class _$VariantReadModelTearOff {
       uomGroupName: uomGroupName,
       reOrderPoint: reOrderPoint,
       reOrderQuantity: reOrderQuantity,
+      linkedItem: linkedItem,
       alterNativeBarcode: alterNativeBarcode,
       alterNativeQrCode: alterNativeQrCode,
       unitCost: unitCost,
@@ -251,6 +254,8 @@ mixin _$VariantReadModel {
   int? get reOrderPoint => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_quantity")
   int? get reOrderQuantity => throw _privateConstructorUsedError;
+  @JsonKey(name: "linked_item")
+  String? get linkedItem => throw _privateConstructorUsedError;
   @JsonKey(name: "var_alternative_barcode")
   List<AlternativeBarcode>? get alterNativeBarcode =>
       throw _privateConstructorUsedError;
@@ -390,6 +395,8 @@ abstract class $VariantReadModelCopyWith<$Res> {
           int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
+      @JsonKey(name: "linked_item")
+          String? linkedItem,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -529,6 +536,7 @@ class _$VariantReadModelCopyWithImpl<$Res>
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
     Object? reOrderQuantity = freezed,
+    Object? linkedItem = freezed,
     Object? alterNativeBarcode = freezed,
     Object? alterNativeQrCode = freezed,
     Object? unitCost = freezed,
@@ -652,6 +660,10 @@ class _$VariantReadModelCopyWithImpl<$Res>
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      linkedItem: linkedItem == freezed
+          ? _value.linkedItem
+          : linkedItem // ignore: cast_nullable_to_non_nullable
+              as String?,
       alterNativeBarcode: alterNativeBarcode == freezed
           ? _value.alterNativeBarcode
           : alterNativeBarcode // ignore: cast_nullable_to_non_nullable
@@ -984,6 +996,8 @@ abstract class _$VariantReadModelCopyWith<$Res>
           int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
+      @JsonKey(name: "linked_item")
+          String? linkedItem,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -1134,6 +1148,7 @@ class __$VariantReadModelCopyWithImpl<$Res>
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
     Object? reOrderQuantity = freezed,
+    Object? linkedItem = freezed,
     Object? alterNativeBarcode = freezed,
     Object? alterNativeQrCode = freezed,
     Object? unitCost = freezed,
@@ -1257,6 +1272,10 @@ class __$VariantReadModelCopyWithImpl<$Res>
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
+      linkedItem: linkedItem == freezed
+          ? _value.linkedItem
+          : linkedItem // ignore: cast_nullable_to_non_nullable
+              as String?,
       alterNativeBarcode: alterNativeBarcode == freezed
           ? _value.alterNativeBarcode
           : alterNativeBarcode // ignore: cast_nullable_to_non_nullable
@@ -1479,6 +1498,7 @@ class _$_VariantReadModel implements _VariantReadModel {
       @JsonKey(name: "uom_group_name") this.uomGroupName,
       @JsonKey(name: "reorder_point") this.reOrderPoint,
       @JsonKey(name: "reorder_quantity") this.reOrderQuantity,
+      @JsonKey(name: "linked_item") this.linkedItem,
       @JsonKey(name: "var_alternative_barcode") this.alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode") this.alterNativeQrCode,
       @JsonKey(name: "unit_cost") this.unitCost,
@@ -1575,6 +1595,9 @@ class _$_VariantReadModel implements _VariantReadModel {
   @override
   @JsonKey(name: "reorder_quantity")
   final int? reOrderQuantity;
+  @override
+  @JsonKey(name: "linked_item")
+  final String? linkedItem;
   @override
   @JsonKey(name: "var_alternative_barcode")
   final List<AlternativeBarcode>? alterNativeBarcode;
@@ -1725,7 +1748,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
   }
 
   @override
@@ -1777,6 +1800,9 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.reOrderQuantity, reOrderQuantity) ||
                 const DeepCollectionEquality()
                     .equals(other.reOrderQuantity, reOrderQuantity)) &&
+            (identical(other.linkedItem, linkedItem) ||
+                const DeepCollectionEquality()
+                    .equals(other.linkedItem, linkedItem)) &&
             (identical(other.alterNativeBarcode, alterNativeBarcode) ||
                 const DeepCollectionEquality()
                     .equals(other.alterNativeBarcode, alterNativeBarcode)) &&
@@ -1798,9 +1824,7 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.actualCost, actualCost) ||
                 const DeepCollectionEquality()
                     .equals(other.actualCost, actualCost)) &&
-            (identical(other.returType, returType) ||
-                const DeepCollectionEquality()
-                    .equals(other.returType, returType)) &&
+            (identical(other.returType, returType) || const DeepCollectionEquality().equals(other.returType, returType)) &&
             (identical(other.safetyStock, safetyStock) || const DeepCollectionEquality().equals(other.safetyStock, safetyStock)) &&
             (identical(other.minPurchaseOrderLimit, minPurchaseOrderLimit) || const DeepCollectionEquality().equals(other.minPurchaseOrderLimit, minPurchaseOrderLimit)) &&
             (identical(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit) || const DeepCollectionEquality().equals(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit)) &&
@@ -1865,6 +1889,7 @@ class _$_VariantReadModel implements _VariantReadModel {
       const DeepCollectionEquality().hash(uomGroupName) ^
       const DeepCollectionEquality().hash(reOrderPoint) ^
       const DeepCollectionEquality().hash(reOrderQuantity) ^
+      const DeepCollectionEquality().hash(linkedItem) ^
       const DeepCollectionEquality().hash(alterNativeBarcode) ^
       const DeepCollectionEquality().hash(alterNativeQrCode) ^
       const DeepCollectionEquality().hash(unitCost) ^
@@ -1953,6 +1978,8 @@ abstract class _VariantReadModel implements VariantReadModel {
           int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
+      @JsonKey(name: "linked_item")
+          String? linkedItem,
       @JsonKey(name: "var_alternative_barcode")
           List<AlternativeBarcode>? alterNativeBarcode,
       @JsonKey(name: "var_alternative_qrcode")
@@ -2098,6 +2125,9 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "reorder_quantity")
   int? get reOrderQuantity => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "linked_item")
+  String? get linkedItem => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "var_alternative_barcode")
   List<AlternativeBarcode>? get alterNativeBarcode =>

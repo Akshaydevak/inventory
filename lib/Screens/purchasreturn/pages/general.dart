@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/generalpost_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/generalread_cubit.dart';
@@ -13,6 +14,7 @@ import 'package:inventory/Screens/purchasreturn/cubits/cubit/returdelete_cubit.d
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/vertical/vertiacal_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/cubits/cubit/verticallist_cubit.dart';
 import 'package:inventory/Screens/purchasreturn/pages/model/purchaseinvoice.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -66,6 +68,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   TextEditingController grandTotalCostController=TextEditingController();
   TextEditingController inventory=TextEditingController();
   TextEditingController vendorMailId=TextEditingController();
+  var paginatedList;
   bool select=false;
   bool updateCheck=false;
   late AutoScrollController recieveController;
@@ -453,6 +456,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
             print("error");
           },
           success: (list) {
+            paginatedList=list;
             print("aaaaayyyiram"+list.data.toString());
 
             result = list.data;
@@ -509,6 +513,26 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                           });
                         });
                       },result: result,
+                        child:     tablePagination(
+                      () => context
+                    .read<VertiacalCubit>()
+                    .refresh(),
+                back: paginatedList?.previousUrl == null
+                    ? null
+                    : () {
+                  context
+                      .read<VertiacalCubit>()
+                      .previuosslotSectionPageList();
+                },
+                next:paginatedList?.nextPageUrl == null
+                    ? null
+                    : () {
+                  // print(data.nextPageUrl);
+                  context
+                      .read<VertiacalCubit>()
+                      .nextslotSectionPageList();
+                },
+              ),
                       ),
                       Expanded(
                         child: Container(
@@ -938,11 +962,24 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                   ]),
                                               if(lines.isEmpty)...[
                                                 TableRow(
-                                                    decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                        border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                            bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                            right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                                .solid))),
+                                                    decoration: BoxDecoration(
+                                                        color: Pellet.tableRowColor,
+                                                        shape: BoxShape.rectangle,
+                                                        border:  Border(
+                                                            left: BorderSide(
+
+                                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                width: .4,
+                                                                style: BorderStyle.solid),
+                                                            bottom: BorderSide(
+
+                                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                style: BorderStyle.solid),
+                                                            right: BorderSide(
+                                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                width: .4,
+
+                                                                style: BorderStyle.solid))),
                                                     children: [
                                                       textPadding(""),
                                                       textPadding(""),
@@ -973,11 +1010,24 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                               if (lines != null)...[
                                                 for (var i = 0; i < lines.length; i++)
                                                   TableRow(
-                                                      decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                          border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                              bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                              right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                                  .solid))),
+                                                      decoration: BoxDecoration(
+                                                          color: Pellet.tableRowColor,
+                                                          shape: BoxShape.rectangle,
+                                                          border:  Border(
+                                                              left: BorderSide(
+
+                                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                  width: .4,
+                                                                  style: BorderStyle.solid),
+                                                              bottom: BorderSide(
+
+                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                  style: BorderStyle.solid),
+                                                              right: BorderSide(
+                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                  width: .4,
+
+                                                                  style: BorderStyle.solid))),
                                                       children: [
                                                         TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1628,6 +1678,12 @@ widget.currentUser();
                   NewInputCard(
                     readOnly: true,
                       controller: widget.vendorTRNnumber, title: "Vendor TRN Number"),
+                  SizedBox(
+                    height: height * .065,
+                  ),
+                  SizedBox(
+                    height: height * .068,
+                  ),
 
 
                 ],
@@ -1665,24 +1721,26 @@ widget.currentUser();
                   height: 90,
                   maxLines: 3,),
                 SizedBox(
-                  height: height * .002,
+                  height: height * .030,
                 ),
                 NewInputCard(
                   controller: widget.remarks, title: "remarks",
                   height: 90,
                   maxLines: 3,),
 
+                SizedBox(
+                  height: height * .065,
+                ),
+                SizedBox(
+                  height: height * .068,
+                ),
+
 
 
 
               ],)),
               Expanded(child: Column(children: [
-                SizedBox(
-                  height: height * .045,
-                ),
-                SizedBox(
-                  height: height * .045,
-                ),
+
 
                 NewInputCard(
                   readOnly: true,

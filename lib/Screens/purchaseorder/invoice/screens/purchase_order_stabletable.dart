@@ -128,7 +128,7 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
             NewInputCard(
 
               controller: widget.remarksController, title: "remarks",height: 90,maxLines: 2,),
-            SizedBox(height: height*.030,),
+            SizedBox(height: height*.070,),
 
 
 

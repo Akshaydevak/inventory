@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventoryPostModel.dart';
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventory_read_cubit.dart';
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventorypost_cubit.dart';
@@ -53,6 +54,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
   List<PurchaseOrder>result=[];
+   var paginatedList;
 
   int selectedVertical=0;
   String inventoryId="";
@@ -303,6 +305,26 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                     veritiaclid!);
                               });
                             },result: result,
+                            child:     tablePagination(
+                                  () => context
+                                  .read<InventorysearchCubit>()
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .nextslotSectionPageList("");
+                              },
+                            ),
                           ),
                           Expanded(child: Column(
                             children: [

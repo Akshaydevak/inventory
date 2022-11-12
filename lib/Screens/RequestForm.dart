@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -115,6 +116,7 @@ class _RequestFormScreenState extends State<RequestFormScreen> {
   PurchaseCureentStockQty? purchaseCurrentStock;
   int?stock=0;
 bool  stockCheck=false;
+var  paginatedList;
  bool updateCheck=false;
   double grands = 0;
   double focValue = 0;
@@ -541,6 +543,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                 print("error");
               },
               success: (list){
+                paginatedList=list;
                 print("listtt"+list.toString());
                 result=list.data;setState(() {
                   print("Here is the result");
@@ -595,6 +598,26 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                   veritiaclid!);
                             });
                           },result: result,
+                          child:                    tablePagination(
+                                () => context
+                                .read<InventorysearchCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .nextslotSectionPageList("");
+                            },
+                          ),
           ),
                         Expanded(child: Container(
                           color: Colors.white,

@@ -139,12 +139,22 @@ class _AttributeScreenState extends State<AttributeScreen> {
         alignment: Alignment.topRight,
         width: MediaQuery.of(context).size.width - 60,
         child: attribute.isNotEmpty == true
-            ? ListView.builder(
+            ? GridView.builder(
+
+                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+
+
+
                 scrollDirection: Axis.horizontal,
                 itemCount: attribute.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    height: 400,
+                    // height: 400,
                     width: MediaQuery.of(context).size.width / 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

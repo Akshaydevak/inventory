@@ -121,16 +121,16 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     String path = "";
     if (tab == "RF") {
       path = stagingUrl +
-          "purchase-order/list-request-form/${Variable.inventory_ID}?code=$next";
+          "purchase-order/list-request-form/${Variable.inventory_ID}?$next";
     } else if (tab == "RFR") {
       path = stagingUrl +
           "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}";
     } else if (tab == "II") {
       path = stagingUrl +
-          "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?code=$next";
+          "purchase-order/list-purchase-order-for-invoice-posting/${Variable.inventory_ID}?$next";
     } else {
       path = stagingUrl +
-          "purchase-order/list-purchase-order/${Variable.inventory_ID}?code=$next";
+          "purchase-order/list-purchase-order/${Variable.inventory_ID}?$next";
     }
     print("urlof Search");
     print(path);
@@ -150,7 +150,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
     return PaginatedResponse<List<PurchaseOrder>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override

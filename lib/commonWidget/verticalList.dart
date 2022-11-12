@@ -37,11 +37,12 @@ import '../Screens/variant/stock/models/stockverticallist.dart';
 
 class VerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
+  final Widget? child;
   final   List<PurchaseOrder> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  VerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox()});
   @override
   _VerticalListState createState() => _VerticalListState();
 }
@@ -231,7 +232,8 @@ class _VerticalListState extends State<VerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          widget.child!
                         ],
                       ),
                     ),
@@ -248,11 +250,12 @@ class _VerticalListState extends State<VerticalList> {
 }
 class PurchaseVerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
+  final Widget child;
   final   List<PurchaseOrder> result ;
   final String? tab;
   int selectedVertical;
   final Function(int) ontap;
-  PurchaseVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  PurchaseVerticalList({ required this.itemsearch,this.child=const SizedBox(),required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _PurchaseVerticalListState createState() => _PurchaseVerticalListState();
 }
@@ -445,7 +448,8 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          widget.child!,
                         ],
                       ),
                     ),
@@ -466,8 +470,9 @@ class SalesGeneralVerticalList extends StatefulWidget {
   final   List<salesOrderTypeModel> result ;
   final String? tab;
   int selectedVertical;
+  final Widget child;
   final Function(int) ontap;
-  SalesGeneralVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  SalesGeneralVerticalList({ this.child=const SizedBox(),required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _SalesGeneralVerticalListState createState() => _SalesGeneralVerticalListState();
 }
@@ -658,7 +663,8 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
                                   )
 
 
-                              ))
+                              )),
+                          widget.child!
                         ],
                       ),
                     ),
@@ -680,8 +686,9 @@ class SalesReturnGeneralVerticalList extends StatefulWidget {
   final   List<salesOrderTypeModel> result ;
   final String? tab;
   int selectedVertical;
+  final Widget child;
   final Function(int) ontap;
-  SalesReturnGeneralVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
+  SalesReturnGeneralVerticalList({ this.child=const SizedBox(),required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab});
   @override
   _SalesReturnGeneralVerticalListState createState() => _SalesReturnGeneralVerticalListState();
 }
@@ -872,8 +879,10 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
                                   )
 
 
-                              ))
+                              )),
+                          widget.child!
                         ],
+
                       ),
                     ),
                   ),

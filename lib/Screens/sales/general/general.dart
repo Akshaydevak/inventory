@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/GeneralScreen.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 
 import 'package:inventory/Screens/sales/general/cubit/generalread/salesgeneralread_cubit.dart';
 import 'package:inventory/Screens/sales/general/cubit/salesgeneraldelete/salesgeneraldelete_cubit.dart';
@@ -51,6 +52,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   bool select = false;
   bool updateCheck = false;
   List<int?> currentStock = [];
+  var paginatedList;
   final GlobalKey< _SalesGeneralGrowableTableState> _myWidgetState = GlobalKey< _SalesGeneralGrowableTableState>();
 
   PurchaseCureentStockQty? purchaseCurrentStock;
@@ -401,6 +403,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                     print("error");
                   },
                   success: (list) {
+                    paginatedList=list;
                     print("appuram" + list.data.toString());
 
                     result = list.data;
@@ -453,6 +456,26 @@ class _SalesGeneralState extends State<SalesGeneral> {
                               });
                             },
                             result: result,
+                            child:     tablePagination(
+                                  () => context
+                                  .read<SalesgeneralverticalCubit>()
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .nextslotSectionPageList();
+                              },
+                            ),
                           ),
                           Expanded(
                             child: Column(

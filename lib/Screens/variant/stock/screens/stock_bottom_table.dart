@@ -3,6 +3,8 @@ import 'package:inventory/Screens/variant/stock/models/stocktableread.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/customtable.dart';
 
+import '../../../../commonWidget/Colors.dart';
+
 class StockBottomTable extends StatefulWidget {
 final  List<StockTableReadModel> data;
   // final  Function storageTableEdit;
@@ -180,29 +182,23 @@ class StockBottomTableState extends State<StockBottomTable> {
                   for (var i = 0; i < widget.data.length; i++)
                     TableRow(
                         decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border:const  Border(
+                            color: Pellet.tableRowColor,
+                            shape: BoxShape.rectangle,
+                            border:  Border(
                                 left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
+
+                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+                                    style: BorderStyle.solid),
                                 bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
+
+                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                    style: BorderStyle.solid),
                                 right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
+                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+
+                                    style: BorderStyle.solid))),
                         children: [
 
                           TableCell(
@@ -252,30 +248,24 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                         ]),],
                 TableRow(
-                    decoration: BoxDecoration(
-                        color: Colors.grey
-                            .shade200,
-                        shape: BoxShape
-                            .rectangle,
-                        border:const  Border(
-                            left: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            bottom: BorderSide(
-                                width: .5,
-                                color: Colors
-                                    .grey,
-                                style: BorderStyle
-                                    .solid),
-                            right: BorderSide(
-                                color: Colors
-                                    .grey,
-                                width: .5,
-                                style: BorderStyle
-                                    .solid))),
+    decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+    left: BorderSide(
+
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
                     children: [
 
                       TableCell(

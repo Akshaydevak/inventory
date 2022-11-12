@@ -4,6 +4,7 @@ import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/logi/login.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
 import 'package:inventory/commonWidget/Colors.dart';
@@ -165,6 +166,7 @@ List<TextEditingController> vatController =[];
   double vatableValue = 0;
   String? variantId;
   bool updateCheck=false;
+  var paginatedList;
   List<OrderLines> orderLisnes = [];
 
   bool onChange = false;
@@ -732,6 +734,7 @@ List<TextEditingController> vatController =[];
                     },
                     success: (list) {
                       print("aaaaayyyiram"+list.data.toString());
+                      paginatedList=list;
 
                       result = list.data;
                       setState(() {
@@ -771,8 +774,29 @@ else{
                               setState(() {});
                               veritiaclid = result[index].id;
                               context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+
                             });
                           },result: result,
+                            child:                    tablePagination(
+                                  () => context
+                                  .read<InventorysearchCubit>()
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<InventorysearchCubit>()
+                                    .nextslotSectionPageList("");
+                              },
+                            ),
                         ),
                         Expanded(
                           child: Container(

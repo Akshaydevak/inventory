@@ -29,6 +29,8 @@ import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import 'heirarchy/general/generalscreen.dart';
+
 class RequestFormReceivigScreen extends StatefulWidget {
   @override
   _RequestFormReceivigScreenState createState() => _RequestFormReceivigScreenState();
@@ -97,6 +99,7 @@ bool  recievlinequantityCheck=false;
   double VatableValue = 0;
   double excessTax = 0;
  bool  updateCheck=false;
+   var paginatedList;
   double vatValue = 0;
   double actualValue = 0;
   double excessTAxValue = 0;
@@ -247,6 +250,7 @@ bool  recievlinequantityCheck=false;
           print("error");
         },
         success: (list){
+          paginatedList=list;
           print("listtt"+list.toString());
           result=list.data;setState(() {
            if(result.isNotEmpty){
@@ -505,6 +509,26 @@ child: IntrinsicHeight(
                 context.read<ReadrequestrecievingCubit>().getRequestFormReceivingRead(veritiaclid!);
               });
             },result: result,
+       child:     tablePagination(
+                  () => context
+                  .read<InventorysearchCubit>()
+                  .refresh(),
+              back: paginatedList?.previousUrl == null
+                  ? null
+                  : () {
+                context
+                    .read<InventorysearchCubit>()
+                    .previuosslotSectionPageList();
+              },
+              next:paginatedList?.nextPageUrl == null
+                  ? null
+                  : () {
+                // print(data.nextPageUrl);
+                context
+                    .read<InventorysearchCubit>()
+                    .nextslotSectionPageList("");
+              },
+            ),
           ),
           Expanded(
             child: Column(
