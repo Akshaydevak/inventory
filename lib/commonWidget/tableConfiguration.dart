@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:inventory/Screens/heirarchy/divisionconfiguration/cubit/categorydivisionconfig/categorylistdivisionconfig_cubit.dart';
+import 'package:inventory/Screens/heirarchy/divisionconfiguration/cubit/group/groumdivision_cubit.dart';
+import 'package:inventory/Screens/heirarchy/divisionconfiguration/cubit/uomlist/uomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
@@ -151,6 +154,30 @@ class TableConfigurePopup extends StatelessWidget {
       case "SalesUomTabalePopup":
         {
           data = SalesUomTabalePopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "UomDivision_ConfigPopup":
+        {
+          data = UomDivisionPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "GroupDivision_Popup":
+        {
+          data = GroupDivisionPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "categoryDivision_Popup":
+        {
+          data = CategoryDivisionPopup(
             type: type,
             valueSelect: valueSelect,
           );
@@ -4201,6 +4228,880 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
 );
   }
 }
+
+
+
+class UomDivisionPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final int id;
+
+  UomDivisionPopup({
+    Key? key,
+    required this.type,
+    this.id=0,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _UomDivisionPopup createState() => _UomDivisionPopup();
+
+
+}
+
+class _UomDivisionPopup extends State<UomDivisionPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<BrandListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => UomlistCubit(),
+  child: Builder(builder: (context) {
+      context.read<UomlistCubit>().getUomDivisionList();
+      return BlocConsumer<UomlistCubit, UomlistState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("uom Code" + list.data.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonVisible: false,
+                buttonCheck: true,
+                buttonName: "Add New",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "",
+                onApply: () {
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "base_uom",
+                  //   ),
+                  // );
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<UomlistCubit>()
+                                  .searchUomList(searchContoller.text);
+                              if (va == "") {
+                                context.read<UomlistCubit>().getUomDivisionList();
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      Container(
+                        height: h / 2,
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            border: const TableBorder(
+                              verticalInside: BorderSide(
+                                  width: .5,
+                                  color: Colors.black45,
+                                  style: BorderStyle.solid),
+                              horizontalInside: BorderSide(
+                                  width: .3,
+                                  color: Colors.black45,
+                                  // color: Colors.blue,
+                                  style: BorderStyle.solid),
+                            ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'UOM',
+                                    // textColor: Colors.black,
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.rectangle,
+                                          border: const Border(
+                                              left: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: .5,
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: InkWell(
+                                              onTap: () {
+                                                BrandListModel model =
+                                                    BrandListModel(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  uomCode: table[i].uomCode,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              child: Container(
+                                                  child:
+                                                      Text(table[i].name ?? ""),
+                                                  height: 45),
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(2),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                          () => context.read<UomlistCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                                  context
+                                      .read<UomlistCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<UomlistCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+class GroupDivisionPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final int id;
+
+  GroupDivisionPopup({
+    Key? key,
+    required this.type,
+    this.id=0,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _GroupDivisionPopup createState() => _GroupDivisionPopup();
+
+
+}
+
+class _GroupDivisionPopup extends State<GroupDivisionPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<BrandListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => GroumdivisionCubit(),
+  child: Builder(builder: (context) {
+      context.read<GroumdivisionCubit>().getGroupList();
+      return BlocConsumer<GroumdivisionCubit, GroumdivisionState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("uom Code" + list.data.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonVisible: false,
+                buttonCheck: true,
+                buttonName: "Add New",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "",
+                onApply: () {
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "base_uom",
+                  //   ),
+                  // );
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<GroumdivisionCubit>()
+                                  .searchUomList(searchContoller.text);
+                              if (va == "") {
+                                context.read<GroumdivisionCubit>().getGroupList();
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      Container(
+                        height: h / 2,
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            border: const TableBorder(
+                              verticalInside: BorderSide(
+                                  width: .5,
+                                  color: Colors.black45,
+                                  style: BorderStyle.solid),
+                              horizontalInside: BorderSide(
+                                  width: .3,
+                                  color: Colors.black45,
+                                  // color: Colors.blue,
+                                  style: BorderStyle.solid),
+                            ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Group',
+                                    // textColor: Colors.black,
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.rectangle,
+                                          border: const Border(
+                                              left: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: .5,
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: InkWell(
+                                              onTap: () {
+                                                BrandListModel model =
+                                                    BrandListModel(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              child: Container(
+                                                  child:
+                                                      Text(table[i].name ?? ""),
+                                                  height: 45),
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(2),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                          () => context.read<GroumdivisionCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                                  context
+                                      .read<GroumdivisionCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<GroumdivisionCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+class CategoryDivisionPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final int id;
+
+  CategoryDivisionPopup({
+    Key? key,
+    required this.type,
+    this.id=0,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _CategoryDivisionPopup createState() => _CategoryDivisionPopup();
+
+
+}
+
+class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<BrandListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => CategorylistdivisionconfigCubit(),
+  child: Builder(builder: (context) {
+      context.read<CategorylistdivisionconfigCubit>().getCategoryList();
+      return BlocConsumer<CategorylistdivisionconfigCubit, CategorylistdivisionconfigState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("uom Code" + list.data.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonVisible: false,
+                buttonCheck: true,
+                buttonName: "Add New",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "",
+                onApply: () {
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "base_uom",
+                  //   ),
+                  // );
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<CategorylistdivisionconfigCubit>()
+                                  .searchCategoryList(searchContoller.text);
+                              if (va == "") {
+                                context.read<CategorylistdivisionconfigCubit>().getCategoryList();
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      Container(
+                        height: h / 2,
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            border: const TableBorder(
+                              verticalInside: BorderSide(
+                                  width: .5,
+                                  color: Colors.black45,
+                                  style: BorderStyle.solid),
+                              horizontalInside: BorderSide(
+                                  width: .3,
+                                  color: Colors.black45,
+                                  // color: Colors.blue,
+                                  style: BorderStyle.solid),
+                            ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Category',
+                                    // textColor: Colors.black,
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.rectangle,
+                                          border: const Border(
+                                              left: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: .5,
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: InkWell(
+                                              onTap: () {
+                                                BrandListModel model =
+                                                    BrandListModel(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              child: Container(
+                                                  child:
+                                                      Text(table[i].name ?? ""),
+                                                  height: 45),
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(2),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                          () => context.read<GroumdivisionCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                                  context
+                                      .read<GroumdivisionCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<GroumdivisionCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+
+
+
+
 
 class UomGroupTabalePopup extends StatefulWidget {
   final String type;

@@ -44,6 +44,7 @@ class VariantPost with _$VariantPost {
     @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
     @JsonKey(name: "vedio_url") final String? vedioUrl,
     @JsonKey(name: "search_name") final String? searchName,
+    @JsonKey(name: "need_multiple_integration") final bool? needMultipleIntegration,
     @JsonKey(name: "pos_name") final String? posName,
     @JsonKey(name: "display_name") final String? displayName,
     @JsonKey(name: "produced_country") final String? producedCountry,

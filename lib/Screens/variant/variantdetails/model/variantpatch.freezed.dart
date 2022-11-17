@@ -81,6 +81,8 @@ class _$VariantPatchTearOff {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "landing_cost")
           double? landingCost,
       @JsonKey(name: "base_price")
@@ -217,6 +219,7 @@ class _$VariantPatchTearOff {
       netWeight: netWeight,
       unitCost: unitCost,
       actualCost: actualCost,
+      needMultipleIntegration: needMultipleIntegration,
       landingCost: landingCost,
       basePrize: basePrize,
       manuFacturedId: manuFacturedId,
@@ -335,6 +338,8 @@ mixin _$VariantPatch {
   double? get unitCost => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "need_multiple_integration")
+  bool? get needMultipleIntegration => throw _privateConstructorUsedError;
   @JsonKey(name: "landing_cost")
   double? get landingCost => throw _privateConstructorUsedError;
   @JsonKey(name: "base_price")
@@ -503,6 +508,8 @@ abstract class $VariantPatchCopyWith<$Res> {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "landing_cost")
           double? landingCost,
       @JsonKey(name: "base_price")
@@ -660,6 +667,7 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
     Object? netWeight = freezed,
     Object? unitCost = freezed,
     Object? actualCost = freezed,
+    Object? needMultipleIntegration = freezed,
     Object? landingCost = freezed,
     Object? basePrize = freezed,
     Object? manuFacturedId = freezed,
@@ -880,6 +888,10 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      needMultipleIntegration: needMultipleIntegration == freezed
+          ? _value.needMultipleIntegration
+          : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
       landingCost: landingCost == freezed
           ? _value.landingCost
           : landingCost // ignore: cast_nullable_to_non_nullable
@@ -1234,6 +1246,8 @@ abstract class _$VariantPatchCopyWith<$Res>
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "landing_cost")
           double? landingCost,
       @JsonKey(name: "base_price")
@@ -1402,6 +1416,7 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
     Object? netWeight = freezed,
     Object? unitCost = freezed,
     Object? actualCost = freezed,
+    Object? needMultipleIntegration = freezed,
     Object? landingCost = freezed,
     Object? basePrize = freezed,
     Object? manuFacturedId = freezed,
@@ -1622,6 +1637,10 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      needMultipleIntegration: needMultipleIntegration == freezed
+          ? _value.needMultipleIntegration
+          : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
       landingCost: landingCost == freezed
           ? _value.landingCost
           : landingCost // ignore: cast_nullable_to_non_nullable
@@ -1873,6 +1892,8 @@ class _$_VariantPatch implements _VariantPatch {
           this.unitCost,
       @JsonKey(name: "actual_cost")
           this.actualCost,
+      @JsonKey(name: "need_multiple_integration")
+          this.needMultipleIntegration,
       @JsonKey(name: "landing_cost")
           this.landingCost,
       @JsonKey(name: "base_price")
@@ -2072,6 +2093,9 @@ class _$_VariantPatch implements _VariantPatch {
   @JsonKey(name: "actual_cost")
   final double? actualCost;
   @override
+  @JsonKey(name: "need_multiple_integration")
+  final bool? needMultipleIntegration;
+  @override
   @JsonKey(name: "landing_cost")
   final double? landingCost;
   @override
@@ -2212,7 +2236,7 @@ class _$_VariantPatch implements _VariantPatch {
 
   @override
   String toString() {
-    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
+    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
   }
 
   @override
@@ -2305,6 +2329,7 @@ class _$_VariantPatch implements _VariantPatch {
             (identical(other.netWeight, netWeight) || const DeepCollectionEquality().equals(other.netWeight, netWeight)) &&
             (identical(other.unitCost, unitCost) || const DeepCollectionEquality().equals(other.unitCost, unitCost)) &&
             (identical(other.actualCost, actualCost) || const DeepCollectionEquality().equals(other.actualCost, actualCost)) &&
+            (identical(other.needMultipleIntegration, needMultipleIntegration) || const DeepCollectionEquality().equals(other.needMultipleIntegration, needMultipleIntegration)) &&
             (identical(other.landingCost, landingCost) || const DeepCollectionEquality().equals(other.landingCost, landingCost)) &&
             (identical(other.basePrize, basePrize) || const DeepCollectionEquality().equals(other.basePrize, basePrize)) &&
             (identical(other.manuFacturedId, manuFacturedId) || const DeepCollectionEquality().equals(other.manuFacturedId, manuFacturedId)) &&
@@ -2399,6 +2424,7 @@ class _$_VariantPatch implements _VariantPatch {
       const DeepCollectionEquality().hash(netWeight) ^
       const DeepCollectionEquality().hash(unitCost) ^
       const DeepCollectionEquality().hash(actualCost) ^
+      const DeepCollectionEquality().hash(needMultipleIntegration) ^
       const DeepCollectionEquality().hash(landingCost) ^
       const DeepCollectionEquality().hash(basePrize) ^
       const DeepCollectionEquality().hash(manuFacturedId) ^
@@ -2518,6 +2544,8 @@ abstract class _VariantPatch implements VariantPatch {
           double? unitCost,
       @JsonKey(name: "actual_cost")
           double? actualCost,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "landing_cost")
           double? landingCost,
       @JsonKey(name: "base_price")
@@ -2716,6 +2744,9 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "need_multiple_integration")
+  bool? get needMultipleIntegration => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "landing_cost")
   double? get landingCost => throw _privateConstructorUsedError;

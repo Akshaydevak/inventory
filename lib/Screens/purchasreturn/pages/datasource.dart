@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
+import 'package:inventory/Screens/heirarchy/divisionconfiguration/model/creationmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandreadmodel.dart';
@@ -319,6 +320,21 @@ abstract class PurchaseSourceAbstract {
   Future<ReadCustomModel> getReturnRead(
 
       );
+  //:::::::::::Division Config+++++++++++++++++++++++++
+  Future<DoubleResponse> postCreateDivisionConfig(DivisionCreationtModel model);
+  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(String? code,
+      );
+
+  Future<DivisionReadModel> getDivisionConfigRead(
+      int? id,
+      );
+  Future<DoubleResponse> patchDivisionConfig(DivisionCreationtModel model,int? id);
+  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(String? code,
+      {String? type, int? id});
+  Future<PaginatedResponse<List<BrandListModel>>> getGroupList(String? code,
+      {String? type, int? id});
+  Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code,
+      {String? type, int? id});
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -3353,7 +3369,8 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     return PaginatedResponse<List<BrandListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 
   @override
@@ -3433,6 +3450,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
             "retail_selling_price_percentage": model.retailSellingPricePercentage,
             "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
             "online_selling_price_percentage": model.onlineSellingPercenage,
+            "need_multiple_integration":model.needMultipleIntegration,
             "vat": model.vat,
             "excess_tax": model.excessTax,
             "minimum_gp": model.minGap,
@@ -3515,6 +3533,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         "unit_cost": model.unitCost,
         "base_price": model.basePrize,
         "landing_cost": model.landingCost,
+          "need_multiple_integration":model.needMultipleIntegration,
         "actual_cost": model.actualCost,
         "produced_country": model.producedCountry,
         "safty_stock": model.safetyStock,
@@ -3609,6 +3628,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           "height":model.height,
           "width":model.width,
           "length":model.length,
+          "need_multiple_integration":model.needMultipleIntegration,
           "weight":model.weight,
           "weight_uom_id":model.weightUomId,
 
@@ -4688,6 +4708,11 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       case "7":
         {
           url = patchCustomApi;
+        }
+        break;
+      case "8":
+        {
+          url = readDivisionConfig;
         }
         break;
     }
@@ -6251,5 +6276,293 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     }
     return DoubleResponse(
         response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<DoubleResponse> postCreateDivisionConfig(DivisionCreationtModel model) async {
+    String path=createDivisionConfig;
+    print(path);
+    try {
+      final response = await client.post(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getDivisionVerticalList(String? code) async {
+    String path = "";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = listDivisionConfig;
+    else
+      path = listDivisionConfig+"?$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+    print(response);
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
+  }
+
+  @override
+  Future<DivisionReadModel> getDivisionConfigRead(int? id) async {
+    String path = readDivisionConfig + id.toString();
+    print(path);
+    try {
+
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+
+      DivisionReadModel dataa =
+      DivisionReadModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    DivisionReadModel dataa =
+    DivisionReadModel.fromJson(response.data['data']);
+
+    return dataa;
+  }
+
+  @override
+  Future<DoubleResponse> patchDivisionConfig(DivisionCreationtModel model, int? id) async {
+    String path=readDivisionConfig+id.toString();
+    print("updation"+path.toString());
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(path,
+        data: model.toJson(),
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getUomDivisionList(String? code, {String? type, int? id}) async {
+    code = code == null ? "" : code;
+    String path = "";
+
+    if (code == "")
+      path = listUomDivisionConfig ;
+    else
+      path =listUomDivisionConfig + "?$code";
+
+    print(path);try{
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }));
+
+
+
+      List<BrandListModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(BrandListModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],);
+    }
+    catch(e){
+      print(e);
+
+    }
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getGroupList(String? code, {String? type, int? id}) async {
+    code = code == null ? "" : code;
+    String path = "";
+
+    if (code == "")
+      path = listGroupConfig;
+    else
+      path =listGroupConfig + "?$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code, {String? type, int? id}) async {
+    code = code == null ? "" : code;
+    String path = "";
+
+    if (code == "")
+      path = listCategoryDivisionConfig ;
+    else
+      path =listCategoryDivisionConfig + "?$code";
+
+    print(path);try{
+      final response = await client.get(path,
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }));
+
+
+
+      List<BrandListModel> items = [];
+      (response.data['data']['results'] as List).forEach((element) {
+        items.add(BrandListModel.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return PaginatedResponse<List<BrandListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],);
+    }
+    catch(e){
+      print(e);
+
+    }
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+
+
+    List<BrandListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],);
   }
 }

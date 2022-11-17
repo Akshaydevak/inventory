@@ -47,6 +47,78 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   List<List<Map<String, dynamic>>> variantList1 = [];
   var lists;
   List<String> vals = [];
+
+
+  List combination_value_extract(input_list){
+    var map_buld = {};
+    var comb_buld = {};
+    for (var b in input_list){
+      for (var attr in b){
+        map_buld[attr['attribute_id']] = attr;
+        comb_buld[attr['attribute_id']] = comb_buld.containsKey(attr['attribute_id']) ? comb_buld[attr['attribute_id']] : [];
+        comb_buld[attr['attribute_id']] += [map_buld[attr['attribute_id']]['value']];
+      }
+    }
+    return [comb_buld,map_buld];
+  }
+
+
+  List combination_build(v,value_mapper){
+    var comb_list2 = [];
+    int i = 0;
+    if (v.isEmpty || value_mapper.isEmpty){
+      return [];
+    }
+    for (var b in v.entries){
+      final key = b.key;
+      final value = b.value;
+      var comb_list2_temp = [];
+      for (var a2 in value) {
+        var comb_list = [];
+        if (comb_list2.isNotEmpty && i != 0){
+          var comb_list_copy = comb_list2;
+          for (var comb in  comb_list_copy){
+            var comb_c = new List.from(comb);
+            comb_c.add({"value":a2,"attribute_id":value_mapper[key]['attribute_id'],'attribute_code':value_mapper[key]['attribute_code']});
+            comb_list.add(comb_c);
+          }
+          comb_list2_temp += comb_list;
+        }else{
+          var comb_temp = [];
+          comb_temp.add({"value":a2,"attribute_id":value_mapper[key]['attribute_id'],'attribute_code':value_mapper[key]['attribute_code']});
+          comb_list2.add(comb_temp);
+        }
+      }
+      if (comb_list2_temp.isNotEmpty){
+        comb_list2 = comb_list2_temp;
+      }
+      i = i + 1;
+    }
+    return comb_list2;
+  }
+
+
+
+  List<String> combination_table(combinationArray){
+    List<String>combi=[];
+    print(combinationArray.toString());
+    for (var b=0;b<combinationArray.length ;b++){
+      combi.add("");
+      var val="";
+      for (var attr=0;attr<combinationArray[b].length; attr++){
+
+         val=val+" "+combinationArray[b][attr]["value"];
+
+
+      }
+      combi[b]=val;
+
+
+    }
+    print("the cccccccccccccccccccccccccccc"+combi.toString());
+    return combi;
+
+  }
   void combinationList(List<List<Map<String, dynamic>>> combinationArrays) {
     setState(() {
       vals.clear();
@@ -94,6 +166,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
     //     }
     //   }
     // }
+    int d=0;
 
     combinationArray = combinationArrays;
     print("Starting combination Array" + combinationArray.toString());
@@ -119,77 +192,181 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
       }
     }
 
-    print("the combination Array is" + combinationArray.toString());
     List<List<Map<String, dynamic>>> combinationArray1=[];
     combinationArray.forEach((element) {
       if(element.isNotEmpty){
         combinationArray1.add(element);
       }
-      print("the combination Array is" + combinationArray1.toString());
+
 
     });
 
 
 
-
-    if(combinationArray1.isNotEmpty){
-      if(combinationArray1.length==1){
-        print("entered");
-
-        var list=combinationArray1[0];
-        for(var i=0;i<list.length;i++){
-          var val = list[i]["value"];
-          if (vals.contains(val) == false) {
-            List<Map<String, dynamic>> mapList = [];
-            mapList.add(list[i]);
-
-            variantList.add(mapList);
-            print("the maplist" + variantList.toString());
-
-            vals.add(val);
-          }
-
-
-        }
-        print(list);
-      }
-
-
-  for(var i=0;i<combinationArray1.length-1;i++){
-        var firstList = combinationArray1[i];
-        print("the first list"+firstList.toString());
-
-
-        for(var m =i+1;m<combinationArray1.length;m++){
-          var secondList = combinationArray1[m];
-          print("the first list====" + secondList.toString());
-
-        if (firstList.isNotEmpty){
-            for (var j = 0; j < firstList.length; j++) {if (secondList.isNotEmpty)
-              for (var k = 0; k < secondList.length; k++) {
-                var val = firstList[j]["value"] + secondList[k]["value"];   if (vals.contains(val) == false) {
-                                    List<Map<String, dynamic>> mapList = [];
-                                    mapList.add(firstList[j]);
-                                    mapList.add(secondList[k]);
-                                    variantList.add(mapList);
-                                    print("the maplist" + variantList.toString());
-
-                                    vals.add(firstList[j]["value"] +" "+ secondList[k]["value"]);
-                                  }
-
-              }
-
-            }
-
-          }
-
-        }
-      }
-
-    }
+print("first array $combinationArray1");
 
 
 
+    var input_list = combinationArray1;
+    var result_extract = combination_value_extract(input_list);
+    var result_value = combination_build(result_extract[0],result_extract[1]);
+ vals=   combination_table(result_value);
+    print("the combination aaaaaaaaaaaa"+result_value.toString());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//     Map map={};
+//
+//     for (var a=0; a<combinationArray1.length; a++){
+// //     print(list[a]);
+//       if(combinationArray1[a].isNotEmpty){
+//         var list1=[];
+//         for(var b=0;b<combinationArray1[a].length;b++){
+//
+//           var title=combinationArray1[a][b]["attribute_id"];
+// //         print(title);
+//           list1.add(combinationArray1[a][b]["value"]);
+//           map={
+//             title:list1
+//           };
+//         }
+//         print("the rrrreeee"+map.toString());
+//
+//
+//       }
+//
+//     }
+
+// if(combinationArray1.isNotEmpty==true){
+//   print("entered");
+//   for (var i=0;i<combinationArray1.length;i++){
+//     print("entered1");
+//     var templist=combinationArray1[i];
+//     print("ssssssssssssssssssss"+templist.toString());
+//     if(templist.isNotEmpty==true){
+//
+//       for (var j=0;j<templist.length;j++){
+//         if(variantList.isNotEmpty==true && d!=0){
+//           for(int copmp=0;copmp<variantList.length;copmp++){
+//             print("mmmmmmmmmmmmmm"+variantList[copmp].toString());
+//             print("mmmmmmmmmmmmmm"+combinationArray1.toString());
+//             print("mmmmmmmmmmmmmm"+j.toString());
+//             variantList[copmp].add(templist[j]);
+//             print(variantList[copmp]);
+//
+//             var www = templist[j];
+//             print("templist $www");
+//
+//             vals[copmp]=vals[copmp]+templist[j]["value"];
+//           }
+//
+//         }
+//         else{
+//           print("entered2 in empty case");
+//           List<Map<String, dynamic>> mapList = [];
+//           mapList.add(templist[j]);
+//           variantList.add(mapList);
+//           var val = templist[j]["value"];
+//           vals.add(val);
+//           print("the maplist" + variantList.toString());
+//         }
+//
+//       }
+//       if(templist.isNotEmpty){
+//
+//         d=d+1;
+//       }
+//
+//     }
+//
+//
+//
+//   }
+// }
+
+//
+// print("the combination list is"+variantList.toString());
+//
+//     if(combinationArray1.isNotEmpty){
+//       if(combinationArray1.length==1){
+//         print("entered");
+//
+//         var list=combinationArray1[0];
+//         for(var i=0;i<list.length;i++){
+//           var val = list[i]["value"];
+//           if (vals.contains(val) == false) {
+//             List<Map<String, dynamic>> mapList = [];
+//             mapList.add(list[i]);
+//
+//             variantList.add(mapList);
+//             print("the maplist" + variantList.toString());
+//
+//             vals.add(val);
+//           }
+//
+//
+//         }
+//         print(list);
+//       }
+//
+//
+//   for(var i=0;i<combinationArray1.length-1;i++){
+//         var firstList = combinationArray1[i];
+//         print("the first list"+firstList.toString());
+//
+//
+//         for(var m =i+1;m<combinationArray1.length;m++){
+//           var secondList = combinationArray1[m];
+//           print("the first list====" + secondList.toString());
+//
+//         if (firstList.isNotEmpty){
+//             for (var j = 0; j < firstList.length; j++) {if (secondList.isNotEmpty)
+//               for (var k = 0; k < secondList.length; k++) {
+//                 var val = firstList[j]["value"] + secondList[k]["value"];   if (vals.contains(val) == false) {
+//                                     List<Map<String, dynamic>> mapList = [];
+//                                     mapList.add(firstList[j]);
+//                                     mapList.add(secondList[k]);
+//                                     variantList.add(mapList);
+//                                     print("the maplist" + variantList.toString());
+//
+//                                     vals.add(firstList[j]["value"] +" "+ secondList[k]["value"]);
+//                                   }
+//
+//               }
+//
+//             }
+//
+//           }
+//
+//         }
+//       }
+//
+//     }
+//
+
+print("the list is"+variantList.toString());
 
 
     //

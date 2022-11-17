@@ -66,6 +66,8 @@ class _$VariantPostTearOff {
           String? vedioUrl,
       @JsonKey(name: "search_name")
           String? searchName,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "pos_name")
           String? posName,
       @JsonKey(name: "display_name")
@@ -199,6 +201,7 @@ class _$VariantPostTearOff {
       vendorDetails: vendorDetails,
       vedioUrl: vedioUrl,
       searchName: searchName,
+      needMultipleIntegration: needMultipleIntegration,
       posName: posName,
       displayName: displayName,
       producedCountry: producedCountry,
@@ -307,6 +310,8 @@ mixin _$VariantPost {
   String? get vedioUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "search_name")
   String? get searchName => throw _privateConstructorUsedError;
+  @JsonKey(name: "need_multiple_integration")
+  bool? get needMultipleIntegration => throw _privateConstructorUsedError;
   @JsonKey(name: "pos_name")
   String? get posName => throw _privateConstructorUsedError;
   @JsonKey(name: "display_name")
@@ -464,6 +469,8 @@ abstract class $VariantPostCopyWith<$Res> {
           String? vedioUrl,
       @JsonKey(name: "search_name")
           String? searchName,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "pos_name")
           String? posName,
       @JsonKey(name: "display_name")
@@ -618,6 +625,7 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
     Object? vendorDetails = freezed,
     Object? vedioUrl = freezed,
     Object? searchName = freezed,
+    Object? needMultipleIntegration = freezed,
     Object? posName = freezed,
     Object? displayName = freezed,
     Object? producedCountry = freezed,
@@ -805,6 +813,10 @@ class _$VariantPostCopyWithImpl<$Res> implements $VariantPostCopyWith<$Res> {
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
+      needMultipleIntegration: needMultipleIntegration == freezed
+          ? _value.needMultipleIntegration
+          : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
       posName: posName == freezed
           ? _value.posName
           : posName // ignore: cast_nullable_to_non_nullable
@@ -1156,6 +1168,8 @@ abstract class _$VariantPostCopyWith<$Res>
           String? vedioUrl,
       @JsonKey(name: "search_name")
           String? searchName,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "pos_name")
           String? posName,
       @JsonKey(name: "display_name")
@@ -1321,6 +1335,7 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
     Object? vendorDetails = freezed,
     Object? vedioUrl = freezed,
     Object? searchName = freezed,
+    Object? needMultipleIntegration = freezed,
     Object? posName = freezed,
     Object? displayName = freezed,
     Object? producedCountry = freezed,
@@ -1508,6 +1523,10 @@ class __$VariantPostCopyWithImpl<$Res> extends _$VariantPostCopyWithImpl<$Res>
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
+      needMultipleIntegration: needMultipleIntegration == freezed
+          ? _value.needMultipleIntegration
+          : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
       posName: posName == freezed
           ? _value.posName
           : posName // ignore: cast_nullable_to_non_nullable
@@ -1756,6 +1775,8 @@ class _$_VariantPost implements _VariantPost {
           this.vedioUrl,
       @JsonKey(name: "search_name")
           this.searchName,
+      @JsonKey(name: "need_multiple_integration")
+          this.needMultipleIntegration,
       @JsonKey(name: "pos_name")
           this.posName,
       @JsonKey(name: "display_name")
@@ -1937,6 +1958,9 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "search_name")
   final String? searchName;
   @override
+  @JsonKey(name: "need_multiple_integration")
+  final bool? needMultipleIntegration;
+  @override
   @JsonKey(name: "pos_name")
   final String? posName;
   @override
@@ -2086,7 +2110,7 @@ class _$_VariantPost implements _VariantPost {
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
   }
 
   @override
@@ -2170,6 +2194,7 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
             (identical(other.vedioUrl, vedioUrl) || const DeepCollectionEquality().equals(other.vedioUrl, vedioUrl)) &&
             (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
+            (identical(other.needMultipleIntegration, needMultipleIntegration) || const DeepCollectionEquality().equals(other.needMultipleIntegration, needMultipleIntegration)) &&
             (identical(other.posName, posName) || const DeepCollectionEquality().equals(other.posName, posName)) &&
             (identical(other.displayName, displayName) || const DeepCollectionEquality().equals(other.displayName, displayName)) &&
             (identical(other.producedCountry, producedCountry) || const DeepCollectionEquality().equals(other.producedCountry, producedCountry)) &&
@@ -2258,6 +2283,7 @@ class _$_VariantPost implements _VariantPost {
       const DeepCollectionEquality().hash(vendorDetails) ^
       const DeepCollectionEquality().hash(vedioUrl) ^
       const DeepCollectionEquality().hash(searchName) ^
+      const DeepCollectionEquality().hash(needMultipleIntegration) ^
       const DeepCollectionEquality().hash(posName) ^
       const DeepCollectionEquality().hash(displayName) ^
       const DeepCollectionEquality().hash(producedCountry) ^
@@ -2365,6 +2391,8 @@ abstract class _VariantPost implements VariantPost {
           String? vedioUrl,
       @JsonKey(name: "search_name")
           String? searchName,
+      @JsonKey(name: "need_multiple_integration")
+          bool? needMultipleIntegration,
       @JsonKey(name: "pos_name")
           String? posName,
       @JsonKey(name: "display_name")
@@ -2547,6 +2575,9 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "search_name")
   String? get searchName => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: "need_multiple_integration")
+  bool? get needMultipleIntegration => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: "pos_name")
   String? get posName => throw _privateConstructorUsedError;

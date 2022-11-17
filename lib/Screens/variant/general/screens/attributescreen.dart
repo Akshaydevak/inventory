@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/variant/general/cubits/variantCreatio_read2/variant_creation_read2_cubit.dart';
 import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart';
@@ -144,8 +145,9 @@ class _AttributeScreenState extends State<AttributeScreen> {
                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
 
             maxCrossAxisExtent: 200,
-            childAspectRatio: 3 / 2,
+            childAspectRatio:1 / 1.1,
             crossAxisSpacing: 20,
+
             mainAxisSpacing: 20),
 
 
@@ -155,7 +157,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                 itemBuilder: (context, index) {
                   return Container(
                     // height: 400,
-                    width: MediaQuery.of(context).size.width / 2,
+                    // width: MediaQuery.of(context).size.width / 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -167,6 +169,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                         if (graphArray[index].isNotEmpty == true)
                           Container(
                             height: 150,
+
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: graphArray[index]!.length,

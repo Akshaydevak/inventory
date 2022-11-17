@@ -17,6 +17,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Invetory/inventorysearch_cubit.dart';
 import 'Screens/Dashboard.dart';
 import 'Screens/heirarchy/customizeddata/cubit/listcustom/listcustomvertical_cubit.dart';
+import 'Screens/heirarchy/divisionconfiguration/cubit/list/list_division_cubit.dart';
 import 'Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
@@ -167,6 +168,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => DeletioncostingCubit(),
         ),BlocProvider(
           create: (context) => ListcustomverticalCubit(),
+        ),BlocProvider(
+          create: (context) => ListDivisionCubit(),
         ),
       ],
       child: MaterialApp(

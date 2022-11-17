@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/widgets/customtable.dart';
 
@@ -88,29 +89,23 @@ class _CombinationTableState extends State<CombinationTable> {
             for(var i=0;i<widget.list.length;i++)...[
           TableRow(
               decoration: BoxDecoration(
-                  color: Colors.grey
-                      .shade200,
-                  shape: BoxShape
-                      .rectangle,
-                  border:const  Border(
+                  color: Pellet.tableRowColor,
+                  shape: BoxShape.rectangle,
+                  border:  Border(
                       left: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+
+                          color: Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+                          style: BorderStyle.solid),
                       bottom: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+
+                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                          style: BorderStyle.solid),
                       right: BorderSide(
-                          color: Colors
-                              .grey,
-                          width: .5,
-                          style: BorderStyle
-                              .solid))),
+                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+
+                          style: BorderStyle.solid))),
               children: [
 
                 TableCell(
@@ -141,29 +136,23 @@ class _CombinationTableState extends State<CombinationTable> {
 ],]else
           TableRow(
               decoration: BoxDecoration(
-                  color: Colors.grey
-                      .shade200,
-                  shape: BoxShape
-                      .rectangle,
-                  border:const  Border(
+                  color: Pellet.tableRowColor,
+                  shape: BoxShape.rectangle,
+                  border:  Border(
                       left: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+
+                          color: Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+                          style: BorderStyle.solid),
                       bottom: BorderSide(
-                          width: .5,
-                          color: Colors
-                              .grey,
-                          style: BorderStyle
-                              .solid),
+
+                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                          style: BorderStyle.solid),
                       right: BorderSide(
-                          color: Colors
-                              .grey,
-                          width: .5,
-                          style: BorderStyle
-                              .solid))),
+                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+
+                          style: BorderStyle.solid))),
               children: [
 
                 TableCell(

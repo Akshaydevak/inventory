@@ -55,6 +55,7 @@ class VariantPatch with _$VariantPatch {
     @JsonKey(name: "net_weight") final String? netWeight,
     @JsonKey(name: "unit_cost") final double? unitCost,
     @JsonKey(name: "actual_cost") final double? actualCost,
+    @JsonKey(name: "need_multiple_integration") final bool? needMultipleIntegration,
 
     @JsonKey(name: "landing_cost") final double? landingCost,
     @JsonKey(name: "base_price") final double? basePrize,

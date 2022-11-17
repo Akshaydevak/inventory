@@ -117,6 +117,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   bool itmcatelog = false;
   bool itmImage = false;
   bool active = false;
+  bool needMultipleIntegration = false;
   int? veritiaclid = 0;
   int? checkIdid = 0;
   bool select=false;
@@ -195,6 +196,12 @@ ProductFeatures? importantInfo;
         break;
       case 'Active' :
         active=val;
+        setState(() {
+
+        });
+        break;
+        case 'Multiple' :
+        needMultipleIntegration=val;
         setState(() {
 
         });
@@ -686,7 +693,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         print("postssssssss" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -945,6 +952,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       ),
                                       SizedBox(height: height * .10,),
                                       VariantStabletable(
+                                          needMultipleIntegration:needMultipleIntegration,
                                         weightUom:weightUomIdController,
                                           weight:weightController,
                                         seblingNameController: searchNAmeController,
@@ -1193,6 +1201,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   itemCatelog: itmcatelog,
                                                   itemImage: itmImage,
                                                   vendorDetails: vendorDetails,
+                                                  needMultipleIntegration: needMultipleIntegration,
 
                                                   minMaxRatio:minMaxController.text.isEmpty?null: minMaxController?.text,
                                                   wholeSaleStock:int.tryParse( wholeSaleStockController?.text??""),
@@ -1261,6 +1270,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   itemImage: itmImage,
                                                   itemCatelog: itmcatelog,
                                                   vendorDetails: vendorDetails,
+                                                  needMultipleIntegration: needMultipleIntegration,
                                                   weightUomId: int.tryParse(weightUomIdController.text),
                                                   // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
                                                   barcode: barCodeController!.text.isEmpty?null:barCodeController.text,

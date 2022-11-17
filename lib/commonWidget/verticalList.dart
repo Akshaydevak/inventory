@@ -248,6 +248,221 @@ class _VerticalListState extends State<VerticalList> {
 
   }
 }
+
+
+
+
+class DivisionConfigVerticalList extends StatefulWidget {
+  final TextEditingController itemsearch;
+  final Widget? child;
+  final   List<BrandListModel> result ;
+  final String? tab;
+  int selectedVertical;
+  final Function(int) ontap;
+  final Function(String) search;
+  DivisionConfigVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox(), required this.search});
+  @override
+  _DivisionConfigVerticalListState createState() => _DivisionConfigVerticalListState();
+}
+
+class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList> {
+  late AutoScrollController controller;
+  int? veritiaclid=0;
+  List<PurchaseOrder>result=[];
+  bool select=false;
+  int selectedVertical=0;
+  NavigationProvider vm = NavigationProvider();
+  TextEditingController itemsearch=TextEditingController();
+  @override
+  void initState() {
+
+    int verticalScrollIndex = 0;
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    vm = Provider.of<NavigationProvider>(context);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<InventorysearchCubit, InventorysearchState>(
+              listener: (context, state) {
+                print("this portion is working");
+                state.maybeWhen(orElse:(){},
+                    error: (){
+                      print("error");
+                    },
+                    success: (list){
+                      print("listtt"+list.toString());
+                      result=list.data;setState(() {
+                        print("Here is the result");
+                        print(result);
+
+                      });
+
+                    }
+                );
+              },
+              builder: (context, state) {
+                return Container(
+                  height: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  child:
+                  Visibility(
+                    visible: !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .172,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  widget.search(va);
+
+
+                                },
+                              )),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: width * 0.009,
+                              right: width * 0.007,
+                            ),
+                            child: Row(
+                              //mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RectangleContainer(
+                                    "asset/rect1.png", context),
+                                SizedBox(
+                                  width: width * .003,
+                                ),
+                                Container(
+                                  color: Color(0xffFFFFFF),
+
+                                  height: width * .0197,
+                                  width: width * .111,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        width: width * .001,
+                                      ),
+                                      Icon(
+                                        Icons.add,
+                                        color: Colors.black,
+                                        size: 14,
+                                      ),
+                                      SizedBox(
+                                        width: width * .007,
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          "Add a Varient",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: width * .010,
+                                              overflow:
+                                              TextOverflow.ellipsis),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: width * .003,
+                                ),
+                                RectangleContainer(
+                                    "asset/rect2.png", context),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: height * .015,
+                          ),
+
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
+                                    separatorBuilder: (context, index) {
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
+                                            index: index,
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget.result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap(index);
+
+                                            },
+                                          ));
+                                    },
+                                    itemCount:widget. result.length,
+                                  )
+
+
+                              )),
+                          widget.child!
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+      ),
+
+    );
+
+  }
+}
+
+
+
+
+
 class PurchaseVerticalList extends StatefulWidget {
   final TextEditingController itemsearch;
   final Widget child;

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
+import 'package:inventory/Screens/heirarchy/divisionconfiguration/model/creationmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/baseuomcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandcreation.dart';
 import 'package:inventory/Screens/heirarchy/general/model/brandreadmodel.dart';
@@ -376,16 +377,35 @@ abstract class PurchaseReturnRepoAbstract {
       CustomCreationtModel model);
 
   Future<Either<Failure, DoubleResponse>> patchCreateCustom(
-      CustomCreationtModel model,int? id);
+      CustomCreationtModel model, int? id);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getCustomVerticalList(
     String? code,
   );
   Future<Either<Failure, ReadCustomModel>> getCustomRead(
     int? id,
-  );  Future<Either<Failure, ReadCustomModel>> getReturnRead(
-
   );
+  Future<Either<Failure, ReadCustomModel>> getReturnRead();
+//:::::::::::::::::::::::division:::::::::::::::::::::::::::::::::::::::::::::::::::
+  Future<Either<Failure, DoubleResponse>> postCreateDivisionConfig(
+      DivisionCreationtModel model);
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getDivisionVerticalList(
+    String? code,
+  );
+  Future<Either<Failure, DivisionReadModel>> getDivisionConfigRead(
+    int? id,
+  );
+  Future<Either<Failure, DoubleResponse>> patchDivisionConfig(
+      DivisionCreationtModel model, int? id);
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getUomDivisionList(String? code, {String? type, int? id});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getGroupList(
+      String? code,
+      {String? type,
+      int? id});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getCategoryList(String? code, {String? type, int? id});
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -1427,14 +1447,67 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, ReadCustomModel>> getReturnRead() {
     return repoExecute<ReadCustomModel>(
-            () async => remoteDataSource.getReturnRead(
-
-        ));
+        () async => remoteDataSource.getReturnRead());
   }
 
   @override
-  Future<Either<Failure, DoubleResponse>> patchCreateCustom(CustomCreationtModel model, int? id) {
+  Future<Either<Failure, DoubleResponse>> patchCreateCustom(
+      CustomCreationtModel model, int? id) {
     return repoExecute<DoubleResponse>(
-            () async => remoteDataSource.patchCreateCustom(model,id));
+        () async => remoteDataSource.patchCreateCustom(model, id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> postCreateDivisionConfig(
+      DivisionCreationtModel model) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.postCreateDivisionConfig(model));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getDivisionVerticalList(String? code) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getDivisionVerticalList(
+              code,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DivisionReadModel>> getDivisionConfigRead(int? id) {
+    return repoExecute<DivisionReadModel>(
+        () async => remoteDataSource.getDivisionConfigRead(
+              id,
+            ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> patchDivisionConfig(
+      DivisionCreationtModel model, int? id) {
+    return repoExecute<DoubleResponse>(
+        () async => remoteDataSource.patchDivisionConfig(model, id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getUomDivisionList(String? code, {String? type, int? id}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(() async =>
+        remoteDataSource.getUomDivisionList(code, type: type, id: id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getGroupList(
+      String? code,
+      {String? type,
+      int? id}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+        () async => remoteDataSource.getGroupList(code, type: type, id: id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
+      getCategoryList(String? code, {String? type, int? id}) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(() async =>
+        remoteDataSource.getCategoryList(code, type: type, id: id));
   }
 }

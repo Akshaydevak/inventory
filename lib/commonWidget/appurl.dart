@@ -309,3 +309,10 @@ const createCustomApi = inventoryBaseUrl + "inventory-product/create-group-custo
 const listCustomApi = inventoryBaseUrl + "inventory-product/list-group-custom-data";
 const readCustomApi = inventoryBaseUrl + "inventory-product/update-group-custom-data/";
 const patchCustomApi = inventoryBaseUrl + "inventory-product/update-group-custom-data/";
+//+++++++++Division Config
+const createDivisionConfig = inventoryBaseUrl + "inventory-product/create-division-configuration";
+const listDivisionConfig = inventoryBaseUrl + "inventory-product/list-division-configuration";
+const readDivisionConfig = inventoryBaseUrl + "inventory-product/patch-division-configuration/";
+const listUomDivisionConfig = inventoryBaseUrl + "inventory-product/list-uom-for-division-configuration";
+const listGroupConfig = inventoryBaseUrl + "inventory-product/list-group-for-division-configuration";
+const listCategoryDivisionConfig = inventoryBaseUrl + "inventory-product/list-category-for-division-configuration";

@@ -35,9 +35,8 @@ class Identification extends StatefulWidget {
   final Function barQrCodeTableAssign;
 
   Identification(
-
       {required this.select,
-        required this.barCode,
+      required this.barCode,
       required this.veritiaclid,
       required this.qrCode,
       required this.rfId,
@@ -58,28 +57,24 @@ class _IdentificationState extends State<Identification> {
   List<TextEditingController> bacCodeListTextEditing = [];
   bool barActive = false;
   bool qrActive = false;
-  List<bool>upDate=[];
-  List<bool>upDateButton=[];
+  List<bool> upDate = [];
+  List<bool> upDateButton = [];
   List<TextEditingController> barcodeTextEditingController = [];
 
   List<AlternativeBarcode> alterNativeQrCode = [];
   bool onChange = false;
   bool onSaveActive = false;
 
-
-  saveButtonActovde(String barcode,bool isActive){
-
-    onChange=true;
-    if(barcode!="" && isActive==true){
+  saveButtonActovde(String barcode, bool isActive) {
+    onChange = true;
+    if (barcode != "" && isActive == true) {
       setState(() {
-        onSaveActive=true;
+        onSaveActive = true;
       });
-    }
-    else{
+    } else {
       setState(() {
-        onSaveActive=false;
+        onSaveActive = false;
       });
-
     }
   }
 
@@ -90,7 +85,7 @@ class _IdentificationState extends State<Identification> {
     if (!onChange) {
       alternativeBarcode = [];
       upDate.clear();
-      onSaveActive=false;
+      onSaveActive = false;
       upDateButton.clear();
 
       bacCodeListTextEditing = [];
@@ -109,7 +104,6 @@ class _IdentificationState extends State<Identification> {
       if (widget.alternativeBarcode?.isNotEmpty == true) {
         alterNativeQrCode = widget?.alternativeQrCode ?? [];
       }
-
     }
 
     onChange = false;
@@ -161,8 +155,9 @@ class _IdentificationState extends State<Identification> {
                         child: Column(
                           children: [
                             NewInputCard(
-                              readOnly: widget.select?false:true,
-                                controller: widget.barCode, title: "Barcode"),
+                                readOnly: widget.select ? false : true,
+                                controller: widget.barCode,
+                                title: "Barcode"),
                           ],
                         ),
                       ),
@@ -272,27 +267,31 @@ class _IdentificationState extends State<Identification> {
                                 decoration: BoxDecoration(
                                     color: Pellet.tableRowColor,
                                     shape: BoxShape.rectangle,
-                                    border:  Border(
+                                    border: Border(
                                         left: BorderSide(
-
-                                            color: Color(0xff3E4F5B).withOpacity(.1),
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
                                             width: .4,
                                             style: BorderStyle.solid),
                                         bottom: BorderSide(
-
-                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
                                             style: BorderStyle.solid),
                                         right: BorderSide(
-                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                            color: Color(0xff3E4F5B)
+                                                .withOpacity(.1),
                                             width: .4,
-
                                             style: BorderStyle.solid))),
                                 children: [
                                   TableCell(
                                     verticalAlignment:
                                         TableCellVerticalAlignment.middle,
 
-                                    child: textPadding((i + 1).toString(),color:upDate[i]?Colors.white:Colors.transparent,height: 48 ),
+                                    child: textPadding((i + 1).toString(),
+                                        color: upDate[i]
+                                            ? Colors.white
+                                            : Colors.transparent,
+                                        height: 48),
                                     // UnderLinedInput(),
                                   ),
                                   TableCell(
@@ -300,105 +299,112 @@ class _IdentificationState extends State<Identification> {
                                           TableCellVerticalAlignment.middle,
                                       child: UnderLinedInput(
                                         readOnly: !upDate[i],
-                                        filledColour: upDate[i]?Colors.white:Colors.transparent,
+                                        filledColour: upDate[i]
+                                            ? Colors.white
+                                            : Colors.transparent,
                                         controller: bacCodeListTextEditing[i],
                                         formatter: false,
                                         // controller: TextEditingController(text:alternativeBarcode?[i].barcode??"" ),
                                         // initialCheck: true,
                                         // last:alternativeBarcode?[i].barcode??"",
                                         onChanged: (va) {
-                                          onChange=true;
+                                          onChange = true;
                                           setState(() {
-                                            upDateButton[i]=true;
+                                            upDateButton[i] = true;
                                           });
                                           alternativeBarcode[i] =
                                               alternativeBarcode[i].copyWith(
                                                   barcode: va.toString());
                                           widget.barQrCodeTableAssign(
-                                              type: "1", list: alternativeBarcode);
+                                              type: "1",
+                                              list: alternativeBarcode);
                                         },
                                       )),
                                   TableCell(
                                     verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                     child: CheckedBoxs(
-                                      color:upDate[i]?Colors.white:Colors.transparent,
+                                        color: upDate[i]
+                                            ? Colors.white
+                                            : Colors.transparent,
                                         valueChanger:
                                             alternativeBarcode[i].isActive,
                                         onSelection: (va) {
-                                        if(upDate[i]==true){
-                                          bool? isActive =
-                                              alternativeBarcode[i].isActive;
-                                          setState(() {
-                                            onChange=true;
+                                          if (upDate[i] == true) {
+                                            bool? isActive =
+                                                alternativeBarcode[i].isActive;
                                             setState(() {
-                                              upDateButton[i]=true;
+                                              onChange = true;
+                                              setState(() {
+                                                upDateButton[i] = true;
+                                              });
+                                              setState(() {});
+                                              isActive = !isActive!;
+                                              alternativeBarcode[i] =
+                                                  alternativeBarcode[i]
+                                                      .copyWith(
+                                                          isActive: isActive);
+                                              // widget.barQrCodeTableAssign(
+                                              //     type: "1", list: alternativeBarcode);
                                             });
-                                            setState(() {});
-                                            isActive = !isActive!;
-                                            alternativeBarcode[i] =
-                                                alternativeBarcode[i].copyWith(
-                                                    isActive: isActive);
-                                            widget.barQrCodeTableAssign(
-                                                type: "1", list: alternativeBarcode);
-                                          });
-                                        }
-
+                                          }
                                         }),
                                   ),
                                   TableCell(
                                     verticalAlignment:
-                                    TableCellVerticalAlignment.middle,
-
+                                        TableCellVerticalAlignment.middle,
                                     child: Row(
                                       children: [
                                         TableTextButton(
-                                          buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
-                                          textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
-                                          bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
-                                          label: upDateButton[i]==true?"Update":"Edit",
+                                          buttonBagroundColor: upDateButton[i]
+                                              ? Pellet.bagroundColor
+                                              : Colors.transparent,
+                                          textColor: upDateButton[i]
+                                              ? Pellet.bagroundColor
+                                              : Colors.black,
+                                          bagroundColor: upDateButton[i]
+                                              ? Pellet.tableBlueHeaderPrint
+                                              : Color(0xffe7e7e7),
+                                          label: upDateButton[i] == true
+                                              ? "Update"
+                                              : "Edit",
 
                                           // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                                           onPress: () {
-                                            onChange=true;
-
+                                            onChange = true;
 
                                             setState(() {
-                                              upDate[i]=!upDate[i];
+                                              upDate[i] = !upDate[i];
 
-                                              if( upDateButton[i]==true){
+                                              if (upDateButton[i] == true) {
                                                 widget.barQrCodeTableAssign(
-                                                    type: "1", list: alternativeBarcode);
-                                                upDateButton[i]=false;
-
+                                                    type: "1",
+                                                    list: alternativeBarcode);
+                                                upDateButton[i] = false;
                                               }
-
-
                                             });
-                                            setState(() {
-
-                                            });
-
+                                            setState(() {});
                                           },
                                         ),
-                                        SizedBox(width: 3,),
+                                        SizedBox(
+                                          width: 3,
+                                        ),
                                         TableIconTextButton(
                                           label: "",
                                           icon: Icons.delete,
                                           onPress: () {
-                                            onChange=true;
+                                            onChange = true;
                                             setState(() {
-                                              alternativeBarcode?.removeAt(
-                                                  i);
+                                              alternativeBarcode?.removeAt(i);
                                               upDate.removeAt(i);
                                               upDateButton.removeAt(i);
-                                              bacCodeListTextEditing.removeAt(i);
+                                              bacCodeListTextEditing
+                                                  .removeAt(i);
                                               widget.barQrCodeTableAssign(
-                                                  type: "1", list: alternativeBarcode);
-
+                                                  type: "1",
+                                                  list: alternativeBarcode);
                                             });
-
                                           },
                                         ),
                                       ],
@@ -407,24 +413,24 @@ class _IdentificationState extends State<Identification> {
                                 ]),
                         ],
                         TableRow(
-            decoration: BoxDecoration(
-            color: Pellet.tableRowColor,
-            shape: BoxShape.rectangle,
-            border:  Border(
-            left: BorderSide(
-
-            color: Color(0xff3E4F5B).withOpacity(.1),
-            width: .4,
-            style: BorderStyle.solid),
-            bottom: BorderSide(
-
-            color:   Color(0xff3E4F5B).withOpacity(.1),
-            style: BorderStyle.solid),
-            right: BorderSide(
-            color:   Color(0xff3E4F5B).withOpacity(.1),
-            width: .4,
-
-            style: BorderStyle.solid))),
+                            decoration: BoxDecoration(
+                                color: Pellet.tableRowColor,
+                                shape: BoxShape.rectangle,
+                                border: Border(
+                                    left: BorderSide(
+                                        color:
+                                            Color(0xff3E4F5B).withOpacity(.1),
+                                        width: .4,
+                                        style: BorderStyle.solid),
+                                    bottom: BorderSide(
+                                        color:
+                                            Color(0xff3E4F5B).withOpacity(.1),
+                                        style: BorderStyle.solid),
+                                    right: BorderSide(
+                                        color:
+                                            Color(0xff3E4F5B).withOpacity(.1),
+                                        width: .4,
+                                        style: BorderStyle.solid))),
                             children: [
                               TableCell(
                                 verticalAlignment:
@@ -444,8 +450,10 @@ class _IdentificationState extends State<Identification> {
                                   child: UnderLinedInput(
                                     controller: barCodeTextEditingController,
                                     onChanged: (va) {
-                                      onChange=true;
-                                      saveButtonActovde(barCodeTextEditingController.text,barActive);
+                                      onChange = true;
+                                      saveButtonActovde(
+                                          barCodeTextEditingController.text,
+                                          barActive);
                                     },
                                   )),
                               TableCell(
@@ -455,7 +463,9 @@ class _IdentificationState extends State<Identification> {
                                     valueChanger: barActive,
                                     onSelection: (va) {
                                       onChange = true;
-                                      saveButtonActovde(barCodeTextEditingController.text,barActive);
+                                      saveButtonActovde(
+                                          barCodeTextEditingController.text,
+                                          barActive);
                                       setState(() {
                                         barActive = !barActive!;
                                       });
@@ -463,12 +473,17 @@ class _IdentificationState extends State<Identification> {
                               ),
                               TableCell(
                                 verticalAlignment:
-                                TableCellVerticalAlignment.middle,
-
+                                    TableCellVerticalAlignment.middle,
                                 child: TableTextButton(
-                                  buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
-                                  textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
-                                  bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                                  buttonBagroundColor: onSaveActive
+                                      ? Pellet.bagroundColor
+                                      : Colors.transparent,
+                                  textColor: onSaveActive
+                                      ? Pellet.bagroundColor
+                                      : Colors.black,
+                                  bagroundColor: onSaveActive
+                                      ? Pellet.tableBlueHeaderPrint
+                                      : Color(0xffe7e7e7),
                                   label: "Save",
                                   // icon: Icons.add,
                                   onPress: () {
@@ -494,7 +509,7 @@ class _IdentificationState extends State<Identification> {
                                           type: "1", list: alternativeBarcode);
                                       barCodeTextEditingController.clear();
                                       barActive = false;
-                                      onSaveActive=false;
+                                      onSaveActive = false;
                                     });
                                   },
                                 ),
@@ -860,7 +875,6 @@ class ProductTablesState extends State<ProductTables> {
                     addNew: widget.addNew,
                   ),
                 ),
-
               ],
             ),
             SizedBox(
@@ -887,7 +901,6 @@ class ProductTablesState extends State<ProductTables> {
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
-
               ],
             ),
             SizedBox(
@@ -911,7 +924,6 @@ class ProductTablesState extends State<ProductTables> {
                     productTableEdit: widget.productTableEdit,
                   ),
                 ),
-
               ],
             ),
 
@@ -926,7 +938,6 @@ class ProductTablesState extends State<ProductTables> {
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
-
               ],
             ),
             SizedBox(
@@ -940,7 +951,6 @@ class ProductTablesState extends State<ProductTables> {
                     storageTableEdit: widget.storageTableEdit,
                   ),
                 ),
-
               ],
             ),
             SizedBox(
@@ -1473,18 +1483,18 @@ class VariantStabletable extends StatefulWidget {
   final bool itmCatelog;
   final bool itmImage;
   final bool active;
+  final bool needMultipleIntegration;
   final Function({String type}) imagePostCheck;
   final Function({String type, bool val}) trueOrFalseChange;
 
   VariantStabletable({
     required this.weightUom,
-
     required this.imagePostCheck,
     required this.itemId,
     required this.weight,
     required this.image3,
     required this.seblingNameController,
-
+    required this.needMultipleIntegration,
     required this.image2,
     required this.actualCost,
     required this.landingCost,
@@ -1555,7 +1565,10 @@ class VariantStabletable extends StatefulWidget {
     required this.uomGroupName,
     required this.baseGroupName,
     required this.salesUomName,
-    required this.purchaseUomName, required this.length, required this.width, required this.height,
+    required this.purchaseUomName,
+    required this.length,
+    required this.width,
+    required this.height,
   });
 
   @override
@@ -1665,7 +1678,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-
                     NewInputCard(
                       readOnly: true,
                       controller: widget.uomGroupName,
@@ -1720,7 +1732,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-                    NewInputCard(controller: widget.baseGroupName,
+                    NewInputCard(
+                      controller: widget.baseGroupName,
                       readOnly: true,
                       // icondrop:true,
                       title: "Base UOM",
@@ -1783,42 +1796,36 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-
-                    NewInputCard(controller: widget.salesUomName,
-                      icondrop:true,
+                    NewInputCard(
+                      controller: widget.salesUomName,
+                      icondrop: true,
                       readOnly: true,
-                      title: "Sales Uom",ontap: (){
+                      title: "Sales Uom",
+                      ontap: () {
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
-                            type: "SalesUomTabalePopup", valueSelect: (BrandListModel va){
-
-                            setState(() {
-                              print(va?.uomCode);
-                              print(va);
-
-
-
-                              widget.salesUom.text = va?.id.toString() ?? "";
-                              widget.salesUomName.text = va?.name.toString() ?? "";
-                              base_uom = va?.id;
-                              Variable.uomId = va?.id;
+                            type: "SalesUomTabalePopup",
+                            valueSelect: (BrandListModel va) {
                               setState(() {
+                                print(va?.uomCode);
+                                print(va);
 
+                                widget.salesUom.text = va?.id.toString() ?? "";
+                                widget.salesUomName.text =
+                                    va?.name.toString() ?? "";
+                                base_uom = va?.id;
+                                Variable.uomId = va?.id;
+                                setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
                               });
-
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-
-                          },
+                            },
                           ),
-
-
                         );
-
-                      },),
+                      },
+                    ),
                     // SelectableDropDownpopUp(
                     //   controller: widget.salesUomName,
                     //   label: "Sales Uom",
@@ -1844,41 +1851,35 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-
-                    NewInputCard(controller: widget.purchaseUomName,
-                      icondrop:true,
+                    NewInputCard(
+                      controller: widget.purchaseUomName,
+                      icondrop: true,
                       readOnly: true,
-                      title: "Purchase UOM",ontap: (){
+                      title: "Purchase UOM",
+                      ontap: () {
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
-                            type: "SalesUomTabalePopup", valueSelect: (BrandListModel va){
-
-                            setState(() {
-                              print(va?.uomCode);
-                              print(va);
-
-
-
-                              widget.purchaseUom.text = va?.id.toString() ?? "";
-                              widget.purchaseUomName.text =
-                                  va?.name.toString() ?? "";
+                            type: "SalesUomTabalePopup",
+                            valueSelect: (BrandListModel va) {
                               setState(() {
+                                print(va?.uomCode);
+                                print(va);
 
+                                widget.purchaseUom.text =
+                                    va?.id.toString() ?? "";
+                                widget.purchaseUomName.text =
+                                    va?.name.toString() ?? "";
+                                setState(() {});
+
+                                // onChange = true;
+                                // orderType.text = va!;
                               });
-
-
-                              // onChange = true;
-                              // orderType.text = va!;
-                            });
-
-                          },
+                            },
                           ),
-
-
                         );
-
-                      },),
+                      },
+                    ),
                     // SelectableDropDownpopUp(
                     //   controller: widget.purchaseUomName,
                     //   label: "Purchase Uom",
@@ -1905,8 +1906,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
-                      formatter: true,
-                        controller: widget.grossWeight, title: "Gross Weight"),
+                        formatter: true,
+                        controller: widget.grossWeight,
+                        title: "Gross Weight"),
                     SizedBox(
                       height: height * .030,
                     ),
@@ -1929,14 +1931,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         controller: widget.landingCost,
                         title: "Landing Cost"),
 
-
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-
-                        controller: widget.length,
-                        title: "Length"),
+                    NewInputCard(controller: widget.length, title: "Length"),
 
                     SizedBox(
                       height: height * .259,
@@ -1946,30 +1944,28 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
-
-
                     NewInputCard(
-                        formatter: true, controller: widget.height,
+                        formatter: true,
+                        controller: widget.height,
                         title: "Height"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-
-                        controller: widget.width,
-                        title: "Width"),
+                    NewInputCard(controller: widget.width, title: "Width"),
                     SizedBox(
                       height: height * .030,
                     ),
                     NewInputCard(
-                        formatter: true, controller: widget.weight,
+                        formatter: true,
+                        controller: widget.weight,
                         title: "Weight"),
 
                     SizedBox(
                       height: height * .030,
                     ),
                     NewInputCard(
-                        formatter: true, controller: widget.weightUom,
+                        formatter: true,
+                        controller: widget.weightUom,
                         title: "Weight UOM Id"),
 
                     SizedBox(
@@ -2023,9 +2019,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //     controller: widget.manuFactureId,
                     //     title: "Manufacture Id"),
 
-
-
-
                     // NewInputCard(
                     //     controller: widget.manuFactureName,
                     //     title: "Manufacture Name"),
@@ -2038,13 +2031,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
-
                             type: "ManuFacturedPopup",
                             valueSelect: (VendorDetailsModel va) {
                               setState(() {
                                 print(va?.id ?? "");
-                                widget.manuFactureId.text = va?.id.toString() ?? "";
-                                widget.manuFactureName.text = va?.manuFactureName.toString() ?? "";
+                                widget.manuFactureId.text =
+                                    va?.id.toString() ?? "";
+                                widget.manuFactureName.text =
+                                    va?.manuFactureName.toString() ?? "";
 
                                 setState(() {});
                                 setState(() {});
@@ -2062,8 +2056,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
-                      formatter: true,
-                        controller: widget.saftyStock, title: "Safety Stock"),
+                        formatter: true,
+                        controller: widget.saftyStock,
+                        title: "Safety Stock"),
 
                     SizedBox(
                       height: height * .030,
@@ -2141,7 +2136,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // orderType.text = va!;
                         });
                       },
-
                     ),
                     SizedBox(
                       height: height * .030,
@@ -2156,11 +2150,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           ConfigurePopup(
                             veritiaclid: widget.veritiaclid,
                             type: "LinkedItemCreatePopUp",
-                            listAssign: (String va){
+                            listAssign: (String va) {
                               setState(() {
-
-
-                              widget.linkedItem.text=va;
+                                widget.linkedItem.text = va;
                               });
                             },
                           ),
@@ -2223,10 +2215,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-
-
-
-
                     SizedBox(
                       height: height * .209,
                     ),
@@ -2235,7 +2223,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
-
                     NewInputCard(
                         formatter: true,
                         controller: widget.minPurchaseOrderLimit,
@@ -2243,7 +2230,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-
 
                     NewInputCard(
                         formatter: true,
@@ -2265,22 +2251,18 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-
-
                     SelectableDropDownpopUp(
                       id: widget.veritiaclid,
                       label: "Return Type",
-                      type:"ReturnTypePopupCall",
-                      value:widget. returnType.text,
+                      type: "ReturnTypePopupCall",
+                      value: widget.returnType.text,
                       onSelection: (String? va) {
-                        print(
-                            "+++++++++++++++++++++++");
+                        print("+++++++++++++++++++++++");
                         //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                         setState(() {
-                         widget.returnType.text=va??"";
+                          widget.returnType.text = va ?? "";
                         });
                       },
-
                       restricted: true,
                     ),
                     // NewInputCard(
@@ -2289,20 +2271,19 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(
-                      formatter: true,
-                        controller: widget.returnTime, title: "Return Time"),
+                        formatter: true,
+                        controller: widget.returnTime,
+                        title: "Return Time"),
                     SizedBox(
                       height: height * .030,
                     ),
                     FileUploadField(
                         fileName: widget.image1.text,
                         fileUrl: widget.image1.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.image1.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2312,7 +2293,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           widget.imagePostCheck(type: "1");
                           widget.image1.text = myFile?.fileName ?? "";
                           // Variable.mobileBannerImage = myFile.toUint8List();
-                           imageEncode = myFile.toBase64();
+                          imageEncode = myFile.toBase64();
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
@@ -2355,12 +2336,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image2.text,
                         fileUrl: widget.image2.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.image2.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2403,7 +2382,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 130kb");;
+                                "Please upload Banner of size Lesser than 130kb");
+                          ;
                           setState(() {});
                         },
                         onCreate: true,
@@ -2414,12 +2394,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image3.text,
                         fileUrl: widget.image3.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.image3.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2451,8 +2429,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "image3");
@@ -2475,12 +2451,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image4.text,
                         fileUrl: widget.image4.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.image4.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2494,7 +2468,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // widget.fileMobileNameCtrl.text =
                           //     myFile.fileName ?? "";
                           // if (Variable.bannerimage!.length <= 240000)
-
 
                           // Variable.bannerEncodedMobileBannerImage =
                           //     myFile.toBase64();
@@ -2534,12 +2507,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.image5.text,
                         fileUrl: widget.image5.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.image5.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2571,7 +2542,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "image5");
@@ -2599,12 +2569,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog1.text,
                         fileUrl: widget.catalog1.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog1.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2635,7 +2603,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "1");
@@ -2658,14 +2625,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog2.text,
                         fileUrl: widget.catalog2.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog2.clear();
                           });
-
                         },
-
                         onChangeTap: (p0) {
                           // loading = true;
                           setState(() {});
@@ -2717,12 +2681,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog3.text,
                         fileUrl: widget.catalog3.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog3.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2753,7 +2715,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "3");
@@ -2776,12 +2737,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog4.text,
                         fileUrl: widget.catalog4.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog4.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2812,7 +2771,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "4");
@@ -2835,12 +2793,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog5.text,
                         fileUrl: widget.catalog5.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog5.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2871,7 +2827,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                           // Variable.popUp = false;
 
                           if (newFile.length <= 150000) {
-
                             context.read<ImagepostCubit>().postImage(
                                 Variable.imageName, imageEncode,
                                 type: "5");
@@ -2894,12 +2849,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog6.text,
                         fileUrl: widget.catalog6.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog6.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -2952,12 +2905,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog7.text,
                         fileUrl: widget.catalog7.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog7.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -3010,12 +2961,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     FileUploadField(
                         fileName: widget.catalog8.text,
                         fileUrl: widget.catalog8.text,
-                        onCancel: (){
-
+                        onCancel: () {
                           setState(() {
                             widget.catalog8.clear();
                           });
-
                         },
                         onChangeTap: (p0) {
                           // loading = true;
@@ -3063,14 +3012,16 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCreate: true,
                         label: "Catalog8"),
                     SizedBox(
-                      height: height * .262     ,
+                      height: height * .262,
                     ),
                   ],
                 ))
               ],
             ),
           ),
-          SizedBox(height: 10,),
+          SizedBox(
+            height: 10,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -3128,21 +3079,17 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     // onChangeExtWarranty = gg;
                     setState(() {});
                   }),
-
-
-
             ],
           ),
-          SizedBox(height: height*.035,),
-
+          SizedBox(
+            height: height * .035,
+          ),
           Container(
-              width: MediaQuery.of(context).size.width/3.5,
+            width: MediaQuery.of(context).size.width / 1.9,
             alignment: Alignment.topLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
-
                 PopUpSwitchTile(
                     value: widget?.itmImage ?? false,
                     title: "Item Image",
@@ -3170,11 +3117,23 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       // onChangeExtWarranty = gg;
                       setState(() {});
                     }),
+                PopUpSwitchTile(
+                    value: widget.needMultipleIntegration ?? false,
+                    title: "Need Multiple Integration",
+                    onClick: (gg) {
+                      bool val = widget.needMultipleIntegration;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "Multiple", val: val);
+                      // widget.activeChange(!widget.active);
 
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
               ],
             ),
           )
-
         ],
       );
     });
@@ -3195,31 +3154,27 @@ class VendorDetailsVarient extends StatefulWidget {
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
   List<VendorDetails> vendorDetails = [];
-  List<bool>upDate=[];
-  List<bool>upDateButton=[];
+  List<bool> upDate = [];
+  List<bool> upDateButton = [];
 
   String vendoeCode = "";
   TextEditingController code = TextEditingController();
   TextEditingController refCode = TextEditingController();
-  List<TextEditingController>codeListTextEditingController = [];
-  List<TextEditingController>refCodeListTextEditingController = [];
+  List<TextEditingController> codeListTextEditingController = [];
+  List<TextEditingController> refCodeListTextEditingController = [];
 
   bool onSaveActive = false;
 
-
-  saveButtonActovde(String name,String ref){
-
-    onChange=true;
-    if(name!="" && ref!=""){
+  saveButtonActovde(String name, String ref) {
+    onChange = true;
+    if (name != "" && ref != "") {
       setState(() {
-        onSaveActive=true;
+        onSaveActive = true;
       });
-    }
-    else{
+    } else {
       setState(() {
-        onSaveActive=false;
+        onSaveActive = false;
       });
-
     }
   }
 
@@ -3227,27 +3182,32 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    if (onChange==false) {
+    if (onChange == false) {
       upDate.clear();
       upDateButton.clear();
-      onSaveActive=false;
+      onSaveActive = false;
       codeListTextEditingController.clear();
       refCodeListTextEditingController.clear();
 
       print("welcome to the entire place");
 
-
       if (widget.vendorDetails?.isNotEmpty == true) {
-
         print(vendorDetails);
-        if(widget.vendorDetails?.isNotEmpty==true){
-          for (var i=0;i<widget.vendorDetails!.length-1;i++){
-            if(vendorDetails[i].vendorName!=null &&vendorDetails[i].vendorCode!=null){
+        if (widget.vendorDetails?.isNotEmpty == true) {
+          for (var i = 0; i < widget.vendorDetails!.length - 1; i++) {
+            if (vendorDetails[i].vendorName != null &&
+                vendorDetails[i].vendorCode != null) {
               upDate.add(false);
               upDateButton.add(false);
-              var nameValue = new TextEditingController(text: vendorDetails[i].vendorName==null?"":vendorDetails[i].vendorName);
+              var nameValue = new TextEditingController(
+                  text: vendorDetails[i].vendorName == null
+                      ? ""
+                      : vendorDetails[i].vendorName);
               codeListTextEditingController.add(nameValue);
-              var refValue = new TextEditingController(text: vendorDetails[i].vendorReerenceCode==null?"":vendorDetails[i].vendorReerenceCode);
+              var refValue = new TextEditingController(
+                  text: vendorDetails[i].vendorReerenceCode == null
+                      ? ""
+                      : vendorDetails[i].vendorReerenceCode);
               refCodeListTextEditingController.add(refValue);
               vendorDetails.add(widget.vendorDetails![i]);
             }
@@ -3270,8 +3230,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               style: BorderStyle.solid),
         ),
         tableWidth: .5,
-        childrens:
-        [
+        childrens: [
           TableRow(
             // decoration: BoxDecoration(
 
@@ -3285,7 +3244,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Sl No',
 
-                padding: EdgeInsets.only(left: 13,top: 13),
+                padding: EdgeInsets.only(left: 13, top: 13),
 
                 height: 46,
                 textColor: Colors.white,
@@ -3296,7 +3255,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Vendor Name',
                 textColor: Colors.white,
-                padding: EdgeInsets.only(left: 13,top: 13),
+                padding: EdgeInsets.only(left: 13, top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3304,7 +3263,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 'Vendor reference code',
                 textColor: Colors.white,
-                padding: EdgeInsets.only(left: 13,top: 13),
+                padding: EdgeInsets.only(left: 13, top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3312,7 +3271,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               tableHeadtext(
                 '',
                 textColor: Colors.white,
-                padding: EdgeInsets.only(left: 13,top: 13),
+                padding: EdgeInsets.only(left: 13, top: 13),
                 height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
@@ -3322,52 +3281,47 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
           if (vendorDetails?.isNotEmpty == true) ...[
             for (var i = 0; i < vendorDetails!.length; i++)
               TableRow(
-    decoration: BoxDecoration(
-    color: Pellet.tableRowColor,
-    shape: BoxShape.rectangle,
-    border:  Border(
-    left: BorderSide(
-
-    color: Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
-    style: BorderStyle.solid),
-    bottom: BorderSide(
-
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    style: BorderStyle.solid),
-    right: BorderSide(
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
-
-    style: BorderStyle.solid))),
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border: Border(
+                          left: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
+                              style: BorderStyle.solid))),
                   children: [
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: textPadding((i + 1).toString(),
+                      child: textPadding(
+                        (i + 1).toString(),
                         height: 50,
-                        color:  upDate[i]?Colors.white:Colors.transparent,
-
+                        color: upDate[i] ? Colors.white : Colors.transparent,
                       ),
                     ),
                     TableCell(
-
                         verticalAlignment: TableCellVerticalAlignment.middle,
                         child:
                             // Text(keys[i].value??"",)
                             UnderLinedInput(
-                              readOnly:  !upDate[i],
-                              filledColour: upDate[i]?Colors.white:Colors.transparent,
-                              controller: codeListTextEditingController[i],
+                          readOnly: !upDate[i],
+                          filledColour:
+                              upDate[i] ? Colors.white : Colors.transparent,
+                          controller: codeListTextEditingController[i],
                           // initialCheck: true,
                           // last: vendorDetails?[i].vendorName ?? "" ?? "",
                           formatter: false,
-                              onComplete: () {
-
-                              },
+                          onComplete: () {},
                           onChanged: (va) {
-                            onChange=true;
+                            onChange = true;
                             print(va);
-                            upDateButton[i]=true;
+                            upDateButton[i] = true;
                             vendorDetails[i] =
                                 vendorDetails[i].copyWith(vendorCode: va);
                             widget.vendorTableEdit(list: vendorDetails);
@@ -3375,75 +3329,70 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                         )),
                     UnderLinedInput(
                       readOnly: !upDate[i],
-                      filledColour: upDate[i]?Colors.white:Colors.transparent,
+                      filledColour:
+                          upDate[i] ? Colors.white : Colors.transparent,
                       controller: refCodeListTextEditingController[i],
                       // initialCheck: true,
                       // last: vendorDetails?[i].vendorReerenceCode ?? "" ?? "",
                       formatter: false,
                       onChanged: (va) {
-                        onChange=true;
+                        onChange = true;
                         setState(() {
-                          upDateButton[i]=true;
+                          upDateButton[i] = true;
                           print(va);
                           vendorDetails[i] =
                               vendorDetails[i].copyWith(vendorReerenceCode: va);
                           widget.vendorTableEdit(list: vendorDetails);
                         });
-
                       },
                     ),
-    TableCell(
-    verticalAlignment: TableCellVerticalAlignment.middle,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
                       child: Row(
                         children: [
                           TableTextButton(
-                            buttonBagroundColor: upDateButton[i]?Pellet.bagroundColor:Colors.transparent,
-                            textColor: upDateButton[i]?Pellet.bagroundColor:Colors.black,
-                            bagroundColor:  upDateButton[i]?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
-                            label: upDateButton[i]==true?"Update":"Edit",
+                            buttonBagroundColor: upDateButton[i]
+                                ? Pellet.bagroundColor
+                                : Colors.transparent,
+                            textColor: upDateButton[i]
+                                ? Pellet.bagroundColor
+                                : Colors.black,
+                            bagroundColor: upDateButton[i]
+                                ? Pellet.tableBlueHeaderPrint
+                                : Color(0xffe7e7e7),
+                            label: upDateButton[i] == true ? "Update" : "Edit",
 
                             // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                             onPress: () {
-                              onChange=true;
-
+                              onChange = true;
 
                               setState(() {
-                                upDate[i]=!upDate[i];
+                                upDate[i] = !upDate[i];
 
-                                if( upDateButton[i]==true){
+                                if (upDateButton[i] == true) {
                                   widget.vendorTableEdit(list: vendorDetails);
-                                  upDateButton[i]=false;
-
-
-
-
-
+                                  upDateButton[i] = false;
                                 }
-
-
                               });
-                              setState(() {
-
-                              });
-
+                              setState(() {});
                             },
                           ),
-                          SizedBox(width: 3,),
-
+                          SizedBox(
+                            width: 3,
+                          ),
                           TableIconTextButton(
                             icon: Icons.delete,
                             onPress: () {
-                              onChange=true;
+                              onChange = true;
                               setState(() {
-                                vendorDetails?.removeAt(
-                                    i);
+                                vendorDetails?.removeAt(i);
                                 upDate.removeAt(i);
                                 upDateButton.removeAt(i);
                                 codeListTextEditingController.removeAt(i);
-                               refCodeListTextEditingController.removeAt(i);
+                                refCodeListTextEditingController.removeAt(i);
 
-                              widget.vendorTableEdit(list: vendorDetails);
+                                widget.vendorTableEdit(list: vendorDetails);
                               });
                             },
                             label: "",
@@ -3453,37 +3402,37 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     )
                   ])
           ],
-          TableRow(decoration: BoxDecoration(
-    color: Pellet.tableRowColor,
-    shape: BoxShape.rectangle,
-    border:  Border(
-    left: BorderSide(
-
-    color: Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
-    style: BorderStyle.solid),
-    bottom: BorderSide(
-
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    style: BorderStyle.solid),
-    right: BorderSide(
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
-
-    style: BorderStyle.solid))),
+          TableRow(
+              decoration: BoxDecoration(
+                  color: Pellet.tableRowColor,
+                  shape: BoxShape.rectangle,
+                  border: Border(
+                      left: BorderSide(
+                          color: Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+                          style: BorderStyle.solid),
+                      bottom: BorderSide(
+                          color: Color(0xff3E4F5B).withOpacity(.1),
+                          style: BorderStyle.solid),
+                      right: BorderSide(
+                          color: Color(0xff3E4F5B).withOpacity(.1),
+                          width: .4,
+                          style: BorderStyle.solid))),
               children: [
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: textPadding((vendorDetails.length + 1).toString(),height: 50,
+                  child: textPadding(
+                    (vendorDetails.length + 1).toString(),
+                    height: 50,
                   ),
                 ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: UnderLinedInput(
+                  child:
+                  UnderLinedInput(
                     suffixIconEnable: true,
                     formatter: false,
                     controller: code,
-
                     onClick: () {
                       showDailogPopUp(
                         context,
@@ -3495,7 +3444,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                               onChange = true;
                               code.text = model.manuFactureName ?? "";
                               vendoeCode = model.manuFactureuserCode ?? "";
-                              saveButtonActovde(code.text,refCode.text);
+                              saveButtonActovde(code.text, refCode.text);
                             });
                           },
                           type: "vendorDetailList_popup",
@@ -3509,17 +3458,22 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     child: UnderLinedInput(
                       formatter: false,
                       controller: refCode,
-                      onChanged: (va){
-                        onChange=true;
-                        saveButtonActovde(code.text,refCode.text);
+                      onChanged: (va) {
+                        onChange = true;
+                        saveButtonActovde(code.text, refCode.text);
                       },
                     )),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: TableTextButton(
-                    buttonBagroundColor:onSaveActive?Pellet.bagroundColor:Colors.transparent,
-                    textColor:onSaveActive?Pellet.bagroundColor:Colors.black,
-                    bagroundColor: onSaveActive?Pellet.tableBlueHeaderPrint:Color( 0xffe7e7e7),
+                    buttonBagroundColor: onSaveActive
+                        ? Pellet.bagroundColor
+                        : Colors.transparent,
+                    textColor:
+                        onSaveActive ? Pellet.bagroundColor : Colors.black,
+                    bagroundColor: onSaveActive
+                        ? Pellet.tableBlueHeaderPrint
+                        : Color(0xffe7e7e7),
                     onPress: () {
                       widget.vendorTableEdit(list: vendorDetails);
                       VendorDetails model = VendorDetails(
@@ -3539,11 +3493,10 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                         widget.vendorTableEdit(list: vendorDetails);
                         code.text = "";
                         refCode.text = "";
-                        onSaveActive=false;
+                        onSaveActive = false;
                       });
                     },
                     label: "Save",
-
                   ),
                 )
               ]),

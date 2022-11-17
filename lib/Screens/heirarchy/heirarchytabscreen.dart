@@ -13,6 +13,7 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'customizeddata/screens/main_customized.dart';
+import 'divisionconfiguration/screens/main_division_configuration.dart';
 
 
 
@@ -29,7 +30,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
   bool isClossed=true;
   @override
   Widget build(BuildContext context) {
-    TabController _tabController = TabController(length: 2, vsync: this,initialIndex: Variable.subIndex[4]??0);
+    TabController _tabController = TabController(length: 3, vsync: this,initialIndex: Variable.subIndex[4]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return SingleChildScrollView(
@@ -117,6 +118,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                                     controller: _tabController,
                                     tabs: [
                                       Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                      Text("Division Configuration",style: TextStyle(color: Colors.black,fontSize: 13),),
                                       Text("Customise Data",style: TextStyle(color: Colors.black,fontSize: 13),),
 
                                     ]),
@@ -144,6 +146,7 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                             controller: _tabController,
                             children: [
                               HeirarchyGeneralScreen(),
+                              DevisionConfiguration(),
                               CustomisedMainScreen(),
 
 
