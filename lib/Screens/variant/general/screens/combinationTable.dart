@@ -1,11 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:inventory/Screens/variant/general/productmodulegeneral.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/widgets/customtable.dart';
 
 class CombinationTable extends StatefulWidget {
-  List<String>list;
+  List<CombinationListClass>list;
   CombinationTable({required this.list});
   @override
   _CombinationTableState createState() => _CombinationTableState();
@@ -112,8 +113,12 @@ class _CombinationTableState extends State<CombinationTable> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
 
                   child:   CheckedBoxs(
-                      valueChanger: true,
+                      valueChanger: widget.list[i].isActive,
                       onSelection:(va){
+                        setState(() {
+                          widget.list[i].isActive=!widget.list[i].isActive;
+                        });
+
 
                       }
 
@@ -123,7 +128,7 @@ class _CombinationTableState extends State<CombinationTable> {
                   verticalAlignment: TableCellVerticalAlignment.middle,
 
 
-                  child:Text(widget.list[i].toString())
+                  child:Text(widget.list[i].value.toString())
 
 
 

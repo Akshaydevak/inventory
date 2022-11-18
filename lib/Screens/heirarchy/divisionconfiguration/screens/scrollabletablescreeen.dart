@@ -8,7 +8,7 @@ import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
-
+bool onChange=false;
 class UomTable extends StatefulWidget {
   List<DataInclude>?list;
   final Function uomTableEdit;
@@ -197,7 +197,8 @@ setState(() {
                                     setState(() {
                                       uomList[i] =
                                           uomList[i].copyWith(
-                                              name: va.name,uomCode: va.code);
+                                              name: va.name,uomCode: va.uomCode);
+                                      codeListController[i]=TextEditingController(text: va.uomCode);
                                       upDateButton[i]=true;
 
 
@@ -474,7 +475,7 @@ class GroupTable extends StatefulWidget {
 class _GroupTableState extends State<GroupTable> {
 
 
-  bool onChange=false;
+
   List<DataInclude>groupList=[];
   List<bool>upDate=[];
 
@@ -652,6 +653,7 @@ class _GroupTableState extends State<GroupTable> {
                                       groupList[i] =
                                           groupList[i].copyWith(
                                               name: va.name,code: va.code);
+                                      codeListController[i]=TextEditingController(text: va.code);
                                       upDateButton[i]=true;
 
 
@@ -1108,6 +1110,7 @@ class _CategoryTableState extends State<CategoryTable> {
                                       categoryList[i] =
                                           categoryList[i].copyWith(
                                               name: va.name,code: va.code);
+                                      codeListController[i]=TextEditingController(text: va.code);
                                       upDateButton[i]=true;
 
 

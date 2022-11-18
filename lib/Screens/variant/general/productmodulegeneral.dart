@@ -46,7 +46,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   List<List<Map<String, dynamic>>> variantList = [];
   List<List<Map<String, dynamic>>> variantList1 = [];
   var lists;
-  List<String> vals = [];
+  List<CombinationListClass> vals = [];
 
 
   List combination_value_extract(input_list){
@@ -99,11 +99,19 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 
 
 
-  List<String> combination_table(combinationArray){
-    List<String>combi=[];
-    print(combinationArray.toString());
+  List<CombinationListClass> combination_table(combinationArray){
+
+    // print("previousCombinationList"+previousCombinationList.length.toString());
+    List<CombinationListClass>combi=[];
+
     for (var b=0;b<combinationArray.length ;b++){
-      combi.add("");
+      CombinationListClass model=CombinationListClass(
+        isActive: false,
+        value: ""
+
+
+      );
+      combi.add(model);
       var val="";
       for (var attr=0;attr<combinationArray[b].length; attr++){
 
@@ -111,10 +119,12 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
 
 
       }
-      combi[b]=val;
+      combi[b].value=val;
+      combi[b].isActive=true;
 
 
     }
+    // previousCombinationList=List.from(combi);
     print("the cccccccccccccccccccccccccccc"+combi.toString());
     return combi;
 
@@ -809,8 +819,22 @@ print("the list is"+variantList.toString());
                                         ctx: context,
                                         text: "Save",
                                         onApply: () {
-                                          print("variantlist" +
-                                              variantList.toString());
+
+                                              var filterList;
+
+
+                                              print("filterList"+filterList.toString());
+                                          if(variantList.isNotEmpty){
+                                            for (int i=0;i<variantList.length;i++){
+                                              if(vals[i].isActive==true){
+                                                filterList.add(variantList[i]);
+
+                                          }
+                                            }
+                                          }
+                                          print("filterList"+filterList.toString());
+
+
 
                                           context
                                               .read<
@@ -952,4 +976,10 @@ class _NewCheckBoxBoxState extends State<NewCheckBoxBox> {
       ),
     );
   }
+}
+class CombinationListClass{
+  bool isActive;
+  String value;
+  CombinationListClass({required this.isActive,required this.value});
+
 }

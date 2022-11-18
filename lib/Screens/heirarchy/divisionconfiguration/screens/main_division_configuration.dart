@@ -235,6 +235,11 @@ ismixed=false;
               context.read<ReadDivisionConfigCubit>().getDivisionConfigRead(veritiaclid!);
             }
             else {
+              setState(() {
+                clear();
+
+              });
+
               print("common");
               // select=true;
 
@@ -275,7 +280,11 @@ ismixed=false;
                           .read<ListDivisionCubit>()
                           .getSearchDevisionList(va);
                       if(va==""){
-                        context.read<ListDivisionCubit>().getDivisionVerticalList();
+                        // clear();
+                        setState(() {
+                          context.read<ListDivisionCubit>().getDivisionVerticalList();
+                        });
+
 
                       }
 

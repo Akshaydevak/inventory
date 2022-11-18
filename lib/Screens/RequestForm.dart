@@ -2186,7 +2186,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                                child: CheckedBoxs(
+                                                                  // color:Color(0xff3E4F5B) ,
 
                                                                   valueChanger:  isReceived1,
                                                                   onSelection: (bool? value ) {
@@ -2470,7 +2471,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                                child: CheckedBoxs(
+                                                                  // color:Color(0xff3E4F5B) ,
 
                                                                   valueChanger:  isInvoiced1,
                                                                   onSelection: (bool? value ) {
@@ -2483,7 +2485,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                                child: CheckedBoxs(
+                                                                  // color:Color(0xff3E4F5B) ,
                                                                   valueChanger:  isFree1,
                                                                   onSelection: (bool? value ) {
                                                                   setState(() {
@@ -2495,7 +2498,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                                child: CheckedBoxs(
+                                                                  // color:Color(0xff3E4F5B) ,
                                                                   valueChanger:  isActive1,
                                                                   onSelection: (bool? value ) {
                                                                     setState(() {

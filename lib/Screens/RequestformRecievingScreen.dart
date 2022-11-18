@@ -3763,7 +3763,8 @@ child: IntrinsicHeight(
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                child: CheckedBoxs(
+                                                  // color:Color(0xff3E4F5B) ,
 
                                                   valueChanger:  isActive1,
                                                   onSelection: (bool? value ) {
