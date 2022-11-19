@@ -285,7 +285,7 @@ abstract class PurchaseSourceAbstract {
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-      List<List<Map<String, dynamic>>>? variantlist});
+        List< dynamic>? variantlist});
   Future<PurchaseOrdertype> getVirtualStiocktype();
 
   Future<DoubleResponse> postStock(
@@ -5541,7 +5541,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-      List<List<Map<String, dynamic>>>? variantlist}) async {
+        List< dynamic>? variantlist}) async {
     String path = postCombinationFrameworkPostApi;
 
     print(path);

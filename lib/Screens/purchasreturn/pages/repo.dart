@@ -345,7 +345,7 @@ abstract class PurchaseReturnRepoAbstract {
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-      List<List<Map<String, dynamic>>>? variantlist});
+        List< dynamic>? variantlist});
   Future<Either<Failure, PurchaseOrdertype>> getVirtualStiocktype();
   Future<Either<Failure, DoubleResponse>> postStock(StockData model);
   Future<Either<Failure, List<LinkedItemListIdModel>>> getLinkedItemListRead(
@@ -1327,7 +1327,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-      List<List<Map<String, dynamic>>>? variantlist}) {
+        List< dynamic>? variantlist}) {
     return repoExecute<DoubleResponse>(() async =>
         remoteDataSource.postCombinationFrameWork(
             itemCode: itemCode,

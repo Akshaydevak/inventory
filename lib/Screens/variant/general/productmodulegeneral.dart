@@ -33,6 +33,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController controller = TextEditingController();
   TextEditingController variantFrameWorkController = TextEditingController();
   int? veritiaclid = 0;
+  var result_value;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   TextEditingController variantController = TextEditingController();
@@ -43,7 +44,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   String uomCode = "";
   List<VariantCreationRead2Model> attribute = [];
   List<List<Map<String, dynamic>>> combinationArray = [];
-  List<List<Map<String, dynamic>>> variantList = [];
+  List<dynamic> variantList = [];
   List<List<Map<String, dynamic>>> variantList1 = [];
   var lists;
   List<CombinationListClass> vals = [];
@@ -219,7 +220,7 @@ print("first array $combinationArray1");
 
     var input_list = combinationArray1;
     var result_extract = combination_value_extract(input_list);
-    var result_value = combination_build(result_extract[0],result_extract[1]);
+     result_value = combination_build(result_extract[0],result_extract[1]);
  vals=   combination_table(result_value);
     print("the combination aaaaaaaaaaaa"+result_value.toString());
 
@@ -654,6 +655,7 @@ print("the list is"+variantList.toString());
                                   selectedVertical = index;
                                   variantController.clear();
                                   variantNameController.clear();
+                                  vals.clear();
 
                                   // select=false;
                                   // clear();
@@ -823,16 +825,16 @@ print("the list is"+variantList.toString());
                                               var filterList;
 
 
-                                              print("filterList"+filterList.toString());
-                                          if(variantList.isNotEmpty){
-                                            for (int i=0;i<variantList.length;i++){
+                                              print("filterList"+ result_value.toString());
+                                          if(result_value.isNotEmpty){
+                                            for (int i=0;i<result_value.length;i++){
                                               if(vals[i].isActive==true){
-                                                filterList.add(variantList[i]);
+                                                variantList.add(result_value[i]);
 
                                           }
                                             }
                                           }
-                                          print("filterList"+filterList.toString());
+                                          print("filterList"+variantList.runtimeType.toString());
 
 
 

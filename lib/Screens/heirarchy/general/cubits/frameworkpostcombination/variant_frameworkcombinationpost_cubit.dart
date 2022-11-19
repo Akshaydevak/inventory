@@ -15,7 +15,7 @@ class VariantFrameworkcombinationpostCubit
       {String? itemCode,
       String? variantCode,
       String? uomCode,
-      List<List<Map<String, dynamic>>>? variantlist}) async {
+      List< dynamic>? variantlist}) async {
     emit(_Loading());
     print("assa");
     final result = await repo.postCombinationFrameWork(
