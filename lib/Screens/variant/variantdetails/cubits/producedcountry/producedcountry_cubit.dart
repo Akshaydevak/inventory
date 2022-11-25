@@ -9,8 +9,8 @@ part 'producedcountry_cubit.freezed.dart';
 class ProducedcountryCubit extends Cubit<ProducedcountryState> {
   ProducedcountryCubit() : super(ProducedcountryState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
-  Future getProducedCountry() async {
-    final result = await repo.getProducedCountry();
+  Future getProducedCountry(String? code) async {
+    final result = await repo.getProducedCountry( code);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

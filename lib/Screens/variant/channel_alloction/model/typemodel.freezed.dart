@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'typemodel.dart';
@@ -11,38 +12,11 @@ part of 'typemodel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ChannelTypeModel _$ChannelTypeModelFromJson(Map<String, dynamic> json) {
   return _ChannelTypeModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ChannelTypeModelTearOff {
-  const _$ChannelTypeModelTearOff();
-
-  _ChannelTypeModel call(
-      {int? id,
-      String? code,
-      String? name,
-      Barcode? barcode,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _ChannelTypeModel(
-      id: id,
-      code: code,
-      name: name,
-      barcode: barcode,
-      isActive: isActive,
-    );
-  }
-
-  ChannelTypeModel fromJson(Map<String, Object> json) {
-    return ChannelTypeModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ChannelTypeModel = _$ChannelTypeModelTearOff();
 
 /// @nodoc
 mixin _$ChannelTypeModel {
@@ -63,7 +37,8 @@ mixin _$ChannelTypeModel {
 abstract class $ChannelTypeModelCopyWith<$Res> {
   factory $ChannelTypeModelCopyWith(
           ChannelTypeModel value, $Res Function(ChannelTypeModel) then) =
-      _$ChannelTypeModelCopyWithImpl<$Res>;
+      _$ChannelTypeModelCopyWithImpl<$Res, ChannelTypeModel>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -75,14 +50,16 @@ abstract class $ChannelTypeModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChannelTypeModelCopyWithImpl<$Res>
+class _$ChannelTypeModelCopyWithImpl<$Res, $Val extends ChannelTypeModel>
     implements $ChannelTypeModelCopyWith<$Res> {
   _$ChannelTypeModelCopyWithImpl(this._value, this._then);
 
-  final ChannelTypeModel _value;
   // ignore: unused_field
-  final $Res Function(ChannelTypeModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -92,48 +69,50 @@ class _$ChannelTypeModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BarcodeCopyWith<$Res>? get barcode {
     if (_value.barcode == null) {
       return null;
     }
 
     return $BarcodeCopyWith<$Res>(_value.barcode!, (value) {
-      return _then(_value.copyWith(barcode: value));
+      return _then(_value.copyWith(barcode: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$ChannelTypeModelCopyWith<$Res>
+abstract class _$$_ChannelTypeModelCopyWith<$Res>
     implements $ChannelTypeModelCopyWith<$Res> {
-  factory _$ChannelTypeModelCopyWith(
-          _ChannelTypeModel value, $Res Function(_ChannelTypeModel) then) =
-      __$ChannelTypeModelCopyWithImpl<$Res>;
+  factory _$$_ChannelTypeModelCopyWith(
+          _$_ChannelTypeModel value, $Res Function(_$_ChannelTypeModel) then) =
+      __$$_ChannelTypeModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -146,16 +125,14 @@ abstract class _$ChannelTypeModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChannelTypeModelCopyWithImpl<$Res>
-    extends _$ChannelTypeModelCopyWithImpl<$Res>
-    implements _$ChannelTypeModelCopyWith<$Res> {
-  __$ChannelTypeModelCopyWithImpl(
-      _ChannelTypeModel _value, $Res Function(_ChannelTypeModel) _then)
-      : super(_value, (v) => _then(v as _ChannelTypeModel));
+class __$$_ChannelTypeModelCopyWithImpl<$Res>
+    extends _$ChannelTypeModelCopyWithImpl<$Res, _$_ChannelTypeModel>
+    implements _$$_ChannelTypeModelCopyWith<$Res> {
+  __$$_ChannelTypeModelCopyWithImpl(
+      _$_ChannelTypeModel _value, $Res Function(_$_ChannelTypeModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ChannelTypeModel get _value => super._value as _ChannelTypeModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -164,24 +141,24 @@ class __$ChannelTypeModelCopyWithImpl<$Res>
     Object? barcode = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_ChannelTypeModel(
-      id: id == freezed
+    return _then(_$_ChannelTypeModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -222,66 +199,60 @@ class _$_ChannelTypeModel implements _ChannelTypeModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChannelTypeModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ChannelTypeModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$ChannelTypeModelCopyWith<_ChannelTypeModel> get copyWith =>
-      __$ChannelTypeModelCopyWithImpl<_ChannelTypeModel>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, id, code, name, barcode, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChannelTypeModelCopyWith<_$_ChannelTypeModel> get copyWith =>
+      __$$_ChannelTypeModelCopyWithImpl<_$_ChannelTypeModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChannelTypeModelToJson(this);
+    return _$$_ChannelTypeModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ChannelTypeModel implements ChannelTypeModel {
   const factory _ChannelTypeModel(
-          {int? id,
-          String? code,
-          String? name,
-          Barcode? barcode,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_ChannelTypeModel;
+      {final int? id,
+      final String? code,
+      final String? name,
+      final Barcode? barcode,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_ChannelTypeModel;
 
   factory _ChannelTypeModel.fromJson(Map<String, dynamic> json) =
       _$_ChannelTypeModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  Barcode? get barcode => throw _privateConstructorUsedError;
+  Barcode? get barcode;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$ChannelTypeModelCopyWith<_ChannelTypeModel> get copyWith =>
+  _$$_ChannelTypeModelCopyWith<_$_ChannelTypeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

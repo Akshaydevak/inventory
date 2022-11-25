@@ -10,9 +10,49 @@ part 'customeridlist_cubit.freezed.dart';
 class CustomeridlistCubit extends Cubit<CustomeridlistState> {
   CustomeridlistCubit() : super(CustomeridlistState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
+  String? prev;
+  String? next;
   Future getCustomerId() async {
-    final result = await repo.getCustomerId();
+    final result = await repo.getCustomerId("");
     print(result);
-    result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));
+    result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
+  Future getSearchCustomerList(String filter) async {
+    emit(CustomeridlistState.initial());
+    final result = await repo.getCustomerId("name=" + filter);
+    result.fold((l) => emit(_Error()), (r) {
+      next = r.nextPage;
+      prev = r.previousPage;
+      // items = r.data;
+
+      emit(_Success(r));
+    });
+  }
+
+  Future nextslotSectionPageList() async {
+    final result = await repo.getCustomerId(next);
+    result.fold((l) => emit(_Error()), (r) {
+      next = r.nextPage;
+      prev = r.previousPage;
+
+      emit(_Success(r));
+    });
+  }
+
+  Future previuosslotSectionPageList() async {
+    // print(previous);
+    final result = await repo.getCustomerId(prev);
+    result.fold((l) => emit(_Error()), (r) {
+      next = r.nextPage;
+      prev = r.previousPage;
+
+      emit(_Success(r));
+    });
+  }
+
+  Future refresh() async {
+    emit(CustomeridlistState.initial());
+    getCustomerId();
+  }
+
 }

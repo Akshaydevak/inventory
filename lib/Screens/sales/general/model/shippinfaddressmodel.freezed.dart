@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'shippinfaddressmodel.dart';
@@ -11,46 +12,11 @@ part of 'shippinfaddressmodel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ShippingAddressModel _$ShippingAddressModelFromJson(Map<String, dynamic> json) {
   return _ShippingAddressModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ShippingAddressModelTearOff {
-  const _$ShippingAddressModelTearOff();
-
-  _ShippingAddressModel call(
-      {int? id,
-      double? discount,
-      double? vat,
-      String? note,
-      String? remarks,
-      @JsonKey(name: "full_name") String? fullName,
-      @JsonKey(name: "building_name") String? buildingName,
-      @JsonKey(name: "street_name") String? streetName,
-      @JsonKey(name: "customer_id") String? customerId}) {
-    return _ShippingAddressModel(
-      id: id,
-      discount: discount,
-      vat: vat,
-      note: note,
-      remarks: remarks,
-      fullName: fullName,
-      buildingName: buildingName,
-      streetName: streetName,
-      customerId: customerId,
-    );
-  }
-
-  ShippingAddressModel fromJson(Map<String, Object> json) {
-    return ShippingAddressModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ShippingAddressModel = _$ShippingAddressModelTearOff();
 
 /// @nodoc
 mixin _$ShippingAddressModel {
@@ -78,7 +44,8 @@ mixin _$ShippingAddressModel {
 abstract class $ShippingAddressModelCopyWith<$Res> {
   factory $ShippingAddressModelCopyWith(ShippingAddressModel value,
           $Res Function(ShippingAddressModel) then) =
-      _$ShippingAddressModelCopyWithImpl<$Res>;
+      _$ShippingAddressModelCopyWithImpl<$Res, ShippingAddressModel>;
+  @useResult
   $Res call(
       {int? id,
       double? discount,
@@ -92,14 +59,17 @@ abstract class $ShippingAddressModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ShippingAddressModelCopyWithImpl<$Res>
+class _$ShippingAddressModelCopyWithImpl<$Res,
+        $Val extends ShippingAddressModel>
     implements $ShippingAddressModelCopyWith<$Res> {
   _$ShippingAddressModelCopyWithImpl(this._value, this._then);
 
-  final ShippingAddressModel _value;
   // ignore: unused_field
-  final $Res Function(ShippingAddressModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -113,53 +83,54 @@ class _$ShippingAddressModelCopyWithImpl<$Res>
     Object? customerId = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullName: fullName == freezed
+      fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      buildingName: buildingName == freezed
+      buildingName: freezed == buildingName
           ? _value.buildingName
           : buildingName // ignore: cast_nullable_to_non_nullable
               as String?,
-      streetName: streetName == freezed
+      streetName: freezed == streetName
           ? _value.streetName
           : streetName // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ShippingAddressModelCopyWith<$Res>
+abstract class _$$_ShippingAddressModelCopyWith<$Res>
     implements $ShippingAddressModelCopyWith<$Res> {
-  factory _$ShippingAddressModelCopyWith(_ShippingAddressModel value,
-          $Res Function(_ShippingAddressModel) then) =
-      __$ShippingAddressModelCopyWithImpl<$Res>;
+  factory _$$_ShippingAddressModelCopyWith(_$_ShippingAddressModel value,
+          $Res Function(_$_ShippingAddressModel) then) =
+      __$$_ShippingAddressModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       double? discount,
@@ -173,16 +144,14 @@ abstract class _$ShippingAddressModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ShippingAddressModelCopyWithImpl<$Res>
-    extends _$ShippingAddressModelCopyWithImpl<$Res>
-    implements _$ShippingAddressModelCopyWith<$Res> {
-  __$ShippingAddressModelCopyWithImpl(
-      _ShippingAddressModel _value, $Res Function(_ShippingAddressModel) _then)
-      : super(_value, (v) => _then(v as _ShippingAddressModel));
+class __$$_ShippingAddressModelCopyWithImpl<$Res>
+    extends _$ShippingAddressModelCopyWithImpl<$Res, _$_ShippingAddressModel>
+    implements _$$_ShippingAddressModelCopyWith<$Res> {
+  __$$_ShippingAddressModelCopyWithImpl(_$_ShippingAddressModel _value,
+      $Res Function(_$_ShippingAddressModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ShippingAddressModel get _value => super._value as _ShippingAddressModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -195,40 +164,40 @@ class __$ShippingAddressModelCopyWithImpl<$Res>
     Object? streetName = freezed,
     Object? customerId = freezed,
   }) {
-    return _then(_ShippingAddressModel(
-      id: id == freezed
+    return _then(_$_ShippingAddressModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      fullName: fullName == freezed
+      fullName: freezed == fullName
           ? _value.fullName
           : fullName // ignore: cast_nullable_to_non_nullable
               as String?,
-      buildingName: buildingName == freezed
+      buildingName: freezed == buildingName
           ? _value.buildingName
           : buildingName // ignore: cast_nullable_to_non_nullable
               as String?,
-      streetName: streetName == freezed
+      streetName: freezed == streetName
           ? _value.streetName
           : streetName // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -284,99 +253,85 @@ class _$_ShippingAddressModel implements _ShippingAddressModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ShippingAddressModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ShippingAddressModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
-            (identical(other.note, note) ||
-                const DeepCollectionEquality().equals(other.note, note)) &&
-            (identical(other.remarks, remarks) ||
-                const DeepCollectionEquality()
-                    .equals(other.remarks, remarks)) &&
+                other.discount == discount) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
+            (identical(other.note, note) || other.note == note) &&
+            (identical(other.remarks, remarks) || other.remarks == remarks) &&
             (identical(other.fullName, fullName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fullName, fullName)) &&
+                other.fullName == fullName) &&
             (identical(other.buildingName, buildingName) ||
-                const DeepCollectionEquality()
-                    .equals(other.buildingName, buildingName)) &&
+                other.buildingName == buildingName) &&
             (identical(other.streetName, streetName) ||
-                const DeepCollectionEquality()
-                    .equals(other.streetName, streetName)) &&
+                other.streetName == streetName) &&
             (identical(other.customerId, customerId) ||
-                const DeepCollectionEquality()
-                    .equals(other.customerId, customerId)));
+                other.customerId == customerId));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(discount) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(remarks) ^
-      const DeepCollectionEquality().hash(fullName) ^
-      const DeepCollectionEquality().hash(buildingName) ^
-      const DeepCollectionEquality().hash(streetName) ^
-      const DeepCollectionEquality().hash(customerId);
 
   @JsonKey(ignore: true)
   @override
-  _$ShippingAddressModelCopyWith<_ShippingAddressModel> get copyWith =>
-      __$ShippingAddressModelCopyWithImpl<_ShippingAddressModel>(
+  int get hashCode => Object.hash(runtimeType, id, discount, vat, note, remarks,
+      fullName, buildingName, streetName, customerId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ShippingAddressModelCopyWith<_$_ShippingAddressModel> get copyWith =>
+      __$$_ShippingAddressModelCopyWithImpl<_$_ShippingAddressModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ShippingAddressModelToJson(this);
+    return _$$_ShippingAddressModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ShippingAddressModel implements ShippingAddressModel {
   const factory _ShippingAddressModel(
-          {int? id,
-          double? discount,
-          double? vat,
-          String? note,
-          String? remarks,
-          @JsonKey(name: "full_name") String? fullName,
-          @JsonKey(name: "building_name") String? buildingName,
-          @JsonKey(name: "street_name") String? streetName,
-          @JsonKey(name: "customer_id") String? customerId}) =
+          {final int? id,
+          final double? discount,
+          final double? vat,
+          final String? note,
+          final String? remarks,
+          @JsonKey(name: "full_name") final String? fullName,
+          @JsonKey(name: "building_name") final String? buildingName,
+          @JsonKey(name: "street_name") final String? streetName,
+          @JsonKey(name: "customer_id") final String? customerId}) =
       _$_ShippingAddressModel;
 
   factory _ShippingAddressModel.fromJson(Map<String, dynamic> json) =
       _$_ShippingAddressModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  double? get discount => throw _privateConstructorUsedError;
+  double? get discount;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
-  String? get note => throw _privateConstructorUsedError;
+  String? get note;
   @override
-  String? get remarks => throw _privateConstructorUsedError;
+  String? get remarks;
   @override
   @JsonKey(name: "full_name")
-  String? get fullName => throw _privateConstructorUsedError;
+  String? get fullName;
   @override
   @JsonKey(name: "building_name")
-  String? get buildingName => throw _privateConstructorUsedError;
+  String? get buildingName;
   @override
   @JsonKey(name: "street_name")
-  String? get streetName => throw _privateConstructorUsedError;
+  String? get streetName;
   @override
   @JsonKey(name: "customer_id")
-  String? get customerId => throw _privateConstructorUsedError;
+  String? get customerId;
   @override
   @JsonKey(ignore: true)
-  _$ShippingAddressModelCopyWith<_ShippingAddressModel> get copyWith =>
+  _$$_ShippingAddressModelCopyWith<_$_ShippingAddressModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -384,29 +339,6 @@ SalesInvoiceCodeModel _$SalesInvoiceCodeModelFromJson(
     Map<String, dynamic> json) {
   return _SalesInvoiceCodeModel.fromJson(json);
 }
-
-/// @nodoc
-class _$SalesInvoiceCodeModelTearOff {
-  const _$SalesInvoiceCodeModelTearOff();
-
-  _SalesInvoiceCodeModel call(
-      {int? id,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "invoice_code") String? invoiceCode}) {
-    return _SalesInvoiceCodeModel(
-      id: id,
-      inventoryId: inventoryId,
-      invoiceCode: invoiceCode,
-    );
-  }
-
-  SalesInvoiceCodeModel fromJson(Map<String, Object> json) {
-    return SalesInvoiceCodeModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SalesInvoiceCodeModel = _$SalesInvoiceCodeModelTearOff();
 
 /// @nodoc
 mixin _$SalesInvoiceCodeModel {
@@ -426,7 +358,8 @@ mixin _$SalesInvoiceCodeModel {
 abstract class $SalesInvoiceCodeModelCopyWith<$Res> {
   factory $SalesInvoiceCodeModelCopyWith(SalesInvoiceCodeModel value,
           $Res Function(SalesInvoiceCodeModel) then) =
-      _$SalesInvoiceCodeModelCopyWithImpl<$Res>;
+      _$SalesInvoiceCodeModelCopyWithImpl<$Res, SalesInvoiceCodeModel>;
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -434,14 +367,17 @@ abstract class $SalesInvoiceCodeModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SalesInvoiceCodeModelCopyWithImpl<$Res>
+class _$SalesInvoiceCodeModelCopyWithImpl<$Res,
+        $Val extends SalesInvoiceCodeModel>
     implements $SalesInvoiceCodeModelCopyWith<$Res> {
   _$SalesInvoiceCodeModelCopyWithImpl(this._value, this._then);
 
-  final SalesInvoiceCodeModel _value;
   // ignore: unused_field
-  final $Res Function(SalesInvoiceCodeModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -449,29 +385,30 @@ class _$SalesInvoiceCodeModelCopyWithImpl<$Res>
     Object? invoiceCode = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceCode: invoiceCode == freezed
+      invoiceCode: freezed == invoiceCode
           ? _value.invoiceCode
           : invoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SalesInvoiceCodeModelCopyWith<$Res>
+abstract class _$$_SalesInvoiceCodeModelCopyWith<$Res>
     implements $SalesInvoiceCodeModelCopyWith<$Res> {
-  factory _$SalesInvoiceCodeModelCopyWith(_SalesInvoiceCodeModel value,
-          $Res Function(_SalesInvoiceCodeModel) then) =
-      __$SalesInvoiceCodeModelCopyWithImpl<$Res>;
+  factory _$$_SalesInvoiceCodeModelCopyWith(_$_SalesInvoiceCodeModel value,
+          $Res Function(_$_SalesInvoiceCodeModel) then) =
+      __$$_SalesInvoiceCodeModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -479,32 +416,30 @@ abstract class _$SalesInvoiceCodeModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SalesInvoiceCodeModelCopyWithImpl<$Res>
-    extends _$SalesInvoiceCodeModelCopyWithImpl<$Res>
-    implements _$SalesInvoiceCodeModelCopyWith<$Res> {
-  __$SalesInvoiceCodeModelCopyWithImpl(_SalesInvoiceCodeModel _value,
-      $Res Function(_SalesInvoiceCodeModel) _then)
-      : super(_value, (v) => _then(v as _SalesInvoiceCodeModel));
+class __$$_SalesInvoiceCodeModelCopyWithImpl<$Res>
+    extends _$SalesInvoiceCodeModelCopyWithImpl<$Res, _$_SalesInvoiceCodeModel>
+    implements _$$_SalesInvoiceCodeModelCopyWith<$Res> {
+  __$$_SalesInvoiceCodeModelCopyWithImpl(_$_SalesInvoiceCodeModel _value,
+      $Res Function(_$_SalesInvoiceCodeModel) _then)
+      : super(_value, _then);
 
-  @override
-  _SalesInvoiceCodeModel get _value => super._value as _SalesInvoiceCodeModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? inventoryId = freezed,
     Object? invoiceCode = freezed,
   }) {
-    return _then(_SalesInvoiceCodeModel(
-      id: id == freezed
+    return _then(_$_SalesInvoiceCodeModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceCode: invoiceCode == freezed
+      invoiceCode: freezed == invoiceCode
           ? _value.invoiceCode
           : invoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -540,56 +475,54 @@ class _$_SalesInvoiceCodeModel implements _SalesInvoiceCodeModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SalesInvoiceCodeModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_SalesInvoiceCodeModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.invoiceCode, invoiceCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoiceCode, invoiceCode)));
+                other.invoiceCode == invoiceCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(invoiceCode);
 
   @JsonKey(ignore: true)
   @override
-  _$SalesInvoiceCodeModelCopyWith<_SalesInvoiceCodeModel> get copyWith =>
-      __$SalesInvoiceCodeModelCopyWithImpl<_SalesInvoiceCodeModel>(
+  int get hashCode => Object.hash(runtimeType, id, inventoryId, invoiceCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SalesInvoiceCodeModelCopyWith<_$_SalesInvoiceCodeModel> get copyWith =>
+      __$$_SalesInvoiceCodeModelCopyWithImpl<_$_SalesInvoiceCodeModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SalesInvoiceCodeModelToJson(this);
+    return _$$_SalesInvoiceCodeModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _SalesInvoiceCodeModel implements SalesInvoiceCodeModel {
   const factory _SalesInvoiceCodeModel(
-          {int? id,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "invoice_code") String? invoiceCode}) =
+          {final int? id,
+          @JsonKey(name: "inventory_id") final String? inventoryId,
+          @JsonKey(name: "invoice_code") final String? invoiceCode}) =
       _$_SalesInvoiceCodeModel;
 
   factory _SalesInvoiceCodeModel.fromJson(Map<String, dynamic> json) =
       _$_SalesInvoiceCodeModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "invoice_code")
-  String? get invoiceCode => throw _privateConstructorUsedError;
+  String? get invoiceCode;
   @override
   @JsonKey(ignore: true)
-  _$SalesInvoiceCodeModelCopyWith<_SalesInvoiceCodeModel> get copyWith =>
+  _$$_SalesInvoiceCodeModelCopyWith<_$_SalesInvoiceCodeModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

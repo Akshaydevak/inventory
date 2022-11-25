@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'baseuomcreation.dart';
@@ -11,47 +12,12 @@ part of 'baseuomcreation.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 BaseUomCreationtModel _$BaseUomCreationtModelFromJson(
     Map<String, dynamic> json) {
   return _BaseUomCreationtModel.fromJson(json);
 }
-
-/// @nodoc
-class _$BaseUomCreationtModelTearOff {
-  const _$BaseUomCreationtModelTearOff();
-
-  _BaseUomCreationtModel call(
-      {String? name,
-      @JsonKey(name: "base_equivalent") String? baseEquivalent,
-      @JsonKey(name: "uomgroup_code") String? uomGroupCode,
-      @JsonKey(name: "short_name") String? shortName,
-      @JsonKey(name: "uomgroup_name") String? uomGroupName,
-      @JsonKey(name: "uom_code") String? uomCode,
-      @JsonKey(name: "standard_code") String? standardCode,
-      @JsonKey(name: "conversion_factor") int? conversionFactor,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _BaseUomCreationtModel(
-      name: name,
-      baseEquivalent: baseEquivalent,
-      uomGroupCode: uomGroupCode,
-      shortName: shortName,
-      uomGroupName: uomGroupName,
-      uomCode: uomCode,
-      standardCode: standardCode,
-      conversionFactor: conversionFactor,
-      isActive: isActive,
-    );
-  }
-
-  BaseUomCreationtModel fromJson(Map<String, Object> json) {
-    return BaseUomCreationtModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $BaseUomCreationtModel = _$BaseUomCreationtModelTearOff();
 
 /// @nodoc
 mixin _$BaseUomCreationtModel {
@@ -83,7 +49,8 @@ mixin _$BaseUomCreationtModel {
 abstract class $BaseUomCreationtModelCopyWith<$Res> {
   factory $BaseUomCreationtModelCopyWith(BaseUomCreationtModel value,
           $Res Function(BaseUomCreationtModel) then) =
-      _$BaseUomCreationtModelCopyWithImpl<$Res>;
+      _$BaseUomCreationtModelCopyWithImpl<$Res, BaseUomCreationtModel>;
+  @useResult
   $Res call(
       {String? name,
       @JsonKey(name: "base_equivalent") String? baseEquivalent,
@@ -97,14 +64,17 @@ abstract class $BaseUomCreationtModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BaseUomCreationtModelCopyWithImpl<$Res>
+class _$BaseUomCreationtModelCopyWithImpl<$Res,
+        $Val extends BaseUomCreationtModel>
     implements $BaseUomCreationtModelCopyWith<$Res> {
   _$BaseUomCreationtModelCopyWithImpl(this._value, this._then);
 
-  final BaseUomCreationtModel _value;
   // ignore: unused_field
-  final $Res Function(BaseUomCreationtModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -118,53 +88,54 @@ class _$BaseUomCreationtModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      baseEquivalent: baseEquivalent == freezed
+      baseEquivalent: freezed == baseEquivalent
           ? _value.baseEquivalent
           : baseEquivalent // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupCode: uomGroupCode == freezed
+      uomGroupCode: freezed == uomGroupCode
           ? _value.uomGroupCode
           : uomGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      shortName: shortName == freezed
+      shortName: freezed == shortName
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupName: uomGroupName == freezed
+      uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      standardCode: standardCode == freezed
+      standardCode: freezed == standardCode
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      conversionFactor: conversionFactor == freezed
+      conversionFactor: freezed == conversionFactor
           ? _value.conversionFactor
           : conversionFactor // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BaseUomCreationtModelCopyWith<$Res>
+abstract class _$$_BaseUomCreationtModelCopyWith<$Res>
     implements $BaseUomCreationtModelCopyWith<$Res> {
-  factory _$BaseUomCreationtModelCopyWith(_BaseUomCreationtModel value,
-          $Res Function(_BaseUomCreationtModel) then) =
-      __$BaseUomCreationtModelCopyWithImpl<$Res>;
+  factory _$$_BaseUomCreationtModelCopyWith(_$_BaseUomCreationtModel value,
+          $Res Function(_$_BaseUomCreationtModel) then) =
+      __$$_BaseUomCreationtModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? name,
       @JsonKey(name: "base_equivalent") String? baseEquivalent,
@@ -178,16 +149,14 @@ abstract class _$BaseUomCreationtModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BaseUomCreationtModelCopyWithImpl<$Res>
-    extends _$BaseUomCreationtModelCopyWithImpl<$Res>
-    implements _$BaseUomCreationtModelCopyWith<$Res> {
-  __$BaseUomCreationtModelCopyWithImpl(_BaseUomCreationtModel _value,
-      $Res Function(_BaseUomCreationtModel) _then)
-      : super(_value, (v) => _then(v as _BaseUomCreationtModel));
+class __$$_BaseUomCreationtModelCopyWithImpl<$Res>
+    extends _$BaseUomCreationtModelCopyWithImpl<$Res, _$_BaseUomCreationtModel>
+    implements _$$_BaseUomCreationtModelCopyWith<$Res> {
+  __$$_BaseUomCreationtModelCopyWithImpl(_$_BaseUomCreationtModel _value,
+      $Res Function(_$_BaseUomCreationtModel) _then)
+      : super(_value, _then);
 
-  @override
-  _BaseUomCreationtModel get _value => super._value as _BaseUomCreationtModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -200,40 +169,40 @@ class __$BaseUomCreationtModelCopyWithImpl<$Res>
     Object? conversionFactor = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_BaseUomCreationtModel(
-      name: name == freezed
+    return _then(_$_BaseUomCreationtModel(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      baseEquivalent: baseEquivalent == freezed
+      baseEquivalent: freezed == baseEquivalent
           ? _value.baseEquivalent
           : baseEquivalent // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupCode: uomGroupCode == freezed
+      uomGroupCode: freezed == uomGroupCode
           ? _value.uomGroupCode
           : uomGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      shortName: shortName == freezed
+      shortName: freezed == shortName
           ? _value.shortName
           : shortName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupName: uomGroupName == freezed
+      uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      standardCode: standardCode == freezed
+      standardCode: freezed == standardCode
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      conversionFactor: conversionFactor == freezed
+      conversionFactor: freezed == conversionFactor
           ? _value.conversionFactor
           : conversionFactor // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -293,104 +262,106 @@ class _$_BaseUomCreationtModel implements _BaseUomCreationtModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _BaseUomCreationtModel &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_BaseUomCreationtModel &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.baseEquivalent, baseEquivalent) ||
-                const DeepCollectionEquality()
-                    .equals(other.baseEquivalent, baseEquivalent)) &&
+                other.baseEquivalent == baseEquivalent) &&
             (identical(other.uomGroupCode, uomGroupCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomGroupCode, uomGroupCode)) &&
+                other.uomGroupCode == uomGroupCode) &&
             (identical(other.shortName, shortName) ||
-                const DeepCollectionEquality()
-                    .equals(other.shortName, shortName)) &&
+                other.shortName == shortName) &&
             (identical(other.uomGroupName, uomGroupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomGroupName, uomGroupName)) &&
-            (identical(other.uomCode, uomCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomCode, uomCode)) &&
+                other.uomGroupName == uomGroupName) &&
+            (identical(other.uomCode, uomCode) || other.uomCode == uomCode) &&
             (identical(other.standardCode, standardCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.standardCode, standardCode)) &&
+                other.standardCode == standardCode) &&
             (identical(other.conversionFactor, conversionFactor) ||
-                const DeepCollectionEquality()
-                    .equals(other.conversionFactor, conversionFactor)) &&
+                other.conversionFactor == conversionFactor) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(baseEquivalent) ^
-      const DeepCollectionEquality().hash(uomGroupCode) ^
-      const DeepCollectionEquality().hash(shortName) ^
-      const DeepCollectionEquality().hash(uomGroupName) ^
-      const DeepCollectionEquality().hash(uomCode) ^
-      const DeepCollectionEquality().hash(standardCode) ^
-      const DeepCollectionEquality().hash(conversionFactor) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$BaseUomCreationtModelCopyWith<_BaseUomCreationtModel> get copyWith =>
-      __$BaseUomCreationtModelCopyWithImpl<_BaseUomCreationtModel>(
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      baseEquivalent,
+      uomGroupCode,
+      shortName,
+      uomGroupName,
+      uomCode,
+      standardCode,
+      conversionFactor,
+      isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BaseUomCreationtModelCopyWith<_$_BaseUomCreationtModel> get copyWith =>
+      __$$_BaseUomCreationtModelCopyWithImpl<_$_BaseUomCreationtModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BaseUomCreationtModelToJson(this);
+    return _$$_BaseUomCreationtModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _BaseUomCreationtModel implements BaseUomCreationtModel {
   const factory _BaseUomCreationtModel(
-          {String? name,
-          @JsonKey(name: "base_equivalent") String? baseEquivalent,
-          @JsonKey(name: "uomgroup_code") String? uomGroupCode,
-          @JsonKey(name: "short_name") String? shortName,
-          @JsonKey(name: "uomgroup_name") String? uomGroupName,
-          @JsonKey(name: "uom_code") String? uomCode,
-          @JsonKey(name: "standard_code") String? standardCode,
-          @JsonKey(name: "conversion_factor") int? conversionFactor,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_BaseUomCreationtModel;
+      {final String? name,
+      @JsonKey(name: "base_equivalent")
+          final String? baseEquivalent,
+      @JsonKey(name: "uomgroup_code")
+          final String? uomGroupCode,
+      @JsonKey(name: "short_name")
+          final String? shortName,
+      @JsonKey(name: "uomgroup_name")
+          final String? uomGroupName,
+      @JsonKey(name: "uom_code")
+          final String? uomCode,
+      @JsonKey(name: "standard_code")
+          final String? standardCode,
+      @JsonKey(name: "conversion_factor")
+          final int? conversionFactor,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_BaseUomCreationtModel;
 
   factory _BaseUomCreationtModel.fromJson(Map<String, dynamic> json) =
       _$_BaseUomCreationtModel.fromJson;
 
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(name: "base_equivalent")
-  String? get baseEquivalent => throw _privateConstructorUsedError;
+  String? get baseEquivalent;
   @override
   @JsonKey(name: "uomgroup_code")
-  String? get uomGroupCode => throw _privateConstructorUsedError;
+  String? get uomGroupCode;
   @override
   @JsonKey(name: "short_name")
-  String? get shortName => throw _privateConstructorUsedError;
+  String? get shortName;
   @override
   @JsonKey(name: "uomgroup_name")
-  String? get uomGroupName => throw _privateConstructorUsedError;
+  String? get uomGroupName;
   @override
   @JsonKey(name: "uom_code")
-  String? get uomCode => throw _privateConstructorUsedError;
+  String? get uomCode;
   @override
   @JsonKey(name: "standard_code")
-  String? get standardCode => throw _privateConstructorUsedError;
+  String? get standardCode;
   @override
   @JsonKey(name: "conversion_factor")
-  int? get conversionFactor => throw _privateConstructorUsedError;
+  int? get conversionFactor;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$BaseUomCreationtModelCopyWith<_BaseUomCreationtModel> get copyWith =>
+  _$$_BaseUomCreationtModelCopyWith<_$_BaseUomCreationtModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

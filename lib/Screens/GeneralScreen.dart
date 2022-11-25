@@ -809,10 +809,12 @@ else{
                                     children: [
                                       SizedBox(height: 3,),
                                       Row(
-                                          mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:MainAxisAlignment.end,
                                         children: [
 
                                           TextButtonLarge(
+                                            marginCheck: true,
+
 
                                             onPress: () {
                                                 select=true;
@@ -824,7 +826,7 @@ else{
                                                });
                                                print("Variable.inventory_ID"+Variable.inventory_ID.toString());
                                             },
-                                            text: "Create",
+                                            text: "CREATE",
                                           ),
                             TextButtonLarge(
                               text: "PREVIEW",
@@ -878,7 +880,7 @@ else{
 
 
                                                     SelectableDropDownpopUp(
-                                                      label: "Order type",
+                                                      label: "Order Type",
                                                       type:"sellingngPrice-basedOn",
                                                       value: purchaseUom,
                                                       onSelection: (String? va) {
@@ -1021,7 +1023,7 @@ else{
                                                         controller: planned_receipt_date,
                                                         // initialValue:
                                                         //     DateTime.parse(fromDate!),
-                                                        label: "Planne_receipt_date",
+                                                        label: "Planned Receipt Date",
                                                         onSaved: (newValue) {
                                                           planned_receipt_date.text = newValue
                                                               ?.toIso8601String()
@@ -1090,6 +1092,9 @@ else{
                                                       title: "Remarks",
                                                       height: 90,
                                                       maxLines: 3,
+                                                    ),
+                                                    SizedBox(
+                                                      height: height * .005,
                                                     ),
 
 
@@ -1162,7 +1167,7 @@ else{
                                                       height: height * .028,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .080,
+                                                      height: height * .078,
                                                     ),
                                                   ],
                                                 )),
@@ -1202,21 +1207,7 @@ else{
                                                   width: 2200,
                                                   padding: EdgeInsets.all(10),
                                                   child: customTable(
-                                                    border: const TableBorder(
-                                                        verticalInside: BorderSide(
-                                                            width:.5,
-                                                            color: Colors.black45,
-                                                            // color: Colors.blue,
-                                                            style:
-                                                                BorderStyle.solid),
 
-                                                        horizontalInside:
-                                                        BorderSide(
-                                                            width:.3,
-                                                            color: Colors.black45,
-                                                            // color: Colors.blue,
-                                                            style:
-                                                            BorderStyle.solid),),
                                                     tableWidth: .5,
                                                     childrens: [
                                                       if(select==true)...[
@@ -3288,36 +3279,28 @@ else{
                                                           children: [
                                                             tableHeadtext(
                                                               'Sno',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white,
                                                             ),
                                                             tableHeadtext(
-                                                              'Variant id',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+                                                              'Variant Id',
+
+
                                                               size: 12,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Variant Name',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
-                                                              'Vendor ref code',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+                                                              'Vendor Ref Code',
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
@@ -3325,164 +3308,143 @@ else{
                                                             // tableHeadtext('description', size: 10, color: null),
                                                             tableHeadtext(
                                                               'Barcode',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
 
                                                             tableHeadtext(
-                                                              'Current qty',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+                                                              'Current Qty',
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Purchase UOM',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Requested qty',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Min Order Qty',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Max Order Qty',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Is Recieved',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Unit Cost',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Excise Tax',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Discount',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'FOC',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Vatable Amount',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
 
                                                             tableHeadtext(
-                                                              'Vat',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+                                                              'VAT',
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Actual Cost',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Grand Total',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Is Invoiced',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               'Is Active',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
+
                                                               size: 13,
                                                               // color: Palette.containerDarknew,
                                                               // textColor: Palette.white
                                                             ),
                                                             tableHeadtext(
                                                               '',
-                                                              padding:
-                                                              EdgeInsets.all(7),
-                                                              height: 46,
+
                                                               size: 13,
                                                             ),
 
@@ -3491,11 +3453,24 @@ else{
                                                       if (table != null)...[
                                                         for (var i = 0; i < table.length; i++)
                                                           TableRow(
-                                                              decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                                  border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                      bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                      right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                                          .solid))),
+                                                              decoration: BoxDecoration(
+                                                                  color: Pellet.tableRowColor,
+                                                                  shape: BoxShape.rectangle,
+                                                                  border:  Border(
+                                                                      left: BorderSide(
+
+                                                                          color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                          width: .4,
+                                                                          style: BorderStyle.solid),
+                                                                      bottom: BorderSide(
+
+                                                                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                          style: BorderStyle.solid),
+                                                                      right: BorderSide(
+                                                                          color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                          width: .4,
+
+                                                                          style: BorderStyle.solid))),
                                                               children: [
                                                                 TableCell(
                                                                   verticalAlignment: TableCellVerticalAlignment.middle,
@@ -4199,59 +4174,57 @@ else{
                                                                         });
                                                                       }),
                                                                 ),
-                                                                Container(  height: 50,
-                                                                  child: TextButton(
-                                                                      style: TextButton.styleFrom(primary: Colors.white, elevation: 2, backgroundColor: Colors.green.shade200),
-                                                                      onPressed: () {
-                                                                        var Vamount = table[i].variableAmount??0;
-                                                                        var variant = table[i].variantId??0;
-                                                                        var mins = table[i].minimumQty??0;
-                                                                        var maxs = table[i].maximumQty??0;
+                                                                TableTextButton(
 
-                                                                        var excess = table[i].excessTax??0;
-                                                                        print("excess" + excess.toString());
-                                                                        var unitcosts = table[i].unitCost??0;
-                                                                        var qty = table[i].requestedQty??0;
-                                                                        var foc = table[i].foc??0;
-                                                                        var dis = table[i].discount??0;
-                                                                        if(variant=="null"||unitcosts==0){
-                                                                          context.showSnackBarError("please fill all the fields");
-                                                                        }
-                                                                        else if(qty==0||qty==""){
-                                                                          context.showSnackBarError(
-                                                                              "the requested quantity not be 0 or empty");
-                                                                        }
-                                                                        else if(qty!<foc!){
-                                                                          context.showSnackBarError("the received qty allways greater than  foc");
+                                                                    onPress: () {
+                                                                      var Vamount = table[i].variableAmount??0;
+                                                                      var variant = table[i].variantId??0;
+                                                                      var mins = table[i].minimumQty??0;
+                                                                      var maxs = table[i].maximumQty??0;
 
-                                                                        }
-                                                                        else if(mins>maxs){
-                                                                          context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
-                                                                        }
-                                                                        else{
-                                                                          addition();
-                                                                          table[i] = table[i].copyWith(updateCheck: false);
-                                                                          setState(() {
+                                                                      var excess = table[i].excessTax??0;
+                                                                      print("excess" + excess.toString());
+                                                                      var unitcosts = table[i].unitCost??0;
+                                                                      var qty = table[i].requestedQty??0;
+                                                                      var foc = table[i].foc??0;
+                                                                      var dis = table[i].discount??0;
+                                                                      if(variant=="null"||unitcosts==0){
+                                                                        context.showSnackBarError("please fill all the fields");
+                                                                      }
+                                                                      else if(qty==0||qty==""){
+                                                                        context.showSnackBarError(
+                                                                            "the requested quantity not be 0 or empty");
+                                                                      }
+                                                                      else if(qty!<foc!){
+                                                                        context.showSnackBarError("the received qty allways greater than  foc");
 
-                                                                          });
-                                                                          updateCheck=false;
-                                                                          focValue=0;
-                                                                          excessTAxValue=0;
-                                                                          Vdiscount = 0;
-                                                                          Vamount = 0;
-                                                                          Vgrnadtotal = 0;
-                                                                          vactualCost = 0;
-                                                                          unitcost = 0;
-                                                                          grands = 0;
-                                                                          actualValue = 0;
-                                                                          VatableValue = 0;
-                                                                          discountValue = 0;
-                                                                          vatValue = 0;
-                                                                          setState(() {});
-                                                                        }
-                                                                      },
-                                                                      child:Text(table?[i].updateCheck==true?"update":"",style:TextStyle(color: updateCheck?Colors.red:Colors.white))
-                                                                  ),
+                                                                      }
+                                                                      else if(mins>maxs){
+                                                                        context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                                      }
+                                                                      else{
+                                                                        addition();
+                                                                        table[i] = table[i].copyWith(updateCheck: false);
+                                                                        setState(() {
+
+                                                                        });
+                                                                        updateCheck=false;
+                                                                        focValue=0;
+                                                                        excessTAxValue=0;
+                                                                        Vdiscount = 0;
+                                                                        Vamount = 0;
+                                                                        Vgrnadtotal = 0;
+                                                                        vactualCost = 0;
+                                                                        unitcost = 0;
+                                                                        grands = 0;
+                                                                        actualValue = 0;
+                                                                        VatableValue = 0;
+                                                                        discountValue = 0;
+                                                                        vatValue = 0;
+                                                                        setState(() {});
+                                                                      }
+                                                                    },
+                                                                    label:table?[i].updateCheck==true?"update":"",
                                                                 ),
                                                               ]),],
 
@@ -4272,24 +4245,23 @@ else{
 //********************************************************************************************************************
                                                         TableRow(
                                                             decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .grey.shade200,
-                                                                shape: BoxShape
-                                                                    .rectangle,
-                                                                border: const Border(
+                                                                color: Pellet.tableRowColor,
+                                                                shape: BoxShape.rectangle,
+                                                                border:  Border(
                                                                     left: BorderSide(
-                                                                        width: 1,
-                                                                        color: Colors
-                                                                            .black45,
-                                                                        style:
-                                                                        BorderStyle
-                                                                            .solid),
+
+                                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                        width: .4,
+                                                                        style: BorderStyle.solid),
+                                                                    bottom: BorderSide(
+
+                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                        style: BorderStyle.solid),
                                                                     right: BorderSide(
-                                                                        color: Colors
-                                                                            .black45,
-                                                                        width: 1,
-                                                                        style: BorderStyle
-                                                                            .solid))),
+                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                        width: .4,
+
+                                                                        style: BorderStyle.solid))),
                                                             children: [
                                                               TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
                                                                 child: textPadding((table.length + 1).toString(), fontSize: 12,
@@ -4614,113 +4586,109 @@ else{
                                                                 ),
                                                               ),
                                                               TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: Container(
-                                                                    height: 50,
-                                                                  child: TextButton(
-                                                                      style: TextButton.styleFrom(primary: Colors.black, backgroundColor: Colors.green.shade200
-                                                                      ),
-                                                                      onPressed: () {
-                                                                      if(  variantId=="null"||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0)
-                                                                        context.showSnackBarError(
-                                                                            "please fill all the fields");
-                                                                      else if(Qty==0||Qty==""){
-                                                                        context.showSnackBarError(
-                                                                            "the requested quantity not be 0 or empty");
-                                                                      }
-                                                                      else if(updateCheck==true){
-                                                                        context.showSnackBarError(
-                                                                            "please click the update button");
-                                                                      }
-                                                                      else if(vfoc!>Qty!){
-                                                                        context.showSnackBarError(
-                                                                            "foc is allways less than requested qty");
-                                                                      }
-                                                                      else{
-                                                                        table.add(
-                                                                            OrderLines(
-                                                                              vendorRefCode: vendorRefCode??"",
-                                                                              isRecieved: isRecieved ?? false,
-                                                                              isActive: _value ?? false,
-                                                                              supplierCode: vendorRefCode?? "",
-                                                                              variantId: variantId ?? "",
-                                                                              variantName: varinatname ?? "",
-                                                                              barcode: Vbarcode ?? "",
-                                                                              cvd: "sss",
-                                                                              foc: vfoc ?? 0,
-                                                                              maximumQty: vmaxnqty ?? 0,
-                                                                              minimumQty: vminqty ?? 0,
-                                                                              excessTax: eTax ?? 0,
-                                                                              vat: vvat ?? 0,
-                                                                              actualCost: vactualCost ?? 0,
-                                                                              purchaseuom: check1 ?? "",
-                                                                              discount: Vdiscount ?? 0,
-                                                                              requestedQty: Qty ?? 0,
-                                                                              unitCost: check! ?? 0,
-                                                                              grandTotal: Vgrnadtotal ?? 0,
-                                                                              variableAmount: Vamount ?? 0,
-                                                                              currentQty: stockQty ?? 0,
-                                                                            ));
-                                                                        currentStock.add(stockQty);
-                                                                        print("athiraaa"+currentStock.toString());
-                                                                        requestedListControllers.clear();
-                                                                        minListControllers.clear() ;
-                                                                        maxListControllers .clear();
-                                                                        unitcostListControllers.clear();
-                                                                        excesstListControllers.clear();
-                                                                        discounttListControllers.clear();
-                                                                        focListControllers.clear();
-                                                                        vatListControllers.clear();
-                                                                        setState(() {
-                                                                          tableClear=false;
-                                                                          valueAddingTextEdingController();
-                                                                        });
-                                                                        print("gtable" +
-                                                                            table
-                                                                                .toString());
-                                                                        addition();
-                                                                        vid = 0;
-                                                                        eTax = 0;
-                                                                        variantId = "";
-                                                                        varinatname = "";
-                                                                        vrefcod = "";
-                                                                        Vbarcode = "";
-                                                                        vendorRefCode="";
-                                                                        vvat=0;
-                                                                        focValue=0;
-                                                                        excessTAxValue=0;
-                                                                        check1 = "";
-                                                                        check = 0;
-                                                                        Qty = 0;
-                                                                        Vdiscount = 0;
-                                                                        unitCostCheck.text="";
-                                                                        Vamount = 0;
-                                                                        vmaxnqty=0;
-                                                                        vminqty=0;
-                                                                        Vgrnadtotal = 0;
-                                                                        vactualCost = 0;
-                                                                        unitcost = 0;
-                                                                        grands = 0;
-                                                                        actualValue = 0;
-                                                                        VatableValue = 0;
-                                                                        discountValue = 0;
-                                                                        vatValue = 0;
-                                                                        stockQty = 0;
-                                                                        vfoc=0;
-                                                                        _value = false;
-                                                                        requestedtTestContoller.clear();
-                                                                        minOrderTestContoller.clear();
-                                                                        maxOrderTestContoller.clear();
-                                                                        discountTestContoller.clear();
-                                                                        focTestContoller.clear();
-                                                                        excesstaxTestContoller.clear();
-                                                                        vatTestContoller.clear();
-                                                                        isRecieved = false;
-                                                                        setState(() {});
+                                                                child: TableTextButton(
 
-                                                                      }
-                                                                      },
-                                                                      child:Text("set",style:TextStyle(color: Colors.black))
-                                                                  ),
+                                                                    onPress: () {
+                                                                    if(  variantId=="null"||vminqty==0||vmaxnqty==0||check==0||eTax==0||vvat==0)
+                                                                      context.showSnackBarError(
+                                                                          "please fill all the fields");
+                                                                    else if(Qty==0||Qty==""){
+                                                                      context.showSnackBarError(
+                                                                          "the requested quantity not be 0 or empty");
+                                                                    }
+                                                                    else if(updateCheck==true){
+                                                                      context.showSnackBarError(
+                                                                          "please click the update button");
+                                                                    }
+                                                                    else if(vfoc!>Qty!){
+                                                                      context.showSnackBarError(
+                                                                          "foc is allways less than requested qty");
+                                                                    }
+                                                                    else{
+                                                                      table.add(
+                                                                          OrderLines(
+                                                                            vendorRefCode: vendorRefCode??"",
+                                                                            isRecieved: isRecieved ?? false,
+                                                                            isActive: _value ?? false,
+                                                                            supplierCode: vendorRefCode?? "",
+                                                                            variantId: variantId ?? "",
+                                                                            variantName: varinatname ?? "",
+                                                                            barcode: Vbarcode ?? "",
+                                                                            cvd: "sss",
+                                                                            foc: vfoc ?? 0,
+                                                                            maximumQty: vmaxnqty ?? 0,
+                                                                            minimumQty: vminqty ?? 0,
+                                                                            excessTax: eTax ?? 0,
+                                                                            vat: vvat ?? 0,
+                                                                            actualCost: vactualCost ?? 0,
+                                                                            purchaseuom: check1 ?? "",
+                                                                            discount: Vdiscount ?? 0,
+                                                                            requestedQty: Qty ?? 0,
+                                                                            unitCost: check! ?? 0,
+                                                                            grandTotal: Vgrnadtotal ?? 0,
+                                                                            variableAmount: Vamount ?? 0,
+                                                                            currentQty: stockQty ?? 0,
+                                                                          ));
+                                                                      currentStock.add(stockQty);
+                                                                      print("athiraaa"+currentStock.toString());
+                                                                      requestedListControllers.clear();
+                                                                      minListControllers.clear() ;
+                                                                      maxListControllers .clear();
+                                                                      unitcostListControllers.clear();
+                                                                      excesstListControllers.clear();
+                                                                      discounttListControllers.clear();
+                                                                      focListControllers.clear();
+                                                                      vatListControllers.clear();
+                                                                      setState(() {
+                                                                        tableClear=false;
+                                                                        valueAddingTextEdingController();
+                                                                      });
+                                                                      print("gtable" +
+                                                                          table
+                                                                              .toString());
+                                                                      addition();
+                                                                      vid = 0;
+                                                                      eTax = 0;
+                                                                      variantId = "";
+                                                                      varinatname = "";
+                                                                      vrefcod = "";
+                                                                      Vbarcode = "";
+                                                                      vendorRefCode="";
+                                                                      vvat=0;
+                                                                      focValue=0;
+                                                                      excessTAxValue=0;
+                                                                      check1 = "";
+                                                                      check = 0;
+                                                                      Qty = 0;
+                                                                      Vdiscount = 0;
+                                                                      unitCostCheck.text="";
+                                                                      Vamount = 0;
+                                                                      vmaxnqty=0;
+                                                                      vminqty=0;
+                                                                      Vgrnadtotal = 0;
+                                                                      vactualCost = 0;
+                                                                      unitcost = 0;
+                                                                      grands = 0;
+                                                                      actualValue = 0;
+                                                                      VatableValue = 0;
+                                                                      discountValue = 0;
+                                                                      vatValue = 0;
+                                                                      stockQty = 0;
+                                                                      vfoc=0;
+                                                                      _value = false;
+                                                                      requestedtTestContoller.clear();
+                                                                      minOrderTestContoller.clear();
+                                                                      maxOrderTestContoller.clear();
+                                                                      discountTestContoller.clear();
+                                                                      focTestContoller.clear();
+                                                                      excesstaxTestContoller.clear();
+                                                                      vatTestContoller.clear();
+                                                                      isRecieved = false;
+                                                                      setState(() {});
+
+                                                                    }
+                                                                    },
+                                                                    label:"SET",
                                                                 ),
                                                               ),
                                                             ]),
@@ -4737,7 +4705,7 @@ else{
                                                       7: FlexColumnWidth(3),
                                                       8: FlexColumnWidth(3),
                                                       9: FlexColumnWidth(3),
-                                                      10: FlexColumnWidth(3),
+                                                      10: FlexColumnWidth(2),
                                                       11: FlexColumnWidth(3),
                                                       12: FlexColumnWidth(3),
                                                       13: FlexColumnWidth(3),
@@ -4746,9 +4714,9 @@ else{
                                                       16: FlexColumnWidth(3),
                                                       17: FlexColumnWidth(3),
                                                       18: FlexColumnWidth(3),
-                                                      19: FlexColumnWidth(3),
-                                                      20: FlexColumnWidth(3),
-                                                      21: FlexColumnWidth(2),
+                                                      19: FlexColumnWidth(2),
+                                                      20: FlexColumnWidth(2),
+                                                      21: FlexColumnWidth(3),
                                                     },
                                                   ),
                                                 ),
@@ -4854,13 +4822,13 @@ else{
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Icon(
-                                              select?   Icons.check:Icons.update,
-                                              color: Colors.white,
-                                            ),
-                                            SizedBox(width:3,),
+                                            // Icon(
+                                            //   select?   Icons.check:Icons.update,
+                                            //   color: Colors.white,
+                                            // ),
+                                            // SizedBox(width:3,),
                                             Text(
-                                             select?"save":"update",
+                                             select?"SAVE":"UPDATE",
                                               style: TextStyle(
                                                   color: Colors.white,
                                                   fontWeight: FontWeight.bold),
@@ -4921,11 +4889,11 @@ Widget Button(IconData? icon, Color border,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-         if(icon!=null) Icon(
-            icon,
-            color: iconColor,
-          ),
-          SizedBox(width: 1,),
+         // if(icon!=null) Icon(
+         //    icon,
+         //    color: iconColor,
+         //  ),
+         //  SizedBox(width: 1,),
           Text(
             text,
             style: TextStyle(color: labelcolor, fontWeight: FontWeight.bold),

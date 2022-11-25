@@ -21,6 +21,7 @@ import 'package:inventory/widgets/customtable.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import '../../../commonWidget/Colors.dart';
 import '../../../printScreen.dart';
 import 'general.dart';
 import 'model/invoicepost.dart';
@@ -430,7 +431,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.end,
                                   children: [
                                     // Container(
                                     //   padding:
@@ -508,7 +509,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                 ),
                                 Row(
                                   children: [
-                                    TextWidget(text: "order lines"),
+                                    TextWidget(text: "Order Lines"),
                                   ],
                                 ),
 
@@ -536,21 +537,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                               width: 2200,
                                               padding: EdgeInsets.all(10),
                                               child: customTable(
-                                                  border: const TableBorder(
-                                                    verticalInside: BorderSide(
-                                                        width: .5,
-                                                        color: Colors.black45,
-                                                        style:
-                                                            BorderStyle.solid),
-                                                    horizontalInside:
-                                                        BorderSide(
-                                                            width: .3,
-                                                            color:
-                                                                Colors.black45,
-                                                            // color: Colors.blue,
-                                                            style: BorderStyle
-                                                                .solid),
-                                                  ),
+
                                                   tableWidth: .5,
                                                   childrens: [
                                                     TableRow(
@@ -567,12 +554,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           tableHeadtext(
                                                             'Sno',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
-
                                                             size: 13,
 
                                                             // color: Palette.containerDarknew,
@@ -580,31 +561,20 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                             // textColor: Palette.white,
                                                           ),
                                                           tableHeadtext(
-                                                            'return orderline  Id',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
+                                                            'Return Order line Id',
+
                                                             size: 13,
                                                           ),
 
                                                           tableHeadtext(
                                                             'Variant Id',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
+
                                                             size: 13,
                                                           ),
 
                                                           tableHeadtext(
                                                             'Variant Name',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -617,21 +587,13 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                           tableHeadtext(
                                                             'Barcode',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
+
                                                             size: 13,
                                                           ),
 
                                                           tableHeadtext(
                                                             'Purchase UOM',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -640,13 +602,9 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
-                                                            ' qty',
+                                                            ' Qty',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
 
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -656,13 +614,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           ),
 
                                                           tableHeadtext(
-                                                            'Unitcost',
-
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
+                                                            'Unit Cost',
 
                                                             size: 13,
 
@@ -672,13 +624,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           ),
 
                                                           tableHeadtext(
-                                                            'Excise tax',
+                                                            'Excess tax',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
@@ -686,20 +633,11 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           ),
                                                           tableHeadtext(
                                                             'Discount',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
                                                             size: 13,
                                                           ),
                                                           tableHeadtext(
                                                             'FOC',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -709,13 +647,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           ),
 
                                                           tableHeadtext(
-                                                            'Vatable Amount',
+                                                            'Variable Amount',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -727,11 +660,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           tableHeadtext(
                                                             'Vat',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
 
                                                             size: 13,
 
@@ -742,13 +670,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                           tableHeadtext(
                                                             'Actual cost',
-
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
-
                                                             size: 13,
 
                                                             // color: Palette.containerDarknew,
@@ -759,12 +680,6 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           tableHeadtext(
                                                             'Grand Total',
 
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-
-                                                            height: 46,
-
                                                             size: 13,
 
                                                             // color: Palette.containerDarknew,
@@ -774,19 +689,12 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                           tableHeadtext(
                                                             'Is Invoiced',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
                                                             size: 13,
                                                           ),
 
                                                           tableHeadtext(
                                                             'Is Free',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -794,10 +702,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                           tableHeadtext(
                                                             '',
-                                                            padding:
-                                                                EdgeInsets.all(
-                                                                    7),
-                                                            height: 46,
+
                                                             size: 13,
                                                           ),
 
@@ -806,11 +711,26 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
 
                                                     if(lines.isEmpty)...[
                                                       TableRow(
-                                                          decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                              border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                  bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                                  right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                                      .solid))),
+                                                          decoration: BoxDecoration(
+                                                              color: Pellet.tableRowColor,
+                                                              shape: BoxShape.rectangle,
+                                                              border:  Border(
+                                                                  left: BorderSide(
+
+                                                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                      width: .4,
+                                                                      style: BorderStyle.solid),
+                                                                  bottom: BorderSide(
+
+                                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                      style: BorderStyle.solid),
+                                                                  right: BorderSide(
+                                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                      width: .4,
+
+                                                                      style: BorderStyle.solid))),
+
+
                                                           children: [
                                                             textPadding(""),
                                                             textPadding(""),
@@ -843,34 +763,25 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           i < lines!.length;
                                                           i++)
                                                         TableRow(
-                                                            decoration: BoxDecoration(
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade200,
-                                                                shape: BoxShape
-                                                                    .rectangle,
-                                                                border: const Border(
-                                                                    left: BorderSide(
-                                                                        width:
-                                                                            .5,
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        style: BorderStyle
-                                                                            .solid),
-                                                                    bottom: BorderSide(
-                                                                        width:
-                                                                            .5,
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        style: BorderStyle
-                                                                            .solid),
-                                                                    right: BorderSide(
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        width:
-                                                                            .5,
-                                                                        style: BorderStyle
-                                                                            .solid))),
+                        decoration: BoxDecoration(
+                        color: Pellet.tableRowColor,
+                            shape: BoxShape.rectangle,
+                            border:  Border(
+                                left: BorderSide(
+
+                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+                                    style: BorderStyle.solid),
+                                bottom: BorderSide(
+
+                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                    style: BorderStyle.solid),
+                                right: BorderSide(
+                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+
+                                    style: BorderStyle.solid))),
+
                                                             children: [
                                                               TableCell(
                                                                 verticalAlignment:
@@ -1292,7 +1203,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   children: [
                                     Button(Icons.delete, Colors.red,
                                         ctx: context,
-                                        text: "Discard",
+                                        text: "DISCARD",
                                         onApply: () {},
                                         height: 29,
                                         width: 90,
@@ -1304,7 +1215,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                     ),
                                     Button(Icons.check, Colors.grey,
                                         ctx: context,
-                                        text: "Save",
+                                        text: "SAVE",
                                         height: 29,
                                         Color: Color(0xff3E4F5B),
                                         width: 90,
@@ -1432,6 +1343,7 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
       color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
               child: Column(
@@ -1440,18 +1352,18 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
               NewInputCard(
                   readOnly: true,
                   controller: widget.returnInvoiceCode,
-                  title: "return invoice code"),
+                  title: "Return Invoice Code"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
                   readOnly: true,
                   controller: widget.purchaseReturnOrderCode,
-                  title: "Purchase return order code"),
+                  title: "Purchase Return Order Code"),
               SizedBox(
                 height: height * .030,
               ),
-              NewInputCard(controller: widget.orderDate, title: "ordered date"),
+              NewInputCard(controller: widget.orderDate, title: "Ordered Date"),
               SizedBox(
                 height: height * .030,
               ),
@@ -1462,7 +1374,7 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
               ),
               NewInputCard(
                 readOnly: true,
-                  controller: widget.paymentStatus, title: "payment Status"),
+                  controller: widget.paymentStatus, title: "Payment Status"),
               SizedBox(
                 height: height * .030,
               ),
@@ -1471,7 +1383,7 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
                   controller: widget.paymentMethod,
                   title: "Payment Method"),
               SizedBox(
-                height: height * .030,
+                height: height * .05,
               ),
             ],
           )),
@@ -1508,7 +1420,7 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
               NewInputCard(
                 readOnly: true,
                 controller: widget.unitCost,
-                title: "UnitCost",
+                title: "Unit Cost",
               ),
               SizedBox(
                 height: height * .030,
@@ -1516,7 +1428,7 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
               NewInputCard(
                 readOnly: true,
                 controller: widget.vatableAmount,
-                title: "Vatable Amount",
+                title: "Variable Amount",
               ),
               SizedBox(
                 height: height * .046,
@@ -1527,13 +1439,11 @@ class _InvoiceStableTableState extends State<InvoiceStableTable> {
           Expanded(
               child: Column(
             children: [
-              SizedBox(
-                height: height * .065,
-              ),
+
               NewInputCard(
                   readOnly: true,
                   controller: widget.excessTax,
-                  title: "Excise Tax"),
+                  title: "Excess Tax"),
               SizedBox(
                 height: height * .030,
               ),

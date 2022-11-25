@@ -61,7 +61,7 @@ dependencies:
 
 
   sticky_headers:
-  flutter_typeahead: ^3.2.1
+  flutter_typeahead: ^4.1.1
   flutter_svg: ^0.20.0-nullsafety.3
 
 
@@ -98,7 +98,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - asset/
+    - asset/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

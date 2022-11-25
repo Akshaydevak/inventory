@@ -14350,7 +14350,7 @@ class PopUpHeader extends StatefulWidget {
   const PopUpHeader({
     Key? key,
     this.buttonNameOption = false,
-    this.buttonName = "save",
+    this.buttonName = "SAVE",
     this.buttonCheck = false,
     this.buttonVisible=true,
     this.functionChane = false,
@@ -14384,6 +14384,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
       padding: EdgeInsets.all(10),
       width: 640,
       child: GeneralSavePage(
+
         onEdit: widget.onEdit,
         buttonName: widget.buttonName,
         onPopUp: true,

@@ -4,11 +4,10 @@ const stagingUrl = "https://api-purchase-order-staging.rgcdynamics.org/";
 const hilalBaseUrl = "https://api-rgc-user.hilalcart.com/";
 // const stagingUrl= "http://65.1.61.201:8111/";
 // const inventoryBaseUrl = "http://65.1.61.201:8112/";
-const inventoryBaseUrl =
-    "https://api-inventory-software-staging.rgcdynamics.org/";
+const inventoryBaseUrl = "https://api-inventory-software-staging.rgcdynamics.org/";
+const userBaseUrl = "https://api-rgc-user.hilalcart.com/";
 
-const inventoryListApi =
-    "https://api-rgc-organization.hilalcart.com/legalunit/business-unit-list?legal_unit=";
+const inventoryListApi = "https://api-rgc-organization.hilalcart.com/legalunit/business-unit-list?legal_unit=";
 const purchasereturnBaseUrl = "https://invtry-purchase-return.rgcdynamics.org/";
 const salesOrderBaseUrl = "https://invtry-sales-order-staging.rgcdynamics.org/";
 const salesReturnBaseUrl = "https://api-invtry-sales-return.hilalcart.com/";
@@ -316,3 +315,10 @@ const readDivisionConfig = inventoryBaseUrl + "inventory-product/patch-division-
 const listUomDivisionConfig = inventoryBaseUrl + "inventory-product/list-uom-for-division-configuration";
 const listGroupConfig = inventoryBaseUrl + "inventory-product/list-group-for-division-configuration";
 const listCategoryDivisionConfig = inventoryBaseUrl + "inventory-product/list-category-for-division-configuration";
+
+
+//user urlsss+++++++++++++++++++++++++++
+const shippingListUrl = userBaseUrl + "user-general_admin_address";
+const customIdListUrl = userBaseUrl + "user-customer_list-customer";
+const customerCreationApi = userBaseUrl + "user-customer_create-customer/inventory";
+

@@ -32,3 +32,26 @@ class CustomerIdCreation2Model with _$CustomerIdCreation2Model {
   factory CustomerIdCreation2Model.fromJson(Map<String, dynamic> json) =>
       _$CustomerIdCreation2ModelFromJson(json);
 }
+@freezed
+class CustomerIdCreationUpdateModel with _$CustomerIdCreationUpdateModel {
+  const factory CustomerIdCreationUpdateModel({
+
+    final int? id,
+    final String? email,
+    final String? password,
+    final String? mobile,
+    final String? fullname,
+    final String? lname,
+    final String? country,
+    final String? gender,
+
+
+    @JsonKey(name: "business_unit") final String? buisnessUnit,
+    @JsonKey(name: "tax_id") final String? taxId,
+
+
+
+  }) = _CustomerIdCreationUpdateModel;
+  factory CustomerIdCreationUpdateModel.fromJson(Map<String, dynamic> json) =>
+      _$CustomerIdCreationUpdateModelFromJson(json);
+}

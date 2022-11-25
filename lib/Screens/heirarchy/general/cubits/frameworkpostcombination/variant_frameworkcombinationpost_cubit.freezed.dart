@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'variant_frameworkcombinationpost_cubit.dart';
@@ -11,34 +12,7 @@ part of 'variant_frameworkcombinationpost_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$VariantFrameworkcombinationpostStateTearOff {
-  const _$VariantFrameworkcombinationpostStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _Error1 error() {
-    return const _Error1();
-  }
-
-  _Success success(DoubleResponse<dynamic, dynamic> data) {
-    return _Success(
-      data,
-    );
-  }
-}
-
-/// @nodoc
-const $VariantFrameworkcombinationpostState =
-    _$VariantFrameworkcombinationpostStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$VariantFrameworkcombinationpostState {
@@ -52,10 +26,10 @@ mixin _$VariantFrameworkcombinationpostState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -77,10 +51,10 @@ mixin _$VariantFrameworkcombinationpostState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error1 value)? error,
+    TResult? Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -99,34 +73,35 @@ abstract class $VariantFrameworkcombinationpostStateCopyWith<$Res> {
   factory $VariantFrameworkcombinationpostStateCopyWith(
           VariantFrameworkcombinationpostState value,
           $Res Function(VariantFrameworkcombinationpostState) then) =
-      _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>;
+      _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res,
+          VariantFrameworkcombinationpostState>;
 }
 
 /// @nodoc
-class _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>
+class _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res,
+        $Val extends VariantFrameworkcombinationpostState>
     implements $VariantFrameworkcombinationpostStateCopyWith<$Res> {
   _$VariantFrameworkcombinationpostStateCopyWithImpl(this._value, this._then);
 
-  final VariantFrameworkcombinationpostState _value;
   // ignore: unused_field
-  final $Res Function(VariantFrameworkcombinationpostState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
-
-  @override
-  _Initial get _value => super._value as _Initial;
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res, _$_Initial>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -141,7 +116,8 @@ class _$_Initial implements _Initial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -161,10 +137,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return initial?.call();
   }
@@ -198,10 +174,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error1 value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return initial?.call(this);
   }
@@ -227,20 +203,18 @@ abstract class _Initial implements VariantFrameworkcombinationpostState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
-
-  @override
-  _Loading get _value => super._value as _Loading;
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res, _$_Loading>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -255,7 +229,8 @@ class _$_Loading implements _Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -275,10 +250,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return loading?.call();
   }
@@ -312,10 +287,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error1 value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return loading?.call(this);
   }
@@ -341,20 +316,17 @@ abstract class _Loading implements VariantFrameworkcombinationpostState {
 }
 
 /// @nodoc
-abstract class _$Error1CopyWith<$Res> {
-  factory _$Error1CopyWith(_Error1 value, $Res Function(_Error1) then) =
-      __$Error1CopyWithImpl<$Res>;
+abstract class _$$_Error1CopyWith<$Res> {
+  factory _$$_Error1CopyWith(_$_Error1 value, $Res Function(_$_Error1) then) =
+      __$$_Error1CopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$Error1CopyWithImpl<$Res>
-    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>
-    implements _$Error1CopyWith<$Res> {
-  __$Error1CopyWithImpl(_Error1 _value, $Res Function(_Error1) _then)
-      : super(_value, (v) => _then(v as _Error1));
-
-  @override
-  _Error1 get _value => super._value as _Error1;
+class __$$_Error1CopyWithImpl<$Res>
+    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res, _$_Error1>
+    implements _$$_Error1CopyWith<$Res> {
+  __$$_Error1CopyWithImpl(_$_Error1 _value, $Res Function(_$_Error1) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -369,7 +341,8 @@ class _$_Error1 implements _Error1 {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Error1);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Error1);
   }
 
   @override
@@ -389,10 +362,10 @@ class _$_Error1 implements _Error1 {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return error?.call();
   }
@@ -426,10 +399,10 @@ class _$_Error1 implements _Error1 {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error1 value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return error?.call(this);
   }
@@ -455,28 +428,28 @@ abstract class _Error1 implements VariantFrameworkcombinationpostState {
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({DoubleResponse<dynamic, dynamic> data});
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$VariantFrameworkcombinationpostStateCopyWithImpl<$Res, _$_Success>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, _then);
 
-  @override
-  _Success get _value => super._value as _Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? data = null,
   }) {
-    return _then(_Success(
-      data == freezed
+    return _then(_$_Success(
+      null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as DoubleResponse<dynamic, dynamic>,
@@ -500,19 +473,19 @@ class _$_Success implements _Success {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Success &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Success &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -528,10 +501,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(DoubleResponse<dynamic, dynamic> data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(DoubleResponse<dynamic, dynamic> data)? success,
   }) {
     return success?.call(data);
   }
@@ -565,10 +538,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error1 value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error1 value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return success?.call(this);
   }
@@ -590,11 +563,11 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements VariantFrameworkcombinationpostState {
-  const factory _Success(DoubleResponse<dynamic, dynamic> data) = _$_Success;
+  const factory _Success(final DoubleResponse<dynamic, dynamic> data) =
+      _$_Success;
 
-  DoubleResponse<dynamic, dynamic> get data =>
-      throw _privateConstructorUsedError;
+  DoubleResponse<dynamic, dynamic> get data;
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }

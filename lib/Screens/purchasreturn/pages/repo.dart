@@ -84,7 +84,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postSalesGeneral(
       SalesGeneralPostModel model);
   Future<Either<Failure, DoubleResponse>> postCustomerIdCreation(
-      CustomerIdCreation2Model model);
+      CustomerIdCreationUpdateModel model);
   Future<Either<Failure, DoubleResponse>> postShippinAddress(
       ShippingAddressCreationModel model);
   Future<Either<Failure, PaginatedResponse<List<salesOrderTypeModel>>>>
@@ -98,8 +98,8 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> salesGeneralDelete(int? id);
   Future<Either<Failure, DoubleResponse>> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id);
-  Future<Either<Failure, List<ShippingAddressModel>>> getShippingId();
-  Future<Either<Failure, List<CustomerIdCreationModel>>> getCustomerId();
+  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{int ? id});
+  Future<Either<Failure,PaginatedResponse< List<CustomerIdListModel>>>> getCustomerId(String? code);
 //sales invoice tab*******************************
   Future<Either<Failure, SalesReturnInvoiceReadModel>> getSalesInvoiceRead(
       int id);
@@ -233,7 +233,7 @@ abstract class PurchaseReturnRepoAbstract {
     String? code,
   );
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getVariantSelectionList(String? code, int item);
+      getVariantSelectionList(String? code, int? item);
   Future<Either<Failure, VariantCreationReadModel>> getVariantCreationRead(
       int? id);
   Future<Either<Failure, List<VariantCreationRead2Model>>>
@@ -371,7 +371,8 @@ abstract class PurchaseReturnRepoAbstract {
       getVendorDetailList(
     String? code,
   );
-  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry();
+  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry(String? code );
+  Future<Either<Failure, List<StateList>>> getStateList(String? code );
   //Custom page++++++++++++++++++++++++++++++++++++++++++++++
   Future<Either<Failure, DoubleResponse>> postCreateCustom(
       CustomCreationtModel model);
@@ -559,9 +560,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<ShippingAddressModel>>> getShippingId() {
-    return repoExecute<List<ShippingAddressModel>>(
-        () async => remoteDataSource.getShippingId());
+  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{int ? id}) {
+    return repoExecute<PaginatedResponse<List<ShippingAddressModel>>>(
+        () async => remoteDataSource.getShippingId(code,id:id));
   }
 
   @override
@@ -572,14 +573,14 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<CustomerIdCreationModel>>> getCustomerId() {
-    return repoExecute<List<CustomerIdCreationModel>>(
-        () async => remoteDataSource.getCustomerId());
+  Future<Either<Failure,PaginatedResponse<List<CustomerIdListModel>>>> getCustomerId(String? code) {
+    return repoExecute<PaginatedResponse<List<CustomerIdListModel>>>(
+        () async => remoteDataSource.getCustomerId(code));
   }
 
   @override
   Future<Either<Failure, DoubleResponse>> postCustomerIdCreation(
-      CustomerIdCreation2Model model) {
+      CustomerIdCreationUpdateModel model) {
     return repoExecute<DoubleResponse>(
         () async => remoteDataSource.postCustomerIdCreation(model));
   }
@@ -996,7 +997,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getVariantSelectionList(String? code, int item) {
+      getVariantSelectionList(String? code, int? item) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
         () async => remoteDataSource.getVariantSelectionList(code, item));
   }
@@ -1415,9 +1416,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry() {
+  Future<Either<Failure, List<VariantReadModel>>> getProducedCountry(String? code) {
     return repoExecute<List<VariantReadModel>>(
-        () async => remoteDataSource.getProducedCountry());
+        () async => remoteDataSource.getProducedCountry(code));
   }
 
   @override
@@ -1509,5 +1510,11 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
       getCategoryList(String? code, {String? type, int? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(() async =>
         remoteDataSource.getCategoryList(code, type: type, id: id));
+  }
+
+  @override
+  Future<Either<Failure, List<StateList>>> getStateList(String? code) {
+    return repoExecute<List<StateList>>(
+            () async => remoteDataSource.getStateList(code));
   }
 }

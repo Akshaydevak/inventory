@@ -81,7 +81,7 @@ abstract class PurchaseSourceAbstract {
   //Sales General Screennnn
   Future<DoubleResponse> postSalesGeneral(SalesGeneralPostModel model);
   Future<DoubleResponse> postShippinAddress(ShippingAddressCreationModel model);
-  Future<DoubleResponse> postCustomerIdCreation(CustomerIdCreation2Model model);
+  Future<DoubleResponse> postCustomerIdCreation(CustomerIdCreationUpdateModel model);
   Future<PaginatedResponse<List<salesOrderTypeModel>>>
       getSalesGeneralVertical();
   Future<PaginatedResponse<List<salesOrderTypeModel>>> getSalesSearch(
@@ -92,8 +92,8 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> salesGeneralDelete(int? id);
   Future<DoubleResponse> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id);
-  Future<List<ShippingAddressModel>> getShippingId();
-  Future<List<CustomerIdCreationModel>> getCustomerId();
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String code,{int ? id});
+  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(String? code);
 //Sales invoice screen*******************************
   Future<SalesReturnInvoiceReadModel> getSalesInvoiceRead(int id);
   Future<DoubleResponse> postSalesInvoice(SalesReturnInvoicePostModel model);
@@ -196,7 +196,7 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<BrandListModel>>> getVariantCreationList(
       String? code);
   Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
-      String? code, int item);
+      String? code, int? item);
   Future<VariantCreationReadModel> getVariantCreationRead(int? id);
   Future<List<VariantCreationRead2Model>> getVariantCreationRead2(String? id);
   Future<PaginatedResponse<List<ChannelTypeModel>>> getChannelTypeList(
@@ -308,7 +308,8 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<VendorDetailsModel>>> getVendorDetailList(
     String? code,
   );
-  Future<List<VariantReadModel>> getProducedCountry();
+  Future<List<VariantReadModel>> getProducedCountry(String ? code);
+  Future<List<StateList>> getStateList(String ? code);
   //Custome Page++++++++++++++++++++++++++++++++++++++++++++++++++++++
   Future<DoubleResponse> postCreateCustom(CustomCreationtModel model);
   Future<DoubleResponse> patchCreateCustom(CustomCreationtModel model,int? id);
@@ -1139,16 +1140,54 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<List<ShippingAddressModel>> getShippingId() async {
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{int ? id}) async {
     print("token" + Variable.token.toString());
 
     UserPreferences().getUser().then((value) {
       token = value.token;
       print("token is here222 exist" + token.toString());
     });
-    print("token is here exist" + token.toString());
-    String path = "https://api-rgc-user.hilalcart.com/user-general_address";
+    String path = "";
+    code = code == null ? "" : code;
 
+    if (code == "")
+      path = shippingListUrl+"?customer_id=$id";
+    else
+      path = shippingListUrl+"?customer_id=$id && name=$code";
+    print(path);
+
+try{
+  final response = await client.get(
+    path,
+    options: Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'token ${token}'
+      },
+    ),
+  );
+  print("vp vp vp");
+  print("Prabhaakaran" + response.toString());
+  //print(response.data['results']);
+  List<ShippingAddressModel> items = [];
+  print(response.data['data']['customer_user_data']['results']);
+  (response.data['data']['customer_user_data']['results'] as List)
+      .forEach((element) {
+    // print("data");
+
+    items.add(ShippingAddressModel.fromJson(element));
+  });
+  return PaginatedResponse<List<ShippingAddressModel>>(
+    items,
+    response.data['data']['customer_user_data']['next'],
+    response.data['data']['customer_user_data']['count'].toString(),
+    previousUrl: response.data['data']['customer_user_data']['previous'],
+  );
+}
+catch(e){
+  print("the error is$e");
+}
     final response = await client.get(
       path,
       options: Options(
@@ -1159,19 +1198,23 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("Prabhaakaran");
+    print("vp vp vp");
     print("Prabhaakaran" + response.toString());
     //print(response.data['results']);
     List<ShippingAddressModel> items = [];
     print(response.data['data']['customer_user_data']['results']);
-
     (response.data['data']['customer_user_data']['results'] as List)
         .forEach((element) {
       // print("data");
 
       items.add(ShippingAddressModel.fromJson(element));
     });
-    return items;
+    return PaginatedResponse<List<ShippingAddressModel>>(
+      items,
+      response.data['data']['customer_user_data']['next'],
+      response.data['data']['customer_user_data']['count'].toString(),
+      previousUrl: response.data['data']['customer_user_data']['previous'],
+    );
   }
 
   @override
@@ -1220,14 +1263,58 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<List<CustomerIdCreationModel>> getCustomerId() async {
-    String path =
-        "https://api-rgc-user.hilalcart.com/user-customer_customeruser/inventory?business_user=True";
-    print(path);
+  Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(String? code) async {
+    // String path =
+    //     "https://api-rgc-user.hilalcart.com/user-customer_customeruser/inventory?business_user=True";
+    // print(path);
 
     UserPreferences().getUser().then((value) {
       token = value.token;
     });
+
+    String path = "";
+    code = code == null ? "" : code;
+
+    if (code == "")
+      path = customIdListUrl;
+    else
+      path = customIdListUrl+"?$code";
+    print("sssssssssssssssssssssss$path");
+    try{
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'token ${token}'
+          },
+        ),
+      );
+      print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSW");
+
+
+
+
+
+      List<CustomerIdListModel> items = [];
+      print(response.data['data']['results']);
+      (response.data['data']['results'] as List)
+          .forEach((element) {
+        // print("data");
+
+        items.add(CustomerIdListModel.fromJson(element));
+      });
+      return PaginatedResponse<List<CustomerIdListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous'],
+      );
+    }
+    catch(e){
+      print(e);
+    }
 
     final response = await client.get(
       path,
@@ -1239,32 +1326,44 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("Prabhaakaran");
-    print("AnaghaSSSDATRSA" + response.toString());
-    //print(response.data['results']);
-    List<CustomerIdCreationModel> items = [];
+    print("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSW");
 
-    (response.data['data']["results"] as List).forEach((element) {
+
+
+
+
+    List<CustomerIdListModel> items = [];
+    print(response.data['data']['results']);
+    (response.data['data']['results'] as List)
+        .forEach((element) {
       // print("data");
 
-      items.add(CustomerIdCreationModel.fromJson(element));
+      items.add(CustomerIdListModel.fromJson(element));
     });
-    return items;
+    return PaginatedResponse<List<CustomerIdListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 
   @override
   Future<DoubleResponse> postCustomerIdCreation(
-      CustomerIdCreation2Model model) async {
+      CustomerIdCreationUpdateModel model) async {
     print("Arathiiii");
     String? token;
     UserPreferences().getUser().then((value) {
       token = value.token;
     });
     print("token is here" + token.toString());
+    String path=customerCreationApi;
+    print(path);
+    print(model);
 
     try {
       final response = await client.post(
-          "https://api-rgc-user.hilalcart.com/user-customer_customerusersignup/inventory",
+          path,
           data: model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -1282,7 +1381,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
     }
 
     final response = await client.post(
-        "https://api-rgc-user.hilalcart.com/user-customer_customerusersignup/inventory",
+        path,
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -3762,7 +3861,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getVariantSelectionList(
-      String? code, int item) async {
+      String? code, int? item) async {
     print("avavava");
     code = code == null ? "" : code;
     String path;
@@ -6065,9 +6164,19 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<List<VariantReadModel>> getProducedCountry() async {
-    String path =
-        "https://api-inventory-software-staging.rgcdynamics.org/country-list?value=list";
+  Future<List<VariantReadModel>> getProducedCountry(String? code) async {
+    String path ;
+
+
+
+
+    code=code==null?"":code;
+    if(code==""){
+      path = inventoryBaseUrl+"country-list?value=list";
+    }
+    else{
+      path=inventoryBaseUrl+"state-list?code=$code&value=list";
+    }
     try {
       print("ppppath" + path.toString());
       print(path);
@@ -6564,5 +6673,53 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       response.data['data']['next'],
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],);
+  }
+
+  @override
+  Future<List<StateList>> getStateList(String? code) async {
+
+
+
+    String  path=inventoryBaseUrl+"state-list?code=$code&value=list";
+
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      List<StateList> items = [];
+      (response.data['data'] as List).forEach((element) {
+        items.add(StateList.fromJson(element));
+        print("itemsAk" + items.toString());
+      });
+      return items;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    List<StateList> items = [];
+    (response.data['data'] as List).forEach((element) {
+      items.add(StateList.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return items;
   }
 }

@@ -36,32 +36,34 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
     double height=MediaQuery.of(context).size.height;
     return Container(
       child:    Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(child: Column(children: [
-            SizedBox(height: height*.030,),
+          Expanded(child: Column(
+
+            children: [
+
+            NewInputCard(
+                readOnly: true,
+                controller:widget. invoiceCodeController, title: "Invoice Code"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. invoiceCodeController, title: "Invoice code"),
+                controller: widget.purchaseCodeController, title: "Purchase Order Code"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
-                controller: widget.purchaseCodeController, title: "purchase order code"),
-            SizedBox(height: height*.030,),
-            NewInputCard(
-                readOnly: true,
-                controller:widget. orderedDateController, title: "ordered date"),
+                controller:widget. orderedDateController, title: "Ordered Date"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
 
-                controller:widget. paymentCodeController, title: "payment code"),
+                controller:widget. paymentCodeController, title: "Payment Code"),
             SizedBox(height: height*.035,),
             NewInputCard(
-                readOnly: true, controller:widget. paymentStatusController, title: "payment status"),
+                readOnly: true, controller:widget. paymentStatusController, title: "Payment Status"),
             SizedBox(height: height*.035,),
             NewInputCard(
-                readOnly: true, controller:widget. paymentMethodController, title: "payment method"),
+                readOnly: true, controller:widget. paymentMethodController, title: "Payment Method"),
             SizedBox(height: height*.030,),
             SizedBox(height: height*.030,),
             SizedBox(height: height*.030,),
@@ -70,31 +72,30 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
 
           ],)),
           Expanded(child: Column(children: [
-            SizedBox(height: height*.030,),
+
+            NewInputCard(
+                readOnly: true,
+                controller:widget. orderStatusController, title: "Order Status"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. orderStatusController, title: "order status"),
+                controller:widget. invoiceStatusController, title: "Invoice Status"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. invoiceStatusController, title: "invoice status"),
+                controller:widget. discountController, title: "Discount"),
             SizedBox(height: height*.030,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. discountController, title: "discount"),
-            SizedBox(height: height*.030,),
-            NewInputCard(
-                readOnly: true,
-                controller:widget. focController, title: "foc"),
+                controller:widget. focController, title: "FOC"),
             SizedBox(height: height*.035,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. unitCostController, title: "unit cost"),
+                controller:widget. unitCostController, title: "Unit Cost"),
             SizedBox(height: height*.035,),
             NewInputCard(
                 readOnly: true,
-                controller:widget. variableAmountController, title: "variable amount"),
+                controller:widget. variableAmountController, title: "Variable Amount"),
             SizedBox(height: height*.030,),
             SizedBox(height: height*.030,),
             SizedBox(height: height*.030,),
@@ -103,31 +104,30 @@ class _PurchaseOrderStabletableState extends State<PurchaseOrderStabletable> {
 
           ],)),
           Expanded(child: Column(children: [
-            SizedBox(height: height*.030,),
-            SizedBox(height: height*.030,),
+
             NewInputCard(
                 readOnly: true,
-                controller:widget. exciseTaxController, title: "excise tax"),
+                controller:widget. exciseTaxController, title: "Excise Tax"),
             SizedBox(height: height*.020,),
             NewInputCard(
                 readOnly: true,
-                controller: widget.vatController, title: "vat"),
+                controller: widget.vatController, title: "VAT"),
             SizedBox(height: height*.020,),
             NewInputCard(    readOnly: true,
 
-                controller:widget. actualCostController, title: "actual cost"),
+                controller:widget. actualCostController, title: "Actual Cost"),
             SizedBox(height: height*.020,),
             NewInputCard(
                 readOnly: true,
-                controller: widget.grandTotalController, title: "grand total"),
+                controller: widget.grandTotalController, title: "Grand Total"),
             SizedBox(height: height*.020,),
             NewInputCard(
 
-              controller:widget. noteController, title: "note",height: 90,maxLines: 2,),
+              controller:widget. noteController, title: "Note",height: 90,maxLines: 2,),
             SizedBox(height: height*.010,),
             NewInputCard(
 
-              controller: widget.remarksController, title: "remarks",height: 90,maxLines: 2,),
+              controller: widget.remarksController, title: "Remarks",height: 90,maxLines: 2,),
             SizedBox(height: height*.070,),
 
 

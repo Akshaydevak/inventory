@@ -11,7 +11,7 @@ class VariantselectionCubit extends Cubit<VariantselectionState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getVariantSelectionList(int item ) async {
+  Future getVariantSelectionList(int? item ) async {
     next = null;
     prev = null;
     print("enterd");
@@ -25,7 +25,7 @@ class VariantselectionCubit extends Cubit<VariantselectionState> {
     });
   }
 
-  Future searchDevisionList(String filter,int item) async {
+  Future searchDevisionList(String filter,int? item) async {
 
     final result = await repo.getVariantSelectionList("name="+filter,item);
     result.fold((l) => emit(_Error()), (r) {
@@ -37,7 +37,7 @@ class VariantselectionCubit extends Cubit<VariantselectionState> {
     });
   }
 
-  Future nextslotSectionPageList(int item) async {
+  Future nextslotSectionPageList(int? item) async {
     final result = await repo.getVariantSelectionList(next,item);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;

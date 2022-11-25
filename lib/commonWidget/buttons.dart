@@ -17,7 +17,7 @@ class Buttons extends StatelessWidget {
   this.height=30,
   this.labelcolor=Colors.black,
   this.iconColor=Colors.black,
-  required this.icon,this.clr=Colors.black,this.border=Colors.white});
+  required this.icon,this.clr=Pellet.tableBlueHeaderPrint,this.border=Colors.white});
 
 
 
@@ -47,7 +47,7 @@ class Buttons extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon,color: iconColor,),
+            // Icon(icon,color: iconColor,),
             Text(text,style: TextStyle(color: labelcolor,fontWeight: FontWeight.bold),)
           ],
         ),//BoxDecoration
@@ -61,39 +61,59 @@ class TextButtonLarge extends StatelessWidget {
   final String text;
   final IconData? icon;
   final Function  onPress;
+  final double  W;
+  final double  H;
   Color clr;
+  final bool  marginCheck;
 
-   TextButtonLarge({Key? key, this.clr=const Color(0XFF24203F), this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
+   TextButtonLarge({Key? key,this.marginCheck=false,this.W=80,this.H=43, this.clr=Pellet.tableBlueHeaderPrint, this.images, required this.text,this.icon,required this.onPress}) : super(key: key);
   @override
   Widget build(BuildContext context) {
  double h=MediaQuery.of(context).size.height;
  double w=MediaQuery.of(context).size.width;
- return Container(
+ return Column(
+   children: [
+     GestureDetector(
+       onTap:(){
+         onPress();
+       },
+       child: Container(
+         // alignment: Alignment.center,
 
-      width: w/15,
-      height:h/15,
-      margin: EdgeInsets.only(right:w *.02,left: w *.02),
-      alignment: Alignment.center,
+         margin: marginCheck?EdgeInsets.only(top: h*.022,right:w *.0048):EdgeInsets.only(right:w *.018,top: h*.022),
+         color: clr,
+         padding: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
 
-      child: TextButton(onPressed:(){onPress(); },
-          style: ButtonStyle(
-              shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero,
-                      side: BorderSide(color: clr)
-                  )
-              ),backgroundColor: MaterialStateProperty.all( clr)
-          ), child: Row(mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Icon(icon),
-              // Image(image: AssetImage(images),height: 5,
-              //   // width: context.blockSizeHorizontal*1.5,
-              // ),
-              // SizedBox(width: 3,),
-              Text(text,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 9),),
-            ],
-          )),
-    );
+         child: Text(text,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 12),),
+       ),
+     ),
+     // Container(
+     //
+     //
+     //      margin: EdgeInsets.only(right:w *.02,left: w *.02,top: h*.014),
+     //      alignment: Alignment.center,
+     //
+     //      child: TextButton(onPressed:(){onPress(); },
+     //          style: ButtonStyle(
+     //              shape: MaterialStateProperty.all(
+     //                  RoundedRectangleBorder(
+     //                      borderRadius: BorderRadius.zero,
+     //                      side: BorderSide(color: clr)
+     //                  )
+     //              ),backgroundColor: MaterialStateProperty.all( clr)
+     //          ), child: Row(mainAxisAlignment: MainAxisAlignment.center,
+     //            children: [
+     //              // Icon(icon),
+     //              // Image(image: AssetImage(images),height: 5,
+     //              //   // width: context.blockSizeHorizontal*1.5,
+     //              // ),
+     //              // SizedBox(width: 3,),
+     //              Text(text,textAlign:TextAlign.center,style: TextStyle(color: Colors.white,fontSize: 9),),
+     //            ],
+     //          )),
+     //    ),
+   ],
+ );
   }
 }
 class TableTextButton extends StatefulWidget {

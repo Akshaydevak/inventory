@@ -424,7 +424,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.end,
                                   children: [
                                     TextButtonLarge(
                                       onPress: () {
@@ -484,7 +484,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Item heirarchy",
+                                        "Item Heirarchy",
                                         textAlign: TextAlign.left,
                                         style: TextStyle(
                                             color: Colors.black,
@@ -543,7 +543,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   children: [
                                     Button(Icons.delete, Colors.red,
                                         ctx: context,
-                                        text: "Discard", onApply: () {
+                                        text: "DISCARD", onApply: () {
                                       // if(updateCheck){
                                       //   // clears();
                                       //
@@ -581,7 +581,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                     ),
                                     Button(Icons.check, Colors.grey,
                                         ctx: context,
-                                        text: select ? "Save" : "update",
+                                        text: select ? "SAVE" : "UPDATE",
                                         height: 29,
                                         Color: Color(0xff3E4F5B),
                                         width: 90,
@@ -889,7 +889,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.categoryName,
                 icondrop: true,
-                title: "category",
+                title: "Category",
                 ontap: () {
                   showDailogPopUp(
                     context,
@@ -957,7 +957,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.subCategoryName,
                 icondrop: true,
-                title: "Sub category",
+                title: "Sub Category",
                 ontap: () {
                   showDailogPopUp(
                     context,

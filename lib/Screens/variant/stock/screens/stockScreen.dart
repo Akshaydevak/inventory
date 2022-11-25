@@ -532,7 +532,7 @@ class _StockScreenState extends State<StockScreen> {
                                   children: [
                                     Button(Icons.delete, Colors.red,
                                         ctx: context,
-                                        text: "Discard",
+                                        text: "DISCARD",
                                         onApply: () {
                                           // if(updateCheck){
                                           //   // clears();
@@ -551,7 +551,7 @@ class _StockScreenState extends State<StockScreen> {
                                     ),
                                     Button(Icons.check, Colors.grey,
                                         ctx: context,
-                                        text: "Save",
+                                        text: "SAVE",
                                         height: 29,
                                         Color: Color(0xff3E4F5B),
                                         width: 90,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -383,7 +384,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loadingg");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -412,7 +413,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                   listener: (context, state) {
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loadingg");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -436,7 +437,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loadingg");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {
@@ -639,6 +640,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                     Expanded(
                                         child: Container(
                                           child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Container(
                                                   child: Column(
@@ -693,22 +696,21 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           Expanded(
                                                             child: Container(
                                                               child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                                 children: [
                                                                   Expanded(
                                                                       child: Column(
                                                                         children: [
                                                                         
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+                                                                     
                                                                           NewInputCard(
                                                                               readOnly:
                                                                               true,
                                                                               controller:
                                                                               orderCodeController,
                                                                               title:
-                                                                              "Order code"),
+                                                                              "Order Code"),
                                                                           SizedBox(
                                                                             height: height *
                                                                                 .030,
@@ -768,7 +770,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               "Invoice Status"),
                                                                           SizedBox(
                                                                             height: height *
-                                                                                .030,
+                                                                                .180,
                                                                           ),
 
                                                                         ],
@@ -777,10 +779,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       child: Column(
                                                                         children: [
                                                                        
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .030,
-                                                                          ),
+                                                                   
                                                                           //  SizedBox(height: height*.030,),
 
                                                                           NewInputCard(
@@ -839,7 +838,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               "Excess Tax"),
                                                                           SizedBox(
                                                                             height: height *
-                                                                                .030,
+                                                                                .180,
                                                                           ),
 
                                                                         ],
@@ -848,15 +847,12 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                       child: Column(
                                                                         children: [
 
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .090,
-                                                                          ),
+                                                                     
                                                                           NewInputCard(
                                                                                   readOnly: true,
                                                                               controller:
                                                                               vatController,
-                                                                              title: "Vat"),
+                                                                              title: "VAT"),
                                                                           SizedBox(
                                                                             height: height *
                                                                                 .030,
@@ -906,12 +902,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                           ),
                                                                           SizedBox(
                                                                             height: height *
-                                                                                .056,
+                                                                                .226,
                                                                           ),
-                                                                          SizedBox(
-                                                                            height: height *
-                                                                                .036,
-                                                                          ),
+                                                                        
                                                                           // SizedBox(height: height*.010,),
                                                                         ],
                                                                       )),
@@ -921,11 +914,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                           )
                                                         ],
                                                       ),
-                                                      SizedBox(
-                                                        height: height * .080,
-                                                      ),
+                                               
                                                       TextWidget(
-                                                          text: "Receiving lines"),
+                                                          text: "Receiving Lines"),
                                                       Divider(
                                                         color: Colors.grey,
                                                         thickness: 1,
@@ -968,20 +959,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                               10),
                                                                           child:
                                                                           customTable(
-                                                                            border: const TableBorder(
-
-                                                                                verticalInside: BorderSide(
-                                                                                    width: 1,
-                                                                                    color: Colors.black45,
-                                                                                    // color: Colors.blue,
-                                                                                    style: BorderStyle.solid),
-                                                                                top: BorderSide(
-                                                                                    width: .5,
-                                                                                    color: Colors.black45,
-                                                                                    // color: Colors.blue,
-                                                                                    style: BorderStyle.solid
-                                                                                ),
-                                                                                horizontalInside: BorderSide.none),
+                                                                              
                                                                             tableWidth:
                                                                             .5,
                                                                             childrens: [
@@ -993,32 +971,28 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                   children: [
                                                                                     tableHeadtext(
                                                                                       'Sno',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white,
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Orderline id',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Orderline Id',
+                                                                                     
                                                                                       size: 12,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Variant Id',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Variant Name',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -1027,73 +1001,63 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                     tableHeadtext(
                                                                                       'Supplier Ref Code',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Barcode',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
 
                                                                                     tableHeadtext(
-                                                                                      'Current qty',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Current Qty',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Purchase UOM',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Recieved qty',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Recieved Qty',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Is recieved',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Is Recieved',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Unitcost',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Unit Cost',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Excise tax',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Excise Tax',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Discount',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -1101,8 +1065,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                     tableHeadtext(
                                                                                       'FOC',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -1110,71 +1073,60 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                     tableHeadtext(
                                                                                       'Vatable Amount',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Vat',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'VAT',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Actual cost',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Actual Cost',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Grand Total',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Is Invoiced',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Expiry Date',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Is Free',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       'Is Active',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
                                                                                       size: 13,
 
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       '',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
 
                                                                                     ),
@@ -1183,7 +1135,24 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                   ]),
                                                                               if(recievingLisnes.isEmpty)...[
                                                                                 TableRow(
-                                                            decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                                  decoration: BoxDecoration(
+                                                                                      color: Pellet.tableRowColor,
+                                                                                      shape: BoxShape.rectangle,
+                                                                                      border:  Border(
+                                                                                          left: BorderSide(
+
+                                                                                              color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                                              width: .4,
+                                                                                              style: BorderStyle.solid),
+                                                                                          bottom: BorderSide(
+
+                                                                                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                              style: BorderStyle.solid),
+                                                                                          right: BorderSide(
+                                                                                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                              width: .4,
+
+                                                                                              style: BorderStyle.solid))),
                                                                 children: [
                                                               textPadding(""),
                                                               textPadding(""),
@@ -1218,7 +1187,24 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 for (var i = 0; i < recievingLisnes.length;
                                                                                 i++)
                                                                                   TableRow(
-                                                                                      decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                                      decoration: BoxDecoration(
+                                                                                          color: Pellet.tableRowColor,
+                                                                                          shape: BoxShape.rectangle,
+                                                                                          border:  Border(
+                                                                                              left: BorderSide(
+
+                                                                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  width: .4,
+                                                                                                  style: BorderStyle.solid),
+                                                                                              bottom: BorderSide(
+
+                                                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  style: BorderStyle.solid),
+                                                                                              right: BorderSide(
+                                                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  width: .4,
+
+                                                                                                  style: BorderStyle.solid))),
                                                                                       children: [
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2036,8 +2022,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                         mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                         children: [
-                                                          Buttons(
-                                                            onApply: () {
+                                                          TextButtonLarge(
+                                                            onPress: () {
                                                               print("recievdelines"+recievingLisnes.toString());
                                                               List<RecievingLines>recieve=[];
                                                               for(var i=0;i<recievingLisnes.length;i++){
@@ -2099,12 +2085,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                             },
                                                             icon: Icons.check,
-                                                            iconColor: Colors.white,
-                                                            text: "generator Order",
-                                                            clr: Color(0xff53A9F9),
-                                                            height: 28,
-                                                            width: 150,
-                                                            labelcolor: Colors.white,
+                                                            // iconColor: Colors.white,
+                                                            text: "GENERATE ORDER",
+                                                          
+                                                          
                                                           ),
                                                         ],
                                                       ),
@@ -2116,7 +2100,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                         height: height * .020,
                                                       ),
                                                       TextWidget(
-                                                          text: "additional variants"),
+                                                          text: "Additional Variants"),
                                                       Divider(
                                                         color: Colors.grey,
                                                         thickness: 1,
@@ -2149,19 +2133,19 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                             .all(
                                                                             10),
                                                                         child: customTable(
-                                                                            border: const TableBorder(
-                                                                                verticalInside: BorderSide(
-                                                                                    width: 1,
-                                                                                    color: Colors.black45,
-                                                                                    // color: Colors.blue,
-                                                                                    style: BorderStyle.solid),
-                                                                                top: BorderSide(
-                                                                                    width: .5,
-                                                                                    color: Colors.black45,
-                                                                                    // color: Colors.blue,
-                                                                                    style: BorderStyle.solid
-                                                                                ),
-                                                                                horizontalInside: BorderSide.none),
+                                                                            // border: const TableBorder(
+                                                                            //     verticalInside: BorderSide(
+                                                                            //         width: 1,
+                                                                            //         color: Colors.black45,
+                                                                            //         // color: Colors.blue,
+                                                                            //         style: BorderStyle.solid),
+                                                                            //     top: BorderSide(
+                                                                            //         width: .5,
+                                                                            //         color: Colors.black45,
+                                                                            //         // color: Colors.blue,
+                                                                            //         style: BorderStyle.solid
+                                                                            //     ),
+                                                                            //     horizontalInside: BorderSide.none),
                                                                             tableWidth: .5,
                                                                             childrens: [
                                                                               TableRow(
@@ -2172,25 +2156,22 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                   children: [
                                                                                     tableHeadtext(
                                                                                       'Sno',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white,
                                                                                     ),
 
                                                                                     tableHeadtext(
-                                                                                      'Variant id',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Variant Id',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'Variant name',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Variant Name',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -2198,155 +2179,135 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     // tableHeadtext('description', size: 10, color: null),
 
                                                                                     tableHeadtext(
-                                                                                      'supplier ref code',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Supplier Ref Code',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'barcode',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Barcode',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'current qty',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Current Qty',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'purchase uom',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Purchase UOM',
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'recieved qty',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Recieved Qty',
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'is recieved',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Is Recieved',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'unitcost',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Unit Cost',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'excise tax',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Excess Tax',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'discount',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Discount',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
 
                                                                                     tableHeadtext(
-                                                                                      'foc',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'FOC',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
 
                                                                                     tableHeadtext(
-                                                                                      'vatableAmount',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Vatable Amount',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'vat',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'VAT',
+                                                                                   
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'actual cost',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Actual Cost',
+                                                                                      
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'grand total',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Grand Total',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'is invoiced',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Is Invoiced',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'expiry date',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Expiry Date',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'is free',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Is Free',
+                                                                                     
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
-                                                                                      'is active',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+                                                                                      'Is Active',
+                                                                                    
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
                                                                                     ),
                                                                                     tableHeadtext(
                                                                                       '',
-                                                                                      padding: EdgeInsets.all(7),
-                                                                                      height: 46,
+
                                                                                       size: 13,
                                                                                       // color: Palette.containerDarknew,
                                                                                       // textColor: Palette.white
@@ -2357,9 +2318,23 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                 for(var i=0;i<additionalVariants.length;i++)
                                                                                   TableRow(
                                                                                       decoration: BoxDecoration(
-                                                                                          color: Colors.grey.shade200,
+                                                                                          color: Pellet.tableRowColor,
                                                                                           shape: BoxShape.rectangle,
-                                                                                          border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                                          border:  Border(
+                                                                                              left: BorderSide(
+
+                                                                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  width: .4,
+                                                                                                  style: BorderStyle.solid),
+                                                                                              bottom: BorderSide(
+
+                                                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  style: BorderStyle.solid),
+                                                                                              right: BorderSide(
+                                                                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                                  width: .4,
+
+                                                                                                  style: BorderStyle.solid))),
                                                                                       children: [
                                                                                         TableCell(
                                                                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3070,10 +3045,24 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
 
                                                                               TableRow(
-                                                                                  decoration: BoxDecoration(
-                                                                                      color: Colors.grey.shade200,
-                                                                                      shape: BoxShape.rectangle,
-                                                                                      border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                                decoration: BoxDecoration(
+                                                                                    color: Pellet.tableRowColor,
+                                                                                    shape: BoxShape.rectangle,
+                                                                                    border:  Border(
+                                                                                        left: BorderSide(
+
+                                                                                            color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                                            width: .4,
+                                                                                            style: BorderStyle.solid),
+                                                                                        bottom: BorderSide(
+
+                                                                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                            style: BorderStyle.solid),
+                                                                                        right: BorderSide(
+                                                                                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                                            width: .4,
+
+                                                                                            style: BorderStyle.solid))),
                                                                                   children: [
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3677,7 +3666,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                     ),
                                                                                     TableCell(
                                                                                       verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                      child: CheckedBoxs(color:Color(0xff3E4F5B) ,
+                                                                                      child: CheckedBoxs(
+                                                                                        // color:Color(0xff3E4F5B) ,
 
                                                                                         valueChanger:  isActive1,
                                                                                         onSelection: (bool? value ) {
@@ -3761,7 +3751,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         },
 
 
-                                                                                        label:"set",
+                                                                                        label:"Save",
 
                                                                                       ),
                                                                                     ),
@@ -3812,8 +3802,8 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                         mainAxisAlignment:
                                                         MainAxisAlignment.end,
                                                         children: [
-                                                          Buttons(
-                                                            onApply: () {
+                                                          TextButtonLarge(
+                                                            onPress: () {
 
                                                               List<RecievingLines>additionalVariants1=[];
                                                               for(var i=0;i<additionalVariants.length;i++){
@@ -3833,12 +3823,12 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                context.read<AdditionalgenerateCubit>().additionlGeneratePost(model!);
                                                             },
                                                             icon: Icons.check,
-                                                            iconColor: Colors.white,
-                                                            text: "generator Order",
-                                                            clr: Color(0xff53A9F9),
-                                                            height: 30,
-                                                            width: 152,
-                                                            labelcolor: Colors.white,
+                                                            // iconColor: Colors.white,
+                                                            text: "GNENERATE ORDER",
+
+                                                            // height: 30,
+                                                            // width: 152,
+                                                            // labelcolor: Colors.white,
                                                           ),
                                                         ],
                                                       ),
@@ -3892,7 +3882,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                             },
                                                             icon: Icons.check,
                                                             iconColor: Colors.white,
-                                                            text: "Save",
+                                                            text: "SAVE",
                                                             // clr: Color(0xff53A9F9),
                                                             height: 32,
                                                             width: 90,
@@ -3989,12 +3979,10 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
         builder: (context) {
           return AlertDialog(
             content: PopUpHeader(
+
+
               label: "Create system generated Po",
               onApply: () {
-
-              },
-
-              onEdit: () {
                 print( "aaa"+widget.model.toString());
                 GenerateMissing? model=widget.model;
 
@@ -4003,6 +3991,13 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
 
                 widget.assign(model);
                 Navigator.pop(context);
+
+              },
+              isDirectCreate: true,
+
+
+              onEdit: () {
+
 
 
 
@@ -4195,10 +4190,10 @@ class _PopUpHeaderState extends State<PopUpHeader> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 boldText(widget.label, fontSize: 18),
-                Transform.scale(
-                  scale: 0.8,
-                  child: _toggleButtonList(widget.onAddNew??(v){}),
-                ),
+                // Transform.scale(
+                //   scale: 0.8,
+                //   child: _toggleButtonList(widget.onAddNew??(v){}),
+                // ),
                 Transform.scale(
                   scale: 0.7,
                   alignment: Alignment.topRight,
@@ -4251,7 +4246,7 @@ class GeneralSavePage extends StatelessWidget {
       {Key? key,
         this.buttonVisible=true,
         this.buttonNameOption=false,
-        this.buttonName="save",
+        this.buttonName="SAVE",
         required this.child,
          this.onApply,
         this.onCancel,
@@ -4337,7 +4332,7 @@ class GeneralSavePage extends StatelessWidget {
     );
   }
 
-  Widget save(BuildContext context,{String? buttonName="Save"} ) {
+  Widget save(BuildContext context,{String? buttonName="SAVE"} ) {
     return Container(
       alignment: Alignment.centerRight,
       child: Row(
@@ -4351,9 +4346,9 @@ class GeneralSavePage extends StatelessWidget {
                 onPressed: onApply,
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.check,
-                    ),
+                    // Icon(
+                    //   Icons.check,
+                    // ),
                     SizedBox(width: 3),
                     Text(
                       buttonName.toString(),
@@ -4551,7 +4546,7 @@ class CommonButtonCustom extends StatelessWidget {
     required this.child,
     Key? key,
     this.onPressed,
-    this.color = Palette.BACKGROUND,
+    this.color = Pellet.tableBlueHeaderPrint,
     this.textColor = Colors.white,
     this.textStyle,
   }) : super(key: key);
@@ -4563,9 +4558,9 @@ class CommonButtonCustom extends StatelessWidget {
     elevation: 0,
     minimumSize: Size(88, 36),
     padding: EdgeInsets.symmetric(horizontal: 16),
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.all(Radius.circular(8)),
-    ),
+    // shape: const RoundedRectangleBorder(
+    //   borderRadius: BorderRadius.all(Radius.circular(8)),
+    // ),
   );
 
   @override

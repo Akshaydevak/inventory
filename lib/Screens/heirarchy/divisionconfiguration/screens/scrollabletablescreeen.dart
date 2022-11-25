@@ -964,12 +964,12 @@ class _CategoryTableState extends State<CategoryTable> {
   Widget build(BuildContext context) {
     print(widget.list);
     if(onChange==false){
-      codeListController.clear();
+
       categoryList.clear();
       setState(() {
 
 
-        categoryList=widget.list??[];
+        categoryList=List.from(widget.list??[]);
         if(categoryList.isNotEmpty==true){
           for( var i=0;i<categoryList.length; i++){
             upDate.add(false);

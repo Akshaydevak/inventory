@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'listbrand.dart';
@@ -11,38 +12,11 @@ part of 'listbrand.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 BrandListModel _$BrandListModelFromJson(Map<String, dynamic> json) {
   return _BrandListModel.fromJson(json);
 }
-
-/// @nodoc
-class _$BrandListModelTearOff {
-  const _$BrandListModelTearOff();
-
-  _BrandListModel call(
-      {int? id,
-      String? name,
-      String? code,
-      @JsonKey(name: "standard_code") String? standardCode,
-      @JsonKey(name: "uom_code") String? uomCode}) {
-    return _BrandListModel(
-      id: id,
-      name: name,
-      code: code,
-      standardCode: standardCode,
-      uomCode: uomCode,
-    );
-  }
-
-  BrandListModel fromJson(Map<String, Object> json) {
-    return BrandListModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $BrandListModel = _$BrandListModelTearOff();
 
 /// @nodoc
 mixin _$BrandListModel {
@@ -64,7 +38,8 @@ mixin _$BrandListModel {
 abstract class $BrandListModelCopyWith<$Res> {
   factory $BrandListModelCopyWith(
           BrandListModel value, $Res Function(BrandListModel) then) =
-      _$BrandListModelCopyWithImpl<$Res>;
+      _$BrandListModelCopyWithImpl<$Res, BrandListModel>;
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -74,14 +49,16 @@ abstract class $BrandListModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BrandListModelCopyWithImpl<$Res>
+class _$BrandListModelCopyWithImpl<$Res, $Val extends BrandListModel>
     implements $BrandListModelCopyWith<$Res> {
   _$BrandListModelCopyWithImpl(this._value, this._then);
 
-  final BrandListModel _value;
   // ignore: unused_field
-  final $Res Function(BrandListModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -91,37 +68,38 @@ class _$BrandListModelCopyWithImpl<$Res>
     Object? uomCode = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      standardCode: standardCode == freezed
+      standardCode: freezed == standardCode
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BrandListModelCopyWith<$Res>
+abstract class _$$_BrandListModelCopyWith<$Res>
     implements $BrandListModelCopyWith<$Res> {
-  factory _$BrandListModelCopyWith(
-          _BrandListModel value, $Res Function(_BrandListModel) then) =
-      __$BrandListModelCopyWithImpl<$Res>;
+  factory _$$_BrandListModelCopyWith(
+          _$_BrandListModel value, $Res Function(_$_BrandListModel) then) =
+      __$$_BrandListModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? name,
@@ -131,16 +109,14 @@ abstract class _$BrandListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$BrandListModelCopyWithImpl<$Res>
-    extends _$BrandListModelCopyWithImpl<$Res>
-    implements _$BrandListModelCopyWith<$Res> {
-  __$BrandListModelCopyWithImpl(
-      _BrandListModel _value, $Res Function(_BrandListModel) _then)
-      : super(_value, (v) => _then(v as _BrandListModel));
+class __$$_BrandListModelCopyWithImpl<$Res>
+    extends _$BrandListModelCopyWithImpl<$Res, _$_BrandListModel>
+    implements _$$_BrandListModelCopyWith<$Res> {
+  __$$_BrandListModelCopyWithImpl(
+      _$_BrandListModel _value, $Res Function(_$_BrandListModel) _then)
+      : super(_value, _then);
 
-  @override
-  _BrandListModel get _value => super._value as _BrandListModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -149,24 +125,24 @@ class __$BrandListModelCopyWithImpl<$Res>
     Object? standardCode = freezed,
     Object? uomCode = freezed,
   }) {
-    return _then(_BrandListModel(
-      id: id == freezed
+    return _then(_$_BrandListModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      standardCode: standardCode == freezed
+      standardCode: freezed == standardCode
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -208,65 +184,60 @@ class _$_BrandListModel implements _BrandListModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _BrandListModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_BrandListModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.standardCode, standardCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.standardCode, standardCode)) &&
-            (identical(other.uomCode, uomCode) ||
-                const DeepCollectionEquality().equals(other.uomCode, uomCode)));
+                other.standardCode == standardCode) &&
+            (identical(other.uomCode, uomCode) || other.uomCode == uomCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(standardCode) ^
-      const DeepCollectionEquality().hash(uomCode);
 
   @JsonKey(ignore: true)
   @override
-  _$BrandListModelCopyWith<_BrandListModel> get copyWith =>
-      __$BrandListModelCopyWithImpl<_BrandListModel>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, id, name, code, standardCode, uomCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BrandListModelCopyWith<_$_BrandListModel> get copyWith =>
+      __$$_BrandListModelCopyWithImpl<_$_BrandListModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BrandListModelToJson(this);
+    return _$$_BrandListModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _BrandListModel implements BrandListModel {
   const factory _BrandListModel(
-      {int? id,
-      String? name,
-      String? code,
-      @JsonKey(name: "standard_code") String? standardCode,
-      @JsonKey(name: "uom_code") String? uomCode}) = _$_BrandListModel;
+      {final int? id,
+      final String? name,
+      final String? code,
+      @JsonKey(name: "standard_code") final String? standardCode,
+      @JsonKey(name: "uom_code") final String? uomCode}) = _$_BrandListModel;
 
   factory _BrandListModel.fromJson(Map<String, dynamic> json) =
       _$_BrandListModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
   @JsonKey(name: "standard_code")
-  String? get standardCode => throw _privateConstructorUsedError;
+  String? get standardCode;
   @override
   @JsonKey(name: "uom_code")
-  String? get uomCode => throw _privateConstructorUsedError;
+  String? get uomCode;
   @override
   @JsonKey(ignore: true)
-  _$BrandListModelCopyWith<_BrandListModel> get copyWith =>
+  _$$_BrandListModelCopyWith<_$_BrandListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

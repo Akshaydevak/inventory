@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'channelpost.dart';
@@ -11,44 +12,11 @@ part of 'channelpost.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ChannelPostModel _$ChannelPostModelFromJson(Map<String, dynamic> json) {
   return _ChannelPostModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ChannelPostModelTearOff {
-  const _$ChannelPostModelTearOff();
-
-  _ChannelPostModel call(
-      {int? priority,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "selection_type") String? selectionType,
-      @JsonKey(name: "channel_type_code") String? channelTypeCode,
-      @JsonKey(name: "channel_type_name") String? channelTypeName,
-      @JsonKey(name: "channel_type_id") String? channelTypeId,
-      @JsonKey(name: "selected_data") List<SelectedData>? selectedData,
-      @JsonKey(name: "channel_data") List<ChannelDatas>? channelDatas}) {
-    return _ChannelPostModel(
-      priority: priority,
-      inventoryId: inventoryId,
-      selectionType: selectionType,
-      channelTypeCode: channelTypeCode,
-      channelTypeName: channelTypeName,
-      channelTypeId: channelTypeId,
-      selectedData: selectedData,
-      channelDatas: channelDatas,
-    );
-  }
-
-  ChannelPostModel fromJson(Map<String, Object> json) {
-    return ChannelPostModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ChannelPostModel = _$ChannelPostModelTearOff();
 
 /// @nodoc
 mixin _$ChannelPostModel {
@@ -78,7 +46,8 @@ mixin _$ChannelPostModel {
 abstract class $ChannelPostModelCopyWith<$Res> {
   factory $ChannelPostModelCopyWith(
           ChannelPostModel value, $Res Function(ChannelPostModel) then) =
-      _$ChannelPostModelCopyWithImpl<$Res>;
+      _$ChannelPostModelCopyWithImpl<$Res, ChannelPostModel>;
+  @useResult
   $Res call(
       {int? priority,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -91,14 +60,16 @@ abstract class $ChannelPostModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChannelPostModelCopyWithImpl<$Res>
+class _$ChannelPostModelCopyWithImpl<$Res, $Val extends ChannelPostModel>
     implements $ChannelPostModelCopyWith<$Res> {
   _$ChannelPostModelCopyWithImpl(this._value, this._then);
 
-  final ChannelPostModel _value;
   // ignore: unused_field
-  final $Res Function(ChannelPostModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? priority = freezed,
@@ -111,49 +82,50 @@ class _$ChannelPostModelCopyWithImpl<$Res>
     Object? channelDatas = freezed,
   }) {
     return _then(_value.copyWith(
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectionType: selectionType == freezed
+      selectionType: freezed == selectionType
           ? _value.selectionType
           : selectionType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeName: channelTypeName == freezed
+      channelTypeName: freezed == channelTypeName
           ? _value.channelTypeName
           : channelTypeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeId: channelTypeId == freezed
+      channelTypeId: freezed == channelTypeId
           ? _value.channelTypeId
           : channelTypeId // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedData: selectedData == freezed
+      selectedData: freezed == selectedData
           ? _value.selectedData
           : selectedData // ignore: cast_nullable_to_non_nullable
               as List<SelectedData>?,
-      channelDatas: channelDatas == freezed
+      channelDatas: freezed == channelDatas
           ? _value.channelDatas
           : channelDatas // ignore: cast_nullable_to_non_nullable
               as List<ChannelDatas>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChannelPostModelCopyWith<$Res>
+abstract class _$$_ChannelPostModelCopyWith<$Res>
     implements $ChannelPostModelCopyWith<$Res> {
-  factory _$ChannelPostModelCopyWith(
-          _ChannelPostModel value, $Res Function(_ChannelPostModel) then) =
-      __$ChannelPostModelCopyWithImpl<$Res>;
+  factory _$$_ChannelPostModelCopyWith(
+          _$_ChannelPostModel value, $Res Function(_$_ChannelPostModel) then) =
+      __$$_ChannelPostModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? priority,
       @JsonKey(name: "inventory_id") String? inventoryId,
@@ -166,16 +138,14 @@ abstract class _$ChannelPostModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChannelPostModelCopyWithImpl<$Res>
-    extends _$ChannelPostModelCopyWithImpl<$Res>
-    implements _$ChannelPostModelCopyWith<$Res> {
-  __$ChannelPostModelCopyWithImpl(
-      _ChannelPostModel _value, $Res Function(_ChannelPostModel) _then)
-      : super(_value, (v) => _then(v as _ChannelPostModel));
+class __$$_ChannelPostModelCopyWithImpl<$Res>
+    extends _$ChannelPostModelCopyWithImpl<$Res, _$_ChannelPostModel>
+    implements _$$_ChannelPostModelCopyWith<$Res> {
+  __$$_ChannelPostModelCopyWithImpl(
+      _$_ChannelPostModel _value, $Res Function(_$_ChannelPostModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ChannelPostModel get _value => super._value as _ChannelPostModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? priority = freezed,
@@ -187,37 +157,37 @@ class __$ChannelPostModelCopyWithImpl<$Res>
     Object? selectedData = freezed,
     Object? channelDatas = freezed,
   }) {
-    return _then(_ChannelPostModel(
-      priority: priority == freezed
+    return _then(_$_ChannelPostModel(
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectionType: selectionType == freezed
+      selectionType: freezed == selectionType
           ? _value.selectionType
           : selectionType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeName: channelTypeName == freezed
+      channelTypeName: freezed == channelTypeName
           ? _value.channelTypeName
           : channelTypeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeId: channelTypeId == freezed
+      channelTypeId: freezed == channelTypeId
           ? _value.channelTypeId
           : channelTypeId // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedData: selectedData == freezed
-          ? _value.selectedData
+      selectedData: freezed == selectedData
+          ? _value._selectedData
           : selectedData // ignore: cast_nullable_to_non_nullable
               as List<SelectedData>?,
-      channelDatas: channelDatas == freezed
-          ? _value.channelDatas
+      channelDatas: freezed == channelDatas
+          ? _value._channelDatas
           : channelDatas // ignore: cast_nullable_to_non_nullable
               as List<ChannelDatas>?,
     ));
@@ -234,8 +204,10 @@ class _$_ChannelPostModel implements _ChannelPostModel {
       @JsonKey(name: "channel_type_code") this.channelTypeCode,
       @JsonKey(name: "channel_type_name") this.channelTypeName,
       @JsonKey(name: "channel_type_id") this.channelTypeId,
-      @JsonKey(name: "selected_data") this.selectedData,
-      @JsonKey(name: "channel_data") this.channelDatas});
+      @JsonKey(name: "selected_data") final List<SelectedData>? selectedData,
+      @JsonKey(name: "channel_data") final List<ChannelDatas>? channelDatas})
+      : _selectedData = selectedData,
+        _channelDatas = channelDatas;
 
   factory _$_ChannelPostModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChannelPostModelFromJson(json);
@@ -257,12 +229,25 @@ class _$_ChannelPostModel implements _ChannelPostModel {
   @override
   @JsonKey(name: "channel_type_id")
   final String? channelTypeId;
+  final List<SelectedData>? _selectedData;
   @override
   @JsonKey(name: "selected_data")
-  final List<SelectedData>? selectedData;
+  List<SelectedData>? get selectedData {
+    final value = _selectedData;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<ChannelDatas>? _channelDatas;
   @override
   @JsonKey(name: "channel_data")
-  final List<ChannelDatas>? channelDatas;
+  List<ChannelDatas>? get channelDatas {
+    final value = _channelDatas;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -272,122 +257,106 @@ class _$_ChannelPostModel implements _ChannelPostModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChannelPostModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ChannelPostModel &&
             (identical(other.priority, priority) ||
-                const DeepCollectionEquality()
-                    .equals(other.priority, priority)) &&
+                other.priority == priority) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.selectionType, selectionType) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectionType, selectionType)) &&
+                other.selectionType == selectionType) &&
             (identical(other.channelTypeCode, channelTypeCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeCode, channelTypeCode)) &&
+                other.channelTypeCode == channelTypeCode) &&
             (identical(other.channelTypeName, channelTypeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeName, channelTypeName)) &&
+                other.channelTypeName == channelTypeName) &&
             (identical(other.channelTypeId, channelTypeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeId, channelTypeId)) &&
-            (identical(other.selectedData, selectedData) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectedData, selectedData)) &&
-            (identical(other.channelDatas, channelDatas) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelDatas, channelDatas)));
+                other.channelTypeId == channelTypeId) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedData, _selectedData) &&
+            const DeepCollectionEquality()
+                .equals(other._channelDatas, _channelDatas));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(priority) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(selectionType) ^
-      const DeepCollectionEquality().hash(channelTypeCode) ^
-      const DeepCollectionEquality().hash(channelTypeName) ^
-      const DeepCollectionEquality().hash(channelTypeId) ^
-      const DeepCollectionEquality().hash(selectedData) ^
-      const DeepCollectionEquality().hash(channelDatas);
 
   @JsonKey(ignore: true)
   @override
-  _$ChannelPostModelCopyWith<_ChannelPostModel> get copyWith =>
-      __$ChannelPostModelCopyWithImpl<_ChannelPostModel>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      priority,
+      inventoryId,
+      selectionType,
+      channelTypeCode,
+      channelTypeName,
+      channelTypeId,
+      const DeepCollectionEquality().hash(_selectedData),
+      const DeepCollectionEquality().hash(_channelDatas));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChannelPostModelCopyWith<_$_ChannelPostModel> get copyWith =>
+      __$$_ChannelPostModelCopyWithImpl<_$_ChannelPostModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChannelPostModelToJson(this);
+    return _$$_ChannelPostModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ChannelPostModel implements ChannelPostModel {
   const factory _ChannelPostModel(
-          {int? priority,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "selection_type") String? selectionType,
-          @JsonKey(name: "channel_type_code") String? channelTypeCode,
-          @JsonKey(name: "channel_type_name") String? channelTypeName,
-          @JsonKey(name: "channel_type_id") String? channelTypeId,
-          @JsonKey(name: "selected_data") List<SelectedData>? selectedData,
-          @JsonKey(name: "channel_data") List<ChannelDatas>? channelDatas}) =
-      _$_ChannelPostModel;
+      {final int? priority,
+      @JsonKey(name: "inventory_id")
+          final String? inventoryId,
+      @JsonKey(name: "selection_type")
+          final String? selectionType,
+      @JsonKey(name: "channel_type_code")
+          final String? channelTypeCode,
+      @JsonKey(name: "channel_type_name")
+          final String? channelTypeName,
+      @JsonKey(name: "channel_type_id")
+          final String? channelTypeId,
+      @JsonKey(name: "selected_data")
+          final List<SelectedData>? selectedData,
+      @JsonKey(name: "channel_data")
+          final List<ChannelDatas>? channelDatas}) = _$_ChannelPostModel;
 
   factory _ChannelPostModel.fromJson(Map<String, dynamic> json) =
       _$_ChannelPostModel.fromJson;
 
   @override
-  int? get priority => throw _privateConstructorUsedError;
+  int? get priority;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "selection_type")
-  String? get selectionType => throw _privateConstructorUsedError;
+  String? get selectionType;
   @override
   @JsonKey(name: "channel_type_code")
-  String? get channelTypeCode => throw _privateConstructorUsedError;
+  String? get channelTypeCode;
   @override
   @JsonKey(name: "channel_type_name")
-  String? get channelTypeName => throw _privateConstructorUsedError;
+  String? get channelTypeName;
   @override
   @JsonKey(name: "channel_type_id")
-  String? get channelTypeId => throw _privateConstructorUsedError;
+  String? get channelTypeId;
   @override
   @JsonKey(name: "selected_data")
-  List<SelectedData>? get selectedData => throw _privateConstructorUsedError;
+  List<SelectedData>? get selectedData;
   @override
   @JsonKey(name: "channel_data")
-  List<ChannelDatas>? get channelDatas => throw _privateConstructorUsedError;
+  List<ChannelDatas>? get channelDatas;
   @override
   @JsonKey(ignore: true)
-  _$ChannelPostModelCopyWith<_ChannelPostModel> get copyWith =>
+  _$$_ChannelPostModelCopyWith<_$_ChannelPostModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 SelectedData _$SelectedDataFromJson(Map<String, dynamic> json) {
   return _SelectedData.fromJson(json);
 }
-
-/// @nodoc
-class _$SelectedDataTearOff {
-  const _$SelectedDataTearOff();
-
-  _SelectedData call({int? id, String? code}) {
-    return _SelectedData(
-      id: id,
-      code: code,
-    );
-  }
-
-  SelectedData fromJson(Map<String, Object> json) {
-    return SelectedData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SelectedData = _$SelectedDataTearOff();
 
 /// @nodoc
 mixin _$SelectedData {
@@ -404,67 +373,71 @@ mixin _$SelectedData {
 abstract class $SelectedDataCopyWith<$Res> {
   factory $SelectedDataCopyWith(
           SelectedData value, $Res Function(SelectedData) then) =
-      _$SelectedDataCopyWithImpl<$Res>;
+      _$SelectedDataCopyWithImpl<$Res, SelectedData>;
+  @useResult
   $Res call({int? id, String? code});
 }
 
 /// @nodoc
-class _$SelectedDataCopyWithImpl<$Res> implements $SelectedDataCopyWith<$Res> {
+class _$SelectedDataCopyWithImpl<$Res, $Val extends SelectedData>
+    implements $SelectedDataCopyWith<$Res> {
   _$SelectedDataCopyWithImpl(this._value, this._then);
 
-  final SelectedData _value;
   // ignore: unused_field
-  final $Res Function(SelectedData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SelectedDataCopyWith<$Res>
+abstract class _$$_SelectedDataCopyWith<$Res>
     implements $SelectedDataCopyWith<$Res> {
-  factory _$SelectedDataCopyWith(
-          _SelectedData value, $Res Function(_SelectedData) then) =
-      __$SelectedDataCopyWithImpl<$Res>;
+  factory _$$_SelectedDataCopyWith(
+          _$_SelectedData value, $Res Function(_$_SelectedData) then) =
+      __$$_SelectedDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({int? id, String? code});
 }
 
 /// @nodoc
-class __$SelectedDataCopyWithImpl<$Res> extends _$SelectedDataCopyWithImpl<$Res>
-    implements _$SelectedDataCopyWith<$Res> {
-  __$SelectedDataCopyWithImpl(
-      _SelectedData _value, $Res Function(_SelectedData) _then)
-      : super(_value, (v) => _then(v as _SelectedData));
+class __$$_SelectedDataCopyWithImpl<$Res>
+    extends _$SelectedDataCopyWithImpl<$Res, _$_SelectedData>
+    implements _$$_SelectedDataCopyWith<$Res> {
+  __$$_SelectedDataCopyWithImpl(
+      _$_SelectedData _value, $Res Function(_$_SelectedData) _then)
+      : super(_value, _then);
 
-  @override
-  _SelectedData get _value => super._value as _SelectedData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
   }) {
-    return _then(_SelectedData(
-      id: id == freezed
+    return _then(_$_SelectedData(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -493,78 +466,50 @@ class _$_SelectedData implements _SelectedData {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SelectedData &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)));
+        (other.runtimeType == runtimeType &&
+            other is _$_SelectedData &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code);
 
   @JsonKey(ignore: true)
   @override
-  _$SelectedDataCopyWith<_SelectedData> get copyWith =>
-      __$SelectedDataCopyWithImpl<_SelectedData>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, code);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SelectedDataCopyWith<_$_SelectedData> get copyWith =>
+      __$$_SelectedDataCopyWithImpl<_$_SelectedData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SelectedDataToJson(this);
+    return _$$_SelectedDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _SelectedData implements SelectedData {
-  const factory _SelectedData({int? id, String? code}) = _$_SelectedData;
+  const factory _SelectedData({final int? id, final String? code}) =
+      _$_SelectedData;
 
   factory _SelectedData.fromJson(Map<String, dynamic> json) =
       _$_SelectedData.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
   @JsonKey(ignore: true)
-  _$SelectedDataCopyWith<_SelectedData> get copyWith =>
+  _$$_SelectedDataCopyWith<_$_SelectedData> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 ChannelDatas _$ChannelDatasFromJson(Map<String, dynamic> json) {
   return _ChannelDatas.fromJson(json);
 }
-
-/// @nodoc
-class _$ChannelDatasTearOff {
-  const _$ChannelDatasTearOff();
-
-  _ChannelDatas call(
-      {int? priority,
-      @JsonKey(name: "channel_id") String? channelId,
-      @JsonKey(name: "channel_code") String? channelCode,
-      @JsonKey(name: "channel_name") String? channelName,
-      @JsonKey(name: "channel_type_name") String? channelTypeName,
-      @JsonKey(name: "channel_stock_type") String? channelStockType}) {
-    return _ChannelDatas(
-      priority: priority,
-      channelId: channelId,
-      channelCode: channelCode,
-      channelName: channelName,
-      channelTypeName: channelTypeName,
-      channelStockType: channelStockType,
-    );
-  }
-
-  ChannelDatas fromJson(Map<String, Object> json) {
-    return ChannelDatas.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ChannelDatas = _$ChannelDatasTearOff();
 
 /// @nodoc
 mixin _$ChannelDatas {
@@ -590,7 +535,8 @@ mixin _$ChannelDatas {
 abstract class $ChannelDatasCopyWith<$Res> {
   factory $ChannelDatasCopyWith(
           ChannelDatas value, $Res Function(ChannelDatas) then) =
-      _$ChannelDatasCopyWithImpl<$Res>;
+      _$ChannelDatasCopyWithImpl<$Res, ChannelDatas>;
+  @useResult
   $Res call(
       {int? priority,
       @JsonKey(name: "channel_id") String? channelId,
@@ -601,13 +547,16 @@ abstract class $ChannelDatasCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChannelDatasCopyWithImpl<$Res> implements $ChannelDatasCopyWith<$Res> {
+class _$ChannelDatasCopyWithImpl<$Res, $Val extends ChannelDatas>
+    implements $ChannelDatasCopyWith<$Res> {
   _$ChannelDatasCopyWithImpl(this._value, this._then);
 
-  final ChannelDatas _value;
   // ignore: unused_field
-  final $Res Function(ChannelDatas) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? priority = freezed,
@@ -618,41 +567,42 @@ class _$ChannelDatasCopyWithImpl<$Res> implements $ChannelDatasCopyWith<$Res> {
     Object? channelStockType = freezed,
   }) {
     return _then(_value.copyWith(
-      priority: priority == freezed
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelName: channelName == freezed
+      channelName: freezed == channelName
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeName: channelTypeName == freezed
+      channelTypeName: freezed == channelTypeName
           ? _value.channelTypeName
           : channelTypeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChannelDatasCopyWith<$Res>
+abstract class _$$_ChannelDatasCopyWith<$Res>
     implements $ChannelDatasCopyWith<$Res> {
-  factory _$ChannelDatasCopyWith(
-          _ChannelDatas value, $Res Function(_ChannelDatas) then) =
-      __$ChannelDatasCopyWithImpl<$Res>;
+  factory _$$_ChannelDatasCopyWith(
+          _$_ChannelDatas value, $Res Function(_$_ChannelDatas) then) =
+      __$$_ChannelDatasCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? priority,
       @JsonKey(name: "channel_id") String? channelId,
@@ -663,15 +613,14 @@ abstract class _$ChannelDatasCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChannelDatasCopyWithImpl<$Res> extends _$ChannelDatasCopyWithImpl<$Res>
-    implements _$ChannelDatasCopyWith<$Res> {
-  __$ChannelDatasCopyWithImpl(
-      _ChannelDatas _value, $Res Function(_ChannelDatas) _then)
-      : super(_value, (v) => _then(v as _ChannelDatas));
+class __$$_ChannelDatasCopyWithImpl<$Res>
+    extends _$ChannelDatasCopyWithImpl<$Res, _$_ChannelDatas>
+    implements _$$_ChannelDatasCopyWith<$Res> {
+  __$$_ChannelDatasCopyWithImpl(
+      _$_ChannelDatas _value, $Res Function(_$_ChannelDatas) _then)
+      : super(_value, _then);
 
-  @override
-  _ChannelDatas get _value => super._value as _ChannelDatas;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? priority = freezed,
@@ -681,28 +630,28 @@ class __$ChannelDatasCopyWithImpl<$Res> extends _$ChannelDatasCopyWithImpl<$Res>
     Object? channelTypeName = freezed,
     Object? channelStockType = freezed,
   }) {
-    return _then(_ChannelDatas(
-      priority: priority == freezed
+    return _then(_$_ChannelDatas(
+      priority: freezed == priority
           ? _value.priority
           : priority // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelName: channelName == freezed
+      channelName: freezed == channelName
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeName: channelTypeName == freezed
+      channelTypeName: freezed == channelTypeName
           ? _value.channelTypeName
           : channelTypeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -750,80 +699,77 @@ class _$_ChannelDatas implements _ChannelDatas {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChannelDatas &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ChannelDatas &&
             (identical(other.priority, priority) ||
-                const DeepCollectionEquality()
-                    .equals(other.priority, priority)) &&
+                other.priority == priority) &&
             (identical(other.channelId, channelId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelId, channelId)) &&
+                other.channelId == channelId) &&
             (identical(other.channelCode, channelCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelCode, channelCode)) &&
+                other.channelCode == channelCode) &&
             (identical(other.channelName, channelName) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelName, channelName)) &&
+                other.channelName == channelName) &&
             (identical(other.channelTypeName, channelTypeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeName, channelTypeName)) &&
+                other.channelTypeName == channelTypeName) &&
             (identical(other.channelStockType, channelStockType) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockType, channelStockType)));
+                other.channelStockType == channelStockType));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(priority) ^
-      const DeepCollectionEquality().hash(channelId) ^
-      const DeepCollectionEquality().hash(channelCode) ^
-      const DeepCollectionEquality().hash(channelName) ^
-      const DeepCollectionEquality().hash(channelTypeName) ^
-      const DeepCollectionEquality().hash(channelStockType);
 
   @JsonKey(ignore: true)
   @override
-  _$ChannelDatasCopyWith<_ChannelDatas> get copyWith =>
-      __$ChannelDatasCopyWithImpl<_ChannelDatas>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, priority, channelId, channelCode,
+      channelName, channelTypeName, channelStockType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChannelDatasCopyWith<_$_ChannelDatas> get copyWith =>
+      __$$_ChannelDatasCopyWithImpl<_$_ChannelDatas>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChannelDatasToJson(this);
+    return _$$_ChannelDatasToJson(
+      this,
+    );
   }
 }
 
 abstract class _ChannelDatas implements ChannelDatas {
   const factory _ChannelDatas(
-          {int? priority,
-          @JsonKey(name: "channel_id") String? channelId,
-          @JsonKey(name: "channel_code") String? channelCode,
-          @JsonKey(name: "channel_name") String? channelName,
-          @JsonKey(name: "channel_type_name") String? channelTypeName,
-          @JsonKey(name: "channel_stock_type") String? channelStockType}) =
-      _$_ChannelDatas;
+      {final int? priority,
+      @JsonKey(name: "channel_id")
+          final String? channelId,
+      @JsonKey(name: "channel_code")
+          final String? channelCode,
+      @JsonKey(name: "channel_name")
+          final String? channelName,
+      @JsonKey(name: "channel_type_name")
+          final String? channelTypeName,
+      @JsonKey(name: "channel_stock_type")
+          final String? channelStockType}) = _$_ChannelDatas;
 
   factory _ChannelDatas.fromJson(Map<String, dynamic> json) =
       _$_ChannelDatas.fromJson;
 
   @override
-  int? get priority => throw _privateConstructorUsedError;
+  int? get priority;
   @override
   @JsonKey(name: "channel_id")
-  String? get channelId => throw _privateConstructorUsedError;
+  String? get channelId;
   @override
   @JsonKey(name: "channel_code")
-  String? get channelCode => throw _privateConstructorUsedError;
+  String? get channelCode;
   @override
   @JsonKey(name: "channel_name")
-  String? get channelName => throw _privateConstructorUsedError;
+  String? get channelName;
   @override
   @JsonKey(name: "channel_type_name")
-  String? get channelTypeName => throw _privateConstructorUsedError;
+  String? get channelTypeName;
   @override
   @JsonKey(name: "channel_stock_type")
-  String? get channelStockType => throw _privateConstructorUsedError;
+  String? get channelStockType;
   @override
   @JsonKey(ignore: true)
-  _$ChannelDatasCopyWith<_ChannelDatas> get copyWith =>
+  _$$_ChannelDatasCopyWith<_$_ChannelDatas> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -582,8 +582,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           print("error");
         },
         success: (data) {
+          // print("aval ethito" + data.toString());
         setState(() {
-          print("aval ethito" + data.toString());
+
           // group=data;
 
           variantNameController.text=data.name??"";
@@ -743,17 +744,16 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
             },
             success: (data) {
               if(data.data.length==0){
-                exportCheck=false;
-                context.showSnackBarError("Does not exist");
-
-
-              }
+    setState(() {
+      exportCheck = false;
+      context.showSnackBarError("Does not exist");
+    }); }
               else{
-                print("aaaayyiram"+data.data.toString());
-                exportCheck=true;
-                checkIdid=data.data[0].id;
-
-              }
+    setState(() {
+      print("aaaayyiram" + data.data.toString());
+      exportCheck = true;
+      checkIdid = data.data[0].id;
+      }); }
 
 
 
@@ -885,10 +885,11 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                               margin: EdgeInsets.only(
                                                   left: width * .02),
                                               child: SearchTextfiled(
-                                                // suffiXCheck: true,
-                                                // suffixOnComplete: (){
-                                                //   context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
-                                                // },
+                                                suffiXCheck: true,
+                                                suffixOnComplete: (){
+                                                  print("aksa");
+                                                  context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
+                                                },
                                                 w: width * .3,
                                                 h: 48,
 
@@ -903,30 +904,30 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 // onComplete: ( String? va),
                                               ),
                                             ),
-                                            gapWidthColumn(width: width * .01),
-                                            Button(null, Colors.grey,
-                                                ctx: context,
-                                                text: "Search",
-                                                height: 32,
-                                                Color:exportCheck? Color(0xff3E4F5B):Colors.lightBlue,
-                                                width: 90,
-                                                labelcolor: Colors.white,
-                                                iconColor: Colors.white,
-                                                onApply: () {
-                                              setState(() {
-                                                print("testing Case");
-                                                context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
-                                              });
-
-
-
-                                                }),
+                                            // gapWidthColumn(width: width * .01),
+                                            // Button(null, Colors.grey,
+                                            //     ctx: context,
+                                            //     text: "Search",
+                                            //     height: 38,
+                                            //     Color:exportCheck? Pellet.tableBlueHeaderPrint:Pellet.tableBlueHeaderPrint,
+                                            //     width: 90,
+                                            //     labelcolor: Colors.white,
+                                            //     iconColor: Colors.white,
+                                            //     onApply: () {
+                                            //   setState(() {
+                                            //     print("testing Case");
+                                            //     context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
+                                            //   });
+                                            //
+                                            //
+                                            //
+                                            //     }),
                                             gapWidthColumn(width: width * .008),
                                             Visibility(
                                               visible: exportCheck,
                                               child: Button(null, Colors.grey,
                                                   ctx: context,
-                                                  text: "export",
+                                                  text: "Export",
                                                   height: 32,
                                                   Color: Color(0xff3E4F5B),
                                                   width: 90,
@@ -1111,7 +1112,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
                                                 },
                                                 height: 29,
-                                                width: 190,
+                                                width: 165,
                                                 Color:  Color(0xff3E4F5B),
                                                 labelcolor: Colors.white,
                                                 iconColor: Colors.white,
@@ -1121,7 +1122,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                             ),
                                             Button(Icons.delete, Colors.red,
                                                 ctx: context,
-                                                text: "Discard",
+                                                text: "DISCARD",
                                                 onApply: () {
 
 
@@ -1165,7 +1166,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
                                             Button(Icons.check, Colors.grey,
                                                 ctx: context,
-                                                text: select?"Save":"update",
+                                                text: select?"SAVE":"UPDATE",
                                                 height: 29,
                                                 Color: Color(0xff3E4F5B),
                                                 width: 90,

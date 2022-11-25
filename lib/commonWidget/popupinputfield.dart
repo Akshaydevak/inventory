@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PopUpInputField extends StatefulWidget {
   final bool read;
@@ -66,7 +67,7 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
               width: 70,
               child: Text.rich(TextSpan(
                   text: widget.label,
-                  style: TextStyle(fontSize: 12),
+                  style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
                   children: widget.required
                       ? [
                     TextSpan(
@@ -119,9 +120,20 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
                       : null,
                   contentPadding: EdgeInsets.all(10),
                   isDense: true,
+                  enabledBorder:OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                  focusedBorder:   OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+
+                  border: OutlineInputBorder(),
                   hintText: widget.hintText,
                   hintStyle: TextStyle(fontSize: 10),
-                  border: OutlineInputBorder(),
+
                 ),
               ):
               TextFormField(
@@ -155,10 +167,21 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
                       ))
                       : null,
                   contentPadding: EdgeInsets.all(10),
+                  enabledBorder:OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                  focusedBorder:   OutlineInputBorder(
+                      borderRadius:BorderRadius.circular(2),
+
+                      borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
                   isDense: true,
+                  border: OutlineInputBorder(),
+
                   hintText: widget.hintText,
                   hintStyle: TextStyle(fontSize: 10),
-                  border: OutlineInputBorder(),
+
                 ),
               )
           ),

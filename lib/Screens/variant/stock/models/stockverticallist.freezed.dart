@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'stockverticallist.dart';
@@ -11,31 +12,12 @@ part of 'stockverticallist.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StockVerticalReadModel _$StockVerticalReadModelFromJson(
     Map<String, dynamic> json) {
   return _StockVerticalReadModel.fromJson(json);
 }
-
-/// @nodoc
-class _$StockVerticalReadModelTearOff {
-  const _$StockVerticalReadModelTearOff();
-
-  _StockVerticalReadModel call({Category? category, String? name}) {
-    return _StockVerticalReadModel(
-      category: category,
-      name: name,
-    );
-  }
-
-  StockVerticalReadModel fromJson(Map<String, Object> json) {
-    return StockVerticalReadModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StockVerticalReadModel = _$StockVerticalReadModelTearOff();
 
 /// @nodoc
 mixin _$StockVerticalReadModel {
@@ -52,57 +34,63 @@ mixin _$StockVerticalReadModel {
 abstract class $StockVerticalReadModelCopyWith<$Res> {
   factory $StockVerticalReadModelCopyWith(StockVerticalReadModel value,
           $Res Function(StockVerticalReadModel) then) =
-      _$StockVerticalReadModelCopyWithImpl<$Res>;
+      _$StockVerticalReadModelCopyWithImpl<$Res, StockVerticalReadModel>;
+  @useResult
   $Res call({Category? category, String? name});
 
   $CategoryCopyWith<$Res>? get category;
 }
 
 /// @nodoc
-class _$StockVerticalReadModelCopyWithImpl<$Res>
+class _$StockVerticalReadModelCopyWithImpl<$Res,
+        $Val extends StockVerticalReadModel>
     implements $StockVerticalReadModelCopyWith<$Res> {
   _$StockVerticalReadModelCopyWithImpl(this._value, this._then);
 
-  final StockVerticalReadModel _value;
   // ignore: unused_field
-  final $Res Function(StockVerticalReadModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? category = freezed,
     Object? name = freezed,
   }) {
     return _then(_value.copyWith(
-      category: category == freezed
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as Category?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $CategoryCopyWith<$Res>? get category {
     if (_value.category == null) {
       return null;
     }
 
     return $CategoryCopyWith<$Res>(_value.category!, (value) {
-      return _then(_value.copyWith(category: value));
+      return _then(_value.copyWith(category: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$StockVerticalReadModelCopyWith<$Res>
+abstract class _$$_StockVerticalReadModelCopyWith<$Res>
     implements $StockVerticalReadModelCopyWith<$Res> {
-  factory _$StockVerticalReadModelCopyWith(_StockVerticalReadModel value,
-          $Res Function(_StockVerticalReadModel) then) =
-      __$StockVerticalReadModelCopyWithImpl<$Res>;
+  factory _$$_StockVerticalReadModelCopyWith(_$_StockVerticalReadModel value,
+          $Res Function(_$_StockVerticalReadModel) then) =
+      __$$_StockVerticalReadModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Category? category, String? name});
 
   @override
@@ -110,27 +98,26 @@ abstract class _$StockVerticalReadModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StockVerticalReadModelCopyWithImpl<$Res>
-    extends _$StockVerticalReadModelCopyWithImpl<$Res>
-    implements _$StockVerticalReadModelCopyWith<$Res> {
-  __$StockVerticalReadModelCopyWithImpl(_StockVerticalReadModel _value,
-      $Res Function(_StockVerticalReadModel) _then)
-      : super(_value, (v) => _then(v as _StockVerticalReadModel));
+class __$$_StockVerticalReadModelCopyWithImpl<$Res>
+    extends _$StockVerticalReadModelCopyWithImpl<$Res,
+        _$_StockVerticalReadModel>
+    implements _$$_StockVerticalReadModelCopyWith<$Res> {
+  __$$_StockVerticalReadModelCopyWithImpl(_$_StockVerticalReadModel _value,
+      $Res Function(_$_StockVerticalReadModel) _then)
+      : super(_value, _then);
 
-  @override
-  _StockVerticalReadModel get _value => super._value as _StockVerticalReadModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? category = freezed,
     Object? name = freezed,
   }) {
-    return _then(_StockVerticalReadModel(
-      category: category == freezed
+    return _then(_$_StockVerticalReadModel(
+      category: freezed == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as Category?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -159,75 +146,53 @@ class _$_StockVerticalReadModel implements _StockVerticalReadModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _StockVerticalReadModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_StockVerticalReadModel &&
             (identical(other.category, category) ||
-                const DeepCollectionEquality()
-                    .equals(other.category, category)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)));
+                other.category == category) &&
+            (identical(other.name, name) || other.name == name));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(category) ^
-      const DeepCollectionEquality().hash(name);
 
   @JsonKey(ignore: true)
   @override
-  _$StockVerticalReadModelCopyWith<_StockVerticalReadModel> get copyWith =>
-      __$StockVerticalReadModelCopyWithImpl<_StockVerticalReadModel>(
+  int get hashCode => Object.hash(runtimeType, category, name);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StockVerticalReadModelCopyWith<_$_StockVerticalReadModel> get copyWith =>
+      __$$_StockVerticalReadModelCopyWithImpl<_$_StockVerticalReadModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StockVerticalReadModelToJson(this);
+    return _$$_StockVerticalReadModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _StockVerticalReadModel implements StockVerticalReadModel {
-  const factory _StockVerticalReadModel({Category? category, String? name}) =
-      _$_StockVerticalReadModel;
+  const factory _StockVerticalReadModel(
+      {final Category? category,
+      final String? name}) = _$_StockVerticalReadModel;
 
   factory _StockVerticalReadModel.fromJson(Map<String, dynamic> json) =
       _$_StockVerticalReadModel.fromJson;
 
   @override
-  Category? get category => throw _privateConstructorUsedError;
+  Category? get category;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
   @JsonKey(ignore: true)
-  _$StockVerticalReadModelCopyWith<_StockVerticalReadModel> get copyWith =>
+  _$$_StockVerticalReadModelCopyWith<_$_StockVerticalReadModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 channelAllocatesRead _$channelAllocatesReadFromJson(Map<String, dynamic> json) {
   return _channelAllocatesRead.fromJson(json);
 }
-
-/// @nodoc
-class _$channelAllocatesReadTearOff {
-  const _$channelAllocatesReadTearOff();
-
-  _channelAllocatesRead call(
-      {List<Category>? results,
-      @JsonKey(name: "channel_type_id") int? channelTypeId,
-      @JsonKey(name: "channel_type_code") String? channelTypeCode}) {
-    return _channelAllocatesRead(
-      results: results,
-      channelTypeId: channelTypeId,
-      channelTypeCode: channelTypeCode,
-    );
-  }
-
-  channelAllocatesRead fromJson(Map<String, Object> json) {
-    return channelAllocatesRead.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $channelAllocatesRead = _$channelAllocatesReadTearOff();
 
 /// @nodoc
 mixin _$channelAllocatesRead {
@@ -247,7 +212,8 @@ mixin _$channelAllocatesRead {
 abstract class $channelAllocatesReadCopyWith<$Res> {
   factory $channelAllocatesReadCopyWith(channelAllocatesRead value,
           $Res Function(channelAllocatesRead) then) =
-      _$channelAllocatesReadCopyWithImpl<$Res>;
+      _$channelAllocatesReadCopyWithImpl<$Res, channelAllocatesRead>;
+  @useResult
   $Res call(
       {List<Category>? results,
       @JsonKey(name: "channel_type_id") int? channelTypeId,
@@ -255,14 +221,17 @@ abstract class $channelAllocatesReadCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$channelAllocatesReadCopyWithImpl<$Res>
+class _$channelAllocatesReadCopyWithImpl<$Res,
+        $Val extends channelAllocatesRead>
     implements $channelAllocatesReadCopyWith<$Res> {
   _$channelAllocatesReadCopyWithImpl(this._value, this._then);
 
-  final channelAllocatesRead _value;
   // ignore: unused_field
-  final $Res Function(channelAllocatesRead) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? results = freezed,
@@ -270,29 +239,30 @@ class _$channelAllocatesReadCopyWithImpl<$Res>
     Object? channelTypeCode = freezed,
   }) {
     return _then(_value.copyWith(
-      results: results == freezed
+      results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
               as List<Category>?,
-      channelTypeId: channelTypeId == freezed
+      channelTypeId: freezed == channelTypeId
           ? _value.channelTypeId
           : channelTypeId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$channelAllocatesReadCopyWith<$Res>
+abstract class _$$_channelAllocatesReadCopyWith<$Res>
     implements $channelAllocatesReadCopyWith<$Res> {
-  factory _$channelAllocatesReadCopyWith(_channelAllocatesRead value,
-          $Res Function(_channelAllocatesRead) then) =
-      __$channelAllocatesReadCopyWithImpl<$Res>;
+  factory _$$_channelAllocatesReadCopyWith(_$_channelAllocatesRead value,
+          $Res Function(_$_channelAllocatesRead) then) =
+      __$$_channelAllocatesReadCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<Category>? results,
       @JsonKey(name: "channel_type_id") int? channelTypeId,
@@ -300,32 +270,30 @@ abstract class _$channelAllocatesReadCopyWith<$Res>
 }
 
 /// @nodoc
-class __$channelAllocatesReadCopyWithImpl<$Res>
-    extends _$channelAllocatesReadCopyWithImpl<$Res>
-    implements _$channelAllocatesReadCopyWith<$Res> {
-  __$channelAllocatesReadCopyWithImpl(
-      _channelAllocatesRead _value, $Res Function(_channelAllocatesRead) _then)
-      : super(_value, (v) => _then(v as _channelAllocatesRead));
+class __$$_channelAllocatesReadCopyWithImpl<$Res>
+    extends _$channelAllocatesReadCopyWithImpl<$Res, _$_channelAllocatesRead>
+    implements _$$_channelAllocatesReadCopyWith<$Res> {
+  __$$_channelAllocatesReadCopyWithImpl(_$_channelAllocatesRead _value,
+      $Res Function(_$_channelAllocatesRead) _then)
+      : super(_value, _then);
 
-  @override
-  _channelAllocatesRead get _value => super._value as _channelAllocatesRead;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? results = freezed,
     Object? channelTypeId = freezed,
     Object? channelTypeCode = freezed,
   }) {
-    return _then(_channelAllocatesRead(
-      results: results == freezed
-          ? _value.results
+    return _then(_$_channelAllocatesRead(
+      results: freezed == results
+          ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
               as List<Category>?,
-      channelTypeId: channelTypeId == freezed
+      channelTypeId: freezed == channelTypeId
           ? _value.channelTypeId
           : channelTypeId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -337,15 +305,23 @@ class __$channelAllocatesReadCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_channelAllocatesRead implements _channelAllocatesRead {
   const _$_channelAllocatesRead(
-      {this.results,
+      {final List<Category>? results,
       @JsonKey(name: "channel_type_id") this.channelTypeId,
-      @JsonKey(name: "channel_type_code") this.channelTypeCode});
+      @JsonKey(name: "channel_type_code") this.channelTypeCode})
+      : _results = results;
 
   factory _$_channelAllocatesRead.fromJson(Map<String, dynamic> json) =>
       _$$_channelAllocatesReadFromJson(json);
 
+  final List<Category>? _results;
   @override
-  final List<Category>? results;
+  List<Category>? get results {
+    final value = _results;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "channel_type_id")
   final int? channelTypeId;
@@ -361,99 +337,65 @@ class _$_channelAllocatesRead implements _channelAllocatesRead {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _channelAllocatesRead &&
-            (identical(other.results, results) ||
-                const DeepCollectionEquality()
-                    .equals(other.results, results)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_channelAllocatesRead &&
+            const DeepCollectionEquality().equals(other._results, _results) &&
             (identical(other.channelTypeId, channelTypeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeId, channelTypeId)) &&
+                other.channelTypeId == channelTypeId) &&
             (identical(other.channelTypeCode, channelTypeCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeCode, channelTypeCode)));
+                other.channelTypeCode == channelTypeCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(results) ^
-      const DeepCollectionEquality().hash(channelTypeId) ^
-      const DeepCollectionEquality().hash(channelTypeCode);
 
   @JsonKey(ignore: true)
   @override
-  _$channelAllocatesReadCopyWith<_channelAllocatesRead> get copyWith =>
-      __$channelAllocatesReadCopyWithImpl<_channelAllocatesRead>(
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_results),
+      channelTypeId,
+      channelTypeCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_channelAllocatesReadCopyWith<_$_channelAllocatesRead> get copyWith =>
+      __$$_channelAllocatesReadCopyWithImpl<_$_channelAllocatesRead>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_channelAllocatesReadToJson(this);
+    return _$$_channelAllocatesReadToJson(
+      this,
+    );
   }
 }
 
 abstract class _channelAllocatesRead implements channelAllocatesRead {
   const factory _channelAllocatesRead(
-          {List<Category>? results,
-          @JsonKey(name: "channel_type_id") int? channelTypeId,
-          @JsonKey(name: "channel_type_code") String? channelTypeCode}) =
+          {final List<Category>? results,
+          @JsonKey(name: "channel_type_id") final int? channelTypeId,
+          @JsonKey(name: "channel_type_code") final String? channelTypeCode}) =
       _$_channelAllocatesRead;
 
   factory _channelAllocatesRead.fromJson(Map<String, dynamic> json) =
       _$_channelAllocatesRead.fromJson;
 
   @override
-  List<Category>? get results => throw _privateConstructorUsedError;
+  List<Category>? get results;
   @override
   @JsonKey(name: "channel_type_id")
-  int? get channelTypeId => throw _privateConstructorUsedError;
+  int? get channelTypeId;
   @override
   @JsonKey(name: "channel_type_code")
-  String? get channelTypeCode => throw _privateConstructorUsedError;
+  String? get channelTypeCode;
   @override
   @JsonKey(ignore: true)
-  _$channelAllocatesReadCopyWith<_channelAllocatesRead> get copyWith =>
+  _$$_channelAllocatesReadCopyWith<_$_channelAllocatesRead> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Category _$CategoryFromJson(Map<String, dynamic> json) {
   return _Category.fromJson(json);
 }
-
-/// @nodoc
-class _$CategoryTearOff {
-  const _$CategoryTearOff();
-
-  _Category call(
-      {String? name,
-      String? description,
-      String? code,
-      int? id,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-      @JsonKey(name: "legal_unit_type") String? legalUnitType,
-      @JsonKey(name: "channel_code") String? channelCode,
-      @JsonKey(name: "channel_stock_type") String? channelStockType,
-      @JsonKey(name: "channel_type_code") String? channelTypeCode}) {
-    return _Category(
-      name: name,
-      description: description,
-      code: code,
-      id: id,
-      isActive: isActive,
-      legalUnitType: legalUnitType,
-      channelCode: channelCode,
-      channelStockType: channelStockType,
-      channelTypeCode: channelTypeCode,
-    );
-  }
-
-  Category fromJson(Map<String, Object> json) {
-    return Category.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Category = _$CategoryTearOff();
 
 /// @nodoc
 mixin _$Category {
@@ -481,7 +423,8 @@ mixin _$Category {
 /// @nodoc
 abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
-      _$CategoryCopyWithImpl<$Res>;
+      _$CategoryCopyWithImpl<$Res, Category>;
+  @useResult
   $Res call(
       {String? name,
       String? description,
@@ -495,13 +438,16 @@ abstract class $CategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
+class _$CategoryCopyWithImpl<$Res, $Val extends Category>
+    implements $CategoryCopyWith<$Res> {
   _$CategoryCopyWithImpl(this._value, this._then);
 
-  final Category _value;
   // ignore: unused_field
-  final $Res Function(Category) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -515,51 +461,53 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
     Object? channelTypeCode = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      legalUnitType: legalUnitType == freezed
+      legalUnitType: freezed == legalUnitType
           ? _value.legalUnitType
           : legalUnitType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
-  factory _$CategoryCopyWith(_Category value, $Res Function(_Category) then) =
-      __$CategoryCopyWithImpl<$Res>;
+abstract class _$$_CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
+  factory _$$_CategoryCopyWith(
+          _$_Category value, $Res Function(_$_Category) then) =
+      __$$_CategoryCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? name,
       String? description,
@@ -573,14 +521,14 @@ abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
-    implements _$CategoryCopyWith<$Res> {
-  __$CategoryCopyWithImpl(_Category _value, $Res Function(_Category) _then)
-      : super(_value, (v) => _then(v as _Category));
+class __$$_CategoryCopyWithImpl<$Res>
+    extends _$CategoryCopyWithImpl<$Res, _$_Category>
+    implements _$$_CategoryCopyWith<$Res> {
+  __$$_CategoryCopyWithImpl(
+      _$_Category _value, $Res Function(_$_Category) _then)
+      : super(_value, _then);
 
-  @override
-  _Category get _value => super._value as _Category;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -593,40 +541,40 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
     Object? channelStockType = freezed,
     Object? channelTypeCode = freezed,
   }) {
-    return _then(_Category(
-      name: name == freezed
+    return _then(_$_Category(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      legalUnitType: legalUnitType == freezed
+      legalUnitType: freezed == legalUnitType
           ? _value.legalUnitType
           : legalUnitType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -683,97 +631,84 @@ class _$_Category implements _Category {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Category &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_Category &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+                other.description == description) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)) &&
+                other.isActive == isActive) &&
             (identical(other.legalUnitType, legalUnitType) ||
-                const DeepCollectionEquality()
-                    .equals(other.legalUnitType, legalUnitType)) &&
+                other.legalUnitType == legalUnitType) &&
             (identical(other.channelCode, channelCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelCode, channelCode)) &&
+                other.channelCode == channelCode) &&
             (identical(other.channelStockType, channelStockType) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockType, channelStockType)) &&
+                other.channelStockType == channelStockType) &&
             (identical(other.channelTypeCode, channelTypeCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeCode, channelTypeCode)));
+                other.channelTypeCode == channelTypeCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(isActive) ^
-      const DeepCollectionEquality().hash(legalUnitType) ^
-      const DeepCollectionEquality().hash(channelCode) ^
-      const DeepCollectionEquality().hash(channelStockType) ^
-      const DeepCollectionEquality().hash(channelTypeCode);
 
   @JsonKey(ignore: true)
   @override
-  _$CategoryCopyWith<_Category> get copyWith =>
-      __$CategoryCopyWithImpl<_Category>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, name, description, code, id,
+      isActive, legalUnitType, channelCode, channelStockType, channelTypeCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CategoryCopyWith<_$_Category> get copyWith =>
+      __$$_CategoryCopyWithImpl<_$_Category>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryToJson(this);
+    return _$$_CategoryToJson(
+      this,
+    );
   }
 }
 
 abstract class _Category implements Category {
   const factory _Category(
-          {String? name,
-          String? description,
-          String? code,
-          int? id,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-          @JsonKey(name: "legal_unit_type") String? legalUnitType,
-          @JsonKey(name: "channel_code") String? channelCode,
-          @JsonKey(name: "channel_stock_type") String? channelStockType,
-          @JsonKey(name: "channel_type_code") String? channelTypeCode}) =
+          {final String? name,
+          final String? description,
+          final String? code,
+          final int? id,
+          @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
+          @JsonKey(name: "legal_unit_type") final String? legalUnitType,
+          @JsonKey(name: "channel_code") final String? channelCode,
+          @JsonKey(name: "channel_stock_type") final String? channelStockType,
+          @JsonKey(name: "channel_type_code") final String? channelTypeCode}) =
       _$_Category;
 
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(name: "legal_unit_type")
-  String? get legalUnitType => throw _privateConstructorUsedError;
+  String? get legalUnitType;
   @override
   @JsonKey(name: "channel_code")
-  String? get channelCode => throw _privateConstructorUsedError;
+  String? get channelCode;
   @override
   @JsonKey(name: "channel_stock_type")
-  String? get channelStockType => throw _privateConstructorUsedError;
+  String? get channelStockType;
   @override
   @JsonKey(name: "channel_type_code")
-  String? get channelTypeCode => throw _privateConstructorUsedError;
+  String? get channelTypeCode;
   @override
   @JsonKey(ignore: true)
-  _$CategoryCopyWith<_Category> get copyWith =>
+  _$$_CategoryCopyWith<_$_Category> get copyWith =>
       throw _privateConstructorUsedError;
 }

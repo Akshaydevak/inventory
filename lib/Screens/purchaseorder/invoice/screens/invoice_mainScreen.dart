@@ -10,6 +10,7 @@ import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventory_
 import 'package:inventory/Screens/inventory_creation_tab/cubits/cubit/inventorypost_cubit.dart';
 import 'package:inventory/Screens/inventory_creation_tab/inventory_read_model.dart';
 import 'package:inventory/Screens/purchaseorder/invoice/screens/purchase_order_stabletable.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
@@ -488,7 +489,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               SizedBox(height: 80,),
                               Row(mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  TextWidget(text: "recieving lines"),
+                                  TextWidget(text: "Receiving lines"),
                                 ],
                               ),
                               Divider(color: Colors.grey,thickness: 1,),
@@ -514,21 +515,21 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                 width: 2200,
                                                 padding: EdgeInsets.all(10),
                                                 child:customTable(
-                                                  border: const TableBorder(
-                                                    verticalInside: BorderSide(
-                                                        width:.5,
-                                                        color: Colors.black45,
-                                                        // color: Colors.blue,
-                                                        style:
-                                                        BorderStyle.solid),
-
-                                                    horizontalInside:
-                                                    BorderSide(
-                                                        width:.3,
-                                                        color: Colors.black45,
-                                                        // color: Colors.blue,
-                                                        style:
-                                                        BorderStyle.solid),),
+                                                  // border: const TableBorder(
+                                                  //   verticalInside: BorderSide(
+                                                  //       width:.5,
+                                                  //       color: Colors.black45,
+                                                  //       // color: Colors.blue,
+                                                  //       style:
+                                                  //       BorderStyle.solid),
+                                                  //
+                                                  //   horizontalInside:
+                                                  //   BorderSide(
+                                                  //       width:.3,
+                                                  //       color: Colors.black45,
+                                                  //       // color: Colors.blue,
+                                                  //       style:
+                                                  //       BorderStyle.solid),),
                                                   tableWidth: .5,
                                                   childrens: [
                                                     TableRow(
@@ -544,36 +545,28 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                         children: [
                                                           tableHeadtext(
                                                             'Sno',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
+
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white,
                                                           ),
                                                           tableHeadtext(
-                                                            'receiving line id',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+                                                            'Receiving Line Id',
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Variant Id',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Variant Name',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -582,9 +575,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           // tableHeadtext('description', size: 10, color: null),
                                                           tableHeadtext(
                                                             'Barcode',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -593,18 +584,14 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                           tableHeadtext(
                                                             'Purchase UOM',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
-                                                            'Requested qty',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+                                                            'Requested Qty',
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -613,100 +600,69 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                           tableHeadtext(
                                                             'Is Recieved',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Unit Cost',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
-                                                            'Excise Tax',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+                                                            'Exccess Tax',
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Discount',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'FOC',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
-                                                            'Vatable Amount',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+                                                            'Variable Amount',
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
 
                                                           tableHeadtext(
-                                                            'Vat',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
+                                                            'VAT',
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Actual Cost',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Grand Total',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Is Invoiced',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
                                                           ),
                                                           tableHeadtext(
                                                             'Is Free',
-                                                            padding:
-                                                            EdgeInsets.all(7),
-                                                            height: 46,
                                                             size: 13,
                                                             // color: Palette.containerDarknew,
                                                             // textColor: Palette.white
@@ -717,7 +673,25 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                     if(additionalVariants.isEmpty)...[
                                                       TableRow(
-                                                        decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                        decoration: BoxDecoration(
+                                                            color: Pellet.tableRowColor,
+                                                            shape: BoxShape.rectangle,
+                                                            border:  Border(
+                                                                left: BorderSide(
+
+                                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                    width: .4,
+                                                                    style: BorderStyle.solid),
+                                                                bottom: BorderSide(
+
+                                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                    style: BorderStyle.solid),
+                                                                right: BorderSide(
+                                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                    width: .4,
+
+                                                                    style: BorderStyle.solid))),
+
                                                         children: [
 
                                                           textPadding(""),
@@ -963,7 +937,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 children: [
                                   Spacer(),
                                   Button(Icons.delete, Colors.red,ctx: context,
-                                      text: "Discard",height: 29,
+                                      text: "DISCARD",height: 29,
+                                      bdr: true,
                                       onApply: (){print("Akkk");},
                                       width: 90,labelcolor: Colors.red,iconColor: Colors.red),
                                   SizedBox(width: width*.008,),
@@ -1010,7 +985,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
 
                                       },
-                                      text: "Save",height: 29,
+                                      text: "SAVE",height: 29,
                                       width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
                                   SizedBox(width: width*.008,),
                                 ],

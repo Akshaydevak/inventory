@@ -14,6 +14,7 @@ import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/cubits/cubit/table_details_cubit_dart_cubit.dart';
@@ -456,9 +457,11 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                     children: [
                                       Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.end,
                                         children: [
                                           TextButtonLarge(
+                                      marginCheck:true,
+
                                             onPress: () {
                                               setState(() {
                                                 select = true;
@@ -514,6 +517,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                           ),
                                         ],
                                       ),
+                                      SizedBox(height: 15,),
                                       SalesReturnGenealStableTable(
                                           select:select,
                                           billingAddresName: billingAddressNameController,
@@ -543,6 +547,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                           totalPrice: toatalPriceController,
                                           assign:listAssign
                                       ),
+                                      SizedBox(height: 30),
                                       SalesReturnGeneralGrowableTable(
                                         updation: tableAssign,
                                         table: table,
@@ -551,7 +556,7 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                       ),
                                       Container(
                                         color: Colors.white,
-                                        height: 50,
+                                        height: 30,
                                       ),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.end,
@@ -796,12 +801,15 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                 color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SelectableDropDownpopUp(
-                              label: "Order type",
+                              label: "Order Type",
                               type: "SalesOrder_TypePopUpCall",
                               value: widget.orderType.text,
                               onSelection: (String va) {
@@ -843,20 +851,20 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.returnOrderCode,
-                                title: " return order code"),
+                                title: " Return Order Code"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.orderDate,
-                                title: "order date"),
+                                title: "Order Date"),
 
                             SizedBox(
                               height: height * .030,
                             ),widget.select?
                             SelectableDropDownpopUp(
-                              label: "sales invoice code",
+                              label: "Sales Invoice Code",
                               type:"InvoiceCode-PopUpCall",
                               value: widget.salesInvoiceCode.text,
                               enable: true,
@@ -882,7 +890,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 //     ));
                               },
                             ):NewInputCard(
-                                controller: widget.salesInvoiceCode, title: "sales invoice code"),
+                                controller: widget.salesInvoiceCode, title: "Sales Invoice Code"),
 
                             SizedBox(
                               height: height * .030,
@@ -926,9 +934,9 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 readOnly: true,
                                 height: 46,
                                 controller: widget.trnNumber,
-                                title: "TRN number"),
+                                title: "TRN Number"),
                             SizedBox(
-                              height: height * .075,
+                              height: height * .090,
                             ),
 
 
@@ -938,73 +946,135 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                         )),
                     Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: height * .045,
-                            ),
-                            SelectableDropDownpopUp(
-                              label: "billing address id",
-                              type:"ShippingAddressPopUpCall",
-                              value: widget.billingAddresName.text,
-                              enable: true,
-                              onSelection: (ShippingAddressModel? va) {
-                                print(
-                                    "+++++++++++++++++++++++");
-                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                setState(() {
-                                  widget.billingAddressId.text=va?.id.toString()??"";
-                                  widget.billingAddresName.text=va?.fullName.toString()??"";
+
+                            // SelectableDropDownpopUp(
+                            //   label: "Billing Address Id",
+                            //   type:"ShippingAddressPopUpCall",
+                            //   value: widget.billingAddresName.text,
+                            //   enable: true,
+                            //   onSelection: (ShippingAddressModel? va) {
+                            //     print(
+                            //         "+++++++++++++++++++++++");
+                            //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            //     setState(() {
+                            //       widget.billingAddressId.text=va?.id.toString()??"";
+                            //       widget.billingAddresName.text=va?.fullName.toString()??"";
+                            //
+                            //
+                            //       // onChange = true;
+                            //       // orderType.text = va!;
+                            //     });
+                            //   },
+                            //   onAddNew: () {
+                            //
+                            //     // showDailogPopUp(
+                            //     //     context,
+                            //     //     WarrantyDetailsPopUp(
+                            //     //       // indexValue: temp,
+                            //     //       // changeActive: onChangeActive,
+                            //     //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                            //     //       // changeExtendedWarranty: onChangeExtendedWarranty,
+                            //     //     ));
+                            //   },
+                            // ),
 
 
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-                              },
-                              onAddNew: () {
+                            NewInputCard(controller: widget.billingAddresName,
+                              icondrop:true,title: "Billing Address Id",ontap: (){
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(
+                                    id: int.tryParse(widget.customerId.text),
+                                    type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
-                                // showDailogPopUp(
-                                //     context,
-                                //     WarrantyDetailsPopUp(
-                                //       // indexValue: temp,
-                                //       // changeActive: onChangeActive,
-                                //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                //       // changeExtendedWarranty: onChangeExtendedWarranty,
-                                //     ));
-                              },
-                            ),
+                                    setState(() {
+
+                                      widget.billingAddressId.text=va?.id.toString()??"";
+                                      widget.billingAddresName.text=va?.fullName.toString()??"";
+                                      setState(() {
+
+                                      });
+
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
                             SizedBox(
                               height: height * .030,
                             ),
-                            SelectableDropDownpopUp(
-                              label: "shipping address id",
-                              type:"ShippingAddressPopUpCall",
-                              value: widget.shippingName.text,
-                              enable: true,
-                              onSelection: (ShippingAddressModel? va) {
-                                print(
-                                    "+++++++++++++++++++++++");
-                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                setState(() {
-                                  widget.shipping.text=va?.id.toString()??"";
-                                  widget.shippingName.text=va?.fullName.toString()??"";
+                            NewInputCard(controller: widget.shippingName,
+                              icondrop:true,title: "Shipping Address Id",ontap: (){
+                                showDailogPopUp(
+                                  context,
+                                  TableConfigurePopup(
+                                    id: int.tryParse(widget.customerId.text),
+                                    type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+
+                                    setState(() {
+
+                                      widget.shipping.text=va?.id.toString()??"";
+                                      widget.shippingName.text=va?.fullName.toString()??"";
+                                      setState(() {
+
+                                      });
 
 
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-                              },
-                              onAddNew: () {
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
 
-                                // showDailogPopUp(
-                                //     context,
-                                //     WarrantyDetailsPopUp(
-                                //       // indexValue: temp,
-                                //       // changeActive: onChangeActive,
-                                //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                //       // changeExtendedWarranty: onChangeExtendedWarranty,
-                                //     ));
-                              },
-                            ),
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
+
+
+
+
+                            // SelectableDropDownpopUp(
+                            //   label: "Shipping Address Id",
+                            //   type:"ShippingAddressPopUpCall",
+                            //   value: widget.shippingName.text,
+                            //   enable: true,
+                            //   onSelection: (ShippingAddressModel? va) {
+                            //     print(
+                            //         "+++++++++++++++++++++++");
+                            //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            //     setState(() {
+                            //       widget.shipping.text=va?.id.toString()??"";
+                            //       widget.shippingName.text=va?.fullName.toString()??"";
+                            //
+                            //
+                            //       // onChange = true;
+                            //       // orderType.text = va!;
+                            //     });
+                            //   },
+                            //   onAddNew: () {
+                            //
+                            //     // showDailogPopUp(
+                            //     //     context,
+                            //     //     WarrantyDetailsPopUp(
+                            //     //       // indexValue: temp,
+                            //     //       // changeActive: onChangeActive,
+                            //     //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                            //     //       // changeExtendedWarranty: onChangeExtendedWarranty,
+                            //     //     ));
+                            //   },
+                            // ),
                             // NewInputCard(
                             //     controller: widget.billingAddressId,
                             //     title: "billing address id"),
@@ -1015,21 +1085,21 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.paymentId,
-                                title: "payment id"),
+                                title: "Payment Id"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.paymentStatus,
-                                title: "payment status"),
+                                title: "Payment Status"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.orderStatus,
-                                title: "order status"),
+                                title: "Order Status"),
                             SizedBox(
                               height: height * .030,
                             ),
@@ -1040,7 +1110,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                               maxLines: 3,
                             ),
                             SizedBox(
-                              height: height * .002,
+                              height: height * .030,
                             ),
                             NewInputCard(
                               controller: widget.remarks,
@@ -1052,64 +1122,62 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                         )),
                     Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              height: height * .045,
-                            ),
+
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.invoiceStatus,
-                                title: "invoice status"),
+                                title: "Invoice Status"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.unitCost,
-                                title: "unit cost"),
+                                title: "Unit Cost"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.discount,
-                                title: "discount"),
+                                title: "Discount"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.exciseTax,
-                                title: "excise tax"),
+                                title: "Excess Tax"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.taxableAmount,
-                                title: "taxable  amount"),
+                                title: "Taxable Amount"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
-                                readOnly: true, controller: widget.vat, title: "vat"),
+                                readOnly: true, controller: widget.vat, title: "VAT"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.sellingPriceTotal,
-                                title: "selling price total"),
+                                title: "Selling Price Total"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.totalPrice,
-                                title: "total price"),
-                            SizedBox(
-                              height: height * .030,
-                            ),
+                                title: "Total Price"),
+
                           ],
                         ))
                   ],
@@ -1361,25 +1429,14 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                         width: 2200,
                         padding: EdgeInsets.all(10),
                         child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+
                             tableWidth: .5,
                             childrens: [
                               TableRow(
                                   children: [
                                     tableHeadtext(
                                       'Variant Id',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
 
@@ -1387,22 +1444,17 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
 
                                     tableHeadtext(
                                       'Barcode',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
                                     tableHeadtext(
-                                      'current Qty',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+                                      'Current Qty',
+
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Return Type',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1412,8 +1464,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     ),
 
                                     tableHeadtext(
-                                      'Return time ',
-                                      padding: EdgeInsets.all(7), height: 46,
+                                      'Return Time ',
+
 
                                       size: 13,
 
@@ -1423,9 +1475,6 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     tableHeadtext(
                                       'Invoiced',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1435,11 +1484,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     ),
 
                                     tableHeadtext(
-                                      'Warrenty',
-
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
+                                      'Warranty',
 
                                       size: 13,
 
@@ -1450,23 +1495,17 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
 
                                     tableHeadtext(
                                       'Sales UOM',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Quantity',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
 
                                     tableHeadtext(
                                       'Unit Cost',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
                                       // color: Palette.containerDarknew,
@@ -1476,9 +1515,6 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     tableHeadtext(
                                       'Excise Tax',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1488,16 +1524,11 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     ),
                                     tableHeadtext(
                                       'Discount Type',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Discount',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1509,9 +1540,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     tableHeadtext(
                                       'Taxable Amount',
 
-                                      padding: EdgeInsets.all(7),
 
-                                      height: 46,
 
                                       size: 13,
 
@@ -1523,9 +1552,6 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     tableHeadtext(
                                       'VAT',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1537,9 +1563,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     tableHeadtext(
                                       'Selling Price',
 
-                                      padding: EdgeInsets.all(7),
 
-                                      height: 46,
 
                                       size: 13,
 
@@ -1549,33 +1573,28 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                     ),
 
                                     tableHeadtext(
-                                      'Warrenty Price',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+                                      'Warranty Price',
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       'Total Price',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       'Is Active',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       '',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
@@ -1586,21 +1605,24 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                               if(table1.isEmpty)...[
                                 TableRow(
                                     decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
+                                        color: Pellet.tableRowColor,
                                         shape: BoxShape.rectangle,
-                                        border: const Border(
+                                        border:  Border(
                                             left: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
+
+                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
                                                 style: BorderStyle.solid),
                                             bottom: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
+
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
                                                 style: BorderStyle.solid),
                                             right: BorderSide(
-                                                color: Colors.grey,
-                                                width: .5,
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+
                                                 style: BorderStyle.solid))),
+
                                     children: [
                                       textPadding(""),
                                       textPadding(""),
@@ -1621,7 +1643,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                                       textPadding(""),
                                       textPadding(""),
                                       textPadding(""),
-                                      Container(height: 42,)
+                                      Container(height: 48,)
 
                                     ]),
 
@@ -1630,22 +1652,25 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                               if (table1 != null) ...[
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+        decoration: BoxDecoration(
+        color: Pellet.tableRowColor,
+        shape: BoxShape.rectangle,
+        border:  Border(
+        left: BorderSide(
+
+        color: Color(0xff3E4F5B).withOpacity(.1),
+        width: .4,
+        style: BorderStyle.solid),
+        bottom: BorderSide(
+
+        color:   Color(0xff3E4F5B).withOpacity(.1),
+        style: BorderStyle.solid),
+        right: BorderSide(
+        color:   Color(0xff3E4F5B).withOpacity(.1),
+        width: .4,
+
+        style: BorderStyle.solid))),
+
                                       children: [
                                         TableCell(
                                           verticalAlignment:

@@ -10,10 +10,14 @@ import 'package:inventory/Screens/sales/general/cubit/generalread/salesgeneralre
 import 'package:inventory/Screens/sales/general/cubit/salesgeneraldelete/salesgeneraldelete_cubit.dart';
 import 'package:inventory/Screens/sales/general/model/customidcreation.dart';
 import 'package:inventory/Screens/sales/general/model/sales_general_post.dart';
+import 'package:inventory/Screens/variant/general/productmodulegeneral.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/variant_read.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/printScreen.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/Scrollabletable.dart';
@@ -482,9 +486,10 @@ class _SalesGeneralState extends State<SalesGeneral> {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.end,
                                   children: [
                                     TextButtonLarge(
+                                      marginCheck: true,
                                       onPress: () {
                                         setState(() {
                                           select = true;
@@ -572,7 +577,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                 ),
                                 Row(
                                   children: [
-                                    TextWidget(text: "order lines"),
+                                    TextWidget(text: "Order Lines"),
                                   ],
                                 ),
 
@@ -605,7 +610,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                   children: [
                                     Button(Icons.delete, Colors.red,
                                         ctx: context,
-                                        text: "Discard", onApply: () {
+                                        text: "DISCARD", onApply: () {
                                       if(updateCheck){
                                         clears();
 
@@ -638,7 +643,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                     ),
                                     Button(Icons.check, Colors.grey,
                                         ctx: context,
-                                        text: select ? "Save" : "update",
+                                        text: select ? "SAVE" : "UPDATE",
                                         height: 29,
                                         Color: Color(0xff3E4F5B),
                                         width: 90,
@@ -797,16 +802,24 @@ class _StableTableState extends State<StableTable> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    return BlocProvider(
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider(
       create: (context) => CustomeridcreationCubit(),
-      child: Builder(
+),
+    BlocProvider(
+      create: (context) => CustomeridcreationCubit(),
+    ),
+  ],
+  child: Builder(
           builder: (context) {
-            return BlocListener<CustomeridcreationCubit, CustomeridcreationState>(
+            return
+              BlocListener<CustomeridcreationCubit, CustomeridcreationState>(
               listener: (context, state) {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -835,15 +848,13 @@ class _StableTableState extends State<StableTable> {
                     Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: height * .042,
-                            ),
+
                             SelectableDropDownpopUp(
-                              label: "Order type",
+                              label: "Order Type",
                               type: "SalesOrder_TypePopUpCall",
                               value: widget.orderType.text,
                               onSelection: (String va) {
-                                print("+++++++++++++++++++++++");
+                                print("$va here is");
                                 //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
                                 setState(() {
                                   widget.orderType.text = va;
@@ -852,7 +863,7 @@ class _StableTableState extends State<StableTable> {
                                   // orderType = va!;
                                 });
                               },
-                              restricted: true,
+                              restricted: false,
                             ),
                             SizedBox(
                               height: height * .030,
@@ -880,14 +891,14 @@ class _StableTableState extends State<StableTable> {
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.orderCode,
-                                title: "order code"),
+                                title: "Order Code"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.orderDate,
-                                title: "order date"),
+                                title: "Order Date"),
                             // SizedBox(
                             //   height: height * .030,
                             // ),
@@ -896,66 +907,100 @@ class _StableTableState extends State<StableTable> {
                             SizedBox(
                               height: height * .030,
                             ),
-                            SelectableDropDownpopUp(
-                              label: "customer id",
 
-                              type:"CustomerId_ListPopUpCall",
-                              value: widget.customerName.text,
-                              enable: true,
-                              onSelection: (CustomerIdCreationModel? va) {
-                                setState(() {
-                                  widget.customerName.text=va?.customerUserCode??"";
-                                  widget.customerId.text=va?.id.toString()??"";
-                                  widget.trnNumber.text=va?.taxId??"";
-
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-                              },
-                              onAddNew: () {
-
+                            NewInputCard(controller: widget.customerName,
+                              icondrop:true,title: "Customer id",ontap: (){
                                 showDailogPopUp(
-                                    context,
-                                    CustomerIdCreationPopUp(
-                                        accesssite: accessSiteController,
-                                        buisnessmode: buisnessmodeController,
-                                        buisnessname: buisnessnameController,
-                                        buisnessuser: buisnessUserController,
-                                        country: country,
-                                        designation: designation,
-                                        email: email,
-                                        fname: fnameController,
-                                        gender: gender,
-                                        lname: lanameController,
-                                        mobile: mobileController,
-                                        password: passwordController,
-                                        taxid: taxidController,
-                                        ontap:(){
-                                          CustomerIdCreation2Model model=CustomerIdCreation2Model(
-                                            email: email?.text??"",
-                                            password: passwordController?.text??"",
-                                            mobile: mobileController?.text??"",
-                                            fname: fnameController?.text,
-                                            lname: lanameController?.text,
-                                            country: country?.text,
-                                            gender: gender?.text,
-                                            accessSite: accessSiteController?.text,
-                                            taxId: taxidController?.text,
-                                            buisnessMode: buisnessUserController?.text,
-                                            designation: designation?.text,
+                                  context,
+                                  TableConfigurePopup(
+                                    type: "customerId_ListPopup", valueSelect: (CustomerIdListModel va){
 
-                                          );
+                                    setState(() {
 
-                                          context
-                                              .read<CustomeridcreationCubit>()
-                                              .postCustomerIdCreation(model);
+                                      widget.customerName.text=va?.customerName??"";
+                                      widget.customerId.text=va?.id.toString()??"";
+                                      print("xxxxxxxxxxxxxxx"+widget.customerId.text.toString());
+                                      widget.trnNumber.text=va?.businessData?.taxId??"";
+                                      setState(() {
+
+                                      });
 
 
-                                        }
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
 
-                                    ));
-                              },
-                            ),
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
+
+
+
+
+                            // SelectableDropDownpopUp(
+                            //   label: "customer id",
+                            //
+                            //   type:"CustomerId_ListPopUpCall",
+                            //   value: widget.customerName.text,
+                            //   enable: true,
+                            //   onSelection: (CustomerIdCreationModel? va) {
+                            //     setState(() {
+                            //       widget.customerName.text=va?.customerUserCode??"";
+                            //       widget.customerId.text=va?.id.toString()??"";
+                            //       widget.trnNumber.text=va?.taxId??"";
+                            //
+                            //       // onChange = true;
+                            //       // orderType.text = va!;
+                            //     });
+                            //   },
+                            //   onAddNew: () {
+                            //
+                            //     showDailogPopUp(
+                            //         context,
+                            //         CustomerIdCreationPopUp(
+                            //             accesssite: accessSiteController,
+                            //             buisnessmode: buisnessmodeController,
+                            //             buisnessname: buisnessnameController,
+                            //             buisnessuser: buisnessUserController,
+                            //             country: country,
+                            //             designation: designation,
+                            //             email: email,
+                            //             fname: fnameController,
+                            //             gender: gender,
+                            //             lname: lanameController,
+                            //             mobile: mobileController,
+                            //             password: passwordController,
+                            //             taxid: taxidController,
+                            //             ontap:(){
+                            //               CustomerIdCreation2Model model=CustomerIdCreation2Model(
+                            //                 email: email?.text??"",
+                            //                 password: passwordController?.text??"",
+                            //                 mobile: mobileController?.text??"",
+                            //                 fname: fnameController?.text,
+                            //                 lname: lanameController?.text,
+                            //                 country: country?.text,
+                            //                 gender: gender?.text,
+                            //                 accessSite: accessSiteController?.text,
+                            //                 taxId: taxidController?.text,
+                            //                 buisnessMode: buisnessUserController?.text,
+                            //                 designation: designation?.text,
+                            //
+                            //               );
+                            //
+                            //               context
+                            //                   .read<CustomeridcreationCubit>()
+                            //                   .postCustomerIdCreation(model);
+                            //
+                            //
+                            //             }
+                            //
+                            //         ));
+                            //   },
+                            // ),
                             // SelectableDropDownpopUp(
                             //   label: "shipping address id",
                             //   type:"ShippingAddressPopUpCall",
@@ -993,42 +1038,73 @@ class _StableTableState extends State<StableTable> {
                                 readOnly: true,
                                 height: 46,
                                 controller: widget.trnNumber,
-                                title: "TRN number"),
+                                title: "TRN Number"),
                             SizedBox(
                               height: height * .030,
                             ),
-                            SelectableDropDownpopUp(
-                              label: "shipping address id",
-                              type:"ShippingAddressPopUpCall",
-                              value: widget.shippingName.text,
-                              enable: true,
-                              onSelection: (ShippingAddressModel? va) {
-                                print(
-                                    "+++++++++++++++++++++++");
-                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                setState(() {
-                                  widget.shipping.text=va?.id.toString()??"";
-                                  widget.shippingName.text=va?.fullName.toString()??"";
-
-
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-                              },
-                              onAddNew: () {
-
+                            NewInputCard(controller: widget.shippingName,
+                              icondrop:true,title: "Shipping Address Id",ontap: (){
                                 showDailogPopUp(
-                                    context,
-                                    WarrantyDetailsPopUp(
-                                      // indexValue: temp,
-                                      // changeActive: onChangeActive,
-                                      // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                      // changeExtendedWarranty: onChangeExtendedWarranty,
-                                    ));
-                              },
-                            ),
+                                  context,
+                                  TableConfigurePopup(
+                                    id: int.tryParse(widget.customerId.text),
+                                    type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+
+                                    setState(() {
+
+                                      widget.shipping.text=va?.id.toString()??"";
+                                      widget.shippingName.text=va?.fullName.toString()??"";
+                                      setState(() {
+
+                                      });
+
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
+
+
+
+                            // SelectableDropDownpopUp(
+                            //   label: "shipping address id",
+                            //   type:"ShippingAddressPopUpCall",
+                            //   value: widget.shippingName.text,
+                            //   enable: true,
+                            //   onSelection: (ShippingAddressModel? va) {
+                            //     print(
+                            //         "+++++++++++++++++++++++");
+                            //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            //     setState(() {
+                            //       widget.shipping.text=va?.id.toString()??"";
+                            //       widget.shippingName.text=va?.fullName.toString()??"";
+                            //
+                            //
+                            //       // onChange = true;
+                            //       // orderType.text = va!;
+                            //     });
+                            //   },
+                            //   onAddNew: () {
+                            //
+                            //     showDailogPopUp(
+                            //         context,
+                            //         WarrantyDetailsPopUp(
+                            //           // indexValue: temp,
+                            //           // changeActive: onChangeActive,
+                            //           // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                            //           // changeExtendedWarranty: onChangeExtendedWarranty,
+                            //         ));
+                            //   },
+                            // ),
                             SizedBox(
-                              height: height * .1222,
+                              height: height * .172,
                             ),
 
                             // NewInputCard(
@@ -1038,39 +1114,65 @@ class _StableTableState extends State<StableTable> {
                     Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: height * .045,
-                            ),
-                            SelectableDropDownpopUp(
-                              label: "billing address id",
-                              type:"ShippingAddressPopUpCall",
-                              value: widget.billingName.text,
-                              enable: true,
-                              onSelection: (ShippingAddressModel? va) {
-                                print(
-                                    "+++++++++++++++++++++++");
-                                //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                setState(() {
-                                  widget.billingAddressId.text=va?.id.toString()??"";
-                                  widget.billingName.text=va?.fullName.toString()??"";
 
-
-                                  // onChange = true;
-                                  // orderType.text = va!;
-                                });
-                              },
-                              onAddNew: () {
-
+                            NewInputCard(controller: widget.billingName,
+                              icondrop:true,title: "Billing Address Id",ontap: (){
                                 showDailogPopUp(
-                                    context,
-                                    WarrantyDetailsPopUp(
-                                      // indexValue: temp,
-                                      // changeActive: onChangeActive,
-                                      // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                      // changeExtendedWarranty: onChangeExtendedWarranty,
-                                    ));
-                              },
-                            ),
+                                  context,
+                                  TableConfigurePopup(
+                                    type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
+
+                                    setState(() {
+
+                                      widget.billingAddressId.text=va?.id.toString()??"";
+                                      widget.billingName.text=va?.fullName.toString()??"";
+                                      setState(() {
+
+                                      });
+
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+
+                                  },
+                                  ),
+
+
+                                );
+
+                              },),
+
+                            // SelectableDropDownpopUp(
+                            //   label: "billing address id",
+                            //   type:"ShippingAddressPopUpCall",
+                            //   value: widget.billingName.text,
+                            //   enable: true,
+                            //   onSelection: (ShippingAddressModel? va) {
+                            //     print(
+                            //         "+++++++++++++++++++++++");
+                            //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            //     setState(() {
+                            //       widget.billingAddressId.text=va?.id.toString()??"";
+                            //       widget.billingName.text=va?.fullName.toString()??"";
+                            //
+                            //
+                            //       // onChange = true;
+                            //       // orderType.text = va!;
+                            //     });
+                            //   },
+                            //   onAddNew: () {
+                            //
+                            //     showDailogPopUp(
+                            //         context,
+                            //         WarrantyDetailsPopUp(
+                            //           // indexValue: temp,
+                            //           // changeActive: onChangeActive,
+                            //           // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                            //           // changeExtendedWarranty: onChangeExtendedWarranty,
+                            //         ));
+                            //   },
+                            // ),
                             // NewInputCard(
                             //     controller: widget.billingAddressId,
                             //     title: "billing address id"),
@@ -1078,46 +1180,50 @@ class _StableTableState extends State<StableTable> {
                               height: height * .030,
                             ),
                             NewInputCard(
-                                controller: widget.salesQuotesId, title: "sales  quotes"),
+                                controller: widget.salesQuotesId, title: "Sales  Quotes"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.paymentId,
-                                title: "payment id"),
+                                title: "Payment Id"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.paymentStatus,
-                                title: "payment status"),
+                                title: "Payment Status"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.orderStatus,
-                                title: "order status"),
+                                title: "Order Status"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                               controller: widget.note,
-                              title: "note",
+                              title: "Note",
                               height: 90,
                               maxLines: 3,
                             ),
                             SizedBox(
-                              height: height * .002,
+                              height: height * .030,
                             ),
                             NewInputCard(
                               controller: widget.remarks,
-                              title: "remarks",
+                              title: "Remarks",
                               height: 90,
                               maxLines: 3,
                             ),
+                            SizedBox(
+                              height: height * .025,
+                            ),
+
                           ],
                         )),
                     Expanded(
@@ -1129,56 +1235,56 @@ class _StableTableState extends State<StableTable> {
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.invoiceStatus,
-                                title: "invoice status"),
+                                title: "Invoice Status"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.unitCost,
-                                title: "unit cost"),
+                                title: "Unit Cost"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.discount,
-                                title: "discount"),
+                                title: "Discount"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.exciseTax,
-                                title: "excise tax"),
+                                title: "Excess Tax"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.taxableAmount,
-                                title: "taxable  amount"),
+                                title: "Taxable  Amount"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
-                                readOnly: true, controller: widget.vat, title: "vat"),
+                                readOnly: true, controller: widget.vat, title: "VAT"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.sellingPriceTotal,
-                                title: "selling price total"),
+                                title: "Selling Price Total"),
                             SizedBox(
                               height: height * .030,
                             ),
                             NewInputCard(
                                 readOnly: true,
                                 controller: widget.totalPrice,
-                                title: "total price"),
+                                title: "Total Price"),
                             SizedBox(
-                              height: height * .030,
+                              height: height * .070,
                             ),
                           ],
                         ))
@@ -1188,7 +1294,7 @@ class _StableTableState extends State<StableTable> {
             );
           }
       ),
-    );
+);
   }
 }
 
@@ -1307,21 +1413,22 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   }
 
   void selliPriceCalculation(double taxableAmount, double vatt) {
-    sellingPrice = (taxableAmount + ((taxableAmount * vatt) / 100));
+    sellingPrice = double.parse((taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
+
     print("sellingPrice" + sellingPrice.toString());
     setState(() {});
   }
 
   double sellingPriceUpdation(double taxableAmount, double vatt) {
     double sellingPrice1 = 0;
-    sellingPrice1 = (taxableAmount + ((taxableAmount * vatt) / 100));
+    sellingPrice1 = double.parse((taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
     print("sellingPrice" + sellingPrice.toString());
     setState(() {});
     return sellingPrice1;
   }
 
   void totalPriceCalculation(double sellingprice, double warrentyprice) {
-    totalPrice = sellingprice + warrentyprice;
+    totalPrice =double.parse((sellingprice + warrentyprice).toStringAsFixed(2));
     setState(() {
       print("totalp" + totalPrice.toString());
     });
@@ -1329,7 +1436,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
   double totalPriceUpdation(double sellingprice, double warrentyprice) {
     double totalPrice1;
-    totalPrice1 = sellingprice + warrentyprice;
+    totalPrice1 = double.parse((sellingprice + warrentyprice).toStringAsFixed(2));
     setState(() {});
     return totalPrice1;
   }
@@ -1534,36 +1641,28 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                   children: [
                                     tableHeadtext(
                                       'Variant Id',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
 
                                     tableHeadtext(
                                       'Variant Name',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                     ),
 
                                     tableHeadtext(
                                       'Barcode',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
                                     tableHeadtext(
-                                      'current Qty',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+                                      'Current Qty',
+
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Return Based On',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1573,9 +1672,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
 
                                     tableHeadtext(
-                                      'Return time is',
-                                      padding: EdgeInsets.all(7), height: 46,
-
+                                      'Return Time Is',
                                       size: 13,
 
 
@@ -1584,9 +1681,6 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     tableHeadtext(
                                       'Invoiced',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1596,11 +1690,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
 
                                     tableHeadtext(
-                                      'Warrenty',
-
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
+                                      'Warranty',
 
                                       size: 13,
 
@@ -1611,23 +1701,17 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
                                     tableHeadtext(
                                       'Sales UOM',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Quantity',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                     ),
 
                                     tableHeadtext(
                                       'Unit Cost',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
                                       // color: Palette.containerDarknew,
@@ -1635,11 +1719,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
 
                                     tableHeadtext(
-                                      'Excise Tax',
-
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
+                                      'Excess Tax',
 
                                       size: 13,
 
@@ -1649,16 +1729,11 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
                                     tableHeadtext(
                                       'Discount Type',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
                                       size: 13,
                                     ),
                                     tableHeadtext(
                                       'Discount',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1670,9 +1745,6 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     tableHeadtext(
                                       'Taxable Amount',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1684,9 +1756,6 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     tableHeadtext(
                                       'VAT',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1698,9 +1767,6 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     tableHeadtext(
                                       'Selling Price',
 
-                                      padding: EdgeInsets.all(7),
-
-                                      height: 46,
 
                                       size: 13,
 
@@ -1710,33 +1776,29 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                     ),
 
                                     tableHeadtext(
-                                      'Warrenty Price',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+                                      'Warranty Price',
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       'Total Price',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       'Is Active',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
                                     ),
                                     tableHeadtext(
                                       '',
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Palette.containerDarknew,
                                       // textColor: Palette.white
@@ -1747,22 +1809,24 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                               if (table1 != null) ...[
                                 for (var i = 0; i < table1!.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+          decoration: BoxDecoration(
+          color: Pellet.tableRowColor,
+              shape: BoxShape.rectangle,
+              border:  Border(
+                  left: BorderSide(
+
+                      color: Color(0xff3E4F5B).withOpacity(.1),
+                      width: .4,
+                      style: BorderStyle.solid),
+                  bottom: BorderSide(
+
+                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                      style: BorderStyle.solid),
+                  right: BorderSide(
+                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                      width: .4,
+
+                      style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                           verticalAlignment:
@@ -2383,20 +2447,22 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                       ]),
                                 TableRow(
                                     decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
+                                        color: Pellet.tableRowColor,
                                         shape: BoxShape.rectangle,
-                                        border: const Border(
+                                        border:  Border(
                                             left: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
+
+                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
                                                 style: BorderStyle.solid),
                                             bottom: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
+
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
                                                 style: BorderStyle.solid),
                                             right: BorderSide(
-                                                color: Colors.grey,
-                                                width: .5,
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+
                                                 style: BorderStyle.solid))),
                                     children: [
                                       PopUpCall(
@@ -2405,6 +2471,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         type: "cost-method-list",
                                         value: variantId,
                                         onSelection: (VariantId? va) {
+                                          print("vaavvavvavavava"+va.toString());
                                           print(va!.id.toString());
                                           print("code" + va!.code.toString());
 
@@ -2783,7 +2850,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                         verticalAlignment:
                                         TableCellVerticalAlignment.middle,
                                         child: CheckedBoxs(
-                                          color: Color(0xff3E4F5B),
+                                          // color: Color(0xff3E4F5B),
                                           valueChanger: isActive1,
                                           onSelection: (bool? value) {
                                             clear=true;
@@ -2793,50 +2860,54 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                           },
                                         ),
                                       ),
-                                      TableTextButton(
-                                          label: "Set",
-                                          onPress: () {
-                                            setState(() {
-                                              if(quantity==0||quantity==""||quantity==null)
-                                                context.showSnackBarError("Please enter the quantity");
-                                              else if(unitcost1==0||unitcost1==""||unitcost1==null)
-                                                context.showSnackBarError("Please enter the unitcost");
-                                              else{
+                                      TableCell(
+                                        verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                        child: TableTextButton(
+                                            label: "Save",
+                                            onPress: () {
+                                              setState(() {
+                                                if(quantity==0||quantity==""||quantity==null)
+                                                  context.showSnackBarError("Please enter the quantity");
+                                                else if(unitcost1==0||unitcost1==""||unitcost1==null)
+                                                  context.showSnackBarError("Please enter the unitcost");
+                                                else{
 
 
-                                                table1.add(SalesOrderLines(
-                                                  variantId: variantId ?? "",
-                                                  stockId: stockId.toString(),
-                                                  returnType: returntype,
-                                                  returnTime: int.tryParse(returntime??""),
-                                                  salesUom: salesUom,
-                                                  warrentyId: "a",
-                                                  discountType: discountPrice,
-                                                  variaNtname: varinatname ?? "",
-                                                  barcode: barcode ?? "",
-                                                  discount: discount1??0,
-                                                  unitCost: unitcost1??0,
-                                                  taxableAmount: taxableAmount??0,
-                                                  quantity: quantity??0,
-                                                  vat: vat1??0,
-                                                  excessTax: etax1??0,
-                                                  sellingPrice: sellingPrice??0,
-                                                  totalPrice: totalPrice??0,
-                                                  qty: stock??0,
-                                                  warrentyPrice: warrentyPrice??0,
-                                                  isInvoiced: invoiced??false,
-                                                  isActive: isActive1??false,
-                                                ));
-                                                currentStock.add(stock??0);
-                                                clearTableAddingVariables();
-                                                widget.updation(table1);
+                                                  table1.add(SalesOrderLines(
+                                                    variantId: variantId ?? "",
+                                                    stockId: stockId.toString(),
+                                                    returnType: returntype,
+                                                    returnTime: int.tryParse(returntime??""),
+                                                    salesUom: salesUom,
+                                                    warrentyId: "a",
+                                                    discountType: discountPrice,
+                                                    variaNtname: varinatname ?? "",
+                                                    barcode: barcode ?? "",
+                                                    discount: discount1??0,
+                                                    unitCost: unitcost1??0,
+                                                    taxableAmount: taxableAmount??0,
+                                                    quantity: quantity??0,
+                                                    vat: vat1??0,
+                                                    excessTax: etax1??0,
+                                                    sellingPrice: sellingPrice??0,
+                                                    totalPrice: totalPrice??0,
+                                                    qty: stock??0,
+                                                    warrentyPrice: warrentyPrice??0,
+                                                    isInvoiced: invoiced??false,
+                                                    isActive: isActive1??false,
+                                                  ));
+                                                  currentStock.add(stock??0);
+                                                  clearTableAddingVariables();
+                                                  widget.updation(table1);
 
-                                              }
+                                                }
 
 
 
-                                            });
-                                          })
+                                              });
+                                            }),
+                                      )
                                     ]),
                               ]
                             ]),
@@ -2880,6 +2951,8 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
+  String countryCode="";
+  String stateCode="";
   TextEditingController addresstype = TextEditingController();
   TextEditingController country = TextEditingController();
   TextEditingController state = TextEditingController();
@@ -2921,7 +2994,13 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
               if (data.data1) {
-                context.showSnackBarSuccess(data.data2);
+
+                showDailogPopUp(
+                    context,
+                    SuccessPopup(
+                      content: data.data2,
+                      // table:table,
+                    ));
                 Timer(Duration(seconds: 5), () {
                   setState(() {
                     // context
@@ -2931,7 +3010,12 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                   });
                 });
               } else {
-                context.showSnackBarError(data.data2);
+                showDailogPopUp(
+                    context,
+                    FailiurePopup(
+                      content: data.data2,
+                      // table:table,
+                    ));
                 print(data.data1);
               }
               ;
@@ -2940,25 +3024,26 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
           },
           child: AlertDialog(
             content: PopUpHeader(
-              label: "Adjust stock",
+              label: "Address Creation",
 
               addNew: false,
               isDirectCreate: true,
               onApply: () {
 
                 ShippingAddressCreationModel model=ShippingAddressCreationModel(
-                  country: country.text??"",
+                  country: countryCode??"",
                   addressTag: addresstag.text??"",
-                  addressType: addresstype.text??"",
+                  addressType:"customer address",
                   buillingName: buildingname.text??"",
                   city: city.text??"",
-                  contact: contact.text??"",
+                  contact: "91"+contact.text.toString()??"",
                   fullName: fullname.text??"",
                   instructions: instructions.text??"",
                   landmark: landmark?.text??'',
-                  state: state?.text??"",
+                  state: state.text??"",
                   streetName: streetname.text??"",
                 );
+                print("aaaaaaaaaaaaaaa"+model.toString());
                 context
                     .read<ShippingaddresscreationCubit>()
                     .postShippinAddress(
@@ -2981,28 +3066,73 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                           children: [
                             Expanded(child: Column(
                               children: [
-                                PopUpInputField(
-                                    controller: addresstype, label: "Address Type"),
-                                gapWidthColumn(),
-                                PopUpInputField(
-                                  controller:country ,
-                                  label: "country",
+
+
+                                SelectableDropDownpopUp(
+                                  row: true,
+                                  controller:country,
+                                  label: "Country",
+                                  type: "ProducedCountryPopUpCall",
+                                  // id: base_uom ?? 0,
+                                  value: country?.text??"",
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (VariantReadModel? va) {
+                                    setState(() {
+                                      country?.text = va?.name.toString() ?? "";
+                                      countryCode = va?.code.toString() ?? "";
+
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
                                 ),
-                                PopUpInputField(
-                                  controller:state ,
-                                  label: "state",
-                                ),
+
+
                                 PopUpInputField(
                                   controller:fullname ,
-                                  label: "full name",
+                                  label: "Full Name",
                                 ),
                                 PopUpInputField(
+                                  boarType:"int",
                                   controller:contact ,
-                                  label: "contact",
+                                  label: "Contact",
                                 ),
                                 PopUpInputField(
                                   controller:city ,
-                                  label: "city",
+                                  label: "City",
+                                ),
+
+                                SelectableDropDownpopUp(
+                                  row: true,
+                                  code: countryCode,
+
+                                  controller:state,
+                                  label: "State",
+                                  type: "StatePop_UpCall",
+                                  // id: base_uom ?? 0,
+                                  value: state?.text??"",
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (StateList? va) {
+                                    setState(() {
+                                      print(va?.code.toString());
+                                      state?.text = va?.name.toString() ?? "";
+                                      stateCode = va?.code.toString() ?? "";
+
+
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
                                 ),
 
                               ],
@@ -3012,11 +3142,11 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                               children: [
                                 PopUpInputField(
                                   controller:streetname ,
-                                  label: "Street name",
+                                  label: "Street Name",
                                 ),
                                 PopUpInputField(
                                   controller:buildingname ,
-                                  label: "building Name",
+                                  label: "Building Name",
                                 ),
                                 PopUpInputField(
                                   controller:landmark ,
@@ -3024,11 +3154,21 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                                 ),
                                 PopUpInputField(
                                   controller:instructions ,
-                                  label: "instruction",
-                                ),   PopUpInputField(
-                                  controller:addresstag ,
-                                  label: "address tag",
+                                  label: "Instruction",
                                 ),
+
+                                NewRadioButtonText(
+                                  lable: "",
+                                  valueAssign:(va){
+
+                                    addresstag.text=va;
+
+                                  },
+
+                                ),
+
+
+
 
                               ],
                             )),
@@ -3428,19 +3568,15 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
   }
 }
 class CustomerIdCreationPopUp extends StatefulWidget {
-  final TextEditingController? email;
-  final TextEditingController? password;
+
   final TextEditingController? mobile;
   final TextEditingController? fname;
-  final TextEditingController? lname;
+  final TextEditingController? taxId;
+
   final TextEditingController? country;
   final TextEditingController? gender;
-  final TextEditingController? accesssite;
-  final TextEditingController? buisnessuser;
-  final TextEditingController? taxid;
-  final TextEditingController? buisnessmode;
-  final TextEditingController? buisnessname;
-  final TextEditingController? designation;
+
+
   final Function ontap;
 
   CustomerIdCreationPopUp({
@@ -3448,17 +3584,11 @@ class CustomerIdCreationPopUp extends StatefulWidget {
     required this.country,
     required this.ontap,
     required this.mobile,
-    required this.email,
-    required this.password,
+    required this.taxId,
+
     required this.fname,
-    required this.lname,
-    required this.gender,
-    required this.accesssite,
-    required this.buisnessuser,
-    required this.taxid,
-    required this.buisnessmode,
-    required this.designation,
-    required this.buisnessname,
+     required this.gender,
+
 
   }) : super(key: key);
 
@@ -3474,6 +3604,19 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
   bool onChange = false;
   bool onChangeWarranty = false;
   bool onChangeExtWarranty = false;
+  TextEditingController? email = TextEditingController();
+  TextEditingController? passwordController = TextEditingController();
+  TextEditingController? mobileController = TextEditingController();
+  TextEditingController? fnameController = TextEditingController();
+  TextEditingController? lanameController = TextEditingController();
+  TextEditingController country = TextEditingController();
+  TextEditingController gender = TextEditingController();
+  TextEditingController accessSiteController = TextEditingController();
+  TextEditingController buisnessUserController = TextEditingController();
+  TextEditingController buisnessnameController = TextEditingController();
+  TextEditingController taxidController = TextEditingController();
+  TextEditingController buisnessmodeController = TextEditingController();
+  TextEditingController designation = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -3504,7 +3647,13 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
               if (data.data1) {
-                context.showSnackBarSuccess(data.data2);
+
+                showDailogPopUp(
+                    context,
+                    SuccessPopup(
+                      content: data.data2,
+                      // table:table,
+                    ));
                 Timer(Duration(seconds: 5), () {
                   setState(() {
                     // context
@@ -3514,7 +3663,13 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
                   });
                 });
               } else {
-                context.showSnackBarError(data.data2);
+
+                showDailogPopUp(
+                    context,
+                    FailiurePopup(
+                      content: data.data2,
+                      // table:table,
+                    ));
                 print(data.data1);
               }
               ;
@@ -3524,7 +3679,9 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
           child: AlertDialog(
 
             content: PopUpHeader(
-              label: "Adjust stock",
+              buttonCheck: true,
+
+              label: "Customer Id Creation",
               onApply: () {
                 widget.ontap();
               },
@@ -3556,58 +3713,57 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
                             Expanded(child: Column(
                               children: [
                                 PopUpInputField(
-                                    controller: widget.email, label: "Email"),
-                                gapWidthColumn(),
-                                PopUpInputField(
-                                  controller:widget.password ,
-                                  label: "Password",
+                                  controller:widget.fname ,
+                                  label: "Full Name",
                                 ),
+
                                 PopUpInputField(
+                                  boarType: "int",
                                   controller:widget.mobile ,
                                   label: "Mobile",
                                 ),
-                                PopUpInputField(
-                                  controller:widget.fname ,
-                                  label: "full name",
-                                ),
-                                PopUpInputField(
-                                  controller:widget.lname ,
-                                  label: "Last name",
-                                ),
-                                PopUpInputField(
-                                  controller:widget.country ,
-                                  label: "country",
-                                ),
+
+
+
+                                // PopUpInputField(
+                                //   controller:widget.country ,
+                                //   label: "country",
+                                // ),
 
                               ],
                             )),
                             SizedBox(width: 15,),
                             Expanded(child:   Column(
                               children: [
-                                PopUpInputField(
-                                  controller:widget.gender ,
-                                  label: "Gender",
+                                SelectableDropDownpopUp(
+                                  row: true,
+                                  controller: widget.country,
+                                  label: "Produced Country",
+                                  type: "ProducedCountryPopUpCall",
+                                  // id: base_uom ?? 0,
+                                  value: widget.country?.text??"",
+                                  onchange: (vale) {
+                                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                                  },
+                                  enable: true,
+                                  onSelection: (VariantReadModel? va) {
+                                    setState(() {
+                                      widget.country?.text =
+                                          va?.name.toString() ?? "";
+
+                                      setState(() {});
+
+                                      // onChange = true;
+                                      // orderType.text = va!;
+                                    });
+                                  },
                                 ),
                                 PopUpInputField(
-                                  controller:widget.accesssite ,
-                                  label: "Access_site",
-                                ),
-                                PopUpInputField(
-                                  controller:widget.buisnessuser ,
-                                  label: "Buisness User",
-                                ),
-                                PopUpInputField(
-                                  controller:widget.buisnessmode ,
-                                  label: "Buisness mode",
-                                ),   PopUpInputField(
-                                  controller:widget.buisnessname ,
-                                  label: "Buisness name",
+
+                                  controller:widget.taxId ,
+                                  label: "Tax ID",
                                 ),
 
-                                PopUpInputField(
-                                  controller:widget.designation ,
-                                  label: "Designation",
-                                ),
 
                               ],
                             )),

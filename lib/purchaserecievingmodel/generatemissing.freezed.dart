@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'generatemissing.dart';
@@ -11,54 +12,11 @@ part of 'generatemissing.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 GenerateMissing _$GenerateMissingFromJson(Map<String, dynamic> json) {
   return _GenerateMissing.fromJson(json);
 }
-
-/// @nodoc
-class _$GenerateMissingTearOff {
-  const _$GenerateMissingTearOff();
-
-  _GenerateMissing call(
-      {int? id,
-      String? remarks,
-      String? note,
-      @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-      @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-      @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "vendor_id") String? vendorId,
-      @JsonKey(name: "vendor_address") String? vendorAddress,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "receiving_id") int? receivinglineId,
-      @JsonKey(name: "order_lines") List<OrderLiness>? orderLinses}) {
-    return _GenerateMissing(
-      id: id,
-      remarks: remarks,
-      note: note,
-      promisedRecieptDate: promisedRecieptDate,
-      plannedRecieptDate: plannedRecieptDate,
-      vendorTrnNumber: vendorTrnNumber,
-      vendorMailId: vendorMailId,
-      createdBy: createdBy,
-      vendorId: vendorId,
-      vendorAddress: vendorAddress,
-      inventoryId: inventoryId,
-      receivinglineId: receivinglineId,
-      orderLinses: orderLinses,
-    );
-  }
-
-  GenerateMissing fromJson(Map<String, Object> json) {
-    return GenerateMissing.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $GenerateMissing = _$GenerateMissingTearOff();
 
 /// @nodoc
 mixin _$GenerateMissing {
@@ -96,7 +54,8 @@ mixin _$GenerateMissing {
 abstract class $GenerateMissingCopyWith<$Res> {
   factory $GenerateMissingCopyWith(
           GenerateMissing value, $Res Function(GenerateMissing) then) =
-      _$GenerateMissingCopyWithImpl<$Res>;
+      _$GenerateMissingCopyWithImpl<$Res, GenerateMissing>;
+  @useResult
   $Res call(
       {int? id,
       String? remarks,
@@ -114,14 +73,16 @@ abstract class $GenerateMissingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GenerateMissingCopyWithImpl<$Res>
+class _$GenerateMissingCopyWithImpl<$Res, $Val extends GenerateMissing>
     implements $GenerateMissingCopyWith<$Res> {
   _$GenerateMissingCopyWithImpl(this._value, this._then);
 
-  final GenerateMissing _value;
   // ignore: unused_field
-  final $Res Function(GenerateMissing) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -139,69 +100,70 @@ class _$GenerateMissingCopyWithImpl<$Res>
     Object? orderLinses = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      promisedRecieptDate: promisedRecieptDate == freezed
+      promisedRecieptDate: freezed == promisedRecieptDate
           ? _value.promisedRecieptDate
           : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      plannedRecieptDate: plannedRecieptDate == freezed
+      plannedRecieptDate: freezed == plannedRecieptDate
           ? _value.plannedRecieptDate
           : plannedRecieptDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorTrnNumber: vendorTrnNumber == freezed
+      vendorTrnNumber: freezed == vendorTrnNumber
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorMailId: vendorMailId == freezed
+      vendorMailId: freezed == vendorMailId
           ? _value.vendorMailId
           : vendorMailId // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorId: vendorId == freezed
+      vendorId: freezed == vendorId
           ? _value.vendorId
           : vendorId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorAddress: vendorAddress == freezed
+      vendorAddress: freezed == vendorAddress
           ? _value.vendorAddress
           : vendorAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      receivinglineId: receivinglineId == freezed
+      receivinglineId: freezed == receivinglineId
           ? _value.receivinglineId
           : receivinglineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      orderLinses: orderLinses == freezed
+      orderLinses: freezed == orderLinses
           ? _value.orderLinses
           : orderLinses // ignore: cast_nullable_to_non_nullable
               as List<OrderLiness>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$GenerateMissingCopyWith<$Res>
+abstract class _$$_GenerateMissingCopyWith<$Res>
     implements $GenerateMissingCopyWith<$Res> {
-  factory _$GenerateMissingCopyWith(
-          _GenerateMissing value, $Res Function(_GenerateMissing) then) =
-      __$GenerateMissingCopyWithImpl<$Res>;
+  factory _$$_GenerateMissingCopyWith(
+          _$_GenerateMissing value, $Res Function(_$_GenerateMissing) then) =
+      __$$_GenerateMissingCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? remarks,
@@ -219,16 +181,14 @@ abstract class _$GenerateMissingCopyWith<$Res>
 }
 
 /// @nodoc
-class __$GenerateMissingCopyWithImpl<$Res>
-    extends _$GenerateMissingCopyWithImpl<$Res>
-    implements _$GenerateMissingCopyWith<$Res> {
-  __$GenerateMissingCopyWithImpl(
-      _GenerateMissing _value, $Res Function(_GenerateMissing) _then)
-      : super(_value, (v) => _then(v as _GenerateMissing));
+class __$$_GenerateMissingCopyWithImpl<$Res>
+    extends _$GenerateMissingCopyWithImpl<$Res, _$_GenerateMissing>
+    implements _$$_GenerateMissingCopyWith<$Res> {
+  __$$_GenerateMissingCopyWithImpl(
+      _$_GenerateMissing _value, $Res Function(_$_GenerateMissing) _then)
+      : super(_value, _then);
 
-  @override
-  _GenerateMissing get _value => super._value as _GenerateMissing;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -245,57 +205,57 @@ class __$GenerateMissingCopyWithImpl<$Res>
     Object? receivinglineId = freezed,
     Object? orderLinses = freezed,
   }) {
-    return _then(_GenerateMissing(
-      id: id == freezed
+    return _then(_$_GenerateMissing(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      promisedRecieptDate: promisedRecieptDate == freezed
+      promisedRecieptDate: freezed == promisedRecieptDate
           ? _value.promisedRecieptDate
           : promisedRecieptDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      plannedRecieptDate: plannedRecieptDate == freezed
+      plannedRecieptDate: freezed == plannedRecieptDate
           ? _value.plannedRecieptDate
           : plannedRecieptDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorTrnNumber: vendorTrnNumber == freezed
+      vendorTrnNumber: freezed == vendorTrnNumber
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorMailId: vendorMailId == freezed
+      vendorMailId: freezed == vendorMailId
           ? _value.vendorMailId
           : vendorMailId // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorId: vendorId == freezed
+      vendorId: freezed == vendorId
           ? _value.vendorId
           : vendorId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorAddress: vendorAddress == freezed
+      vendorAddress: freezed == vendorAddress
           ? _value.vendorAddress
           : vendorAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      receivinglineId: receivinglineId == freezed
+      receivinglineId: freezed == receivinglineId
           ? _value.receivinglineId
           : receivinglineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      orderLinses: orderLinses == freezed
-          ? _value.orderLinses
+      orderLinses: freezed == orderLinses
+          ? _value._orderLinses
           : orderLinses // ignore: cast_nullable_to_non_nullable
               as List<OrderLiness>?,
     ));
@@ -318,7 +278,8 @@ class _$_GenerateMissing implements _GenerateMissing {
       @JsonKey(name: "vendor_address") this.vendorAddress,
       @JsonKey(name: "inventory_id") this.inventoryId,
       @JsonKey(name: "receiving_id") this.receivinglineId,
-      @JsonKey(name: "order_lines") this.orderLinses});
+      @JsonKey(name: "order_lines") final List<OrderLiness>? orderLinses})
+      : _orderLinses = orderLinses;
 
   factory _$_GenerateMissing.fromJson(Map<String, dynamic> json) =>
       _$$_GenerateMissingFromJson(json);
@@ -356,9 +317,15 @@ class _$_GenerateMissing implements _GenerateMissing {
   @override
   @JsonKey(name: "receiving_id")
   final int? receivinglineId;
+  final List<OrderLiness>? _orderLinses;
   @override
   @JsonKey(name: "order_lines")
-  final List<OrderLiness>? orderLinses;
+  List<OrderLiness>? get orderLinses {
+    final value = _orderLinses;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -368,160 +335,139 @@ class _$_GenerateMissing implements _GenerateMissing {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _GenerateMissing &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.remarks, remarks) ||
-                const DeepCollectionEquality()
-                    .equals(other.remarks, remarks)) &&
-            (identical(other.note, note) ||
-                const DeepCollectionEquality().equals(other.note, note)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_GenerateMissing &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.remarks, remarks) || other.remarks == remarks) &&
+            (identical(other.note, note) || other.note == note) &&
             (identical(other.promisedRecieptDate, promisedRecieptDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.promisedRecieptDate, promisedRecieptDate)) &&
+                other.promisedRecieptDate == promisedRecieptDate) &&
             (identical(other.plannedRecieptDate, plannedRecieptDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.plannedRecieptDate, plannedRecieptDate)) &&
+                other.plannedRecieptDate == plannedRecieptDate) &&
             (identical(other.vendorTrnNumber, vendorTrnNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorTrnNumber, vendorTrnNumber)) &&
+                other.vendorTrnNumber == vendorTrnNumber) &&
             (identical(other.vendorMailId, vendorMailId) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorMailId, vendorMailId)) &&
+                other.vendorMailId == vendorMailId) &&
             (identical(other.createdBy, createdBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdBy, createdBy)) &&
+                other.createdBy == createdBy) &&
             (identical(other.vendorId, vendorId) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorId, vendorId)) &&
+                other.vendorId == vendorId) &&
             (identical(other.vendorAddress, vendorAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorAddress, vendorAddress)) &&
+                other.vendorAddress == vendorAddress) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.receivinglineId, receivinglineId) ||
-                const DeepCollectionEquality()
-                    .equals(other.receivinglineId, receivinglineId)) &&
-            (identical(other.orderLinses, orderLinses) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderLinses, orderLinses)));
+                other.receivinglineId == receivinglineId) &&
+            const DeepCollectionEquality()
+                .equals(other._orderLinses, _orderLinses));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(remarks) ^
-      const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(promisedRecieptDate) ^
-      const DeepCollectionEquality().hash(plannedRecieptDate) ^
-      const DeepCollectionEquality().hash(vendorTrnNumber) ^
-      const DeepCollectionEquality().hash(vendorMailId) ^
-      const DeepCollectionEquality().hash(createdBy) ^
-      const DeepCollectionEquality().hash(vendorId) ^
-      const DeepCollectionEquality().hash(vendorAddress) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(receivinglineId) ^
-      const DeepCollectionEquality().hash(orderLinses);
 
   @JsonKey(ignore: true)
   @override
-  _$GenerateMissingCopyWith<_GenerateMissing> get copyWith =>
-      __$GenerateMissingCopyWithImpl<_GenerateMissing>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      remarks,
+      note,
+      promisedRecieptDate,
+      plannedRecieptDate,
+      vendorTrnNumber,
+      vendorMailId,
+      createdBy,
+      vendorId,
+      vendorAddress,
+      inventoryId,
+      receivinglineId,
+      const DeepCollectionEquality().hash(_orderLinses));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_GenerateMissingCopyWith<_$_GenerateMissing> get copyWith =>
+      __$$_GenerateMissingCopyWithImpl<_$_GenerateMissing>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_GenerateMissingToJson(this);
+    return _$$_GenerateMissingToJson(
+      this,
+    );
   }
 }
 
 abstract class _GenerateMissing implements GenerateMissing {
   const factory _GenerateMissing(
-          {int? id,
-          String? remarks,
-          String? note,
-          @JsonKey(name: "promised_receipt_date") String? promisedRecieptDate,
-          @JsonKey(name: "planned_receipt_date") String? plannedRecieptDate,
-          @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-          @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-          @JsonKey(name: "created_by") String? createdBy,
-          @JsonKey(name: "vendor_id") String? vendorId,
-          @JsonKey(name: "vendor_address") String? vendorAddress,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "receiving_id") int? receivinglineId,
-          @JsonKey(name: "order_lines") List<OrderLiness>? orderLinses}) =
-      _$_GenerateMissing;
+      {final int? id,
+      final String? remarks,
+      final String? note,
+      @JsonKey(name: "promised_receipt_date")
+          final String? promisedRecieptDate,
+      @JsonKey(name: "planned_receipt_date")
+          final String? plannedRecieptDate,
+      @JsonKey(name: "vendor_trn_number")
+          final String? vendorTrnNumber,
+      @JsonKey(name: "vendor_mail_id")
+          final String? vendorMailId,
+      @JsonKey(name: "created_by")
+          final String? createdBy,
+      @JsonKey(name: "vendor_id")
+          final String? vendorId,
+      @JsonKey(name: "vendor_address")
+          final String? vendorAddress,
+      @JsonKey(name: "inventory_id")
+          final String? inventoryId,
+      @JsonKey(name: "receiving_id")
+          final int? receivinglineId,
+      @JsonKey(name: "order_lines")
+          final List<OrderLiness>? orderLinses}) = _$_GenerateMissing;
 
   factory _GenerateMissing.fromJson(Map<String, dynamic> json) =
       _$_GenerateMissing.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get remarks => throw _privateConstructorUsedError;
+  String? get remarks;
   @override
-  String? get note => throw _privateConstructorUsedError;
+  String? get note;
   @override
   @JsonKey(name: "promised_receipt_date")
-  String? get promisedRecieptDate => throw _privateConstructorUsedError;
+  String? get promisedRecieptDate;
   @override
   @JsonKey(name: "planned_receipt_date")
-  String? get plannedRecieptDate => throw _privateConstructorUsedError;
+  String? get plannedRecieptDate;
   @override
   @JsonKey(name: "vendor_trn_number")
-  String? get vendorTrnNumber => throw _privateConstructorUsedError;
+  String? get vendorTrnNumber;
   @override
   @JsonKey(name: "vendor_mail_id")
-  String? get vendorMailId => throw _privateConstructorUsedError;
+  String? get vendorMailId;
   @override
   @JsonKey(name: "created_by")
-  String? get createdBy => throw _privateConstructorUsedError;
+  String? get createdBy;
   @override
   @JsonKey(name: "vendor_id")
-  String? get vendorId => throw _privateConstructorUsedError;
+  String? get vendorId;
   @override
   @JsonKey(name: "vendor_address")
-  String? get vendorAddress => throw _privateConstructorUsedError;
+  String? get vendorAddress;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "receiving_id")
-  int? get receivinglineId => throw _privateConstructorUsedError;
+  int? get receivinglineId;
   @override
   @JsonKey(name: "order_lines")
-  List<OrderLiness>? get orderLinses => throw _privateConstructorUsedError;
+  List<OrderLiness>? get orderLinses;
   @override
   @JsonKey(ignore: true)
-  _$GenerateMissingCopyWith<_GenerateMissing> get copyWith =>
+  _$$_GenerateMissingCopyWith<_$_GenerateMissing> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 OrderLiness _$OrderLinessFromJson(Map<String, dynamic> json) {
   return _OrderLines.fromJson(json);
 }
-
-/// @nodoc
-class _$OrderLinessTearOff {
-  const _$OrderLinessTearOff();
-
-  _OrderLines call(
-      {@JsonKey(name: "order_line_id") int? orderLineId,
-      @JsonKey(name: "receiving_line_id") int? receivinglineId}) {
-    return _OrderLines(
-      orderLineId: orderLineId,
-      receivinglineId: receivinglineId,
-    );
-  }
-
-  OrderLiness fromJson(Map<String, Object> json) {
-    return OrderLiness.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $OrderLiness = _$OrderLinessTearOff();
 
 /// @nodoc
 mixin _$OrderLiness {
@@ -540,71 +486,75 @@ mixin _$OrderLiness {
 abstract class $OrderLinessCopyWith<$Res> {
   factory $OrderLinessCopyWith(
           OrderLiness value, $Res Function(OrderLiness) then) =
-      _$OrderLinessCopyWithImpl<$Res>;
+      _$OrderLinessCopyWithImpl<$Res, OrderLiness>;
+  @useResult
   $Res call(
       {@JsonKey(name: "order_line_id") int? orderLineId,
       @JsonKey(name: "receiving_line_id") int? receivinglineId});
 }
 
 /// @nodoc
-class _$OrderLinessCopyWithImpl<$Res> implements $OrderLinessCopyWith<$Res> {
+class _$OrderLinessCopyWithImpl<$Res, $Val extends OrderLiness>
+    implements $OrderLinessCopyWith<$Res> {
   _$OrderLinessCopyWithImpl(this._value, this._then);
 
-  final OrderLiness _value;
   // ignore: unused_field
-  final $Res Function(OrderLiness) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? orderLineId = freezed,
     Object? receivinglineId = freezed,
   }) {
     return _then(_value.copyWith(
-      orderLineId: orderLineId == freezed
+      orderLineId: freezed == orderLineId
           ? _value.orderLineId
           : orderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      receivinglineId: receivinglineId == freezed
+      receivinglineId: freezed == receivinglineId
           ? _value.receivinglineId
           : receivinglineId // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$OrderLinesCopyWith<$Res>
+abstract class _$$_OrderLinesCopyWith<$Res>
     implements $OrderLinessCopyWith<$Res> {
-  factory _$OrderLinesCopyWith(
-          _OrderLines value, $Res Function(_OrderLines) then) =
-      __$OrderLinesCopyWithImpl<$Res>;
+  factory _$$_OrderLinesCopyWith(
+          _$_OrderLines value, $Res Function(_$_OrderLines) then) =
+      __$$_OrderLinesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: "order_line_id") int? orderLineId,
       @JsonKey(name: "receiving_line_id") int? receivinglineId});
 }
 
 /// @nodoc
-class __$OrderLinesCopyWithImpl<$Res> extends _$OrderLinessCopyWithImpl<$Res>
-    implements _$OrderLinesCopyWith<$Res> {
-  __$OrderLinesCopyWithImpl(
-      _OrderLines _value, $Res Function(_OrderLines) _then)
-      : super(_value, (v) => _then(v as _OrderLines));
+class __$$_OrderLinesCopyWithImpl<$Res>
+    extends _$OrderLinessCopyWithImpl<$Res, _$_OrderLines>
+    implements _$$_OrderLinesCopyWith<$Res> {
+  __$$_OrderLinesCopyWithImpl(
+      _$_OrderLines _value, $Res Function(_$_OrderLines) _then)
+      : super(_value, _then);
 
-  @override
-  _OrderLines get _value => super._value as _OrderLines;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? orderLineId = freezed,
     Object? receivinglineId = freezed,
   }) {
-    return _then(_OrderLines(
-      orderLineId: orderLineId == freezed
+    return _then(_$_OrderLines(
+      orderLineId: freezed == orderLineId
           ? _value.orderLineId
           : orderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      receivinglineId: receivinglineId == freezed
+      receivinglineId: freezed == receivinglineId
           ? _value.receivinglineId
           : receivinglineId // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -637,36 +587,36 @@ class _$_OrderLines implements _OrderLines {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _OrderLines &&
+        (other.runtimeType == runtimeType &&
+            other is _$_OrderLines &&
             (identical(other.orderLineId, orderLineId) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderLineId, orderLineId)) &&
+                other.orderLineId == orderLineId) &&
             (identical(other.receivinglineId, receivinglineId) ||
-                const DeepCollectionEquality()
-                    .equals(other.receivinglineId, receivinglineId)));
+                other.receivinglineId == receivinglineId));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(orderLineId) ^
-      const DeepCollectionEquality().hash(receivinglineId);
 
   @JsonKey(ignore: true)
   @override
-  _$OrderLinesCopyWith<_OrderLines> get copyWith =>
-      __$OrderLinesCopyWithImpl<_OrderLines>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, orderLineId, receivinglineId);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_OrderLinesCopyWith<_$_OrderLines> get copyWith =>
+      __$$_OrderLinesCopyWithImpl<_$_OrderLines>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OrderLinesToJson(this);
+    return _$$_OrderLinesToJson(
+      this,
+    );
   }
 }
 
 abstract class _OrderLines implements OrderLiness {
   const factory _OrderLines(
-          {@JsonKey(name: "order_line_id") int? orderLineId,
-          @JsonKey(name: "receiving_line_id") int? receivinglineId}) =
+          {@JsonKey(name: "order_line_id") final int? orderLineId,
+          @JsonKey(name: "receiving_line_id") final int? receivinglineId}) =
       _$_OrderLines;
 
   factory _OrderLines.fromJson(Map<String, dynamic> json) =
@@ -674,52 +624,19 @@ abstract class _OrderLines implements OrderLiness {
 
   @override
   @JsonKey(name: "order_line_id")
-  int? get orderLineId => throw _privateConstructorUsedError;
+  int? get orderLineId;
   @override
   @JsonKey(name: "receiving_line_id")
-  int? get receivinglineId => throw _privateConstructorUsedError;
+  int? get receivinglineId;
   @override
   @JsonKey(ignore: true)
-  _$OrderLinesCopyWith<_OrderLines> get copyWith =>
+  _$$_OrderLinesCopyWith<_$_OrderLines> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 OrderedPersonModel _$OrderedPersonModelFromJson(Map<String, dynamic> json) {
   return _OrderedPersonModel.fromJson(json);
 }
-
-/// @nodoc
-class _$OrderedPersonModelTearOff {
-  const _$OrderedPersonModelTearOff();
-
-  _OrderedPersonModel call(
-      {int? id,
-      String? fname,
-      String? lname,
-      @JsonKey(name: "user_login_id") int? userLoginId,
-      @JsonKey(name: "employee_usercode") String? employeeUserCode,
-      @JsonKey(name: "organization_code") String? organisationCode,
-      @JsonKey(name: "designation_id") int? designationId,
-      @JsonKey(name: "is_active") bool? isActive}) {
-    return _OrderedPersonModel(
-      id: id,
-      fname: fname,
-      lname: lname,
-      userLoginId: userLoginId,
-      employeeUserCode: employeeUserCode,
-      organisationCode: organisationCode,
-      designationId: designationId,
-      isActive: isActive,
-    );
-  }
-
-  OrderedPersonModel fromJson(Map<String, Object> json) {
-    return OrderedPersonModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $OrderedPersonModel = _$OrderedPersonModelTearOff();
 
 /// @nodoc
 mixin _$OrderedPersonModel {
@@ -747,7 +664,8 @@ mixin _$OrderedPersonModel {
 abstract class $OrderedPersonModelCopyWith<$Res> {
   factory $OrderedPersonModelCopyWith(
           OrderedPersonModel value, $Res Function(OrderedPersonModel) then) =
-      _$OrderedPersonModelCopyWithImpl<$Res>;
+      _$OrderedPersonModelCopyWithImpl<$Res, OrderedPersonModel>;
+  @useResult
   $Res call(
       {int? id,
       String? fname,
@@ -760,14 +678,16 @@ abstract class $OrderedPersonModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$OrderedPersonModelCopyWithImpl<$Res>
+class _$OrderedPersonModelCopyWithImpl<$Res, $Val extends OrderedPersonModel>
     implements $OrderedPersonModelCopyWith<$Res> {
   _$OrderedPersonModelCopyWithImpl(this._value, this._then);
 
-  final OrderedPersonModel _value;
   // ignore: unused_field
-  final $Res Function(OrderedPersonModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -780,49 +700,50 @@ class _$OrderedPersonModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      fname: fname == freezed
+      fname: freezed == fname
           ? _value.fname
           : fname // ignore: cast_nullable_to_non_nullable
               as String?,
-      lname: lname == freezed
+      lname: freezed == lname
           ? _value.lname
           : lname // ignore: cast_nullable_to_non_nullable
               as String?,
-      userLoginId: userLoginId == freezed
+      userLoginId: freezed == userLoginId
           ? _value.userLoginId
           : userLoginId // ignore: cast_nullable_to_non_nullable
               as int?,
-      employeeUserCode: employeeUserCode == freezed
+      employeeUserCode: freezed == employeeUserCode
           ? _value.employeeUserCode
           : employeeUserCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      organisationCode: organisationCode == freezed
+      organisationCode: freezed == organisationCode
           ? _value.organisationCode
           : organisationCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      designationId: designationId == freezed
+      designationId: freezed == designationId
           ? _value.designationId
           : designationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$OrderedPersonModelCopyWith<$Res>
+abstract class _$$_OrderedPersonModelCopyWith<$Res>
     implements $OrderedPersonModelCopyWith<$Res> {
-  factory _$OrderedPersonModelCopyWith(
-          _OrderedPersonModel value, $Res Function(_OrderedPersonModel) then) =
-      __$OrderedPersonModelCopyWithImpl<$Res>;
+  factory _$$_OrderedPersonModelCopyWith(_$_OrderedPersonModel value,
+          $Res Function(_$_OrderedPersonModel) then) =
+      __$$_OrderedPersonModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? fname,
@@ -835,16 +756,14 @@ abstract class _$OrderedPersonModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$OrderedPersonModelCopyWithImpl<$Res>
-    extends _$OrderedPersonModelCopyWithImpl<$Res>
-    implements _$OrderedPersonModelCopyWith<$Res> {
-  __$OrderedPersonModelCopyWithImpl(
-      _OrderedPersonModel _value, $Res Function(_OrderedPersonModel) _then)
-      : super(_value, (v) => _then(v as _OrderedPersonModel));
+class __$$_OrderedPersonModelCopyWithImpl<$Res>
+    extends _$OrderedPersonModelCopyWithImpl<$Res, _$_OrderedPersonModel>
+    implements _$$_OrderedPersonModelCopyWith<$Res> {
+  __$$_OrderedPersonModelCopyWithImpl(
+      _$_OrderedPersonModel _value, $Res Function(_$_OrderedPersonModel) _then)
+      : super(_value, _then);
 
-  @override
-  _OrderedPersonModel get _value => super._value as _OrderedPersonModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -856,36 +775,36 @@ class __$OrderedPersonModelCopyWithImpl<$Res>
     Object? designationId = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_OrderedPersonModel(
-      id: id == freezed
+    return _then(_$_OrderedPersonModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      fname: fname == freezed
+      fname: freezed == fname
           ? _value.fname
           : fname // ignore: cast_nullable_to_non_nullable
               as String?,
-      lname: lname == freezed
+      lname: freezed == lname
           ? _value.lname
           : lname // ignore: cast_nullable_to_non_nullable
               as String?,
-      userLoginId: userLoginId == freezed
+      userLoginId: freezed == userLoginId
           ? _value.userLoginId
           : userLoginId // ignore: cast_nullable_to_non_nullable
               as int?,
-      employeeUserCode: employeeUserCode == freezed
+      employeeUserCode: freezed == employeeUserCode
           ? _value.employeeUserCode
           : employeeUserCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      organisationCode: organisationCode == freezed
+      organisationCode: freezed == organisationCode
           ? _value.organisationCode
           : organisationCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      designationId: designationId == freezed
+      designationId: freezed == designationId
           ? _value.designationId
           : designationId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -939,90 +858,81 @@ class _$_OrderedPersonModel implements _OrderedPersonModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _OrderedPersonModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.fname, fname) ||
-                const DeepCollectionEquality().equals(other.fname, fname)) &&
-            (identical(other.lname, lname) ||
-                const DeepCollectionEquality().equals(other.lname, lname)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_OrderedPersonModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.fname, fname) || other.fname == fname) &&
+            (identical(other.lname, lname) || other.lname == lname) &&
             (identical(other.userLoginId, userLoginId) ||
-                const DeepCollectionEquality()
-                    .equals(other.userLoginId, userLoginId)) &&
+                other.userLoginId == userLoginId) &&
             (identical(other.employeeUserCode, employeeUserCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.employeeUserCode, employeeUserCode)) &&
+                other.employeeUserCode == employeeUserCode) &&
             (identical(other.organisationCode, organisationCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.organisationCode, organisationCode)) &&
+                other.organisationCode == organisationCode) &&
             (identical(other.designationId, designationId) ||
-                const DeepCollectionEquality()
-                    .equals(other.designationId, designationId)) &&
+                other.designationId == designationId) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(fname) ^
-      const DeepCollectionEquality().hash(lname) ^
-      const DeepCollectionEquality().hash(userLoginId) ^
-      const DeepCollectionEquality().hash(employeeUserCode) ^
-      const DeepCollectionEquality().hash(organisationCode) ^
-      const DeepCollectionEquality().hash(designationId) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$OrderedPersonModelCopyWith<_OrderedPersonModel> get copyWith =>
-      __$OrderedPersonModelCopyWithImpl<_OrderedPersonModel>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, fname, lname, userLoginId,
+      employeeUserCode, organisationCode, designationId, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_OrderedPersonModelCopyWith<_$_OrderedPersonModel> get copyWith =>
+      __$$_OrderedPersonModelCopyWithImpl<_$_OrderedPersonModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_OrderedPersonModelToJson(this);
+    return _$$_OrderedPersonModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _OrderedPersonModel implements OrderedPersonModel {
   const factory _OrderedPersonModel(
-      {int? id,
-      String? fname,
-      String? lname,
-      @JsonKey(name: "user_login_id") int? userLoginId,
-      @JsonKey(name: "employee_usercode") String? employeeUserCode,
-      @JsonKey(name: "organization_code") String? organisationCode,
-      @JsonKey(name: "designation_id") int? designationId,
-      @JsonKey(name: "is_active") bool? isActive}) = _$_OrderedPersonModel;
+          {final int? id,
+          final String? fname,
+          final String? lname,
+          @JsonKey(name: "user_login_id") final int? userLoginId,
+          @JsonKey(name: "employee_usercode") final String? employeeUserCode,
+          @JsonKey(name: "organization_code") final String? organisationCode,
+          @JsonKey(name: "designation_id") final int? designationId,
+          @JsonKey(name: "is_active") final bool? isActive}) =
+      _$_OrderedPersonModel;
 
   factory _OrderedPersonModel.fromJson(Map<String, dynamic> json) =
       _$_OrderedPersonModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get fname => throw _privateConstructorUsedError;
+  String? get fname;
   @override
-  String? get lname => throw _privateConstructorUsedError;
+  String? get lname;
   @override
   @JsonKey(name: "user_login_id")
-  int? get userLoginId => throw _privateConstructorUsedError;
+  int? get userLoginId;
   @override
   @JsonKey(name: "employee_usercode")
-  String? get employeeUserCode => throw _privateConstructorUsedError;
+  String? get employeeUserCode;
   @override
   @JsonKey(name: "organization_code")
-  String? get organisationCode => throw _privateConstructorUsedError;
+  String? get organisationCode;
   @override
   @JsonKey(name: "designation_id")
-  int? get designationId => throw _privateConstructorUsedError;
+  int? get designationId;
   @override
   @JsonKey(name: "is_active")
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$OrderedPersonModelCopyWith<_OrderedPersonModel> get copyWith =>
+  _$$_OrderedPersonModelCopyWith<_$_OrderedPersonModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

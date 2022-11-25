@@ -519,7 +519,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                           children: [
                             Button(Icons.delete, Colors.red,
                                 ctx: context,
-                                text: "Discard",
+                                text: "DISCARD",
                                 onApply: () {
                                   // if(updateCheck){
                                   //   // clears();
@@ -538,7 +538,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             ),
                             Button(Icons.check, Colors.grey,
                                 ctx: context,
-                                text:select?"Save":"Update",
+                                text:select?"SAVE":"UPDATE",
                                 height: 29,
                                 Color: Color(0xff3E4F5B),
                                 width: 90,

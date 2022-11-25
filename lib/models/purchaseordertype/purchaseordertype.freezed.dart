@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'purchaseordertype.dart';
@@ -11,38 +12,11 @@ part of 'purchaseordertype.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PurchaseOrdertype _$PurchaseOrdertypeFromJson(Map<String, dynamic> json) {
   return _PurchaseOrdertype.fromJson(json);
 }
-
-/// @nodoc
-class _$PurchaseOrdertypeTearOff {
-  const _$PurchaseOrdertypeTearOff();
-
-  _PurchaseOrdertype call(
-      {@JsonKey(name: "order_types") List<String>? orderTypes,
-      @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
-      @JsonKey(name: "discount_type") List<String>? discountType,
-      @JsonKey(name: "order_modes") List<String>? orderMode,
-      @JsonKey(name: "virtual_stock_type") List<String>? virtualStockType}) {
-    return _PurchaseOrdertype(
-      orderTypes: orderTypes,
-      pricingPgT: pricingPgT,
-      discountType: discountType,
-      orderMode: orderMode,
-      virtualStockType: virtualStockType,
-    );
-  }
-
-  PurchaseOrdertype fromJson(Map<String, Object> json) {
-    return PurchaseOrdertype.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PurchaseOrdertype = _$PurchaseOrdertypeTearOff();
 
 /// @nodoc
 mixin _$PurchaseOrdertype {
@@ -67,7 +41,8 @@ mixin _$PurchaseOrdertype {
 abstract class $PurchaseOrdertypeCopyWith<$Res> {
   factory $PurchaseOrdertypeCopyWith(
           PurchaseOrdertype value, $Res Function(PurchaseOrdertype) then) =
-      _$PurchaseOrdertypeCopyWithImpl<$Res>;
+      _$PurchaseOrdertypeCopyWithImpl<$Res, PurchaseOrdertype>;
+  @useResult
   $Res call(
       {@JsonKey(name: "order_types") List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
@@ -77,14 +52,16 @@ abstract class $PurchaseOrdertypeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PurchaseOrdertypeCopyWithImpl<$Res>
+class _$PurchaseOrdertypeCopyWithImpl<$Res, $Val extends PurchaseOrdertype>
     implements $PurchaseOrdertypeCopyWith<$Res> {
   _$PurchaseOrdertypeCopyWithImpl(this._value, this._then);
 
-  final PurchaseOrdertype _value;
   // ignore: unused_field
-  final $Res Function(PurchaseOrdertype) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? orderTypes = freezed,
@@ -94,37 +71,38 @@ class _$PurchaseOrdertypeCopyWithImpl<$Res>
     Object? virtualStockType = freezed,
   }) {
     return _then(_value.copyWith(
-      orderTypes: orderTypes == freezed
+      orderTypes: freezed == orderTypes
           ? _value.orderTypes
           : orderTypes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      pricingPgT: pricingPgT == freezed
+      pricingPgT: freezed == pricingPgT
           ? _value.pricingPgT
           : pricingPgT // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      discountType: discountType == freezed
+      discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      orderMode: orderMode == freezed
+      orderMode: freezed == orderMode
           ? _value.orderMode
           : orderMode // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      virtualStockType: virtualStockType == freezed
+      virtualStockType: freezed == virtualStockType
           ? _value.virtualStockType
           : virtualStockType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PurchaseOrdertypeCopyWith<$Res>
+abstract class _$$_PurchaseOrdertypeCopyWith<$Res>
     implements $PurchaseOrdertypeCopyWith<$Res> {
-  factory _$PurchaseOrdertypeCopyWith(
-          _PurchaseOrdertype value, $Res Function(_PurchaseOrdertype) then) =
-      __$PurchaseOrdertypeCopyWithImpl<$Res>;
+  factory _$$_PurchaseOrdertypeCopyWith(_$_PurchaseOrdertype value,
+          $Res Function(_$_PurchaseOrdertype) then) =
+      __$$_PurchaseOrdertypeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: "order_types") List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type") List<String>? pricingPgT,
@@ -134,16 +112,14 @@ abstract class _$PurchaseOrdertypeCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PurchaseOrdertypeCopyWithImpl<$Res>
-    extends _$PurchaseOrdertypeCopyWithImpl<$Res>
-    implements _$PurchaseOrdertypeCopyWith<$Res> {
-  __$PurchaseOrdertypeCopyWithImpl(
-      _PurchaseOrdertype _value, $Res Function(_PurchaseOrdertype) _then)
-      : super(_value, (v) => _then(v as _PurchaseOrdertype));
+class __$$_PurchaseOrdertypeCopyWithImpl<$Res>
+    extends _$PurchaseOrdertypeCopyWithImpl<$Res, _$_PurchaseOrdertype>
+    implements _$$_PurchaseOrdertypeCopyWith<$Res> {
+  __$$_PurchaseOrdertypeCopyWithImpl(
+      _$_PurchaseOrdertype _value, $Res Function(_$_PurchaseOrdertype) _then)
+      : super(_value, _then);
 
-  @override
-  _PurchaseOrdertype get _value => super._value as _PurchaseOrdertype;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? orderTypes = freezed,
@@ -152,25 +128,25 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
     Object? orderMode = freezed,
     Object? virtualStockType = freezed,
   }) {
-    return _then(_PurchaseOrdertype(
-      orderTypes: orderTypes == freezed
-          ? _value.orderTypes
+    return _then(_$_PurchaseOrdertype(
+      orderTypes: freezed == orderTypes
+          ? _value._orderTypes
           : orderTypes // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      pricingPgT: pricingPgT == freezed
-          ? _value.pricingPgT
+      pricingPgT: freezed == pricingPgT
+          ? _value._pricingPgT
           : pricingPgT // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      discountType: discountType == freezed
-          ? _value.discountType
+      discountType: freezed == discountType
+          ? _value._discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      orderMode: orderMode == freezed
-          ? _value.orderMode
+      orderMode: freezed == orderMode
+          ? _value._orderMode
           : orderMode // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      virtualStockType: virtualStockType == freezed
-          ? _value.virtualStockType
+      virtualStockType: freezed == virtualStockType
+          ? _value._virtualStockType
           : virtualStockType // ignore: cast_nullable_to_non_nullable
               as List<String>?,
     ));
@@ -181,30 +157,74 @@ class __$PurchaseOrdertypeCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   const _$_PurchaseOrdertype(
-      {@JsonKey(name: "order_types") this.orderTypes,
-      @JsonKey(name: "pricing_pg_type") this.pricingPgT,
-      @JsonKey(name: "discount_type") this.discountType,
-      @JsonKey(name: "order_modes") this.orderMode,
-      @JsonKey(name: "virtual_stock_type") this.virtualStockType});
+      {@JsonKey(name: "order_types")
+          final List<String>? orderTypes,
+      @JsonKey(name: "pricing_pg_type")
+          final List<String>? pricingPgT,
+      @JsonKey(name: "discount_type")
+          final List<String>? discountType,
+      @JsonKey(name: "order_modes")
+          final List<String>? orderMode,
+      @JsonKey(name: "virtual_stock_type")
+          final List<String>? virtualStockType})
+      : _orderTypes = orderTypes,
+        _pricingPgT = pricingPgT,
+        _discountType = discountType,
+        _orderMode = orderMode,
+        _virtualStockType = virtualStockType;
 
   factory _$_PurchaseOrdertype.fromJson(Map<String, dynamic> json) =>
       _$$_PurchaseOrdertypeFromJson(json);
 
+  final List<String>? _orderTypes;
   @override
   @JsonKey(name: "order_types")
-  final List<String>? orderTypes;
+  List<String>? get orderTypes {
+    final value = _orderTypes;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _pricingPgT;
   @override
   @JsonKey(name: "pricing_pg_type")
-  final List<String>? pricingPgT;
+  List<String>? get pricingPgT {
+    final value = _pricingPgT;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _discountType;
   @override
   @JsonKey(name: "discount_type")
-  final List<String>? discountType;
+  List<String>? get discountType {
+    final value = _discountType;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _orderMode;
   @override
   @JsonKey(name: "order_modes")
-  final List<String>? orderMode;
+  List<String>? get orderMode {
+    final value = _orderMode;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _virtualStockType;
   @override
   @JsonKey(name: "virtual_stock_type")
-  final List<String>? virtualStockType;
+  List<String>? get virtualStockType {
+    final value = _virtualStockType;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -214,77 +234,78 @@ class _$_PurchaseOrdertype implements _PurchaseOrdertype {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PurchaseOrdertype &&
-            (identical(other.orderTypes, orderTypes) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderTypes, orderTypes)) &&
-            (identical(other.pricingPgT, pricingPgT) ||
-                const DeepCollectionEquality()
-                    .equals(other.pricingPgT, pricingPgT)) &&
-            (identical(other.discountType, discountType) ||
-                const DeepCollectionEquality()
-                    .equals(other.discountType, discountType)) &&
-            (identical(other.orderMode, orderMode) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderMode, orderMode)) &&
-            (identical(other.virtualStockType, virtualStockType) ||
-                const DeepCollectionEquality()
-                    .equals(other.virtualStockType, virtualStockType)));
+        (other.runtimeType == runtimeType &&
+            other is _$_PurchaseOrdertype &&
+            const DeepCollectionEquality()
+                .equals(other._orderTypes, _orderTypes) &&
+            const DeepCollectionEquality()
+                .equals(other._pricingPgT, _pricingPgT) &&
+            const DeepCollectionEquality()
+                .equals(other._discountType, _discountType) &&
+            const DeepCollectionEquality()
+                .equals(other._orderMode, _orderMode) &&
+            const DeepCollectionEquality()
+                .equals(other._virtualStockType, _virtualStockType));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(orderTypes) ^
-      const DeepCollectionEquality().hash(pricingPgT) ^
-      const DeepCollectionEquality().hash(discountType) ^
-      const DeepCollectionEquality().hash(orderMode) ^
-      const DeepCollectionEquality().hash(virtualStockType);
 
   @JsonKey(ignore: true)
   @override
-  _$PurchaseOrdertypeCopyWith<_PurchaseOrdertype> get copyWith =>
-      __$PurchaseOrdertypeCopyWithImpl<_PurchaseOrdertype>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_orderTypes),
+      const DeepCollectionEquality().hash(_pricingPgT),
+      const DeepCollectionEquality().hash(_discountType),
+      const DeepCollectionEquality().hash(_orderMode),
+      const DeepCollectionEquality().hash(_virtualStockType));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PurchaseOrdertypeCopyWith<_$_PurchaseOrdertype> get copyWith =>
+      __$$_PurchaseOrdertypeCopyWithImpl<_$_PurchaseOrdertype>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PurchaseOrdertypeToJson(this);
+    return _$$_PurchaseOrdertypeToJson(
+      this,
+    );
   }
 }
 
 abstract class _PurchaseOrdertype implements PurchaseOrdertype {
   const factory _PurchaseOrdertype(
       {@JsonKey(name: "order_types")
-          List<String>? orderTypes,
+          final List<String>? orderTypes,
       @JsonKey(name: "pricing_pg_type")
-          List<String>? pricingPgT,
+          final List<String>? pricingPgT,
       @JsonKey(name: "discount_type")
-          List<String>? discountType,
+          final List<String>? discountType,
       @JsonKey(name: "order_modes")
-          List<String>? orderMode,
+          final List<String>? orderMode,
       @JsonKey(name: "virtual_stock_type")
-          List<String>? virtualStockType}) = _$_PurchaseOrdertype;
+          final List<String>? virtualStockType}) = _$_PurchaseOrdertype;
 
   factory _PurchaseOrdertype.fromJson(Map<String, dynamic> json) =
       _$_PurchaseOrdertype.fromJson;
 
   @override
   @JsonKey(name: "order_types")
-  List<String>? get orderTypes => throw _privateConstructorUsedError;
+  List<String>? get orderTypes;
   @override
   @JsonKey(name: "pricing_pg_type")
-  List<String>? get pricingPgT => throw _privateConstructorUsedError;
+  List<String>? get pricingPgT;
   @override
   @JsonKey(name: "discount_type")
-  List<String>? get discountType => throw _privateConstructorUsedError;
+  List<String>? get discountType;
   @override
   @JsonKey(name: "order_modes")
-  List<String>? get orderMode => throw _privateConstructorUsedError;
+  List<String>? get orderMode;
   @override
   @JsonKey(name: "virtual_stock_type")
-  List<String>? get virtualStockType => throw _privateConstructorUsedError;
+  List<String>? get virtualStockType;
   @override
   @JsonKey(ignore: true)
-  _$PurchaseOrdertypeCopyWith<_PurchaseOrdertype> get copyWith =>
+  _$$_PurchaseOrdertypeCopyWith<_$_PurchaseOrdertype> get copyWith =>
       throw _privateConstructorUsedError;
 }

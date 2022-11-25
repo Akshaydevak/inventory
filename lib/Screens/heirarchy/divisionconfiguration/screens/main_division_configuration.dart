@@ -32,6 +32,7 @@ class _DevisionConfigurationState extends State< DevisionConfiguration> {
   TextEditingController priorityController=TextEditingController();
   TextEditingController descriptionController=TextEditingController();
   TextEditingController image1Controller=TextEditingController();
+  TextEditingController image1NameController=TextEditingController();
   bool isActive=false;
   bool ismixed=false;
   bool select=false;
@@ -93,6 +94,7 @@ class _DevisionConfigurationState extends State< DevisionConfiguration> {
 codeController.clear();
 nameController.clear();
 image1Controller.clear();
+image1NameController.clear();
 priorityController.clear();
 descriptionController.clear();
 isActive=false;
@@ -170,6 +172,7 @@ ismixed=false;
             codeController.text=data.code??"";
             nameController.text=data.name??"";
             image1Controller.text=data.image??"";
+            image1NameController.text=data.image??"";
             descriptionController.text=data.description??"";
             priorityController.text=data.priority?.toString()??"";
             uomList=data.uom??[];
@@ -267,7 +270,7 @@ ismixed=false;
                         select=false;
                         selectedVertical=index;
 
-                        clear();
+                        // clear();
 
                         setState(() {});
                         veritiaclid = result[index].id;
@@ -280,7 +283,7 @@ ismixed=false;
                           .read<ListDivisionCubit>()
                           .getSearchDevisionList(va);
                       if(va==""){
-                        // clear();
+                        clear();
                         setState(() {
                           context.read<ListDivisionCubit>().getDivisionVerticalList();
                         });
@@ -312,10 +315,10 @@ ismixed=false;
                     ),
                   ),
                   Expanded(child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                     TextButtonLarge(
-                      text: "Create",
+                      text: "CREATE",
                       onPress: (){
                         clear();
                         categoryList?.clear();
@@ -329,8 +332,9 @@ ismixed=false;
 
                       },
                     ),
-                    SizedBox(height: 20,),
+
                     DivisionStableTable(
+                      image1Name:image1NameController,
                       select:select,
                      code: codeController,
                       active: isActive,
@@ -381,7 +385,7 @@ ismixed=false;
 
                           Button(Icons.delete, Colors.red,
                               ctx: context,
-                              text: "Discard",
+                              text: "DISCARD",
                               onApply: () {
                                 if(select==true)
                                   clear();
@@ -414,7 +418,7 @@ ismixed=false;
                           ),
                           Button(Icons.check, Colors.grey,
                               ctx: context,
-                              text: select?"Save":"update",
+                              text: select?"SAVE":"UPDATE",
                               height: 29,
                               Color: Color(0xff3E4F5B),
                               width: 90,

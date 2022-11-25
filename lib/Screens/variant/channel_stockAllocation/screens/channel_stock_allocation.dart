@@ -580,7 +580,7 @@ if(addVirtual==null){
                                 ),
                                 Button(Icons.check, Colors.grey,
                                     ctx: context,
-                                    text:"Update",
+                                    text:"UPDATE",
                                     height: 29,
                                     Color: Color(0xff3E4F5B),
                                     width: 90,

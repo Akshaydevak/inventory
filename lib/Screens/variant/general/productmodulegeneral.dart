@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/frameworkpostcombination/variant_frameworkcombinationpost_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/general/cubits/listvariant/listvariant_cubit.dart';
@@ -10,6 +11,7 @@ import 'package:inventory/Screens/variant/general/model/variant_read2_model.dart
 import 'package:inventory/Screens/variant/general/model/variant_read_model.dart';
 import 'package:inventory/Screens/variant/general/screens/attributescreen.dart';
 import 'package:inventory/Screens/variant/general/screens/combinationTable.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
@@ -805,7 +807,7 @@ print("the list is"+variantList.toString());
                                     children: [
                                       Button(Icons.delete, Colors.red,
                                           ctx: context,
-                                          text: "Discard",
+                                          text: "DISCARD",
                                           onApply: () {},
                                           height: 29,
                                           width: 90,
@@ -819,7 +821,7 @@ print("the list is"+variantList.toString());
                                         Icons.check,
                                         Colors.grey,
                                         ctx: context,
-                                        text: "Save",
+                                        text: "SAVE",
                                         onApply: () {
 
                                               var filterList;
@@ -936,6 +938,49 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
     );
   }
 }
+
+
+
+class NewRadioButtonText extends StatefulWidget {
+  final String lable;
+
+   final Function valueAssign;
+  NewRadioButtonText({required this.lable,required this.valueAssign});
+
+
+  @override
+
+  State<NewRadioButtonText> createState() => _NewRadioButtonTextState();
+}
+
+class _NewRadioButtonTextState extends State<NewRadioButtonText> {
+  List<String>aaa=["home","office","other"];
+  String? gender;
+  int m=-2;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        for(var i=0;i<aaa.length;i++)...[
+        Text(aaa[i],style:GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600) ),
+        Radio(
+          value: m,
+          groupValue: i,
+          activeColor: Pellet.tableBlueHeaderPrint,
+          onChanged: (val) {
+            setState(() {
+              m=i;
+              widget.valueAssign(aaa[m]);
+
+            });
+          },
+        ),
+      ],
+    ]
+    );
+  }
+}
+
 
 class NewCheckBoxBox extends StatefulWidget {
   final Function onChange;

@@ -287,7 +287,7 @@ class _VAriantStockStableTableState extends State<VAriantStockStableTable> {
                           },
                             formatter: true,
 
-                            controller: widget.addVirtualStockType, title: "Add virtual stock"),
+                            controller: widget.addVirtualStockType, title: "Add Virtual Stock"),
                         SizedBox(
                           height: height * .030,
                         ),   NewInputCreateCard(

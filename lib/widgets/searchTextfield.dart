@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 
 class SearchTextfiled extends StatefulWidget {
   final Color color;
@@ -49,43 +50,42 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
               filled: true,
               labelStyle: TextStyle(color: Colors.white),
 
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(
-                  Radius.circular(3),
+              focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black38, width: .6),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.black38, width: .6),
+          ),
 
-                  // borderSide: BorderSide(color: Palette.fieldColor, width: 0.0),
-                ),
-                borderSide: BorderSide.none,
-              ),
 
 
               // border: InputBorder.none,
               hintText: widget.hintText,
-              suffixIcon: widget.suffiXCheck?Padding(
-                  padding: const EdgeInsets.only(right: 10),
-                  child: GestureDetector(
-                    onTap: (){
-                      if(widget.suffixOnComplete!=null){
-                        widget.suffixOnComplete;
-                      }
+              suffixIcon: widget.suffiXCheck?GestureDetector(
+                  onTap: (){
+                    if(widget.suffixOnComplete!=null){
+                      widget.suffixOnComplete!();
+                    }
 
-                    },
-                    child: Container(
-                      alignment: Alignment.centerRight,
-                      color: Colors.blue,
-                      height: 10,
-                      width: 15,
-                      child: const Text(
-                        "Search",style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  )):Padding(
+                  },
+                  child: Container(
+                    color: Pellet.tableBlueHeaderPrint,
+
+                      // alignment: Alignment.center,
+                      padding: const EdgeInsets.only(right: 10),
+                      child: GestureDetector(
+                        child: const Icon(
+                          Icons.search,color: Colors.grey,
+                        ),
+                      ))):Container(
+                  // color: Colors.red,
                   padding: const EdgeInsets.only(right: 10),
                   child: GestureDetector(
                     child: const Icon(
                       Icons.search,color: Colors.grey,
                     ),
                   )),
+
               hintStyle: const TextStyle(color: Colors.grey, fontSize: 12),
               // ),
             ),

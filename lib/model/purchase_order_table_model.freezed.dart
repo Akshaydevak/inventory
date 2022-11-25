@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'purchase_order_table_model.dart';
@@ -11,53 +12,12 @@ part of 'purchase_order_table_model.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PurchaseOrderTableModel _$PurchaseOrderTableModelFromJson(
     Map<String, dynamic> json) {
   return _PurchaseOrderTableModel.fromJson(json);
 }
-
-/// @nodoc
-class _$PurchaseOrderTableModelTearOff {
-  const _$PurchaseOrderTableModelTearOff();
-
-  _PurchaseOrderTableModel call(
-      {int? id,
-      String? code,
-      String? name,
-      double? vat,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") int? returnTime,
-      @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
-      @JsonKey(name: "barcode") Barcode? barCode}) {
-    return _PurchaseOrderTableModel(
-      id: id,
-      code: code,
-      name: name,
-      vat: vat,
-      purchaseUom: purchaseUom,
-      purchaseUomName: purchaseUomName,
-      excessTax: excessTax,
-      unitCost: unitCost,
-      returnType: returnType,
-      returnTime: returnTime,
-      vendorDetails: vendorDetails,
-      barCode: barCode,
-    );
-  }
-
-  PurchaseOrderTableModel fromJson(Map<String, Object> json) {
-    return PurchaseOrderTableModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PurchaseOrderTableModel = _$PurchaseOrderTableModelTearOff();
 
 /// @nodoc
 mixin _$PurchaseOrderTableModel {
@@ -92,7 +52,8 @@ mixin _$PurchaseOrderTableModel {
 abstract class $PurchaseOrderTableModelCopyWith<$Res> {
   factory $PurchaseOrderTableModelCopyWith(PurchaseOrderTableModel value,
           $Res Function(PurchaseOrderTableModel) then) =
-      _$PurchaseOrderTableModelCopyWithImpl<$Res>;
+      _$PurchaseOrderTableModelCopyWithImpl<$Res, PurchaseOrderTableModel>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -111,14 +72,17 @@ abstract class $PurchaseOrderTableModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PurchaseOrderTableModelCopyWithImpl<$Res>
+class _$PurchaseOrderTableModelCopyWithImpl<$Res,
+        $Val extends PurchaseOrderTableModel>
     implements $PurchaseOrderTableModelCopyWith<$Res> {
   _$PurchaseOrderTableModelCopyWithImpl(this._value, this._then);
 
-  final PurchaseOrderTableModel _value;
   // ignore: unused_field
-  final $Res Function(PurchaseOrderTableModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -135,76 +99,78 @@ class _$PurchaseOrderTableModelCopyWithImpl<$Res>
     Object? barCode = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUomName: purchaseUomName == freezed
+      purchaseUomName: freezed == purchaseUomName
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as int?,
-      vendorDetails: vendorDetails == freezed
+      vendorDetails: freezed == vendorDetails
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
-      barCode: barCode == freezed
+      barCode: freezed == barCode
           ? _value.barCode
           : barCode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BarcodeCopyWith<$Res>? get barCode {
     if (_value.barCode == null) {
       return null;
     }
 
     return $BarcodeCopyWith<$Res>(_value.barCode!, (value) {
-      return _then(_value.copyWith(barCode: value));
+      return _then(_value.copyWith(barCode: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$PurchaseOrderTableModelCopyWith<$Res>
+abstract class _$$_PurchaseOrderTableModelCopyWith<$Res>
     implements $PurchaseOrderTableModelCopyWith<$Res> {
-  factory _$PurchaseOrderTableModelCopyWith(_PurchaseOrderTableModel value,
-          $Res Function(_PurchaseOrderTableModel) then) =
-      __$PurchaseOrderTableModelCopyWithImpl<$Res>;
+  factory _$$_PurchaseOrderTableModelCopyWith(_$_PurchaseOrderTableModel value,
+          $Res Function(_$_PurchaseOrderTableModel) then) =
+      __$$_PurchaseOrderTableModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -224,17 +190,15 @@ abstract class _$PurchaseOrderTableModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PurchaseOrderTableModelCopyWithImpl<$Res>
-    extends _$PurchaseOrderTableModelCopyWithImpl<$Res>
-    implements _$PurchaseOrderTableModelCopyWith<$Res> {
-  __$PurchaseOrderTableModelCopyWithImpl(_PurchaseOrderTableModel _value,
-      $Res Function(_PurchaseOrderTableModel) _then)
-      : super(_value, (v) => _then(v as _PurchaseOrderTableModel));
+class __$$_PurchaseOrderTableModelCopyWithImpl<$Res>
+    extends _$PurchaseOrderTableModelCopyWithImpl<$Res,
+        _$_PurchaseOrderTableModel>
+    implements _$$_PurchaseOrderTableModelCopyWith<$Res> {
+  __$$_PurchaseOrderTableModelCopyWithImpl(_$_PurchaseOrderTableModel _value,
+      $Res Function(_$_PurchaseOrderTableModel) _then)
+      : super(_value, _then);
 
-  @override
-  _PurchaseOrderTableModel get _value =>
-      super._value as _PurchaseOrderTableModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -250,52 +214,52 @@ class __$PurchaseOrderTableModelCopyWithImpl<$Res>
     Object? vendorDetails = freezed,
     Object? barCode = freezed,
   }) {
-    return _then(_PurchaseOrderTableModel(
-      id: id == freezed
+    return _then(_$_PurchaseOrderTableModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUomName: purchaseUomName == freezed
+      purchaseUomName: freezed == purchaseUomName
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as int?,
-      vendorDetails: vendorDetails == freezed
-          ? _value.vendorDetails
+      vendorDetails: freezed == vendorDetails
+          ? _value._vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
-      barCode: barCode == freezed
+      barCode: freezed == barCode
           ? _value.barCode
           : barCode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
@@ -317,8 +281,9 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "return_type") this.returnType,
       @JsonKey(name: "return_time") this.returnTime,
-      @JsonKey(name: "vendor_details") this.vendorDetails,
-      @JsonKey(name: "barcode") this.barCode});
+      @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "barcode") this.barCode})
+      : _vendorDetails = vendorDetails;
 
   factory _$_PurchaseOrderTableModel.fromJson(Map<String, dynamic> json) =>
       _$$_PurchaseOrderTableModelFromJson(json);
@@ -331,7 +296,8 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
   final String? name;
   @override
   final double? vat;
-  @override //final String? vat,
+//final String? vat,
+  @override
   @JsonKey(name: "purchase_uom")
   final String? purchaseUom;
   @override
@@ -349,9 +315,16 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
   @override
   @JsonKey(name: "return_time")
   final int? returnTime;
+  final List<VendorDetails>? _vendorDetails;
   @override
   @JsonKey(name: "vendor_details")
-  final List<VendorDetails>? vendorDetails;
+  List<VendorDetails>? get vendorDetails {
+    final value = _vendorDetails;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "barcode")
   final Barcode? barCode;
@@ -364,148 +337,129 @@ class _$_PurchaseOrderTableModel implements _PurchaseOrderTableModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PurchaseOrderTableModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_PurchaseOrderTableModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.purchaseUom, purchaseUom) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseUom, purchaseUom)) &&
+                other.purchaseUom == purchaseUom) &&
             (identical(other.purchaseUomName, purchaseUomName) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseUomName, purchaseUomName)) &&
+                other.purchaseUomName == purchaseUomName) &&
             (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
+                other.excessTax == excessTax) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
+                other.unitCost == unitCost) &&
             (identical(other.returnType, returnType) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnType, returnType)) &&
+                other.returnType == returnType) &&
             (identical(other.returnTime, returnTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnTime, returnTime)) &&
-            (identical(other.vendorDetails, vendorDetails) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorDetails, vendorDetails)) &&
-            (identical(other.barCode, barCode) ||
-                const DeepCollectionEquality().equals(other.barCode, barCode)));
+                other.returnTime == returnTime) &&
+            const DeepCollectionEquality()
+                .equals(other._vendorDetails, _vendorDetails) &&
+            (identical(other.barCode, barCode) || other.barCode == barCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(purchaseUom) ^
-      const DeepCollectionEquality().hash(purchaseUomName) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(returnType) ^
-      const DeepCollectionEquality().hash(returnTime) ^
-      const DeepCollectionEquality().hash(vendorDetails) ^
-      const DeepCollectionEquality().hash(barCode);
 
   @JsonKey(ignore: true)
   @override
-  _$PurchaseOrderTableModelCopyWith<_PurchaseOrderTableModel> get copyWith =>
-      __$PurchaseOrderTableModelCopyWithImpl<_PurchaseOrderTableModel>(
-          this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      code,
+      name,
+      vat,
+      purchaseUom,
+      purchaseUomName,
+      excessTax,
+      unitCost,
+      returnType,
+      returnTime,
+      const DeepCollectionEquality().hash(_vendorDetails),
+      barCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PurchaseOrderTableModelCopyWith<_$_PurchaseOrderTableModel>
+      get copyWith =>
+          __$$_PurchaseOrderTableModelCopyWithImpl<_$_PurchaseOrderTableModel>(
+              this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PurchaseOrderTableModelToJson(this);
+    return _$$_PurchaseOrderTableModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _PurchaseOrderTableModel implements PurchaseOrderTableModel {
   const factory _PurchaseOrderTableModel(
-      {int? id,
-      String? code,
-      String? name,
-      double? vat,
-      @JsonKey(name: "purchase_uom") String? purchaseUom,
-      @JsonKey(name: "purchase_uom_name") String? purchaseUomName,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "return_type") String? returnType,
-      @JsonKey(name: "return_time") int? returnTime,
-      @JsonKey(name: "vendor_details") List<VendorDetails>? vendorDetails,
-      @JsonKey(name: "barcode") Barcode? barCode}) = _$_PurchaseOrderTableModel;
+      {final int? id,
+      final String? code,
+      final String? name,
+      final double? vat,
+      @JsonKey(name: "purchase_uom")
+          final String? purchaseUom,
+      @JsonKey(name: "purchase_uom_name")
+          final String? purchaseUomName,
+      @JsonKey(name: "excess_tax")
+          final double? excessTax,
+      @JsonKey(name: "unit_cost")
+          final double? unitCost,
+      @JsonKey(name: "return_type")
+          final String? returnType,
+      @JsonKey(name: "return_time")
+          final int? returnTime,
+      @JsonKey(name: "vendor_details")
+          final List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "barcode")
+          final Barcode? barCode}) = _$_PurchaseOrderTableModel;
 
   factory _PurchaseOrderTableModel.fromJson(Map<String, dynamic> json) =
       _$_PurchaseOrderTableModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override //final String? vat,
   @JsonKey(name: "purchase_uom")
-  String? get purchaseUom => throw _privateConstructorUsedError;
+  String? get purchaseUom;
   @override
   @JsonKey(name: "purchase_uom_name")
-  String? get purchaseUomName => throw _privateConstructorUsedError;
+  String? get purchaseUomName;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "return_type")
-  String? get returnType => throw _privateConstructorUsedError;
+  String? get returnType;
   @override
   @JsonKey(name: "return_time")
-  int? get returnTime => throw _privateConstructorUsedError;
+  int? get returnTime;
   @override
   @JsonKey(name: "vendor_details")
-  List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
+  List<VendorDetails>? get vendorDetails;
   @override
   @JsonKey(name: "barcode")
-  Barcode? get barCode => throw _privateConstructorUsedError;
+  Barcode? get barCode;
   @override
   @JsonKey(ignore: true)
-  _$PurchaseOrderTableModelCopyWith<_PurchaseOrderTableModel> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_PurchaseOrderTableModelCopyWith<_$_PurchaseOrderTableModel>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 VendorDetails _$VendorDetailsFromJson(Map<String, dynamic> json) {
   return _VendorDetails.fromJson(json);
 }
-
-/// @nodoc
-class _$VendorDetailsTearOff {
-  const _$VendorDetailsTearOff();
-
-  _VendorDetails call(
-      {@JsonKey(name: "vendor_code") String? vendorCode,
-      @JsonKey(name: "vendor_reference_code") String? vendorRefCode}) {
-    return _VendorDetails(
-      vendorCode: vendorCode,
-      vendorRefCode: vendorRefCode,
-    );
-  }
-
-  VendorDetails fromJson(Map<String, Object> json) {
-    return VendorDetails.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VendorDetails = _$VendorDetailsTearOff();
 
 /// @nodoc
 mixin _$VendorDetails {
@@ -524,73 +478,75 @@ mixin _$VendorDetails {
 abstract class $VendorDetailsCopyWith<$Res> {
   factory $VendorDetailsCopyWith(
           VendorDetails value, $Res Function(VendorDetails) then) =
-      _$VendorDetailsCopyWithImpl<$Res>;
+      _$VendorDetailsCopyWithImpl<$Res, VendorDetails>;
+  @useResult
   $Res call(
       {@JsonKey(name: "vendor_code") String? vendorCode,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode});
 }
 
 /// @nodoc
-class _$VendorDetailsCopyWithImpl<$Res>
+class _$VendorDetailsCopyWithImpl<$Res, $Val extends VendorDetails>
     implements $VendorDetailsCopyWith<$Res> {
   _$VendorDetailsCopyWithImpl(this._value, this._then);
 
-  final VendorDetails _value;
   // ignore: unused_field
-  final $Res Function(VendorDetails) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? vendorCode = freezed,
     Object? vendorRefCode = freezed,
   }) {
     return _then(_value.copyWith(
-      vendorCode: vendorCode == freezed
+      vendorCode: freezed == vendorCode
           ? _value.vendorCode
           : vendorCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorRefCode: vendorRefCode == freezed
+      vendorRefCode: freezed == vendorRefCode
           ? _value.vendorRefCode
           : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VendorDetailsCopyWith<$Res>
+abstract class _$$_VendorDetailsCopyWith<$Res>
     implements $VendorDetailsCopyWith<$Res> {
-  factory _$VendorDetailsCopyWith(
-          _VendorDetails value, $Res Function(_VendorDetails) then) =
-      __$VendorDetailsCopyWithImpl<$Res>;
+  factory _$$_VendorDetailsCopyWith(
+          _$_VendorDetails value, $Res Function(_$_VendorDetails) then) =
+      __$$_VendorDetailsCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: "vendor_code") String? vendorCode,
       @JsonKey(name: "vendor_reference_code") String? vendorRefCode});
 }
 
 /// @nodoc
-class __$VendorDetailsCopyWithImpl<$Res>
-    extends _$VendorDetailsCopyWithImpl<$Res>
-    implements _$VendorDetailsCopyWith<$Res> {
-  __$VendorDetailsCopyWithImpl(
-      _VendorDetails _value, $Res Function(_VendorDetails) _then)
-      : super(_value, (v) => _then(v as _VendorDetails));
+class __$$_VendorDetailsCopyWithImpl<$Res>
+    extends _$VendorDetailsCopyWithImpl<$Res, _$_VendorDetails>
+    implements _$$_VendorDetailsCopyWith<$Res> {
+  __$$_VendorDetailsCopyWithImpl(
+      _$_VendorDetails _value, $Res Function(_$_VendorDetails) _then)
+      : super(_value, _then);
 
-  @override
-  _VendorDetails get _value => super._value as _VendorDetails;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? vendorCode = freezed,
     Object? vendorRefCode = freezed,
   }) {
-    return _then(_VendorDetails(
-      vendorCode: vendorCode == freezed
+    return _then(_$_VendorDetails(
+      vendorCode: freezed == vendorCode
           ? _value.vendorCode
           : vendorCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorRefCode: vendorRefCode == freezed
+      vendorRefCode: freezed == vendorRefCode
           ? _value.vendorRefCode
           : vendorRefCode // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -623,79 +579,57 @@ class _$_VendorDetails implements _VendorDetails {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VendorDetails &&
+        (other.runtimeType == runtimeType &&
+            other is _$_VendorDetails &&
             (identical(other.vendorCode, vendorCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorCode, vendorCode)) &&
+                other.vendorCode == vendorCode) &&
             (identical(other.vendorRefCode, vendorRefCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorRefCode, vendorRefCode)));
+                other.vendorRefCode == vendorRefCode));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(vendorCode) ^
-      const DeepCollectionEquality().hash(vendorRefCode);
 
   @JsonKey(ignore: true)
   @override
-  _$VendorDetailsCopyWith<_VendorDetails> get copyWith =>
-      __$VendorDetailsCopyWithImpl<_VendorDetails>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, vendorCode, vendorRefCode);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VendorDetailsCopyWith<_$_VendorDetails> get copyWith =>
+      __$$_VendorDetailsCopyWithImpl<_$_VendorDetails>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VendorDetailsToJson(this);
+    return _$$_VendorDetailsToJson(
+      this,
+    );
   }
 }
 
 abstract class _VendorDetails implements VendorDetails {
   const factory _VendorDetails(
-          {@JsonKey(name: "vendor_code") String? vendorCode,
-          @JsonKey(name: "vendor_reference_code") String? vendorRefCode}) =
-      _$_VendorDetails;
+      {@JsonKey(name: "vendor_code")
+          final String? vendorCode,
+      @JsonKey(name: "vendor_reference_code")
+          final String? vendorRefCode}) = _$_VendorDetails;
 
   factory _VendorDetails.fromJson(Map<String, dynamic> json) =
       _$_VendorDetails.fromJson;
 
   @override
   @JsonKey(name: "vendor_code")
-  String? get vendorCode => throw _privateConstructorUsedError;
+  String? get vendorCode;
   @override
   @JsonKey(name: "vendor_reference_code")
-  String? get vendorRefCode => throw _privateConstructorUsedError;
+  String? get vendorRefCode;
   @override
   @JsonKey(ignore: true)
-  _$VendorDetailsCopyWith<_VendorDetails> get copyWith =>
+  _$$_VendorDetailsCopyWith<_$_VendorDetails> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Barcode _$BarcodeFromJson(Map<String, dynamic> json) {
   return _Barcode.fromJson(json);
 }
-
-/// @nodoc
-class _$BarcodeTearOff {
-  const _$BarcodeTearOff();
-
-  _Barcode call(
-      {int? id,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "barcode_number") String? barcodeNumber}) {
-    return _Barcode(
-      id: id,
-      fileName: fileName,
-      barcodeNumber: barcodeNumber,
-    );
-  }
-
-  Barcode fromJson(Map<String, Object> json) {
-    return Barcode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Barcode = _$BarcodeTearOff();
 
 /// @nodoc
 mixin _$Barcode {
@@ -713,7 +647,8 @@ mixin _$Barcode {
 /// @nodoc
 abstract class $BarcodeCopyWith<$Res> {
   factory $BarcodeCopyWith(Barcode value, $Res Function(Barcode) then) =
-      _$BarcodeCopyWithImpl<$Res>;
+      _$BarcodeCopyWithImpl<$Res, Barcode>;
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "file_name") String? fileName,
@@ -721,13 +656,16 @@ abstract class $BarcodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarcodeCopyWithImpl<$Res> implements $BarcodeCopyWith<$Res> {
+class _$BarcodeCopyWithImpl<$Res, $Val extends Barcode>
+    implements $BarcodeCopyWith<$Res> {
   _$BarcodeCopyWithImpl(this._value, this._then);
 
-  final Barcode _value;
   // ignore: unused_field
-  final $Res Function(Barcode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -735,27 +673,29 @@ class _$BarcodeCopyWithImpl<$Res> implements $BarcodeCopyWith<$Res> {
     Object? barcodeNumber = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcodeNumber: barcodeNumber == freezed
+      barcodeNumber: freezed == barcodeNumber
           ? _value.barcodeNumber
           : barcodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
-  factory _$BarcodeCopyWith(_Barcode value, $Res Function(_Barcode) then) =
-      __$BarcodeCopyWithImpl<$Res>;
+abstract class _$$_BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
+  factory _$$_BarcodeCopyWith(
+          _$_Barcode value, $Res Function(_$_Barcode) then) =
+      __$$_BarcodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "file_name") String? fileName,
@@ -763,30 +703,29 @@ abstract class _$BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$BarcodeCopyWithImpl<$Res> extends _$BarcodeCopyWithImpl<$Res>
-    implements _$BarcodeCopyWith<$Res> {
-  __$BarcodeCopyWithImpl(_Barcode _value, $Res Function(_Barcode) _then)
-      : super(_value, (v) => _then(v as _Barcode));
+class __$$_BarcodeCopyWithImpl<$Res>
+    extends _$BarcodeCopyWithImpl<$Res, _$_Barcode>
+    implements _$$_BarcodeCopyWith<$Res> {
+  __$$_BarcodeCopyWithImpl(_$_Barcode _value, $Res Function(_$_Barcode) _then)
+      : super(_value, _then);
 
-  @override
-  _Barcode get _value => super._value as _Barcode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? fileName = freezed,
     Object? barcodeNumber = freezed,
   }) {
-    return _then(_Barcode(
-      id: id == freezed
+    return _then(_$_Barcode(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcodeNumber: barcodeNumber == freezed
+      barcodeNumber: freezed == barcodeNumber
           ? _value.barcodeNumber
           : barcodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -822,53 +761,52 @@ class _$_Barcode implements _Barcode {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Barcode &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_Barcode &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.fileName, fileName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fileName, fileName)) &&
+                other.fileName == fileName) &&
             (identical(other.barcodeNumber, barcodeNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcodeNumber, barcodeNumber)));
+                other.barcodeNumber == barcodeNumber));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(fileName) ^
-      const DeepCollectionEquality().hash(barcodeNumber);
 
   @JsonKey(ignore: true)
   @override
-  _$BarcodeCopyWith<_Barcode> get copyWith =>
-      __$BarcodeCopyWithImpl<_Barcode>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, fileName, barcodeNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BarcodeCopyWith<_$_Barcode> get copyWith =>
+      __$$_BarcodeCopyWithImpl<_$_Barcode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BarcodeToJson(this);
+    return _$$_BarcodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _Barcode implements Barcode {
   const factory _Barcode(
-      {int? id,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "barcode_number") String? barcodeNumber}) = _$_Barcode;
+          {final int? id,
+          @JsonKey(name: "file_name") final String? fileName,
+          @JsonKey(name: "barcode_number") final String? barcodeNumber}) =
+      _$_Barcode;
 
   factory _Barcode.fromJson(Map<String, dynamic> json) = _$_Barcode.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "file_name")
-  String? get fileName => throw _privateConstructorUsedError;
+  String? get fileName;
   @override
   @JsonKey(name: "barcode_number")
-  String? get barcodeNumber => throw _privateConstructorUsedError;
+  String? get barcodeNumber;
   @override
   @JsonKey(ignore: true)
-  _$BarcodeCopyWith<_Barcode> get copyWith =>
+  _$$_BarcodeCopyWith<_$_Barcode> get copyWith =>
       throw _privateConstructorUsedError;
 }

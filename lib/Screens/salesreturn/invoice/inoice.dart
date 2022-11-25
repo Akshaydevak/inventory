@@ -9,6 +9,7 @@ import 'package:inventory/Screens/salesreturn/cubit/verticallist/salesreturnvert
 import 'package:inventory/Screens/salesreturn/invoice/cubit/invoicepost/salesreturninvoicepost_cubit.dart';
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoicepost.dart';
 import 'package:inventory/Screens/salesreturn/invoice/model/salesreturninvoiceread.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -302,6 +303,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
             return Builder(
                 builder: (context) {
                   return Scaffold(
+                    backgroundColor: Pellet.bagroundColor,
                     body: SingleChildScrollView(
                       child: IntrinsicHeight(
                         child: Row(
@@ -353,6 +355,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                             Expanded(child: Column(
                               children: [
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     TextButtonLarge(
                                       text: "PREVIEW",
@@ -413,7 +416,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                 SizedBox(height: 80,),
                                 Row(mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
-                                    TextWidget(text: "Invoice lines"),
+                                    TextWidget(text: "Invoice Lines"),
                                   ],
                                 ),
                                 Divider(color: Colors.grey,thickness: 1,),
@@ -428,7 +431,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                   children: [
                                     Spacer(),
                                     Button(Icons.delete, Colors.red,ctx: context,
-                                        text: "Discard",height: 29,
+                                        text: "DISCARD",height: 29,
                                         onApply: (){print("Akkk");},
                                         width: 90,labelcolor: Colors.red,iconColor: Colors.red),
                                     SizedBox(width: width*.008,),
@@ -462,7 +465,7 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                           context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
 
                                         },
-                                        text: "Save",height: 29,
+                                        text: "SAVE",height: 29,
                                         width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
                                     SizedBox(width: width*.008,),
                                   ],
@@ -565,6 +568,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
               color: Colors.white,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                       child: Column(
@@ -572,7 +576,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                           NewInputCard(
                               readOnly: true,
                               controller: widget.invoiceCode,
-                              title: " InvoiceCode code"),
+                              title: " Invoice Code"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -594,7 +598,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                           NewInputCard(
                               readOnly: true,
                               controller: widget.paymentStatus,
-                              title: "payment Status"),
+                              title: "Payment Status"),
 
                           SizedBox(
                             height: height * .030,
@@ -619,9 +623,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                   Expanded(
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: height * .060,
-                          ),
+
                           NewInputCard(
                               readOnly: true,
                               height: 46,
@@ -651,7 +653,7 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                           NewInputCard(
                               readOnly: true,
                               controller: widget.assignto,
-                              title: "Assign to"),
+                              title: "Assign To"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -670,61 +672,61 @@ class _SalesReturnInvoiceStableTableState extends State<SalesReturnInvoiceStable
                             height: 90,
                             maxLines: 3,
                           ),
+                          SizedBox(
+                            height: height * .010,
+                          ),
+
                         ],
                       )),
                   Expanded(
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: height * .060,
-                          ),
+
                           NewInputCard(
                               readOnly: true,
                               controller: widget.unitCost,
-                              title: "unit cost"),
+                              title: "Unit Cost"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
                               controller: widget.discount,
-                              title: "discount"),
+                              title: "Discount"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
                               controller: widget.exciseTax,
-                              title: "excise tax"),
+                              title: "Excise Tax"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
                               controller: widget.taxableAmount,
-                              title: "taxable  amount"),
+                              title: "Taxable Amount"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
-                              readOnly: true, controller: widget.vat, title: "vat"),
+                              readOnly: true, controller: widget.vat, title: "VAT"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
                               controller: widget.sellingPriceTotal,
-                              title: "selling price total"),
+                              title: "Selling Price Total"),
                           SizedBox(
                             height: height * .030,
                           ),
                           NewInputCard(
                               readOnly: true,
                               controller: widget.totalPrice,
-                              title: "total price"),
-                          SizedBox(
-                            height: height * .030,
-                          ),
+                              title: "Total Price"),
+
                         ],
                       ))
                 ],
@@ -901,25 +903,14 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                       width: 2200,
                       padding: EdgeInsets.all(10),
                       child: customTable(
-                          border: const TableBorder(
-                            verticalInside: BorderSide(
-                                width: .5,
-                                color: Colors.black45,
-                                style: BorderStyle.solid),
-                            horizontalInside: BorderSide(
-                                width: .3,
-                                color: Colors.black45,
-                                // color: Colors.blue,
-                                style: BorderStyle.solid),
-                          ),
+
                           tableWidth: .5,
                           childrens: [
                             TableRow(
                                 children: [
                                   tableHeadtext(
                                     'Variant Id',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
 
@@ -927,14 +918,12 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
                                   tableHeadtext(
                                     'Barcode',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
                                   tableHeadtext(
                                     'Sales Order Line Code',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
 
@@ -942,9 +931,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   tableHeadtext(
                                     'Invoiced',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
 
                                     size: 13,
 
@@ -957,23 +943,19 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
                                   tableHeadtext(
                                     'Sales UOM',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
                                   tableHeadtext(
                                     'Quantity',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
 
                                   tableHeadtext(
                                     'Unit Cost',
 
-                                    padding: EdgeInsets.all(7),
 
-                                    height: 46,
 
                                     size: 13,
                                     // color: Palette.containerDarknew,
@@ -983,9 +965,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   tableHeadtext(
                                     'Excise Tax',
 
-                                    padding: EdgeInsets.all(7),
 
-                                    height: 46,
 
                                     size: 13,
 
@@ -995,16 +975,13 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   ),
                                   tableHeadtext(
                                     'Discount Type',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                   ),
                                   tableHeadtext(
                                     'Discount',
 
-                                    padding: EdgeInsets.all(7),
 
-                                    height: 46,
 
                                     size: 13,
 
@@ -1016,9 +993,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   tableHeadtext(
                                     'Taxable Amount',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
 
                                     size: 13,
 
@@ -1030,9 +1004,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   tableHeadtext(
                                     'VAT',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
 
                                     size: 13,
 
@@ -1044,9 +1015,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   tableHeadtext(
                                     'Selling Price',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
 
                                     size: 13,
 
@@ -1056,17 +1024,15 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                   ),
 
                                   tableHeadtext(
-                                    'Warrenty Price',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    'Warranty Price',
+
                                     size: 13,
                                     // color: Palette.containerDarknew,
                                     // textColor: Palette.white
                                   ),
                                   tableHeadtext(
                                     'Total Price',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+
                                     size: 13,
                                     // color: Palette.containerDarknew,
                                     // textColor: Palette.white
@@ -1074,8 +1040,6 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
                                   tableHeadtext(
                                     '',
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
                                     size: 13,
                                     // color: Palette.containerDarknew,
                                     // textColor: Palette.white
@@ -1085,22 +1049,25 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                 ]),
                             if(table1.isEmpty)...[
                               TableRow(
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      shape: BoxShape.rectangle,
-                                      border: const Border(
-                                          left: BorderSide(
-                                              width: .5,
-                                              color: Colors.grey,
-                                              style: BorderStyle.solid),
-                                          bottom: BorderSide(
-                                              width: .5,
-                                              color: Colors.grey,
-                                              style: BorderStyle.solid),
-                                          right: BorderSide(
-                                              color: Colors.grey,
-                                              width: .5,
-                                              style: BorderStyle.solid))),
+          decoration: BoxDecoration(
+          color: Pellet.tableRowColor,
+              shape: BoxShape.rectangle,
+              border:  Border(
+                  left: BorderSide(
+
+                      color: Color(0xff3E4F5B).withOpacity(.1),
+                      width: .4,
+                      style: BorderStyle.solid),
+                  bottom: BorderSide(
+
+                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                      style: BorderStyle.solid),
+                  right: BorderSide(
+                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                      width: .4,
+
+                      style: BorderStyle.solid))),
+
                                   children: [
 
                                     textPadding(""),
@@ -1118,7 +1085,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                     textPadding(""),
                                     textPadding(""),
                                     textPadding(""),
-                                    Container(height: 42,)
+                                    Container(height: 48,)
 
                                   ]),
 
@@ -1126,22 +1093,25 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                             if (table1 != null) ...[
                               for (var i = 0; i < table1!.length; i++)
                                 TableRow(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey.shade200,
-                                        shape: BoxShape.rectangle,
-                                        border: const Border(
-                                            left: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
-                                                style: BorderStyle.solid),
-                                            bottom: BorderSide(
-                                                width: .5,
-                                                color: Colors.grey,
-                                                style: BorderStyle.solid),
-                                            right: BorderSide(
-                                                color: Colors.grey,
-                                                width: .5,
-                                                style: BorderStyle.solid))),
+        decoration: BoxDecoration(
+        color: Pellet.tableRowColor,
+        shape: BoxShape.rectangle,
+        border:  Border(
+        left: BorderSide(
+
+        color: Color(0xff3E4F5B).withOpacity(.1),
+        width: .4,
+        style: BorderStyle.solid),
+        bottom: BorderSide(
+
+        color:   Color(0xff3E4F5B).withOpacity(.1),
+        style: BorderStyle.solid),
+        right: BorderSide(
+        color:   Color(0xff3E4F5B).withOpacity(.1),
+        width: .4,
+
+        style: BorderStyle.solid)))
+        ,
                                     children: [
                                       TableCell(
                                         verticalAlignment:

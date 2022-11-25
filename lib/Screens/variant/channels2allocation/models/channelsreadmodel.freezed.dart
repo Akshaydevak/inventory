@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'channelsreadmodel.dart';
@@ -11,117 +12,11 @@ part of 'channelsreadmodel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ChannelListModel _$ChannelListModelFromJson(Map<String, dynamic> json) {
   return _ChannelListModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ChannelListModelTearOff {
-  const _$ChannelListModelTearOff();
-
-  _ChannelListModel call(
-      {int? id,
-      @JsonKey(name: "channel_name")
-          String? channelName,
-      @JsonKey(name: "channel_id")
-          String? channelId,
-      @JsonKey(name: "channel_code")
-          String? channelCode,
-      @JsonKey(name: "channel_stock_type")
-          String? channelStockType,
-      @JsonKey(name: "channel_stock_code")
-          String? channelStockCode,
-      @JsonKey(name: "channel_stock_quantity")
-          int? channelStockQuantity,
-      @JsonKey(name: "safety_stock_qty")
-          int? safetyStockQuantity,
-      @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
-      @JsonKey(name: "reorder_quantity")
-          int? reOrderQuantity,
-      @JsonKey(name: "available_qty")
-          int? availableQuantity,
-      @JsonKey(name: "reserved_qty")
-          int? reservedQuantity,
-      @JsonKey(name: "damaged_qty")
-          int? damagedQuantity,
-      @JsonKey(name: "returned_qty")
-          int? returnedQuantity,
-      @JsonKey(name: "replacement_qty")
-          int? replaceMentQuantity,
-      @JsonKey(name: "virtual_stock")
-          int? virtualStock,
-      @JsonKey(name: "purchase_blocked_qty")
-          int? purchaseBlockQuantity,
-      @JsonKey(name: "sales_blocked_qty")
-          int? salesblockQuantity,
-      @JsonKey(name: "add_virtual_stock")
-          int? addVirtualStock,
-      @JsonKey(name: "virtual_type")
-          String? virtualType,
-      @JsonKey(name: "channel_type_code")
-          String? channelTypeCode,
-      @JsonKey(name: "variant_code")
-          String? variantCode,
-      @JsonKey(name: "channel_type_stock_id")
-          int? channelTypeStockId,
-      @JsonKey(name: "stock_id")
-          int? stockId,
-      @JsonKey(name: "variant_id")
-          int? varaintId,
-      @JsonKey(name: "channel_status_crucial_point")
-          int? channelStatusCrucialPoint,
-      @JsonKey(name: "channel_status_medium_point")
-          int? channelStatusMediumPoint,
-      @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
-      @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesBlock,
-      @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked}) {
-    return _ChannelListModel(
-      id: id,
-      channelName: channelName,
-      channelId: channelId,
-      channelCode: channelCode,
-      channelStockType: channelStockType,
-      channelStockCode: channelStockCode,
-      channelStockQuantity: channelStockQuantity,
-      safetyStockQuantity: safetyStockQuantity,
-      reOrderPoint: reOrderPoint,
-      reOrderQuantity: reOrderQuantity,
-      availableQuantity: availableQuantity,
-      reservedQuantity: reservedQuantity,
-      damagedQuantity: damagedQuantity,
-      returnedQuantity: returnedQuantity,
-      replaceMentQuantity: replaceMentQuantity,
-      virtualStock: virtualStock,
-      purchaseBlockQuantity: purchaseBlockQuantity,
-      salesblockQuantity: salesblockQuantity,
-      addVirtualStock: addVirtualStock,
-      virtualType: virtualType,
-      channelTypeCode: channelTypeCode,
-      variantCode: variantCode,
-      channelTypeStockId: channelTypeStockId,
-      stockId: stockId,
-      varaintId: varaintId,
-      channelStatusCrucialPoint: channelStatusCrucialPoint,
-      channelStatusMediumPoint: channelStatusMediumPoint,
-      stockWarning: stockWarning,
-      salesBlock: salesBlock,
-      purchaseBlocked: purchaseBlocked,
-    );
-  }
-
-  ChannelListModel fromJson(Map<String, Object> json) {
-    return ChannelListModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ChannelListModel = _$ChannelListModelTearOff();
 
 /// @nodoc
 mixin _$ChannelListModel {
@@ -195,7 +90,8 @@ mixin _$ChannelListModel {
 abstract class $ChannelListModelCopyWith<$Res> {
   factory $ChannelListModelCopyWith(
           ChannelListModel value, $Res Function(ChannelListModel) then) =
-      _$ChannelListModelCopyWithImpl<$Res>;
+      _$ChannelListModelCopyWithImpl<$Res, ChannelListModel>;
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "channel_name")
@@ -259,14 +155,16 @@ abstract class $ChannelListModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ChannelListModelCopyWithImpl<$Res>
+class _$ChannelListModelCopyWithImpl<$Res, $Val extends ChannelListModel>
     implements $ChannelListModelCopyWith<$Res> {
   _$ChannelListModelCopyWithImpl(this._value, this._then);
 
-  final ChannelListModel _value;
   // ignore: unused_field
-  final $Res Function(ChannelListModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -301,137 +199,138 @@ class _$ChannelListModelCopyWithImpl<$Res>
     Object? purchaseBlocked = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelName: channelName == freezed
+      channelName: freezed == channelName
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockCode: channelStockCode == freezed
+      channelStockCode: freezed == channelStockCode
           ? _value.channelStockCode
           : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockQuantity: channelStockQuantity == freezed
+      channelStockQuantity: freezed == channelStockQuantity
           ? _value.channelStockQuantity
           : channelStockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      safetyStockQuantity: safetyStockQuantity == freezed
+      safetyStockQuantity: freezed == safetyStockQuantity
           ? _value.safetyStockQuantity
           : safetyStockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderQuantity: reOrderQuantity == freezed
+      reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      availableQuantity: availableQuantity == freezed
+      availableQuantity: freezed == availableQuantity
           ? _value.availableQuantity
           : availableQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reservedQuantity: reservedQuantity == freezed
+      reservedQuantity: freezed == reservedQuantity
           ? _value.reservedQuantity
           : reservedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      damagedQuantity: damagedQuantity == freezed
+      damagedQuantity: freezed == damagedQuantity
           ? _value.damagedQuantity
           : damagedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      returnedQuantity: returnedQuantity == freezed
+      returnedQuantity: freezed == returnedQuantity
           ? _value.returnedQuantity
           : returnedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      replaceMentQuantity: replaceMentQuantity == freezed
+      replaceMentQuantity: freezed == replaceMentQuantity
           ? _value.replaceMentQuantity
           : replaceMentQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualStock: virtualStock == freezed
+      virtualStock: freezed == virtualStock
           ? _value.virtualStock
           : virtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      purchaseBlockQuantity: purchaseBlockQuantity == freezed
+      purchaseBlockQuantity: freezed == purchaseBlockQuantity
           ? _value.purchaseBlockQuantity
           : purchaseBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesblockQuantity: salesblockQuantity == freezed
+      salesblockQuantity: freezed == salesblockQuantity
           ? _value.salesblockQuantity
           : salesblockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      addVirtualStock: addVirtualStock == freezed
+      addVirtualStock: freezed == addVirtualStock
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualType: virtualType == freezed
+      virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeStockId: channelTypeStockId == freezed
+      channelTypeStockId: freezed == channelTypeStockId
           ? _value.channelTypeStockId
           : channelTypeStockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockId: stockId == freezed
+      stockId: freezed == stockId
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      varaintId: varaintId == freezed
+      varaintId: freezed == varaintId
           ? _value.varaintId
           : varaintId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStatusCrucialPoint: channelStatusCrucialPoint == freezed
+      channelStatusCrucialPoint: freezed == channelStatusCrucialPoint
           ? _value.channelStatusCrucialPoint
           : channelStatusCrucialPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStatusMediumPoint: channelStatusMediumPoint == freezed
+      channelStatusMediumPoint: freezed == channelStatusMediumPoint
           ? _value.channelStatusMediumPoint
           : channelStatusMediumPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlock: salesBlock == freezed
+      salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlocked: purchaseBlocked == freezed
+      purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ChannelListModelCopyWith<$Res>
+abstract class _$$_ChannelListModelCopyWith<$Res>
     implements $ChannelListModelCopyWith<$Res> {
-  factory _$ChannelListModelCopyWith(
-          _ChannelListModel value, $Res Function(_ChannelListModel) then) =
-      __$ChannelListModelCopyWithImpl<$Res>;
+  factory _$$_ChannelListModelCopyWith(
+          _$_ChannelListModel value, $Res Function(_$_ChannelListModel) then) =
+      __$$_ChannelListModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       @JsonKey(name: "channel_name")
@@ -495,16 +394,14 @@ abstract class _$ChannelListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ChannelListModelCopyWithImpl<$Res>
-    extends _$ChannelListModelCopyWithImpl<$Res>
-    implements _$ChannelListModelCopyWith<$Res> {
-  __$ChannelListModelCopyWithImpl(
-      _ChannelListModel _value, $Res Function(_ChannelListModel) _then)
-      : super(_value, (v) => _then(v as _ChannelListModel));
+class __$$_ChannelListModelCopyWithImpl<$Res>
+    extends _$ChannelListModelCopyWithImpl<$Res, _$_ChannelListModel>
+    implements _$$_ChannelListModelCopyWith<$Res> {
+  __$$_ChannelListModelCopyWithImpl(
+      _$_ChannelListModel _value, $Res Function(_$_ChannelListModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ChannelListModel get _value => super._value as _ChannelListModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -538,124 +435,124 @@ class __$ChannelListModelCopyWithImpl<$Res>
     Object? salesBlock = freezed,
     Object? purchaseBlocked = freezed,
   }) {
-    return _then(_ChannelListModel(
-      id: id == freezed
+    return _then(_$_ChannelListModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelName: channelName == freezed
+      channelName: freezed == channelName
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockType: channelStockType == freezed
+      channelStockType: freezed == channelStockType
           ? _value.channelStockType
           : channelStockType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockCode: channelStockCode == freezed
+      channelStockCode: freezed == channelStockCode
           ? _value.channelStockCode
           : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockQuantity: channelStockQuantity == freezed
+      channelStockQuantity: freezed == channelStockQuantity
           ? _value.channelStockQuantity
           : channelStockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      safetyStockQuantity: safetyStockQuantity == freezed
+      safetyStockQuantity: freezed == safetyStockQuantity
           ? _value.safetyStockQuantity
           : safetyStockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderQuantity: reOrderQuantity == freezed
+      reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      availableQuantity: availableQuantity == freezed
+      availableQuantity: freezed == availableQuantity
           ? _value.availableQuantity
           : availableQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reservedQuantity: reservedQuantity == freezed
+      reservedQuantity: freezed == reservedQuantity
           ? _value.reservedQuantity
           : reservedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      damagedQuantity: damagedQuantity == freezed
+      damagedQuantity: freezed == damagedQuantity
           ? _value.damagedQuantity
           : damagedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      returnedQuantity: returnedQuantity == freezed
+      returnedQuantity: freezed == returnedQuantity
           ? _value.returnedQuantity
           : returnedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      replaceMentQuantity: replaceMentQuantity == freezed
+      replaceMentQuantity: freezed == replaceMentQuantity
           ? _value.replaceMentQuantity
           : replaceMentQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualStock: virtualStock == freezed
+      virtualStock: freezed == virtualStock
           ? _value.virtualStock
           : virtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      purchaseBlockQuantity: purchaseBlockQuantity == freezed
+      purchaseBlockQuantity: freezed == purchaseBlockQuantity
           ? _value.purchaseBlockQuantity
           : purchaseBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesblockQuantity: salesblockQuantity == freezed
+      salesblockQuantity: freezed == salesblockQuantity
           ? _value.salesblockQuantity
           : salesblockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      addVirtualStock: addVirtualStock == freezed
+      addVirtualStock: freezed == addVirtualStock
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualType: virtualType == freezed
+      virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeCode: channelTypeCode == freezed
+      channelTypeCode: freezed == channelTypeCode
           ? _value.channelTypeCode
           : channelTypeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeStockId: channelTypeStockId == freezed
+      channelTypeStockId: freezed == channelTypeStockId
           ? _value.channelTypeStockId
           : channelTypeStockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockId: stockId == freezed
+      stockId: freezed == stockId
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      varaintId: varaintId == freezed
+      varaintId: freezed == varaintId
           ? _value.varaintId
           : varaintId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStatusCrucialPoint: channelStatusCrucialPoint == freezed
+      channelStatusCrucialPoint: freezed == channelStatusCrucialPoint
           ? _value.channelStatusCrucialPoint
           : channelStatusCrucialPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStatusMediumPoint: channelStatusMediumPoint == freezed
+      channelStatusMediumPoint: freezed == channelStatusMediumPoint
           ? _value.channelStatusMediumPoint
           : channelStatusMediumPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlock: salesBlock == freezed
+      salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlocked: purchaseBlocked == freezed
+      purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -828,282 +725,276 @@ class _$_ChannelListModel implements _ChannelListModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ChannelListModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ChannelListModel &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.channelName, channelName) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelName, channelName)) &&
+                other.channelName == channelName) &&
             (identical(other.channelId, channelId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelId, channelId)) &&
+                other.channelId == channelId) &&
             (identical(other.channelCode, channelCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelCode, channelCode)) &&
+                other.channelCode == channelCode) &&
             (identical(other.channelStockType, channelStockType) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockType, channelStockType)) &&
+                other.channelStockType == channelStockType) &&
             (identical(other.channelStockCode, channelStockCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockCode, channelStockCode)) &&
+                other.channelStockCode == channelStockCode) &&
             (identical(other.channelStockQuantity, channelStockQuantity) ||
-                const DeepCollectionEquality().equals(
-                    other.channelStockQuantity, channelStockQuantity)) &&
+                other.channelStockQuantity == channelStockQuantity) &&
             (identical(other.safetyStockQuantity, safetyStockQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.safetyStockQuantity, safetyStockQuantity)) &&
+                other.safetyStockQuantity == safetyStockQuantity) &&
             (identical(other.reOrderPoint, reOrderPoint) ||
-                const DeepCollectionEquality()
-                    .equals(other.reOrderPoint, reOrderPoint)) &&
+                other.reOrderPoint == reOrderPoint) &&
             (identical(other.reOrderQuantity, reOrderQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.reOrderQuantity, reOrderQuantity)) &&
+                other.reOrderQuantity == reOrderQuantity) &&
             (identical(other.availableQuantity, availableQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.availableQuantity, availableQuantity)) &&
+                other.availableQuantity == availableQuantity) &&
             (identical(other.reservedQuantity, reservedQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.reservedQuantity, reservedQuantity)) &&
+                other.reservedQuantity == reservedQuantity) &&
             (identical(other.damagedQuantity, damagedQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.damagedQuantity, damagedQuantity)) &&
+                other.damagedQuantity == damagedQuantity) &&
             (identical(other.returnedQuantity, returnedQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnedQuantity, returnedQuantity)) &&
+                other.returnedQuantity == returnedQuantity) &&
             (identical(other.replaceMentQuantity, replaceMentQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.replaceMentQuantity, replaceMentQuantity)) &&
+                other.replaceMentQuantity == replaceMentQuantity) &&
             (identical(other.virtualStock, virtualStock) ||
-                const DeepCollectionEquality()
-                    .equals(other.virtualStock, virtualStock)) &&
+                other.virtualStock == virtualStock) &&
             (identical(other.purchaseBlockQuantity, purchaseBlockQuantity) ||
-                const DeepCollectionEquality().equals(
-                    other.purchaseBlockQuantity, purchaseBlockQuantity)) &&
+                other.purchaseBlockQuantity == purchaseBlockQuantity) &&
             (identical(other.salesblockQuantity, salesblockQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesblockQuantity, salesblockQuantity)) &&
+                other.salesblockQuantity == salesblockQuantity) &&
             (identical(other.addVirtualStock, addVirtualStock) ||
-                const DeepCollectionEquality()
-                    .equals(other.addVirtualStock, addVirtualStock)) &&
+                other.addVirtualStock == addVirtualStock) &&
             (identical(other.virtualType, virtualType) ||
-                const DeepCollectionEquality()
-                    .equals(other.virtualType, virtualType)) &&
+                other.virtualType == virtualType) &&
             (identical(other.channelTypeCode, channelTypeCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelTypeCode, channelTypeCode)) &&
+                other.channelTypeCode == channelTypeCode) &&
             (identical(other.variantCode, variantCode) ||
-                const DeepCollectionEquality().equals(other.variantCode, variantCode)) &&
-            (identical(other.channelTypeStockId, channelTypeStockId) || const DeepCollectionEquality().equals(other.channelTypeStockId, channelTypeStockId)) &&
-            (identical(other.stockId, stockId) || const DeepCollectionEquality().equals(other.stockId, stockId)) &&
-            (identical(other.varaintId, varaintId) || const DeepCollectionEquality().equals(other.varaintId, varaintId)) &&
-            (identical(other.channelStatusCrucialPoint, channelStatusCrucialPoint) || const DeepCollectionEquality().equals(other.channelStatusCrucialPoint, channelStatusCrucialPoint)) &&
-            (identical(other.channelStatusMediumPoint, channelStatusMediumPoint) || const DeepCollectionEquality().equals(other.channelStatusMediumPoint, channelStatusMediumPoint)) &&
-            (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
-            (identical(other.salesBlock, salesBlock) || const DeepCollectionEquality().equals(other.salesBlock, salesBlock)) &&
-            (identical(other.purchaseBlocked, purchaseBlocked) || const DeepCollectionEquality().equals(other.purchaseBlocked, purchaseBlocked)));
+                other.variantCode == variantCode) &&
+            (identical(other.channelTypeStockId, channelTypeStockId) ||
+                other.channelTypeStockId == channelTypeStockId) &&
+            (identical(other.stockId, stockId) || other.stockId == stockId) &&
+            (identical(other.varaintId, varaintId) ||
+                other.varaintId == varaintId) &&
+            (identical(other.channelStatusCrucialPoint,
+                    channelStatusCrucialPoint) ||
+                other.channelStatusCrucialPoint == channelStatusCrucialPoint) &&
+            (identical(
+                    other.channelStatusMediumPoint, channelStatusMediumPoint) ||
+                other.channelStatusMediumPoint == channelStatusMediumPoint) &&
+            (identical(other.stockWarning, stockWarning) ||
+                other.stockWarning == stockWarning) &&
+            (identical(other.salesBlock, salesBlock) ||
+                other.salesBlock == salesBlock) &&
+            (identical(other.purchaseBlocked, purchaseBlocked) ||
+                other.purchaseBlocked == purchaseBlocked));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(channelName) ^
-      const DeepCollectionEquality().hash(channelId) ^
-      const DeepCollectionEquality().hash(channelCode) ^
-      const DeepCollectionEquality().hash(channelStockType) ^
-      const DeepCollectionEquality().hash(channelStockCode) ^
-      const DeepCollectionEquality().hash(channelStockQuantity) ^
-      const DeepCollectionEquality().hash(safetyStockQuantity) ^
-      const DeepCollectionEquality().hash(reOrderPoint) ^
-      const DeepCollectionEquality().hash(reOrderQuantity) ^
-      const DeepCollectionEquality().hash(availableQuantity) ^
-      const DeepCollectionEquality().hash(reservedQuantity) ^
-      const DeepCollectionEquality().hash(damagedQuantity) ^
-      const DeepCollectionEquality().hash(returnedQuantity) ^
-      const DeepCollectionEquality().hash(replaceMentQuantity) ^
-      const DeepCollectionEquality().hash(virtualStock) ^
-      const DeepCollectionEquality().hash(purchaseBlockQuantity) ^
-      const DeepCollectionEquality().hash(salesblockQuantity) ^
-      const DeepCollectionEquality().hash(addVirtualStock) ^
-      const DeepCollectionEquality().hash(virtualType) ^
-      const DeepCollectionEquality().hash(channelTypeCode) ^
-      const DeepCollectionEquality().hash(variantCode) ^
-      const DeepCollectionEquality().hash(channelTypeStockId) ^
-      const DeepCollectionEquality().hash(stockId) ^
-      const DeepCollectionEquality().hash(varaintId) ^
-      const DeepCollectionEquality().hash(channelStatusCrucialPoint) ^
-      const DeepCollectionEquality().hash(channelStatusMediumPoint) ^
-      const DeepCollectionEquality().hash(stockWarning) ^
-      const DeepCollectionEquality().hash(salesBlock) ^
-      const DeepCollectionEquality().hash(purchaseBlocked);
 
   @JsonKey(ignore: true)
   @override
-  _$ChannelListModelCopyWith<_ChannelListModel> get copyWith =>
-      __$ChannelListModelCopyWithImpl<_ChannelListModel>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        channelName,
+        channelId,
+        channelCode,
+        channelStockType,
+        channelStockCode,
+        channelStockQuantity,
+        safetyStockQuantity,
+        reOrderPoint,
+        reOrderQuantity,
+        availableQuantity,
+        reservedQuantity,
+        damagedQuantity,
+        returnedQuantity,
+        replaceMentQuantity,
+        virtualStock,
+        purchaseBlockQuantity,
+        salesblockQuantity,
+        addVirtualStock,
+        virtualType,
+        channelTypeCode,
+        variantCode,
+        channelTypeStockId,
+        stockId,
+        varaintId,
+        channelStatusCrucialPoint,
+        channelStatusMediumPoint,
+        stockWarning,
+        salesBlock,
+        purchaseBlocked
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ChannelListModelCopyWith<_$_ChannelListModel> get copyWith =>
+      __$$_ChannelListModelCopyWithImpl<_$_ChannelListModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ChannelListModelToJson(this);
+    return _$$_ChannelListModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ChannelListModel implements ChannelListModel {
   const factory _ChannelListModel(
-      {int? id,
+      {final int? id,
       @JsonKey(name: "channel_name")
-          String? channelName,
+          final String? channelName,
       @JsonKey(name: "channel_id")
-          String? channelId,
+          final String? channelId,
       @JsonKey(name: "channel_code")
-          String? channelCode,
+          final String? channelCode,
       @JsonKey(name: "channel_stock_type")
-          String? channelStockType,
+          final String? channelStockType,
       @JsonKey(name: "channel_stock_code")
-          String? channelStockCode,
+          final String? channelStockCode,
       @JsonKey(name: "channel_stock_quantity")
-          int? channelStockQuantity,
+          final int? channelStockQuantity,
       @JsonKey(name: "safety_stock_qty")
-          int? safetyStockQuantity,
+          final int? safetyStockQuantity,
       @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
+          final int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
-          int? reOrderQuantity,
+          final int? reOrderQuantity,
       @JsonKey(name: "available_qty")
-          int? availableQuantity,
+          final int? availableQuantity,
       @JsonKey(name: "reserved_qty")
-          int? reservedQuantity,
+          final int? reservedQuantity,
       @JsonKey(name: "damaged_qty")
-          int? damagedQuantity,
+          final int? damagedQuantity,
       @JsonKey(name: "returned_qty")
-          int? returnedQuantity,
+          final int? returnedQuantity,
       @JsonKey(name: "replacement_qty")
-          int? replaceMentQuantity,
+          final int? replaceMentQuantity,
       @JsonKey(name: "virtual_stock")
-          int? virtualStock,
+          final int? virtualStock,
       @JsonKey(name: "purchase_blocked_qty")
-          int? purchaseBlockQuantity,
+          final int? purchaseBlockQuantity,
       @JsonKey(name: "sales_blocked_qty")
-          int? salesblockQuantity,
+          final int? salesblockQuantity,
       @JsonKey(name: "add_virtual_stock")
-          int? addVirtualStock,
+          final int? addVirtualStock,
       @JsonKey(name: "virtual_type")
-          String? virtualType,
+          final String? virtualType,
       @JsonKey(name: "channel_type_code")
-          String? channelTypeCode,
+          final String? channelTypeCode,
       @JsonKey(name: "variant_code")
-          String? variantCode,
+          final String? variantCode,
       @JsonKey(name: "channel_type_stock_id")
-          int? channelTypeStockId,
+          final int? channelTypeStockId,
       @JsonKey(name: "stock_id")
-          int? stockId,
+          final int? stockId,
       @JsonKey(name: "variant_id")
-          int? varaintId,
+          final int? varaintId,
       @JsonKey(name: "channel_status_crucial_point")
-          int? channelStatusCrucialPoint,
+          final int? channelStatusCrucialPoint,
       @JsonKey(name: "channel_status_medium_point")
-          int? channelStatusMediumPoint,
+          final int? channelStatusMediumPoint,
       @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
+          final bool? stockWarning,
       @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesBlock,
+          final bool? salesBlock,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked}) = _$_ChannelListModel;
+          final bool? purchaseBlocked}) = _$_ChannelListModel;
 
   factory _ChannelListModel.fromJson(Map<String, dynamic> json) =
       _$_ChannelListModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "channel_name")
-  String? get channelName => throw _privateConstructorUsedError;
+  String? get channelName;
   @override
   @JsonKey(name: "channel_id")
-  String? get channelId => throw _privateConstructorUsedError;
+  String? get channelId;
   @override
   @JsonKey(name: "channel_code")
-  String? get channelCode => throw _privateConstructorUsedError;
+  String? get channelCode;
   @override
   @JsonKey(name: "channel_stock_type")
-  String? get channelStockType => throw _privateConstructorUsedError;
+  String? get channelStockType;
   @override
   @JsonKey(name: "channel_stock_code")
-  String? get channelStockCode => throw _privateConstructorUsedError;
+  String? get channelStockCode;
   @override
   @JsonKey(name: "channel_stock_quantity")
-  int? get channelStockQuantity => throw _privateConstructorUsedError;
+  int? get channelStockQuantity;
   @override
   @JsonKey(name: "safety_stock_qty")
-  int? get safetyStockQuantity => throw _privateConstructorUsedError;
+  int? get safetyStockQuantity;
   @override
   @JsonKey(name: "reorder_point")
-  int? get reOrderPoint => throw _privateConstructorUsedError;
+  int? get reOrderPoint;
   @override
   @JsonKey(name: "reorder_quantity")
-  int? get reOrderQuantity => throw _privateConstructorUsedError;
+  int? get reOrderQuantity;
   @override
   @JsonKey(name: "available_qty")
-  int? get availableQuantity => throw _privateConstructorUsedError;
+  int? get availableQuantity;
   @override
   @JsonKey(name: "reserved_qty")
-  int? get reservedQuantity => throw _privateConstructorUsedError;
+  int? get reservedQuantity;
   @override
   @JsonKey(name: "damaged_qty")
-  int? get damagedQuantity => throw _privateConstructorUsedError;
+  int? get damagedQuantity;
   @override
   @JsonKey(name: "returned_qty")
-  int? get returnedQuantity => throw _privateConstructorUsedError;
+  int? get returnedQuantity;
   @override
   @JsonKey(name: "replacement_qty")
-  int? get replaceMentQuantity => throw _privateConstructorUsedError;
+  int? get replaceMentQuantity;
   @override
   @JsonKey(name: "virtual_stock")
-  int? get virtualStock => throw _privateConstructorUsedError;
+  int? get virtualStock;
   @override
   @JsonKey(name: "purchase_blocked_qty")
-  int? get purchaseBlockQuantity => throw _privateConstructorUsedError;
+  int? get purchaseBlockQuantity;
   @override
   @JsonKey(name: "sales_blocked_qty")
-  int? get salesblockQuantity => throw _privateConstructorUsedError;
+  int? get salesblockQuantity;
   @override
   @JsonKey(name: "add_virtual_stock")
-  int? get addVirtualStock => throw _privateConstructorUsedError;
+  int? get addVirtualStock;
   @override
   @JsonKey(name: "virtual_type")
-  String? get virtualType => throw _privateConstructorUsedError;
+  String? get virtualType;
   @override
   @JsonKey(name: "channel_type_code")
-  String? get channelTypeCode => throw _privateConstructorUsedError;
+  String? get channelTypeCode;
   @override
   @JsonKey(name: "variant_code")
-  String? get variantCode => throw _privateConstructorUsedError;
+  String? get variantCode;
   @override
   @JsonKey(name: "channel_type_stock_id")
-  int? get channelTypeStockId => throw _privateConstructorUsedError;
+  int? get channelTypeStockId;
   @override
   @JsonKey(name: "stock_id")
-  int? get stockId => throw _privateConstructorUsedError;
+  int? get stockId;
   @override
   @JsonKey(name: "variant_id")
-  int? get varaintId => throw _privateConstructorUsedError;
+  int? get varaintId;
   @override
   @JsonKey(name: "channel_status_crucial_point")
-  int? get channelStatusCrucialPoint => throw _privateConstructorUsedError;
+  int? get channelStatusCrucialPoint;
   @override
   @JsonKey(name: "channel_status_medium_point")
-  int? get channelStatusMediumPoint => throw _privateConstructorUsedError;
+  int? get channelStatusMediumPoint;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
-  bool? get stockWarning => throw _privateConstructorUsedError;
+  bool? get stockWarning;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
-  bool? get salesBlock => throw _privateConstructorUsedError;
+  bool? get salesBlock;
   @override
   @JsonKey(name: "purchase_blocked", defaultValue: false)
-  bool? get purchaseBlocked => throw _privateConstructorUsedError;
+  bool? get purchaseBlocked;
   @override
   @JsonKey(ignore: true)
-  _$ChannelListModelCopyWith<_ChannelListModel> get copyWith =>
+  _$$_ChannelListModelCopyWith<_$_ChannelListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -320,7 +320,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                 children: [
                                   Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.end,
                                     children: [
 
                                       TextButtonLarge(
@@ -356,6 +356,9 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    width: width * .003,
+                                  ),
                                   InvoiceSalesStableTable(
                                     totalPrice: totalPricePriceController,
                                     sellingPrice: sellingPriceController,
@@ -385,7 +388,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     height: 50,
                                   ),
                                   Row(children: [
-                                    TextWidget(text: "invoice lines"),
+                                    TextWidget(text: "Invoice Lines"),
                                   ],),
 
                                   Divider(color: Colors.grey,thickness: 1,),
@@ -398,7 +401,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                   ),
                                   Container(
                                     color: Colors.white,
-                                    height: 50,
+                                    height: 10,
                                   ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
@@ -418,10 +421,10 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                       //     iconColor: Colors.red,
                                       //     bdr: true),
                                       SizedBox(
-                                        width: width * .008,
+                                        width: width * .003,
                                       ),
                                       Button(Icons.check, Colors.grey,ctx: context,
-                                          text: "Save",
+                                          text: "SAVE",
                                           height: 29,
                                           Color: Color(0xff3E4F5B),
                                           width: 90,
@@ -532,7 +535,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
-      taxableAmounts = (total - ((total * disct) / 100));
+      taxableAmounts = double.parse((total - ((total * disct) / 100)).toStringAsFixed(2));
     }
     return taxableAmounts;
   }
@@ -541,7 +544,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
   double sellingPriceUpdation(double taxableAmount, double vatt) {
     double sellingPrice1 = 0;
-    sellingPrice1 = (taxableAmount + ((taxableAmount * vatt) / 100));
+    sellingPrice1 = double.parse((taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
 
     setState(() {});
     return sellingPrice1;
@@ -634,17 +637,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                   padding: EdgeInsets.all(10),
                                   child: customTable(
 
-                                      border: const TableBorder(
 
-                                        verticalInside: BorderSide(
-                                            width:.5,
-                                            color: Colors.black45,
-                                            style: BorderStyle.solid),
-                                        horizontalInside: BorderSide(
-                                            width:.3,
-                                            color: Colors.black45,
-                                            // color: Colors.blue,
-                                            style: BorderStyle.solid),),
 
                                       tableWidth: .5,
 
@@ -661,16 +654,15 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                             children: [
 
-                                              tableHeadtext('Variant Id', padding: EdgeInsets.all(7), height: 46, size: 13,),
-                                              tableHeadtext('Barcode', padding: EdgeInsets.all(7), height: 46, size: 13,
+                                              tableHeadtext('Variant Id',  size: 13,),
+                                              tableHeadtext('Barcode',  size: 13,
                                               ),
-                                              tableHeadtext('Sales Order Line Code', padding: EdgeInsets.all(7), height: 46, size: 13,
+                                              tableHeadtext('Sales Order Line Code', size: 13,
                                               ),
 
-                                              tableHeadtext('Return Based On', padding: EdgeInsets.all(7), height: 46, size: 13,),
+                                              tableHeadtext('Return Based On', size: 13,),
                                               tableHeadtext(
-                                                'Return time ', padding: EdgeInsets.all(7),
-                                                height: 46,
+                                                'Return time ',
 
                                                 size: 13,
 
@@ -684,9 +676,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 ' Is Invoiced',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -700,9 +690,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'Sales UOM',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -716,9 +704,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'Quantity',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -731,9 +717,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'Unit Cost',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
@@ -741,17 +725,14 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                               ),
                                               tableHeadtext(
                                                 'Discount Type',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                               ),
                                               tableHeadtext(
 
                                                 'Discount',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -765,11 +746,8 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                               tableHeadtext(
 
-                                                'Excise Tax',
+                                                'Excess Tax',
 
-                                                padding: EdgeInsets.all(7),
-
-                                                height: 46,
 
                                                 size: 13,
 
@@ -783,9 +761,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'Taxable Amount',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -799,9 +775,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'VAT',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -817,9 +791,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                                 'Selling Price',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -829,9 +801,8 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                               ),
                                               tableHeadtext(
-                                                'Warrenty Price',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+                                                'Warranty Price',
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
@@ -841,24 +812,21 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
 
                                               tableHeadtext(
                                                 'Total Price',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Is Active',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 '',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
@@ -872,11 +840,25 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                         if (table1 != null)...[
                                           for (var i = 0; i < table1!.length; i++)
                                             TableRow(
-                                                decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle,
-                                                    border:const  Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                        bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid),
-                                                        right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle
-                                                            .solid))),
+                    decoration: BoxDecoration(
+                    color: Pellet.tableRowColor,
+                        shape: BoxShape.rectangle,
+                        border:  Border(
+                            left: BorderSide(
+
+                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+                                style: BorderStyle.solid),
+                            bottom: BorderSide(
+
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                style: BorderStyle.solid),
+                            right: BorderSide(
+                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                width: .4,
+
+                                style: BorderStyle.solid))),
+
                                                 children: [
 
                                                   TableCell(
@@ -1382,14 +1364,63 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                       widget.updation(table1);
                                                       // table1[i].copyWith(updatecheck: false);
                                                     },
-                                                    label: "update",
+                                                    label: "UPDATE",
                                                   )
 
 
                                                 ]
                                             )
+                                        ],
+
+                                      if(table1.isEmpty==true)
+                                        TableRow(
+                                            decoration: BoxDecoration(
+                                                color: Pellet.tableRowColor,
+                                                shape: BoxShape.rectangle,
+                                                border:  Border(
+                                                    left: BorderSide(
+
+                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+                                                        style: BorderStyle.solid),
+                                                    bottom: BorderSide(
+
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        style: BorderStyle.solid),
+                                                    right: BorderSide(
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+
+                                                        style: BorderStyle.solid))),
+
+                    children: [
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+                      textPadding(""),
+
+                      Container(height: 50,)
+
+
+                    ])
+
+
                                         ]
-                                      ]
+
                                   ),
                                 ),
 
@@ -1450,12 +1481,12 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
 
                 NewInputCard(
                     controller: widget.invoiceCode
-                    , title: "Invoice code"),
+                    , title: "Invoice Code"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
-                    controller: widget.invoiceDate, title: "Invoice date"),
+                    controller: widget.invoiceDate, title: "Invoice Date"),
                 SizedBox(
                   height: height * .030,
                 ),
@@ -1465,19 +1496,19 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
                   height: height * .030,
                 ),
                 NewInputCard(
-                    controller: widget.paymentStatus, title: "payment status"),
+                    controller: widget.paymentStatus, title: "Payment Status"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
-                    controller: widget.paymentMethod, title: "payment method"),
+                    controller: widget.paymentMethod, title: "Payment Method"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
-                    controller: widget.customerId, title: "customer id"),
+                    controller: widget.customerId, title: "Customer Id"),
                 SizedBox(
-                  height: height * .080,
+                  height: height * .119,
                 ),
 
 
@@ -1486,39 +1517,38 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
             )),
             Expanded(child: Column(children: [
               SizedBox(
-                height: height * .045,
+                height: height * .015,
+              ),
+              NewInputCard(
+                  controller: widget.trn, title: "TRN Number"),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                  controller: widget.orderStatus, title: "Order Status"),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                  controller: widget.invoiceStatus, title: "Invoice Status"),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                  controller: widget.assignedto, title: "Assigned To"),
+              SizedBox(
+                height: height * .030,
               ),
 
               NewInputCard(
-                  controller: widget.trn, title: "TRN number"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.orderStatus, title: "order status"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.invoiceStatus, title: "invoice status"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.assignedto, title: "assigned to"),
-              SizedBox(
-                height: height * .030,
-              ),
-
-              NewInputCard(
-                controller: widget.note, title: "note",
+                controller: widget.note, title: "Note",
                 height: 90,
                 maxLines: 3,),
               SizedBox(
-                height: height * .002,
+                height: height * .030,
               ),
               NewInputCard(
-                controller: widget.remarks, title: "remarks",
+                controller: widget.remarks, title: "Remarks",
                 height: 90,
                 maxLines: 3,),
 
@@ -1528,45 +1558,45 @@ class _InvoiceSalesStableTableState extends State<InvoiceSalesStableTable> {
             ],)),
             Expanded(child: Column(children: [
               SizedBox(
-                height: height * .045,
+                height: height * .015,
+              ),
+
+
+
+              NewInputCard(
+                  controller: widget.unitCost, title: "Unit Cost"),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                  controller: widget.discount, title: "Discount"),
+              SizedBox(
+                height: height * .030,
+              ),
+              NewInputCard(
+                  controller: widget.excise, title: "Exccess Tax"),
+              SizedBox(
+                height: height * .030,
               ),
 
               NewInputCard(
-                  controller: widget.unitCost, title: "unit Cost"),
+                  controller: widget.taxable, title: "Taxable  Amount"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: widget.discount, title: "discount"),
+                  controller: widget.vat, title: "VAT"),
               SizedBox(
                 height: height * .030,
               ),
               NewInputCard(
-                  controller: widget.excise, title: "excise tax"),
+                  controller: widget.sellingPrice, title: "Selling Price Total"),
               SizedBox(
                 height: height * .030,
               ),
+              NewInputCard(
+                  controller: widget.totalPrice, title: "Total Price"),
 
-              NewInputCard(
-                  controller: widget.taxable, title: "taxable  amount"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.vat, title: "vat"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.sellingPrice, title: "selling price total"),
-              SizedBox(
-                height: height * .030,
-              ),
-              NewInputCard(
-                  controller: widget.totalPrice, title: "total price"),
-              SizedBox(
-                height: height * .030,
-              ),
             ],))
 
           ],

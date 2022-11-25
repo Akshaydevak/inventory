@@ -382,7 +382,7 @@ class _VariantChannelAllocationScreenState
                                       children: [
                                         Button(Icons.delete, Colors.red,
                                             ctx: context,
-                                            text: "Discard",
+                                            text: "DISCARD",
                                             onApply: () {
                                               // if(updateCheck){
                                               //   // clears();
@@ -401,7 +401,7 @@ class _VariantChannelAllocationScreenState
                                         ),
                                         Button(Icons.check, Colors.grey,
                                             ctx: context,
-                                            text:"save",
+                                            text:"SAVE",
                                             height: 29,
                                             Color: Color(0xff3E4F5B),
                                             width: 90,

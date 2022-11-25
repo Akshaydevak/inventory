@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'costingpagecreation.dart';
@@ -11,71 +12,12 @@ part of 'costingpagecreation.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 CostingPageCreationPostModel _$CostingPageCreationPostModelFromJson(
     Map<String, dynamic> json) {
   return _CostingPageCreationPostModel.fromJson(json);
 }
-
-/// @nodoc
-class _$CostingPageCreationPostModelTearOff {
-  const _$CostingPageCreationPostModelTearOff();
-
-  _CostingPageCreationPostModel call(
-      {String? description,
-      int? id,
-      @JsonKey(name: "pricing_pg_type") List<String>? pricingPgtype,
-      @JsonKey(name: "channel_id") int? channelId,
-      @JsonKey(name: "costing_method_id") int? costingMethodId,
-      @JsonKey(name: "pricing_group_id") int? pricingGroupId,
-      @JsonKey(name: "channel_stock_id") int? channelStockId,
-      @JsonKey(name: "channel_code") String? channelCode,
-      @JsonKey(name: "price_group_name") String? pricingGroupName,
-      @JsonKey(name: "costing_method_name") String? costingMethodName,
-      @JsonKey(name: "channel_stock_code") String? channelStockCode,
-      @JsonKey(name: "costing_code") String? costingCode,
-      @JsonKey(name: "variant_id") int? variantId,
-      @JsonKey(name: "variant_code") String? variantCode,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "pricing_gp_type") String? pricingGpType,
-      @JsonKey(name: "gp_percentage") double? gpPercentage,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "selling_price") double? sellingPrice,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _CostingPageCreationPostModel(
-      description: description,
-      id: id,
-      pricingPgtype: pricingPgtype,
-      channelId: channelId,
-      costingMethodId: costingMethodId,
-      pricingGroupId: pricingGroupId,
-      channelStockId: channelStockId,
-      channelCode: channelCode,
-      pricingGroupName: pricingGroupName,
-      costingMethodName: costingMethodName,
-      channelStockCode: channelStockCode,
-      costingCode: costingCode,
-      variantId: variantId,
-      variantCode: variantCode,
-      inventoryId: inventoryId,
-      createdBy: createdBy,
-      pricingGpType: pricingGpType,
-      gpPercentage: gpPercentage,
-      unitCost: unitCost,
-      sellingPrice: sellingPrice,
-      isActive: isActive,
-    );
-  }
-
-  CostingPageCreationPostModel fromJson(Map<String, Object> json) {
-    return CostingPageCreationPostModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $CostingPageCreationPostModel = _$CostingPageCreationPostModelTearOff();
 
 /// @nodoc
 mixin _$CostingPageCreationPostModel {
@@ -131,7 +73,9 @@ abstract class $CostingPageCreationPostModelCopyWith<$Res> {
   factory $CostingPageCreationPostModelCopyWith(
           CostingPageCreationPostModel value,
           $Res Function(CostingPageCreationPostModel) then) =
-      _$CostingPageCreationPostModelCopyWithImpl<$Res>;
+      _$CostingPageCreationPostModelCopyWithImpl<$Res,
+          CostingPageCreationPostModel>;
+  @useResult
   $Res call(
       {String? description,
       int? id,
@@ -157,14 +101,17 @@ abstract class $CostingPageCreationPostModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CostingPageCreationPostModelCopyWithImpl<$Res>
+class _$CostingPageCreationPostModelCopyWithImpl<$Res,
+        $Val extends CostingPageCreationPostModel>
     implements $CostingPageCreationPostModelCopyWith<$Res> {
   _$CostingPageCreationPostModelCopyWithImpl(this._value, this._then);
 
-  final CostingPageCreationPostModel _value;
   // ignore: unused_field
-  final $Res Function(CostingPageCreationPostModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -190,102 +137,103 @@ class _$CostingPageCreationPostModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      pricingPgtype: pricingPgtype == freezed
+      pricingPgtype: freezed == pricingPgtype
           ? _value.pricingPgtype
           : pricingPgtype // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as int?,
-      costingMethodId: costingMethodId == freezed
+      costingMethodId: freezed == costingMethodId
           ? _value.costingMethodId
           : costingMethodId // ignore: cast_nullable_to_non_nullable
               as int?,
-      pricingGroupId: pricingGroupId == freezed
+      pricingGroupId: freezed == pricingGroupId
           ? _value.pricingGroupId
           : pricingGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStockId: channelStockId == freezed
+      channelStockId: freezed == channelStockId
           ? _value.channelStockId
           : channelStockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      pricingGroupName: pricingGroupName == freezed
+      pricingGroupName: freezed == pricingGroupName
           ? _value.pricingGroupName
           : pricingGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      costingMethodName: costingMethodName == freezed
+      costingMethodName: freezed == costingMethodName
           ? _value.costingMethodName
           : costingMethodName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockCode: channelStockCode == freezed
+      channelStockCode: freezed == channelStockCode
           ? _value.channelStockCode
           : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      costingCode: costingCode == freezed
+      costingCode: freezed == costingCode
           ? _value.costingCode
           : costingCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      pricingGpType: pricingGpType == freezed
+      pricingGpType: freezed == pricingGpType
           ? _value.pricingGpType
           : pricingGpType // ignore: cast_nullable_to_non_nullable
               as String?,
-      gpPercentage: gpPercentage == freezed
+      gpPercentage: freezed == gpPercentage
           ? _value.gpPercentage
           : gpPercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPrice: sellingPrice == freezed
+      sellingPrice: freezed == sellingPrice
           ? _value.sellingPrice
           : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$CostingPageCreationPostModelCopyWith<$Res>
+abstract class _$$_CostingPageCreationPostModelCopyWith<$Res>
     implements $CostingPageCreationPostModelCopyWith<$Res> {
-  factory _$CostingPageCreationPostModelCopyWith(
-          _CostingPageCreationPostModel value,
-          $Res Function(_CostingPageCreationPostModel) then) =
-      __$CostingPageCreationPostModelCopyWithImpl<$Res>;
+  factory _$$_CostingPageCreationPostModelCopyWith(
+          _$_CostingPageCreationPostModel value,
+          $Res Function(_$_CostingPageCreationPostModel) then) =
+      __$$_CostingPageCreationPostModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? description,
       int? id,
@@ -311,18 +259,16 @@ abstract class _$CostingPageCreationPostModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CostingPageCreationPostModelCopyWithImpl<$Res>
-    extends _$CostingPageCreationPostModelCopyWithImpl<$Res>
-    implements _$CostingPageCreationPostModelCopyWith<$Res> {
-  __$CostingPageCreationPostModelCopyWithImpl(
-      _CostingPageCreationPostModel _value,
-      $Res Function(_CostingPageCreationPostModel) _then)
-      : super(_value, (v) => _then(v as _CostingPageCreationPostModel));
+class __$$_CostingPageCreationPostModelCopyWithImpl<$Res>
+    extends _$CostingPageCreationPostModelCopyWithImpl<$Res,
+        _$_CostingPageCreationPostModel>
+    implements _$$_CostingPageCreationPostModelCopyWith<$Res> {
+  __$$_CostingPageCreationPostModelCopyWithImpl(
+      _$_CostingPageCreationPostModel _value,
+      $Res Function(_$_CostingPageCreationPostModel) _then)
+      : super(_value, _then);
 
-  @override
-  _CostingPageCreationPostModel get _value =>
-      super._value as _CostingPageCreationPostModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -347,88 +293,88 @@ class __$CostingPageCreationPostModelCopyWithImpl<$Res>
     Object? sellingPrice = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_CostingPageCreationPostModel(
-      description: description == freezed
+    return _then(_$_CostingPageCreationPostModel(
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      pricingPgtype: pricingPgtype == freezed
-          ? _value.pricingPgtype
+      pricingPgtype: freezed == pricingPgtype
+          ? _value._pricingPgtype
           : pricingPgtype // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      channelId: channelId == freezed
+      channelId: freezed == channelId
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as int?,
-      costingMethodId: costingMethodId == freezed
+      costingMethodId: freezed == costingMethodId
           ? _value.costingMethodId
           : costingMethodId // ignore: cast_nullable_to_non_nullable
               as int?,
-      pricingGroupId: pricingGroupId == freezed
+      pricingGroupId: freezed == pricingGroupId
           ? _value.pricingGroupId
           : pricingGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelStockId: channelStockId == freezed
+      channelStockId: freezed == channelStockId
           ? _value.channelStockId
           : channelStockId // ignore: cast_nullable_to_non_nullable
               as int?,
-      channelCode: channelCode == freezed
+      channelCode: freezed == channelCode
           ? _value.channelCode
           : channelCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      pricingGroupName: pricingGroupName == freezed
+      pricingGroupName: freezed == pricingGroupName
           ? _value.pricingGroupName
           : pricingGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      costingMethodName: costingMethodName == freezed
+      costingMethodName: freezed == costingMethodName
           ? _value.costingMethodName
           : costingMethodName // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelStockCode: channelStockCode == freezed
+      channelStockCode: freezed == channelStockCode
           ? _value.channelStockCode
           : channelStockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      costingCode: costingCode == freezed
+      costingCode: freezed == costingCode
           ? _value.costingCode
           : costingCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      pricingGpType: pricingGpType == freezed
+      pricingGpType: freezed == pricingGpType
           ? _value.pricingGpType
           : pricingGpType // ignore: cast_nullable_to_non_nullable
               as String?,
-      gpPercentage: gpPercentage == freezed
+      gpPercentage: freezed == gpPercentage
           ? _value.gpPercentage
           : gpPercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPrice: sellingPrice == freezed
+      sellingPrice: freezed == sellingPrice
           ? _value.sellingPrice
           : sellingPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -442,7 +388,7 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
   const _$_CostingPageCreationPostModel(
       {this.description,
       this.id,
-      @JsonKey(name: "pricing_pg_type") this.pricingPgtype,
+      @JsonKey(name: "pricing_pg_type") final List<String>? pricingPgtype,
       @JsonKey(name: "channel_id") this.channelId,
       @JsonKey(name: "costing_method_id") this.costingMethodId,
       @JsonKey(name: "pricing_group_id") this.pricingGroupId,
@@ -460,7 +406,8 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
       @JsonKey(name: "gp_percentage") this.gpPercentage,
       @JsonKey(name: "unit_cost") this.unitCost,
       @JsonKey(name: "selling_price") this.sellingPrice,
-      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive})
+      : _pricingPgtype = pricingPgtype;
 
   factory _$_CostingPageCreationPostModel.fromJson(Map<String, dynamic> json) =>
       _$$_CostingPageCreationPostModelFromJson(json);
@@ -469,9 +416,16 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
   final String? description;
   @override
   final int? id;
+  final List<String>? _pricingPgtype;
   @override
   @JsonKey(name: "pricing_pg_type")
-  final List<String>? pricingPgtype;
+  List<String>? get pricingPgtype {
+    final value = _pricingPgtype;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "channel_id")
   final int? channelId;
@@ -535,200 +489,203 @@ class _$_CostingPageCreationPostModel implements _CostingPageCreationPostModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CostingPageCreationPostModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_CostingPageCreationPostModel &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.pricingPgtype, pricingPgtype) ||
-                const DeepCollectionEquality()
-                    .equals(other.pricingPgtype, pricingPgtype)) &&
+                other.description == description) &&
+            (identical(other.id, id) || other.id == id) &&
+            const DeepCollectionEquality()
+                .equals(other._pricingPgtype, _pricingPgtype) &&
             (identical(other.channelId, channelId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelId, channelId)) &&
+                other.channelId == channelId) &&
             (identical(other.costingMethodId, costingMethodId) ||
-                const DeepCollectionEquality()
-                    .equals(other.costingMethodId, costingMethodId)) &&
+                other.costingMethodId == costingMethodId) &&
             (identical(other.pricingGroupId, pricingGroupId) ||
-                const DeepCollectionEquality()
-                    .equals(other.pricingGroupId, pricingGroupId)) &&
+                other.pricingGroupId == pricingGroupId) &&
             (identical(other.channelStockId, channelStockId) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockId, channelStockId)) &&
+                other.channelStockId == channelStockId) &&
             (identical(other.channelCode, channelCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelCode, channelCode)) &&
+                other.channelCode == channelCode) &&
             (identical(other.pricingGroupName, pricingGroupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.pricingGroupName, pricingGroupName)) &&
+                other.pricingGroupName == pricingGroupName) &&
             (identical(other.costingMethodName, costingMethodName) ||
-                const DeepCollectionEquality()
-                    .equals(other.costingMethodName, costingMethodName)) &&
+                other.costingMethodName == costingMethodName) &&
             (identical(other.channelStockCode, channelStockCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.channelStockCode, channelStockCode)) &&
+                other.channelStockCode == channelStockCode) &&
             (identical(other.costingCode, costingCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.costingCode, costingCode)) &&
+                other.costingCode == costingCode) &&
             (identical(other.variantId, variantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantId, variantId)) &&
+                other.variantId == variantId) &&
             (identical(other.variantCode, variantCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantCode, variantCode)) &&
+                other.variantCode == variantCode) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.createdBy, createdBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdBy, createdBy)) &&
+                other.createdBy == createdBy) &&
             (identical(other.pricingGpType, pricingGpType) ||
-                const DeepCollectionEquality()
-                    .equals(other.pricingGpType, pricingGpType)) &&
+                other.pricingGpType == pricingGpType) &&
             (identical(other.gpPercentage, gpPercentage) ||
-                const DeepCollectionEquality()
-                    .equals(other.gpPercentage, gpPercentage)) &&
+                other.gpPercentage == gpPercentage) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
+                other.unitCost == unitCost) &&
             (identical(other.sellingPrice, sellingPrice) ||
-                const DeepCollectionEquality()
-                    .equals(other.sellingPrice, sellingPrice)) &&
+                other.sellingPrice == sellingPrice) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(pricingPgtype) ^
-      const DeepCollectionEquality().hash(channelId) ^
-      const DeepCollectionEquality().hash(costingMethodId) ^
-      const DeepCollectionEquality().hash(pricingGroupId) ^
-      const DeepCollectionEquality().hash(channelStockId) ^
-      const DeepCollectionEquality().hash(channelCode) ^
-      const DeepCollectionEquality().hash(pricingGroupName) ^
-      const DeepCollectionEquality().hash(costingMethodName) ^
-      const DeepCollectionEquality().hash(channelStockCode) ^
-      const DeepCollectionEquality().hash(costingCode) ^
-      const DeepCollectionEquality().hash(variantId) ^
-      const DeepCollectionEquality().hash(variantCode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(createdBy) ^
-      const DeepCollectionEquality().hash(pricingGpType) ^
-      const DeepCollectionEquality().hash(gpPercentage) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(sellingPrice) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$CostingPageCreationPostModelCopyWith<_CostingPageCreationPostModel>
-      get copyWith => __$CostingPageCreationPostModelCopyWithImpl<
-          _CostingPageCreationPostModel>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        description,
+        id,
+        const DeepCollectionEquality().hash(_pricingPgtype),
+        channelId,
+        costingMethodId,
+        pricingGroupId,
+        channelStockId,
+        channelCode,
+        pricingGroupName,
+        costingMethodName,
+        channelStockCode,
+        costingCode,
+        variantId,
+        variantCode,
+        inventoryId,
+        createdBy,
+        pricingGpType,
+        gpPercentage,
+        unitCost,
+        sellingPrice,
+        isActive
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CostingPageCreationPostModelCopyWith<_$_CostingPageCreationPostModel>
+      get copyWith => __$$_CostingPageCreationPostModelCopyWithImpl<
+          _$_CostingPageCreationPostModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CostingPageCreationPostModelToJson(this);
+    return _$$_CostingPageCreationPostModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _CostingPageCreationPostModel
     implements CostingPageCreationPostModel {
   const factory _CostingPageCreationPostModel(
-          {String? description,
-          int? id,
-          @JsonKey(name: "pricing_pg_type") List<String>? pricingPgtype,
-          @JsonKey(name: "channel_id") int? channelId,
-          @JsonKey(name: "costing_method_id") int? costingMethodId,
-          @JsonKey(name: "pricing_group_id") int? pricingGroupId,
-          @JsonKey(name: "channel_stock_id") int? channelStockId,
-          @JsonKey(name: "channel_code") String? channelCode,
-          @JsonKey(name: "price_group_name") String? pricingGroupName,
-          @JsonKey(name: "costing_method_name") String? costingMethodName,
-          @JsonKey(name: "channel_stock_code") String? channelStockCode,
-          @JsonKey(name: "costing_code") String? costingCode,
-          @JsonKey(name: "variant_id") int? variantId,
-          @JsonKey(name: "variant_code") String? variantCode,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "created_by") String? createdBy,
-          @JsonKey(name: "pricing_gp_type") String? pricingGpType,
-          @JsonKey(name: "gp_percentage") double? gpPercentage,
-          @JsonKey(name: "unit_cost") double? unitCost,
-          @JsonKey(name: "selling_price") double? sellingPrice,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_CostingPageCreationPostModel;
+      {final String? description,
+      final int? id,
+      @JsonKey(name: "pricing_pg_type")
+          final List<String>? pricingPgtype,
+      @JsonKey(name: "channel_id")
+          final int? channelId,
+      @JsonKey(name: "costing_method_id")
+          final int? costingMethodId,
+      @JsonKey(name: "pricing_group_id")
+          final int? pricingGroupId,
+      @JsonKey(name: "channel_stock_id")
+          final int? channelStockId,
+      @JsonKey(name: "channel_code")
+          final String? channelCode,
+      @JsonKey(name: "price_group_name")
+          final String? pricingGroupName,
+      @JsonKey(name: "costing_method_name")
+          final String? costingMethodName,
+      @JsonKey(name: "channel_stock_code")
+          final String? channelStockCode,
+      @JsonKey(name: "costing_code")
+          final String? costingCode,
+      @JsonKey(name: "variant_id")
+          final int? variantId,
+      @JsonKey(name: "variant_code")
+          final String? variantCode,
+      @JsonKey(name: "inventory_id")
+          final String? inventoryId,
+      @JsonKey(name: "created_by")
+          final String? createdBy,
+      @JsonKey(name: "pricing_gp_type")
+          final String? pricingGpType,
+      @JsonKey(name: "gp_percentage")
+          final double? gpPercentage,
+      @JsonKey(name: "unit_cost")
+          final double? unitCost,
+      @JsonKey(name: "selling_price")
+          final double? sellingPrice,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_CostingPageCreationPostModel;
 
   factory _CostingPageCreationPostModel.fromJson(Map<String, dynamic> json) =
       _$_CostingPageCreationPostModel.fromJson;
 
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "pricing_pg_type")
-  List<String>? get pricingPgtype => throw _privateConstructorUsedError;
+  List<String>? get pricingPgtype;
   @override
   @JsonKey(name: "channel_id")
-  int? get channelId => throw _privateConstructorUsedError;
+  int? get channelId;
   @override
   @JsonKey(name: "costing_method_id")
-  int? get costingMethodId => throw _privateConstructorUsedError;
+  int? get costingMethodId;
   @override
   @JsonKey(name: "pricing_group_id")
-  int? get pricingGroupId => throw _privateConstructorUsedError;
+  int? get pricingGroupId;
   @override
   @JsonKey(name: "channel_stock_id")
-  int? get channelStockId => throw _privateConstructorUsedError;
+  int? get channelStockId;
   @override
   @JsonKey(name: "channel_code")
-  String? get channelCode => throw _privateConstructorUsedError;
+  String? get channelCode;
   @override
   @JsonKey(name: "price_group_name")
-  String? get pricingGroupName => throw _privateConstructorUsedError;
+  String? get pricingGroupName;
   @override
   @JsonKey(name: "costing_method_name")
-  String? get costingMethodName => throw _privateConstructorUsedError;
+  String? get costingMethodName;
   @override
   @JsonKey(name: "channel_stock_code")
-  String? get channelStockCode => throw _privateConstructorUsedError;
+  String? get channelStockCode;
   @override
   @JsonKey(name: "costing_code")
-  String? get costingCode => throw _privateConstructorUsedError;
+  String? get costingCode;
   @override
   @JsonKey(name: "variant_id")
-  int? get variantId => throw _privateConstructorUsedError;
+  int? get variantId;
   @override
   @JsonKey(name: "variant_code")
-  String? get variantCode => throw _privateConstructorUsedError;
+  String? get variantCode;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "created_by")
-  String? get createdBy => throw _privateConstructorUsedError;
+  String? get createdBy;
   @override
   @JsonKey(name: "pricing_gp_type")
-  String? get pricingGpType => throw _privateConstructorUsedError;
+  String? get pricingGpType;
   @override
   @JsonKey(name: "gp_percentage")
-  double? get gpPercentage => throw _privateConstructorUsedError;
+  double? get gpPercentage;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "selling_price")
-  double? get sellingPrice => throw _privateConstructorUsedError;
+  double? get sellingPrice;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$CostingPageCreationPostModelCopyWith<_CostingPageCreationPostModel>
+  _$$_CostingPageCreationPostModelCopyWith<_$_CostingPageCreationPostModel>
       get copyWith => throw _privateConstructorUsedError;
 }

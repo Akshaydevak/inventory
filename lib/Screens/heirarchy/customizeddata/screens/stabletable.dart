@@ -46,10 +46,14 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
       Builder(
           builder: (context) {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   color: Colors.white,
                   child: Row(
+
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Expanded(child: Column(
@@ -184,9 +188,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
 
                       ],)),
                       Expanded(child: Column(children: [
-                        SizedBox(
-                          height: height * .030,
-                        ),
+
                         NewInputCard(
                           formatter: true,
                             controller: widget.weightUomId, title: "Weight In Kilogram"),

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -569,6 +570,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         },
   builder: (context, state) {
     return Scaffold(
+      backgroundColor:Pellet.bagroundColor ,
       body: SingleChildScrollView(
                   child: IntrinsicHeight(
 
@@ -620,24 +622,24 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                           ),
           ),
                         Expanded(child: Container(
-                          color: Colors.white,
+
+
                           child: Column(
+                            mainAxisAlignment:MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(top: 15,left: 10),
+                             
+                              Container(
 
+                                child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButtonLarge(
+                                      marginCheck: true,
+                                      
+                                    
 
-
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          primary: Colors.blue,
-                                          elevation: 2,
-                                          backgroundColor: Colors.white24),
-                                      onPressed: () {
+                                      onPress: () {
                                         setState(() {
 
                                           select=true;
@@ -655,59 +657,69 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                       },
                                       // icon: Icon(Icons.refresh),
                                       // label: Text("Clear")
-                                      child: Text("clear"),
+                                      text: "CREATE"
                                     ),
-                                  ),
-                                  TextButtonLarge(
-                                    text: "PREVIEW",
-                                    onPress: (){
-                                      print("Akshay");
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(builder: (context) =>
-                                            PrintScreen(
-                                              note: noteController.text,
-                                              select: select,
-                                              // vendorCode:vend.text,
-                                              orderCode:ordereCodeController.text ,
-                                              orderDate: orderDateController.text,
-                                              table:table,
-                                              vat: double.tryParse( vatController.text),
-                                              actualCost:double.tryParse( actualCostController.text),
-                                              variableAmount:double.tryParse( vatableAmountController.text) ,
-                                              discount:double.tryParse( discountController.text) ,
-                                              unitCost:double.tryParse( unitCostController.text) ,
-                                              excisetax:double.tryParse( excessTaxController.text) ,
-                                              remarks: remarksController.text ,
+                                    TextButtonLarge(
+                                      text: "PREVIEW",
+                                      onPress: (){
+                                        print("Akshay");
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>
+                                              PrintScreen(
+                                                note: noteController.text,
+                                                select: select,
+                                                // vendorCode:vend.text,
+                                                orderCode:ordereCodeController.text ,
+                                                orderDate: orderDateController.text,
+                                                table:table,
+                                                vat: double.tryParse( vatController.text),
+                                                actualCost:double.tryParse( actualCostController.text),
+                                                variableAmount:double.tryParse( vatableAmountController.text) ,
+                                                discount:double.tryParse( discountController.text) ,
+                                                unitCost:double.tryParse( unitCostController.text) ,
+                                                excisetax:double.tryParse( excessTaxController.text) ,
+                                                remarks: remarksController.text ,
 
 
 
 
 
-                                            )),
-                                      );
+                                              )),
+                                        );
 
 
-                                    },
-                                  ),
-                                ],
+                                      },
+                                    ),
+                                  ],
+                                ),
                               ),
-                              Expanded(child: Container(
+                              SizedBox(height: 10,),
+                              Container(
+
                                 child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment:
                                   CrossAxisAlignment.start,
                                   children: [
                                     Row(
+                                        mainAxisAlignment:MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Expanded(child:Container(
+
                                           child: Row(
+                                              mainAxisAlignment:MainAxisAlignment.start,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                             Expanded(child: Column(
+                                                mainAxisAlignment:MainAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              SizedBox(height: height*.030,),
+                                                              // SizedBox(height: height*.030,),
 
                                                               SelectableDropDownpopUp(
-                                                                label: "Order type",
+                                                                label: "Order Type",
                                                                 type:"RequestFormType",
                                                                 value: orderType.text,
                                                                 onSelection: (String? va) {
@@ -725,7 +737,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: ordereCodeController, title: "Order code"),
+                                                                  controller: ordereCodeController, title: "Order Code"),
 
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
@@ -807,36 +819,36 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               SizedBox(height: height*.030,),
                                                               SizedBox(height: height*.030,),
                                                               SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.094,),
+                                                              SizedBox(height: height*.194,),
 
 
                                                             ],
                                                           ),),
                                                           Expanded(child: Column(
+                                                              mainAxisAlignment:MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              SizedBox(height: height*.030,),
-                                                              SizedBox(height: height*.030,),
-                                                              SizedBox(height: 10,),
+
 
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: paymentCodeController, title: "Payment code"),
+                                                                  controller: paymentCodeController, title: "Payment Code"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   readOnly: true,
-                                                                  controller: paymentStatusController, title: "Payment status"),
+                                                                  controller: paymentStatusController, title: "Payment Status"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   readOnly: true,
-                                                                  controller: orderStatusController, title: "Order status"),
+                                                                  controller: orderStatusController, title: "Order Status"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   readOnly: true,
-                                                                  controller: receivingSattusController, title: "Receiving status"),
+                                                                  controller: receivingSattusController, title: "Receiving Status"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   readOnly: true,
-                                                                  controller: invoiceStatusController, title: "Invoice status"),
+                                                                  controller: invoiceStatusController, title: "Invoice Status"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                   controller: noteController, title: "Note",height: 90,maxLines: 3,),
@@ -844,46 +856,46 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               NewInputCard(
                                                                   controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
                                                               SizedBox(height: height*.045,),
-                                                              SizedBox(height: height*.035,),
+                                                              SizedBox(height: height*.135,),
 
                                                             ],
                                                           ),),
                                                           Expanded(child: Column(
+                                                              mainAxisAlignment:MainAxisAlignment.start,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
-                                                              SizedBox(height: height*.030,),
-
                                                               NewInputCard(
                                                                 readOnly: true,
                                                                   controller: discountController, title: "Discount"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: focController, title: "foc"),
+                                                                  controller: focController, title: "FOC"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: unitCostController, title: "Unit cost"),
+                                                                  controller: unitCostController, title: "Unit Cost"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: vatableAmountController, title: "Variable amount"),
+                                                                  controller: vatableAmountController, title: "Variable Amount"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: excessTaxController, title: "excess tax"),
+                                                                  controller: excessTaxController, title: "Excess Tax"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: vatController, title: "vat"),
+                                                                  controller: vatController, title: "VAT"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: actualCostController, title: "actual cost"),
+                                                                  controller: actualCostController, title: "Actual Cost"),
                                                               SizedBox(height: height*.030,),
                                                               NewInputCard(
                                                                 readOnly: true,
-                                                                  controller: grandTotalController, title: "grand total"),
-                                                              SizedBox(height: height*.030,),
+                                                                  controller: grandTotalController, title: "Grand Total"),
+                                                              SizedBox(height: height*.130,),
 
 
                                                             ],
@@ -920,21 +932,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                     width:  2200,
                                                     padding: EdgeInsets.all(10),
                                                     child: customTable(
-                                                      border: const TableBorder(
-                                                        verticalInside: BorderSide(
-                                                            width:.5,
-                                                            color: Colors.black45,
-                                                            // color: Colors.blue,
-                                                            style:
-                                                            BorderStyle.solid),
 
-                                                        horizontalInside:
-                                                        BorderSide(
-                                                            width:.3,
-                                                            color: Colors.black45,
-                                                            // color: Colors.blue,
-                                                            style:
-                                                            BorderStyle.solid),),
                                                       tableWidth: .5,
                                                       childrens: [
                                                         TableRow(
@@ -950,27 +948,20 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                             children: [
                                                               tableHeadtext(
                                                                 'Sno',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white,
                                                               ),
                                                               tableHeadtext(
-                                                                'Variant id',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+                                                                'Variant Id',
                                                                 size: 12,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Variant Name',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
@@ -979,109 +970,86 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                               // tableHeadtext('description', size: 10, color: null),
                                                               tableHeadtext(
                                                                 'Barcode',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
 
                                                               tableHeadtext(
-                                                                'Current qty',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+                                                                'Current Qty',
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Purchase UOM',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
-                                                                'Requested qty',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+                                                                'Requested Qty',
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Min Order Qty',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Max Order Qty',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Is Recieved',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Unit Cost',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Excise Tax',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Discount',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'FOC',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Vatable Amount',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
@@ -1089,63 +1057,49 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                               tableHeadtext(
                                                                 'Vat',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Actual Cost',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Grand Total',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Is Invoiced',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Is Free',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 'Is Active',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
                                                               ),
                                                               tableHeadtext(
                                                                 '',
-                                                                padding:
-                                                                EdgeInsets.all(7),
-                                                                height: 46,
+
                                                                 size: 13,
 
                                                               ),
@@ -1157,30 +1111,25 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                           i < table.length;
                                                           i++)
                                                             TableRow(
-                                                                decoration: BoxDecoration(
-                                                                    color: Colors.grey
-                                                                        .shade200,
-                                                                    shape: BoxShape
-                                                                        .rectangle,
-                                                                    border:const  Border(
-                                                                        left: BorderSide(
-                                                                            width: .5,
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            style: BorderStyle
-                                                                                .solid),
-                                                                        bottom: BorderSide(
-                                                                            width: .5,
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            style: BorderStyle
-                                                                                .solid),
-                                                                        right: BorderSide(
-                                                                            color: Colors
-                                                                                .grey,
-                                                                            width: .5,
-                                                                            style: BorderStyle
-                                                                                .solid))),
+                                    decoration: BoxDecoration(
+                                    color: Pellet.tableRowColor,
+                                        shape: BoxShape.rectangle,
+                                        border:  Border(
+                                            left: BorderSide(
+
+                                                color: Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+                                                style: BorderStyle.solid),
+                                            bottom: BorderSide(
+
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                style: BorderStyle.solid),
+                                            right: BorderSide(
+                                                color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                width: .4,
+
+                                                style: BorderStyle.solid))),
+
                                                                 children: [
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1985,10 +1934,25 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                 ]),],
                                                         TableRow(
-                                                            decoration: BoxDecoration(
-                                                              color: Colors.grey.shade200,
-                                                              shape: BoxShape.rectangle,
-                                                              border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+      decoration: BoxDecoration(
+      color: Pellet.tableRowColor,
+      shape: BoxShape.rectangle,
+      border:  Border(
+      left: BorderSide(
+
+      color: Color(0xff3E4F5B).withOpacity(.1),
+        width: .4,
+        style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
+
                                                             children: [
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2517,89 +2481,92 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                   },
                                                                 ),
                                                               ),
-                                                              TableTextButton(label: "Set", onPress: (){
-                                                                foc1=foc1??0;
-                                                                recievedQty=recievedQty??0;
-                                                                if(variantId=="null"||recievedQty==0||unitcost==0||vat1==0){
-                                                                  context.showSnackBarError("please fill all the fields");
-                                                                }
-                                                                else if(recievedQty==0||recievedQty==""){
-                                                                  context.showSnackBarError(
-                                                                      "the requested quantity not be 0 or empty");
+                                                              TableCell(
+                                                                  verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                child: TableTextButton(label: "Save", onPress: (){
+                                                                  foc1=foc1??0;
+                                                                  recievedQty=recievedQty??0;
+                                                                  if(variantId=="null"||recievedQty==0||unitcost==0||vat1==0){
+                                                                    context.showSnackBarError("please fill all the fields");
+                                                                  }
+                                                                  else if(recievedQty==0||recievedQty==""){
+                                                                    context.showSnackBarError(
+                                                                        "the requested quantity not be 0 or empty");
 
-                                                                }
-                                                                else if(recievedQty!<foc1!){
-                                                                  context.showSnackBarError("the received qty allways greater than  foc");
+                                                                  }
+                                                                  else if(recievedQty!<foc1!){
+                                                                    context.showSnackBarError("the received qty allways greater than  foc");
 
-                                                                }
-                                                                else {
-                                                                  setState(() {
-                                                                    currentStock.add(stock);
-                                                                    table.add(
-                                                                        OrderLines(
-                                                                          variantId: variantId ?? "",
-                                                                          currentQty: stock,
-                                                                          supplierCode: supplierRefCode,
-                                                                          variantName: varinatname ?? "",
-                                                                          barcode: barcode ?? "",
-                                                                          minimumQty: minQty,
-                                                                          maximumQty: maxQty,
-                                                                          purchaseuom: purchaseUomName ?? "",
-                                                                          requestedQty: recievedQty,
-                                                                          isRecieved: isReceived1,
-                                                                          discount: discount,
-                                                                          foc: foc1,
-                                                                          unitCost: unitcost,
-                                                                          variableAmount: vatableAmount1,
-                                                                          vat: vat1,
-                                                                          excessTax: excess1,
-                                                                          actualCost: actualCost1,
-                                                                          grandTotal: grandTotal1,
-                                                                          isInvoiced: isInvoiced1,
-                                                                          isFree: isFree1,
-                                                                          isActive: isActive1,
-                                                                        ));
-                                                                  });
-                                                                  addition();
-                                                                  unitcost2 = 0;
-                                                                  receivedTestContoller.clear();
-                                                                  excesstaxTestContoller.clear();
-                                                                  minOrderTestContoller.clear();
-                                                                  maxOrderTestContoller.clear();
-                                                                  discountTestContoller.clear();
-                                                                  vatTestContoller.clear();
-                                                                  focTestContoller.clear();
-                                                                  grands = 0;
-                                                                  actualValue = 0;
-                                                                  vatValue = 0;
-                                                                  discountValue = 0;
-                                                                  focValue = 0;
-                                                                  VatableValue = 0;
-                                                                  excessTAxValue = 0;
-                                                                  variantId = "";
-                                                                  varinatname =
-                                                                  "";
-                                                                  barcode = "";
-                                                                  purchaseUomName = "";
-                                                                  recievedQty = 0;
-                                                                  excess1 = 0;
-                                                                  unitCostCheck.clear();
-                                                                  isReceived1 = false;
-                                                                  discount = 0;
-                                                                  foc1 = 0;
-                                                                  unitcost = 0;
-                                                                  vatableAmount1 =
-                                                                  0;
-                                                                  vat1 = 0;
-                                                                  grandTotal1 = 0;
-                                                                  actualCost1 = 0;
-                                                                  isActive1 =
-                                                                  false;
-                                                                  isFree1 = false;
-                                                                  isInvoiced1 =
-                                                                  false;
-                                                                  stock = 0;
-                                                                } }),
+                                                                  }
+                                                                  else {
+                                                                    setState(() {
+                                                                      currentStock.add(stock);
+                                                                      table.add(
+                                                                          OrderLines(
+                                                                            variantId: variantId ?? "",
+                                                                            currentQty: stock,
+                                                                            supplierCode: supplierRefCode,
+                                                                            variantName: varinatname ?? "",
+                                                                            barcode: barcode ?? "",
+                                                                            minimumQty: minQty,
+                                                                            maximumQty: maxQty,
+                                                                            purchaseuom: purchaseUomName ?? "",
+                                                                            requestedQty: recievedQty,
+                                                                            isRecieved: isReceived1,
+                                                                            discount: discount,
+                                                                            foc: foc1,
+                                                                            unitCost: unitcost,
+                                                                            variableAmount: vatableAmount1,
+                                                                            vat: vat1,
+                                                                            excessTax: excess1,
+                                                                            actualCost: actualCost1,
+                                                                            grandTotal: grandTotal1,
+                                                                            isInvoiced: isInvoiced1,
+                                                                            isFree: isFree1,
+                                                                            isActive: isActive1,
+                                                                          ));
+                                                                    });
+                                                                    addition();
+                                                                    unitcost2 = 0;
+                                                                    receivedTestContoller.clear();
+                                                                    excesstaxTestContoller.clear();
+                                                                    minOrderTestContoller.clear();
+                                                                    maxOrderTestContoller.clear();
+                                                                    discountTestContoller.clear();
+                                                                    vatTestContoller.clear();
+                                                                    focTestContoller.clear();
+                                                                    grands = 0;
+                                                                    actualValue = 0;
+                                                                    vatValue = 0;
+                                                                    discountValue = 0;
+                                                                    focValue = 0;
+                                                                    VatableValue = 0;
+                                                                    excessTAxValue = 0;
+                                                                    variantId = "";
+                                                                    varinatname =
+                                                                    "";
+                                                                    barcode = "";
+                                                                    purchaseUomName = "";
+                                                                    recievedQty = 0;
+                                                                    excess1 = 0;
+                                                                    unitCostCheck.clear();
+                                                                    isReceived1 = false;
+                                                                    discount = 0;
+                                                                    foc1 = 0;
+                                                                    unitcost = 0;
+                                                                    vatableAmount1 =
+                                                                    0;
+                                                                    vat1 = 0;
+                                                                    grandTotal1 = 0;
+                                                                    actualCost1 = 0;
+                                                                    isActive1 =
+                                                                    false;
+                                                                    isFree1 = false;
+                                                                    isInvoiced1 =
+                                                                    false;
+                                                                    stock = 0;
+                                                                  } }),
+                                                              ),
 
 
 
@@ -2649,10 +2616,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                         ),
                                       ),
                                     ),
+                                    SizedBox(height: 20,),
                                     Row(
                                       children: [
                                         Spacer(),
                                         Button(Icons.delete, Colors.red,ctx: context,
+                                            bdr: true,
                                             onApply: (){print("Akkk");
                                             if(select){
                                               clear();
@@ -2682,7 +2651,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                             }
 
                                             },
-                                        text: "Discard",height: 29,
+                                        text: "DISCARD",height: 29,
                                         width: 90,labelcolor: Colors.red,iconColor: Colors.red),
                                         SizedBox(width: width*.008,),
 
@@ -2737,13 +2706,9 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                           mainAxisAlignment:
                           MainAxisAlignment.center,
                           children: [
-                            Icon(
-                              select?   Icons.check:Icons.update,
-                              color: Colors.white,
-                            ),
-                            SizedBox(width:3,),
+
                             Text(
-                              select?"save":"update",
+                              select?"SAVE":"UPDATE",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
@@ -2758,7 +2723,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                   ],
                                 ),
-                              ))
+                              )
                             ],
                           ),
                         ))

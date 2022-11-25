@@ -10,6 +10,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
   final TextEditingController? controller;
   final VoidCallback? onAddNew;
   final Function onSelection;
+  final String? code;
   final bool required;
   final bool row;
   final List<String>? list;
@@ -23,6 +24,7 @@ class SelectableDropDownpopUp extends StatefulWidget {
   const SelectableDropDownpopUp(
       {Key? key,
         this.value,
+        this.code,
          this.bindType,
         this.type,
         this.apiType,
@@ -88,6 +90,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                 child: widget.type != null
                     ? PopUpCall(
+                  code: widget.code,
                     apiType:widget.apiType,
                   id:widget.id,
                   onchange:widget.onchange,
@@ -106,6 +109,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                       controller: widget.controller,
                       onChanged: (va){
                         widget?.onchange!(va!);
+
                       },
 
                       decoration: InputDecoration(
@@ -171,6 +175,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     onAddNew: widget.onAddNew,
                     value: widget.value,
                     id:widget.id,
+                    code: widget.code,
                     onchange:widget.onchange,
                     enable: widget.enable,
                     type: widget.type!)
@@ -181,7 +186,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                   textFieldConfiguration: TextFieldConfiguration(
 
                       controller: TextEditingController(text: widget.value),
-                      onTap: () {},
+                      // onTap: () {},
                       decoration: InputDecoration(
 
                           enabledBorder:OutlineInputBorder(
@@ -197,6 +202,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.more_horiz_rounded))),
                   onSuggestionSelected: (suggestion) {
+                    print("ssssssssssssssssssssssssssssssssssssssssssssssssssssssssss");
                     widget.onSelection(suggestion);
                   },
                   itemBuilder: (context, suggestion) {

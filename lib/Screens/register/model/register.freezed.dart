@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'register.dart';
@@ -11,58 +12,11 @@ part of 'register.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 RegisterModel _$RegisterModelFromJson(Map<String, dynamic> json) {
   return _RegisterModel.fromJson(json);
 }
-
-/// @nodoc
-class _$RegisterModelTearOff {
-  const _$RegisterModelTearOff();
-
-  _RegisterModel call(
-      {String? email,
-      String? password,
-      String? mobile,
-      String? lname,
-      String? fname,
-      String? country,
-      String? gender,
-      String? token,
-      @JsonKey(name: "login_id") int? loginid,
-      @JsonKey(name: "accesssite") String? accesssite,
-      @JsonKey(name: "legal_entiry") String? legalEntiry,
-      @JsonKey(name: "employee_code") String? employeeCode,
-      @JsonKey(name: "organization_type") String? organizationType,
-      @JsonKey(name: "organization_code") String? organizationCode,
-      @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) {
-    return _RegisterModel(
-      email: email,
-      password: password,
-      mobile: mobile,
-      lname: lname,
-      fname: fname,
-      country: country,
-      gender: gender,
-      token: token,
-      loginid: loginid,
-      accesssite: accesssite,
-      legalEntiry: legalEntiry,
-      employeeCode: employeeCode,
-      organizationType: organizationType,
-      organizationCode: organizationCode,
-      isLoggedIn: isLoggedIn,
-    );
-  }
-
-  RegisterModel fromJson(Map<String, Object> json) {
-    return RegisterModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $RegisterModel = _$RegisterModelTearOff();
 
 /// @nodoc
 mixin _$RegisterModel {
@@ -99,7 +53,8 @@ mixin _$RegisterModel {
 abstract class $RegisterModelCopyWith<$Res> {
   factory $RegisterModelCopyWith(
           RegisterModel value, $Res Function(RegisterModel) then) =
-      _$RegisterModelCopyWithImpl<$Res>;
+      _$RegisterModelCopyWithImpl<$Res, RegisterModel>;
+  @useResult
   $Res call(
       {String? email,
       String? password,
@@ -119,14 +74,16 @@ abstract class $RegisterModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RegisterModelCopyWithImpl<$Res>
+class _$RegisterModelCopyWithImpl<$Res, $Val extends RegisterModel>
     implements $RegisterModelCopyWith<$Res> {
   _$RegisterModelCopyWithImpl(this._value, this._then);
 
-  final RegisterModel _value;
   // ignore: unused_field
-  final $Res Function(RegisterModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? email = freezed,
@@ -146,77 +103,78 @@ class _$RegisterModelCopyWithImpl<$Res>
     Object? isLoggedIn = freezed,
   }) {
     return _then(_value.copyWith(
-      email: email == freezed
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      mobile: mobile == freezed
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as String?,
-      lname: lname == freezed
+      lname: freezed == lname
           ? _value.lname
           : lname // ignore: cast_nullable_to_non_nullable
               as String?,
-      fname: fname == freezed
+      fname: freezed == fname
           ? _value.fname
           : fname // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      loginid: loginid == freezed
+      loginid: freezed == loginid
           ? _value.loginid
           : loginid // ignore: cast_nullable_to_non_nullable
               as int?,
-      accesssite: accesssite == freezed
+      accesssite: freezed == accesssite
           ? _value.accesssite
           : accesssite // ignore: cast_nullable_to_non_nullable
               as String?,
-      legalEntiry: legalEntiry == freezed
+      legalEntiry: freezed == legalEntiry
           ? _value.legalEntiry
           : legalEntiry // ignore: cast_nullable_to_non_nullable
               as String?,
-      employeeCode: employeeCode == freezed
+      employeeCode: freezed == employeeCode
           ? _value.employeeCode
           : employeeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationType: organizationType == freezed
+      organizationType: freezed == organizationType
           ? _value.organizationType
           : organizationType // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationCode: organizationCode == freezed
+      organizationCode: freezed == organizationCode
           ? _value.organizationCode
           : organizationCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isLoggedIn: isLoggedIn == freezed
+      isLoggedIn: freezed == isLoggedIn
           ? _value.isLoggedIn
           : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$RegisterModelCopyWith<$Res>
+abstract class _$$_RegisterModelCopyWith<$Res>
     implements $RegisterModelCopyWith<$Res> {
-  factory _$RegisterModelCopyWith(
-          _RegisterModel value, $Res Function(_RegisterModel) then) =
-      __$RegisterModelCopyWithImpl<$Res>;
+  factory _$$_RegisterModelCopyWith(
+          _$_RegisterModel value, $Res Function(_$_RegisterModel) then) =
+      __$$_RegisterModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? email,
       String? password,
@@ -236,16 +194,14 @@ abstract class _$RegisterModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$RegisterModelCopyWithImpl<$Res>
-    extends _$RegisterModelCopyWithImpl<$Res>
-    implements _$RegisterModelCopyWith<$Res> {
-  __$RegisterModelCopyWithImpl(
-      _RegisterModel _value, $Res Function(_RegisterModel) _then)
-      : super(_value, (v) => _then(v as _RegisterModel));
+class __$$_RegisterModelCopyWithImpl<$Res>
+    extends _$RegisterModelCopyWithImpl<$Res, _$_RegisterModel>
+    implements _$$_RegisterModelCopyWith<$Res> {
+  __$$_RegisterModelCopyWithImpl(
+      _$_RegisterModel _value, $Res Function(_$_RegisterModel) _then)
+      : super(_value, _then);
 
-  @override
-  _RegisterModel get _value => super._value as _RegisterModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? email = freezed,
@@ -264,64 +220,64 @@ class __$RegisterModelCopyWithImpl<$Res>
     Object? organizationCode = freezed,
     Object? isLoggedIn = freezed,
   }) {
-    return _then(_RegisterModel(
-      email: email == freezed
+    return _then(_$_RegisterModel(
+      email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      password: password == freezed
+      password: freezed == password
           ? _value.password
           : password // ignore: cast_nullable_to_non_nullable
               as String?,
-      mobile: mobile == freezed
+      mobile: freezed == mobile
           ? _value.mobile
           : mobile // ignore: cast_nullable_to_non_nullable
               as String?,
-      lname: lname == freezed
+      lname: freezed == lname
           ? _value.lname
           : lname // ignore: cast_nullable_to_non_nullable
               as String?,
-      fname: fname == freezed
+      fname: freezed == fname
           ? _value.fname
           : fname // ignore: cast_nullable_to_non_nullable
               as String?,
-      country: country == freezed
+      country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
               as String?,
-      gender: gender == freezed
+      gender: freezed == gender
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
-      token: token == freezed
+      token: freezed == token
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
-      loginid: loginid == freezed
+      loginid: freezed == loginid
           ? _value.loginid
           : loginid // ignore: cast_nullable_to_non_nullable
               as int?,
-      accesssite: accesssite == freezed
+      accesssite: freezed == accesssite
           ? _value.accesssite
           : accesssite // ignore: cast_nullable_to_non_nullable
               as String?,
-      legalEntiry: legalEntiry == freezed
+      legalEntiry: freezed == legalEntiry
           ? _value.legalEntiry
           : legalEntiry // ignore: cast_nullable_to_non_nullable
               as String?,
-      employeeCode: employeeCode == freezed
+      employeeCode: freezed == employeeCode
           ? _value.employeeCode
           : employeeCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationType: organizationType == freezed
+      organizationType: freezed == organizationType
           ? _value.organizationType
           : organizationType // ignore: cast_nullable_to_non_nullable
               as String?,
-      organizationCode: organizationCode == freezed
+      organizationCode: freezed == organizationCode
           ? _value.organizationCode
           : organizationCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isLoggedIn: isLoggedIn == freezed
+      isLoggedIn: freezed == isLoggedIn
           ? _value.isLoggedIn
           : isLoggedIn // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -398,139 +354,133 @@ class _$_RegisterModel implements _RegisterModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _RegisterModel &&
-            (identical(other.email, email) ||
-                const DeepCollectionEquality().equals(other.email, email)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_RegisterModel &&
+            (identical(other.email, email) || other.email == email) &&
             (identical(other.password, password) ||
-                const DeepCollectionEquality()
-                    .equals(other.password, password)) &&
-            (identical(other.mobile, mobile) ||
-                const DeepCollectionEquality().equals(other.mobile, mobile)) &&
-            (identical(other.lname, lname) ||
-                const DeepCollectionEquality().equals(other.lname, lname)) &&
-            (identical(other.fname, fname) ||
-                const DeepCollectionEquality().equals(other.fname, fname)) &&
-            (identical(other.country, country) ||
-                const DeepCollectionEquality()
-                    .equals(other.country, country)) &&
-            (identical(other.gender, gender) ||
-                const DeepCollectionEquality().equals(other.gender, gender)) &&
-            (identical(other.token, token) ||
-                const DeepCollectionEquality().equals(other.token, token)) &&
-            (identical(other.loginid, loginid) ||
-                const DeepCollectionEquality()
-                    .equals(other.loginid, loginid)) &&
+                other.password == password) &&
+            (identical(other.mobile, mobile) || other.mobile == mobile) &&
+            (identical(other.lname, lname) || other.lname == lname) &&
+            (identical(other.fname, fname) || other.fname == fname) &&
+            (identical(other.country, country) || other.country == country) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.loginid, loginid) || other.loginid == loginid) &&
             (identical(other.accesssite, accesssite) ||
-                const DeepCollectionEquality()
-                    .equals(other.accesssite, accesssite)) &&
+                other.accesssite == accesssite) &&
             (identical(other.legalEntiry, legalEntiry) ||
-                const DeepCollectionEquality()
-                    .equals(other.legalEntiry, legalEntiry)) &&
+                other.legalEntiry == legalEntiry) &&
             (identical(other.employeeCode, employeeCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.employeeCode, employeeCode)) &&
+                other.employeeCode == employeeCode) &&
             (identical(other.organizationType, organizationType) ||
-                const DeepCollectionEquality()
-                    .equals(other.organizationType, organizationType)) &&
+                other.organizationType == organizationType) &&
             (identical(other.organizationCode, organizationCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.organizationCode, organizationCode)) &&
+                other.organizationCode == organizationCode) &&
             (identical(other.isLoggedIn, isLoggedIn) ||
-                const DeepCollectionEquality()
-                    .equals(other.isLoggedIn, isLoggedIn)));
+                other.isLoggedIn == isLoggedIn));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(email) ^
-      const DeepCollectionEquality().hash(password) ^
-      const DeepCollectionEquality().hash(mobile) ^
-      const DeepCollectionEquality().hash(lname) ^
-      const DeepCollectionEquality().hash(fname) ^
-      const DeepCollectionEquality().hash(country) ^
-      const DeepCollectionEquality().hash(gender) ^
-      const DeepCollectionEquality().hash(token) ^
-      const DeepCollectionEquality().hash(loginid) ^
-      const DeepCollectionEquality().hash(accesssite) ^
-      const DeepCollectionEquality().hash(legalEntiry) ^
-      const DeepCollectionEquality().hash(employeeCode) ^
-      const DeepCollectionEquality().hash(organizationType) ^
-      const DeepCollectionEquality().hash(organizationCode) ^
-      const DeepCollectionEquality().hash(isLoggedIn);
 
   @JsonKey(ignore: true)
   @override
-  _$RegisterModelCopyWith<_RegisterModel> get copyWith =>
-      __$RegisterModelCopyWithImpl<_RegisterModel>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      email,
+      password,
+      mobile,
+      lname,
+      fname,
+      country,
+      gender,
+      token,
+      loginid,
+      accesssite,
+      legalEntiry,
+      employeeCode,
+      organizationType,
+      organizationCode,
+      isLoggedIn);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_RegisterModelCopyWith<_$_RegisterModel> get copyWith =>
+      __$$_RegisterModelCopyWithImpl<_$_RegisterModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RegisterModelToJson(this);
+    return _$$_RegisterModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _RegisterModel implements RegisterModel {
   const factory _RegisterModel(
-          {String? email,
-          String? password,
-          String? mobile,
-          String? lname,
-          String? fname,
-          String? country,
-          String? gender,
-          String? token,
-          @JsonKey(name: "login_id") int? loginid,
-          @JsonKey(name: "accesssite") String? accesssite,
-          @JsonKey(name: "legal_entiry") String? legalEntiry,
-          @JsonKey(name: "employee_code") String? employeeCode,
-          @JsonKey(name: "organization_type") String? organizationType,
-          @JsonKey(name: "organization_code") String? organizationCode,
-          @JsonKey(name: "isLoggedIn", defaultValue: false) bool? isLoggedIn}) =
-      _$_RegisterModel;
+      {final String? email,
+      final String? password,
+      final String? mobile,
+      final String? lname,
+      final String? fname,
+      final String? country,
+      final String? gender,
+      final String? token,
+      @JsonKey(name: "login_id")
+          final int? loginid,
+      @JsonKey(name: "accesssite")
+          final String? accesssite,
+      @JsonKey(name: "legal_entiry")
+          final String? legalEntiry,
+      @JsonKey(name: "employee_code")
+          final String? employeeCode,
+      @JsonKey(name: "organization_type")
+          final String? organizationType,
+      @JsonKey(name: "organization_code")
+          final String? organizationCode,
+      @JsonKey(name: "isLoggedIn", defaultValue: false)
+          final bool? isLoggedIn}) = _$_RegisterModel;
 
   factory _RegisterModel.fromJson(Map<String, dynamic> json) =
       _$_RegisterModel.fromJson;
 
   @override
-  String? get email => throw _privateConstructorUsedError;
+  String? get email;
   @override
-  String? get password => throw _privateConstructorUsedError;
+  String? get password;
   @override
-  String? get mobile => throw _privateConstructorUsedError;
+  String? get mobile;
   @override
-  String? get lname => throw _privateConstructorUsedError;
+  String? get lname;
   @override
-  String? get fname => throw _privateConstructorUsedError;
+  String? get fname;
   @override
-  String? get country => throw _privateConstructorUsedError;
+  String? get country;
   @override
-  String? get gender => throw _privateConstructorUsedError;
+  String? get gender;
   @override
-  String? get token => throw _privateConstructorUsedError;
+  String? get token;
   @override
   @JsonKey(name: "login_id")
-  int? get loginid => throw _privateConstructorUsedError;
+  int? get loginid;
   @override
   @JsonKey(name: "accesssite")
-  String? get accesssite => throw _privateConstructorUsedError;
+  String? get accesssite;
   @override
   @JsonKey(name: "legal_entiry")
-  String? get legalEntiry => throw _privateConstructorUsedError;
+  String? get legalEntiry;
   @override
   @JsonKey(name: "employee_code")
-  String? get employeeCode => throw _privateConstructorUsedError;
+  String? get employeeCode;
   @override
   @JsonKey(name: "organization_type")
-  String? get organizationType => throw _privateConstructorUsedError;
+  String? get organizationType;
   @override
   @JsonKey(name: "organization_code")
-  String? get organizationCode => throw _privateConstructorUsedError;
+  String? get organizationCode;
   @override
   @JsonKey(name: "isLoggedIn", defaultValue: false)
-  bool? get isLoggedIn => throw _privateConstructorUsedError;
+  bool? get isLoggedIn;
   @override
   @JsonKey(ignore: true)
-  _$RegisterModelCopyWith<_RegisterModel> get copyWith =>
+  _$$_RegisterModelCopyWith<_$_RegisterModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

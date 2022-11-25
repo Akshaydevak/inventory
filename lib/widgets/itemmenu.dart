@@ -37,7 +37,7 @@ class _ItemCardState extends State<ItemCard> {
   builder: (context, state) {
     return MouseRegion(
       onEnter: (event) {
-        //isHover = true;
+        isHover = true;
         setState(() {});
       },
       onExit: (event) {

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'images.dart';
@@ -11,44 +12,11 @@ part of 'images.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ImagesModel _$ImagesModelFromJson(Map<String, dynamic> json) {
   return _ImagesModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ImagesModelTearOff {
-  const _$ImagesModelTearOff();
-
-  _ImagesModel call(
-      {int? image1,
-      int? image2,
-      int? image3,
-      int? itemCatelog1,
-      int? itemCatelog2,
-      int? itemCatelog3,
-      int? itemCatelog4,
-      int? itemCatelog5}) {
-    return _ImagesModel(
-      image1: image1,
-      image2: image2,
-      image3: image3,
-      itemCatelog1: itemCatelog1,
-      itemCatelog2: itemCatelog2,
-      itemCatelog3: itemCatelog3,
-      itemCatelog4: itemCatelog4,
-      itemCatelog5: itemCatelog5,
-    );
-  }
-
-  ImagesModel fromJson(Map<String, Object> json) {
-    return ImagesModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ImagesModel = _$ImagesModelTearOff();
 
 /// @nodoc
 mixin _$ImagesModel {
@@ -71,7 +39,8 @@ mixin _$ImagesModel {
 abstract class $ImagesModelCopyWith<$Res> {
   factory $ImagesModelCopyWith(
           ImagesModel value, $Res Function(ImagesModel) then) =
-      _$ImagesModelCopyWithImpl<$Res>;
+      _$ImagesModelCopyWithImpl<$Res, ImagesModel>;
+  @useResult
   $Res call(
       {int? image1,
       int? image2,
@@ -84,13 +53,16 @@ abstract class $ImagesModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ImagesModelCopyWithImpl<$Res> implements $ImagesModelCopyWith<$Res> {
+class _$ImagesModelCopyWithImpl<$Res, $Val extends ImagesModel>
+    implements $ImagesModelCopyWith<$Res> {
   _$ImagesModelCopyWithImpl(this._value, this._then);
 
-  final ImagesModel _value;
   // ignore: unused_field
-  final $Res Function(ImagesModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? image1 = freezed,
@@ -103,49 +75,50 @@ class _$ImagesModelCopyWithImpl<$Res> implements $ImagesModelCopyWith<$Res> {
     Object? itemCatelog5 = freezed,
   }) {
     return _then(_value.copyWith(
-      image1: image1 == freezed
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog1: itemCatelog1 == freezed
+      itemCatelog1: freezed == itemCatelog1
           ? _value.itemCatelog1
           : itemCatelog1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog2: itemCatelog2 == freezed
+      itemCatelog2: freezed == itemCatelog2
           ? _value.itemCatelog2
           : itemCatelog2 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog3: itemCatelog3 == freezed
+      itemCatelog3: freezed == itemCatelog3
           ? _value.itemCatelog3
           : itemCatelog3 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog4: itemCatelog4 == freezed
+      itemCatelog4: freezed == itemCatelog4
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog5: itemCatelog5 == freezed
+      itemCatelog5: freezed == itemCatelog5
           ? _value.itemCatelog5
           : itemCatelog5 // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ImagesModelCopyWith<$Res>
+abstract class _$$_ImagesModelCopyWith<$Res>
     implements $ImagesModelCopyWith<$Res> {
-  factory _$ImagesModelCopyWith(
-          _ImagesModel value, $Res Function(_ImagesModel) then) =
-      __$ImagesModelCopyWithImpl<$Res>;
+  factory _$$_ImagesModelCopyWith(
+          _$_ImagesModel value, $Res Function(_$_ImagesModel) then) =
+      __$$_ImagesModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? image1,
       int? image2,
@@ -158,15 +131,14 @@ abstract class _$ImagesModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ImagesModelCopyWithImpl<$Res> extends _$ImagesModelCopyWithImpl<$Res>
-    implements _$ImagesModelCopyWith<$Res> {
-  __$ImagesModelCopyWithImpl(
-      _ImagesModel _value, $Res Function(_ImagesModel) _then)
-      : super(_value, (v) => _then(v as _ImagesModel));
+class __$$_ImagesModelCopyWithImpl<$Res>
+    extends _$ImagesModelCopyWithImpl<$Res, _$_ImagesModel>
+    implements _$$_ImagesModelCopyWith<$Res> {
+  __$$_ImagesModelCopyWithImpl(
+      _$_ImagesModel _value, $Res Function(_$_ImagesModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ImagesModel get _value => super._value as _ImagesModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? image1 = freezed,
@@ -178,36 +150,36 @@ class __$ImagesModelCopyWithImpl<$Res> extends _$ImagesModelCopyWithImpl<$Res>
     Object? itemCatelog4 = freezed,
     Object? itemCatelog5 = freezed,
   }) {
-    return _then(_ImagesModel(
-      image1: image1 == freezed
+    return _then(_$_ImagesModel(
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog1: itemCatelog1 == freezed
+      itemCatelog1: freezed == itemCatelog1
           ? _value.itemCatelog1
           : itemCatelog1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog2: itemCatelog2 == freezed
+      itemCatelog2: freezed == itemCatelog2
           ? _value.itemCatelog2
           : itemCatelog2 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog3: itemCatelog3 == freezed
+      itemCatelog3: freezed == itemCatelog3
           ? _value.itemCatelog3
           : itemCatelog3 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog4: itemCatelog4 == freezed
+      itemCatelog4: freezed == itemCatelog4
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as int?,
-      itemCatelog5: itemCatelog5 == freezed
+      itemCatelog5: freezed == itemCatelog5
           ? _value.itemCatelog5
           : itemCatelog5 // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -256,85 +228,74 @@ class _$_ImagesModel implements _ImagesModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ImagesModel &&
-            (identical(other.image1, image1) ||
-                const DeepCollectionEquality().equals(other.image1, image1)) &&
-            (identical(other.image2, image2) ||
-                const DeepCollectionEquality().equals(other.image2, image2)) &&
-            (identical(other.image3, image3) ||
-                const DeepCollectionEquality().equals(other.image3, image3)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ImagesModel &&
+            (identical(other.image1, image1) || other.image1 == image1) &&
+            (identical(other.image2, image2) || other.image2 == image2) &&
+            (identical(other.image3, image3) || other.image3 == image3) &&
             (identical(other.itemCatelog1, itemCatelog1) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog1, itemCatelog1)) &&
+                other.itemCatelog1 == itemCatelog1) &&
             (identical(other.itemCatelog2, itemCatelog2) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog2, itemCatelog2)) &&
+                other.itemCatelog2 == itemCatelog2) &&
             (identical(other.itemCatelog3, itemCatelog3) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog3, itemCatelog3)) &&
+                other.itemCatelog3 == itemCatelog3) &&
             (identical(other.itemCatelog4, itemCatelog4) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog4, itemCatelog4)) &&
+                other.itemCatelog4 == itemCatelog4) &&
             (identical(other.itemCatelog5, itemCatelog5) ||
-                const DeepCollectionEquality()
-                    .equals(other.itemCatelog5, itemCatelog5)));
+                other.itemCatelog5 == itemCatelog5));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(image1) ^
-      const DeepCollectionEquality().hash(image2) ^
-      const DeepCollectionEquality().hash(image3) ^
-      const DeepCollectionEquality().hash(itemCatelog1) ^
-      const DeepCollectionEquality().hash(itemCatelog2) ^
-      const DeepCollectionEquality().hash(itemCatelog3) ^
-      const DeepCollectionEquality().hash(itemCatelog4) ^
-      const DeepCollectionEquality().hash(itemCatelog5);
 
   @JsonKey(ignore: true)
   @override
-  _$ImagesModelCopyWith<_ImagesModel> get copyWith =>
-      __$ImagesModelCopyWithImpl<_ImagesModel>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, image1, image2, image3,
+      itemCatelog1, itemCatelog2, itemCatelog3, itemCatelog4, itemCatelog5);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ImagesModelCopyWith<_$_ImagesModel> get copyWith =>
+      __$$_ImagesModelCopyWithImpl<_$_ImagesModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ImagesModelToJson(this);
+    return _$$_ImagesModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ImagesModel implements ImagesModel {
   const factory _ImagesModel(
-      {int? image1,
-      int? image2,
-      int? image3,
-      int? itemCatelog1,
-      int? itemCatelog2,
-      int? itemCatelog3,
-      int? itemCatelog4,
-      int? itemCatelog5}) = _$_ImagesModel;
+      {final int? image1,
+      final int? image2,
+      final int? image3,
+      final int? itemCatelog1,
+      final int? itemCatelog2,
+      final int? itemCatelog3,
+      final int? itemCatelog4,
+      final int? itemCatelog5}) = _$_ImagesModel;
 
   factory _ImagesModel.fromJson(Map<String, dynamic> json) =
       _$_ImagesModel.fromJson;
 
   @override
-  int? get image1 => throw _privateConstructorUsedError;
+  int? get image1;
   @override
-  int? get image2 => throw _privateConstructorUsedError;
+  int? get image2;
   @override
-  int? get image3 => throw _privateConstructorUsedError;
+  int? get image3;
   @override
-  int? get itemCatelog1 => throw _privateConstructorUsedError;
+  int? get itemCatelog1;
   @override
-  int? get itemCatelog2 => throw _privateConstructorUsedError;
+  int? get itemCatelog2;
   @override
-  int? get itemCatelog3 => throw _privateConstructorUsedError;
+  int? get itemCatelog3;
   @override
-  int? get itemCatelog4 => throw _privateConstructorUsedError;
+  int? get itemCatelog4;
   @override
-  int? get itemCatelog5 => throw _privateConstructorUsedError;
+  int? get itemCatelog5;
   @override
   @JsonKey(ignore: true)
-  _$ImagesModelCopyWith<_ImagesModel> get copyWith =>
+  _$$_ImagesModelCopyWith<_$_ImagesModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

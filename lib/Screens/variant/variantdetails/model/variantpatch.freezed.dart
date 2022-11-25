@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'variantpatch.dart';
@@ -11,271 +12,11 @@ part of 'variantpatch.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 VariantPatch _$VariantPatchFromJson(Map<String, dynamic> json) {
   return _VariantPatch.fromJson(json);
 }
-
-/// @nodoc
-class _$VariantPatchTearOff {
-  const _$VariantPatchTearOff();
-
-  _VariantPatch call(
-      {int? id,
-      String? code,
-      String? barcode,
-      String? qrcode,
-      double? vat,
-      String? description,
-      String? name,
-      String? status,
-      int? image1,
-      String? image2,
-      double? height,
-      double? width,
-      double? length,
-      double? weight,
-      String? image3,
-      String? image4,
-      String? image5,
-      String? catalog1,
-      String? catalog2,
-      String? catalog3,
-      String? catalog4,
-      String? catalog5,
-      String? catalog6,
-      String? catalog7,
-      String? catalog8,
-      Storage? Ingrediants,
-      Storage? storage,
-      @JsonKey(name: "variant_name")
-          String? variantName,
-      @JsonKey(name: "maximum_gp")
-          double? maxGp,
-      @JsonKey(name: "minimum_gp")
-          double? minGap,
-      @JsonKey(name: "weight_uom_id")
-          int? weightUomId,
-      @JsonKey(name: "sales_uom")
-          String? salesUom,
-      @JsonKey(name: "purchase_uom")
-          String? purchaseUom,
-      @JsonKey(name: "search_name")
-          String? searchName,
-      @JsonKey(name: "display_name")
-          String? displayName,
-      @JsonKey(name: "variant_value")
-          String? variantValue,
-      @JsonKey(name: "arabic_description")
-          String? arabicDescription,
-      @JsonKey(name: "additional_description")
-          String? additionalDescription,
-      @JsonKey(name: "pos_name")
-          String? posName,
-      @JsonKey(name: "gross_weight")
-          String? grossWeight,
-      @JsonKey(name: "net_weight")
-          String? netWeight,
-      @JsonKey(name: "unit_cost")
-          double? unitCost,
-      @JsonKey(name: "actual_cost")
-          double? actualCost,
-      @JsonKey(name: "need_multiple_integration")
-          bool? needMultipleIntegration,
-      @JsonKey(name: "landing_cost")
-          double? landingCost,
-      @JsonKey(name: "base_price")
-          double? basePrize,
-      @JsonKey(name: "manufacture_id")
-          int? manuFacturedId,
-      @JsonKey(name: "manufacture_name")
-          String? manuFacturedName,
-      @JsonKey(name: "safty_stock")
-          int? safetyStock,
-      @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
-      @JsonKey(name: "reorder_quantity")
-          int? reorderQuantity,
-      @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesBolock,
-      @JsonKey(name: "purchase_block", defaultValue: false)
-          bool? purchaseBlock,
-      @JsonKey(name: "ratio_to_eccommerce")
-          String? ratioToEcommerce,
-      @JsonKey(name: "min_max_ratio")
-          String? minMaxRatio,
-      @JsonKey(name: "min_sales_order_limit")
-          int? minSalesOrderLimit,
-      @JsonKey(name: "max_sales_order_limit")
-          int? maxSalesOrderLimit,
-      @JsonKey(name: "sebling_id")
-          int? seblingId,
-      @JsonKey(name: "sibling_code")
-          int? sibilingCode,
-      @JsonKey(name: "whole_sale_stock")
-          int? wholeSaleStock,
-      @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
-      @JsonKey(name: "item_catalog", defaultValue: false)
-          bool? itemCatelog,
-      @JsonKey(name: "item_image", defaultValue: false)
-          bool? itemImage,
-      @JsonKey(name: "is_active", defaultValue: false)
-          bool? isActive,
-      @JsonKey(name: "retail_selling_price_percentage")
-          double? retailSellingPricePercentage,
-      @JsonKey(name: "wholesale_selling_price_percentage")
-          double? wholeSellingPricePercentage,
-      @JsonKey(name: "online_selling_price_percentage")
-          double? onlineSellingPercenage,
-      @JsonKey(name: "vedio_url")
-          String? vedioUrl,
-      @JsonKey(name: "average_gp")
-          double? avgGp,
-      @JsonKey(name: "targeted_gp")
-          double? targetedGp,
-      @JsonKey(name: "min_purchase_order_limit")
-          int? minPurchaseOrderLimit,
-      @JsonKey(name: "max_purchase_order_limit")
-          int? maxPurchaseOrderLimit,
-      @JsonKey(name: "important_info")
-          ProductFeatures? importantInfo,
-      @JsonKey(name: "Additional_info")
-          ProductFeatures? additionalInfo,
-      @JsonKey(name: "Nutriants_facts")
-          ProductFeatures? nutriantsFacts,
-      @JsonKey(name: "product_details")
-          ProductFeatures? productDetails,
-      @JsonKey(name: "product_features")
-          ProductFeatures? productFeatures,
-      @JsonKey(name: "about_the_products")
-          Storage? aboutProducts,
-      @JsonKey(name: "product_behaviour")
-          List<productBehaviour>? productBehavior,
-      @JsonKey(name: "usage_direction")
-          Storage? usageDirection,
-      @JsonKey(name: "vendor_details")
-          List<VendorDetails>? vendorDetails,
-      @JsonKey(name: "uom_code")
-          String? uomCode,
-      @JsonKey(name: "alternative_barcode")
-          List<AlternativeBarcode>? alternativeBarcode,
-      @JsonKey(name: "alternative_qrcode")
-          List<AlternativeBarcode>? alternativeQrCodeBarcode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
-      @JsonKey(name: "produced_country")
-          String? producedCountry,
-      @JsonKey(name: "excess_tax")
-          double? excessTax,
-      @JsonKey(name: "return_type")
-          String? returnType,
-      @JsonKey(name: "variant_status")
-          String? variantStatus,
-      @JsonKey(name: "return_time")
-          int? returnTime}) {
-    return _VariantPatch(
-      id: id,
-      code: code,
-      barcode: barcode,
-      qrcode: qrcode,
-      vat: vat,
-      description: description,
-      name: name,
-      status: status,
-      image1: image1,
-      image2: image2,
-      height: height,
-      width: width,
-      length: length,
-      weight: weight,
-      image3: image3,
-      image4: image4,
-      image5: image5,
-      catalog1: catalog1,
-      catalog2: catalog2,
-      catalog3: catalog3,
-      catalog4: catalog4,
-      catalog5: catalog5,
-      catalog6: catalog6,
-      catalog7: catalog7,
-      catalog8: catalog8,
-      Ingrediants: Ingrediants,
-      storage: storage,
-      variantName: variantName,
-      maxGp: maxGp,
-      minGap: minGap,
-      weightUomId: weightUomId,
-      salesUom: salesUom,
-      purchaseUom: purchaseUom,
-      searchName: searchName,
-      displayName: displayName,
-      variantValue: variantValue,
-      arabicDescription: arabicDescription,
-      additionalDescription: additionalDescription,
-      posName: posName,
-      grossWeight: grossWeight,
-      netWeight: netWeight,
-      unitCost: unitCost,
-      actualCost: actualCost,
-      needMultipleIntegration: needMultipleIntegration,
-      landingCost: landingCost,
-      basePrize: basePrize,
-      manuFacturedId: manuFacturedId,
-      manuFacturedName: manuFacturedName,
-      safetyStock: safetyStock,
-      reOrderPoint: reOrderPoint,
-      reorderQuantity: reorderQuantity,
-      salesBolock: salesBolock,
-      purchaseBlock: purchaseBlock,
-      ratioToEcommerce: ratioToEcommerce,
-      minMaxRatio: minMaxRatio,
-      minSalesOrderLimit: minSalesOrderLimit,
-      maxSalesOrderLimit: maxSalesOrderLimit,
-      seblingId: seblingId,
-      sibilingCode: sibilingCode,
-      wholeSaleStock: wholeSaleStock,
-      stockWarning: stockWarning,
-      itemCatelog: itemCatelog,
-      itemImage: itemImage,
-      isActive: isActive,
-      retailSellingPricePercentage: retailSellingPricePercentage,
-      wholeSellingPricePercentage: wholeSellingPricePercentage,
-      onlineSellingPercenage: onlineSellingPercenage,
-      vedioUrl: vedioUrl,
-      avgGp: avgGp,
-      targetedGp: targetedGp,
-      minPurchaseOrderLimit: minPurchaseOrderLimit,
-      maxPurchaseOrderLimit: maxPurchaseOrderLimit,
-      importantInfo: importantInfo,
-      additionalInfo: additionalInfo,
-      nutriantsFacts: nutriantsFacts,
-      productDetails: productDetails,
-      productFeatures: productFeatures,
-      aboutProducts: aboutProducts,
-      productBehavior: productBehavior,
-      usageDirection: usageDirection,
-      vendorDetails: vendorDetails,
-      uomCode: uomCode,
-      alternativeBarcode: alternativeBarcode,
-      alternativeQrCodeBarcode: alternativeQrCodeBarcode,
-      inventoryId: inventoryId,
-      producedCountry: producedCountry,
-      excessTax: excessTax,
-      returnType: returnType,
-      variantStatus: variantStatus,
-      returnTime: returnTime,
-    );
-  }
-
-  VariantPatch fromJson(Map<String, Object> json) {
-    return VariantPatch.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VariantPatch = _$VariantPatchTearOff();
 
 /// @nodoc
 mixin _$VariantPatch {
@@ -447,7 +188,8 @@ mixin _$VariantPatch {
 abstract class $VariantPatchCopyWith<$Res> {
   factory $VariantPatchCopyWith(
           VariantPatch value, $Res Function(VariantPatch) then) =
-      _$VariantPatchCopyWithImpl<$Res>;
+      _$VariantPatchCopyWithImpl<$Res, VariantPatch>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -615,13 +357,16 @@ abstract class $VariantPatchCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
+class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
+    implements $VariantPatchCopyWith<$Res> {
   _$VariantPatchCopyWithImpl(this._value, this._then);
 
-  final VariantPatch _value;
   // ignore: unused_field
-  final $Res Function(VariantPatch) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -716,476 +461,486 @@ class _$VariantPatchCopyWithImpl<$Res> implements $VariantPatchCopyWith<$Res> {
     Object? returnTime = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      qrcode: qrcode == freezed
+      qrcode: freezed == qrcode
           ? _value.qrcode
           : qrcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      image1: image1 == freezed
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
+      height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as double?,
-      width: width == freezed
+      width: freezed == width
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
               as double?,
-      length: length == freezed
+      length: freezed == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as double?,
-      weight: weight == freezed
+      weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as double?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image4: image4 == freezed
+      image4: freezed == image4
           ? _value.image4
           : image4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image5: image5 == freezed
+      image5: freezed == image5
           ? _value.image5
           : image5 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog1: catalog1 == freezed
+      catalog1: freezed == catalog1
           ? _value.catalog1
           : catalog1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog2: catalog2 == freezed
+      catalog2: freezed == catalog2
           ? _value.catalog2
           : catalog2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog3: catalog3 == freezed
+      catalog3: freezed == catalog3
           ? _value.catalog3
           : catalog3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog4: catalog4 == freezed
+      catalog4: freezed == catalog4
           ? _value.catalog4
           : catalog4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog5: catalog5 == freezed
+      catalog5: freezed == catalog5
           ? _value.catalog5
           : catalog5 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog6: catalog6 == freezed
+      catalog6: freezed == catalog6
           ? _value.catalog6
           : catalog6 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog7: catalog7 == freezed
+      catalog7: freezed == catalog7
           ? _value.catalog7
           : catalog7 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog8: catalog8 == freezed
+      catalog8: freezed == catalog8
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
               as String?,
-      Ingrediants: Ingrediants == freezed
+      Ingrediants: freezed == Ingrediants
           ? _value.Ingrediants
           : Ingrediants // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      storage: storage == freezed
+      storage: freezed == storage
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      variantName: variantName == freezed
+      variantName: freezed == variantName
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
               as String?,
-      maxGp: maxGp == freezed
+      maxGp: freezed == maxGp
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      minGap: minGap == freezed
+      minGap: freezed == minGap
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
               as double?,
-      weightUomId: weightUomId == freezed
+      weightUomId: freezed == weightUomId
           ? _value.weightUomId
           : weightUomId // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUom: salesUom == freezed
+      salesUom: freezed == salesUom
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      searchName: searchName == freezed
+      searchName: freezed == searchName
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantValue: variantValue == freezed
+      variantValue: freezed == variantValue
           ? _value.variantValue
           : variantValue // ignore: cast_nullable_to_non_nullable
               as String?,
-      arabicDescription: arabicDescription == freezed
+      arabicDescription: freezed == arabicDescription
           ? _value.arabicDescription
           : arabicDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      additionalDescription: additionalDescription == freezed
+      additionalDescription: freezed == additionalDescription
           ? _value.additionalDescription
           : additionalDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      posName: posName == freezed
+      posName: freezed == posName
           ? _value.posName
           : posName // ignore: cast_nullable_to_non_nullable
               as String?,
-      grossWeight: grossWeight == freezed
+      grossWeight: freezed == grossWeight
           ? _value.grossWeight
           : grossWeight // ignore: cast_nullable_to_non_nullable
               as String?,
-      netWeight: netWeight == freezed
+      netWeight: freezed == netWeight
           ? _value.netWeight
           : netWeight // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      actualCost: actualCost == freezed
+      actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      needMultipleIntegration: needMultipleIntegration == freezed
+      needMultipleIntegration: freezed == needMultipleIntegration
           ? _value.needMultipleIntegration
           : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
               as bool?,
-      landingCost: landingCost == freezed
+      landingCost: freezed == landingCost
           ? _value.landingCost
           : landingCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      basePrize: basePrize == freezed
+      basePrize: freezed == basePrize
           ? _value.basePrize
           : basePrize // ignore: cast_nullable_to_non_nullable
               as double?,
-      manuFacturedId: manuFacturedId == freezed
+      manuFacturedId: freezed == manuFacturedId
           ? _value.manuFacturedId
           : manuFacturedId // ignore: cast_nullable_to_non_nullable
               as int?,
-      manuFacturedName: manuFacturedName == freezed
+      manuFacturedName: freezed == manuFacturedName
           ? _value.manuFacturedName
           : manuFacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
-      safetyStock: safetyStock == freezed
+      safetyStock: freezed == safetyStock
           ? _value.safetyStock
           : safetyStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      reorderQuantity: reorderQuantity == freezed
+      reorderQuantity: freezed == reorderQuantity
           ? _value.reorderQuantity
           : reorderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesBolock: salesBolock == freezed
+      salesBolock: freezed == salesBolock
           ? _value.salesBolock
           : salesBolock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      ratioToEcommerce: ratioToEcommerce == freezed
+      ratioToEcommerce: freezed == ratioToEcommerce
           ? _value.ratioToEcommerce
           : ratioToEcommerce // ignore: cast_nullable_to_non_nullable
               as String?,
-      minMaxRatio: minMaxRatio == freezed
+      minMaxRatio: freezed == minMaxRatio
           ? _value.minMaxRatio
           : minMaxRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      minSalesOrderLimit: minSalesOrderLimit == freezed
+      minSalesOrderLimit: freezed == minSalesOrderLimit
           ? _value.minSalesOrderLimit
           : minSalesOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      maxSalesOrderLimit: maxSalesOrderLimit == freezed
+      maxSalesOrderLimit: freezed == maxSalesOrderLimit
           ? _value.maxSalesOrderLimit
           : maxSalesOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      seblingId: seblingId == freezed
+      seblingId: freezed == seblingId
           ? _value.seblingId
           : seblingId // ignore: cast_nullable_to_non_nullable
               as int?,
-      sibilingCode: sibilingCode == freezed
+      sibilingCode: freezed == sibilingCode
           ? _value.sibilingCode
           : sibilingCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      wholeSaleStock: wholeSaleStock == freezed
+      wholeSaleStock: freezed == wholeSaleStock
           ? _value.wholeSaleStock
           : wholeSaleStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemCatelog: itemCatelog == freezed
+      itemCatelog: freezed == itemCatelog
           ? _value.itemCatelog
           : itemCatelog // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemImage: itemImage == freezed
+      itemImage: freezed == itemImage
           ? _value.itemImage
           : itemImage // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      retailSellingPricePercentage: retailSellingPricePercentage == freezed
+      retailSellingPricePercentage: freezed == retailSellingPricePercentage
           ? _value.retailSellingPricePercentage
           : retailSellingPricePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      wholeSellingPricePercentage: wholeSellingPricePercentage == freezed
+      wholeSellingPricePercentage: freezed == wholeSellingPricePercentage
           ? _value.wholeSellingPricePercentage
           : wholeSellingPricePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      onlineSellingPercenage: onlineSellingPercenage == freezed
+      onlineSellingPercenage: freezed == onlineSellingPercenage
           ? _value.onlineSellingPercenage
           : onlineSellingPercenage // ignore: cast_nullable_to_non_nullable
               as double?,
-      vedioUrl: vedioUrl == freezed
+      vedioUrl: freezed == vedioUrl
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      avgGp: avgGp == freezed
+      avgGp: freezed == avgGp
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      targetedGp: targetedGp == freezed
+      targetedGp: freezed == targetedGp
           ? _value.targetedGp
           : targetedGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      minPurchaseOrderLimit: minPurchaseOrderLimit == freezed
+      minPurchaseOrderLimit: freezed == minPurchaseOrderLimit
           ? _value.minPurchaseOrderLimit
           : minPurchaseOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      maxPurchaseOrderLimit: maxPurchaseOrderLimit == freezed
+      maxPurchaseOrderLimit: freezed == maxPurchaseOrderLimit
           ? _value.maxPurchaseOrderLimit
           : maxPurchaseOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      importantInfo: importantInfo == freezed
+      importantInfo: freezed == importantInfo
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      additionalInfo: additionalInfo == freezed
+      additionalInfo: freezed == additionalInfo
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      nutriantsFacts: nutriantsFacts == freezed
+      nutriantsFacts: freezed == nutriantsFacts
           ? _value.nutriantsFacts
           : nutriantsFacts // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      productDetails: productDetails == freezed
+      productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      productFeatures: productFeatures == freezed
+      productFeatures: freezed == productFeatures
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      aboutProducts: aboutProducts == freezed
+      aboutProducts: freezed == aboutProducts
           ? _value.aboutProducts
           : aboutProducts // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      productBehavior: productBehavior == freezed
+      productBehavior: freezed == productBehavior
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
               as List<productBehaviour>?,
-      usageDirection: usageDirection == freezed
+      usageDirection: freezed == usageDirection
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      vendorDetails: vendorDetails == freezed
+      vendorDetails: freezed == vendorDetails
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      alternativeBarcode: alternativeBarcode == freezed
+      alternativeBarcode: freezed == alternativeBarcode
           ? _value.alternativeBarcode
           : alternativeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      alternativeQrCodeBarcode: alternativeQrCodeBarcode == freezed
+      alternativeQrCodeBarcode: freezed == alternativeQrCodeBarcode
           ? _value.alternativeQrCodeBarcode
           : alternativeQrCodeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      producedCountry: producedCountry == freezed
+      producedCountry: freezed == producedCountry
           ? _value.producedCountry
           : producedCountry // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantStatus: variantStatus == freezed
+      variantStatus: freezed == variantStatus
           ? _value.variantStatus
           : variantStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StorageCopyWith<$Res>? get Ingrediants {
     if (_value.Ingrediants == null) {
       return null;
     }
 
     return $StorageCopyWith<$Res>(_value.Ingrediants!, (value) {
-      return _then(_value.copyWith(Ingrediants: value));
+      return _then(_value.copyWith(Ingrediants: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StorageCopyWith<$Res>? get storage {
     if (_value.storage == null) {
       return null;
     }
 
     return $StorageCopyWith<$Res>(_value.storage!, (value) {
-      return _then(_value.copyWith(storage: value));
+      return _then(_value.copyWith(storage: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductFeaturesCopyWith<$Res>? get importantInfo {
     if (_value.importantInfo == null) {
       return null;
     }
 
     return $ProductFeaturesCopyWith<$Res>(_value.importantInfo!, (value) {
-      return _then(_value.copyWith(importantInfo: value));
+      return _then(_value.copyWith(importantInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductFeaturesCopyWith<$Res>? get additionalInfo {
     if (_value.additionalInfo == null) {
       return null;
     }
 
     return $ProductFeaturesCopyWith<$Res>(_value.additionalInfo!, (value) {
-      return _then(_value.copyWith(additionalInfo: value));
+      return _then(_value.copyWith(additionalInfo: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductFeaturesCopyWith<$Res>? get nutriantsFacts {
     if (_value.nutriantsFacts == null) {
       return null;
     }
 
     return $ProductFeaturesCopyWith<$Res>(_value.nutriantsFacts!, (value) {
-      return _then(_value.copyWith(nutriantsFacts: value));
+      return _then(_value.copyWith(nutriantsFacts: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductFeaturesCopyWith<$Res>? get productDetails {
     if (_value.productDetails == null) {
       return null;
     }
 
     return $ProductFeaturesCopyWith<$Res>(_value.productDetails!, (value) {
-      return _then(_value.copyWith(productDetails: value));
+      return _then(_value.copyWith(productDetails: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ProductFeaturesCopyWith<$Res>? get productFeatures {
     if (_value.productFeatures == null) {
       return null;
     }
 
     return $ProductFeaturesCopyWith<$Res>(_value.productFeatures!, (value) {
-      return _then(_value.copyWith(productFeatures: value));
+      return _then(_value.copyWith(productFeatures: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StorageCopyWith<$Res>? get aboutProducts {
     if (_value.aboutProducts == null) {
       return null;
     }
 
     return $StorageCopyWith<$Res>(_value.aboutProducts!, (value) {
-      return _then(_value.copyWith(aboutProducts: value));
+      return _then(_value.copyWith(aboutProducts: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StorageCopyWith<$Res>? get usageDirection {
     if (_value.usageDirection == null) {
       return null;
     }
 
     return $StorageCopyWith<$Res>(_value.usageDirection!, (value) {
-      return _then(_value.copyWith(usageDirection: value));
+      return _then(_value.copyWith(usageDirection: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$VariantPatchCopyWith<$Res>
+abstract class _$$_VariantPatchCopyWith<$Res>
     implements $VariantPatchCopyWith<$Res> {
-  factory _$VariantPatchCopyWith(
-          _VariantPatch value, $Res Function(_VariantPatch) then) =
-      __$VariantPatchCopyWithImpl<$Res>;
+  factory _$$_VariantPatchCopyWith(
+          _$_VariantPatch value, $Res Function(_$_VariantPatch) then) =
+      __$$_VariantPatchCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -1362,15 +1117,14 @@ abstract class _$VariantPatchCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
-    implements _$VariantPatchCopyWith<$Res> {
-  __$VariantPatchCopyWithImpl(
-      _VariantPatch _value, $Res Function(_VariantPatch) _then)
-      : super(_value, (v) => _then(v as _VariantPatch));
+class __$$_VariantPatchCopyWithImpl<$Res>
+    extends _$VariantPatchCopyWithImpl<$Res, _$_VariantPatch>
+    implements _$$_VariantPatchCopyWith<$Res> {
+  __$$_VariantPatchCopyWithImpl(
+      _$_VariantPatch _value, $Res Function(_$_VariantPatch) _then)
+      : super(_value, _then);
 
-  @override
-  _VariantPatch get _value => super._value as _VariantPatch;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1464,364 +1218,364 @@ class __$VariantPatchCopyWithImpl<$Res> extends _$VariantPatchCopyWithImpl<$Res>
     Object? variantStatus = freezed,
     Object? returnTime = freezed,
   }) {
-    return _then(_VariantPatch(
-      id: id == freezed
+    return _then(_$_VariantPatch(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      qrcode: qrcode == freezed
+      qrcode: freezed == qrcode
           ? _value.qrcode
           : qrcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      image1: image1 == freezed
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as int?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      height: height == freezed
+      height: freezed == height
           ? _value.height
           : height // ignore: cast_nullable_to_non_nullable
               as double?,
-      width: width == freezed
+      width: freezed == width
           ? _value.width
           : width // ignore: cast_nullable_to_non_nullable
               as double?,
-      length: length == freezed
+      length: freezed == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
               as double?,
-      weight: weight == freezed
+      weight: freezed == weight
           ? _value.weight
           : weight // ignore: cast_nullable_to_non_nullable
               as double?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image4: image4 == freezed
+      image4: freezed == image4
           ? _value.image4
           : image4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image5: image5 == freezed
+      image5: freezed == image5
           ? _value.image5
           : image5 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog1: catalog1 == freezed
+      catalog1: freezed == catalog1
           ? _value.catalog1
           : catalog1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog2: catalog2 == freezed
+      catalog2: freezed == catalog2
           ? _value.catalog2
           : catalog2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog3: catalog3 == freezed
+      catalog3: freezed == catalog3
           ? _value.catalog3
           : catalog3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog4: catalog4 == freezed
+      catalog4: freezed == catalog4
           ? _value.catalog4
           : catalog4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog5: catalog5 == freezed
+      catalog5: freezed == catalog5
           ? _value.catalog5
           : catalog5 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog6: catalog6 == freezed
+      catalog6: freezed == catalog6
           ? _value.catalog6
           : catalog6 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog7: catalog7 == freezed
+      catalog7: freezed == catalog7
           ? _value.catalog7
           : catalog7 // ignore: cast_nullable_to_non_nullable
               as String?,
-      catalog8: catalog8 == freezed
+      catalog8: freezed == catalog8
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
               as String?,
-      Ingrediants: Ingrediants == freezed
+      Ingrediants: freezed == Ingrediants
           ? _value.Ingrediants
           : Ingrediants // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      storage: storage == freezed
+      storage: freezed == storage
           ? _value.storage
           : storage // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      variantName: variantName == freezed
+      variantName: freezed == variantName
           ? _value.variantName
           : variantName // ignore: cast_nullable_to_non_nullable
               as String?,
-      maxGp: maxGp == freezed
+      maxGp: freezed == maxGp
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      minGap: minGap == freezed
+      minGap: freezed == minGap
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
               as double?,
-      weightUomId: weightUomId == freezed
+      weightUomId: freezed == weightUomId
           ? _value.weightUomId
           : weightUomId // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUom: salesUom == freezed
+      salesUom: freezed == salesUom
           ? _value.salesUom
           : salesUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as String?,
-      searchName: searchName == freezed
+      searchName: freezed == searchName
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantValue: variantValue == freezed
+      variantValue: freezed == variantValue
           ? _value.variantValue
           : variantValue // ignore: cast_nullable_to_non_nullable
               as String?,
-      arabicDescription: arabicDescription == freezed
+      arabicDescription: freezed == arabicDescription
           ? _value.arabicDescription
           : arabicDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      additionalDescription: additionalDescription == freezed
+      additionalDescription: freezed == additionalDescription
           ? _value.additionalDescription
           : additionalDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      posName: posName == freezed
+      posName: freezed == posName
           ? _value.posName
           : posName // ignore: cast_nullable_to_non_nullable
               as String?,
-      grossWeight: grossWeight == freezed
+      grossWeight: freezed == grossWeight
           ? _value.grossWeight
           : grossWeight // ignore: cast_nullable_to_non_nullable
               as String?,
-      netWeight: netWeight == freezed
+      netWeight: freezed == netWeight
           ? _value.netWeight
           : netWeight // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      actualCost: actualCost == freezed
+      actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      needMultipleIntegration: needMultipleIntegration == freezed
+      needMultipleIntegration: freezed == needMultipleIntegration
           ? _value.needMultipleIntegration
           : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
               as bool?,
-      landingCost: landingCost == freezed
+      landingCost: freezed == landingCost
           ? _value.landingCost
           : landingCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      basePrize: basePrize == freezed
+      basePrize: freezed == basePrize
           ? _value.basePrize
           : basePrize // ignore: cast_nullable_to_non_nullable
               as double?,
-      manuFacturedId: manuFacturedId == freezed
+      manuFacturedId: freezed == manuFacturedId
           ? _value.manuFacturedId
           : manuFacturedId // ignore: cast_nullable_to_non_nullable
               as int?,
-      manuFacturedName: manuFacturedName == freezed
+      manuFacturedName: freezed == manuFacturedName
           ? _value.manuFacturedName
           : manuFacturedName // ignore: cast_nullable_to_non_nullable
               as String?,
-      safetyStock: safetyStock == freezed
+      safetyStock: freezed == safetyStock
           ? _value.safetyStock
           : safetyStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      reorderQuantity: reorderQuantity == freezed
+      reorderQuantity: freezed == reorderQuantity
           ? _value.reorderQuantity
           : reorderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesBolock: salesBolock == freezed
+      salesBolock: freezed == salesBolock
           ? _value.salesBolock
           : salesBolock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      ratioToEcommerce: ratioToEcommerce == freezed
+      ratioToEcommerce: freezed == ratioToEcommerce
           ? _value.ratioToEcommerce
           : ratioToEcommerce // ignore: cast_nullable_to_non_nullable
               as String?,
-      minMaxRatio: minMaxRatio == freezed
+      minMaxRatio: freezed == minMaxRatio
           ? _value.minMaxRatio
           : minMaxRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      minSalesOrderLimit: minSalesOrderLimit == freezed
+      minSalesOrderLimit: freezed == minSalesOrderLimit
           ? _value.minSalesOrderLimit
           : minSalesOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      maxSalesOrderLimit: maxSalesOrderLimit == freezed
+      maxSalesOrderLimit: freezed == maxSalesOrderLimit
           ? _value.maxSalesOrderLimit
           : maxSalesOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      seblingId: seblingId == freezed
+      seblingId: freezed == seblingId
           ? _value.seblingId
           : seblingId // ignore: cast_nullable_to_non_nullable
               as int?,
-      sibilingCode: sibilingCode == freezed
+      sibilingCode: freezed == sibilingCode
           ? _value.sibilingCode
           : sibilingCode // ignore: cast_nullable_to_non_nullable
               as int?,
-      wholeSaleStock: wholeSaleStock == freezed
+      wholeSaleStock: freezed == wholeSaleStock
           ? _value.wholeSaleStock
           : wholeSaleStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemCatelog: itemCatelog == freezed
+      itemCatelog: freezed == itemCatelog
           ? _value.itemCatelog
           : itemCatelog // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemImage: itemImage == freezed
+      itemImage: freezed == itemImage
           ? _value.itemImage
           : itemImage // ignore: cast_nullable_to_non_nullable
               as bool?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      retailSellingPricePercentage: retailSellingPricePercentage == freezed
+      retailSellingPricePercentage: freezed == retailSellingPricePercentage
           ? _value.retailSellingPricePercentage
           : retailSellingPricePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      wholeSellingPricePercentage: wholeSellingPricePercentage == freezed
+      wholeSellingPricePercentage: freezed == wholeSellingPricePercentage
           ? _value.wholeSellingPricePercentage
           : wholeSellingPricePercentage // ignore: cast_nullable_to_non_nullable
               as double?,
-      onlineSellingPercenage: onlineSellingPercenage == freezed
+      onlineSellingPercenage: freezed == onlineSellingPercenage
           ? _value.onlineSellingPercenage
           : onlineSellingPercenage // ignore: cast_nullable_to_non_nullable
               as double?,
-      vedioUrl: vedioUrl == freezed
+      vedioUrl: freezed == vedioUrl
           ? _value.vedioUrl
           : vedioUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      avgGp: avgGp == freezed
+      avgGp: freezed == avgGp
           ? _value.avgGp
           : avgGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      targetedGp: targetedGp == freezed
+      targetedGp: freezed == targetedGp
           ? _value.targetedGp
           : targetedGp // ignore: cast_nullable_to_non_nullable
               as double?,
-      minPurchaseOrderLimit: minPurchaseOrderLimit == freezed
+      minPurchaseOrderLimit: freezed == minPurchaseOrderLimit
           ? _value.minPurchaseOrderLimit
           : minPurchaseOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      maxPurchaseOrderLimit: maxPurchaseOrderLimit == freezed
+      maxPurchaseOrderLimit: freezed == maxPurchaseOrderLimit
           ? _value.maxPurchaseOrderLimit
           : maxPurchaseOrderLimit // ignore: cast_nullable_to_non_nullable
               as int?,
-      importantInfo: importantInfo == freezed
+      importantInfo: freezed == importantInfo
           ? _value.importantInfo
           : importantInfo // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      additionalInfo: additionalInfo == freezed
+      additionalInfo: freezed == additionalInfo
           ? _value.additionalInfo
           : additionalInfo // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      nutriantsFacts: nutriantsFacts == freezed
+      nutriantsFacts: freezed == nutriantsFacts
           ? _value.nutriantsFacts
           : nutriantsFacts // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      productDetails: productDetails == freezed
+      productDetails: freezed == productDetails
           ? _value.productDetails
           : productDetails // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      productFeatures: productFeatures == freezed
+      productFeatures: freezed == productFeatures
           ? _value.productFeatures
           : productFeatures // ignore: cast_nullable_to_non_nullable
               as ProductFeatures?,
-      aboutProducts: aboutProducts == freezed
+      aboutProducts: freezed == aboutProducts
           ? _value.aboutProducts
           : aboutProducts // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      productBehavior: productBehavior == freezed
-          ? _value.productBehavior
+      productBehavior: freezed == productBehavior
+          ? _value._productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
               as List<productBehaviour>?,
-      usageDirection: usageDirection == freezed
+      usageDirection: freezed == usageDirection
           ? _value.usageDirection
           : usageDirection // ignore: cast_nullable_to_non_nullable
               as Storage?,
-      vendorDetails: vendorDetails == freezed
-          ? _value.vendorDetails
+      vendorDetails: freezed == vendorDetails
+          ? _value._vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      alternativeBarcode: alternativeBarcode == freezed
-          ? _value.alternativeBarcode
+      alternativeBarcode: freezed == alternativeBarcode
+          ? _value._alternativeBarcode
           : alternativeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      alternativeQrCodeBarcode: alternativeQrCodeBarcode == freezed
-          ? _value.alternativeQrCodeBarcode
+      alternativeQrCodeBarcode: freezed == alternativeQrCodeBarcode
+          ? _value._alternativeQrCodeBarcode
           : alternativeQrCodeBarcode // ignore: cast_nullable_to_non_nullable
               as List<AlternativeBarcode>?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      producedCountry: producedCountry == freezed
+      producedCountry: freezed == producedCountry
           ? _value.producedCountry
           : producedCountry // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantStatus: variantStatus == freezed
+      variantStatus: freezed == variantStatus
           ? _value.variantStatus
           : variantStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -1963,17 +1717,17 @@ class _$_VariantPatch implements _VariantPatch {
       @JsonKey(name: "about_the_products")
           this.aboutProducts,
       @JsonKey(name: "product_behaviour")
-          this.productBehavior,
+          final List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
           this.usageDirection,
       @JsonKey(name: "vendor_details")
-          this.vendorDetails,
+          final List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
           this.uomCode,
       @JsonKey(name: "alternative_barcode")
-          this.alternativeBarcode,
+          final List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
-          this.alternativeQrCodeBarcode,
+          final List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
           this.inventoryId,
       @JsonKey(name: "produced_country")
@@ -1985,7 +1739,11 @@ class _$_VariantPatch implements _VariantPatch {
       @JsonKey(name: "variant_status")
           this.variantStatus,
       @JsonKey(name: "return_time")
-          this.returnTime});
+          this.returnTime})
+      : _productBehavior = productBehavior,
+        _vendorDetails = vendorDetails,
+        _alternativeBarcode = alternativeBarcode,
+        _alternativeQrCodeBarcode = alternativeQrCodeBarcode;
 
   factory _$_VariantPatch.fromJson(Map<String, dynamic> json) =>
       _$$_VariantPatchFromJson(json);
@@ -2197,24 +1955,52 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   @JsonKey(name: "about_the_products")
   final Storage? aboutProducts;
+  final List<productBehaviour>? _productBehavior;
   @override
   @JsonKey(name: "product_behaviour")
-  final List<productBehaviour>? productBehavior;
+  List<productBehaviour>? get productBehavior {
+    final value = _productBehavior;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "usage_direction")
   final Storage? usageDirection;
+  final List<VendorDetails>? _vendorDetails;
   @override
   @JsonKey(name: "vendor_details")
-  final List<VendorDetails>? vendorDetails;
+  List<VendorDetails>? get vendorDetails {
+    final value = _vendorDetails;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "uom_code")
   final String? uomCode;
+  final List<AlternativeBarcode>? _alternativeBarcode;
   @override
   @JsonKey(name: "alternative_barcode")
-  final List<AlternativeBarcode>? alternativeBarcode;
+  List<AlternativeBarcode>? get alternativeBarcode {
+    final value = _alternativeBarcode;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<AlternativeBarcode>? _alternativeQrCodeBarcode;
   @override
   @JsonKey(name: "alternative_qrcode")
-  final List<AlternativeBarcode>? alternativeQrCodeBarcode;
+  List<AlternativeBarcode>? get alternativeQrCodeBarcode {
+    final value = _alternativeQrCodeBarcode;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "inventory_id")
   final String? inventoryId;
@@ -2242,655 +2028,654 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VariantPatch &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
-            (identical(other.qrcode, qrcode) ||
-                const DeepCollectionEquality().equals(other.qrcode, qrcode)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_VariantPatch &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.qrcode, qrcode) || other.qrcode == qrcode) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
-            (identical(other.image1, image1) ||
-                const DeepCollectionEquality().equals(other.image1, image1)) &&
-            (identical(other.image2, image2) ||
-                const DeepCollectionEquality().equals(other.image2, image2)) &&
-            (identical(other.height, height) ||
-                const DeepCollectionEquality().equals(other.height, height)) &&
-            (identical(other.width, width) ||
-                const DeepCollectionEquality().equals(other.width, width)) &&
-            (identical(other.length, length) ||
-                const DeepCollectionEquality().equals(other.length, length)) &&
-            (identical(other.weight, weight) ||
-                const DeepCollectionEquality().equals(other.weight, weight)) &&
-            (identical(other.image3, image3) ||
-                const DeepCollectionEquality().equals(other.image3, image3)) &&
-            (identical(other.image4, image4) ||
-                const DeepCollectionEquality().equals(other.image4, image4)) &&
-            (identical(other.image5, image5) ||
-                const DeepCollectionEquality().equals(other.image5, image5)) &&
+                other.description == description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.image1, image1) || other.image1 == image1) &&
+            (identical(other.image2, image2) || other.image2 == image2) &&
+            (identical(other.height, height) || other.height == height) &&
+            (identical(other.width, width) || other.width == width) &&
+            (identical(other.length, length) || other.length == length) &&
+            (identical(other.weight, weight) || other.weight == weight) &&
+            (identical(other.image3, image3) || other.image3 == image3) &&
+            (identical(other.image4, image4) || other.image4 == image4) &&
+            (identical(other.image5, image5) || other.image5 == image5) &&
             (identical(other.catalog1, catalog1) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog1, catalog1)) &&
+                other.catalog1 == catalog1) &&
             (identical(other.catalog2, catalog2) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog2, catalog2)) &&
+                other.catalog2 == catalog2) &&
             (identical(other.catalog3, catalog3) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog3, catalog3)) &&
+                other.catalog3 == catalog3) &&
             (identical(other.catalog4, catalog4) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog4, catalog4)) &&
+                other.catalog4 == catalog4) &&
             (identical(other.catalog5, catalog5) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog5, catalog5)) &&
+                other.catalog5 == catalog5) &&
             (identical(other.catalog6, catalog6) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog6, catalog6)) &&
+                other.catalog6 == catalog6) &&
             (identical(other.catalog7, catalog7) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog7, catalog7)) &&
+                other.catalog7 == catalog7) &&
             (identical(other.catalog8, catalog8) ||
-                const DeepCollectionEquality()
-                    .equals(other.catalog8, catalog8)) &&
+                other.catalog8 == catalog8) &&
             (identical(other.Ingrediants, Ingrediants) ||
-                const DeepCollectionEquality()
-                    .equals(other.Ingrediants, Ingrediants)) &&
-            (identical(other.storage, storage) ||
-                const DeepCollectionEquality()
-                    .equals(other.storage, storage)) &&
+                other.Ingrediants == Ingrediants) &&
+            (identical(other.storage, storage) || other.storage == storage) &&
             (identical(other.variantName, variantName) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantName, variantName)) &&
-            (identical(other.maxGp, maxGp) ||
-                const DeepCollectionEquality().equals(other.maxGp, maxGp)) &&
-            (identical(other.minGap, minGap) ||
-                const DeepCollectionEquality().equals(other.minGap, minGap)) &&
-            (identical(other.weightUomId, weightUomId) || const DeepCollectionEquality().equals(other.weightUomId, weightUomId)) &&
-            (identical(other.salesUom, salesUom) || const DeepCollectionEquality().equals(other.salesUom, salesUom)) &&
-            (identical(other.purchaseUom, purchaseUom) || const DeepCollectionEquality().equals(other.purchaseUom, purchaseUom)) &&
-            (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
-            (identical(other.displayName, displayName) || const DeepCollectionEquality().equals(other.displayName, displayName)) &&
-            (identical(other.variantValue, variantValue) || const DeepCollectionEquality().equals(other.variantValue, variantValue)) &&
-            (identical(other.arabicDescription, arabicDescription) || const DeepCollectionEquality().equals(other.arabicDescription, arabicDescription)) &&
-            (identical(other.additionalDescription, additionalDescription) || const DeepCollectionEquality().equals(other.additionalDescription, additionalDescription)) &&
-            (identical(other.posName, posName) || const DeepCollectionEquality().equals(other.posName, posName)) &&
-            (identical(other.grossWeight, grossWeight) || const DeepCollectionEquality().equals(other.grossWeight, grossWeight)) &&
-            (identical(other.netWeight, netWeight) || const DeepCollectionEquality().equals(other.netWeight, netWeight)) &&
-            (identical(other.unitCost, unitCost) || const DeepCollectionEquality().equals(other.unitCost, unitCost)) &&
-            (identical(other.actualCost, actualCost) || const DeepCollectionEquality().equals(other.actualCost, actualCost)) &&
-            (identical(other.needMultipleIntegration, needMultipleIntegration) || const DeepCollectionEquality().equals(other.needMultipleIntegration, needMultipleIntegration)) &&
-            (identical(other.landingCost, landingCost) || const DeepCollectionEquality().equals(other.landingCost, landingCost)) &&
-            (identical(other.basePrize, basePrize) || const DeepCollectionEquality().equals(other.basePrize, basePrize)) &&
-            (identical(other.manuFacturedId, manuFacturedId) || const DeepCollectionEquality().equals(other.manuFacturedId, manuFacturedId)) &&
-            (identical(other.manuFacturedName, manuFacturedName) || const DeepCollectionEquality().equals(other.manuFacturedName, manuFacturedName)) &&
-            (identical(other.safetyStock, safetyStock) || const DeepCollectionEquality().equals(other.safetyStock, safetyStock)) &&
-            (identical(other.reOrderPoint, reOrderPoint) || const DeepCollectionEquality().equals(other.reOrderPoint, reOrderPoint)) &&
-            (identical(other.reorderQuantity, reorderQuantity) || const DeepCollectionEquality().equals(other.reorderQuantity, reorderQuantity)) &&
-            (identical(other.salesBolock, salesBolock) || const DeepCollectionEquality().equals(other.salesBolock, salesBolock)) &&
-            (identical(other.purchaseBlock, purchaseBlock) || const DeepCollectionEquality().equals(other.purchaseBlock, purchaseBlock)) &&
-            (identical(other.ratioToEcommerce, ratioToEcommerce) || const DeepCollectionEquality().equals(other.ratioToEcommerce, ratioToEcommerce)) &&
-            (identical(other.minMaxRatio, minMaxRatio) || const DeepCollectionEquality().equals(other.minMaxRatio, minMaxRatio)) &&
-            (identical(other.minSalesOrderLimit, minSalesOrderLimit) || const DeepCollectionEquality().equals(other.minSalesOrderLimit, minSalesOrderLimit)) &&
-            (identical(other.maxSalesOrderLimit, maxSalesOrderLimit) || const DeepCollectionEquality().equals(other.maxSalesOrderLimit, maxSalesOrderLimit)) &&
-            (identical(other.seblingId, seblingId) || const DeepCollectionEquality().equals(other.seblingId, seblingId)) &&
-            (identical(other.sibilingCode, sibilingCode) || const DeepCollectionEquality().equals(other.sibilingCode, sibilingCode)) &&
-            (identical(other.wholeSaleStock, wholeSaleStock) || const DeepCollectionEquality().equals(other.wholeSaleStock, wholeSaleStock)) &&
-            (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
-            (identical(other.itemCatelog, itemCatelog) || const DeepCollectionEquality().equals(other.itemCatelog, itemCatelog)) &&
-            (identical(other.itemImage, itemImage) || const DeepCollectionEquality().equals(other.itemImage, itemImage)) &&
-            (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
-            (identical(other.retailSellingPricePercentage, retailSellingPricePercentage) || const DeepCollectionEquality().equals(other.retailSellingPricePercentage, retailSellingPricePercentage)) &&
-            (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) || const DeepCollectionEquality().equals(other.wholeSellingPricePercentage, wholeSellingPricePercentage)) &&
-            (identical(other.onlineSellingPercenage, onlineSellingPercenage) || const DeepCollectionEquality().equals(other.onlineSellingPercenage, onlineSellingPercenage)) &&
-            (identical(other.vedioUrl, vedioUrl) || const DeepCollectionEquality().equals(other.vedioUrl, vedioUrl)) &&
-            (identical(other.avgGp, avgGp) || const DeepCollectionEquality().equals(other.avgGp, avgGp)) &&
-            (identical(other.targetedGp, targetedGp) || const DeepCollectionEquality().equals(other.targetedGp, targetedGp)) &&
-            (identical(other.minPurchaseOrderLimit, minPurchaseOrderLimit) || const DeepCollectionEquality().equals(other.minPurchaseOrderLimit, minPurchaseOrderLimit)) &&
-            (identical(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit) || const DeepCollectionEquality().equals(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit)) &&
-            (identical(other.importantInfo, importantInfo) || const DeepCollectionEquality().equals(other.importantInfo, importantInfo)) &&
-            (identical(other.additionalInfo, additionalInfo) || const DeepCollectionEquality().equals(other.additionalInfo, additionalInfo)) &&
-            (identical(other.nutriantsFacts, nutriantsFacts) || const DeepCollectionEquality().equals(other.nutriantsFacts, nutriantsFacts)) &&
-            (identical(other.productDetails, productDetails) || const DeepCollectionEquality().equals(other.productDetails, productDetails)) &&
-            (identical(other.productFeatures, productFeatures) || const DeepCollectionEquality().equals(other.productFeatures, productFeatures)) &&
-            (identical(other.aboutProducts, aboutProducts) || const DeepCollectionEquality().equals(other.aboutProducts, aboutProducts)) &&
-            (identical(other.productBehavior, productBehavior) || const DeepCollectionEquality().equals(other.productBehavior, productBehavior)) &&
-            (identical(other.usageDirection, usageDirection) || const DeepCollectionEquality().equals(other.usageDirection, usageDirection)) &&
-            (identical(other.vendorDetails, vendorDetails) || const DeepCollectionEquality().equals(other.vendorDetails, vendorDetails)) &&
-            (identical(other.uomCode, uomCode) || const DeepCollectionEquality().equals(other.uomCode, uomCode)) &&
-            (identical(other.alternativeBarcode, alternativeBarcode) || const DeepCollectionEquality().equals(other.alternativeBarcode, alternativeBarcode)) &&
-            (identical(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode) || const DeepCollectionEquality().equals(other.alternativeQrCodeBarcode, alternativeQrCodeBarcode)) &&
-            (identical(other.inventoryId, inventoryId) || const DeepCollectionEquality().equals(other.inventoryId, inventoryId)) &&
-            (identical(other.producedCountry, producedCountry) || const DeepCollectionEquality().equals(other.producedCountry, producedCountry)) &&
-            (identical(other.excessTax, excessTax) || const DeepCollectionEquality().equals(other.excessTax, excessTax)) &&
-            (identical(other.returnType, returnType) || const DeepCollectionEquality().equals(other.returnType, returnType)) &&
-            (identical(other.variantStatus, variantStatus) || const DeepCollectionEquality().equals(other.variantStatus, variantStatus)) &&
-            (identical(other.returnTime, returnTime) || const DeepCollectionEquality().equals(other.returnTime, returnTime)));
+                other.variantName == variantName) &&
+            (identical(other.maxGp, maxGp) || other.maxGp == maxGp) &&
+            (identical(other.minGap, minGap) || other.minGap == minGap) &&
+            (identical(other.weightUomId, weightUomId) ||
+                other.weightUomId == weightUomId) &&
+            (identical(other.salesUom, salesUom) ||
+                other.salesUom == salesUom) &&
+            (identical(other.purchaseUom, purchaseUom) ||
+                other.purchaseUom == purchaseUom) &&
+            (identical(other.searchName, searchName) ||
+                other.searchName == searchName) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.variantValue, variantValue) ||
+                other.variantValue == variantValue) &&
+            (identical(other.arabicDescription, arabicDescription) ||
+                other.arabicDescription == arabicDescription) &&
+            (identical(other.additionalDescription, additionalDescription) ||
+                other.additionalDescription == additionalDescription) &&
+            (identical(other.posName, posName) || other.posName == posName) &&
+            (identical(other.grossWeight, grossWeight) ||
+                other.grossWeight == grossWeight) &&
+            (identical(other.netWeight, netWeight) ||
+                other.netWeight == netWeight) &&
+            (identical(other.unitCost, unitCost) ||
+                other.unitCost == unitCost) &&
+            (identical(other.actualCost, actualCost) ||
+                other.actualCost == actualCost) &&
+            (identical(other.needMultipleIntegration, needMultipleIntegration) ||
+                other.needMultipleIntegration == needMultipleIntegration) &&
+            (identical(other.landingCost, landingCost) ||
+                other.landingCost == landingCost) &&
+            (identical(other.basePrize, basePrize) ||
+                other.basePrize == basePrize) &&
+            (identical(other.manuFacturedId, manuFacturedId) ||
+                other.manuFacturedId == manuFacturedId) &&
+            (identical(other.manuFacturedName, manuFacturedName) ||
+                other.manuFacturedName == manuFacturedName) &&
+            (identical(other.safetyStock, safetyStock) ||
+                other.safetyStock == safetyStock) &&
+            (identical(other.reOrderPoint, reOrderPoint) ||
+                other.reOrderPoint == reOrderPoint) &&
+            (identical(other.reorderQuantity, reorderQuantity) ||
+                other.reorderQuantity == reorderQuantity) &&
+            (identical(other.salesBolock, salesBolock) ||
+                other.salesBolock == salesBolock) &&
+            (identical(other.purchaseBlock, purchaseBlock) ||
+                other.purchaseBlock == purchaseBlock) &&
+            (identical(other.ratioToEcommerce, ratioToEcommerce) ||
+                other.ratioToEcommerce == ratioToEcommerce) &&
+            (identical(other.minMaxRatio, minMaxRatio) ||
+                other.minMaxRatio == minMaxRatio) &&
+            (identical(other.minSalesOrderLimit, minSalesOrderLimit) ||
+                other.minSalesOrderLimit == minSalesOrderLimit) &&
+            (identical(other.maxSalesOrderLimit, maxSalesOrderLimit) ||
+                other.maxSalesOrderLimit == maxSalesOrderLimit) &&
+            (identical(other.seblingId, seblingId) ||
+                other.seblingId == seblingId) &&
+            (identical(other.sibilingCode, sibilingCode) ||
+                other.sibilingCode == sibilingCode) &&
+            (identical(other.wholeSaleStock, wholeSaleStock) ||
+                other.wholeSaleStock == wholeSaleStock) &&
+            (identical(other.stockWarning, stockWarning) || other.stockWarning == stockWarning) &&
+            (identical(other.itemCatelog, itemCatelog) || other.itemCatelog == itemCatelog) &&
+            (identical(other.itemImage, itemImage) || other.itemImage == itemImage) &&
+            (identical(other.isActive, isActive) || other.isActive == isActive) &&
+            (identical(other.retailSellingPricePercentage, retailSellingPricePercentage) || other.retailSellingPricePercentage == retailSellingPricePercentage) &&
+            (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) || other.wholeSellingPricePercentage == wholeSellingPricePercentage) &&
+            (identical(other.onlineSellingPercenage, onlineSellingPercenage) || other.onlineSellingPercenage == onlineSellingPercenage) &&
+            (identical(other.vedioUrl, vedioUrl) || other.vedioUrl == vedioUrl) &&
+            (identical(other.avgGp, avgGp) || other.avgGp == avgGp) &&
+            (identical(other.targetedGp, targetedGp) || other.targetedGp == targetedGp) &&
+            (identical(other.minPurchaseOrderLimit, minPurchaseOrderLimit) || other.minPurchaseOrderLimit == minPurchaseOrderLimit) &&
+            (identical(other.maxPurchaseOrderLimit, maxPurchaseOrderLimit) || other.maxPurchaseOrderLimit == maxPurchaseOrderLimit) &&
+            (identical(other.importantInfo, importantInfo) || other.importantInfo == importantInfo) &&
+            (identical(other.additionalInfo, additionalInfo) || other.additionalInfo == additionalInfo) &&
+            (identical(other.nutriantsFacts, nutriantsFacts) || other.nutriantsFacts == nutriantsFacts) &&
+            (identical(other.productDetails, productDetails) || other.productDetails == productDetails) &&
+            (identical(other.productFeatures, productFeatures) || other.productFeatures == productFeatures) &&
+            (identical(other.aboutProducts, aboutProducts) || other.aboutProducts == aboutProducts) &&
+            const DeepCollectionEquality().equals(other._productBehavior, _productBehavior) &&
+            (identical(other.usageDirection, usageDirection) || other.usageDirection == usageDirection) &&
+            const DeepCollectionEquality().equals(other._vendorDetails, _vendorDetails) &&
+            (identical(other.uomCode, uomCode) || other.uomCode == uomCode) &&
+            const DeepCollectionEquality().equals(other._alternativeBarcode, _alternativeBarcode) &&
+            const DeepCollectionEquality().equals(other._alternativeQrCodeBarcode, _alternativeQrCodeBarcode) &&
+            (identical(other.inventoryId, inventoryId) || other.inventoryId == inventoryId) &&
+            (identical(other.producedCountry, producedCountry) || other.producedCountry == producedCountry) &&
+            (identical(other.excessTax, excessTax) || other.excessTax == excessTax) &&
+            (identical(other.returnType, returnType) || other.returnType == returnType) &&
+            (identical(other.variantStatus, variantStatus) || other.variantStatus == variantStatus) &&
+            (identical(other.returnTime, returnTime) || other.returnTime == returnTime));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(qrcode) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(image1) ^
-      const DeepCollectionEquality().hash(image2) ^
-      const DeepCollectionEquality().hash(height) ^
-      const DeepCollectionEquality().hash(width) ^
-      const DeepCollectionEquality().hash(length) ^
-      const DeepCollectionEquality().hash(weight) ^
-      const DeepCollectionEquality().hash(image3) ^
-      const DeepCollectionEquality().hash(image4) ^
-      const DeepCollectionEquality().hash(image5) ^
-      const DeepCollectionEquality().hash(catalog1) ^
-      const DeepCollectionEquality().hash(catalog2) ^
-      const DeepCollectionEquality().hash(catalog3) ^
-      const DeepCollectionEquality().hash(catalog4) ^
-      const DeepCollectionEquality().hash(catalog5) ^
-      const DeepCollectionEquality().hash(catalog6) ^
-      const DeepCollectionEquality().hash(catalog7) ^
-      const DeepCollectionEquality().hash(catalog8) ^
-      const DeepCollectionEquality().hash(Ingrediants) ^
-      const DeepCollectionEquality().hash(storage) ^
-      const DeepCollectionEquality().hash(variantName) ^
-      const DeepCollectionEquality().hash(maxGp) ^
-      const DeepCollectionEquality().hash(minGap) ^
-      const DeepCollectionEquality().hash(weightUomId) ^
-      const DeepCollectionEquality().hash(salesUom) ^
-      const DeepCollectionEquality().hash(purchaseUom) ^
-      const DeepCollectionEquality().hash(searchName) ^
-      const DeepCollectionEquality().hash(displayName) ^
-      const DeepCollectionEquality().hash(variantValue) ^
-      const DeepCollectionEquality().hash(arabicDescription) ^
-      const DeepCollectionEquality().hash(additionalDescription) ^
-      const DeepCollectionEquality().hash(posName) ^
-      const DeepCollectionEquality().hash(grossWeight) ^
-      const DeepCollectionEquality().hash(netWeight) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(actualCost) ^
-      const DeepCollectionEquality().hash(needMultipleIntegration) ^
-      const DeepCollectionEquality().hash(landingCost) ^
-      const DeepCollectionEquality().hash(basePrize) ^
-      const DeepCollectionEquality().hash(manuFacturedId) ^
-      const DeepCollectionEquality().hash(manuFacturedName) ^
-      const DeepCollectionEquality().hash(safetyStock) ^
-      const DeepCollectionEquality().hash(reOrderPoint) ^
-      const DeepCollectionEquality().hash(reorderQuantity) ^
-      const DeepCollectionEquality().hash(salesBolock) ^
-      const DeepCollectionEquality().hash(purchaseBlock) ^
-      const DeepCollectionEquality().hash(ratioToEcommerce) ^
-      const DeepCollectionEquality().hash(minMaxRatio) ^
-      const DeepCollectionEquality().hash(minSalesOrderLimit) ^
-      const DeepCollectionEquality().hash(maxSalesOrderLimit) ^
-      const DeepCollectionEquality().hash(seblingId) ^
-      const DeepCollectionEquality().hash(sibilingCode) ^
-      const DeepCollectionEquality().hash(wholeSaleStock) ^
-      const DeepCollectionEquality().hash(stockWarning) ^
-      const DeepCollectionEquality().hash(itemCatelog) ^
-      const DeepCollectionEquality().hash(itemImage) ^
-      const DeepCollectionEquality().hash(isActive) ^
-      const DeepCollectionEquality().hash(retailSellingPricePercentage) ^
-      const DeepCollectionEquality().hash(wholeSellingPricePercentage) ^
-      const DeepCollectionEquality().hash(onlineSellingPercenage) ^
-      const DeepCollectionEquality().hash(vedioUrl) ^
-      const DeepCollectionEquality().hash(avgGp) ^
-      const DeepCollectionEquality().hash(targetedGp) ^
-      const DeepCollectionEquality().hash(minPurchaseOrderLimit) ^
-      const DeepCollectionEquality().hash(maxPurchaseOrderLimit) ^
-      const DeepCollectionEquality().hash(importantInfo) ^
-      const DeepCollectionEquality().hash(additionalInfo) ^
-      const DeepCollectionEquality().hash(nutriantsFacts) ^
-      const DeepCollectionEquality().hash(productDetails) ^
-      const DeepCollectionEquality().hash(productFeatures) ^
-      const DeepCollectionEquality().hash(aboutProducts) ^
-      const DeepCollectionEquality().hash(productBehavior) ^
-      const DeepCollectionEquality().hash(usageDirection) ^
-      const DeepCollectionEquality().hash(vendorDetails) ^
-      const DeepCollectionEquality().hash(uomCode) ^
-      const DeepCollectionEquality().hash(alternativeBarcode) ^
-      const DeepCollectionEquality().hash(alternativeQrCodeBarcode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(producedCountry) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(returnType) ^
-      const DeepCollectionEquality().hash(variantStatus) ^
-      const DeepCollectionEquality().hash(returnTime);
 
   @JsonKey(ignore: true)
   @override
-  _$VariantPatchCopyWith<_VariantPatch> get copyWith =>
-      __$VariantPatchCopyWithImpl<_VariantPatch>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        code,
+        barcode,
+        qrcode,
+        vat,
+        description,
+        name,
+        status,
+        image1,
+        image2,
+        height,
+        width,
+        length,
+        weight,
+        image3,
+        image4,
+        image5,
+        catalog1,
+        catalog2,
+        catalog3,
+        catalog4,
+        catalog5,
+        catalog6,
+        catalog7,
+        catalog8,
+        Ingrediants,
+        storage,
+        variantName,
+        maxGp,
+        minGap,
+        weightUomId,
+        salesUom,
+        purchaseUom,
+        searchName,
+        displayName,
+        variantValue,
+        arabicDescription,
+        additionalDescription,
+        posName,
+        grossWeight,
+        netWeight,
+        unitCost,
+        actualCost,
+        needMultipleIntegration,
+        landingCost,
+        basePrize,
+        manuFacturedId,
+        manuFacturedName,
+        safetyStock,
+        reOrderPoint,
+        reorderQuantity,
+        salesBolock,
+        purchaseBlock,
+        ratioToEcommerce,
+        minMaxRatio,
+        minSalesOrderLimit,
+        maxSalesOrderLimit,
+        seblingId,
+        sibilingCode,
+        wholeSaleStock,
+        stockWarning,
+        itemCatelog,
+        itemImage,
+        isActive,
+        retailSellingPricePercentage,
+        wholeSellingPricePercentage,
+        onlineSellingPercenage,
+        vedioUrl,
+        avgGp,
+        targetedGp,
+        minPurchaseOrderLimit,
+        maxPurchaseOrderLimit,
+        importantInfo,
+        additionalInfo,
+        nutriantsFacts,
+        productDetails,
+        productFeatures,
+        aboutProducts,
+        const DeepCollectionEquality().hash(_productBehavior),
+        usageDirection,
+        const DeepCollectionEquality().hash(_vendorDetails),
+        uomCode,
+        const DeepCollectionEquality().hash(_alternativeBarcode),
+        const DeepCollectionEquality().hash(_alternativeQrCodeBarcode),
+        inventoryId,
+        producedCountry,
+        excessTax,
+        returnType,
+        variantStatus,
+        returnTime
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VariantPatchCopyWith<_$_VariantPatch> get copyWith =>
+      __$$_VariantPatchCopyWithImpl<_$_VariantPatch>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VariantPatchToJson(this);
+    return _$$_VariantPatchToJson(
+      this,
+    );
   }
 }
 
 abstract class _VariantPatch implements VariantPatch {
   const factory _VariantPatch(
-      {int? id,
-      String? code,
-      String? barcode,
-      String? qrcode,
-      double? vat,
-      String? description,
-      String? name,
-      String? status,
-      int? image1,
-      String? image2,
-      double? height,
-      double? width,
-      double? length,
-      double? weight,
-      String? image3,
-      String? image4,
-      String? image5,
-      String? catalog1,
-      String? catalog2,
-      String? catalog3,
-      String? catalog4,
-      String? catalog5,
-      String? catalog6,
-      String? catalog7,
-      String? catalog8,
-      Storage? Ingrediants,
-      Storage? storage,
+      {final int? id,
+      final String? code,
+      final String? barcode,
+      final String? qrcode,
+      final double? vat,
+      final String? description,
+      final String? name,
+      final String? status,
+      final int? image1,
+      final String? image2,
+      final double? height,
+      final double? width,
+      final double? length,
+      final double? weight,
+      final String? image3,
+      final String? image4,
+      final String? image5,
+      final String? catalog1,
+      final String? catalog2,
+      final String? catalog3,
+      final String? catalog4,
+      final String? catalog5,
+      final String? catalog6,
+      final String? catalog7,
+      final String? catalog8,
+      final Storage? Ingrediants,
+      final Storage? storage,
       @JsonKey(name: "variant_name")
-          String? variantName,
+          final String? variantName,
       @JsonKey(name: "maximum_gp")
-          double? maxGp,
+          final double? maxGp,
       @JsonKey(name: "minimum_gp")
-          double? minGap,
+          final double? minGap,
       @JsonKey(name: "weight_uom_id")
-          int? weightUomId,
+          final int? weightUomId,
       @JsonKey(name: "sales_uom")
-          String? salesUom,
+          final String? salesUom,
       @JsonKey(name: "purchase_uom")
-          String? purchaseUom,
+          final String? purchaseUom,
       @JsonKey(name: "search_name")
-          String? searchName,
+          final String? searchName,
       @JsonKey(name: "display_name")
-          String? displayName,
+          final String? displayName,
       @JsonKey(name: "variant_value")
-          String? variantValue,
+          final String? variantValue,
       @JsonKey(name: "arabic_description")
-          String? arabicDescription,
+          final String? arabicDescription,
       @JsonKey(name: "additional_description")
-          String? additionalDescription,
+          final String? additionalDescription,
       @JsonKey(name: "pos_name")
-          String? posName,
+          final String? posName,
       @JsonKey(name: "gross_weight")
-          String? grossWeight,
+          final String? grossWeight,
       @JsonKey(name: "net_weight")
-          String? netWeight,
+          final String? netWeight,
       @JsonKey(name: "unit_cost")
-          double? unitCost,
+          final double? unitCost,
       @JsonKey(name: "actual_cost")
-          double? actualCost,
+          final double? actualCost,
       @JsonKey(name: "need_multiple_integration")
-          bool? needMultipleIntegration,
+          final bool? needMultipleIntegration,
       @JsonKey(name: "landing_cost")
-          double? landingCost,
+          final double? landingCost,
       @JsonKey(name: "base_price")
-          double? basePrize,
+          final double? basePrize,
       @JsonKey(name: "manufacture_id")
-          int? manuFacturedId,
+          final int? manuFacturedId,
       @JsonKey(name: "manufacture_name")
-          String? manuFacturedName,
+          final String? manuFacturedName,
       @JsonKey(name: "safty_stock")
-          int? safetyStock,
+          final int? safetyStock,
       @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
+          final int? reOrderPoint,
       @JsonKey(name: "reorder_quantity")
-          int? reorderQuantity,
+          final int? reorderQuantity,
       @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesBolock,
+          final bool? salesBolock,
       @JsonKey(name: "purchase_block", defaultValue: false)
-          bool? purchaseBlock,
+          final bool? purchaseBlock,
       @JsonKey(name: "ratio_to_eccommerce")
-          String? ratioToEcommerce,
+          final String? ratioToEcommerce,
       @JsonKey(name: "min_max_ratio")
-          String? minMaxRatio,
+          final String? minMaxRatio,
       @JsonKey(name: "min_sales_order_limit")
-          int? minSalesOrderLimit,
+          final int? minSalesOrderLimit,
       @JsonKey(name: "max_sales_order_limit")
-          int? maxSalesOrderLimit,
+          final int? maxSalesOrderLimit,
       @JsonKey(name: "sebling_id")
-          int? seblingId,
+          final int? seblingId,
       @JsonKey(name: "sibling_code")
-          int? sibilingCode,
+          final int? sibilingCode,
       @JsonKey(name: "whole_sale_stock")
-          int? wholeSaleStock,
+          final int? wholeSaleStock,
       @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
+          final bool? stockWarning,
       @JsonKey(name: "item_catalog", defaultValue: false)
-          bool? itemCatelog,
+          final bool? itemCatelog,
       @JsonKey(name: "item_image", defaultValue: false)
-          bool? itemImage,
+          final bool? itemImage,
       @JsonKey(name: "is_active", defaultValue: false)
-          bool? isActive,
+          final bool? isActive,
       @JsonKey(name: "retail_selling_price_percentage")
-          double? retailSellingPricePercentage,
+          final double? retailSellingPricePercentage,
       @JsonKey(name: "wholesale_selling_price_percentage")
-          double? wholeSellingPricePercentage,
+          final double? wholeSellingPricePercentage,
       @JsonKey(name: "online_selling_price_percentage")
-          double? onlineSellingPercenage,
+          final double? onlineSellingPercenage,
       @JsonKey(name: "vedio_url")
-          String? vedioUrl,
+          final String? vedioUrl,
       @JsonKey(name: "average_gp")
-          double? avgGp,
+          final double? avgGp,
       @JsonKey(name: "targeted_gp")
-          double? targetedGp,
+          final double? targetedGp,
       @JsonKey(name: "min_purchase_order_limit")
-          int? minPurchaseOrderLimit,
+          final int? minPurchaseOrderLimit,
       @JsonKey(name: "max_purchase_order_limit")
-          int? maxPurchaseOrderLimit,
+          final int? maxPurchaseOrderLimit,
       @JsonKey(name: "important_info")
-          ProductFeatures? importantInfo,
+          final ProductFeatures? importantInfo,
       @JsonKey(name: "Additional_info")
-          ProductFeatures? additionalInfo,
+          final ProductFeatures? additionalInfo,
       @JsonKey(name: "Nutriants_facts")
-          ProductFeatures? nutriantsFacts,
+          final ProductFeatures? nutriantsFacts,
       @JsonKey(name: "product_details")
-          ProductFeatures? productDetails,
+          final ProductFeatures? productDetails,
       @JsonKey(name: "product_features")
-          ProductFeatures? productFeatures,
+          final ProductFeatures? productFeatures,
       @JsonKey(name: "about_the_products")
-          Storage? aboutProducts,
+          final Storage? aboutProducts,
       @JsonKey(name: "product_behaviour")
-          List<productBehaviour>? productBehavior,
+          final List<productBehaviour>? productBehavior,
       @JsonKey(name: "usage_direction")
-          Storage? usageDirection,
+          final Storage? usageDirection,
       @JsonKey(name: "vendor_details")
-          List<VendorDetails>? vendorDetails,
+          final List<VendorDetails>? vendorDetails,
       @JsonKey(name: "uom_code")
-          String? uomCode,
+          final String? uomCode,
       @JsonKey(name: "alternative_barcode")
-          List<AlternativeBarcode>? alternativeBarcode,
+          final List<AlternativeBarcode>? alternativeBarcode,
       @JsonKey(name: "alternative_qrcode")
-          List<AlternativeBarcode>? alternativeQrCodeBarcode,
+          final List<AlternativeBarcode>? alternativeQrCodeBarcode,
       @JsonKey(name: "inventory_id")
-          String? inventoryId,
+          final String? inventoryId,
       @JsonKey(name: "produced_country")
-          String? producedCountry,
+          final String? producedCountry,
       @JsonKey(name: "excess_tax")
-          double? excessTax,
+          final double? excessTax,
       @JsonKey(name: "return_type")
-          String? returnType,
+          final String? returnType,
       @JsonKey(name: "variant_status")
-          String? variantStatus,
+          final String? variantStatus,
       @JsonKey(name: "return_time")
-          int? returnTime}) = _$_VariantPatch;
+          final int? returnTime}) = _$_VariantPatch;
 
   factory _VariantPatch.fromJson(Map<String, dynamic> json) =
       _$_VariantPatch.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  String? get barcode => throw _privateConstructorUsedError;
+  String? get barcode;
   @override
-  String? get qrcode => throw _privateConstructorUsedError;
+  String? get qrcode;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  int? get image1 => throw _privateConstructorUsedError;
+  int? get image1;
   @override
-  String? get image2 => throw _privateConstructorUsedError;
+  String? get image2;
   @override
-  double? get height => throw _privateConstructorUsedError;
+  double? get height;
   @override
-  double? get width => throw _privateConstructorUsedError;
+  double? get width;
   @override
-  double? get length => throw _privateConstructorUsedError;
+  double? get length;
   @override
-  double? get weight => throw _privateConstructorUsedError;
+  double? get weight;
   @override
-  String? get image3 => throw _privateConstructorUsedError;
+  String? get image3;
   @override
-  String? get image4 => throw _privateConstructorUsedError;
+  String? get image4;
   @override
-  String? get image5 => throw _privateConstructorUsedError;
+  String? get image5;
   @override
-  String? get catalog1 => throw _privateConstructorUsedError;
+  String? get catalog1;
   @override
-  String? get catalog2 => throw _privateConstructorUsedError;
+  String? get catalog2;
   @override
-  String? get catalog3 => throw _privateConstructorUsedError;
+  String? get catalog3;
   @override
-  String? get catalog4 => throw _privateConstructorUsedError;
+  String? get catalog4;
   @override
-  String? get catalog5 => throw _privateConstructorUsedError;
+  String? get catalog5;
   @override
-  String? get catalog6 => throw _privateConstructorUsedError;
+  String? get catalog6;
   @override
-  String? get catalog7 => throw _privateConstructorUsedError;
+  String? get catalog7;
   @override
-  String? get catalog8 => throw _privateConstructorUsedError;
+  String? get catalog8;
   @override
-  Storage? get Ingrediants => throw _privateConstructorUsedError;
+  Storage? get Ingrediants;
   @override
-  Storage? get storage => throw _privateConstructorUsedError;
+  Storage? get storage;
   @override
   @JsonKey(name: "variant_name")
-  String? get variantName => throw _privateConstructorUsedError;
+  String? get variantName;
   @override
   @JsonKey(name: "maximum_gp")
-  double? get maxGp => throw _privateConstructorUsedError;
+  double? get maxGp;
   @override
   @JsonKey(name: "minimum_gp")
-  double? get minGap => throw _privateConstructorUsedError;
+  double? get minGap;
   @override
   @JsonKey(name: "weight_uom_id")
-  int? get weightUomId => throw _privateConstructorUsedError;
+  int? get weightUomId;
   @override
   @JsonKey(name: "sales_uom")
-  String? get salesUom => throw _privateConstructorUsedError;
+  String? get salesUom;
   @override
   @JsonKey(name: "purchase_uom")
-  String? get purchaseUom => throw _privateConstructorUsedError;
+  String? get purchaseUom;
   @override
   @JsonKey(name: "search_name")
-  String? get searchName => throw _privateConstructorUsedError;
+  String? get searchName;
   @override
   @JsonKey(name: "display_name")
-  String? get displayName => throw _privateConstructorUsedError;
+  String? get displayName;
   @override
   @JsonKey(name: "variant_value")
-  String? get variantValue => throw _privateConstructorUsedError;
+  String? get variantValue;
   @override
   @JsonKey(name: "arabic_description")
-  String? get arabicDescription => throw _privateConstructorUsedError;
+  String? get arabicDescription;
   @override
   @JsonKey(name: "additional_description")
-  String? get additionalDescription => throw _privateConstructorUsedError;
+  String? get additionalDescription;
   @override
   @JsonKey(name: "pos_name")
-  String? get posName => throw _privateConstructorUsedError;
+  String? get posName;
   @override
   @JsonKey(name: "gross_weight")
-  String? get grossWeight => throw _privateConstructorUsedError;
+  String? get grossWeight;
   @override
   @JsonKey(name: "net_weight")
-  String? get netWeight => throw _privateConstructorUsedError;
+  String? get netWeight;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "actual_cost")
-  double? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost;
   @override
   @JsonKey(name: "need_multiple_integration")
-  bool? get needMultipleIntegration => throw _privateConstructorUsedError;
+  bool? get needMultipleIntegration;
   @override
   @JsonKey(name: "landing_cost")
-  double? get landingCost => throw _privateConstructorUsedError;
+  double? get landingCost;
   @override
   @JsonKey(name: "base_price")
-  double? get basePrize => throw _privateConstructorUsedError;
+  double? get basePrize;
   @override
   @JsonKey(name: "manufacture_id")
-  int? get manuFacturedId => throw _privateConstructorUsedError;
+  int? get manuFacturedId;
   @override
   @JsonKey(name: "manufacture_name")
-  String? get manuFacturedName => throw _privateConstructorUsedError;
+  String? get manuFacturedName;
   @override
   @JsonKey(name: "safty_stock")
-  int? get safetyStock => throw _privateConstructorUsedError;
+  int? get safetyStock;
   @override
   @JsonKey(name: "reorder_point")
-  int? get reOrderPoint => throw _privateConstructorUsedError;
+  int? get reOrderPoint;
   @override
   @JsonKey(name: "reorder_quantity")
-  int? get reorderQuantity => throw _privateConstructorUsedError;
+  int? get reorderQuantity;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
-  bool? get salesBolock => throw _privateConstructorUsedError;
+  bool? get salesBolock;
   @override
   @JsonKey(name: "purchase_block", defaultValue: false)
-  bool? get purchaseBlock => throw _privateConstructorUsedError;
+  bool? get purchaseBlock;
   @override
   @JsonKey(name: "ratio_to_eccommerce")
-  String? get ratioToEcommerce => throw _privateConstructorUsedError;
+  String? get ratioToEcommerce;
   @override
   @JsonKey(name: "min_max_ratio")
-  String? get minMaxRatio => throw _privateConstructorUsedError;
+  String? get minMaxRatio;
   @override
   @JsonKey(name: "min_sales_order_limit")
-  int? get minSalesOrderLimit => throw _privateConstructorUsedError;
+  int? get minSalesOrderLimit;
   @override
   @JsonKey(name: "max_sales_order_limit")
-  int? get maxSalesOrderLimit => throw _privateConstructorUsedError;
+  int? get maxSalesOrderLimit;
   @override
   @JsonKey(name: "sebling_id")
-  int? get seblingId => throw _privateConstructorUsedError;
+  int? get seblingId;
   @override
   @JsonKey(name: "sibling_code")
-  int? get sibilingCode => throw _privateConstructorUsedError;
+  int? get sibilingCode;
   @override
   @JsonKey(name: "whole_sale_stock")
-  int? get wholeSaleStock => throw _privateConstructorUsedError;
+  int? get wholeSaleStock;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
-  bool? get stockWarning => throw _privateConstructorUsedError;
+  bool? get stockWarning;
   @override
   @JsonKey(name: "item_catalog", defaultValue: false)
-  bool? get itemCatelog => throw _privateConstructorUsedError;
+  bool? get itemCatelog;
   @override
   @JsonKey(name: "item_image", defaultValue: false)
-  bool? get itemImage => throw _privateConstructorUsedError;
+  bool? get itemImage;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(name: "retail_selling_price_percentage")
-  double? get retailSellingPricePercentage =>
-      throw _privateConstructorUsedError;
+  double? get retailSellingPricePercentage;
   @override
   @JsonKey(name: "wholesale_selling_price_percentage")
-  double? get wholeSellingPricePercentage => throw _privateConstructorUsedError;
+  double? get wholeSellingPricePercentage;
   @override
   @JsonKey(name: "online_selling_price_percentage")
-  double? get onlineSellingPercenage => throw _privateConstructorUsedError;
+  double? get onlineSellingPercenage;
   @override
   @JsonKey(name: "vedio_url")
-  String? get vedioUrl => throw _privateConstructorUsedError;
+  String? get vedioUrl;
   @override
   @JsonKey(name: "average_gp")
-  double? get avgGp => throw _privateConstructorUsedError;
+  double? get avgGp;
   @override
   @JsonKey(name: "targeted_gp")
-  double? get targetedGp => throw _privateConstructorUsedError;
+  double? get targetedGp;
   @override
   @JsonKey(name: "min_purchase_order_limit")
-  int? get minPurchaseOrderLimit => throw _privateConstructorUsedError;
+  int? get minPurchaseOrderLimit;
   @override
   @JsonKey(name: "max_purchase_order_limit")
-  int? get maxPurchaseOrderLimit => throw _privateConstructorUsedError;
+  int? get maxPurchaseOrderLimit;
   @override
   @JsonKey(name: "important_info")
-  ProductFeatures? get importantInfo => throw _privateConstructorUsedError;
+  ProductFeatures? get importantInfo;
   @override
   @JsonKey(name: "Additional_info")
-  ProductFeatures? get additionalInfo => throw _privateConstructorUsedError;
+  ProductFeatures? get additionalInfo;
   @override
   @JsonKey(name: "Nutriants_facts")
-  ProductFeatures? get nutriantsFacts => throw _privateConstructorUsedError;
+  ProductFeatures? get nutriantsFacts;
   @override
   @JsonKey(name: "product_details")
-  ProductFeatures? get productDetails => throw _privateConstructorUsedError;
+  ProductFeatures? get productDetails;
   @override
   @JsonKey(name: "product_features")
-  ProductFeatures? get productFeatures => throw _privateConstructorUsedError;
+  ProductFeatures? get productFeatures;
   @override
   @JsonKey(name: "about_the_products")
-  Storage? get aboutProducts => throw _privateConstructorUsedError;
+  Storage? get aboutProducts;
   @override
   @JsonKey(name: "product_behaviour")
-  List<productBehaviour>? get productBehavior =>
-      throw _privateConstructorUsedError;
+  List<productBehaviour>? get productBehavior;
   @override
   @JsonKey(name: "usage_direction")
-  Storage? get usageDirection => throw _privateConstructorUsedError;
+  Storage? get usageDirection;
   @override
   @JsonKey(name: "vendor_details")
-  List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
+  List<VendorDetails>? get vendorDetails;
   @override
   @JsonKey(name: "uom_code")
-  String? get uomCode => throw _privateConstructorUsedError;
+  String? get uomCode;
   @override
   @JsonKey(name: "alternative_barcode")
-  List<AlternativeBarcode>? get alternativeBarcode =>
-      throw _privateConstructorUsedError;
+  List<AlternativeBarcode>? get alternativeBarcode;
   @override
   @JsonKey(name: "alternative_qrcode")
-  List<AlternativeBarcode>? get alternativeQrCodeBarcode =>
-      throw _privateConstructorUsedError;
+  List<AlternativeBarcode>? get alternativeQrCodeBarcode;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "produced_country")
-  String? get producedCountry => throw _privateConstructorUsedError;
+  String? get producedCountry;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "return_type")
-  String? get returnType => throw _privateConstructorUsedError;
+  String? get returnType;
   @override
   @JsonKey(name: "variant_status")
-  String? get variantStatus => throw _privateConstructorUsedError;
+  String? get variantStatus;
   @override
   @JsonKey(name: "return_time")
-  int? get returnTime => throw _privateConstructorUsedError;
+  int? get returnTime;
   @override
   @JsonKey(ignore: true)
-  _$VariantPatchCopyWith<_VariantPatch> get copyWith =>
+  _$$_VariantPatchCopyWith<_$_VariantPatch> get copyWith =>
       throw _privateConstructorUsedError;
 }

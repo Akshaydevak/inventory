@@ -540,30 +540,24 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:MainAxisAlignment.end,
                                 children: [
 
-                                  Container(
-                                    padding: EdgeInsets.only(top: 15,left: 10),
-                                    child: TextButton(
-                                      style: TextButton.styleFrom(
-                                          primary: Colors.blue,
-                                          // elevation: 2,
-                                          backgroundColor: Colors.white24),
-                                      onPressed: () {
-                                        select=true;
-                                        updateCheck=false;
-                                        currentStock.clear();
-                                        clear();
-                                        lines?.clear();
+                                  TextButtonLarge(
+                                    marginCheck: true,
 
-                                        setState(() {
-                                        });
+                                    onPress: () {
+                                      select=true;
+                                      updateCheck=false;
+                                      currentStock.clear();
+                                      clear();
+                                      lines?.clear();
 
-                                      },
-                                      child: Text("Create"),
-                                    ),
-                                  ),
+                                      setState(() {
+                                      });
+
+                                    },
+                                    text: "CREATE",                                  ),
                                   TextButtonLarge(
                                     text: "PREVIEW",
                                     onPress: (){
@@ -599,6 +593,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                   ),
                                 ],
                               ),
+                              SizedBox(height: 20,),
 
 
                               TopStableTable(
@@ -616,7 +611,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 height: 50,
                               ),
                               Row(children: [
-                                TextWidget(text: "order lines"),
+                                TextWidget(text: "Order Lines"),
                               ],),
 
                               Divider(color: Colors.grey,thickness: 1,),
@@ -670,11 +665,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                     tableHeadtext(
 
                                                       'Sno',
-
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
-
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -689,10 +679,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Variant Id',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
-
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -704,11 +690,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                     tableHeadtext(
 
                                                       'Variant Name',
-
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
-
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -725,18 +706,14 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
                                                       'Barcode',
-                                                      padding: EdgeInsets.all(7),
-                                                      height: 46,
+
                                                       size: 13,
                                                     ),
 
                                                     tableHeadtext(
 
-                                                      'Current qty',
+                                                      'Current Qty',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -750,9 +727,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Purchase UOM',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -766,10 +740,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Qty',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
-
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -780,11 +750,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
 
-                                                      'Unitcost',
+                                                      'Unit cost',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -798,10 +765,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Discount',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
-
                                                       size: 13,
 
                                                       // color: Palette.containerDarknew,
@@ -813,10 +776,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                     tableHeadtext(
 
                                                       'FOC',
-
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -830,27 +789,20 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Vatable Amount',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
                                                     ),
                                                     tableHeadtext(
-                                                      'Excise Tax',
-                                                      padding: EdgeInsets.all(7),
-                                                      height: 46,
+                                                      'Excess Tax',
+
                                                       size: 13,
                                                     ),
                                                     tableHeadtext(
 
                                                       'VAT',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -866,9 +818,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Actual Cost',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -882,9 +831,6 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                       'Grand Total',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -896,11 +842,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
 
-                                                      'isInvoiced',
+                                                      'Is Invoiced',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -912,11 +855,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
 
-                                                      'isFree',
+                                                      'Is Free',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -928,11 +868,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
 
-                                                      'IsActive',
+                                                      'Is Active',
 
-                                                      padding: EdgeInsets.all(7),
-
-                                                      height: 46,
 
                                                       size: 13,
 
@@ -941,16 +878,13 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
                                                     tableHeadtext(
                                                       '',
-                                                      padding: EdgeInsets.all(7),
-                                                      height: 46,
+
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
                                                     ),
                                                     tableHeadtext(
                                                       '',
-                                                      padding: EdgeInsets.all(7),
-                                                      height: 46,
                                                       size: 13,
                                                       // color: Palette.containerDarknew,
                                                       // textColor: Palette.white
@@ -1000,7 +934,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                       textPadding(""),
                                                       textPadding(""),
                                                       textPadding(""),
-                                                      textPadding("",height: 55),
+                                                      textPadding("",height: 49),
 
                                                     ]
                                                 )
@@ -1268,7 +1202,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   Button(Icons.delete, Colors.red,ctx: context,
-                                      text: "Discard",
+                                      text: "DISCARD",
                                       onApply: (){
                                         if(select){
                                           clear();
@@ -1305,7 +1239,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                     width: width * .008,
                                   ),
                                   Button(Icons.check, Colors.grey,ctx: context,
-                                    text: select?"Save":"update",
+                                    text: select?"SAVE":"UPDATE",
                                     height: 29,
                                       Color: Color(0xff3E4F5B),
                                     width: 90,
@@ -1599,13 +1533,13 @@ widget.currentUser();
                   NewInputCard(
                     readOnly: true,
                       controller: widget.orderType,
-                       title: "Order type"),
+                       title: "Order Type"),
                   SizedBox(
                     height: height * .030,
                   ),
                   NewInputCard(
                     readOnly: true,
-                      controller: widget.orderCode, title: "order code"),
+                      controller: widget.orderCode, title: "Order Code"),
                   SizedBox(
                     height: height * .030,
                   ),
@@ -1630,7 +1564,7 @@ widget.currentUser();
                     height: height * .030,
                   ),
                   widget.select? SelectableDropDownpopUp(
-                    label: "PurchaseInvoice id",
+                    label: "PurchaseInvoice Id",
                     type:"PurchaseInvoices",
                     value: widget.purchaseInvoiceId.text??"",
                     onSelection: (PurchaseInvoice? va) {
@@ -1655,7 +1589,7 @@ widget.currentUser();
 
                   ): NewInputCard(
                     readOnly: true,
-                      controller: widget.purchaseInvoiceId, title: "PurchaseInvoice id"),
+                      controller: widget.purchaseInvoiceId, title: "Purchase Invoice Id"),
 
                   // NewInputCard(
                   //     controller: widget.purchaseInvoiceId, title: "PurchaseInvoice id"),
@@ -1664,7 +1598,7 @@ widget.currentUser();
                   ),
                   NewInputCard(
                     readOnly: true,
-                      controller: widget.vendorCode, title: "vendor Code"),
+                      controller: widget.vendorCode, title: "Vendor Code"),
                   SizedBox(
                     height: height * .030,
                   ),
@@ -1717,14 +1651,14 @@ widget.currentUser();
                   height: height * .030,
                 ),
                 NewInputCard(
-                  controller: widget.note, title: "note",
+                  controller: widget.note, title: "Note",
                   height: 90,
                   maxLines: 3,),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
-                  controller: widget.remarks, title: "remarks",
+                  controller: widget.remarks, title: "Remarks",
                   height: 90,
                   maxLines: 3,),
 
@@ -1750,13 +1684,13 @@ widget.currentUser();
                 ),
                 NewInputCard(
                   readOnly: true,
-                    controller: widget.foc, title: "Foc"),
+                    controller: widget.foc, title: "FOC"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
                   readOnly: true,
-                    controller: widget.unitCost, title: "UnitCost"),
+                    controller: widget.unitCost, title: "Unit Cost"),
                 SizedBox(
                   height: height * .030,
                 ),
@@ -1768,13 +1702,13 @@ widget.currentUser();
                 ),
                 NewInputCard(
                   readOnly: true,
-                    controller: widget.excessTax, title: "Excess Atx"),
+                    controller: widget.excessTax, title: "Excess Tax"),
                 SizedBox(
                   height: height * .030,
                 ),
                 NewInputCard(
                   readOnly: true,
-                    controller: widget.vat, title: "vat"),
+                    controller: widget.vat, title: "VAT"),
                 SizedBox(
                   height: height * .030,
                 ),
@@ -1786,7 +1720,7 @@ widget.currentUser();
                 ),
                 NewInputCard(
                   readOnly: true,
-                    controller: widget.grandToatl, title: "Grnad Total"),
+                    controller: widget.grandToatl, title: "Grand Total"),
 
               ],))
 

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'variantframeworkpost.dart';
@@ -11,43 +12,12 @@ part of 'variantframeworkpost.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 VariantFrameworkPostModel _$VariantFrameworkPostModelFromJson(
     Map<String, dynamic> json) {
   return _VariantFrameworkPostModel.fromJson(json);
 }
-
-/// @nodoc
-class _$VariantFrameworkPostModelTearOff {
-  const _$VariantFrameworkPostModelTearOff();
-
-  _VariantFrameworkPostModel call(
-      {String? name,
-      String? barcode,
-      String? description,
-      @JsonKey(name: "category_id")
-          int? categoryId,
-      @JsonKey(name: "variant_lines_list")
-          List<VariantLineListModel>? variantLineList,
-      bool? purchaseBlock}) {
-    return _VariantFrameworkPostModel(
-      name: name,
-      barcode: barcode,
-      description: description,
-      categoryId: categoryId,
-      variantLineList: variantLineList,
-      purchaseBlock: purchaseBlock,
-    );
-  }
-
-  VariantFrameworkPostModel fromJson(Map<String, Object> json) {
-    return VariantFrameworkPostModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VariantFrameworkPostModel = _$VariantFrameworkPostModelTearOff();
 
 /// @nodoc
 mixin _$VariantFrameworkPostModel {
@@ -71,7 +41,8 @@ mixin _$VariantFrameworkPostModel {
 abstract class $VariantFrameworkPostModelCopyWith<$Res> {
   factory $VariantFrameworkPostModelCopyWith(VariantFrameworkPostModel value,
           $Res Function(VariantFrameworkPostModel) then) =
-      _$VariantFrameworkPostModelCopyWithImpl<$Res>;
+      _$VariantFrameworkPostModelCopyWithImpl<$Res, VariantFrameworkPostModel>;
+  @useResult
   $Res call(
       {String? name,
       String? barcode,
@@ -84,14 +55,17 @@ abstract class $VariantFrameworkPostModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VariantFrameworkPostModelCopyWithImpl<$Res>
+class _$VariantFrameworkPostModelCopyWithImpl<$Res,
+        $Val extends VariantFrameworkPostModel>
     implements $VariantFrameworkPostModelCopyWith<$Res> {
   _$VariantFrameworkPostModelCopyWithImpl(this._value, this._then);
 
-  final VariantFrameworkPostModel _value;
   // ignore: unused_field
-  final $Res Function(VariantFrameworkPostModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -102,41 +76,43 @@ class _$VariantFrameworkPostModelCopyWithImpl<$Res>
     Object? purchaseBlock = freezed,
   }) {
     return _then(_value.copyWith(
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryId: categoryId == freezed
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantLineList: variantLineList == freezed
+      variantLineList: freezed == variantLineList
           ? _value.variantLineList
           : variantLineList // ignore: cast_nullable_to_non_nullable
               as List<VariantLineListModel>?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VariantFrameworkPostModelCopyWith<$Res>
+abstract class _$$_VariantFrameworkPostModelCopyWith<$Res>
     implements $VariantFrameworkPostModelCopyWith<$Res> {
-  factory _$VariantFrameworkPostModelCopyWith(_VariantFrameworkPostModel value,
-          $Res Function(_VariantFrameworkPostModel) then) =
-      __$VariantFrameworkPostModelCopyWithImpl<$Res>;
+  factory _$$_VariantFrameworkPostModelCopyWith(
+          _$_VariantFrameworkPostModel value,
+          $Res Function(_$_VariantFrameworkPostModel) then) =
+      __$$_VariantFrameworkPostModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? name,
       String? barcode,
@@ -149,17 +125,16 @@ abstract class _$VariantFrameworkPostModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VariantFrameworkPostModelCopyWithImpl<$Res>
-    extends _$VariantFrameworkPostModelCopyWithImpl<$Res>
-    implements _$VariantFrameworkPostModelCopyWith<$Res> {
-  __$VariantFrameworkPostModelCopyWithImpl(_VariantFrameworkPostModel _value,
-      $Res Function(_VariantFrameworkPostModel) _then)
-      : super(_value, (v) => _then(v as _VariantFrameworkPostModel));
+class __$$_VariantFrameworkPostModelCopyWithImpl<$Res>
+    extends _$VariantFrameworkPostModelCopyWithImpl<$Res,
+        _$_VariantFrameworkPostModel>
+    implements _$$_VariantFrameworkPostModelCopyWith<$Res> {
+  __$$_VariantFrameworkPostModelCopyWithImpl(
+      _$_VariantFrameworkPostModel _value,
+      $Res Function(_$_VariantFrameworkPostModel) _then)
+      : super(_value, _then);
 
-  @override
-  _VariantFrameworkPostModel get _value =>
-      super._value as _VariantFrameworkPostModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? name = freezed,
@@ -169,28 +144,28 @@ class __$VariantFrameworkPostModelCopyWithImpl<$Res>
     Object? variantLineList = freezed,
     Object? purchaseBlock = freezed,
   }) {
-    return _then(_VariantFrameworkPostModel(
-      name: name == freezed
+    return _then(_$_VariantFrameworkPostModel(
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryId: categoryId == freezed
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantLineList: variantLineList == freezed
-          ? _value.variantLineList
+      variantLineList: freezed == variantLineList
+          ? _value._variantLineList
           : variantLineList // ignore: cast_nullable_to_non_nullable
               as List<VariantLineListModel>?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -205,9 +180,12 @@ class _$_VariantFrameworkPostModel implements _VariantFrameworkPostModel {
       {this.name,
       this.barcode,
       this.description,
-      @JsonKey(name: "category_id") this.categoryId,
-      @JsonKey(name: "variant_lines_list") this.variantLineList,
-      this.purchaseBlock});
+      @JsonKey(name: "category_id")
+          this.categoryId,
+      @JsonKey(name: "variant_lines_list")
+          final List<VariantLineListModel>? variantLineList,
+      this.purchaseBlock})
+      : _variantLineList = variantLineList;
 
   factory _$_VariantFrameworkPostModel.fromJson(Map<String, dynamic> json) =>
       _$$_VariantFrameworkPostModelFromJson(json);
@@ -221,9 +199,16 @@ class _$_VariantFrameworkPostModel implements _VariantFrameworkPostModel {
   @override
   @JsonKey(name: "category_id")
   final int? categoryId;
+  final List<VariantLineListModel>? _variantLineList;
   @override
   @JsonKey(name: "variant_lines_list")
-  final List<VariantLineListModel>? variantLineList;
+  List<VariantLineListModel>? get variantLineList {
+    final value = _variantLineList;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final bool? purchaseBlock;
 
@@ -235,110 +220,83 @@ class _$_VariantFrameworkPostModel implements _VariantFrameworkPostModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VariantFrameworkPostModel &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_VariantFrameworkPostModel &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
+                other.description == description) &&
             (identical(other.categoryId, categoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryId, categoryId)) &&
-            (identical(other.variantLineList, variantLineList) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantLineList, variantLineList)) &&
+                other.categoryId == categoryId) &&
+            const DeepCollectionEquality()
+                .equals(other._variantLineList, _variantLineList) &&
             (identical(other.purchaseBlock, purchaseBlock) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseBlock, purchaseBlock)));
+                other.purchaseBlock == purchaseBlock));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(categoryId) ^
-      const DeepCollectionEquality().hash(variantLineList) ^
-      const DeepCollectionEquality().hash(purchaseBlock);
 
   @JsonKey(ignore: true)
   @override
-  _$VariantFrameworkPostModelCopyWith<_VariantFrameworkPostModel>
-      get copyWith =>
-          __$VariantFrameworkPostModelCopyWithImpl<_VariantFrameworkPostModel>(
-              this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      name,
+      barcode,
+      description,
+      categoryId,
+      const DeepCollectionEquality().hash(_variantLineList),
+      purchaseBlock);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VariantFrameworkPostModelCopyWith<_$_VariantFrameworkPostModel>
+      get copyWith => __$$_VariantFrameworkPostModelCopyWithImpl<
+          _$_VariantFrameworkPostModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VariantFrameworkPostModelToJson(this);
+    return _$$_VariantFrameworkPostModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _VariantFrameworkPostModel implements VariantFrameworkPostModel {
   const factory _VariantFrameworkPostModel(
-      {String? name,
-      String? barcode,
-      String? description,
+      {final String? name,
+      final String? barcode,
+      final String? description,
       @JsonKey(name: "category_id")
-          int? categoryId,
+          final int? categoryId,
       @JsonKey(name: "variant_lines_list")
-          List<VariantLineListModel>? variantLineList,
-      bool? purchaseBlock}) = _$_VariantFrameworkPostModel;
+          final List<VariantLineListModel>? variantLineList,
+      final bool? purchaseBlock}) = _$_VariantFrameworkPostModel;
 
   factory _VariantFrameworkPostModel.fromJson(Map<String, dynamic> json) =
       _$_VariantFrameworkPostModel.fromJson;
 
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get barcode => throw _privateConstructorUsedError;
+  String? get barcode;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
   @JsonKey(name: "category_id")
-  int? get categoryId => throw _privateConstructorUsedError;
+  int? get categoryId;
   @override
   @JsonKey(name: "variant_lines_list")
-  List<VariantLineListModel>? get variantLineList =>
-      throw _privateConstructorUsedError;
+  List<VariantLineListModel>? get variantLineList;
   @override
-  bool? get purchaseBlock => throw _privateConstructorUsedError;
+  bool? get purchaseBlock;
   @override
   @JsonKey(ignore: true)
-  _$VariantFrameworkPostModelCopyWith<_VariantFrameworkPostModel>
+  _$$_VariantFrameworkPostModelCopyWith<_$_VariantFrameworkPostModel>
       get copyWith => throw _privateConstructorUsedError;
 }
 
 VariantLineListModel _$VariantLineListModelFromJson(Map<String, dynamic> json) {
   return _VariantLineListModel.fromJson(json);
 }
-
-/// @nodoc
-class _$VariantLineListModelTearOff {
-  const _$VariantLineListModelTearOff();
-
-  _VariantLineListModel call(
-      {@JsonKey(name: "attribute_id") int? attributeId,
-      List<String>? values,
-      bool? purchaseBlock}) {
-    return _VariantLineListModel(
-      attributeId: attributeId,
-      values: values,
-      purchaseBlock: purchaseBlock,
-    );
-  }
-
-  VariantLineListModel fromJson(Map<String, Object> json) {
-    return VariantLineListModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $VariantLineListModel = _$VariantLineListModelTearOff();
 
 /// @nodoc
 mixin _$VariantLineListModel {
@@ -357,7 +315,8 @@ mixin _$VariantLineListModel {
 abstract class $VariantLineListModelCopyWith<$Res> {
   factory $VariantLineListModelCopyWith(VariantLineListModel value,
           $Res Function(VariantLineListModel) then) =
-      _$VariantLineListModelCopyWithImpl<$Res>;
+      _$VariantLineListModelCopyWithImpl<$Res, VariantLineListModel>;
+  @useResult
   $Res call(
       {@JsonKey(name: "attribute_id") int? attributeId,
       List<String>? values,
@@ -365,14 +324,17 @@ abstract class $VariantLineListModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$VariantLineListModelCopyWithImpl<$Res>
+class _$VariantLineListModelCopyWithImpl<$Res,
+        $Val extends VariantLineListModel>
     implements $VariantLineListModelCopyWith<$Res> {
   _$VariantLineListModelCopyWithImpl(this._value, this._then);
 
-  final VariantLineListModel _value;
   // ignore: unused_field
-  final $Res Function(VariantLineListModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? attributeId = freezed,
@@ -380,29 +342,30 @@ class _$VariantLineListModelCopyWithImpl<$Res>
     Object? purchaseBlock = freezed,
   }) {
     return _then(_value.copyWith(
-      attributeId: attributeId == freezed
+      attributeId: freezed == attributeId
           ? _value.attributeId
           : attributeId // ignore: cast_nullable_to_non_nullable
               as int?,
-      values: values == freezed
+      values: freezed == values
           ? _value.values
           : values // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$VariantLineListModelCopyWith<$Res>
+abstract class _$$_VariantLineListModelCopyWith<$Res>
     implements $VariantLineListModelCopyWith<$Res> {
-  factory _$VariantLineListModelCopyWith(_VariantLineListModel value,
-          $Res Function(_VariantLineListModel) then) =
-      __$VariantLineListModelCopyWithImpl<$Res>;
+  factory _$$_VariantLineListModelCopyWith(_$_VariantLineListModel value,
+          $Res Function(_$_VariantLineListModel) then) =
+      __$$_VariantLineListModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: "attribute_id") int? attributeId,
       List<String>? values,
@@ -410,32 +373,30 @@ abstract class _$VariantLineListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$VariantLineListModelCopyWithImpl<$Res>
-    extends _$VariantLineListModelCopyWithImpl<$Res>
-    implements _$VariantLineListModelCopyWith<$Res> {
-  __$VariantLineListModelCopyWithImpl(
-      _VariantLineListModel _value, $Res Function(_VariantLineListModel) _then)
-      : super(_value, (v) => _then(v as _VariantLineListModel));
+class __$$_VariantLineListModelCopyWithImpl<$Res>
+    extends _$VariantLineListModelCopyWithImpl<$Res, _$_VariantLineListModel>
+    implements _$$_VariantLineListModelCopyWith<$Res> {
+  __$$_VariantLineListModelCopyWithImpl(_$_VariantLineListModel _value,
+      $Res Function(_$_VariantLineListModel) _then)
+      : super(_value, _then);
 
-  @override
-  _VariantLineListModel get _value => super._value as _VariantLineListModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? attributeId = freezed,
     Object? values = freezed,
     Object? purchaseBlock = freezed,
   }) {
-    return _then(_VariantLineListModel(
-      attributeId: attributeId == freezed
+    return _then(_$_VariantLineListModel(
+      attributeId: freezed == attributeId
           ? _value.attributeId
           : attributeId // ignore: cast_nullable_to_non_nullable
               as int?,
-      values: values == freezed
-          ? _value.values
+      values: freezed == values
+          ? _value._values
           : values // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -448,8 +409,9 @@ class __$VariantLineListModelCopyWithImpl<$Res>
 class _$_VariantLineListModel implements _VariantLineListModel {
   const _$_VariantLineListModel(
       {@JsonKey(name: "attribute_id") this.attributeId,
-      this.values,
-      this.purchaseBlock});
+      final List<String>? values,
+      this.purchaseBlock})
+      : _values = values;
 
   factory _$_VariantLineListModel.fromJson(Map<String, dynamic> json) =>
       _$$_VariantLineListModelFromJson(json);
@@ -457,8 +419,15 @@ class _$_VariantLineListModel implements _VariantLineListModel {
   @override
   @JsonKey(name: "attribute_id")
   final int? attributeId;
+  final List<String>? _values;
   @override
-  final List<String>? values;
+  List<String>? get values {
+    final value = _values;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final bool? purchaseBlock;
 
@@ -470,88 +439,60 @@ class _$_VariantLineListModel implements _VariantLineListModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _VariantLineListModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_VariantLineListModel &&
             (identical(other.attributeId, attributeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.attributeId, attributeId)) &&
-            (identical(other.values, values) ||
-                const DeepCollectionEquality().equals(other.values, values)) &&
+                other.attributeId == attributeId) &&
+            const DeepCollectionEquality().equals(other._values, _values) &&
             (identical(other.purchaseBlock, purchaseBlock) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseBlock, purchaseBlock)));
+                other.purchaseBlock == purchaseBlock));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(attributeId) ^
-      const DeepCollectionEquality().hash(values) ^
-      const DeepCollectionEquality().hash(purchaseBlock);
 
   @JsonKey(ignore: true)
   @override
-  _$VariantLineListModelCopyWith<_VariantLineListModel> get copyWith =>
-      __$VariantLineListModelCopyWithImpl<_VariantLineListModel>(
+  int get hashCode => Object.hash(runtimeType, attributeId,
+      const DeepCollectionEquality().hash(_values), purchaseBlock);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_VariantLineListModelCopyWith<_$_VariantLineListModel> get copyWith =>
+      __$$_VariantLineListModelCopyWithImpl<_$_VariantLineListModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_VariantLineListModelToJson(this);
+    return _$$_VariantLineListModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _VariantLineListModel implements VariantLineListModel {
   const factory _VariantLineListModel(
-      {@JsonKey(name: "attribute_id") int? attributeId,
-      List<String>? values,
-      bool? purchaseBlock}) = _$_VariantLineListModel;
+      {@JsonKey(name: "attribute_id") final int? attributeId,
+      final List<String>? values,
+      final bool? purchaseBlock}) = _$_VariantLineListModel;
 
   factory _VariantLineListModel.fromJson(Map<String, dynamic> json) =
       _$_VariantLineListModel.fromJson;
 
   @override
   @JsonKey(name: "attribute_id")
-  int? get attributeId => throw _privateConstructorUsedError;
+  int? get attributeId;
   @override
-  List<String>? get values => throw _privateConstructorUsedError;
+  List<String>? get values;
   @override
-  bool? get purchaseBlock => throw _privateConstructorUsedError;
+  bool? get purchaseBlock;
   @override
   @JsonKey(ignore: true)
-  _$VariantLineListModelCopyWith<_VariantLineListModel> get copyWith =>
+  _$$_VariantLineListModelCopyWith<_$_VariantLineListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 AttributeListModel _$AttributeListModelFromJson(Map<String, dynamic> json) {
   return _AttributeListModel.fromJson(json);
 }
-
-/// @nodoc
-class _$AttributeListModelTearOff {
-  const _$AttributeListModelTearOff();
-
-  _AttributeListModel call(
-      {int? id,
-      String? code,
-      @JsonKey(name: "attribute_type") String? attributeType,
-      @JsonKey(name: "attribute_name") String? attributeName,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _AttributeListModel(
-      id: id,
-      code: code,
-      attributeType: attributeType,
-      attributeName: attributeName,
-      isActive: isActive,
-    );
-  }
-
-  AttributeListModel fromJson(Map<String, Object> json) {
-    return AttributeListModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $AttributeListModel = _$AttributeListModelTearOff();
 
 /// @nodoc
 mixin _$AttributeListModel {
@@ -574,7 +515,8 @@ mixin _$AttributeListModel {
 abstract class $AttributeListModelCopyWith<$Res> {
   factory $AttributeListModelCopyWith(
           AttributeListModel value, $Res Function(AttributeListModel) then) =
-      _$AttributeListModelCopyWithImpl<$Res>;
+      _$AttributeListModelCopyWithImpl<$Res, AttributeListModel>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -584,14 +526,16 @@ abstract class $AttributeListModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$AttributeListModelCopyWithImpl<$Res>
+class _$AttributeListModelCopyWithImpl<$Res, $Val extends AttributeListModel>
     implements $AttributeListModelCopyWith<$Res> {
   _$AttributeListModelCopyWithImpl(this._value, this._then);
 
-  final AttributeListModel _value;
   // ignore: unused_field
-  final $Res Function(AttributeListModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -601,37 +545,38 @@ class _$AttributeListModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      attributeType: attributeType == freezed
+      attributeType: freezed == attributeType
           ? _value.attributeType
           : attributeType // ignore: cast_nullable_to_non_nullable
               as String?,
-      attributeName: attributeName == freezed
+      attributeName: freezed == attributeName
           ? _value.attributeName
           : attributeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$AttributeListModelCopyWith<$Res>
+abstract class _$$_AttributeListModelCopyWith<$Res>
     implements $AttributeListModelCopyWith<$Res> {
-  factory _$AttributeListModelCopyWith(
-          _AttributeListModel value, $Res Function(_AttributeListModel) then) =
-      __$AttributeListModelCopyWithImpl<$Res>;
+  factory _$$_AttributeListModelCopyWith(_$_AttributeListModel value,
+          $Res Function(_$_AttributeListModel) then) =
+      __$$_AttributeListModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -641,16 +586,14 @@ abstract class _$AttributeListModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$AttributeListModelCopyWithImpl<$Res>
-    extends _$AttributeListModelCopyWithImpl<$Res>
-    implements _$AttributeListModelCopyWith<$Res> {
-  __$AttributeListModelCopyWithImpl(
-      _AttributeListModel _value, $Res Function(_AttributeListModel) _then)
-      : super(_value, (v) => _then(v as _AttributeListModel));
+class __$$_AttributeListModelCopyWithImpl<$Res>
+    extends _$AttributeListModelCopyWithImpl<$Res, _$_AttributeListModel>
+    implements _$$_AttributeListModelCopyWith<$Res> {
+  __$$_AttributeListModelCopyWithImpl(
+      _$_AttributeListModel _value, $Res Function(_$_AttributeListModel) _then)
+      : super(_value, _then);
 
-  @override
-  _AttributeListModel get _value => super._value as _AttributeListModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -659,24 +602,24 @@ class __$AttributeListModelCopyWithImpl<$Res>
     Object? attributeName = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_AttributeListModel(
-      id: id == freezed
+    return _then(_$_AttributeListModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      attributeType: attributeType == freezed
+      attributeType: freezed == attributeType
           ? _value.attributeType
           : attributeType // ignore: cast_nullable_to_non_nullable
               as String?,
-      attributeName: attributeName == freezed
+      attributeName: freezed == attributeName
           ? _value.attributeName
           : attributeName // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -719,69 +662,67 @@ class _$_AttributeListModel implements _AttributeListModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _AttributeListModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_AttributeListModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.attributeType, attributeType) ||
-                const DeepCollectionEquality()
-                    .equals(other.attributeType, attributeType)) &&
+                other.attributeType == attributeType) &&
             (identical(other.attributeName, attributeName) ||
-                const DeepCollectionEquality()
-                    .equals(other.attributeName, attributeName)) &&
+                other.attributeName == attributeName) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(attributeType) ^
-      const DeepCollectionEquality().hash(attributeName) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$AttributeListModelCopyWith<_AttributeListModel> get copyWith =>
-      __$AttributeListModelCopyWithImpl<_AttributeListModel>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType, id, code, attributeType, attributeName, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_AttributeListModelCopyWith<_$_AttributeListModel> get copyWith =>
+      __$$_AttributeListModelCopyWithImpl<_$_AttributeListModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AttributeListModelToJson(this);
+    return _$$_AttributeListModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _AttributeListModel implements AttributeListModel {
   const factory _AttributeListModel(
-          {int? id,
-          String? code,
-          @JsonKey(name: "attribute_type") String? attributeType,
-          @JsonKey(name: "attribute_name") String? attributeName,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_AttributeListModel;
+      {final int? id,
+      final String? code,
+      @JsonKey(name: "attribute_type")
+          final String? attributeType,
+      @JsonKey(name: "attribute_name")
+          final String? attributeName,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_AttributeListModel;
 
   factory _AttributeListModel.fromJson(Map<String, dynamic> json) =
       _$_AttributeListModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
   @JsonKey(name: "attribute_type")
-  String? get attributeType => throw _privateConstructorUsedError;
+  String? get attributeType;
   @override
   @JsonKey(name: "attribute_name")
-  String? get attributeName => throw _privateConstructorUsedError;
+  String? get attributeName;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$AttributeListModelCopyWith<_AttributeListModel> get copyWith =>
+  _$$_AttributeListModelCopyWith<_$_AttributeListModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

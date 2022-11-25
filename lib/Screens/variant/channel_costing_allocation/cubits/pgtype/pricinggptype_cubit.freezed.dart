@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'pricinggptype_cubit.dart';
@@ -11,33 +12,7 @@ part of 'pricinggptype_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PricinggptypeStateTearOff {
-  const _$PricinggptypeStateTearOff();
-
-  _Initial initial() {
-    return const _Initial();
-  }
-
-  _Loading loading() {
-    return const _Loading();
-  }
-
-  _Error error() {
-    return const _Error();
-  }
-
-  _Success success(PurchaseOrdertype data) {
-    return _Success(
-      data,
-    );
-  }
-}
-
-/// @nodoc
-const $PricinggptypeState = _$PricinggptypeStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PricinggptypeState {
@@ -51,10 +26,10 @@ mixin _$PricinggptypeState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(PurchaseOrdertype data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(PurchaseOrdertype data)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,10 +51,10 @@ mixin _$PricinggptypeState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -97,34 +72,33 @@ mixin _$PricinggptypeState {
 abstract class $PricinggptypeStateCopyWith<$Res> {
   factory $PricinggptypeStateCopyWith(
           PricinggptypeState value, $Res Function(PricinggptypeState) then) =
-      _$PricinggptypeStateCopyWithImpl<$Res>;
+      _$PricinggptypeStateCopyWithImpl<$Res, PricinggptypeState>;
 }
 
 /// @nodoc
-class _$PricinggptypeStateCopyWithImpl<$Res>
+class _$PricinggptypeStateCopyWithImpl<$Res, $Val extends PricinggptypeState>
     implements $PricinggptypeStateCopyWith<$Res> {
   _$PricinggptypeStateCopyWithImpl(this._value, this._then);
 
-  final PricinggptypeState _value;
   // ignore: unused_field
-  final $Res Function(PricinggptypeState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 }
 
 /// @nodoc
-abstract class _$InitialCopyWith<$Res> {
-  factory _$InitialCopyWith(_Initial value, $Res Function(_Initial) then) =
-      __$InitialCopyWithImpl<$Res>;
+abstract class _$$_InitialCopyWith<$Res> {
+  factory _$$_InitialCopyWith(
+          _$_Initial value, $Res Function(_$_Initial) then) =
+      __$$_InitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$InitialCopyWithImpl<$Res>
-    extends _$PricinggptypeStateCopyWithImpl<$Res>
-    implements _$InitialCopyWith<$Res> {
-  __$InitialCopyWithImpl(_Initial _value, $Res Function(_Initial) _then)
-      : super(_value, (v) => _then(v as _Initial));
-
-  @override
-  _Initial get _value => super._value as _Initial;
+class __$$_InitialCopyWithImpl<$Res>
+    extends _$PricinggptypeStateCopyWithImpl<$Res, _$_Initial>
+    implements _$$_InitialCopyWith<$Res> {
+  __$$_InitialCopyWithImpl(_$_Initial _value, $Res Function(_$_Initial) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -139,7 +113,8 @@ class _$_Initial implements _Initial {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Initial);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Initial);
   }
 
   @override
@@ -159,10 +134,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(PurchaseOrdertype data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(PurchaseOrdertype data)? success,
   }) {
     return initial?.call();
   }
@@ -196,10 +171,10 @@ class _$_Initial implements _Initial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return initial?.call(this);
   }
@@ -225,20 +200,18 @@ abstract class _Initial implements PricinggptypeState {
 }
 
 /// @nodoc
-abstract class _$LoadingCopyWith<$Res> {
-  factory _$LoadingCopyWith(_Loading value, $Res Function(_Loading) then) =
-      __$LoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$LoadingCopyWithImpl<$Res>
-    extends _$PricinggptypeStateCopyWithImpl<$Res>
-    implements _$LoadingCopyWith<$Res> {
-  __$LoadingCopyWithImpl(_Loading _value, $Res Function(_Loading) _then)
-      : super(_value, (v) => _then(v as _Loading));
-
-  @override
-  _Loading get _value => super._value as _Loading;
+class __$$_LoadingCopyWithImpl<$Res>
+    extends _$PricinggptypeStateCopyWithImpl<$Res, _$_Loading>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -253,7 +226,8 @@ class _$_Loading implements _Loading {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Loading);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -273,10 +247,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(PurchaseOrdertype data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(PurchaseOrdertype data)? success,
   }) {
     return loading?.call();
   }
@@ -310,10 +284,10 @@ class _$_Loading implements _Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return loading?.call(this);
   }
@@ -339,19 +313,17 @@ abstract class _Loading implements PricinggptypeState {
 }
 
 /// @nodoc
-abstract class _$ErrorCopyWith<$Res> {
-  factory _$ErrorCopyWith(_Error value, $Res Function(_Error) then) =
-      __$ErrorCopyWithImpl<$Res>;
+abstract class _$$_ErrorCopyWith<$Res> {
+  factory _$$_ErrorCopyWith(_$_Error value, $Res Function(_$_Error) then) =
+      __$$_ErrorCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$ErrorCopyWithImpl<$Res> extends _$PricinggptypeStateCopyWithImpl<$Res>
-    implements _$ErrorCopyWith<$Res> {
-  __$ErrorCopyWithImpl(_Error _value, $Res Function(_Error) _then)
-      : super(_value, (v) => _then(v as _Error));
-
-  @override
-  _Error get _value => super._value as _Error;
+class __$$_ErrorCopyWithImpl<$Res>
+    extends _$PricinggptypeStateCopyWithImpl<$Res, _$_Error>
+    implements _$$_ErrorCopyWith<$Res> {
+  __$$_ErrorCopyWithImpl(_$_Error _value, $Res Function(_$_Error) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -366,7 +338,8 @@ class _$_Error implements _Error {
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _Error);
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Error);
   }
 
   @override
@@ -386,10 +359,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(PurchaseOrdertype data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(PurchaseOrdertype data)? success,
   }) {
     return error?.call();
   }
@@ -423,10 +396,10 @@ class _$_Error implements _Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return error?.call(this);
   }
@@ -452,30 +425,30 @@ abstract class _Error implements PricinggptypeState {
 }
 
 /// @nodoc
-abstract class _$SuccessCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) then) =
-      __$SuccessCopyWithImpl<$Res>;
+abstract class _$$_SuccessCopyWith<$Res> {
+  factory _$$_SuccessCopyWith(
+          _$_Success value, $Res Function(_$_Success) then) =
+      __$$_SuccessCopyWithImpl<$Res>;
+  @useResult
   $Res call({PurchaseOrdertype data});
 
   $PurchaseOrdertypeCopyWith<$Res> get data;
 }
 
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    extends _$PricinggptypeStateCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(_Success _value, $Res Function(_Success) _then)
-      : super(_value, (v) => _then(v as _Success));
+class __$$_SuccessCopyWithImpl<$Res>
+    extends _$PricinggptypeStateCopyWithImpl<$Res, _$_Success>
+    implements _$$_SuccessCopyWith<$Res> {
+  __$$_SuccessCopyWithImpl(_$_Success _value, $Res Function(_$_Success) _then)
+      : super(_value, _then);
 
-  @override
-  _Success get _value => super._value as _Success;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
+    Object? data = null,
   }) {
-    return _then(_Success(
-      data == freezed
+    return _then(_$_Success(
+      null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as PurchaseOrdertype,
@@ -483,6 +456,7 @@ class __$SuccessCopyWithImpl<$Res>
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $PurchaseOrdertypeCopyWith<$Res> get data {
     return $PurchaseOrdertypeCopyWith<$Res>(_value.data, (value) {
       return _then(_value.copyWith(data: value));
@@ -506,19 +480,19 @@ class _$_Success implements _Success {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Success &&
-            (identical(other.data, data) ||
-                const DeepCollectionEquality().equals(other.data, data)));
+        (other.runtimeType == runtimeType &&
+            other is _$_Success &&
+            (identical(other.data, data) || other.data == data));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(data);
+  int get hashCode => Object.hash(runtimeType, data);
 
   @JsonKey(ignore: true)
   @override
-  _$SuccessCopyWith<_Success> get copyWith =>
-      __$SuccessCopyWithImpl<_Success>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
+      __$$_SuccessCopyWithImpl<_$_Success>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -534,10 +508,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function()? initial,
-    TResult Function()? loading,
-    TResult Function()? error,
-    TResult Function(PurchaseOrdertype data)? success,
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? error,
+    TResult? Function(PurchaseOrdertype data)? success,
   }) {
     return success?.call(data);
   }
@@ -571,10 +545,10 @@ class _$_Success implements _Success {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_Initial value)? initial,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Error value)? error,
-    TResult Function(_Success value)? success,
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Error value)? error,
+    TResult? Function(_Success value)? success,
   }) {
     return success?.call(this);
   }
@@ -596,10 +570,10 @@ class _$_Success implements _Success {
 }
 
 abstract class _Success implements PricinggptypeState {
-  const factory _Success(PurchaseOrdertype data) = _$_Success;
+  const factory _Success(final PurchaseOrdertype data) = _$_Success;
 
-  PurchaseOrdertype get data => throw _privateConstructorUsedError;
+  PurchaseOrdertype get data;
   @JsonKey(ignore: true)
-  _$SuccessCopyWith<_Success> get copyWith =>
+  _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
 }

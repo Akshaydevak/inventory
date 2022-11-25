@@ -28,22 +28,22 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
           color:Color(0xffF2F3F5),
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.only(
-                    left: width * .014, right: width * .014),
-                width: double.infinity,
-                height: 55,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
-                    TextWidget(text: "Sales")
-                  ],
-                ),
-              ),
+              // Container(
+              //   margin: EdgeInsets.only(
+              //       left: width * .014, right: width * .014),
+              //   width: double.infinity,
+              //   height: 55,
+              //   child: Column(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     crossAxisAlignment: CrossAxisAlignment.start,
+              //     children: [
+              //       SizedBox(
+              //         height: height * 0.02,
+              //       ),
+              //       TextWidget(text: "Sales")
+              //     ],
+              //   ),
+              // ),
 
 
 

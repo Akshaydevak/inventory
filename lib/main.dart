@@ -32,6 +32,7 @@ import 'Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 
 import 'Screens/logi/login.dart';
 import 'Screens/sales/general/cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
+import 'Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import 'Screens/variant/channel_alloction/cubit/channelread/channelread_cubit.dart';
 import 'Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
@@ -170,6 +171,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ListcustomverticalCubit(),
         ),BlocProvider(
           create: (context) => ListDivisionCubit(),
+        ),BlocProvider(
+          create: (context) => ShippingadreesCubit(),
         ),
       ],
       child: MaterialApp(
@@ -256,7 +259,7 @@ class _MyHomeState extends State<MyHome> {
       debugShowCheckedModeBanner: false,
       title: '',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepOrange,
       ),
       initialRoute: '/',
       routes: {

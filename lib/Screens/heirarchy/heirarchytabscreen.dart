@@ -41,22 +41,22 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
               color:Color(0xffF2F3F5),
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: width * .014, right: width * .014),
-                    width: double.infinity,
-                    height: 55,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        TextWidget(text: "Heirarchy"),
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(
+                  //       left: width * .014, right: width * .014),
+                  //   width: double.infinity,
+                  //   height: 55,
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: height * 0.02,
+                  //       ),
+                  //       TextWidget(text: "Heirarchy"),
+                  //     ],
+                  //   ),
+                  // ),
 
 
 
@@ -125,15 +125,18 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
                               ),
 
                               Spacer(),
-                              TextButton.icon(onPressed: (){
-                                isClossed=!isClossed;
-                                costingTypeMethodeCheck=false;
-                                // print( widget.isClossed);
-                                // widget.changer(widget.isClossed);
-                                setState(() {
+                              Container(
+                                margin: EdgeInsets.only(right: 10,top: 10),
+                                child: TextButton.icon(onPressed: (){
+                                  isClossed=!isClossed;
+                                  costingTypeMethodeCheck=false;
+                                  // print( widget.isClossed);
+                                  // widget.changer(widget.isClossed);
+                                  setState(() {
 
-                                });
-                              }, icon:Icon(Icons.code), label: Text("Configuration"))
+                                  });
+                                }, icon:Icon(Icons.code), label: Text("Configuration")),
+                              )
                             ],
                           ),
                         ),

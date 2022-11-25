@@ -7,6 +7,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 
 class DivisionStableTable extends StatefulWidget {
   final TextEditingController code;
+  final TextEditingController image1Name;
   final TextEditingController name;
   final TextEditingController priority;
   final TextEditingController image1;
@@ -21,7 +22,7 @@ class DivisionStableTable extends StatefulWidget {
 
 
   DivisionStableTable({
-    required this.select, required this.code, required this.name, required this.priority, required this.image1, required this.description, required this.active, required this.isMoxed, required this.activeChange});
+    required this.select,required this.image1Name, required this.code, required this.name, required this.priority, required this.image1, required this.description, required this.active, required this.isMoxed, required this.activeChange});
 
   @override
   _DivisionStableTableState createState() => _DivisionStableTableState();
@@ -73,11 +74,16 @@ class _DivisionStableTableState extends State<DivisionStableTable> {
         child: Builder(
             builder: (context) {
               return Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
                           NewInputCard(
@@ -104,11 +110,12 @@ class _DivisionStableTableState extends State<DivisionStableTable> {
 
                         FileUploadField(
 
-                            fileName: widget.image1.text,
-                            fileUrl: widget.image1.text,
+                            fileName: widget.image1Name.text,
+                            fileUrl: widget.image1Name.text,
                             onCancel: () {
                               setState(() {
                                 widget.image1.clear();
+                                widget.image1Name.clear();
                               });
                             },
                             onChangeTap: (p0) {
@@ -120,6 +127,7 @@ class _DivisionStableTableState extends State<DivisionStableTable> {
 
 
                               widget.image1.text = myFile?.fileName ?? "";
+                              widget.image1Name.text = myFile?.fileName ?? "";
                               // Variable.mobileBannerImage = myFile.toUint8List();
                               //
                                imageEncode =

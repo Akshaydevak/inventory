@@ -10,7 +10,7 @@ part 'customeridcreation_cubit.freezed.dart';
 class CustomeridcreationCubit extends Cubit<CustomeridcreationState> {
   CustomeridcreationCubit() : super(CustomeridcreationState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
-  Future postCustomerIdCreation(CustomerIdCreation2Model model) async {
+  Future postCustomerIdCreation(CustomerIdCreationUpdateModel model) async {
     emit(_Loading());
     print("assa");
     final result = await repo.postCustomerIdCreation(model);

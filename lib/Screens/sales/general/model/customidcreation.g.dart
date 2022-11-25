@@ -53,3 +53,33 @@ Map<String, dynamic> _$$_CustomerIdCreation2ModelToJson(
       'tax_id': instance.taxId,
       'login_id': instance.loginId,
     };
+
+_$_CustomerIdCreationUpdateModel _$$_CustomerIdCreationUpdateModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_CustomerIdCreationUpdateModel(
+      id: json['id'] as int?,
+      email: json['email'] as String?,
+      password: json['password'] as String?,
+      mobile: json['mobile'] as String?,
+      fullname: json['fullname'] as String?,
+      lname: json['lname'] as String?,
+      country: json['country'] as String?,
+      gender: json['gender'] as String?,
+      buisnessUnit: json['business_unit'] as String?,
+      taxId: json['tax_id'] as String?,
+    );
+
+Map<String, dynamic> _$$_CustomerIdCreationUpdateModelToJson(
+        _$_CustomerIdCreationUpdateModel instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'email': instance.email,
+      'password': instance.password,
+      'mobile': instance.mobile,
+      'fullname': instance.fullname,
+      'lname': instance.lname,
+      'country': instance.country,
+      'gender': instance.gender,
+      'business_unit': instance.buisnessUnit,
+      'tax_id': instance.taxId,
+    };

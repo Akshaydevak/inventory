@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'categoryread.dart';
@@ -11,52 +12,11 @@ part of 'categoryread.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 CategoryReadModel _$CategoryReadModelFromJson(Map<String, dynamic> json) {
   return _CategoryReadModel.fromJson(json);
 }
-
-/// @nodoc
-class _$CategoryReadModelTearOff {
-  const _$CategoryReadModelTearOff();
-
-  _CategoryReadModel call(
-      {String? description,
-      String? code,
-      String? status,
-      String? name,
-      String? image,
-      int? id,
-      @JsonKey(name: "alternative_name") String? alternativename,
-      @JsonKey(name: "division_name") String? divisionName,
-      @JsonKey(name: "parent_name") String? parentname,
-      @JsonKey(name: "parent_code") String? parentCode,
-      @JsonKey(name: "division_code") String? divisionCode,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _CategoryReadModel(
-      description: description,
-      code: code,
-      status: status,
-      name: name,
-      image: image,
-      id: id,
-      alternativename: alternativename,
-      divisionName: divisionName,
-      parentname: parentname,
-      parentCode: parentCode,
-      divisionCode: divisionCode,
-      isActive: isActive,
-    );
-  }
-
-  CategoryReadModel fromJson(Map<String, Object> json) {
-    return CategoryReadModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $CategoryReadModel = _$CategoryReadModelTearOff();
 
 /// @nodoc
 mixin _$CategoryReadModel {
@@ -89,7 +49,8 @@ mixin _$CategoryReadModel {
 abstract class $CategoryReadModelCopyWith<$Res> {
   factory $CategoryReadModelCopyWith(
           CategoryReadModel value, $Res Function(CategoryReadModel) then) =
-      _$CategoryReadModelCopyWithImpl<$Res>;
+      _$CategoryReadModelCopyWithImpl<$Res, CategoryReadModel>;
+  @useResult
   $Res call(
       {String? description,
       String? code,
@@ -106,14 +67,16 @@ abstract class $CategoryReadModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CategoryReadModelCopyWithImpl<$Res>
+class _$CategoryReadModelCopyWithImpl<$Res, $Val extends CategoryReadModel>
     implements $CategoryReadModelCopyWith<$Res> {
   _$CategoryReadModelCopyWithImpl(this._value, this._then);
 
-  final CategoryReadModel _value;
   // ignore: unused_field
-  final $Res Function(CategoryReadModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -130,65 +93,66 @@ class _$CategoryReadModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      alternativename: alternativename == freezed
+      alternativename: freezed == alternativename
           ? _value.alternativename
           : alternativename // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionName: divisionName == freezed
+      divisionName: freezed == divisionName
           ? _value.divisionName
           : divisionName // ignore: cast_nullable_to_non_nullable
               as String?,
-      parentname: parentname == freezed
+      parentname: freezed == parentname
           ? _value.parentname
           : parentname // ignore: cast_nullable_to_non_nullable
               as String?,
-      parentCode: parentCode == freezed
+      parentCode: freezed == parentCode
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionCode: divisionCode == freezed
+      divisionCode: freezed == divisionCode
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$CategoryReadModelCopyWith<$Res>
+abstract class _$$_CategoryReadModelCopyWith<$Res>
     implements $CategoryReadModelCopyWith<$Res> {
-  factory _$CategoryReadModelCopyWith(
-          _CategoryReadModel value, $Res Function(_CategoryReadModel) then) =
-      __$CategoryReadModelCopyWithImpl<$Res>;
+  factory _$$_CategoryReadModelCopyWith(_$_CategoryReadModel value,
+          $Res Function(_$_CategoryReadModel) then) =
+      __$$_CategoryReadModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? description,
       String? code,
@@ -205,16 +169,14 @@ abstract class _$CategoryReadModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$CategoryReadModelCopyWithImpl<$Res>
-    extends _$CategoryReadModelCopyWithImpl<$Res>
-    implements _$CategoryReadModelCopyWith<$Res> {
-  __$CategoryReadModelCopyWithImpl(
-      _CategoryReadModel _value, $Res Function(_CategoryReadModel) _then)
-      : super(_value, (v) => _then(v as _CategoryReadModel));
+class __$$_CategoryReadModelCopyWithImpl<$Res>
+    extends _$CategoryReadModelCopyWithImpl<$Res, _$_CategoryReadModel>
+    implements _$$_CategoryReadModelCopyWith<$Res> {
+  __$$_CategoryReadModelCopyWithImpl(
+      _$_CategoryReadModel _value, $Res Function(_$_CategoryReadModel) _then)
+      : super(_value, _then);
 
-  @override
-  _CategoryReadModel get _value => super._value as _CategoryReadModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -230,52 +192,52 @@ class __$CategoryReadModelCopyWithImpl<$Res>
     Object? divisionCode = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_CategoryReadModel(
-      description: description == freezed
+    return _then(_$_CategoryReadModel(
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as String?,
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      alternativename: alternativename == freezed
+      alternativename: freezed == alternativename
           ? _value.alternativename
           : alternativename // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionName: divisionName == freezed
+      divisionName: freezed == divisionName
           ? _value.divisionName
           : divisionName // ignore: cast_nullable_to_non_nullable
               as String?,
-      parentname: parentname == freezed
+      parentname: freezed == parentname
           ? _value.parentname
           : parentname // ignore: cast_nullable_to_non_nullable
               as String?,
-      parentCode: parentCode == freezed
+      parentCode: freezed == parentCode
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionCode: divisionCode == freezed
+      divisionCode: freezed == divisionCode
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -342,118 +304,117 @@ class _$_CategoryReadModel implements _CategoryReadModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _CategoryReadModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_CategoryReadModel &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.image, image) ||
-                const DeepCollectionEquality().equals(other.image, image)) &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+                other.description == description) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.image, image) || other.image == image) &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.alternativename, alternativename) ||
-                const DeepCollectionEquality()
-                    .equals(other.alternativename, alternativename)) &&
+                other.alternativename == alternativename) &&
             (identical(other.divisionName, divisionName) ||
-                const DeepCollectionEquality()
-                    .equals(other.divisionName, divisionName)) &&
+                other.divisionName == divisionName) &&
             (identical(other.parentname, parentname) ||
-                const DeepCollectionEquality()
-                    .equals(other.parentname, parentname)) &&
+                other.parentname == parentname) &&
             (identical(other.parentCode, parentCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.parentCode, parentCode)) &&
+                other.parentCode == parentCode) &&
             (identical(other.divisionCode, divisionCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.divisionCode, divisionCode)) &&
+                other.divisionCode == divisionCode) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(alternativename) ^
-      const DeepCollectionEquality().hash(divisionName) ^
-      const DeepCollectionEquality().hash(parentname) ^
-      const DeepCollectionEquality().hash(parentCode) ^
-      const DeepCollectionEquality().hash(divisionCode) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$CategoryReadModelCopyWith<_CategoryReadModel> get copyWith =>
-      __$CategoryReadModelCopyWithImpl<_CategoryReadModel>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      description,
+      code,
+      status,
+      name,
+      image,
+      id,
+      alternativename,
+      divisionName,
+      parentname,
+      parentCode,
+      divisionCode,
+      isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_CategoryReadModelCopyWith<_$_CategoryReadModel> get copyWith =>
+      __$$_CategoryReadModelCopyWithImpl<_$_CategoryReadModel>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_CategoryReadModelToJson(this);
+    return _$$_CategoryReadModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _CategoryReadModel implements CategoryReadModel {
   const factory _CategoryReadModel(
-          {String? description,
-          String? code,
-          String? status,
-          String? name,
-          String? image,
-          int? id,
-          @JsonKey(name: "alternative_name") String? alternativename,
-          @JsonKey(name: "division_name") String? divisionName,
-          @JsonKey(name: "parent_name") String? parentname,
-          @JsonKey(name: "parent_code") String? parentCode,
-          @JsonKey(name: "division_code") String? divisionCode,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_CategoryReadModel;
+      {final String? description,
+      final String? code,
+      final String? status,
+      final String? name,
+      final String? image,
+      final int? id,
+      @JsonKey(name: "alternative_name")
+          final String? alternativename,
+      @JsonKey(name: "division_name")
+          final String? divisionName,
+      @JsonKey(name: "parent_name")
+          final String? parentname,
+      @JsonKey(name: "parent_code")
+          final String? parentCode,
+      @JsonKey(name: "division_code")
+          final String? divisionCode,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_CategoryReadModel;
 
   factory _CategoryReadModel.fromJson(Map<String, dynamic> json) =
       _$_CategoryReadModel.fromJson;
 
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get image => throw _privateConstructorUsedError;
+  String? get image;
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
   @JsonKey(name: "alternative_name")
-  String? get alternativename => throw _privateConstructorUsedError;
+  String? get alternativename;
   @override
   @JsonKey(name: "division_name")
-  String? get divisionName => throw _privateConstructorUsedError;
+  String? get divisionName;
   @override
   @JsonKey(name: "parent_name")
-  String? get parentname => throw _privateConstructorUsedError;
+  String? get parentname;
   @override
   @JsonKey(name: "parent_code")
-  String? get parentCode => throw _privateConstructorUsedError;
+  String? get parentCode;
   @override
   @JsonKey(name: "division_code")
-  String? get divisionCode => throw _privateConstructorUsedError;
+  String? get divisionCode;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$CategoryReadModelCopyWith<_CategoryReadModel> get copyWith =>
+  _$$_CategoryReadModelCopyWith<_$_CategoryReadModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

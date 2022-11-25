@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'stock_read.dart';
@@ -11,34 +12,11 @@ part of 'stock_read.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 StockReadModel _$StockReadModelFromJson(Map<String, dynamic> json) {
   return _StockReadModel.fromJson(json);
 }
-
-/// @nodoc
-class _$StockReadModelTearOff {
-  const _$StockReadModelTearOff();
-
-  _StockReadModel call(
-      {int? id,
-      String? code,
-      @JsonKey(name: "stock_data") StockData? stockData}) {
-    return _StockReadModel(
-      id: id,
-      code: code,
-      stockData: stockData,
-    );
-  }
-
-  StockReadModel fromJson(Map<String, Object> json) {
-    return StockReadModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StockReadModel = _$StockReadModelTearOff();
 
 /// @nodoc
 mixin _$StockReadModel {
@@ -57,7 +35,8 @@ mixin _$StockReadModel {
 abstract class $StockReadModelCopyWith<$Res> {
   factory $StockReadModelCopyWith(
           StockReadModel value, $Res Function(StockReadModel) then) =
-      _$StockReadModelCopyWithImpl<$Res>;
+      _$StockReadModelCopyWithImpl<$Res, StockReadModel>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -67,14 +46,16 @@ abstract class $StockReadModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StockReadModelCopyWithImpl<$Res>
+class _$StockReadModelCopyWithImpl<$Res, $Val extends StockReadModel>
     implements $StockReadModelCopyWith<$Res> {
   _$StockReadModelCopyWithImpl(this._value, this._then);
 
-  final StockReadModel _value;
   // ignore: unused_field
-  final $Res Function(StockReadModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -82,40 +63,42 @@ class _$StockReadModelCopyWithImpl<$Res>
     Object? stockData = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockData: stockData == freezed
+      stockData: freezed == stockData
           ? _value.stockData
           : stockData // ignore: cast_nullable_to_non_nullable
               as StockData?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $StockDataCopyWith<$Res>? get stockData {
     if (_value.stockData == null) {
       return null;
     }
 
     return $StockDataCopyWith<$Res>(_value.stockData!, (value) {
-      return _then(_value.copyWith(stockData: value));
+      return _then(_value.copyWith(stockData: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$StockReadModelCopyWith<$Res>
+abstract class _$$_StockReadModelCopyWith<$Res>
     implements $StockReadModelCopyWith<$Res> {
-  factory _$StockReadModelCopyWith(
-          _StockReadModel value, $Res Function(_StockReadModel) then) =
-      __$StockReadModelCopyWithImpl<$Res>;
+  factory _$$_StockReadModelCopyWith(
+          _$_StockReadModel value, $Res Function(_$_StockReadModel) then) =
+      __$$_StockReadModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -126,32 +109,30 @@ abstract class _$StockReadModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$StockReadModelCopyWithImpl<$Res>
-    extends _$StockReadModelCopyWithImpl<$Res>
-    implements _$StockReadModelCopyWith<$Res> {
-  __$StockReadModelCopyWithImpl(
-      _StockReadModel _value, $Res Function(_StockReadModel) _then)
-      : super(_value, (v) => _then(v as _StockReadModel));
+class __$$_StockReadModelCopyWithImpl<$Res>
+    extends _$StockReadModelCopyWithImpl<$Res, _$_StockReadModel>
+    implements _$$_StockReadModelCopyWith<$Res> {
+  __$$_StockReadModelCopyWithImpl(
+      _$_StockReadModel _value, $Res Function(_$_StockReadModel) _then)
+      : super(_value, _then);
 
-  @override
-  _StockReadModel get _value => super._value as _StockReadModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
     Object? stockData = freezed,
   }) {
-    return _then(_StockReadModel(
-      id: id == freezed
+    return _then(_$_StockReadModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockData: stockData == freezed
+      stockData: freezed == stockData
           ? _value.stockData
           : stockData // ignore: cast_nullable_to_non_nullable
               as StockData?,
@@ -184,173 +165,58 @@ class _$_StockReadModel implements _StockReadModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _StockReadModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_StockReadModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.stockData, stockData) ||
-                const DeepCollectionEquality()
-                    .equals(other.stockData, stockData)));
+                other.stockData == stockData));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(stockData);
 
   @JsonKey(ignore: true)
   @override
-  _$StockReadModelCopyWith<_StockReadModel> get copyWith =>
-      __$StockReadModelCopyWithImpl<_StockReadModel>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, id, code, stockData);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StockReadModelCopyWith<_$_StockReadModel> get copyWith =>
+      __$$_StockReadModelCopyWithImpl<_$_StockReadModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StockReadModelToJson(this);
+    return _$$_StockReadModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _StockReadModel implements StockReadModel {
   const factory _StockReadModel(
-      {int? id,
-      String? code,
-      @JsonKey(name: "stock_data") StockData? stockData}) = _$_StockReadModel;
+          {final int? id,
+          final String? code,
+          @JsonKey(name: "stock_data") final StockData? stockData}) =
+      _$_StockReadModel;
 
   factory _StockReadModel.fromJson(Map<String, dynamic> json) =
       _$_StockReadModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
   @JsonKey(name: "stock_data")
-  StockData? get stockData => throw _privateConstructorUsedError;
+  StockData? get stockData;
   @override
   @JsonKey(ignore: true)
-  _$StockReadModelCopyWith<_StockReadModel> get copyWith =>
+  _$$_StockReadModelCopyWith<_$_StockReadModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 StockData _$StockDataFromJson(Map<String, dynamic> json) {
   return _StockData.fromJson(json);
 }
-
-/// @nodoc
-class _$StockDataTearOff {
-  const _$StockDataTearOff();
-
-  _StockData call(
-      {int? id,
-      String? code,
-      @JsonKey(name: "base_uom_name")
-          String? baseUomName,
-      @JsonKey(name: "purchase_uom_name")
-          String? purchaseUomName,
-      @JsonKey(name: "purchase_uom")
-          int? purchaseUom,
-      @JsonKey(name: "sales_uom_name")
-          String? salesUomName,
-      @JsonKey(name: "variant_id")
-          int? variantId,
-      @JsonKey(name: "variant_code")
-          String? variantCode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
-      @JsonKey(name: "channel_type_allocation_ratio")
-          String? channelTypeAllocationRatio,
-      @JsonKey(name: "min_max_ratio")
-          String? minMaxRatio,
-      @JsonKey(name: "virtual_type")
-          String? virtualType,
-      @JsonKey(name: "stock_code")
-          String? stockCode,
-      @JsonKey(name: "safety_stock_qty")
-          int? safetyStockQty,
-      @JsonKey(name: "reorder_qty")
-          int? reOrderQuantity,
-      @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
-      @JsonKey(name: "base_uom")
-          int? baseUom,
-      @JsonKey(name: "sales_uom")
-          int? salesUOM,
-      @JsonKey(name: "available_qty")
-          int? availableQuantity,
-      @JsonKey(name: "cancelled_qty")
-          int? availablcancelledQuantityeQuantity,
-      @JsonKey(name: "reserved_qty")
-          int? reservedQuantity,
-      @JsonKey(name: "damaged_qty")
-          int? damagedQuantity,
-      @JsonKey(name: "return_qty")
-          int? returnQuantity,
-      @JsonKey(name: "sales_blocked_qty")
-          int? salesBlockQuantity,
-      @JsonKey(name: "purchase_blocked_qty")
-          int? purchaseBlockQuantity,
-      @JsonKey(name: "maximum_quantity")
-          int? maximumQuantity,
-      @JsonKey(name: "add_virtual_stock")
-          int? addVirtualStock,
-      @JsonKey(name: "virtual_stock")
-          int? virtualStock,
-      @JsonKey(name: "minimum_quantity")
-          int? minimumQuantity,
-      @JsonKey(name: "created_at")
-          String? createdAt,
-      @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
-      @JsonKey(name: "sales_blocked", defaultValue: false)
-          bool? salesBlocked,
-      @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked}) {
-    return _StockData(
-      id: id,
-      code: code,
-      baseUomName: baseUomName,
-      purchaseUomName: purchaseUomName,
-      purchaseUom: purchaseUom,
-      salesUomName: salesUomName,
-      variantId: variantId,
-      variantCode: variantCode,
-      inventoryId: inventoryId,
-      channelTypeAllocationRatio: channelTypeAllocationRatio,
-      minMaxRatio: minMaxRatio,
-      virtualType: virtualType,
-      stockCode: stockCode,
-      safetyStockQty: safetyStockQty,
-      reOrderQuantity: reOrderQuantity,
-      reOrderPoint: reOrderPoint,
-      baseUom: baseUom,
-      salesUOM: salesUOM,
-      availableQuantity: availableQuantity,
-      availablcancelledQuantityeQuantity: availablcancelledQuantityeQuantity,
-      reservedQuantity: reservedQuantity,
-      damagedQuantity: damagedQuantity,
-      returnQuantity: returnQuantity,
-      salesBlockQuantity: salesBlockQuantity,
-      purchaseBlockQuantity: purchaseBlockQuantity,
-      maximumQuantity: maximumQuantity,
-      addVirtualStock: addVirtualStock,
-      virtualStock: virtualStock,
-      minimumQuantity: minimumQuantity,
-      createdAt: createdAt,
-      stockWarning: stockWarning,
-      salesBlocked: salesBlocked,
-      purchaseBlocked: purchaseBlocked,
-    );
-  }
-
-  StockData fromJson(Map<String, Object> json) {
-    return StockData.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $StockData = _$StockDataTearOff();
 
 /// @nodoc
 mixin _$StockData {
@@ -429,7 +295,8 @@ mixin _$StockData {
 /// @nodoc
 abstract class $StockDataCopyWith<$Res> {
   factory $StockDataCopyWith(StockData value, $Res Function(StockData) then) =
-      _$StockDataCopyWithImpl<$Res>;
+      _$StockDataCopyWithImpl<$Res, StockData>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -498,13 +365,16 @@ abstract class $StockDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
+class _$StockDataCopyWithImpl<$Res, $Val extends StockData>
+    implements $StockDataCopyWith<$Res> {
   _$StockDataCopyWithImpl(this._value, this._then);
 
-  final StockData _value;
   // ignore: unused_field
-  final $Res Function(StockData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -542,149 +412,150 @@ class _$StockDataCopyWithImpl<$Res> implements $StockDataCopyWith<$Res> {
     Object? purchaseBlocked = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      baseUomName: baseUomName == freezed
+      baseUomName: freezed == baseUomName
           ? _value.baseUomName
           : baseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUomName: purchaseUomName == freezed
+      purchaseUomName: freezed == purchaseUomName
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUomName: salesUomName == freezed
+      salesUomName: freezed == salesUomName
           ? _value.salesUomName
           : salesUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeAllocationRatio: channelTypeAllocationRatio == freezed
+      channelTypeAllocationRatio: freezed == channelTypeAllocationRatio
           ? _value.channelTypeAllocationRatio
           : channelTypeAllocationRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      minMaxRatio: minMaxRatio == freezed
+      minMaxRatio: freezed == minMaxRatio
           ? _value.minMaxRatio
           : minMaxRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      virtualType: virtualType == freezed
+      virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockCode: stockCode == freezed
+      stockCode: freezed == stockCode
           ? _value.stockCode
           : stockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      safetyStockQty: safetyStockQty == freezed
+      safetyStockQty: freezed == safetyStockQty
           ? _value.safetyStockQty
           : safetyStockQty // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderQuantity: reOrderQuantity == freezed
+      reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      baseUom: baseUom == freezed
+      baseUom: freezed == baseUom
           ? _value.baseUom
           : baseUom // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUOM: salesUOM == freezed
+      salesUOM: freezed == salesUOM
           ? _value.salesUOM
           : salesUOM // ignore: cast_nullable_to_non_nullable
               as int?,
-      availableQuantity: availableQuantity == freezed
+      availableQuantity: freezed == availableQuantity
           ? _value.availableQuantity
           : availableQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      availablcancelledQuantityeQuantity: availablcancelledQuantityeQuantity ==
-              freezed
+      availablcancelledQuantityeQuantity: freezed ==
+              availablcancelledQuantityeQuantity
           ? _value.availablcancelledQuantityeQuantity
           : availablcancelledQuantityeQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reservedQuantity: reservedQuantity == freezed
+      reservedQuantity: freezed == reservedQuantity
           ? _value.reservedQuantity
           : reservedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      damagedQuantity: damagedQuantity == freezed
+      damagedQuantity: freezed == damagedQuantity
           ? _value.damagedQuantity
           : damagedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      returnQuantity: returnQuantity == freezed
+      returnQuantity: freezed == returnQuantity
           ? _value.returnQuantity
           : returnQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesBlockQuantity: salesBlockQuantity == freezed
+      salesBlockQuantity: freezed == salesBlockQuantity
           ? _value.salesBlockQuantity
           : salesBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      purchaseBlockQuantity: purchaseBlockQuantity == freezed
+      purchaseBlockQuantity: freezed == purchaseBlockQuantity
           ? _value.purchaseBlockQuantity
           : purchaseBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      maximumQuantity: maximumQuantity == freezed
+      maximumQuantity: freezed == maximumQuantity
           ? _value.maximumQuantity
           : maximumQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      addVirtualStock: addVirtualStock == freezed
+      addVirtualStock: freezed == addVirtualStock
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualStock: virtualStock == freezed
+      virtualStock: freezed == virtualStock
           ? _value.virtualStock
           : virtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      minimumQuantity: minimumQuantity == freezed
+      minimumQuantity: freezed == minimumQuantity
           ? _value.minimumQuantity
           : minimumQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlocked: salesBlocked == freezed
+      salesBlocked: freezed == salesBlocked
           ? _value.salesBlocked
           : salesBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlocked: purchaseBlocked == freezed
+      purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
-  factory _$StockDataCopyWith(
-          _StockData value, $Res Function(_StockData) then) =
-      __$StockDataCopyWithImpl<$Res>;
+abstract class _$$_StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
+  factory _$$_StockDataCopyWith(
+          _$_StockData value, $Res Function(_$_StockData) then) =
+      __$$_StockDataCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -753,14 +624,14 @@ abstract class _$StockDataCopyWith<$Res> implements $StockDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
-    implements _$StockDataCopyWith<$Res> {
-  __$StockDataCopyWithImpl(_StockData _value, $Res Function(_StockData) _then)
-      : super(_value, (v) => _then(v as _StockData));
+class __$$_StockDataCopyWithImpl<$Res>
+    extends _$StockDataCopyWithImpl<$Res, _$_StockData>
+    implements _$$_StockDataCopyWith<$Res> {
+  __$$_StockDataCopyWithImpl(
+      _$_StockData _value, $Res Function(_$_StockData) _then)
+      : super(_value, _then);
 
-  @override
-  _StockData get _value => super._value as _StockData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -797,137 +668,137 @@ class __$StockDataCopyWithImpl<$Res> extends _$StockDataCopyWithImpl<$Res>
     Object? salesBlocked = freezed,
     Object? purchaseBlocked = freezed,
   }) {
-    return _then(_StockData(
-      id: id == freezed
+    return _then(_$_StockData(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      baseUomName: baseUomName == freezed
+      baseUomName: freezed == baseUomName
           ? _value.baseUomName
           : baseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUomName: purchaseUomName == freezed
+      purchaseUomName: freezed == purchaseUomName
           ? _value.purchaseUomName
           : purchaseUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseUom: purchaseUom == freezed
+      purchaseUom: freezed == purchaseUom
           ? _value.purchaseUom
           : purchaseUom // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUomName: salesUomName == freezed
+      salesUomName: freezed == salesUomName
           ? _value.salesUomName
           : salesUomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as int?,
-      variantCode: variantCode == freezed
+      variantCode: freezed == variantCode
           ? _value.variantCode
           : variantCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      channelTypeAllocationRatio: channelTypeAllocationRatio == freezed
+      channelTypeAllocationRatio: freezed == channelTypeAllocationRatio
           ? _value.channelTypeAllocationRatio
           : channelTypeAllocationRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      minMaxRatio: minMaxRatio == freezed
+      minMaxRatio: freezed == minMaxRatio
           ? _value.minMaxRatio
           : minMaxRatio // ignore: cast_nullable_to_non_nullable
               as String?,
-      virtualType: virtualType == freezed
+      virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockCode: stockCode == freezed
+      stockCode: freezed == stockCode
           ? _value.stockCode
           : stockCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      safetyStockQty: safetyStockQty == freezed
+      safetyStockQty: freezed == safetyStockQty
           ? _value.safetyStockQty
           : safetyStockQty // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderQuantity: reOrderQuantity == freezed
+      reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reOrderPoint: reOrderPoint == freezed
+      reOrderPoint: freezed == reOrderPoint
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
-      baseUom: baseUom == freezed
+      baseUom: freezed == baseUom
           ? _value.baseUom
           : baseUom // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesUOM: salesUOM == freezed
+      salesUOM: freezed == salesUOM
           ? _value.salesUOM
           : salesUOM // ignore: cast_nullable_to_non_nullable
               as int?,
-      availableQuantity: availableQuantity == freezed
+      availableQuantity: freezed == availableQuantity
           ? _value.availableQuantity
           : availableQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      availablcancelledQuantityeQuantity: availablcancelledQuantityeQuantity ==
-              freezed
+      availablcancelledQuantityeQuantity: freezed ==
+              availablcancelledQuantityeQuantity
           ? _value.availablcancelledQuantityeQuantity
           : availablcancelledQuantityeQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      reservedQuantity: reservedQuantity == freezed
+      reservedQuantity: freezed == reservedQuantity
           ? _value.reservedQuantity
           : reservedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      damagedQuantity: damagedQuantity == freezed
+      damagedQuantity: freezed == damagedQuantity
           ? _value.damagedQuantity
           : damagedQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      returnQuantity: returnQuantity == freezed
+      returnQuantity: freezed == returnQuantity
           ? _value.returnQuantity
           : returnQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesBlockQuantity: salesBlockQuantity == freezed
+      salesBlockQuantity: freezed == salesBlockQuantity
           ? _value.salesBlockQuantity
           : salesBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      purchaseBlockQuantity: purchaseBlockQuantity == freezed
+      purchaseBlockQuantity: freezed == purchaseBlockQuantity
           ? _value.purchaseBlockQuantity
           : purchaseBlockQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      maximumQuantity: maximumQuantity == freezed
+      maximumQuantity: freezed == maximumQuantity
           ? _value.maximumQuantity
           : maximumQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      addVirtualStock: addVirtualStock == freezed
+      addVirtualStock: freezed == addVirtualStock
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      virtualStock: virtualStock == freezed
+      virtualStock: freezed == virtualStock
           ? _value.virtualStock
           : virtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
-      minimumQuantity: minimumQuantity == freezed
+      minimumQuantity: freezed == minimumQuantity
           ? _value.minimumQuantity
           : minimumQuantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      createdAt: createdAt == freezed
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockWarning: stockWarning == freezed
+      stockWarning: freezed == stockWarning
           ? _value.stockWarning
           : stockWarning // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlocked: salesBlocked == freezed
+      salesBlocked: freezed == salesBlocked
           ? _value.salesBlocked
           : salesBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlocked: purchaseBlocked == freezed
+      purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -1113,298 +984,297 @@ class _$_StockData implements _StockData {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _StockData &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_StockData &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.baseUomName, baseUomName) ||
-                const DeepCollectionEquality()
-                    .equals(other.baseUomName, baseUomName)) &&
+                other.baseUomName == baseUomName) &&
             (identical(other.purchaseUomName, purchaseUomName) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseUomName, purchaseUomName)) &&
+                other.purchaseUomName == purchaseUomName) &&
             (identical(other.purchaseUom, purchaseUom) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseUom, purchaseUom)) &&
+                other.purchaseUom == purchaseUom) &&
             (identical(other.salesUomName, salesUomName) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesUomName, salesUomName)) &&
+                other.salesUomName == salesUomName) &&
             (identical(other.variantId, variantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantId, variantId)) &&
+                other.variantId == variantId) &&
             (identical(other.variantCode, variantCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantCode, variantCode)) &&
+                other.variantCode == variantCode) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.channelTypeAllocationRatio, channelTypeAllocationRatio) ||
-                const DeepCollectionEquality().equals(
-                    other.channelTypeAllocationRatio,
-                    channelTypeAllocationRatio)) &&
+                other.channelTypeAllocationRatio ==
+                    channelTypeAllocationRatio) &&
             (identical(other.minMaxRatio, minMaxRatio) ||
-                const DeepCollectionEquality()
-                    .equals(other.minMaxRatio, minMaxRatio)) &&
+                other.minMaxRatio == minMaxRatio) &&
             (identical(other.virtualType, virtualType) ||
-                const DeepCollectionEquality()
-                    .equals(other.virtualType, virtualType)) &&
+                other.virtualType == virtualType) &&
             (identical(other.stockCode, stockCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.stockCode, stockCode)) &&
+                other.stockCode == stockCode) &&
             (identical(other.safetyStockQty, safetyStockQty) ||
-                const DeepCollectionEquality()
-                    .equals(other.safetyStockQty, safetyStockQty)) &&
+                other.safetyStockQty == safetyStockQty) &&
             (identical(other.reOrderQuantity, reOrderQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.reOrderQuantity, reOrderQuantity)) &&
+                other.reOrderQuantity == reOrderQuantity) &&
             (identical(other.reOrderPoint, reOrderPoint) ||
-                const DeepCollectionEquality()
-                    .equals(other.reOrderPoint, reOrderPoint)) &&
-            (identical(other.baseUom, baseUom) ||
-                const DeepCollectionEquality()
-                    .equals(other.baseUom, baseUom)) &&
+                other.reOrderPoint == reOrderPoint) &&
+            (identical(other.baseUom, baseUom) || other.baseUom == baseUom) &&
             (identical(other.salesUOM, salesUOM) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesUOM, salesUOM)) &&
+                other.salesUOM == salesUOM) &&
             (identical(other.availableQuantity, availableQuantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.availableQuantity, availableQuantity)) &&
+                other.availableQuantity == availableQuantity) &&
             (identical(other.availablcancelledQuantityeQuantity, availablcancelledQuantityeQuantity) ||
-                const DeepCollectionEquality().equals(other.availablcancelledQuantityeQuantity, availablcancelledQuantityeQuantity)) &&
-            (identical(other.reservedQuantity, reservedQuantity) || const DeepCollectionEquality().equals(other.reservedQuantity, reservedQuantity)) &&
-            (identical(other.damagedQuantity, damagedQuantity) || const DeepCollectionEquality().equals(other.damagedQuantity, damagedQuantity)) &&
-            (identical(other.returnQuantity, returnQuantity) || const DeepCollectionEquality().equals(other.returnQuantity, returnQuantity)) &&
-            (identical(other.salesBlockQuantity, salesBlockQuantity) || const DeepCollectionEquality().equals(other.salesBlockQuantity, salesBlockQuantity)) &&
-            (identical(other.purchaseBlockQuantity, purchaseBlockQuantity) || const DeepCollectionEquality().equals(other.purchaseBlockQuantity, purchaseBlockQuantity)) &&
-            (identical(other.maximumQuantity, maximumQuantity) || const DeepCollectionEquality().equals(other.maximumQuantity, maximumQuantity)) &&
-            (identical(other.addVirtualStock, addVirtualStock) || const DeepCollectionEquality().equals(other.addVirtualStock, addVirtualStock)) &&
-            (identical(other.virtualStock, virtualStock) || const DeepCollectionEquality().equals(other.virtualStock, virtualStock)) &&
-            (identical(other.minimumQuantity, minimumQuantity) || const DeepCollectionEquality().equals(other.minimumQuantity, minimumQuantity)) &&
-            (identical(other.createdAt, createdAt) || const DeepCollectionEquality().equals(other.createdAt, createdAt)) &&
-            (identical(other.stockWarning, stockWarning) || const DeepCollectionEquality().equals(other.stockWarning, stockWarning)) &&
-            (identical(other.salesBlocked, salesBlocked) || const DeepCollectionEquality().equals(other.salesBlocked, salesBlocked)) &&
-            (identical(other.purchaseBlocked, purchaseBlocked) || const DeepCollectionEquality().equals(other.purchaseBlocked, purchaseBlocked)));
+                other.availablcancelledQuantityeQuantity ==
+                    availablcancelledQuantityeQuantity) &&
+            (identical(other.reservedQuantity, reservedQuantity) ||
+                other.reservedQuantity == reservedQuantity) &&
+            (identical(other.damagedQuantity, damagedQuantity) ||
+                other.damagedQuantity == damagedQuantity) &&
+            (identical(other.returnQuantity, returnQuantity) ||
+                other.returnQuantity == returnQuantity) &&
+            (identical(other.salesBlockQuantity, salesBlockQuantity) ||
+                other.salesBlockQuantity == salesBlockQuantity) &&
+            (identical(other.purchaseBlockQuantity, purchaseBlockQuantity) ||
+                other.purchaseBlockQuantity == purchaseBlockQuantity) &&
+            (identical(other.maximumQuantity, maximumQuantity) ||
+                other.maximumQuantity == maximumQuantity) &&
+            (identical(other.addVirtualStock, addVirtualStock) ||
+                other.addVirtualStock == addVirtualStock) &&
+            (identical(other.virtualStock, virtualStock) ||
+                other.virtualStock == virtualStock) &&
+            (identical(other.minimumQuantity, minimumQuantity) ||
+                other.minimumQuantity == minimumQuantity) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.stockWarning, stockWarning) ||
+                other.stockWarning == stockWarning) &&
+            (identical(other.salesBlocked, salesBlocked) ||
+                other.salesBlocked == salesBlocked) &&
+            (identical(other.purchaseBlocked, purchaseBlocked) ||
+                other.purchaseBlocked == purchaseBlocked));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(baseUomName) ^
-      const DeepCollectionEquality().hash(purchaseUomName) ^
-      const DeepCollectionEquality().hash(purchaseUom) ^
-      const DeepCollectionEquality().hash(salesUomName) ^
-      const DeepCollectionEquality().hash(variantId) ^
-      const DeepCollectionEquality().hash(variantCode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(channelTypeAllocationRatio) ^
-      const DeepCollectionEquality().hash(minMaxRatio) ^
-      const DeepCollectionEquality().hash(virtualType) ^
-      const DeepCollectionEquality().hash(stockCode) ^
-      const DeepCollectionEquality().hash(safetyStockQty) ^
-      const DeepCollectionEquality().hash(reOrderQuantity) ^
-      const DeepCollectionEquality().hash(reOrderPoint) ^
-      const DeepCollectionEquality().hash(baseUom) ^
-      const DeepCollectionEquality().hash(salesUOM) ^
-      const DeepCollectionEquality().hash(availableQuantity) ^
-      const DeepCollectionEquality().hash(availablcancelledQuantityeQuantity) ^
-      const DeepCollectionEquality().hash(reservedQuantity) ^
-      const DeepCollectionEquality().hash(damagedQuantity) ^
-      const DeepCollectionEquality().hash(returnQuantity) ^
-      const DeepCollectionEquality().hash(salesBlockQuantity) ^
-      const DeepCollectionEquality().hash(purchaseBlockQuantity) ^
-      const DeepCollectionEquality().hash(maximumQuantity) ^
-      const DeepCollectionEquality().hash(addVirtualStock) ^
-      const DeepCollectionEquality().hash(virtualStock) ^
-      const DeepCollectionEquality().hash(minimumQuantity) ^
-      const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(stockWarning) ^
-      const DeepCollectionEquality().hash(salesBlocked) ^
-      const DeepCollectionEquality().hash(purchaseBlocked);
 
   @JsonKey(ignore: true)
   @override
-  _$StockDataCopyWith<_StockData> get copyWith =>
-      __$StockDataCopyWithImpl<_StockData>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        code,
+        baseUomName,
+        purchaseUomName,
+        purchaseUom,
+        salesUomName,
+        variantId,
+        variantCode,
+        inventoryId,
+        channelTypeAllocationRatio,
+        minMaxRatio,
+        virtualType,
+        stockCode,
+        safetyStockQty,
+        reOrderQuantity,
+        reOrderPoint,
+        baseUom,
+        salesUOM,
+        availableQuantity,
+        availablcancelledQuantityeQuantity,
+        reservedQuantity,
+        damagedQuantity,
+        returnQuantity,
+        salesBlockQuantity,
+        purchaseBlockQuantity,
+        maximumQuantity,
+        addVirtualStock,
+        virtualStock,
+        minimumQuantity,
+        createdAt,
+        stockWarning,
+        salesBlocked,
+        purchaseBlocked
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_StockDataCopyWith<_$_StockData> get copyWith =>
+      __$$_StockDataCopyWithImpl<_$_StockData>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_StockDataToJson(this);
+    return _$$_StockDataToJson(
+      this,
+    );
   }
 }
 
 abstract class _StockData implements StockData {
   const factory _StockData(
-      {int? id,
-      String? code,
+      {final int? id,
+      final String? code,
       @JsonKey(name: "base_uom_name")
-          String? baseUomName,
+          final String? baseUomName,
       @JsonKey(name: "purchase_uom_name")
-          String? purchaseUomName,
+          final String? purchaseUomName,
       @JsonKey(name: "purchase_uom")
-          int? purchaseUom,
+          final int? purchaseUom,
       @JsonKey(name: "sales_uom_name")
-          String? salesUomName,
+          final String? salesUomName,
       @JsonKey(name: "variant_id")
-          int? variantId,
+          final int? variantId,
       @JsonKey(name: "variant_code")
-          String? variantCode,
+          final String? variantCode,
       @JsonKey(name: "inventory_id")
-          String? inventoryId,
+          final String? inventoryId,
       @JsonKey(name: "channel_type_allocation_ratio")
-          String? channelTypeAllocationRatio,
+          final String? channelTypeAllocationRatio,
       @JsonKey(name: "min_max_ratio")
-          String? minMaxRatio,
+          final String? minMaxRatio,
       @JsonKey(name: "virtual_type")
-          String? virtualType,
+          final String? virtualType,
       @JsonKey(name: "stock_code")
-          String? stockCode,
+          final String? stockCode,
       @JsonKey(name: "safety_stock_qty")
-          int? safetyStockQty,
+          final int? safetyStockQty,
       @JsonKey(name: "reorder_qty")
-          int? reOrderQuantity,
+          final int? reOrderQuantity,
       @JsonKey(name: "reorder_point")
-          int? reOrderPoint,
+          final int? reOrderPoint,
       @JsonKey(name: "base_uom")
-          int? baseUom,
+          final int? baseUom,
       @JsonKey(name: "sales_uom")
-          int? salesUOM,
+          final int? salesUOM,
       @JsonKey(name: "available_qty")
-          int? availableQuantity,
+          final int? availableQuantity,
       @JsonKey(name: "cancelled_qty")
-          int? availablcancelledQuantityeQuantity,
+          final int? availablcancelledQuantityeQuantity,
       @JsonKey(name: "reserved_qty")
-          int? reservedQuantity,
+          final int? reservedQuantity,
       @JsonKey(name: "damaged_qty")
-          int? damagedQuantity,
+          final int? damagedQuantity,
       @JsonKey(name: "return_qty")
-          int? returnQuantity,
+          final int? returnQuantity,
       @JsonKey(name: "sales_blocked_qty")
-          int? salesBlockQuantity,
+          final int? salesBlockQuantity,
       @JsonKey(name: "purchase_blocked_qty")
-          int? purchaseBlockQuantity,
+          final int? purchaseBlockQuantity,
       @JsonKey(name: "maximum_quantity")
-          int? maximumQuantity,
+          final int? maximumQuantity,
       @JsonKey(name: "add_virtual_stock")
-          int? addVirtualStock,
+          final int? addVirtualStock,
       @JsonKey(name: "virtual_stock")
-          int? virtualStock,
+          final int? virtualStock,
       @JsonKey(name: "minimum_quantity")
-          int? minimumQuantity,
+          final int? minimumQuantity,
       @JsonKey(name: "created_at")
-          String? createdAt,
+          final String? createdAt,
       @JsonKey(name: "stock_warning", defaultValue: false)
-          bool? stockWarning,
+          final bool? stockWarning,
       @JsonKey(name: "sales_blocked", defaultValue: false)
-          bool? salesBlocked,
+          final bool? salesBlocked,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked}) = _$_StockData;
+          final bool? purchaseBlocked}) = _$_StockData;
 
   factory _StockData.fromJson(Map<String, dynamic> json) =
       _$_StockData.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
   @JsonKey(name: "base_uom_name")
-  String? get baseUomName => throw _privateConstructorUsedError;
+  String? get baseUomName;
   @override
   @JsonKey(name: "purchase_uom_name")
-  String? get purchaseUomName => throw _privateConstructorUsedError;
+  String? get purchaseUomName;
   @override
   @JsonKey(name: "purchase_uom")
-  int? get purchaseUom => throw _privateConstructorUsedError;
+  int? get purchaseUom;
   @override
   @JsonKey(name: "sales_uom_name")
-  String? get salesUomName => throw _privateConstructorUsedError;
+  String? get salesUomName;
   @override
   @JsonKey(name: "variant_id")
-  int? get variantId => throw _privateConstructorUsedError;
+  int? get variantId;
   @override
   @JsonKey(name: "variant_code")
-  String? get variantCode => throw _privateConstructorUsedError;
+  String? get variantCode;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "channel_type_allocation_ratio")
-  String? get channelTypeAllocationRatio => throw _privateConstructorUsedError;
+  String? get channelTypeAllocationRatio;
   @override
   @JsonKey(name: "min_max_ratio")
-  String? get minMaxRatio => throw _privateConstructorUsedError;
+  String? get minMaxRatio;
   @override
   @JsonKey(name: "virtual_type")
-  String? get virtualType => throw _privateConstructorUsedError;
+  String? get virtualType;
   @override
   @JsonKey(name: "stock_code")
-  String? get stockCode => throw _privateConstructorUsedError;
+  String? get stockCode;
   @override
   @JsonKey(name: "safety_stock_qty")
-  int? get safetyStockQty => throw _privateConstructorUsedError;
+  int? get safetyStockQty;
   @override
   @JsonKey(name: "reorder_qty")
-  int? get reOrderQuantity => throw _privateConstructorUsedError;
+  int? get reOrderQuantity;
   @override
   @JsonKey(name: "reorder_point")
-  int? get reOrderPoint => throw _privateConstructorUsedError;
+  int? get reOrderPoint;
   @override
   @JsonKey(name: "base_uom")
-  int? get baseUom => throw _privateConstructorUsedError;
+  int? get baseUom;
   @override
   @JsonKey(name: "sales_uom")
-  int? get salesUOM => throw _privateConstructorUsedError;
+  int? get salesUOM;
   @override
   @JsonKey(name: "available_qty")
-  int? get availableQuantity => throw _privateConstructorUsedError;
+  int? get availableQuantity;
   @override
   @JsonKey(name: "cancelled_qty")
-  int? get availablcancelledQuantityeQuantity =>
-      throw _privateConstructorUsedError;
+  int? get availablcancelledQuantityeQuantity;
   @override
   @JsonKey(name: "reserved_qty")
-  int? get reservedQuantity => throw _privateConstructorUsedError;
+  int? get reservedQuantity;
   @override
   @JsonKey(name: "damaged_qty")
-  int? get damagedQuantity => throw _privateConstructorUsedError;
+  int? get damagedQuantity;
   @override
   @JsonKey(name: "return_qty")
-  int? get returnQuantity => throw _privateConstructorUsedError;
+  int? get returnQuantity;
   @override
   @JsonKey(name: "sales_blocked_qty")
-  int? get salesBlockQuantity => throw _privateConstructorUsedError;
+  int? get salesBlockQuantity;
   @override
   @JsonKey(name: "purchase_blocked_qty")
-  int? get purchaseBlockQuantity => throw _privateConstructorUsedError;
+  int? get purchaseBlockQuantity;
   @override
   @JsonKey(name: "maximum_quantity")
-  int? get maximumQuantity => throw _privateConstructorUsedError;
+  int? get maximumQuantity;
   @override
   @JsonKey(name: "add_virtual_stock")
-  int? get addVirtualStock => throw _privateConstructorUsedError;
+  int? get addVirtualStock;
   @override
   @JsonKey(name: "virtual_stock")
-  int? get virtualStock => throw _privateConstructorUsedError;
+  int? get virtualStock;
   @override
   @JsonKey(name: "minimum_quantity")
-  int? get minimumQuantity => throw _privateConstructorUsedError;
+  int? get minimumQuantity;
   @override
   @JsonKey(name: "created_at")
-  String? get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt;
   @override
   @JsonKey(name: "stock_warning", defaultValue: false)
-  bool? get stockWarning => throw _privateConstructorUsedError;
+  bool? get stockWarning;
   @override
   @JsonKey(name: "sales_blocked", defaultValue: false)
-  bool? get salesBlocked => throw _privateConstructorUsedError;
+  bool? get salesBlocked;
   @override
   @JsonKey(name: "purchase_blocked", defaultValue: false)
-  bool? get purchaseBlocked => throw _privateConstructorUsedError;
+  bool? get purchaseBlocked;
   @override
   @JsonKey(ignore: true)
-  _$StockDataCopyWith<_StockData> get copyWith =>
+  _$$_StockDataCopyWith<_$_StockData> get copyWith =>
       throw _privateConstructorUsedError;
 }

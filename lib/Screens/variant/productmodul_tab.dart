@@ -46,22 +46,22 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
               color:Color(0xffF2F3F5),
               child: Column(
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        left: width * .014, right: width * .014),
-                    width: double.infinity,
-                    height: 55,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                        TextWidget(text: "Variant")
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   margin: EdgeInsets.only(
+                  //       left: width * .014, right: width * .014),
+                  //   width: double.infinity,
+                  //   height: 55,
+                  //   child: Column(
+                  //     mainAxisAlignment: MainAxisAlignment.center,
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: [
+                  //       SizedBox(
+                  //         height: height * 0.02,
+                  //       ),
+                  //       TextWidget(text: "Variant")
+                  //     ],
+                  //   ),
+                  // ),
 
 
 
@@ -83,7 +83,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
 
 
                               Container(
-                                width:MediaQuery.of(context).size.width*.48,
+                                width:MediaQuery.of(context).size.width*.6,
                                 height: width*.052,
                                 margin: EdgeInsets.only(top:22),
 
@@ -131,16 +131,19 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
                                     ]),
                               ),
                               Spacer(),
-                              TextButton.icon(onPressed: (){
+                              Container(
+                                margin: EdgeInsets.only(right: 10,top: 12),
+                                child: TextButton.icon(onPressed: (){
 
-                                // print( widget.isClossed);
-                                // widget.changer(widget.isClossed);
-                                setState(() {
-                                  isClossed=!isClossed;
-                                  costingTypeMethodeCheck=false;
+                                  // print( widget.isClossed);
+                                  // widget.changer(widget.isClossed);
+                                  setState(() {
+                                    isClossed=!isClossed;
+                                    costingTypeMethodeCheck=false;
 
-                                });
-                              }, icon:Icon(Icons.code), label: Text("Configuration"))
+                                  });
+                                }, icon:Icon(Icons.code), label: Text("Configuration")),
+                              )
 
                             ],
                           ),

@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'itemread.dart';
@@ -11,118 +12,11 @@ part of 'itemread.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 ItemReadModel _$ItemReadModelFromJson(Map<String, dynamic> json) {
   return _ItemReadModel.fromJson(json);
 }
-
-/// @nodoc
-class _$ItemReadModelTearOff {
-  const _$ItemReadModelTearOff();
-
-  _ItemReadModel call(
-      {int? id,
-      String? code,
-      String? description,
-      String? name,
-      String? image1,
-      String? image2,
-      String? image3,
-      Barcode? barcode,
-      @JsonKey(name: "uom_code") String? uomCode,
-      @JsonKey(name: "uom_group_code") String? uomGroupCode,
-      @JsonKey(name: "uom_group_name") String? uomGroupName,
-      @JsonKey(name: "uom_group_id") int? uomGroupId,
-      @JsonKey(name: "uom_name") String? uomName,
-      @JsonKey(name: "division_id") int? divisionId,
-      @JsonKey(name: "category_id") int? categoryId,
-      @JsonKey(name: "sub_category_id") int? subCategoryId,
-      @JsonKey(name: "group_code") String? groupCode,
-      @JsonKey(name: "group_name") String? groupName,
-      @JsonKey(name: "brand_code") String? brandCode,
-      @JsonKey(name: "brand_name") String? brandName,
-      @JsonKey(name: "material_code") String? materialCode,
-      @JsonKey(name: "material_name") String? materialName,
-      @JsonKey(name: "old_system_code") String? oldSystemCode,
-      @JsonKey(name: "static_group_code") String? staticGroupCode,
-      @JsonKey(name: "division_code") String? divisionCode,
-      @JsonKey(name: "division_name") String? divisionName,
-      @JsonKey(name: "category_code") String? categoryCode,
-      @JsonKey(name: "category_name") String? categoryName,
-      @JsonKey(name: "sub_category_code") String? subCategoryCode,
-      @JsonKey(name: "sub_category_name") String? subCategoryName,
-      @JsonKey(name: "static_group_name") String? staticGroupName,
-      @JsonKey(name: "variant_framework_code") String? variantFrameWork,
-      @JsonKey(name: "variant_framwork_name") String? variantFrameWorkName,
-      @JsonKey(name: "item_meta") ItemMeta? itemMeta,
-      @JsonKey(name: "qr_code") QrCode? qrCode,
-      @JsonKey(name: "search_name") String? searchName,
-      @JsonKey(name: "display_name") String? displayname,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive,
-      @JsonKey(name: "sales_block", defaultValue: false) bool? salesBlock,
-      @JsonKey(name: "purchase_block", defaultValue: false) bool? purchaseBlock,
-      @JsonKey(name: "item_cataloge1") String? itemCatelog1,
-      @JsonKey(name: "item_cataloge2") String? itemCatelog2,
-      @JsonKey(name: "item_cataloge3") String? itemCatelog3,
-      @JsonKey(name: "item_cataloge4") String? itemCatelog4,
-      @JsonKey(name: "item_cataloge5") String? itemCatelog5}) {
-    return _ItemReadModel(
-      id: id,
-      code: code,
-      description: description,
-      name: name,
-      image1: image1,
-      image2: image2,
-      image3: image3,
-      barcode: barcode,
-      uomCode: uomCode,
-      uomGroupCode: uomGroupCode,
-      uomGroupName: uomGroupName,
-      uomGroupId: uomGroupId,
-      uomName: uomName,
-      divisionId: divisionId,
-      categoryId: categoryId,
-      subCategoryId: subCategoryId,
-      groupCode: groupCode,
-      groupName: groupName,
-      brandCode: brandCode,
-      brandName: brandName,
-      materialCode: materialCode,
-      materialName: materialName,
-      oldSystemCode: oldSystemCode,
-      staticGroupCode: staticGroupCode,
-      divisionCode: divisionCode,
-      divisionName: divisionName,
-      categoryCode: categoryCode,
-      categoryName: categoryName,
-      subCategoryCode: subCategoryCode,
-      subCategoryName: subCategoryName,
-      staticGroupName: staticGroupName,
-      variantFrameWork: variantFrameWork,
-      variantFrameWorkName: variantFrameWorkName,
-      itemMeta: itemMeta,
-      qrCode: qrCode,
-      searchName: searchName,
-      displayname: displayname,
-      isActive: isActive,
-      salesBlock: salesBlock,
-      purchaseBlock: purchaseBlock,
-      itemCatelog1: itemCatelog1,
-      itemCatelog2: itemCatelog2,
-      itemCatelog3: itemCatelog3,
-      itemCatelog4: itemCatelog4,
-      itemCatelog5: itemCatelog5,
-    );
-  }
-
-  ItemReadModel fromJson(Map<String, Object> json) {
-    return ItemReadModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ItemReadModel = _$ItemReadModelTearOff();
 
 /// @nodoc
 mixin _$ItemReadModel {
@@ -219,7 +113,8 @@ mixin _$ItemReadModel {
 abstract class $ItemReadModelCopyWith<$Res> {
   factory $ItemReadModelCopyWith(
           ItemReadModel value, $Res Function(ItemReadModel) then) =
-      _$ItemReadModelCopyWithImpl<$Res>;
+      _$ItemReadModelCopyWithImpl<$Res, ItemReadModel>;
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -273,14 +168,16 @@ abstract class $ItemReadModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ItemReadModelCopyWithImpl<$Res>
+class _$ItemReadModelCopyWithImpl<$Res, $Val extends ItemReadModel>
     implements $ItemReadModelCopyWith<$Res> {
   _$ItemReadModelCopyWithImpl(this._value, this._then);
 
-  final ItemReadModel _value;
   // ignore: unused_field
-  final $Res Function(ItemReadModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -330,230 +227,234 @@ class _$ItemReadModelCopyWithImpl<$Res>
     Object? itemCatelog5 = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image1: image1 == freezed
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupCode: uomGroupCode == freezed
+      uomGroupCode: freezed == uomGroupCode
           ? _value.uomGroupCode
           : uomGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupName: uomGroupName == freezed
+      uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupId: uomGroupId == freezed
+      uomGroupId: freezed == uomGroupId
           ? _value.uomGroupId
           : uomGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
-      uomName: uomName == freezed
+      uomName: freezed == uomName
           ? _value.uomName
           : uomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionId: divisionId == freezed
+      divisionId: freezed == divisionId
           ? _value.divisionId
           : divisionId // ignore: cast_nullable_to_non_nullable
               as int?,
-      categoryId: categoryId == freezed
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      subCategoryId: subCategoryId == freezed
+      subCategoryId: freezed == subCategoryId
           ? _value.subCategoryId
           : subCategoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      groupCode: groupCode == freezed
+      groupCode: freezed == groupCode
           ? _value.groupCode
           : groupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      groupName: groupName == freezed
+      groupName: freezed == groupName
           ? _value.groupName
           : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      brandCode: brandCode == freezed
+      brandCode: freezed == brandCode
           ? _value.brandCode
           : brandCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      brandName: brandName == freezed
+      brandName: freezed == brandName
           ? _value.brandName
           : brandName // ignore: cast_nullable_to_non_nullable
               as String?,
-      materialCode: materialCode == freezed
+      materialCode: freezed == materialCode
           ? _value.materialCode
           : materialCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      materialName: materialName == freezed
+      materialName: freezed == materialName
           ? _value.materialName
           : materialName // ignore: cast_nullable_to_non_nullable
               as String?,
-      oldSystemCode: oldSystemCode == freezed
+      oldSystemCode: freezed == oldSystemCode
           ? _value.oldSystemCode
           : oldSystemCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      staticGroupCode: staticGroupCode == freezed
+      staticGroupCode: freezed == staticGroupCode
           ? _value.staticGroupCode
           : staticGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionCode: divisionCode == freezed
+      divisionCode: freezed == divisionCode
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionName: divisionName == freezed
+      divisionName: freezed == divisionName
           ? _value.divisionName
           : divisionName // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryCode: categoryCode == freezed
+      categoryCode: freezed == categoryCode
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryName: categoryName == freezed
+      categoryName: freezed == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      subCategoryCode: subCategoryCode == freezed
+      subCategoryCode: freezed == subCategoryCode
           ? _value.subCategoryCode
           : subCategoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      subCategoryName: subCategoryName == freezed
+      subCategoryName: freezed == subCategoryName
           ? _value.subCategoryName
           : subCategoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      staticGroupName: staticGroupName == freezed
+      staticGroupName: freezed == staticGroupName
           ? _value.staticGroupName
           : staticGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantFrameWork: variantFrameWork == freezed
+      variantFrameWork: freezed == variantFrameWork
           ? _value.variantFrameWork
           : variantFrameWork // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantFrameWorkName: variantFrameWorkName == freezed
+      variantFrameWorkName: freezed == variantFrameWorkName
           ? _value.variantFrameWorkName
           : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemMeta: itemMeta == freezed
+      itemMeta: freezed == itemMeta
           ? _value.itemMeta
           : itemMeta // ignore: cast_nullable_to_non_nullable
               as ItemMeta?,
-      qrCode: qrCode == freezed
+      qrCode: freezed == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as QrCode?,
-      searchName: searchName == freezed
+      searchName: freezed == searchName
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayname: displayname == freezed
+      displayname: freezed == displayname
           ? _value.displayname
           : displayname // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlock: salesBlock == freezed
+      salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemCatelog1: itemCatelog1 == freezed
+      itemCatelog1: freezed == itemCatelog1
           ? _value.itemCatelog1
           : itemCatelog1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog2: itemCatelog2 == freezed
+      itemCatelog2: freezed == itemCatelog2
           ? _value.itemCatelog2
           : itemCatelog2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog3: itemCatelog3 == freezed
+      itemCatelog3: freezed == itemCatelog3
           ? _value.itemCatelog3
           : itemCatelog3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog4: itemCatelog4 == freezed
+      itemCatelog4: freezed == itemCatelog4
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog5: itemCatelog5 == freezed
+      itemCatelog5: freezed == itemCatelog5
           ? _value.itemCatelog5
           : itemCatelog5 // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $BarcodeCopyWith<$Res>? get barcode {
     if (_value.barcode == null) {
       return null;
     }
 
     return $BarcodeCopyWith<$Res>(_value.barcode!, (value) {
-      return _then(_value.copyWith(barcode: value));
+      return _then(_value.copyWith(barcode: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $ItemMetaCopyWith<$Res>? get itemMeta {
     if (_value.itemMeta == null) {
       return null;
     }
 
     return $ItemMetaCopyWith<$Res>(_value.itemMeta!, (value) {
-      return _then(_value.copyWith(itemMeta: value));
+      return _then(_value.copyWith(itemMeta: value) as $Val);
     });
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $QrCodeCopyWith<$Res>? get qrCode {
     if (_value.qrCode == null) {
       return null;
     }
 
     return $QrCodeCopyWith<$Res>(_value.qrCode!, (value) {
-      return _then(_value.copyWith(qrCode: value));
+      return _then(_value.copyWith(qrCode: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$ItemReadModelCopyWith<$Res>
+abstract class _$$_ItemReadModelCopyWith<$Res>
     implements $ItemReadModelCopyWith<$Res> {
-  factory _$ItemReadModelCopyWith(
-          _ItemReadModel value, $Res Function(_ItemReadModel) then) =
-      __$ItemReadModelCopyWithImpl<$Res>;
+  factory _$$_ItemReadModelCopyWith(
+          _$_ItemReadModel value, $Res Function(_$_ItemReadModel) then) =
+      __$$_ItemReadModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       String? code,
@@ -610,16 +511,14 @@ abstract class _$ItemReadModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$ItemReadModelCopyWithImpl<$Res>
-    extends _$ItemReadModelCopyWithImpl<$Res>
-    implements _$ItemReadModelCopyWith<$Res> {
-  __$ItemReadModelCopyWithImpl(
-      _ItemReadModel _value, $Res Function(_ItemReadModel) _then)
-      : super(_value, (v) => _then(v as _ItemReadModel));
+class __$$_ItemReadModelCopyWithImpl<$Res>
+    extends _$ItemReadModelCopyWithImpl<$Res, _$_ItemReadModel>
+    implements _$$_ItemReadModelCopyWith<$Res> {
+  __$$_ItemReadModelCopyWithImpl(
+      _$_ItemReadModel _value, $Res Function(_$_ItemReadModel) _then)
+      : super(_value, _then);
 
-  @override
-  _ItemReadModel get _value => super._value as _ItemReadModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -668,184 +567,184 @@ class __$ItemReadModelCopyWithImpl<$Res>
     Object? itemCatelog4 = freezed,
     Object? itemCatelog5 = freezed,
   }) {
-    return _then(_ItemReadModel(
-      id: id == freezed
+    return _then(_$_ItemReadModel(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: code == freezed
+      code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image1: image1 == freezed
+      image1: freezed == image1
           ? _value.image1
           : image1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image2: image2 == freezed
+      image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      image3: image3 == freezed
+      image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as Barcode?,
-      uomCode: uomCode == freezed
+      uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupCode: uomGroupCode == freezed
+      uomGroupCode: freezed == uomGroupCode
           ? _value.uomGroupCode
           : uomGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupName: uomGroupName == freezed
+      uomGroupName: freezed == uomGroupName
           ? _value.uomGroupName
           : uomGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      uomGroupId: uomGroupId == freezed
+      uomGroupId: freezed == uomGroupId
           ? _value.uomGroupId
           : uomGroupId // ignore: cast_nullable_to_non_nullable
               as int?,
-      uomName: uomName == freezed
+      uomName: freezed == uomName
           ? _value.uomName
           : uomName // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionId: divisionId == freezed
+      divisionId: freezed == divisionId
           ? _value.divisionId
           : divisionId // ignore: cast_nullable_to_non_nullable
               as int?,
-      categoryId: categoryId == freezed
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      subCategoryId: subCategoryId == freezed
+      subCategoryId: freezed == subCategoryId
           ? _value.subCategoryId
           : subCategoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      groupCode: groupCode == freezed
+      groupCode: freezed == groupCode
           ? _value.groupCode
           : groupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      groupName: groupName == freezed
+      groupName: freezed == groupName
           ? _value.groupName
           : groupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      brandCode: brandCode == freezed
+      brandCode: freezed == brandCode
           ? _value.brandCode
           : brandCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      brandName: brandName == freezed
+      brandName: freezed == brandName
           ? _value.brandName
           : brandName // ignore: cast_nullable_to_non_nullable
               as String?,
-      materialCode: materialCode == freezed
+      materialCode: freezed == materialCode
           ? _value.materialCode
           : materialCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      materialName: materialName == freezed
+      materialName: freezed == materialName
           ? _value.materialName
           : materialName // ignore: cast_nullable_to_non_nullable
               as String?,
-      oldSystemCode: oldSystemCode == freezed
+      oldSystemCode: freezed == oldSystemCode
           ? _value.oldSystemCode
           : oldSystemCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      staticGroupCode: staticGroupCode == freezed
+      staticGroupCode: freezed == staticGroupCode
           ? _value.staticGroupCode
           : staticGroupCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionCode: divisionCode == freezed
+      divisionCode: freezed == divisionCode
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      divisionName: divisionName == freezed
+      divisionName: freezed == divisionName
           ? _value.divisionName
           : divisionName // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryCode: categoryCode == freezed
+      categoryCode: freezed == categoryCode
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryName: categoryName == freezed
+      categoryName: freezed == categoryName
           ? _value.categoryName
           : categoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      subCategoryCode: subCategoryCode == freezed
+      subCategoryCode: freezed == subCategoryCode
           ? _value.subCategoryCode
           : subCategoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      subCategoryName: subCategoryName == freezed
+      subCategoryName: freezed == subCategoryName
           ? _value.subCategoryName
           : subCategoryName // ignore: cast_nullable_to_non_nullable
               as String?,
-      staticGroupName: staticGroupName == freezed
+      staticGroupName: freezed == staticGroupName
           ? _value.staticGroupName
           : staticGroupName // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantFrameWork: variantFrameWork == freezed
+      variantFrameWork: freezed == variantFrameWork
           ? _value.variantFrameWork
           : variantFrameWork // ignore: cast_nullable_to_non_nullable
               as String?,
-      variantFrameWorkName: variantFrameWorkName == freezed
+      variantFrameWorkName: freezed == variantFrameWorkName
           ? _value.variantFrameWorkName
           : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemMeta: itemMeta == freezed
+      itemMeta: freezed == itemMeta
           ? _value.itemMeta
           : itemMeta // ignore: cast_nullable_to_non_nullable
               as ItemMeta?,
-      qrCode: qrCode == freezed
+      qrCode: freezed == qrCode
           ? _value.qrCode
           : qrCode // ignore: cast_nullable_to_non_nullable
               as QrCode?,
-      searchName: searchName == freezed
+      searchName: freezed == searchName
           ? _value.searchName
           : searchName // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayname: displayname == freezed
+      displayname: freezed == displayname
           ? _value.displayname
           : displayname // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-      salesBlock: salesBlock == freezed
+      salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      purchaseBlock: purchaseBlock == freezed
+      purchaseBlock: freezed == purchaseBlock
           ? _value.purchaseBlock
           : purchaseBlock // ignore: cast_nullable_to_non_nullable
               as bool?,
-      itemCatelog1: itemCatelog1 == freezed
+      itemCatelog1: freezed == itemCatelog1
           ? _value.itemCatelog1
           : itemCatelog1 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog2: itemCatelog2 == freezed
+      itemCatelog2: freezed == itemCatelog2
           ? _value.itemCatelog2
           : itemCatelog2 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog3: itemCatelog3 == freezed
+      itemCatelog3: freezed == itemCatelog3
           ? _value.itemCatelog3
           : itemCatelog3 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog4: itemCatelog4 == freezed
+      itemCatelog4: freezed == itemCatelog4
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
-      itemCatelog5: itemCatelog5 == freezed
+      itemCatelog5: freezed == itemCatelog5
           ? _value.itemCatelog5
           : itemCatelog5 // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1042,404 +941,379 @@ class _$_ItemReadModel implements _ItemReadModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ItemReadModel &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.code, code) ||
-                const DeepCollectionEquality().equals(other.code, code)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ItemReadModel &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.code, code) || other.code == code) &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.image1, image1) ||
-                const DeepCollectionEquality().equals(other.image1, image1)) &&
-            (identical(other.image2, image2) ||
-                const DeepCollectionEquality().equals(other.image2, image2)) &&
-            (identical(other.image3, image3) ||
-                const DeepCollectionEquality().equals(other.image3, image3)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
-            (identical(other.uomCode, uomCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomCode, uomCode)) &&
+                other.description == description) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.image1, image1) || other.image1 == image1) &&
+            (identical(other.image2, image2) || other.image2 == image2) &&
+            (identical(other.image3, image3) || other.image3 == image3) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.uomCode, uomCode) || other.uomCode == uomCode) &&
             (identical(other.uomGroupCode, uomGroupCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomGroupCode, uomGroupCode)) &&
+                other.uomGroupCode == uomGroupCode) &&
             (identical(other.uomGroupName, uomGroupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomGroupName, uomGroupName)) &&
+                other.uomGroupName == uomGroupName) &&
             (identical(other.uomGroupId, uomGroupId) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomGroupId, uomGroupId)) &&
-            (identical(other.uomName, uomName) ||
-                const DeepCollectionEquality()
-                    .equals(other.uomName, uomName)) &&
+                other.uomGroupId == uomGroupId) &&
+            (identical(other.uomName, uomName) || other.uomName == uomName) &&
             (identical(other.divisionId, divisionId) ||
-                const DeepCollectionEquality()
-                    .equals(other.divisionId, divisionId)) &&
+                other.divisionId == divisionId) &&
             (identical(other.categoryId, categoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryId, categoryId)) &&
+                other.categoryId == categoryId) &&
             (identical(other.subCategoryId, subCategoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.subCategoryId, subCategoryId)) &&
+                other.subCategoryId == subCategoryId) &&
             (identical(other.groupCode, groupCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupCode, groupCode)) &&
+                other.groupCode == groupCode) &&
             (identical(other.groupName, groupName) ||
-                const DeepCollectionEquality()
-                    .equals(other.groupName, groupName)) &&
+                other.groupName == groupName) &&
             (identical(other.brandCode, brandCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.brandCode, brandCode)) &&
+                other.brandCode == brandCode) &&
             (identical(other.brandName, brandName) ||
-                const DeepCollectionEquality()
-                    .equals(other.brandName, brandName)) &&
+                other.brandName == brandName) &&
             (identical(other.materialCode, materialCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.materialCode, materialCode)) &&
+                other.materialCode == materialCode) &&
             (identical(other.materialName, materialName) ||
-                const DeepCollectionEquality()
-                    .equals(other.materialName, materialName)) &&
+                other.materialName == materialName) &&
             (identical(other.oldSystemCode, oldSystemCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.oldSystemCode, oldSystemCode)) &&
+                other.oldSystemCode == oldSystemCode) &&
             (identical(other.staticGroupCode, staticGroupCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.staticGroupCode, staticGroupCode)) &&
+                other.staticGroupCode == staticGroupCode) &&
             (identical(other.divisionCode, divisionCode) ||
-                const DeepCollectionEquality().equals(other.divisionCode, divisionCode)) &&
-            (identical(other.divisionName, divisionName) || const DeepCollectionEquality().equals(other.divisionName, divisionName)) &&
-            (identical(other.categoryCode, categoryCode) || const DeepCollectionEquality().equals(other.categoryCode, categoryCode)) &&
-            (identical(other.categoryName, categoryName) || const DeepCollectionEquality().equals(other.categoryName, categoryName)) &&
-            (identical(other.subCategoryCode, subCategoryCode) || const DeepCollectionEquality().equals(other.subCategoryCode, subCategoryCode)) &&
-            (identical(other.subCategoryName, subCategoryName) || const DeepCollectionEquality().equals(other.subCategoryName, subCategoryName)) &&
-            (identical(other.staticGroupName, staticGroupName) || const DeepCollectionEquality().equals(other.staticGroupName, staticGroupName)) &&
-            (identical(other.variantFrameWork, variantFrameWork) || const DeepCollectionEquality().equals(other.variantFrameWork, variantFrameWork)) &&
-            (identical(other.variantFrameWorkName, variantFrameWorkName) || const DeepCollectionEquality().equals(other.variantFrameWorkName, variantFrameWorkName)) &&
-            (identical(other.itemMeta, itemMeta) || const DeepCollectionEquality().equals(other.itemMeta, itemMeta)) &&
-            (identical(other.qrCode, qrCode) || const DeepCollectionEquality().equals(other.qrCode, qrCode)) &&
-            (identical(other.searchName, searchName) || const DeepCollectionEquality().equals(other.searchName, searchName)) &&
-            (identical(other.displayname, displayname) || const DeepCollectionEquality().equals(other.displayname, displayname)) &&
-            (identical(other.isActive, isActive) || const DeepCollectionEquality().equals(other.isActive, isActive)) &&
-            (identical(other.salesBlock, salesBlock) || const DeepCollectionEquality().equals(other.salesBlock, salesBlock)) &&
-            (identical(other.purchaseBlock, purchaseBlock) || const DeepCollectionEquality().equals(other.purchaseBlock, purchaseBlock)) &&
-            (identical(other.itemCatelog1, itemCatelog1) || const DeepCollectionEquality().equals(other.itemCatelog1, itemCatelog1)) &&
-            (identical(other.itemCatelog2, itemCatelog2) || const DeepCollectionEquality().equals(other.itemCatelog2, itemCatelog2)) &&
-            (identical(other.itemCatelog3, itemCatelog3) || const DeepCollectionEquality().equals(other.itemCatelog3, itemCatelog3)) &&
-            (identical(other.itemCatelog4, itemCatelog4) || const DeepCollectionEquality().equals(other.itemCatelog4, itemCatelog4)) &&
-            (identical(other.itemCatelog5, itemCatelog5) || const DeepCollectionEquality().equals(other.itemCatelog5, itemCatelog5)));
+                other.divisionCode == divisionCode) &&
+            (identical(other.divisionName, divisionName) ||
+                other.divisionName == divisionName) &&
+            (identical(other.categoryCode, categoryCode) ||
+                other.categoryCode == categoryCode) &&
+            (identical(other.categoryName, categoryName) ||
+                other.categoryName == categoryName) &&
+            (identical(other.subCategoryCode, subCategoryCode) ||
+                other.subCategoryCode == subCategoryCode) &&
+            (identical(other.subCategoryName, subCategoryName) ||
+                other.subCategoryName == subCategoryName) &&
+            (identical(other.staticGroupName, staticGroupName) ||
+                other.staticGroupName == staticGroupName) &&
+            (identical(other.variantFrameWork, variantFrameWork) ||
+                other.variantFrameWork == variantFrameWork) &&
+            (identical(other.variantFrameWorkName, variantFrameWorkName) ||
+                other.variantFrameWorkName == variantFrameWorkName) &&
+            (identical(other.itemMeta, itemMeta) ||
+                other.itemMeta == itemMeta) &&
+            (identical(other.qrCode, qrCode) || other.qrCode == qrCode) &&
+            (identical(other.searchName, searchName) ||
+                other.searchName == searchName) &&
+            (identical(other.displayname, displayname) ||
+                other.displayname == displayname) &&
+            (identical(other.isActive, isActive) ||
+                other.isActive == isActive) &&
+            (identical(other.salesBlock, salesBlock) ||
+                other.salesBlock == salesBlock) &&
+            (identical(other.purchaseBlock, purchaseBlock) ||
+                other.purchaseBlock == purchaseBlock) &&
+            (identical(other.itemCatelog1, itemCatelog1) ||
+                other.itemCatelog1 == itemCatelog1) &&
+            (identical(other.itemCatelog2, itemCatelog2) ||
+                other.itemCatelog2 == itemCatelog2) &&
+            (identical(other.itemCatelog3, itemCatelog3) ||
+                other.itemCatelog3 == itemCatelog3) &&
+            (identical(other.itemCatelog4, itemCatelog4) ||
+                other.itemCatelog4 == itemCatelog4) &&
+            (identical(other.itemCatelog5, itemCatelog5) ||
+                other.itemCatelog5 == itemCatelog5));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(code) ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(image1) ^
-      const DeepCollectionEquality().hash(image2) ^
-      const DeepCollectionEquality().hash(image3) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(uomCode) ^
-      const DeepCollectionEquality().hash(uomGroupCode) ^
-      const DeepCollectionEquality().hash(uomGroupName) ^
-      const DeepCollectionEquality().hash(uomGroupId) ^
-      const DeepCollectionEquality().hash(uomName) ^
-      const DeepCollectionEquality().hash(divisionId) ^
-      const DeepCollectionEquality().hash(categoryId) ^
-      const DeepCollectionEquality().hash(subCategoryId) ^
-      const DeepCollectionEquality().hash(groupCode) ^
-      const DeepCollectionEquality().hash(groupName) ^
-      const DeepCollectionEquality().hash(brandCode) ^
-      const DeepCollectionEquality().hash(brandName) ^
-      const DeepCollectionEquality().hash(materialCode) ^
-      const DeepCollectionEquality().hash(materialName) ^
-      const DeepCollectionEquality().hash(oldSystemCode) ^
-      const DeepCollectionEquality().hash(staticGroupCode) ^
-      const DeepCollectionEquality().hash(divisionCode) ^
-      const DeepCollectionEquality().hash(divisionName) ^
-      const DeepCollectionEquality().hash(categoryCode) ^
-      const DeepCollectionEquality().hash(categoryName) ^
-      const DeepCollectionEquality().hash(subCategoryCode) ^
-      const DeepCollectionEquality().hash(subCategoryName) ^
-      const DeepCollectionEquality().hash(staticGroupName) ^
-      const DeepCollectionEquality().hash(variantFrameWork) ^
-      const DeepCollectionEquality().hash(variantFrameWorkName) ^
-      const DeepCollectionEquality().hash(itemMeta) ^
-      const DeepCollectionEquality().hash(qrCode) ^
-      const DeepCollectionEquality().hash(searchName) ^
-      const DeepCollectionEquality().hash(displayname) ^
-      const DeepCollectionEquality().hash(isActive) ^
-      const DeepCollectionEquality().hash(salesBlock) ^
-      const DeepCollectionEquality().hash(purchaseBlock) ^
-      const DeepCollectionEquality().hash(itemCatelog1) ^
-      const DeepCollectionEquality().hash(itemCatelog2) ^
-      const DeepCollectionEquality().hash(itemCatelog3) ^
-      const DeepCollectionEquality().hash(itemCatelog4) ^
-      const DeepCollectionEquality().hash(itemCatelog5);
 
   @JsonKey(ignore: true)
   @override
-  _$ItemReadModelCopyWith<_ItemReadModel> get copyWith =>
-      __$ItemReadModelCopyWithImpl<_ItemReadModel>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        code,
+        description,
+        name,
+        image1,
+        image2,
+        image3,
+        barcode,
+        uomCode,
+        uomGroupCode,
+        uomGroupName,
+        uomGroupId,
+        uomName,
+        divisionId,
+        categoryId,
+        subCategoryId,
+        groupCode,
+        groupName,
+        brandCode,
+        brandName,
+        materialCode,
+        materialName,
+        oldSystemCode,
+        staticGroupCode,
+        divisionCode,
+        divisionName,
+        categoryCode,
+        categoryName,
+        subCategoryCode,
+        subCategoryName,
+        staticGroupName,
+        variantFrameWork,
+        variantFrameWorkName,
+        itemMeta,
+        qrCode,
+        searchName,
+        displayname,
+        isActive,
+        salesBlock,
+        purchaseBlock,
+        itemCatelog1,
+        itemCatelog2,
+        itemCatelog3,
+        itemCatelog4,
+        itemCatelog5
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ItemReadModelCopyWith<_$_ItemReadModel> get copyWith =>
+      __$$_ItemReadModelCopyWithImpl<_$_ItemReadModel>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemReadModelToJson(this);
+    return _$$_ItemReadModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _ItemReadModel implements ItemReadModel {
   const factory _ItemReadModel(
-      {int? id,
-      String? code,
-      String? description,
-      String? name,
-      String? image1,
-      String? image2,
-      String? image3,
-      Barcode? barcode,
+      {final int? id,
+      final String? code,
+      final String? description,
+      final String? name,
+      final String? image1,
+      final String? image2,
+      final String? image3,
+      final Barcode? barcode,
       @JsonKey(name: "uom_code")
-          String? uomCode,
+          final String? uomCode,
       @JsonKey(name: "uom_group_code")
-          String? uomGroupCode,
+          final String? uomGroupCode,
       @JsonKey(name: "uom_group_name")
-          String? uomGroupName,
+          final String? uomGroupName,
       @JsonKey(name: "uom_group_id")
-          int? uomGroupId,
+          final int? uomGroupId,
       @JsonKey(name: "uom_name")
-          String? uomName,
+          final String? uomName,
       @JsonKey(name: "division_id")
-          int? divisionId,
+          final int? divisionId,
       @JsonKey(name: "category_id")
-          int? categoryId,
+          final int? categoryId,
       @JsonKey(name: "sub_category_id")
-          int? subCategoryId,
+          final int? subCategoryId,
       @JsonKey(name: "group_code")
-          String? groupCode,
+          final String? groupCode,
       @JsonKey(name: "group_name")
-          String? groupName,
+          final String? groupName,
       @JsonKey(name: "brand_code")
-          String? brandCode,
+          final String? brandCode,
       @JsonKey(name: "brand_name")
-          String? brandName,
+          final String? brandName,
       @JsonKey(name: "material_code")
-          String? materialCode,
+          final String? materialCode,
       @JsonKey(name: "material_name")
-          String? materialName,
+          final String? materialName,
       @JsonKey(name: "old_system_code")
-          String? oldSystemCode,
+          final String? oldSystemCode,
       @JsonKey(name: "static_group_code")
-          String? staticGroupCode,
+          final String? staticGroupCode,
       @JsonKey(name: "division_code")
-          String? divisionCode,
+          final String? divisionCode,
       @JsonKey(name: "division_name")
-          String? divisionName,
+          final String? divisionName,
       @JsonKey(name: "category_code")
-          String? categoryCode,
+          final String? categoryCode,
       @JsonKey(name: "category_name")
-          String? categoryName,
+          final String? categoryName,
       @JsonKey(name: "sub_category_code")
-          String? subCategoryCode,
+          final String? subCategoryCode,
       @JsonKey(name: "sub_category_name")
-          String? subCategoryName,
+          final String? subCategoryName,
       @JsonKey(name: "static_group_name")
-          String? staticGroupName,
+          final String? staticGroupName,
       @JsonKey(name: "variant_framework_code")
-          String? variantFrameWork,
+          final String? variantFrameWork,
       @JsonKey(name: "variant_framwork_name")
-          String? variantFrameWorkName,
+          final String? variantFrameWorkName,
       @JsonKey(name: "item_meta")
-          ItemMeta? itemMeta,
+          final ItemMeta? itemMeta,
       @JsonKey(name: "qr_code")
-          QrCode? qrCode,
+          final QrCode? qrCode,
       @JsonKey(name: "search_name")
-          String? searchName,
+          final String? searchName,
       @JsonKey(name: "display_name")
-          String? displayname,
+          final String? displayname,
       @JsonKey(name: "is_active", defaultValue: false)
-          bool? isActive,
+          final bool? isActive,
       @JsonKey(name: "sales_block", defaultValue: false)
-          bool? salesBlock,
+          final bool? salesBlock,
       @JsonKey(name: "purchase_block", defaultValue: false)
-          bool? purchaseBlock,
+          final bool? purchaseBlock,
       @JsonKey(name: "item_cataloge1")
-          String? itemCatelog1,
+          final String? itemCatelog1,
       @JsonKey(name: "item_cataloge2")
-          String? itemCatelog2,
+          final String? itemCatelog2,
       @JsonKey(name: "item_cataloge3")
-          String? itemCatelog3,
+          final String? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          String? itemCatelog4,
+          final String? itemCatelog4,
       @JsonKey(name: "item_cataloge5")
-          String? itemCatelog5}) = _$_ItemReadModel;
+          final String? itemCatelog5}) = _$_ItemReadModel;
 
   factory _ItemReadModel.fromJson(Map<String, dynamic> json) =
       _$_ItemReadModel.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  String? get code => throw _privateConstructorUsedError;
+  String? get code;
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  String? get image1 => throw _privateConstructorUsedError;
+  String? get image1;
   @override
-  String? get image2 => throw _privateConstructorUsedError;
+  String? get image2;
   @override
-  String? get image3 => throw _privateConstructorUsedError;
+  String? get image3;
   @override
-  Barcode? get barcode => throw _privateConstructorUsedError;
+  Barcode? get barcode;
   @override
   @JsonKey(name: "uom_code")
-  String? get uomCode => throw _privateConstructorUsedError;
+  String? get uomCode;
   @override
   @JsonKey(name: "uom_group_code")
-  String? get uomGroupCode => throw _privateConstructorUsedError;
+  String? get uomGroupCode;
   @override
   @JsonKey(name: "uom_group_name")
-  String? get uomGroupName => throw _privateConstructorUsedError;
+  String? get uomGroupName;
   @override
   @JsonKey(name: "uom_group_id")
-  int? get uomGroupId => throw _privateConstructorUsedError;
+  int? get uomGroupId;
   @override
   @JsonKey(name: "uom_name")
-  String? get uomName => throw _privateConstructorUsedError;
+  String? get uomName;
   @override
   @JsonKey(name: "division_id")
-  int? get divisionId => throw _privateConstructorUsedError;
+  int? get divisionId;
   @override
   @JsonKey(name: "category_id")
-  int? get categoryId => throw _privateConstructorUsedError;
+  int? get categoryId;
   @override
   @JsonKey(name: "sub_category_id")
-  int? get subCategoryId => throw _privateConstructorUsedError;
+  int? get subCategoryId;
   @override
   @JsonKey(name: "group_code")
-  String? get groupCode => throw _privateConstructorUsedError;
+  String? get groupCode;
   @override
   @JsonKey(name: "group_name")
-  String? get groupName => throw _privateConstructorUsedError;
+  String? get groupName;
   @override
   @JsonKey(name: "brand_code")
-  String? get brandCode => throw _privateConstructorUsedError;
+  String? get brandCode;
   @override
   @JsonKey(name: "brand_name")
-  String? get brandName => throw _privateConstructorUsedError;
+  String? get brandName;
   @override
   @JsonKey(name: "material_code")
-  String? get materialCode => throw _privateConstructorUsedError;
+  String? get materialCode;
   @override
   @JsonKey(name: "material_name")
-  String? get materialName => throw _privateConstructorUsedError;
+  String? get materialName;
   @override
   @JsonKey(name: "old_system_code")
-  String? get oldSystemCode => throw _privateConstructorUsedError;
+  String? get oldSystemCode;
   @override
   @JsonKey(name: "static_group_code")
-  String? get staticGroupCode => throw _privateConstructorUsedError;
+  String? get staticGroupCode;
   @override
   @JsonKey(name: "division_code")
-  String? get divisionCode => throw _privateConstructorUsedError;
+  String? get divisionCode;
   @override
   @JsonKey(name: "division_name")
-  String? get divisionName => throw _privateConstructorUsedError;
+  String? get divisionName;
   @override
   @JsonKey(name: "category_code")
-  String? get categoryCode => throw _privateConstructorUsedError;
+  String? get categoryCode;
   @override
   @JsonKey(name: "category_name")
-  String? get categoryName => throw _privateConstructorUsedError;
+  String? get categoryName;
   @override
   @JsonKey(name: "sub_category_code")
-  String? get subCategoryCode => throw _privateConstructorUsedError;
+  String? get subCategoryCode;
   @override
   @JsonKey(name: "sub_category_name")
-  String? get subCategoryName => throw _privateConstructorUsedError;
+  String? get subCategoryName;
   @override
   @JsonKey(name: "static_group_name")
-  String? get staticGroupName => throw _privateConstructorUsedError;
+  String? get staticGroupName;
   @override
   @JsonKey(name: "variant_framework_code")
-  String? get variantFrameWork => throw _privateConstructorUsedError;
+  String? get variantFrameWork;
   @override
   @JsonKey(name: "variant_framwork_name")
-  String? get variantFrameWorkName => throw _privateConstructorUsedError;
+  String? get variantFrameWorkName;
   @override
   @JsonKey(name: "item_meta")
-  ItemMeta? get itemMeta => throw _privateConstructorUsedError;
+  ItemMeta? get itemMeta;
   @override
   @JsonKey(name: "qr_code")
-  QrCode? get qrCode => throw _privateConstructorUsedError;
+  QrCode? get qrCode;
   @override
   @JsonKey(name: "search_name")
-  String? get searchName => throw _privateConstructorUsedError;
+  String? get searchName;
   @override
   @JsonKey(name: "display_name")
-  String? get displayname => throw _privateConstructorUsedError;
+  String? get displayname;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
-  bool? get salesBlock => throw _privateConstructorUsedError;
+  bool? get salesBlock;
   @override
   @JsonKey(name: "purchase_block", defaultValue: false)
-  bool? get purchaseBlock => throw _privateConstructorUsedError;
+  bool? get purchaseBlock;
   @override
   @JsonKey(name: "item_cataloge1")
-  String? get itemCatelog1 => throw _privateConstructorUsedError;
+  String? get itemCatelog1;
   @override
   @JsonKey(name: "item_cataloge2")
-  String? get itemCatelog2 => throw _privateConstructorUsedError;
+  String? get itemCatelog2;
   @override
   @JsonKey(name: "item_cataloge3")
-  String? get itemCatelog3 => throw _privateConstructorUsedError;
+  String? get itemCatelog3;
   @override
   @JsonKey(name: "item_cataloge4")
-  String? get itemCatelog4 => throw _privateConstructorUsedError;
+  String? get itemCatelog4;
   @override
   @JsonKey(name: "item_cataloge5")
-  String? get itemCatelog5 => throw _privateConstructorUsedError;
+  String? get itemCatelog5;
   @override
   @JsonKey(ignore: true)
-  _$ItemReadModelCopyWith<_ItemReadModel> get copyWith =>
+  _$$_ItemReadModelCopyWith<_$_ItemReadModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 Barcode _$BarcodeFromJson(Map<String, dynamic> json) {
   return _Barcode.fromJson(json);
 }
-
-/// @nodoc
-class _$BarcodeTearOff {
-  const _$BarcodeTearOff();
-
-  _Barcode call(
-      {int? key,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "barcode_number") String? barcodeNumber}) {
-    return _Barcode(
-      key: key,
-      fileName: fileName,
-      barcodeNumber: barcodeNumber,
-    );
-  }
-
-  Barcode fromJson(Map<String, Object> json) {
-    return Barcode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $Barcode = _$BarcodeTearOff();
 
 /// @nodoc
 mixin _$Barcode {
@@ -1457,7 +1331,8 @@ mixin _$Barcode {
 /// @nodoc
 abstract class $BarcodeCopyWith<$Res> {
   factory $BarcodeCopyWith(Barcode value, $Res Function(Barcode) then) =
-      _$BarcodeCopyWithImpl<$Res>;
+      _$BarcodeCopyWithImpl<$Res, Barcode>;
+  @useResult
   $Res call(
       {int? key,
       @JsonKey(name: "file_name") String? fileName,
@@ -1465,13 +1340,16 @@ abstract class $BarcodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$BarcodeCopyWithImpl<$Res> implements $BarcodeCopyWith<$Res> {
+class _$BarcodeCopyWithImpl<$Res, $Val extends Barcode>
+    implements $BarcodeCopyWith<$Res> {
   _$BarcodeCopyWithImpl(this._value, this._then);
 
-  final Barcode _value;
   // ignore: unused_field
-  final $Res Function(Barcode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
@@ -1479,27 +1357,29 @@ class _$BarcodeCopyWithImpl<$Res> implements $BarcodeCopyWith<$Res> {
     Object? barcodeNumber = freezed,
   }) {
     return _then(_value.copyWith(
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as int?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcodeNumber: barcodeNumber == freezed
+      barcodeNumber: freezed == barcodeNumber
           ? _value.barcodeNumber
           : barcodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
-  factory _$BarcodeCopyWith(_Barcode value, $Res Function(_Barcode) then) =
-      __$BarcodeCopyWithImpl<$Res>;
+abstract class _$$_BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
+  factory _$$_BarcodeCopyWith(
+          _$_Barcode value, $Res Function(_$_Barcode) then) =
+      __$$_BarcodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? key,
       @JsonKey(name: "file_name") String? fileName,
@@ -1507,30 +1387,29 @@ abstract class _$BarcodeCopyWith<$Res> implements $BarcodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$BarcodeCopyWithImpl<$Res> extends _$BarcodeCopyWithImpl<$Res>
-    implements _$BarcodeCopyWith<$Res> {
-  __$BarcodeCopyWithImpl(_Barcode _value, $Res Function(_Barcode) _then)
-      : super(_value, (v) => _then(v as _Barcode));
+class __$$_BarcodeCopyWithImpl<$Res>
+    extends _$BarcodeCopyWithImpl<$Res, _$_Barcode>
+    implements _$$_BarcodeCopyWith<$Res> {
+  __$$_BarcodeCopyWithImpl(_$_Barcode _value, $Res Function(_$_Barcode) _then)
+      : super(_value, _then);
 
-  @override
-  _Barcode get _value => super._value as _Barcode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
     Object? fileName = freezed,
     Object? barcodeNumber = freezed,
   }) {
-    return _then(_Barcode(
-      key: key == freezed
+    return _then(_$_Barcode(
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as int?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      barcodeNumber: barcodeNumber == freezed
+      barcodeNumber: freezed == barcodeNumber
           ? _value.barcodeNumber
           : barcodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1566,85 +1445,59 @@ class _$_Barcode implements _Barcode {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Barcode &&
-            (identical(other.key, key) ||
-                const DeepCollectionEquality().equals(other.key, key)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_Barcode &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.fileName, fileName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fileName, fileName)) &&
+                other.fileName == fileName) &&
             (identical(other.barcodeNumber, barcodeNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcodeNumber, barcodeNumber)));
+                other.barcodeNumber == barcodeNumber));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(key) ^
-      const DeepCollectionEquality().hash(fileName) ^
-      const DeepCollectionEquality().hash(barcodeNumber);
 
   @JsonKey(ignore: true)
   @override
-  _$BarcodeCopyWith<_Barcode> get copyWith =>
-      __$BarcodeCopyWithImpl<_Barcode>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, key, fileName, barcodeNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_BarcodeCopyWith<_$_Barcode> get copyWith =>
+      __$$_BarcodeCopyWithImpl<_$_Barcode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_BarcodeToJson(this);
+    return _$$_BarcodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _Barcode implements Barcode {
   const factory _Barcode(
-      {int? key,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "barcode_number") String? barcodeNumber}) = _$_Barcode;
+          {final int? key,
+          @JsonKey(name: "file_name") final String? fileName,
+          @JsonKey(name: "barcode_number") final String? barcodeNumber}) =
+      _$_Barcode;
 
   factory _Barcode.fromJson(Map<String, dynamic> json) = _$_Barcode.fromJson;
 
   @override
-  int? get key => throw _privateConstructorUsedError;
+  int? get key;
   @override
   @JsonKey(name: "file_name")
-  String? get fileName => throw _privateConstructorUsedError;
+  String? get fileName;
   @override
   @JsonKey(name: "barcode_number")
-  String? get barcodeNumber => throw _privateConstructorUsedError;
+  String? get barcodeNumber;
   @override
   @JsonKey(ignore: true)
-  _$BarcodeCopyWith<_Barcode> get copyWith =>
+  _$$_BarcodeCopyWith<_$_Barcode> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 QrCode _$QrCodeFromJson(Map<String, dynamic> json) {
   return _QrCode.fromJson(json);
 }
-
-/// @nodoc
-class _$QrCodeTearOff {
-  const _$QrCodeTearOff();
-
-  _QrCode call(
-      {int? key,
-      String? content,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "qrcode_number") String? qrCodeNumber}) {
-    return _QrCode(
-      key: key,
-      content: content,
-      fileName: fileName,
-      qrCodeNumber: qrCodeNumber,
-    );
-  }
-
-  QrCode fromJson(Map<String, Object> json) {
-    return QrCode.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $QrCode = _$QrCodeTearOff();
 
 /// @nodoc
 mixin _$QrCode {
@@ -1663,7 +1516,8 @@ mixin _$QrCode {
 /// @nodoc
 abstract class $QrCodeCopyWith<$Res> {
   factory $QrCodeCopyWith(QrCode value, $Res Function(QrCode) then) =
-      _$QrCodeCopyWithImpl<$Res>;
+      _$QrCodeCopyWithImpl<$Res, QrCode>;
+  @useResult
   $Res call(
       {int? key,
       String? content,
@@ -1672,13 +1526,16 @@ abstract class $QrCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QrCodeCopyWithImpl<$Res> implements $QrCodeCopyWith<$Res> {
+class _$QrCodeCopyWithImpl<$Res, $Val extends QrCode>
+    implements $QrCodeCopyWith<$Res> {
   _$QrCodeCopyWithImpl(this._value, this._then);
 
-  final QrCode _value;
   // ignore: unused_field
-  final $Res Function(QrCode) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
@@ -1687,31 +1544,32 @@ class _$QrCodeCopyWithImpl<$Res> implements $QrCodeCopyWith<$Res> {
     Object? qrCodeNumber = freezed,
   }) {
     return _then(_value.copyWith(
-      key: key == freezed
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as int?,
-      content: content == freezed
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      qrCodeNumber: qrCodeNumber == freezed
+      qrCodeNumber: freezed == qrCodeNumber
           ? _value.qrCodeNumber
           : qrCodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$QrCodeCopyWith<$Res> implements $QrCodeCopyWith<$Res> {
-  factory _$QrCodeCopyWith(_QrCode value, $Res Function(_QrCode) then) =
-      __$QrCodeCopyWithImpl<$Res>;
+abstract class _$$_QrCodeCopyWith<$Res> implements $QrCodeCopyWith<$Res> {
+  factory _$$_QrCodeCopyWith(_$_QrCode value, $Res Function(_$_QrCode) then) =
+      __$$_QrCodeCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? key,
       String? content,
@@ -1720,14 +1578,13 @@ abstract class _$QrCodeCopyWith<$Res> implements $QrCodeCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$QrCodeCopyWithImpl<$Res> extends _$QrCodeCopyWithImpl<$Res>
-    implements _$QrCodeCopyWith<$Res> {
-  __$QrCodeCopyWithImpl(_QrCode _value, $Res Function(_QrCode) _then)
-      : super(_value, (v) => _then(v as _QrCode));
+class __$$_QrCodeCopyWithImpl<$Res>
+    extends _$QrCodeCopyWithImpl<$Res, _$_QrCode>
+    implements _$$_QrCodeCopyWith<$Res> {
+  __$$_QrCodeCopyWithImpl(_$_QrCode _value, $Res Function(_$_QrCode) _then)
+      : super(_value, _then);
 
-  @override
-  _QrCode get _value => super._value as _QrCode;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? key = freezed,
@@ -1735,20 +1592,20 @@ class __$QrCodeCopyWithImpl<$Res> extends _$QrCodeCopyWithImpl<$Res>
     Object? fileName = freezed,
     Object? qrCodeNumber = freezed,
   }) {
-    return _then(_QrCode(
-      key: key == freezed
+    return _then(_$_QrCode(
+      key: freezed == key
           ? _value.key
           : key // ignore: cast_nullable_to_non_nullable
               as int?,
-      content: content == freezed
+      content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
               as String?,
-      fileName: fileName == freezed
+      fileName: freezed == fileName
           ? _value.fileName
           : fileName // ignore: cast_nullable_to_non_nullable
               as String?,
-      qrCodeNumber: qrCodeNumber == freezed
+      qrCodeNumber: freezed == qrCodeNumber
           ? _value.qrCodeNumber
           : qrCodeNumber // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1787,84 +1644,63 @@ class _$_QrCode implements _QrCode {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _QrCode &&
-            (identical(other.key, key) ||
-                const DeepCollectionEquality().equals(other.key, key)) &&
-            (identical(other.content, content) ||
-                const DeepCollectionEquality()
-                    .equals(other.content, content)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_QrCode &&
+            (identical(other.key, key) || other.key == key) &&
+            (identical(other.content, content) || other.content == content) &&
             (identical(other.fileName, fileName) ||
-                const DeepCollectionEquality()
-                    .equals(other.fileName, fileName)) &&
+                other.fileName == fileName) &&
             (identical(other.qrCodeNumber, qrCodeNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.qrCodeNumber, qrCodeNumber)));
+                other.qrCodeNumber == qrCodeNumber));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(key) ^
-      const DeepCollectionEquality().hash(content) ^
-      const DeepCollectionEquality().hash(fileName) ^
-      const DeepCollectionEquality().hash(qrCodeNumber);
 
   @JsonKey(ignore: true)
   @override
-  _$QrCodeCopyWith<_QrCode> get copyWith =>
-      __$QrCodeCopyWithImpl<_QrCode>(this, _$identity);
+  int get hashCode =>
+      Object.hash(runtimeType, key, content, fileName, qrCodeNumber);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_QrCodeCopyWith<_$_QrCode> get copyWith =>
+      __$$_QrCodeCopyWithImpl<_$_QrCode>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_QrCodeToJson(this);
+    return _$$_QrCodeToJson(
+      this,
+    );
   }
 }
 
 abstract class _QrCode implements QrCode {
   const factory _QrCode(
-      {int? key,
-      String? content,
-      @JsonKey(name: "file_name") String? fileName,
-      @JsonKey(name: "qrcode_number") String? qrCodeNumber}) = _$_QrCode;
+      {final int? key,
+      final String? content,
+      @JsonKey(name: "file_name") final String? fileName,
+      @JsonKey(name: "qrcode_number") final String? qrCodeNumber}) = _$_QrCode;
 
   factory _QrCode.fromJson(Map<String, dynamic> json) = _$_QrCode.fromJson;
 
   @override
-  int? get key => throw _privateConstructorUsedError;
+  int? get key;
   @override
-  String? get content => throw _privateConstructorUsedError;
+  String? get content;
   @override
   @JsonKey(name: "file_name")
-  String? get fileName => throw _privateConstructorUsedError;
+  String? get fileName;
   @override
   @JsonKey(name: "qrcode_number")
-  String? get qrCodeNumber => throw _privateConstructorUsedError;
+  String? get qrCodeNumber;
   @override
   @JsonKey(ignore: true)
-  _$QrCodeCopyWith<_QrCode> get copyWith => throw _privateConstructorUsedError;
+  _$$_QrCodeCopyWith<_$_QrCode> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 ItemMeta _$ItemMetaFromJson(Map<String, dynamic> json) {
   return _ItemMeta.fromJson(json);
 }
-
-/// @nodoc
-class _$ItemMetaTearOff {
-  const _$ItemMetaTearOff();
-
-  _ItemMeta call({String? description}) {
-    return _ItemMeta(
-      description: description,
-    );
-  }
-
-  ItemMeta fromJson(Map<String, Object> json) {
-    return ItemMeta.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $ItemMeta = _$ItemMetaTearOff();
 
 /// @nodoc
 mixin _$ItemMeta {
@@ -1879,54 +1715,60 @@ mixin _$ItemMeta {
 /// @nodoc
 abstract class $ItemMetaCopyWith<$Res> {
   factory $ItemMetaCopyWith(ItemMeta value, $Res Function(ItemMeta) then) =
-      _$ItemMetaCopyWithImpl<$Res>;
+      _$ItemMetaCopyWithImpl<$Res, ItemMeta>;
+  @useResult
   $Res call({String? description});
 }
 
 /// @nodoc
-class _$ItemMetaCopyWithImpl<$Res> implements $ItemMetaCopyWith<$Res> {
+class _$ItemMetaCopyWithImpl<$Res, $Val extends ItemMeta>
+    implements $ItemMetaCopyWith<$Res> {
   _$ItemMetaCopyWithImpl(this._value, this._then);
 
-  final ItemMeta _value;
   // ignore: unused_field
-  final $Res Function(ItemMeta) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$ItemMetaCopyWith<$Res> implements $ItemMetaCopyWith<$Res> {
-  factory _$ItemMetaCopyWith(_ItemMeta value, $Res Function(_ItemMeta) then) =
-      __$ItemMetaCopyWithImpl<$Res>;
+abstract class _$$_ItemMetaCopyWith<$Res> implements $ItemMetaCopyWith<$Res> {
+  factory _$$_ItemMetaCopyWith(
+          _$_ItemMeta value, $Res Function(_$_ItemMeta) then) =
+      __$$_ItemMetaCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({String? description});
 }
 
 /// @nodoc
-class __$ItemMetaCopyWithImpl<$Res> extends _$ItemMetaCopyWithImpl<$Res>
-    implements _$ItemMetaCopyWith<$Res> {
-  __$ItemMetaCopyWithImpl(_ItemMeta _value, $Res Function(_ItemMeta) _then)
-      : super(_value, (v) => _then(v as _ItemMeta));
+class __$$_ItemMetaCopyWithImpl<$Res>
+    extends _$ItemMetaCopyWithImpl<$Res, _$_ItemMeta>
+    implements _$$_ItemMetaCopyWith<$Res> {
+  __$$_ItemMetaCopyWithImpl(
+      _$_ItemMeta _value, $Res Function(_$_ItemMeta) _then)
+      : super(_value, _then);
 
-  @override
-  _ItemMeta get _value => super._value as _ItemMeta;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
   }) {
-    return _then(_ItemMeta(
-      description: description == freezed
+    return _then(_$_ItemMeta(
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -1953,36 +1795,39 @@ class _$_ItemMeta implements _ItemMeta {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _ItemMeta &&
+        (other.runtimeType == runtimeType &&
+            other is _$_ItemMeta &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)));
+                other.description == description));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(description);
 
   @JsonKey(ignore: true)
   @override
-  _$ItemMetaCopyWith<_ItemMeta> get copyWith =>
-      __$ItemMetaCopyWithImpl<_ItemMeta>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, description);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ItemMetaCopyWith<_$_ItemMeta> get copyWith =>
+      __$$_ItemMetaCopyWithImpl<_$_ItemMeta>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ItemMetaToJson(this);
+    return _$$_ItemMetaToJson(
+      this,
+    );
   }
 }
 
 abstract class _ItemMeta implements ItemMeta {
-  const factory _ItemMeta({String? description}) = _$_ItemMeta;
+  const factory _ItemMeta({final String? description}) = _$_ItemMeta;
 
   factory _ItemMeta.fromJson(Map<String, dynamic> json) = _$_ItemMeta.fromJson;
 
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
   @JsonKey(ignore: true)
-  _$ItemMetaCopyWith<_ItemMeta> get copyWith =>
+  _$$_ItemMetaCopyWith<_$_ItemMeta> get copyWith =>
       throw _privateConstructorUsedError;
 }

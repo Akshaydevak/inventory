@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Screens/heirarchy/divisionconfiguration/cubit/categorydivisionconfig/categorylistdivisionconfig_cubit.dart';
@@ -15,6 +17,13 @@ import 'package:inventory/Screens/heirarchy/general/cubits/subcategorylist/subca
 import 'package:inventory/Screens/heirarchy/general/cubits/uomgrouplist/uomgruoplist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
+import 'package:inventory/Screens/sales/general/cubit/customeridcreation/customeridcreation_cubit.dart';
+import 'package:inventory/Screens/sales/general/cubit/customeridlist/customeridlist_cubit.dart';
+import 'package:inventory/Screens/sales/general/cubit/shippingaddress/shippingadrees_cubit.dart';
+import 'package:inventory/Screens/sales/general/general.dart';
+import 'package:inventory/Screens/sales/general/model/customeridlistmodel.dart';
+import 'package:inventory/Screens/sales/general/model/customidcreation.dart';
+import 'package:inventory/Screens/sales/general/model/shippinfaddressmodel.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingcreatelist/costingcreatelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingtypelist/costingtypelist_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pricinglist/pricinglist_cubit.dart';
@@ -22,7 +31,10 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pric
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_list_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/vendordetailslist/vendordetailslist_cubit.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
+import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 
@@ -34,7 +46,7 @@ class TableConfigurePopup extends StatelessWidget {
   final String type;
   final String? apiType;
   final Function valueSelect;
-  final int id;
+  final int? id;
 
   TableConfigurePopup(
       {Key? key,
@@ -191,6 +203,23 @@ class TableConfigurePopup extends StatelessWidget {
           );
         }
         break;
+      case "shippingIdListPopup":
+        {
+          data = shippingIdListPopup(
+            id:id,
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+      case "customerId_ListPopup":
+        {
+          data = customerIdListPopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
 
       case "BrandTabalePopup":
         {
@@ -310,7 +339,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -807,7 +836,7 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
 
 class UOMPopup extends StatefulWidget {
   final String type;
-  final int id;
+  final int? id;
   final Function valueSelect;
 
   UOMPopup({
@@ -879,7 +908,7 @@ class _UOMPopup extends State<UOMPopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -1449,7 +1478,7 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -1735,7 +1764,7 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -2309,7 +2338,7 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -2524,7 +2553,7 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
 class varientTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
-  final int id;
+  final int? id;
 
   varientTabalePopup({
     Key? key,
@@ -2595,7 +2624,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -2814,7 +2843,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
 class ManuFacturedPopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
-  final int id;
+  final int? id;
 
   ManuFacturedPopup({
     Key? key,
@@ -3093,7 +3122,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
 
 class categoryTabalePopup extends StatefulWidget {
   final String type;
-  final int id;
+  final int? id;
   final Function valueSelect;
   final String? apiType;
 
@@ -3169,7 +3198,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3452,7 +3481,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -3734,7 +3763,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4020,7 +4049,7 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                 functionChane: true,
                 buttonVisible: false,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4310,7 +4339,7 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                 functionChane: true,
                 buttonVisible: false,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4599,7 +4628,7 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                 functionChane: true,
                 buttonVisible: false,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -4888,7 +4917,7 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                 functionChane: true,
                 buttonVisible: false,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5175,7 +5204,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5385,6 +5414,687 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
   }
 }
 
+
+class shippingIdListPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+  final int? id;
+
+  shippingIdListPopup({
+    Key? key,
+    required this.type,
+    required this.id,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _shippingIdListPopup createState() => _shippingIdListPopup();
+}
+
+class _shippingIdListPopup extends State<shippingIdListPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<ShippingAddressModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return Builder(builder: (context) {
+      context.read<ShippingadreesCubit>().getShippingId(id:widget.id);
+      return BlocConsumer<ShippingadreesCubit, ShippingadreesState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcomessssssssssssssss" + list.data.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Shipping",
+                onApply: () {
+                      showDailogPopUp(
+                          context,
+                          WarrantyDetailsPopUp(
+                            // indexValue: temp,
+                            // changeActive: onChangeActive,
+                            // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                            // changeExtendedWarranty: onChangeExtendedWarranty,
+                          ));
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context
+                                  .read<ShippingadreesCubit>()
+                                  .getSearchCustomList(searchContoller.text);
+                              if (va == "") {
+                                context
+                                    .read<ShippingadreesCubit>()
+                                    .getShippingId();
+                              }
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      Container(
+                        height: h / 2,
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            border: const TableBorder(
+                              verticalInside: BorderSide(
+                                  width: .5,
+                                  color: Colors.black45,
+                                  style: BorderStyle.solid),
+                              horizontalInside: BorderSide(
+                                  width: .3,
+                                  color: Colors.black45,
+                                  // color: Colors.blue,
+                                  style: BorderStyle.solid),
+                            ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+
+                                    padding: EdgeInsets.all(7),
+
+                                    height: 46,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Shipping',
+                                    // textColor: Colors.black,
+                                    padding: EdgeInsets.all(7),
+                                    height: 46,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Colors.grey.shade200,
+                                          shape: BoxShape.rectangle,
+                                          border: const Border(
+                                              left: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+                                                  width: .5,
+                                                  color: Colors.grey,
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color: Colors.grey,
+                                                  width: .5,
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: InkWell(
+                                              onTap: () {
+                                                ShippingAddressModel model =
+                                                ShippingAddressModel(
+                                                  id: table[i].id,
+                                                  fullName: table[i].fullName,
+
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              child: Container(
+                                                  child:
+                                                      Text(table[i].fullName ?? ""),
+                                                  height: 45),
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(2),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                          () => context.read<ShippingadreesCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                                  context
+                                      .read<ShippingadreesCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<ShippingadreesCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    });
+  }
+}
+
+
+
+
+class customerIdListPopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+   customerIdListPopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _customerIdListPopup createState() => _customerIdListPopup();
+}
+
+class _customerIdListPopup extends State<customerIdListPopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+
+  TextEditingController? mobileController = TextEditingController();
+  TextEditingController? fnameController = TextEditingController();
+
+  TextEditingController country = TextEditingController();
+  TextEditingController gender = TextEditingController();
+  TextEditingController taxId = TextEditingController();
+  TextEditingController accessSiteController = TextEditingController();
+  TextEditingController buisnessUserController = TextEditingController();
+  TextEditingController buisnessnameController = TextEditingController();
+
+  TextEditingController buisnessmodeController = TextEditingController();
+
+  List<CustomerIdListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+  providers: [
+    BlocProvider<CustomeridlistCubit>(
+      create: (context) => CustomeridlistCubit(),
+),
+    BlocProvider(
+      create: (context) => CustomeridcreationCubit(),
+    ),
+  ],
+  child: Builder(builder: (context) {
+        context.read<CustomeridlistCubit>().getCustomerId();
+        return BlocListener<CustomeridcreationCubit, CustomeridcreationState>(
+          listener: (context, state) {
+            print("postssssssss" + state.toString());
+            state.maybeWhen(orElse: () {
+              // context.
+              context.showSnackBarError("Loadingggg");
+            }, error: () {
+              context.showSnackBarError(Variable.errorMessege);
+            }, success: (data) {
+              if (data.data1) {
+
+                showDailogPopUp(
+                    context,
+                    SuccessPopup(
+                      content: data.data2,
+                      // table:table,
+                    ));
+                Timer(Duration(seconds: 5), () {
+                  setState(() {
+                    // context
+                    //     .read<InventorysearchCubit>()
+                    //     .getInventorySearch("code");
+                    // select=false;
+                  });
+                });
+              } else {
+
+                showDailogPopUp(
+                    context,
+                    FailiurePopup(
+                      content: data.data2,
+                      // table:table,
+                    ));;
+                print(data.data1);
+              }
+              ;
+            });
+          },
+          child: BlocConsumer<CustomeridlistCubit, CustomeridlistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("Welcomessssssssssssssss" + list.data.toString());
+                    table = list.data;
+                    list1 = list;
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                double h = MediaQuery.of(context).size.height;
+                double w = MediaQuery.of(context).size.width;
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    buttonName: "ADD NEW",
+                    onTap: () {},
+                    isDirectCreate: true,
+                    addNew: false,
+                    label: "Custom Id",
+                    onApply: () {
+
+
+                        showDailogPopUp(
+                            context,
+                            CustomerIdCreationPopUp(
+
+                                country: country,
+
+                                fname: fnameController,
+                                gender: gender,
+
+                                mobile: mobileController,
+                                taxId: taxId,
+
+                                ontap:(){
+                                  CustomerIdCreationUpdateModel model=CustomerIdCreationUpdateModel(
+
+                                    mobile: mobileController?.text??"",
+                                    fullname: fnameController?.text,
+                                    taxId: taxId?.text,
+
+                                    country: country?.text,
+                                    gender: gender?.text,
+
+
+
+                                  );
+
+                                  context
+                                      .read<CustomeridcreationCubit>()
+                                      .postCustomerIdCreation(model);
+
+
+
+
+
+                      // widget.onTap();
+                      setState(() {});
+                    }));},
+                    onEdit: () {},
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child: SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                h: 40,
+                                hintText: "Search...",
+                                ctrlr: searchContoller,
+                                onChanged: (va) {
+                                  print("searching case" + va.toString());
+                                  context
+                                      .read<CustomeridlistCubit>()
+                                      .getSearchCustomerList(searchContoller.text);
+                                  if (va == "") {
+                                    context
+                                        .read<CustomeridlistCubit>()
+                                        .getCustomerId();
+                                  }
+                                },
+                              )),
+                          SizedBox(
+                            height: h * .004,
+                          ),
+                          Container(
+                            height: h / 2,
+                            // width: w/7,
+                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                            child: SingleChildScrollView(
+                              child: customTable(
+                                border: const TableBorder(
+                                  verticalInside: BorderSide(
+                                      width: .5,
+                                      color: Colors.black45,
+                                      style: BorderStyle.solid),
+                                  horizontalInside: BorderSide(
+                                      width: .3,
+                                      color: Colors.black45,
+                                      // color: Colors.blue,
+                                      style: BorderStyle.solid),
+                                ),
+                                tableWidth: .5,
+                                childrens: [
+                                  TableRow(
+                                    // decoration: BoxDecoration(
+
+                                    //     color: Colors.green.shade200,
+
+                                    //     shape: BoxShape.rectangle,
+
+                                    //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                    children: [
+                                      tableHeadtext(
+                                        'Sl No',
+
+                                        padding: EdgeInsets.all(7),
+
+                                        height: 46,
+                                        // textColor: Colors.black,
+                                        // color: Color(0xffE5E5E5),
+
+                                        size: 13,
+                                      ),
+
+                                      tableHeadtext(
+                                        'customer Id',
+                                        // textColor: Colors.black,
+                                        padding: EdgeInsets.all(7),
+                                        height: 46,
+                                        size: 13,
+                                        // color: Color(0xffE5E5E5),
+                                      ),
+                                      // tableHeadtext(
+                                      //   '',
+                                      //   textColor: Colors.black,
+                                      //   padding: EdgeInsets.all(7),
+                                      //   height: 46,
+                                      //   size: 13,
+                                      //   // color: Color(0xffE5E5E5),
+                                      // ),
+                                    ],
+                                  ),
+                                  if (table?.isNotEmpty == true) ...[
+                                    for (var i = 0; i < table.length; i++)
+                                      TableRow(
+                decoration: BoxDecoration(
+                color: Pellet.tableRowColor,
+                    shape: BoxShape.rectangle,
+                    border:  Border(
+                        left: BorderSide(
+
+                            color: Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+                            style: BorderStyle.solid),
+                        bottom: BorderSide(
+
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            style: BorderStyle.solid),
+                        right: BorderSide(
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+
+                            style: BorderStyle.solid))),
+                                          children: [
+                                            TableCell(
+                                                verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                                child:
+                                                textPadding((i + 1).toString())
+                                              // Text(keys[i].key??"")
+
+                                            ),
+                                            TableCell(
+                                                verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    CustomerIdListModel model =
+                                                    CustomerIdListModel(
+                                                      customerUserCode:table[i].customerUserCode ,
+
+                                                      id: table[i].id,
+                                                      businessData: table[i].businessData,
+                                                        customerName:table[i].customerName,
+
+
+                                                    );
+
+                                                    Navigator.pop(context);
+
+                                                    widget.valueSelect(model);
+                                                  },
+                                                  child: Container(
+                                                      child:
+                                                      Text(table[i].customerUserCode ?? ""),
+                                                      height: 45),
+                                                )
+                                              // Text(keys[i].value??"",)
+
+                                            ),
+                                          ]),
+                                  ],
+                                ],
+                                widths: {
+                                  0: FlexColumnWidth(2),
+                                  1: FlexColumnWidth(5),
+                                },
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: h * .004,
+                          ),
+                          if (list1 != null)
+                            tablePagination(
+                                  () => context.read<CustomeridlistCubit>().refresh(),
+                              back: list1?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<CustomeridlistCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next: list1.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<CustomeridlistCubit>()
+                                    .nextslotSectionPageList();
+                              },
+                            )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+);
+  }}
+
+
+
+
+
+
+
+
+
+
+
 class BrandTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
@@ -5457,7 +6167,7 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5575,20 +6285,22 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -5741,7 +6453,7 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -5855,22 +6567,24 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+            decoration: BoxDecoration(
+            color: Pellet.tableRowColor,
+                shape: BoxShape.rectangle,
+                border:  Border(
+                    left: BorderSide(
+
+                        color: Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+                        style: BorderStyle.solid),
+                    bottom: BorderSide(
+
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        style: BorderStyle.solid),
+                    right: BorderSide(
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+
+                        style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
@@ -6139,20 +6853,22 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -6305,7 +7021,7 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -6422,20 +7138,22 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -6587,7 +7305,7 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
-                buttonName: "Add New",
+                buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
@@ -6708,20 +7426,22 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(

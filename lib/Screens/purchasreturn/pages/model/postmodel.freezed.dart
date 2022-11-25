@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'postmodel.dart';
@@ -11,73 +12,12 @@ part of 'postmodel.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 PurchaseReturnGeneralPost _$PurchaseReturnGeneralPostFromJson(
     Map<String, dynamic> json) {
   return _PurchaseReturnGeneralPost.fromJson(json);
 }
-
-/// @nodoc
-class _$PurchaseReturnGeneralPostTearOff {
-  const _$PurchaseReturnGeneralPostTearOff();
-
-  _PurchaseReturnGeneralPost call(
-      {int? id,
-      double? foc,
-      double? discount,
-      double? vat,
-      String? note,
-      String? remarks,
-      @JsonKey(name: "invoice_code") String? invoiceCode,
-      @JsonKey(name: "order_type") String? orderType,
-      @JsonKey(name: "purchase_invoice_id") String? purchaseInvoiceId,
-      @JsonKey(name: "inventory_id") String? inventoryId,
-      @JsonKey(name: "vendor_code") String? vendorCode,
-      @JsonKey(name: "unit_cost") double? unitCost,
-      @JsonKey(name: "grand_total") double? grandTotal,
-      @JsonKey(name: "vatable_amount") double? vatableAmount,
-      @JsonKey(name: "excess_tax") double? excessTax,
-      @JsonKey(name: "actual_cost") double? actualCost,
-      @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-      @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-      @JsonKey(name: "vendor_address") String? vendorAddress,
-      @JsonKey(name: "created_by") String? createdBy,
-      @JsonKey(name: "edited_by") String? editedBy,
-      @JsonKey(name: "order_lines") List<Liness>? lines}) {
-    return _PurchaseReturnGeneralPost(
-      id: id,
-      foc: foc,
-      discount: discount,
-      vat: vat,
-      note: note,
-      remarks: remarks,
-      invoiceCode: invoiceCode,
-      orderType: orderType,
-      purchaseInvoiceId: purchaseInvoiceId,
-      inventoryId: inventoryId,
-      vendorCode: vendorCode,
-      unitCost: unitCost,
-      grandTotal: grandTotal,
-      vatableAmount: vatableAmount,
-      excessTax: excessTax,
-      actualCost: actualCost,
-      vendorTrnNumber: vendorTrnNumber,
-      vendorMailId: vendorMailId,
-      vendorAddress: vendorAddress,
-      createdBy: createdBy,
-      editedBy: editedBy,
-      lines: lines,
-    );
-  }
-
-  PurchaseReturnGeneralPost fromJson(Map<String, Object> json) {
-    return PurchaseReturnGeneralPost.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $PurchaseReturnGeneralPost = _$PurchaseReturnGeneralPostTearOff();
 
 /// @nodoc
 mixin _$PurchaseReturnGeneralPost {
@@ -130,7 +70,8 @@ mixin _$PurchaseReturnGeneralPost {
 abstract class $PurchaseReturnGeneralPostCopyWith<$Res> {
   factory $PurchaseReturnGeneralPostCopyWith(PurchaseReturnGeneralPost value,
           $Res Function(PurchaseReturnGeneralPost) then) =
-      _$PurchaseReturnGeneralPostCopyWithImpl<$Res>;
+      _$PurchaseReturnGeneralPostCopyWithImpl<$Res, PurchaseReturnGeneralPost>;
+  @useResult
   $Res call(
       {int? id,
       double? foc,
@@ -157,14 +98,17 @@ abstract class $PurchaseReturnGeneralPostCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PurchaseReturnGeneralPostCopyWithImpl<$Res>
+class _$PurchaseReturnGeneralPostCopyWithImpl<$Res,
+        $Val extends PurchaseReturnGeneralPost>
     implements $PurchaseReturnGeneralPostCopyWith<$Res> {
   _$PurchaseReturnGeneralPostCopyWithImpl(this._value, this._then);
 
-  final PurchaseReturnGeneralPost _value;
   // ignore: unused_field
-  final $Res Function(PurchaseReturnGeneralPost) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -191,105 +135,107 @@ class _$PurchaseReturnGeneralPostCopyWithImpl<$Res>
     Object? lines = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      foc: foc == freezed
+      foc: freezed == foc
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
               as double?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceCode: invoiceCode == freezed
+      invoiceCode: freezed == invoiceCode
           ? _value.invoiceCode
           : invoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      orderType: orderType == freezed
+      orderType: freezed == orderType
           ? _value.orderType
           : orderType // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseInvoiceId: purchaseInvoiceId == freezed
+      purchaseInvoiceId: freezed == purchaseInvoiceId
           ? _value.purchaseInvoiceId
           : purchaseInvoiceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorCode: vendorCode == freezed
+      vendorCode: freezed == vendorCode
           ? _value.vendorCode
           : vendorCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      grandTotal: grandTotal == freezed
+      grandTotal: freezed == grandTotal
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      vatableAmount: vatableAmount == freezed
+      vatableAmount: freezed == vatableAmount
           ? _value.vatableAmount
           : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      actualCost: actualCost == freezed
+      actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      vendorTrnNumber: vendorTrnNumber == freezed
+      vendorTrnNumber: freezed == vendorTrnNumber
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorMailId: vendorMailId == freezed
+      vendorMailId: freezed == vendorMailId
           ? _value.vendorMailId
           : vendorMailId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorAddress: vendorAddress == freezed
+      vendorAddress: freezed == vendorAddress
           ? _value.vendorAddress
           : vendorAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      editedBy: editedBy == freezed
+      editedBy: freezed == editedBy
           ? _value.editedBy
           : editedBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      lines: lines == freezed
+      lines: freezed == lines
           ? _value.lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<Liness>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PurchaseReturnGeneralPostCopyWith<$Res>
+abstract class _$$_PurchaseReturnGeneralPostCopyWith<$Res>
     implements $PurchaseReturnGeneralPostCopyWith<$Res> {
-  factory _$PurchaseReturnGeneralPostCopyWith(_PurchaseReturnGeneralPost value,
-          $Res Function(_PurchaseReturnGeneralPost) then) =
-      __$PurchaseReturnGeneralPostCopyWithImpl<$Res>;
+  factory _$$_PurchaseReturnGeneralPostCopyWith(
+          _$_PurchaseReturnGeneralPost value,
+          $Res Function(_$_PurchaseReturnGeneralPost) then) =
+      __$$_PurchaseReturnGeneralPostCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       double? foc,
@@ -316,17 +262,16 @@ abstract class _$PurchaseReturnGeneralPostCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PurchaseReturnGeneralPostCopyWithImpl<$Res>
-    extends _$PurchaseReturnGeneralPostCopyWithImpl<$Res>
-    implements _$PurchaseReturnGeneralPostCopyWith<$Res> {
-  __$PurchaseReturnGeneralPostCopyWithImpl(_PurchaseReturnGeneralPost _value,
-      $Res Function(_PurchaseReturnGeneralPost) _then)
-      : super(_value, (v) => _then(v as _PurchaseReturnGeneralPost));
+class __$$_PurchaseReturnGeneralPostCopyWithImpl<$Res>
+    extends _$PurchaseReturnGeneralPostCopyWithImpl<$Res,
+        _$_PurchaseReturnGeneralPost>
+    implements _$$_PurchaseReturnGeneralPostCopyWith<$Res> {
+  __$$_PurchaseReturnGeneralPostCopyWithImpl(
+      _$_PurchaseReturnGeneralPost _value,
+      $Res Function(_$_PurchaseReturnGeneralPost) _then)
+      : super(_value, _then);
 
-  @override
-  _PurchaseReturnGeneralPost get _value =>
-      super._value as _PurchaseReturnGeneralPost;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -352,93 +297,93 @@ class __$PurchaseReturnGeneralPostCopyWithImpl<$Res>
     Object? editedBy = freezed,
     Object? lines = freezed,
   }) {
-    return _then(_PurchaseReturnGeneralPost(
-      id: id == freezed
+    return _then(_$_PurchaseReturnGeneralPost(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      foc: foc == freezed
+      foc: freezed == foc
           ? _value.foc
           : foc // ignore: cast_nullable_to_non_nullable
               as double?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      note: note == freezed
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceCode: invoiceCode == freezed
+      invoiceCode: freezed == invoiceCode
           ? _value.invoiceCode
           : invoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      orderType: orderType == freezed
+      orderType: freezed == orderType
           ? _value.orderType
           : orderType // ignore: cast_nullable_to_non_nullable
               as String?,
-      purchaseInvoiceId: purchaseInvoiceId == freezed
+      purchaseInvoiceId: freezed == purchaseInvoiceId
           ? _value.purchaseInvoiceId
           : purchaseInvoiceId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorCode: vendorCode == freezed
+      vendorCode: freezed == vendorCode
           ? _value.vendorCode
           : vendorCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      grandTotal: grandTotal == freezed
+      grandTotal: freezed == grandTotal
           ? _value.grandTotal
           : grandTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      vatableAmount: vatableAmount == freezed
+      vatableAmount: freezed == vatableAmount
           ? _value.vatableAmount
           : vatableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      actualCost: actualCost == freezed
+      actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      vendorTrnNumber: vendorTrnNumber == freezed
+      vendorTrnNumber: freezed == vendorTrnNumber
           ? _value.vendorTrnNumber
           : vendorTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorMailId: vendorMailId == freezed
+      vendorMailId: freezed == vendorMailId
           ? _value.vendorMailId
           : vendorMailId // ignore: cast_nullable_to_non_nullable
               as String?,
-      vendorAddress: vendorAddress == freezed
+      vendorAddress: freezed == vendorAddress
           ? _value.vendorAddress
           : vendorAddress // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdBy: createdBy == freezed
+      createdBy: freezed == createdBy
           ? _value.createdBy
           : createdBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      editedBy: editedBy == freezed
+      editedBy: freezed == editedBy
           ? _value.editedBy
           : editedBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      lines: lines == freezed
-          ? _value.lines
+      lines: freezed == lines
+          ? _value._lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<Liness>?,
     ));
@@ -470,7 +415,8 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
       @JsonKey(name: "vendor_address") this.vendorAddress,
       @JsonKey(name: "created_by") this.createdBy,
       @JsonKey(name: "edited_by") this.editedBy,
-      @JsonKey(name: "order_lines") this.lines});
+      @JsonKey(name: "order_lines") final List<Liness>? lines})
+      : _lines = lines;
 
   factory _$_PurchaseReturnGeneralPost.fromJson(Map<String, dynamic> json) =>
       _$$_PurchaseReturnGeneralPostFromJson(json);
@@ -532,9 +478,15 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
   @override
   @JsonKey(name: "edited_by")
   final String? editedBy;
+  final List<Liness>? _lines;
   @override
   @JsonKey(name: "order_lines")
-  final List<Liness>? lines;
+  List<Liness>? get lines {
+    final value = _lines;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -544,200 +496,182 @@ class _$_PurchaseReturnGeneralPost implements _PurchaseReturnGeneralPost {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _PurchaseReturnGeneralPost &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.foc, foc) ||
-                const DeepCollectionEquality().equals(other.foc, foc)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_PurchaseReturnGeneralPost &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.foc, foc) || other.foc == foc) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
-            (identical(other.note, note) ||
-                const DeepCollectionEquality().equals(other.note, note)) &&
-            (identical(other.remarks, remarks) ||
-                const DeepCollectionEquality()
-                    .equals(other.remarks, remarks)) &&
+                other.discount == discount) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
+            (identical(other.note, note) || other.note == note) &&
+            (identical(other.remarks, remarks) || other.remarks == remarks) &&
             (identical(other.invoiceCode, invoiceCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoiceCode, invoiceCode)) &&
+                other.invoiceCode == invoiceCode) &&
             (identical(other.orderType, orderType) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderType, orderType)) &&
+                other.orderType == orderType) &&
             (identical(other.purchaseInvoiceId, purchaseInvoiceId) ||
-                const DeepCollectionEquality()
-                    .equals(other.purchaseInvoiceId, purchaseInvoiceId)) &&
+                other.purchaseInvoiceId == purchaseInvoiceId) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.vendorCode, vendorCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorCode, vendorCode)) &&
+                other.vendorCode == vendorCode) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
+                other.unitCost == unitCost) &&
             (identical(other.grandTotal, grandTotal) ||
-                const DeepCollectionEquality()
-                    .equals(other.grandTotal, grandTotal)) &&
+                other.grandTotal == grandTotal) &&
             (identical(other.vatableAmount, vatableAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.vatableAmount, vatableAmount)) &&
+                other.vatableAmount == vatableAmount) &&
             (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
+                other.excessTax == excessTax) &&
             (identical(other.actualCost, actualCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.actualCost, actualCost)) &&
+                other.actualCost == actualCost) &&
             (identical(other.vendorTrnNumber, vendorTrnNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorTrnNumber, vendorTrnNumber)) &&
+                other.vendorTrnNumber == vendorTrnNumber) &&
             (identical(other.vendorMailId, vendorMailId) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorMailId, vendorMailId)) &&
+                other.vendorMailId == vendorMailId) &&
             (identical(other.vendorAddress, vendorAddress) ||
-                const DeepCollectionEquality()
-                    .equals(other.vendorAddress, vendorAddress)) &&
+                other.vendorAddress == vendorAddress) &&
             (identical(other.createdBy, createdBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdBy, createdBy)) &&
+                other.createdBy == createdBy) &&
             (identical(other.editedBy, editedBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.editedBy, editedBy)) &&
-            (identical(other.lines, lines) ||
-                const DeepCollectionEquality().equals(other.lines, lines)));
+                other.editedBy == editedBy) &&
+            const DeepCollectionEquality().equals(other._lines, _lines));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(foc) ^
-      const DeepCollectionEquality().hash(discount) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(note) ^
-      const DeepCollectionEquality().hash(remarks) ^
-      const DeepCollectionEquality().hash(invoiceCode) ^
-      const DeepCollectionEquality().hash(orderType) ^
-      const DeepCollectionEquality().hash(purchaseInvoiceId) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(vendorCode) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(grandTotal) ^
-      const DeepCollectionEquality().hash(vatableAmount) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(actualCost) ^
-      const DeepCollectionEquality().hash(vendorTrnNumber) ^
-      const DeepCollectionEquality().hash(vendorMailId) ^
-      const DeepCollectionEquality().hash(vendorAddress) ^
-      const DeepCollectionEquality().hash(createdBy) ^
-      const DeepCollectionEquality().hash(editedBy) ^
-      const DeepCollectionEquality().hash(lines);
 
   @JsonKey(ignore: true)
   @override
-  _$PurchaseReturnGeneralPostCopyWith<_PurchaseReturnGeneralPost>
-      get copyWith =>
-          __$PurchaseReturnGeneralPostCopyWithImpl<_PurchaseReturnGeneralPost>(
-              this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        foc,
+        discount,
+        vat,
+        note,
+        remarks,
+        invoiceCode,
+        orderType,
+        purchaseInvoiceId,
+        inventoryId,
+        vendorCode,
+        unitCost,
+        grandTotal,
+        vatableAmount,
+        excessTax,
+        actualCost,
+        vendorTrnNumber,
+        vendorMailId,
+        vendorAddress,
+        createdBy,
+        editedBy,
+        const DeepCollectionEquality().hash(_lines)
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_PurchaseReturnGeneralPostCopyWith<_$_PurchaseReturnGeneralPost>
+      get copyWith => __$$_PurchaseReturnGeneralPostCopyWithImpl<
+          _$_PurchaseReturnGeneralPost>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PurchaseReturnGeneralPostToJson(this);
+    return _$$_PurchaseReturnGeneralPostToJson(
+      this,
+    );
   }
 }
 
 abstract class _PurchaseReturnGeneralPost implements PurchaseReturnGeneralPost {
   const factory _PurchaseReturnGeneralPost(
-          {int? id,
-          double? foc,
-          double? discount,
-          double? vat,
-          String? note,
-          String? remarks,
-          @JsonKey(name: "invoice_code") String? invoiceCode,
-          @JsonKey(name: "order_type") String? orderType,
-          @JsonKey(name: "purchase_invoice_id") String? purchaseInvoiceId,
-          @JsonKey(name: "inventory_id") String? inventoryId,
-          @JsonKey(name: "vendor_code") String? vendorCode,
-          @JsonKey(name: "unit_cost") double? unitCost,
-          @JsonKey(name: "grand_total") double? grandTotal,
-          @JsonKey(name: "vatable_amount") double? vatableAmount,
-          @JsonKey(name: "excess_tax") double? excessTax,
-          @JsonKey(name: "actual_cost") double? actualCost,
-          @JsonKey(name: "vendor_trn_number") String? vendorTrnNumber,
-          @JsonKey(name: "vendor_mail_id") String? vendorMailId,
-          @JsonKey(name: "vendor_address") String? vendorAddress,
-          @JsonKey(name: "created_by") String? createdBy,
-          @JsonKey(name: "edited_by") String? editedBy,
-          @JsonKey(name: "order_lines") List<Liness>? lines}) =
+          {final int? id,
+          final double? foc,
+          final double? discount,
+          final double? vat,
+          final String? note,
+          final String? remarks,
+          @JsonKey(name: "invoice_code") final String? invoiceCode,
+          @JsonKey(name: "order_type") final String? orderType,
+          @JsonKey(name: "purchase_invoice_id") final String? purchaseInvoiceId,
+          @JsonKey(name: "inventory_id") final String? inventoryId,
+          @JsonKey(name: "vendor_code") final String? vendorCode,
+          @JsonKey(name: "unit_cost") final double? unitCost,
+          @JsonKey(name: "grand_total") final double? grandTotal,
+          @JsonKey(name: "vatable_amount") final double? vatableAmount,
+          @JsonKey(name: "excess_tax") final double? excessTax,
+          @JsonKey(name: "actual_cost") final double? actualCost,
+          @JsonKey(name: "vendor_trn_number") final String? vendorTrnNumber,
+          @JsonKey(name: "vendor_mail_id") final String? vendorMailId,
+          @JsonKey(name: "vendor_address") final String? vendorAddress,
+          @JsonKey(name: "created_by") final String? createdBy,
+          @JsonKey(name: "edited_by") final String? editedBy,
+          @JsonKey(name: "order_lines") final List<Liness>? lines}) =
       _$_PurchaseReturnGeneralPost;
 
   factory _PurchaseReturnGeneralPost.fromJson(Map<String, dynamic> json) =
       _$_PurchaseReturnGeneralPost.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  double? get foc => throw _privateConstructorUsedError;
+  double? get foc;
   @override
-  double? get discount => throw _privateConstructorUsedError;
+  double? get discount;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
-  String? get note => throw _privateConstructorUsedError;
+  String? get note;
   @override
-  String? get remarks => throw _privateConstructorUsedError;
+  String? get remarks;
   @override
   @JsonKey(name: "invoice_code")
-  String? get invoiceCode => throw _privateConstructorUsedError;
+  String? get invoiceCode;
   @override
   @JsonKey(name: "order_type")
-  String? get orderType => throw _privateConstructorUsedError;
+  String? get orderType;
   @override
   @JsonKey(name: "purchase_invoice_id")
-  String? get purchaseInvoiceId => throw _privateConstructorUsedError;
+  String? get purchaseInvoiceId;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "vendor_code")
-  String? get vendorCode => throw _privateConstructorUsedError;
+  String? get vendorCode;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "grand_total")
-  double? get grandTotal => throw _privateConstructorUsedError;
+  double? get grandTotal;
   @override
   @JsonKey(name: "vatable_amount")
-  double? get vatableAmount => throw _privateConstructorUsedError;
+  double? get vatableAmount;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "actual_cost")
-  double? get actualCost => throw _privateConstructorUsedError;
+  double? get actualCost;
   @override
   @JsonKey(name: "vendor_trn_number")
-  String? get vendorTrnNumber => throw _privateConstructorUsedError;
+  String? get vendorTrnNumber;
   @override
   @JsonKey(name: "vendor_mail_id")
-  String? get vendorMailId => throw _privateConstructorUsedError;
+  String? get vendorMailId;
   @override
   @JsonKey(name: "vendor_address")
-  String? get vendorAddress => throw _privateConstructorUsedError;
+  String? get vendorAddress;
   @override
   @JsonKey(name: "created_by")
-  String? get createdBy => throw _privateConstructorUsedError;
+  String? get createdBy;
   @override
   @JsonKey(name: "edited_by")
-  String? get editedBy => throw _privateConstructorUsedError;
+  String? get editedBy;
   @override
   @JsonKey(name: "order_lines")
-  List<Liness>? get lines => throw _privateConstructorUsedError;
+  List<Liness>? get lines;
   @override
   @JsonKey(ignore: true)
-  _$PurchaseReturnGeneralPostCopyWith<_PurchaseReturnGeneralPost>
+  _$$_PurchaseReturnGeneralPostCopyWith<_$_PurchaseReturnGeneralPost>
       get copyWith => throw _privateConstructorUsedError;
 }

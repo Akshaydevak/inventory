@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'salesreturninvoiceread.dart';
@@ -11,80 +12,12 @@ part of 'salesreturninvoiceread.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 SalesReturnInvoiceReadModel2 _$SalesReturnInvoiceReadModel2FromJson(
     Map<String, dynamic> json) {
   return _SalesReturnInvoiceReadModel2.fromJson(json);
 }
-
-/// @nodoc
-class _$SalesReturnInvoiceReadModel2TearOff {
-  const _$SalesReturnInvoiceReadModel2TearOff();
-
-  _SalesReturnInvoiceReadModel2 call(
-      {int? id,
-      double? discount,
-      double? vat,
-      @JsonKey(name: "sales_return_order_code")
-          String? salesReturnOrderCode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
-      @JsonKey(name: "payment_id")
-          String? paymentId,
-      @JsonKey(name: "payment_status")
-          String? paymentStatus,
-      @JsonKey(name: "customer_id")
-          String? customerId,
-      @JsonKey(name: "trn_number")
-          String? trnNumber,
-      @JsonKey(name: "order_satus")
-          String? orderStatus,
-      @JsonKey(name: "invoice_status")
-          String? invoiceStatus,
-      @JsonKey(name: "unit_cost")
-          double? unitCost,
-      @JsonKey(name: "excess_tax")
-          double? excessTax,
-      @JsonKey(name: "taxable_amount")
-          double? taxableAmount,
-      @JsonKey(name: "selling_price_total")
-          double? sellingPriceTotal,
-      @JsonKey(name: "total_price")
-          double? totalPrice,
-      @JsonKey(name: "return_order_lines")
-          List<SalesReturnLinesOrderLines>? returnOrrder,
-      @JsonKey(name: "invoice_data")
-          InvoicedDatasSalesReturn? invoicedData}) {
-    return _SalesReturnInvoiceReadModel2(
-      id: id,
-      discount: discount,
-      vat: vat,
-      salesReturnOrderCode: salesReturnOrderCode,
-      inventoryId: inventoryId,
-      paymentId: paymentId,
-      paymentStatus: paymentStatus,
-      customerId: customerId,
-      trnNumber: trnNumber,
-      orderStatus: orderStatus,
-      invoiceStatus: invoiceStatus,
-      unitCost: unitCost,
-      excessTax: excessTax,
-      taxableAmount: taxableAmount,
-      sellingPriceTotal: sellingPriceTotal,
-      totalPrice: totalPrice,
-      returnOrrder: returnOrrder,
-      invoicedData: invoicedData,
-    );
-  }
-
-  SalesReturnInvoiceReadModel2 fromJson(Map<String, Object> json) {
-    return SalesReturnInvoiceReadModel2.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SalesReturnInvoiceReadModel2 = _$SalesReturnInvoiceReadModel2TearOff();
 
 /// @nodoc
 mixin _$SalesReturnInvoiceReadModel2 {
@@ -135,7 +68,9 @@ abstract class $SalesReturnInvoiceReadModel2CopyWith<$Res> {
   factory $SalesReturnInvoiceReadModel2CopyWith(
           SalesReturnInvoiceReadModel2 value,
           $Res Function(SalesReturnInvoiceReadModel2) then) =
-      _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>;
+      _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res,
+          SalesReturnInvoiceReadModel2>;
+  @useResult
   $Res call(
       {int? id,
       double? discount,
@@ -175,14 +110,17 @@ abstract class $SalesReturnInvoiceReadModel2CopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
+class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res,
+        $Val extends SalesReturnInvoiceReadModel2>
     implements $SalesReturnInvoiceReadModel2CopyWith<$Res> {
   _$SalesReturnInvoiceReadModel2CopyWithImpl(this._value, this._then);
 
-  final SalesReturnInvoiceReadModel2 _value;
   // ignore: unused_field
-  final $Res Function(SalesReturnInvoiceReadModel2) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -205,82 +143,83 @@ class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
     Object? invoicedData = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      salesReturnOrderCode: salesReturnOrderCode == freezed
+      salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentId: paymentId == freezed
+      paymentId: freezed == paymentId
           ? _value.paymentId
           : paymentId // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      trnNumber: trnNumber == freezed
+      trnNumber: freezed == trnNumber
           ? _value.trnNumber
           : trnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      orderStatus: orderStatus == freezed
+      orderStatus: freezed == orderStatus
           ? _value.orderStatus
           : orderStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceStatus: invoiceStatus == freezed
+      invoiceStatus: freezed == invoiceStatus
           ? _value.invoiceStatus
           : invoiceStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnOrrder: returnOrrder == freezed
+      returnOrrder: freezed == returnOrrder
           ? _value.returnOrrder
           : returnOrrder // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
-      invoicedData: invoicedData == freezed
+      invoicedData: freezed == invoicedData
           ? _value.invoicedData
           : invoicedData // ignore: cast_nullable_to_non_nullable
               as InvoicedDatasSalesReturn?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $InvoicedDatasSalesReturnCopyWith<$Res>? get invoicedData {
     if (_value.invoicedData == null) {
       return null;
@@ -288,19 +227,20 @@ class _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
 
     return $InvoicedDatasSalesReturnCopyWith<$Res>(_value.invoicedData!,
         (value) {
-      return _then(_value.copyWith(invoicedData: value));
+      return _then(_value.copyWith(invoicedData: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$SalesReturnInvoiceReadModel2CopyWith<$Res>
+abstract class _$$_SalesReturnInvoiceReadModel2CopyWith<$Res>
     implements $SalesReturnInvoiceReadModel2CopyWith<$Res> {
-  factory _$SalesReturnInvoiceReadModel2CopyWith(
-          _SalesReturnInvoiceReadModel2 value,
-          $Res Function(_SalesReturnInvoiceReadModel2) then) =
-      __$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>;
+  factory _$$_SalesReturnInvoiceReadModel2CopyWith(
+          _$_SalesReturnInvoiceReadModel2 value,
+          $Res Function(_$_SalesReturnInvoiceReadModel2) then) =
+      __$$_SalesReturnInvoiceReadModel2CopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       double? discount,
@@ -341,18 +281,16 @@ abstract class _$SalesReturnInvoiceReadModel2CopyWith<$Res>
 }
 
 /// @nodoc
-class __$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
-    extends _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
-    implements _$SalesReturnInvoiceReadModel2CopyWith<$Res> {
-  __$SalesReturnInvoiceReadModel2CopyWithImpl(
-      _SalesReturnInvoiceReadModel2 _value,
-      $Res Function(_SalesReturnInvoiceReadModel2) _then)
-      : super(_value, (v) => _then(v as _SalesReturnInvoiceReadModel2));
+class __$$_SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
+    extends _$SalesReturnInvoiceReadModel2CopyWithImpl<$Res,
+        _$_SalesReturnInvoiceReadModel2>
+    implements _$$_SalesReturnInvoiceReadModel2CopyWith<$Res> {
+  __$$_SalesReturnInvoiceReadModel2CopyWithImpl(
+      _$_SalesReturnInvoiceReadModel2 _value,
+      $Res Function(_$_SalesReturnInvoiceReadModel2) _then)
+      : super(_value, _then);
 
-  @override
-  _SalesReturnInvoiceReadModel2 get _value =>
-      super._value as _SalesReturnInvoiceReadModel2;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -374,76 +312,76 @@ class __$SalesReturnInvoiceReadModel2CopyWithImpl<$Res>
     Object? returnOrrder = freezed,
     Object? invoicedData = freezed,
   }) {
-    return _then(_SalesReturnInvoiceReadModel2(
-      id: id == freezed
+    return _then(_$_SalesReturnInvoiceReadModel2(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      salesReturnOrderCode: salesReturnOrderCode == freezed
+      salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentId: paymentId == freezed
+      paymentId: freezed == paymentId
           ? _value.paymentId
           : paymentId // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      trnNumber: trnNumber == freezed
+      trnNumber: freezed == trnNumber
           ? _value.trnNumber
           : trnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      orderStatus: orderStatus == freezed
+      orderStatus: freezed == orderStatus
           ? _value.orderStatus
           : orderStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceStatus: invoiceStatus == freezed
+      invoiceStatus: freezed == invoiceStatus
           ? _value.invoiceStatus
           : invoiceStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      returnOrrder: returnOrrder == freezed
-          ? _value.returnOrrder
+      returnOrrder: freezed == returnOrrder
+          ? _value._returnOrrder
           : returnOrrder // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
-      invoicedData: invoicedData == freezed
+      invoicedData: freezed == invoicedData
           ? _value.invoicedData
           : invoicedData // ignore: cast_nullable_to_non_nullable
               as InvoicedDatasSalesReturn?,
@@ -458,21 +396,37 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
       {this.id,
       this.discount,
       this.vat,
-      @JsonKey(name: "sales_return_order_code") this.salesReturnOrderCode,
-      @JsonKey(name: "inventory_id") this.inventoryId,
-      @JsonKey(name: "payment_id") this.paymentId,
-      @JsonKey(name: "payment_status") this.paymentStatus,
-      @JsonKey(name: "customer_id") this.customerId,
-      @JsonKey(name: "trn_number") this.trnNumber,
-      @JsonKey(name: "order_satus") this.orderStatus,
-      @JsonKey(name: "invoice_status") this.invoiceStatus,
-      @JsonKey(name: "unit_cost") this.unitCost,
-      @JsonKey(name: "excess_tax") this.excessTax,
-      @JsonKey(name: "taxable_amount") this.taxableAmount,
-      @JsonKey(name: "selling_price_total") this.sellingPriceTotal,
-      @JsonKey(name: "total_price") this.totalPrice,
-      @JsonKey(name: "return_order_lines") this.returnOrrder,
-      @JsonKey(name: "invoice_data") this.invoicedData});
+      @JsonKey(name: "sales_return_order_code")
+          this.salesReturnOrderCode,
+      @JsonKey(name: "inventory_id")
+          this.inventoryId,
+      @JsonKey(name: "payment_id")
+          this.paymentId,
+      @JsonKey(name: "payment_status")
+          this.paymentStatus,
+      @JsonKey(name: "customer_id")
+          this.customerId,
+      @JsonKey(name: "trn_number")
+          this.trnNumber,
+      @JsonKey(name: "order_satus")
+          this.orderStatus,
+      @JsonKey(name: "invoice_status")
+          this.invoiceStatus,
+      @JsonKey(name: "unit_cost")
+          this.unitCost,
+      @JsonKey(name: "excess_tax")
+          this.excessTax,
+      @JsonKey(name: "taxable_amount")
+          this.taxableAmount,
+      @JsonKey(name: "selling_price_total")
+          this.sellingPriceTotal,
+      @JsonKey(name: "total_price")
+          this.totalPrice,
+      @JsonKey(name: "return_order_lines")
+          final List<SalesReturnLinesOrderLines>? returnOrrder,
+      @JsonKey(name: "invoice_data")
+          this.invoicedData})
+      : _returnOrrder = returnOrrder;
 
   factory _$_SalesReturnInvoiceReadModel2.fromJson(Map<String, dynamic> json) =>
       _$$_SalesReturnInvoiceReadModel2FromJson(json);
@@ -522,9 +476,16 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
   @override
   @JsonKey(name: "total_price")
   final double? totalPrice;
+  final List<SalesReturnLinesOrderLines>? _returnOrrder;
   @override
   @JsonKey(name: "return_order_lines")
-  final List<SalesReturnLinesOrderLines>? returnOrrder;
+  List<SalesReturnLinesOrderLines>? get returnOrrder {
+    final value = _returnOrrder;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "invoice_data")
   final InvoicedDatasSalesReturn? invoicedData;
@@ -537,192 +498,177 @@ class _$_SalesReturnInvoiceReadModel2 implements _SalesReturnInvoiceReadModel2 {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SalesReturnInvoiceReadModel2 &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_SalesReturnInvoiceReadModel2 &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
+                other.discount == discount) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.salesReturnOrderCode, salesReturnOrderCode) ||
-                const DeepCollectionEquality().equals(
-                    other.salesReturnOrderCode, salesReturnOrderCode)) &&
+                other.salesReturnOrderCode == salesReturnOrderCode) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.paymentId, paymentId) ||
-                const DeepCollectionEquality()
-                    .equals(other.paymentId, paymentId)) &&
+                other.paymentId == paymentId) &&
             (identical(other.paymentStatus, paymentStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.paymentStatus, paymentStatus)) &&
+                other.paymentStatus == paymentStatus) &&
             (identical(other.customerId, customerId) ||
-                const DeepCollectionEquality()
-                    .equals(other.customerId, customerId)) &&
+                other.customerId == customerId) &&
             (identical(other.trnNumber, trnNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.trnNumber, trnNumber)) &&
+                other.trnNumber == trnNumber) &&
             (identical(other.orderStatus, orderStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.orderStatus, orderStatus)) &&
+                other.orderStatus == orderStatus) &&
             (identical(other.invoiceStatus, invoiceStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoiceStatus, invoiceStatus)) &&
+                other.invoiceStatus == invoiceStatus) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
+                other.unitCost == unitCost) &&
             (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
+                other.excessTax == excessTax) &&
             (identical(other.taxableAmount, taxableAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.taxableAmount, taxableAmount)) &&
+                other.taxableAmount == taxableAmount) &&
             (identical(other.sellingPriceTotal, sellingPriceTotal) ||
-                const DeepCollectionEquality()
-                    .equals(other.sellingPriceTotal, sellingPriceTotal)) &&
+                other.sellingPriceTotal == sellingPriceTotal) &&
             (identical(other.totalPrice, totalPrice) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalPrice, totalPrice)) &&
-            (identical(other.returnOrrder, returnOrrder) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnOrrder, returnOrrder)) &&
+                other.totalPrice == totalPrice) &&
+            const DeepCollectionEquality()
+                .equals(other._returnOrrder, _returnOrrder) &&
             (identical(other.invoicedData, invoicedData) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoicedData, invoicedData)));
+                other.invoicedData == invoicedData));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(discount) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(salesReturnOrderCode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(paymentId) ^
-      const DeepCollectionEquality().hash(paymentStatus) ^
-      const DeepCollectionEquality().hash(customerId) ^
-      const DeepCollectionEquality().hash(trnNumber) ^
-      const DeepCollectionEquality().hash(orderStatus) ^
-      const DeepCollectionEquality().hash(invoiceStatus) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(taxableAmount) ^
-      const DeepCollectionEquality().hash(sellingPriceTotal) ^
-      const DeepCollectionEquality().hash(totalPrice) ^
-      const DeepCollectionEquality().hash(returnOrrder) ^
-      const DeepCollectionEquality().hash(invoicedData);
 
   @JsonKey(ignore: true)
   @override
-  _$SalesReturnInvoiceReadModel2CopyWith<_SalesReturnInvoiceReadModel2>
-      get copyWith => __$SalesReturnInvoiceReadModel2CopyWithImpl<
-          _SalesReturnInvoiceReadModel2>(this, _$identity);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      discount,
+      vat,
+      salesReturnOrderCode,
+      inventoryId,
+      paymentId,
+      paymentStatus,
+      customerId,
+      trnNumber,
+      orderStatus,
+      invoiceStatus,
+      unitCost,
+      excessTax,
+      taxableAmount,
+      sellingPriceTotal,
+      totalPrice,
+      const DeepCollectionEquality().hash(_returnOrrder),
+      invoicedData);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SalesReturnInvoiceReadModel2CopyWith<_$_SalesReturnInvoiceReadModel2>
+      get copyWith => __$$_SalesReturnInvoiceReadModel2CopyWithImpl<
+          _$_SalesReturnInvoiceReadModel2>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SalesReturnInvoiceReadModel2ToJson(this);
+    return _$$_SalesReturnInvoiceReadModel2ToJson(
+      this,
+    );
   }
 }
 
 abstract class _SalesReturnInvoiceReadModel2
     implements SalesReturnInvoiceReadModel2 {
   const factory _SalesReturnInvoiceReadModel2(
-          {int? id,
-          double? discount,
-          double? vat,
+          {final int? id,
+          final double? discount,
+          final double? vat,
           @JsonKey(name: "sales_return_order_code")
-              String? salesReturnOrderCode,
+              final String? salesReturnOrderCode,
           @JsonKey(name: "inventory_id")
-              String? inventoryId,
+              final String? inventoryId,
           @JsonKey(name: "payment_id")
-              String? paymentId,
+              final String? paymentId,
           @JsonKey(name: "payment_status")
-              String? paymentStatus,
+              final String? paymentStatus,
           @JsonKey(name: "customer_id")
-              String? customerId,
+              final String? customerId,
           @JsonKey(name: "trn_number")
-              String? trnNumber,
+              final String? trnNumber,
           @JsonKey(name: "order_satus")
-              String? orderStatus,
+              final String? orderStatus,
           @JsonKey(name: "invoice_status")
-              String? invoiceStatus,
+              final String? invoiceStatus,
           @JsonKey(name: "unit_cost")
-              double? unitCost,
+              final double? unitCost,
           @JsonKey(name: "excess_tax")
-              double? excessTax,
+              final double? excessTax,
           @JsonKey(name: "taxable_amount")
-              double? taxableAmount,
+              final double? taxableAmount,
           @JsonKey(name: "selling_price_total")
-              double? sellingPriceTotal,
+              final double? sellingPriceTotal,
           @JsonKey(name: "total_price")
-              double? totalPrice,
+              final double? totalPrice,
           @JsonKey(name: "return_order_lines")
-              List<SalesReturnLinesOrderLines>? returnOrrder,
+              final List<SalesReturnLinesOrderLines>? returnOrrder,
           @JsonKey(name: "invoice_data")
-              InvoicedDatasSalesReturn? invoicedData}) =
+              final InvoicedDatasSalesReturn? invoicedData}) =
       _$_SalesReturnInvoiceReadModel2;
 
   factory _SalesReturnInvoiceReadModel2.fromJson(Map<String, dynamic> json) =
       _$_SalesReturnInvoiceReadModel2.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  double? get discount => throw _privateConstructorUsedError;
+  double? get discount;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
   @JsonKey(name: "sales_return_order_code")
-  String? get salesReturnOrderCode => throw _privateConstructorUsedError;
+  String? get salesReturnOrderCode;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "payment_id")
-  String? get paymentId => throw _privateConstructorUsedError;
+  String? get paymentId;
   @override
   @JsonKey(name: "payment_status")
-  String? get paymentStatus => throw _privateConstructorUsedError;
+  String? get paymentStatus;
   @override
   @JsonKey(name: "customer_id")
-  String? get customerId => throw _privateConstructorUsedError;
+  String? get customerId;
   @override
   @JsonKey(name: "trn_number")
-  String? get trnNumber => throw _privateConstructorUsedError;
+  String? get trnNumber;
   @override
   @JsonKey(name: "order_satus")
-  String? get orderStatus => throw _privateConstructorUsedError;
+  String? get orderStatus;
   @override
   @JsonKey(name: "invoice_status")
-  String? get invoiceStatus => throw _privateConstructorUsedError;
+  String? get invoiceStatus;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "taxable_amount")
-  double? get taxableAmount => throw _privateConstructorUsedError;
+  double? get taxableAmount;
   @override
   @JsonKey(name: "selling_price_total")
-  double? get sellingPriceTotal => throw _privateConstructorUsedError;
+  double? get sellingPriceTotal;
   @override
   @JsonKey(name: "total_price")
-  double? get totalPrice => throw _privateConstructorUsedError;
+  double? get totalPrice;
   @override
   @JsonKey(name: "return_order_lines")
-  List<SalesReturnLinesOrderLines>? get returnOrrder =>
-      throw _privateConstructorUsedError;
+  List<SalesReturnLinesOrderLines>? get returnOrrder;
   @override
   @JsonKey(name: "invoice_data")
-  InvoicedDatasSalesReturn? get invoicedData =>
-      throw _privateConstructorUsedError;
+  InvoicedDatasSalesReturn? get invoicedData;
   @override
   @JsonKey(ignore: true)
-  _$SalesReturnInvoiceReadModel2CopyWith<_SalesReturnInvoiceReadModel2>
+  _$$_SalesReturnInvoiceReadModel2CopyWith<_$_SalesReturnInvoiceReadModel2>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -730,93 +676,6 @@ SalesReturnLinesOrderLines _$SalesReturnLinesOrderLinesFromJson(
     Map<String, dynamic> json) {
   return _SalesReturnLinesOrderLines.fromJson(json);
 }
-
-/// @nodoc
-class _$SalesReturnLinesOrderLinesTearOff {
-  const _$SalesReturnLinesOrderLinesTearOff();
-
-  _SalesReturnLinesOrderLines call(
-      {int? id,
-      int? quantity,
-      String? barcode,
-      double? discount,
-      double? vat,
-      @JsonKey(name: "variant_id")
-          String? variantId,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
-      @JsonKey(name: "invoice_line_id")
-          String? invoiceLineId,
-      @JsonKey(name: "sales_return_order_line_code")
-          String? salesReturnOrderLineCode,
-      @JsonKey(name: "invoice_return_line_code")
-          String? invoiceReturnLineCode,
-      @JsonKey(name: "stock_id")
-          String? stockId,
-      @JsonKey(name: "warranty_id")
-          String? warrantyId,
-      @JsonKey(name: "sales_uom")
-          String? salesUOM,
-      @JsonKey(name: "discount_type")
-          String? discountType,
-      @JsonKey(name: "return_type")
-          String? returnType,
-      @JsonKey(name: "return_time")
-          String? returnTime,
-      @JsonKey(name: "total_qty")
-          int? totalQty,
-      @JsonKey(name: "sales_return_order_id")
-          int? salesReturnOrderLineId,
-      @JsonKey(name: "is_invoiced", defaultValue: false)
-          bool? isInvoiced,
-      @JsonKey(name: "unit_cost")
-          double? unitCost,
-      @JsonKey(name: "excess_tax")
-          double? excessTax,
-      @JsonKey(name: "taxable_amount")
-          double? taxableAmount,
-      @JsonKey(name: "selling_price")
-          double? sellingPriceTotal,
-      @JsonKey(name: "total_price")
-          double? totalPrice,
-      @JsonKey(name: "warranty_price")
-          double? warrentyPrice}) {
-    return _SalesReturnLinesOrderLines(
-      id: id,
-      quantity: quantity,
-      barcode: barcode,
-      discount: discount,
-      vat: vat,
-      variantId: variantId,
-      inventoryId: inventoryId,
-      invoiceLineId: invoiceLineId,
-      salesReturnOrderLineCode: salesReturnOrderLineCode,
-      invoiceReturnLineCode: invoiceReturnLineCode,
-      stockId: stockId,
-      warrantyId: warrantyId,
-      salesUOM: salesUOM,
-      discountType: discountType,
-      returnType: returnType,
-      returnTime: returnTime,
-      totalQty: totalQty,
-      salesReturnOrderLineId: salesReturnOrderLineId,
-      isInvoiced: isInvoiced,
-      unitCost: unitCost,
-      excessTax: excessTax,
-      taxableAmount: taxableAmount,
-      sellingPriceTotal: sellingPriceTotal,
-      totalPrice: totalPrice,
-      warrentyPrice: warrentyPrice,
-    );
-  }
-
-  SalesReturnLinesOrderLines fromJson(Map<String, Object> json) {
-    return SalesReturnLinesOrderLines.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $SalesReturnLinesOrderLines = _$SalesReturnLinesOrderLinesTearOff();
 
 /// @nodoc
 mixin _$SalesReturnLinesOrderLines {
@@ -876,7 +735,9 @@ mixin _$SalesReturnLinesOrderLines {
 abstract class $SalesReturnLinesOrderLinesCopyWith<$Res> {
   factory $SalesReturnLinesOrderLinesCopyWith(SalesReturnLinesOrderLines value,
           $Res Function(SalesReturnLinesOrderLines) then) =
-      _$SalesReturnLinesOrderLinesCopyWithImpl<$Res>;
+      _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
+          SalesReturnLinesOrderLines>;
+  @useResult
   $Res call(
       {int? id,
       int? quantity,
@@ -926,14 +787,17 @@ abstract class $SalesReturnLinesOrderLinesCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res>
+class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
+        $Val extends SalesReturnLinesOrderLines>
     implements $SalesReturnLinesOrderLinesCopyWith<$Res> {
   _$SalesReturnLinesOrderLinesCopyWithImpl(this._value, this._then);
 
-  final SalesReturnLinesOrderLines _value;
   // ignore: unused_field
-  final $Res Function(SalesReturnLinesOrderLines) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -963,118 +827,119 @@ class _$SalesReturnLinesOrderLinesCopyWithImpl<$Res>
     Object? warrentyPrice = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceLineId: invoiceLineId == freezed
+      invoiceLineId: freezed == invoiceLineId
           ? _value.invoiceLineId
           : invoiceLineId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesReturnOrderLineCode: salesReturnOrderLineCode == freezed
+      salesReturnOrderLineCode: freezed == salesReturnOrderLineCode
           ? _value.salesReturnOrderLineCode
           : salesReturnOrderLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceReturnLineCode: invoiceReturnLineCode == freezed
+      invoiceReturnLineCode: freezed == invoiceReturnLineCode
           ? _value.invoiceReturnLineCode
           : invoiceReturnLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockId: stockId == freezed
+      stockId: freezed == stockId
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as String?,
-      warrantyId: warrantyId == freezed
+      warrantyId: freezed == warrantyId
           ? _value.warrantyId
           : warrantyId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesUOM: salesUOM == freezed
+      salesUOM: freezed == salesUOM
           ? _value.salesUOM
           : salesUOM // ignore: cast_nullable_to_non_nullable
               as String?,
-      discountType: discountType == freezed
+      discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: totalQty == freezed
+      totalQty: freezed == totalQty
           ? _value.totalQty
           : totalQty // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesReturnOrderLineId: salesReturnOrderLineId == freezed
+      salesReturnOrderLineId: freezed == salesReturnOrderLineId
           ? _value.salesReturnOrderLineId
           : salesReturnOrderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isInvoiced: isInvoiced == freezed
+      isInvoiced: freezed == isInvoiced
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
               as bool?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      warrentyPrice: warrentyPrice == freezed
+      warrentyPrice: freezed == warrentyPrice
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$SalesReturnLinesOrderLinesCopyWith<$Res>
+abstract class _$$_SalesReturnLinesOrderLinesCopyWith<$Res>
     implements $SalesReturnLinesOrderLinesCopyWith<$Res> {
-  factory _$SalesReturnLinesOrderLinesCopyWith(
-          _SalesReturnLinesOrderLines value,
-          $Res Function(_SalesReturnLinesOrderLines) then) =
-      __$SalesReturnLinesOrderLinesCopyWithImpl<$Res>;
+  factory _$$_SalesReturnLinesOrderLinesCopyWith(
+          _$_SalesReturnLinesOrderLines value,
+          $Res Function(_$_SalesReturnLinesOrderLines) then) =
+      __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       int? quantity,
@@ -1124,17 +989,16 @@ abstract class _$SalesReturnLinesOrderLinesCopyWith<$Res>
 }
 
 /// @nodoc
-class __$SalesReturnLinesOrderLinesCopyWithImpl<$Res>
-    extends _$SalesReturnLinesOrderLinesCopyWithImpl<$Res>
-    implements _$SalesReturnLinesOrderLinesCopyWith<$Res> {
-  __$SalesReturnLinesOrderLinesCopyWithImpl(_SalesReturnLinesOrderLines _value,
-      $Res Function(_SalesReturnLinesOrderLines) _then)
-      : super(_value, (v) => _then(v as _SalesReturnLinesOrderLines));
+class __$$_SalesReturnLinesOrderLinesCopyWithImpl<$Res>
+    extends _$SalesReturnLinesOrderLinesCopyWithImpl<$Res,
+        _$_SalesReturnLinesOrderLines>
+    implements _$$_SalesReturnLinesOrderLinesCopyWith<$Res> {
+  __$$_SalesReturnLinesOrderLinesCopyWithImpl(
+      _$_SalesReturnLinesOrderLines _value,
+      $Res Function(_$_SalesReturnLinesOrderLines) _then)
+      : super(_value, _then);
 
-  @override
-  _SalesReturnLinesOrderLines get _value =>
-      super._value as _SalesReturnLinesOrderLines;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1163,104 +1027,104 @@ class __$SalesReturnLinesOrderLinesCopyWithImpl<$Res>
     Object? totalPrice = freezed,
     Object? warrentyPrice = freezed,
   }) {
-    return _then(_SalesReturnLinesOrderLines(
-      id: id == freezed
+    return _then(_$_SalesReturnLinesOrderLines(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      variantId: variantId == freezed
+      variantId: freezed == variantId
           ? _value.variantId
           : variantId // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceLineId: invoiceLineId == freezed
+      invoiceLineId: freezed == invoiceLineId
           ? _value.invoiceLineId
           : invoiceLineId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesReturnOrderLineCode: salesReturnOrderLineCode == freezed
+      salesReturnOrderLineCode: freezed == salesReturnOrderLineCode
           ? _value.salesReturnOrderLineCode
           : salesReturnOrderLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceReturnLineCode: invoiceReturnLineCode == freezed
+      invoiceReturnLineCode: freezed == invoiceReturnLineCode
           ? _value.invoiceReturnLineCode
           : invoiceReturnLineCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      stockId: stockId == freezed
+      stockId: freezed == stockId
           ? _value.stockId
           : stockId // ignore: cast_nullable_to_non_nullable
               as String?,
-      warrantyId: warrantyId == freezed
+      warrantyId: freezed == warrantyId
           ? _value.warrantyId
           : warrantyId // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesUOM: salesUOM == freezed
+      salesUOM: freezed == salesUOM
           ? _value.salesUOM
           : salesUOM // ignore: cast_nullable_to_non_nullable
               as String?,
-      discountType: discountType == freezed
+      discountType: freezed == discountType
           ? _value.discountType
           : discountType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnType: returnType == freezed
+      returnType: freezed == returnType
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
-      returnTime: returnTime == freezed
+      returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
               as String?,
-      totalQty: totalQty == freezed
+      totalQty: freezed == totalQty
           ? _value.totalQty
           : totalQty // ignore: cast_nullable_to_non_nullable
               as int?,
-      salesReturnOrderLineId: salesReturnOrderLineId == freezed
+      salesReturnOrderLineId: freezed == salesReturnOrderLineId
           ? _value.salesReturnOrderLineId
           : salesReturnOrderLineId // ignore: cast_nullable_to_non_nullable
               as int?,
-      isInvoiced: isInvoiced == freezed
+      isInvoiced: freezed == isInvoiced
           ? _value.isInvoiced
           : isInvoiced // ignore: cast_nullable_to_non_nullable
               as bool?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      warrentyPrice: warrentyPrice == freezed
+      warrentyPrice: freezed == warrentyPrice
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
@@ -1400,236 +1264,228 @@ class _$_SalesReturnLinesOrderLines implements _SalesReturnLinesOrderLines {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _SalesReturnLinesOrderLines &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_SalesReturnLinesOrderLines &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.quantity, quantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.quantity, quantity)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
+                other.quantity == quantity) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
+                other.discount == discount) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.variantId, variantId) ||
-                const DeepCollectionEquality()
-                    .equals(other.variantId, variantId)) &&
+                other.variantId == variantId) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.invoiceLineId, invoiceLineId) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoiceLineId, invoiceLineId)) &&
-            (identical(other.salesReturnOrderLineCode, salesReturnOrderLineCode) ||
-                const DeepCollectionEquality().equals(
-                    other.salesReturnOrderLineCode,
-                    salesReturnOrderLineCode)) &&
+                other.invoiceLineId == invoiceLineId) &&
+            (identical(
+                    other.salesReturnOrderLineCode, salesReturnOrderLineCode) ||
+                other.salesReturnOrderLineCode == salesReturnOrderLineCode) &&
             (identical(other.invoiceReturnLineCode, invoiceReturnLineCode) ||
-                const DeepCollectionEquality().equals(
-                    other.invoiceReturnLineCode, invoiceReturnLineCode)) &&
-            (identical(other.stockId, stockId) ||
-                const DeepCollectionEquality()
-                    .equals(other.stockId, stockId)) &&
+                other.invoiceReturnLineCode == invoiceReturnLineCode) &&
+            (identical(other.stockId, stockId) || other.stockId == stockId) &&
             (identical(other.warrantyId, warrantyId) ||
-                const DeepCollectionEquality()
-                    .equals(other.warrantyId, warrantyId)) &&
+                other.warrantyId == warrantyId) &&
             (identical(other.salesUOM, salesUOM) ||
-                const DeepCollectionEquality()
-                    .equals(other.salesUOM, salesUOM)) &&
+                other.salesUOM == salesUOM) &&
             (identical(other.discountType, discountType) ||
-                const DeepCollectionEquality()
-                    .equals(other.discountType, discountType)) &&
+                other.discountType == discountType) &&
             (identical(other.returnType, returnType) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnType, returnType)) &&
+                other.returnType == returnType) &&
             (identical(other.returnTime, returnTime) ||
-                const DeepCollectionEquality()
-                    .equals(other.returnTime, returnTime)) &&
+                other.returnTime == returnTime) &&
             (identical(other.totalQty, totalQty) ||
-                const DeepCollectionEquality()
-                    .equals(other.totalQty, totalQty)) &&
+                other.totalQty == totalQty) &&
             (identical(other.salesReturnOrderLineId, salesReturnOrderLineId) ||
-                const DeepCollectionEquality().equals(
-                    other.salesReturnOrderLineId, salesReturnOrderLineId)) &&
+                other.salesReturnOrderLineId == salesReturnOrderLineId) &&
             (identical(other.isInvoiced, isInvoiced) ||
-                const DeepCollectionEquality().equals(other.isInvoiced, isInvoiced)) &&
-            (identical(other.unitCost, unitCost) || const DeepCollectionEquality().equals(other.unitCost, unitCost)) &&
-            (identical(other.excessTax, excessTax) || const DeepCollectionEquality().equals(other.excessTax, excessTax)) &&
-            (identical(other.taxableAmount, taxableAmount) || const DeepCollectionEquality().equals(other.taxableAmount, taxableAmount)) &&
-            (identical(other.sellingPriceTotal, sellingPriceTotal) || const DeepCollectionEquality().equals(other.sellingPriceTotal, sellingPriceTotal)) &&
-            (identical(other.totalPrice, totalPrice) || const DeepCollectionEquality().equals(other.totalPrice, totalPrice)) &&
-            (identical(other.warrentyPrice, warrentyPrice) || const DeepCollectionEquality().equals(other.warrentyPrice, warrentyPrice)));
+                other.isInvoiced == isInvoiced) &&
+            (identical(other.unitCost, unitCost) ||
+                other.unitCost == unitCost) &&
+            (identical(other.excessTax, excessTax) ||
+                other.excessTax == excessTax) &&
+            (identical(other.taxableAmount, taxableAmount) ||
+                other.taxableAmount == taxableAmount) &&
+            (identical(other.sellingPriceTotal, sellingPriceTotal) ||
+                other.sellingPriceTotal == sellingPriceTotal) &&
+            (identical(other.totalPrice, totalPrice) ||
+                other.totalPrice == totalPrice) &&
+            (identical(other.warrentyPrice, warrentyPrice) ||
+                other.warrentyPrice == warrentyPrice));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(quantity) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(discount) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(variantId) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(invoiceLineId) ^
-      const DeepCollectionEquality().hash(salesReturnOrderLineCode) ^
-      const DeepCollectionEquality().hash(invoiceReturnLineCode) ^
-      const DeepCollectionEquality().hash(stockId) ^
-      const DeepCollectionEquality().hash(warrantyId) ^
-      const DeepCollectionEquality().hash(salesUOM) ^
-      const DeepCollectionEquality().hash(discountType) ^
-      const DeepCollectionEquality().hash(returnType) ^
-      const DeepCollectionEquality().hash(returnTime) ^
-      const DeepCollectionEquality().hash(totalQty) ^
-      const DeepCollectionEquality().hash(salesReturnOrderLineId) ^
-      const DeepCollectionEquality().hash(isInvoiced) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(taxableAmount) ^
-      const DeepCollectionEquality().hash(sellingPriceTotal) ^
-      const DeepCollectionEquality().hash(totalPrice) ^
-      const DeepCollectionEquality().hash(warrentyPrice);
 
   @JsonKey(ignore: true)
   @override
-  _$SalesReturnLinesOrderLinesCopyWith<_SalesReturnLinesOrderLines>
-      get copyWith => __$SalesReturnLinesOrderLinesCopyWithImpl<
-          _SalesReturnLinesOrderLines>(this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        quantity,
+        barcode,
+        discount,
+        vat,
+        variantId,
+        inventoryId,
+        invoiceLineId,
+        salesReturnOrderLineCode,
+        invoiceReturnLineCode,
+        stockId,
+        warrantyId,
+        salesUOM,
+        discountType,
+        returnType,
+        returnTime,
+        totalQty,
+        salesReturnOrderLineId,
+        isInvoiced,
+        unitCost,
+        excessTax,
+        taxableAmount,
+        sellingPriceTotal,
+        totalPrice,
+        warrentyPrice
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_SalesReturnLinesOrderLinesCopyWith<_$_SalesReturnLinesOrderLines>
+      get copyWith => __$$_SalesReturnLinesOrderLinesCopyWithImpl<
+          _$_SalesReturnLinesOrderLines>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SalesReturnLinesOrderLinesToJson(this);
+    return _$$_SalesReturnLinesOrderLinesToJson(
+      this,
+    );
   }
 }
 
 abstract class _SalesReturnLinesOrderLines
     implements SalesReturnLinesOrderLines {
   const factory _SalesReturnLinesOrderLines(
-      {int? id,
-      int? quantity,
-      String? barcode,
-      double? discount,
-      double? vat,
+      {final int? id,
+      final int? quantity,
+      final String? barcode,
+      final double? discount,
+      final double? vat,
       @JsonKey(name: "variant_id")
-          String? variantId,
+          final String? variantId,
       @JsonKey(name: "inventory_id")
-          String? inventoryId,
+          final String? inventoryId,
       @JsonKey(name: "invoice_line_id")
-          String? invoiceLineId,
+          final String? invoiceLineId,
       @JsonKey(name: "sales_return_order_line_code")
-          String? salesReturnOrderLineCode,
+          final String? salesReturnOrderLineCode,
       @JsonKey(name: "invoice_return_line_code")
-          String? invoiceReturnLineCode,
+          final String? invoiceReturnLineCode,
       @JsonKey(name: "stock_id")
-          String? stockId,
+          final String? stockId,
       @JsonKey(name: "warranty_id")
-          String? warrantyId,
+          final String? warrantyId,
       @JsonKey(name: "sales_uom")
-          String? salesUOM,
+          final String? salesUOM,
       @JsonKey(name: "discount_type")
-          String? discountType,
+          final String? discountType,
       @JsonKey(name: "return_type")
-          String? returnType,
+          final String? returnType,
       @JsonKey(name: "return_time")
-          String? returnTime,
+          final String? returnTime,
       @JsonKey(name: "total_qty")
-          int? totalQty,
+          final int? totalQty,
       @JsonKey(name: "sales_return_order_id")
-          int? salesReturnOrderLineId,
+          final int? salesReturnOrderLineId,
       @JsonKey(name: "is_invoiced", defaultValue: false)
-          bool? isInvoiced,
+          final bool? isInvoiced,
       @JsonKey(name: "unit_cost")
-          double? unitCost,
+          final double? unitCost,
       @JsonKey(name: "excess_tax")
-          double? excessTax,
+          final double? excessTax,
       @JsonKey(name: "taxable_amount")
-          double? taxableAmount,
+          final double? taxableAmount,
       @JsonKey(name: "selling_price")
-          double? sellingPriceTotal,
+          final double? sellingPriceTotal,
       @JsonKey(name: "total_price")
-          double? totalPrice,
+          final double? totalPrice,
       @JsonKey(name: "warranty_price")
-          double? warrentyPrice}) = _$_SalesReturnLinesOrderLines;
+          final double? warrentyPrice}) = _$_SalesReturnLinesOrderLines;
 
   factory _SalesReturnLinesOrderLines.fromJson(Map<String, dynamic> json) =
       _$_SalesReturnLinesOrderLines.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  int? get quantity => throw _privateConstructorUsedError;
+  int? get quantity;
   @override
-  String? get barcode => throw _privateConstructorUsedError;
+  String? get barcode;
   @override
-  double? get discount => throw _privateConstructorUsedError;
+  double? get discount;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
   @JsonKey(name: "variant_id")
-  String? get variantId => throw _privateConstructorUsedError;
+  String? get variantId;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "invoice_line_id")
-  String? get invoiceLineId => throw _privateConstructorUsedError;
+  String? get invoiceLineId;
   @override
   @JsonKey(name: "sales_return_order_line_code")
-  String? get salesReturnOrderLineCode => throw _privateConstructorUsedError;
+  String? get salesReturnOrderLineCode;
   @override
   @JsonKey(name: "invoice_return_line_code")
-  String? get invoiceReturnLineCode => throw _privateConstructorUsedError;
+  String? get invoiceReturnLineCode;
   @override
   @JsonKey(name: "stock_id")
-  String? get stockId => throw _privateConstructorUsedError;
+  String? get stockId;
   @override
   @JsonKey(name: "warranty_id")
-  String? get warrantyId => throw _privateConstructorUsedError;
+  String? get warrantyId;
   @override
   @JsonKey(name: "sales_uom")
-  String? get salesUOM => throw _privateConstructorUsedError;
+  String? get salesUOM;
   @override
   @JsonKey(name: "discount_type")
-  String? get discountType => throw _privateConstructorUsedError;
+  String? get discountType;
   @override
   @JsonKey(name: "return_type")
-  String? get returnType => throw _privateConstructorUsedError;
+  String? get returnType;
   @override
   @JsonKey(name: "return_time")
-  String? get returnTime => throw _privateConstructorUsedError;
+  String? get returnTime;
   @override
   @JsonKey(name: "total_qty")
-  int? get totalQty => throw _privateConstructorUsedError;
+  int? get totalQty;
   @override
   @JsonKey(name: "sales_return_order_id")
-  int? get salesReturnOrderLineId => throw _privateConstructorUsedError;
+  int? get salesReturnOrderLineId;
   @override
   @JsonKey(name: "is_invoiced", defaultValue: false)
-  bool? get isInvoiced => throw _privateConstructorUsedError;
+  bool? get isInvoiced;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "taxable_amount")
-  double? get taxableAmount => throw _privateConstructorUsedError;
+  double? get taxableAmount;
   @override
   @JsonKey(name: "selling_price")
-  double? get sellingPriceTotal => throw _privateConstructorUsedError;
+  double? get sellingPriceTotal;
   @override
   @JsonKey(name: "total_price")
-  double? get totalPrice => throw _privateConstructorUsedError;
+  double? get totalPrice;
   @override
   @JsonKey(name: "warranty_price")
-  double? get warrentyPrice => throw _privateConstructorUsedError;
+  double? get warrentyPrice;
   @override
   @JsonKey(ignore: true)
-  _$SalesReturnLinesOrderLinesCopyWith<_SalesReturnLinesOrderLines>
+  _$$_SalesReturnLinesOrderLinesCopyWith<_$_SalesReturnLinesOrderLines>
       get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -1637,94 +1493,6 @@ InvoicedDatasSalesReturn _$InvoicedDatasSalesReturnFromJson(
     Map<String, dynamic> json) {
   return _InvoicedDatasSalesReturn.fromJson(json);
 }
-
-/// @nodoc
-class _$InvoicedDatasSalesReturnTearOff {
-  const _$InvoicedDatasSalesReturnTearOff();
-
-  _InvoicedDatasSalesReturn call(
-      {int? id,
-      int? quantity,
-      String? barcode,
-      String? notes,
-      String? remarks,
-      double? discount,
-      double? vat,
-      @JsonKey(name: "sales_return_order_code")
-          String? salesReturnOrderCode,
-      @JsonKey(name: "sales_return_invoice_code")
-          String? salesReturnInvoiceCode,
-      @JsonKey(name: "inventory_id")
-          String? inventoryId,
-      @JsonKey(name: "customer_id")
-          String? customerId,
-      @JsonKey(name: "customer_trn_number")
-          String? customerTrnNumber,
-      @JsonKey(name: "invoiced_by")
-          String? invoicedBy,
-      @JsonKey(name: "created_date")
-          String? createdDate,
-      @JsonKey(name: "invoice_status")
-          String? invoiceStatus,
-      @JsonKey(name: "payment_method")
-          String? paymentMethod,
-      @JsonKey(name: "payment_status")
-          String? paymentStatus,
-      @JsonKey(name: "payment_code")
-          String? paymentCode,
-      @JsonKey(name: "assigned_to")
-          String? assignedTo,
-      @JsonKey(name: "excess_tax")
-          double? excessTax,
-      @JsonKey(name: "unit_cost")
-          double? unitCost,
-      @JsonKey(name: "taxable_amount")
-          double? taxableAmount,
-      @JsonKey(name: "selling_price_total")
-          double? sellingPriceTotal,
-      @JsonKey(name: "total_price")
-          double? totalPrice,
-      @JsonKey(name: "warranty_price")
-          double? warrentyPrice,
-      @JsonKey(name: "invoice_lines")
-          List<SalesReturnLinesOrderLines>? lines}) {
-    return _InvoicedDatasSalesReturn(
-      id: id,
-      quantity: quantity,
-      barcode: barcode,
-      notes: notes,
-      remarks: remarks,
-      discount: discount,
-      vat: vat,
-      salesReturnOrderCode: salesReturnOrderCode,
-      salesReturnInvoiceCode: salesReturnInvoiceCode,
-      inventoryId: inventoryId,
-      customerId: customerId,
-      customerTrnNumber: customerTrnNumber,
-      invoicedBy: invoicedBy,
-      createdDate: createdDate,
-      invoiceStatus: invoiceStatus,
-      paymentMethod: paymentMethod,
-      paymentStatus: paymentStatus,
-      paymentCode: paymentCode,
-      assignedTo: assignedTo,
-      excessTax: excessTax,
-      unitCost: unitCost,
-      taxableAmount: taxableAmount,
-      sellingPriceTotal: sellingPriceTotal,
-      totalPrice: totalPrice,
-      warrentyPrice: warrentyPrice,
-      lines: lines,
-    );
-  }
-
-  InvoicedDatasSalesReturn fromJson(Map<String, Object> json) {
-    return InvoicedDatasSalesReturn.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $InvoicedDatasSalesReturn = _$InvoicedDatasSalesReturnTearOff();
 
 /// @nodoc
 mixin _$InvoicedDatasSalesReturn {
@@ -1785,7 +1553,8 @@ mixin _$InvoicedDatasSalesReturn {
 abstract class $InvoicedDatasSalesReturnCopyWith<$Res> {
   factory $InvoicedDatasSalesReturnCopyWith(InvoicedDatasSalesReturn value,
           $Res Function(InvoicedDatasSalesReturn) then) =
-      _$InvoicedDatasSalesReturnCopyWithImpl<$Res>;
+      _$InvoicedDatasSalesReturnCopyWithImpl<$Res, InvoicedDatasSalesReturn>;
+  @useResult
   $Res call(
       {int? id,
       int? quantity,
@@ -1835,14 +1604,17 @@ abstract class $InvoicedDatasSalesReturnCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$InvoicedDatasSalesReturnCopyWithImpl<$Res>
+class _$InvoicedDatasSalesReturnCopyWithImpl<$Res,
+        $Val extends InvoicedDatasSalesReturn>
     implements $InvoicedDatasSalesReturnCopyWith<$Res> {
   _$InvoicedDatasSalesReturnCopyWithImpl(this._value, this._then);
 
-  final InvoicedDatasSalesReturn _value;
   // ignore: unused_field
-  final $Res Function(InvoicedDatasSalesReturn) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -1873,121 +1645,123 @@ class _$InvoicedDatasSalesReturnCopyWithImpl<$Res>
     Object? lines = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      notes: notes == freezed
+      notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      salesReturnOrderCode: salesReturnOrderCode == freezed
+      salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesReturnInvoiceCode: salesReturnInvoiceCode == freezed
+      salesReturnInvoiceCode: freezed == salesReturnInvoiceCode
           ? _value.salesReturnInvoiceCode
           : salesReturnInvoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerTrnNumber: customerTrnNumber == freezed
+      customerTrnNumber: freezed == customerTrnNumber
           ? _value.customerTrnNumber
           : customerTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoicedBy: invoicedBy == freezed
+      invoicedBy: freezed == invoicedBy
           ? _value.invoicedBy
           : invoicedBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceStatus: invoiceStatus == freezed
+      invoiceStatus: freezed == invoiceStatus
           ? _value.invoiceStatus
           : invoiceStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentMethod: paymentMethod == freezed
+      paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentCode: paymentCode == freezed
+      paymentCode: freezed == paymentCode
           ? _value.paymentCode
           : paymentCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignedTo: assignedTo == freezed
+      assignedTo: freezed == assignedTo
           ? _value.assignedTo
           : assignedTo // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      warrentyPrice: warrentyPrice == freezed
+      warrentyPrice: freezed == warrentyPrice
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      lines: lines == freezed
+      lines: freezed == lines
           ? _value.lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$InvoicedDatasSalesReturnCopyWith<$Res>
+abstract class _$$_InvoicedDatasSalesReturnCopyWith<$Res>
     implements $InvoicedDatasSalesReturnCopyWith<$Res> {
-  factory _$InvoicedDatasSalesReturnCopyWith(_InvoicedDatasSalesReturn value,
-          $Res Function(_InvoicedDatasSalesReturn) then) =
-      __$InvoicedDatasSalesReturnCopyWithImpl<$Res>;
+  factory _$$_InvoicedDatasSalesReturnCopyWith(
+          _$_InvoicedDatasSalesReturn value,
+          $Res Function(_$_InvoicedDatasSalesReturn) then) =
+      __$$_InvoicedDatasSalesReturnCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int? id,
       int? quantity,
@@ -2037,17 +1811,15 @@ abstract class _$InvoicedDatasSalesReturnCopyWith<$Res>
 }
 
 /// @nodoc
-class __$InvoicedDatasSalesReturnCopyWithImpl<$Res>
-    extends _$InvoicedDatasSalesReturnCopyWithImpl<$Res>
-    implements _$InvoicedDatasSalesReturnCopyWith<$Res> {
-  __$InvoicedDatasSalesReturnCopyWithImpl(_InvoicedDatasSalesReturn _value,
-      $Res Function(_InvoicedDatasSalesReturn) _then)
-      : super(_value, (v) => _then(v as _InvoicedDatasSalesReturn));
+class __$$_InvoicedDatasSalesReturnCopyWithImpl<$Res>
+    extends _$InvoicedDatasSalesReturnCopyWithImpl<$Res,
+        _$_InvoicedDatasSalesReturn>
+    implements _$$_InvoicedDatasSalesReturnCopyWith<$Res> {
+  __$$_InvoicedDatasSalesReturnCopyWithImpl(_$_InvoicedDatasSalesReturn _value,
+      $Res Function(_$_InvoicedDatasSalesReturn) _then)
+      : super(_value, _then);
 
-  @override
-  _InvoicedDatasSalesReturn get _value =>
-      super._value as _InvoicedDatasSalesReturn;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? id = freezed,
@@ -2077,109 +1849,109 @@ class __$InvoicedDatasSalesReturnCopyWithImpl<$Res>
     Object? warrentyPrice = freezed,
     Object? lines = freezed,
   }) {
-    return _then(_InvoicedDatasSalesReturn(
-      id: id == freezed
+    return _then(_$_InvoicedDatasSalesReturn(
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      quantity: quantity == freezed
+      quantity: freezed == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int?,
-      barcode: barcode == freezed
+      barcode: freezed == barcode
           ? _value.barcode
           : barcode // ignore: cast_nullable_to_non_nullable
               as String?,
-      notes: notes == freezed
+      notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      remarks: remarks == freezed
+      remarks: freezed == remarks
           ? _value.remarks
           : remarks // ignore: cast_nullable_to_non_nullable
               as String?,
-      discount: discount == freezed
+      discount: freezed == discount
           ? _value.discount
           : discount // ignore: cast_nullable_to_non_nullable
               as double?,
-      vat: vat == freezed
+      vat: freezed == vat
           ? _value.vat
           : vat // ignore: cast_nullable_to_non_nullable
               as double?,
-      salesReturnOrderCode: salesReturnOrderCode == freezed
+      salesReturnOrderCode: freezed == salesReturnOrderCode
           ? _value.salesReturnOrderCode
           : salesReturnOrderCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      salesReturnInvoiceCode: salesReturnInvoiceCode == freezed
+      salesReturnInvoiceCode: freezed == salesReturnInvoiceCode
           ? _value.salesReturnInvoiceCode
           : salesReturnInvoiceCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      inventoryId: inventoryId == freezed
+      inventoryId: freezed == inventoryId
           ? _value.inventoryId
           : inventoryId // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerId: customerId == freezed
+      customerId: freezed == customerId
           ? _value.customerId
           : customerId // ignore: cast_nullable_to_non_nullable
               as String?,
-      customerTrnNumber: customerTrnNumber == freezed
+      customerTrnNumber: freezed == customerTrnNumber
           ? _value.customerTrnNumber
           : customerTrnNumber // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoicedBy: invoicedBy == freezed
+      invoicedBy: freezed == invoicedBy
           ? _value.invoicedBy
           : invoicedBy // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdDate: createdDate == freezed
+      createdDate: freezed == createdDate
           ? _value.createdDate
           : createdDate // ignore: cast_nullable_to_non_nullable
               as String?,
-      invoiceStatus: invoiceStatus == freezed
+      invoiceStatus: freezed == invoiceStatus
           ? _value.invoiceStatus
           : invoiceStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentMethod: paymentMethod == freezed
+      paymentMethod: freezed == paymentMethod
           ? _value.paymentMethod
           : paymentMethod // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentStatus: paymentStatus == freezed
+      paymentStatus: freezed == paymentStatus
           ? _value.paymentStatus
           : paymentStatus // ignore: cast_nullable_to_non_nullable
               as String?,
-      paymentCode: paymentCode == freezed
+      paymentCode: freezed == paymentCode
           ? _value.paymentCode
           : paymentCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      assignedTo: assignedTo == freezed
+      assignedTo: freezed == assignedTo
           ? _value.assignedTo
           : assignedTo // ignore: cast_nullable_to_non_nullable
               as String?,
-      excessTax: excessTax == freezed
+      excessTax: freezed == excessTax
           ? _value.excessTax
           : excessTax // ignore: cast_nullable_to_non_nullable
               as double?,
-      unitCost: unitCost == freezed
+      unitCost: freezed == unitCost
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
-      taxableAmount: taxableAmount == freezed
+      taxableAmount: freezed == taxableAmount
           ? _value.taxableAmount
           : taxableAmount // ignore: cast_nullable_to_non_nullable
               as double?,
-      sellingPriceTotal: sellingPriceTotal == freezed
+      sellingPriceTotal: freezed == sellingPriceTotal
           ? _value.sellingPriceTotal
           : sellingPriceTotal // ignore: cast_nullable_to_non_nullable
               as double?,
-      totalPrice: totalPrice == freezed
+      totalPrice: freezed == totalPrice
           ? _value.totalPrice
           : totalPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      warrentyPrice: warrentyPrice == freezed
+      warrentyPrice: freezed == warrentyPrice
           ? _value.warrentyPrice
           : warrentyPrice // ignore: cast_nullable_to_non_nullable
               as double?,
-      lines: lines == freezed
-          ? _value.lines
+      lines: freezed == lines
+          ? _value._lines
           : lines // ignore: cast_nullable_to_non_nullable
               as List<SalesReturnLinesOrderLines>?,
     ));
@@ -2197,25 +1969,45 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
       this.remarks,
       this.discount,
       this.vat,
-      @JsonKey(name: "sales_return_order_code") this.salesReturnOrderCode,
-      @JsonKey(name: "sales_return_invoice_code") this.salesReturnInvoiceCode,
-      @JsonKey(name: "inventory_id") this.inventoryId,
-      @JsonKey(name: "customer_id") this.customerId,
-      @JsonKey(name: "customer_trn_number") this.customerTrnNumber,
-      @JsonKey(name: "invoiced_by") this.invoicedBy,
-      @JsonKey(name: "created_date") this.createdDate,
-      @JsonKey(name: "invoice_status") this.invoiceStatus,
-      @JsonKey(name: "payment_method") this.paymentMethod,
-      @JsonKey(name: "payment_status") this.paymentStatus,
-      @JsonKey(name: "payment_code") this.paymentCode,
-      @JsonKey(name: "assigned_to") this.assignedTo,
-      @JsonKey(name: "excess_tax") this.excessTax,
-      @JsonKey(name: "unit_cost") this.unitCost,
-      @JsonKey(name: "taxable_amount") this.taxableAmount,
-      @JsonKey(name: "selling_price_total") this.sellingPriceTotal,
-      @JsonKey(name: "total_price") this.totalPrice,
-      @JsonKey(name: "warranty_price") this.warrentyPrice,
-      @JsonKey(name: "invoice_lines") this.lines});
+      @JsonKey(name: "sales_return_order_code")
+          this.salesReturnOrderCode,
+      @JsonKey(name: "sales_return_invoice_code")
+          this.salesReturnInvoiceCode,
+      @JsonKey(name: "inventory_id")
+          this.inventoryId,
+      @JsonKey(name: "customer_id")
+          this.customerId,
+      @JsonKey(name: "customer_trn_number")
+          this.customerTrnNumber,
+      @JsonKey(name: "invoiced_by")
+          this.invoicedBy,
+      @JsonKey(name: "created_date")
+          this.createdDate,
+      @JsonKey(name: "invoice_status")
+          this.invoiceStatus,
+      @JsonKey(name: "payment_method")
+          this.paymentMethod,
+      @JsonKey(name: "payment_status")
+          this.paymentStatus,
+      @JsonKey(name: "payment_code")
+          this.paymentCode,
+      @JsonKey(name: "assigned_to")
+          this.assignedTo,
+      @JsonKey(name: "excess_tax")
+          this.excessTax,
+      @JsonKey(name: "unit_cost")
+          this.unitCost,
+      @JsonKey(name: "taxable_amount")
+          this.taxableAmount,
+      @JsonKey(name: "selling_price_total")
+          this.sellingPriceTotal,
+      @JsonKey(name: "total_price")
+          this.totalPrice,
+      @JsonKey(name: "warranty_price")
+          this.warrentyPrice,
+      @JsonKey(name: "invoice_lines")
+          final List<SalesReturnLinesOrderLines>? lines})
+      : _lines = lines;
 
   factory _$_InvoicedDatasSalesReturn.fromJson(Map<String, dynamic> json) =>
       _$$_InvoicedDatasSalesReturnFromJson(json);
@@ -2288,9 +2080,15 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
   @override
   @JsonKey(name: "warranty_price")
   final double? warrentyPrice;
+  final List<SalesReturnLinesOrderLines>? _lines;
   @override
   @JsonKey(name: "invoice_lines")
-  final List<SalesReturnLinesOrderLines>? lines;
+  List<SalesReturnLinesOrderLines>? get lines {
+    final value = _lines;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
@@ -2300,245 +2098,228 @@ class _$_InvoicedDatasSalesReturn implements _InvoicedDatasSalesReturn {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _InvoicedDatasSalesReturn &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$_InvoicedDatasSalesReturn &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.quantity, quantity) ||
-                const DeepCollectionEquality()
-                    .equals(other.quantity, quantity)) &&
-            (identical(other.barcode, barcode) ||
-                const DeepCollectionEquality()
-                    .equals(other.barcode, barcode)) &&
-            (identical(other.notes, notes) ||
-                const DeepCollectionEquality().equals(other.notes, notes)) &&
-            (identical(other.remarks, remarks) ||
-                const DeepCollectionEquality()
-                    .equals(other.remarks, remarks)) &&
+                other.quantity == quantity) &&
+            (identical(other.barcode, barcode) || other.barcode == barcode) &&
+            (identical(other.notes, notes) || other.notes == notes) &&
+            (identical(other.remarks, remarks) || other.remarks == remarks) &&
             (identical(other.discount, discount) ||
-                const DeepCollectionEquality()
-                    .equals(other.discount, discount)) &&
-            (identical(other.vat, vat) ||
-                const DeepCollectionEquality().equals(other.vat, vat)) &&
+                other.discount == discount) &&
+            (identical(other.vat, vat) || other.vat == vat) &&
             (identical(other.salesReturnOrderCode, salesReturnOrderCode) ||
-                const DeepCollectionEquality().equals(
-                    other.salesReturnOrderCode, salesReturnOrderCode)) &&
+                other.salesReturnOrderCode == salesReturnOrderCode) &&
             (identical(other.salesReturnInvoiceCode, salesReturnInvoiceCode) ||
-                const DeepCollectionEquality().equals(
-                    other.salesReturnInvoiceCode, salesReturnInvoiceCode)) &&
+                other.salesReturnInvoiceCode == salesReturnInvoiceCode) &&
             (identical(other.inventoryId, inventoryId) ||
-                const DeepCollectionEquality()
-                    .equals(other.inventoryId, inventoryId)) &&
+                other.inventoryId == inventoryId) &&
             (identical(other.customerId, customerId) ||
-                const DeepCollectionEquality()
-                    .equals(other.customerId, customerId)) &&
+                other.customerId == customerId) &&
             (identical(other.customerTrnNumber, customerTrnNumber) ||
-                const DeepCollectionEquality()
-                    .equals(other.customerTrnNumber, customerTrnNumber)) &&
+                other.customerTrnNumber == customerTrnNumber) &&
             (identical(other.invoicedBy, invoicedBy) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoicedBy, invoicedBy)) &&
+                other.invoicedBy == invoicedBy) &&
             (identical(other.createdDate, createdDate) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdDate, createdDate)) &&
+                other.createdDate == createdDate) &&
             (identical(other.invoiceStatus, invoiceStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.invoiceStatus, invoiceStatus)) &&
+                other.invoiceStatus == invoiceStatus) &&
             (identical(other.paymentMethod, paymentMethod) ||
-                const DeepCollectionEquality()
-                    .equals(other.paymentMethod, paymentMethod)) &&
+                other.paymentMethod == paymentMethod) &&
             (identical(other.paymentStatus, paymentStatus) ||
-                const DeepCollectionEquality()
-                    .equals(other.paymentStatus, paymentStatus)) &&
+                other.paymentStatus == paymentStatus) &&
             (identical(other.paymentCode, paymentCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.paymentCode, paymentCode)) &&
+                other.paymentCode == paymentCode) &&
             (identical(other.assignedTo, assignedTo) ||
-                const DeepCollectionEquality()
-                    .equals(other.assignedTo, assignedTo)) &&
+                other.assignedTo == assignedTo) &&
             (identical(other.excessTax, excessTax) ||
-                const DeepCollectionEquality()
-                    .equals(other.excessTax, excessTax)) &&
+                other.excessTax == excessTax) &&
             (identical(other.unitCost, unitCost) ||
-                const DeepCollectionEquality()
-                    .equals(other.unitCost, unitCost)) &&
+                other.unitCost == unitCost) &&
             (identical(other.taxableAmount, taxableAmount) ||
-                const DeepCollectionEquality()
-                    .equals(other.taxableAmount, taxableAmount)) &&
+                other.taxableAmount == taxableAmount) &&
             (identical(other.sellingPriceTotal, sellingPriceTotal) ||
-                const DeepCollectionEquality().equals(other.sellingPriceTotal, sellingPriceTotal)) &&
-            (identical(other.totalPrice, totalPrice) || const DeepCollectionEquality().equals(other.totalPrice, totalPrice)) &&
-            (identical(other.warrentyPrice, warrentyPrice) || const DeepCollectionEquality().equals(other.warrentyPrice, warrentyPrice)) &&
-            (identical(other.lines, lines) || const DeepCollectionEquality().equals(other.lines, lines)));
+                other.sellingPriceTotal == sellingPriceTotal) &&
+            (identical(other.totalPrice, totalPrice) ||
+                other.totalPrice == totalPrice) &&
+            (identical(other.warrentyPrice, warrentyPrice) ||
+                other.warrentyPrice == warrentyPrice) &&
+            const DeepCollectionEquality().equals(other._lines, _lines));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(quantity) ^
-      const DeepCollectionEquality().hash(barcode) ^
-      const DeepCollectionEquality().hash(notes) ^
-      const DeepCollectionEquality().hash(remarks) ^
-      const DeepCollectionEquality().hash(discount) ^
-      const DeepCollectionEquality().hash(vat) ^
-      const DeepCollectionEquality().hash(salesReturnOrderCode) ^
-      const DeepCollectionEquality().hash(salesReturnInvoiceCode) ^
-      const DeepCollectionEquality().hash(inventoryId) ^
-      const DeepCollectionEquality().hash(customerId) ^
-      const DeepCollectionEquality().hash(customerTrnNumber) ^
-      const DeepCollectionEquality().hash(invoicedBy) ^
-      const DeepCollectionEquality().hash(createdDate) ^
-      const DeepCollectionEquality().hash(invoiceStatus) ^
-      const DeepCollectionEquality().hash(paymentMethod) ^
-      const DeepCollectionEquality().hash(paymentStatus) ^
-      const DeepCollectionEquality().hash(paymentCode) ^
-      const DeepCollectionEquality().hash(assignedTo) ^
-      const DeepCollectionEquality().hash(excessTax) ^
-      const DeepCollectionEquality().hash(unitCost) ^
-      const DeepCollectionEquality().hash(taxableAmount) ^
-      const DeepCollectionEquality().hash(sellingPriceTotal) ^
-      const DeepCollectionEquality().hash(totalPrice) ^
-      const DeepCollectionEquality().hash(warrentyPrice) ^
-      const DeepCollectionEquality().hash(lines);
 
   @JsonKey(ignore: true)
   @override
-  _$InvoicedDatasSalesReturnCopyWith<_InvoicedDatasSalesReturn> get copyWith =>
-      __$InvoicedDatasSalesReturnCopyWithImpl<_InvoicedDatasSalesReturn>(
-          this, _$identity);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        quantity,
+        barcode,
+        notes,
+        remarks,
+        discount,
+        vat,
+        salesReturnOrderCode,
+        salesReturnInvoiceCode,
+        inventoryId,
+        customerId,
+        customerTrnNumber,
+        invoicedBy,
+        createdDate,
+        invoiceStatus,
+        paymentMethod,
+        paymentStatus,
+        paymentCode,
+        assignedTo,
+        excessTax,
+        unitCost,
+        taxableAmount,
+        sellingPriceTotal,
+        totalPrice,
+        warrentyPrice,
+        const DeepCollectionEquality().hash(_lines)
+      ]);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_InvoicedDatasSalesReturnCopyWith<_$_InvoicedDatasSalesReturn>
+      get copyWith => __$$_InvoicedDatasSalesReturnCopyWithImpl<
+          _$_InvoicedDatasSalesReturn>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_InvoicedDatasSalesReturnToJson(this);
+    return _$$_InvoicedDatasSalesReturnToJson(
+      this,
+    );
   }
 }
 
 abstract class _InvoicedDatasSalesReturn implements InvoicedDatasSalesReturn {
   const factory _InvoicedDatasSalesReturn(
-          {int? id,
-          int? quantity,
-          String? barcode,
-          String? notes,
-          String? remarks,
-          double? discount,
-          double? vat,
+          {final int? id,
+          final int? quantity,
+          final String? barcode,
+          final String? notes,
+          final String? remarks,
+          final double? discount,
+          final double? vat,
           @JsonKey(name: "sales_return_order_code")
-              String? salesReturnOrderCode,
+              final String? salesReturnOrderCode,
           @JsonKey(name: "sales_return_invoice_code")
-              String? salesReturnInvoiceCode,
+              final String? salesReturnInvoiceCode,
           @JsonKey(name: "inventory_id")
-              String? inventoryId,
+              final String? inventoryId,
           @JsonKey(name: "customer_id")
-              String? customerId,
+              final String? customerId,
           @JsonKey(name: "customer_trn_number")
-              String? customerTrnNumber,
+              final String? customerTrnNumber,
           @JsonKey(name: "invoiced_by")
-              String? invoicedBy,
+              final String? invoicedBy,
           @JsonKey(name: "created_date")
-              String? createdDate,
+              final String? createdDate,
           @JsonKey(name: "invoice_status")
-              String? invoiceStatus,
+              final String? invoiceStatus,
           @JsonKey(name: "payment_method")
-              String? paymentMethod,
+              final String? paymentMethod,
           @JsonKey(name: "payment_status")
-              String? paymentStatus,
+              final String? paymentStatus,
           @JsonKey(name: "payment_code")
-              String? paymentCode,
+              final String? paymentCode,
           @JsonKey(name: "assigned_to")
-              String? assignedTo,
+              final String? assignedTo,
           @JsonKey(name: "excess_tax")
-              double? excessTax,
+              final double? excessTax,
           @JsonKey(name: "unit_cost")
-              double? unitCost,
+              final double? unitCost,
           @JsonKey(name: "taxable_amount")
-              double? taxableAmount,
+              final double? taxableAmount,
           @JsonKey(name: "selling_price_total")
-              double? sellingPriceTotal,
+              final double? sellingPriceTotal,
           @JsonKey(name: "total_price")
-              double? totalPrice,
+              final double? totalPrice,
           @JsonKey(name: "warranty_price")
-              double? warrentyPrice,
+              final double? warrentyPrice,
           @JsonKey(name: "invoice_lines")
-              List<SalesReturnLinesOrderLines>? lines}) =
+              final List<SalesReturnLinesOrderLines>? lines}) =
       _$_InvoicedDatasSalesReturn;
 
   factory _InvoicedDatasSalesReturn.fromJson(Map<String, dynamic> json) =
       _$_InvoicedDatasSalesReturn.fromJson;
 
   @override
-  int? get id => throw _privateConstructorUsedError;
+  int? get id;
   @override
-  int? get quantity => throw _privateConstructorUsedError;
+  int? get quantity;
   @override
-  String? get barcode => throw _privateConstructorUsedError;
+  String? get barcode;
   @override
-  String? get notes => throw _privateConstructorUsedError;
+  String? get notes;
   @override
-  String? get remarks => throw _privateConstructorUsedError;
+  String? get remarks;
   @override
-  double? get discount => throw _privateConstructorUsedError;
+  double? get discount;
   @override
-  double? get vat => throw _privateConstructorUsedError;
+  double? get vat;
   @override
   @JsonKey(name: "sales_return_order_code")
-  String? get salesReturnOrderCode => throw _privateConstructorUsedError;
+  String? get salesReturnOrderCode;
   @override
   @JsonKey(name: "sales_return_invoice_code")
-  String? get salesReturnInvoiceCode => throw _privateConstructorUsedError;
+  String? get salesReturnInvoiceCode;
   @override
   @JsonKey(name: "inventory_id")
-  String? get inventoryId => throw _privateConstructorUsedError;
+  String? get inventoryId;
   @override
   @JsonKey(name: "customer_id")
-  String? get customerId => throw _privateConstructorUsedError;
+  String? get customerId;
   @override
   @JsonKey(name: "customer_trn_number")
-  String? get customerTrnNumber => throw _privateConstructorUsedError;
+  String? get customerTrnNumber;
   @override
   @JsonKey(name: "invoiced_by")
-  String? get invoicedBy => throw _privateConstructorUsedError;
+  String? get invoicedBy;
   @override
   @JsonKey(name: "created_date")
-  String? get createdDate => throw _privateConstructorUsedError;
+  String? get createdDate;
   @override
   @JsonKey(name: "invoice_status")
-  String? get invoiceStatus => throw _privateConstructorUsedError;
+  String? get invoiceStatus;
   @override
   @JsonKey(name: "payment_method")
-  String? get paymentMethod => throw _privateConstructorUsedError;
+  String? get paymentMethod;
   @override
   @JsonKey(name: "payment_status")
-  String? get paymentStatus => throw _privateConstructorUsedError;
+  String? get paymentStatus;
   @override
   @JsonKey(name: "payment_code")
-  String? get paymentCode => throw _privateConstructorUsedError;
+  String? get paymentCode;
   @override
   @JsonKey(name: "assigned_to")
-  String? get assignedTo => throw _privateConstructorUsedError;
+  String? get assignedTo;
   @override
   @JsonKey(name: "excess_tax")
-  double? get excessTax => throw _privateConstructorUsedError;
+  double? get excessTax;
   @override
   @JsonKey(name: "unit_cost")
-  double? get unitCost => throw _privateConstructorUsedError;
+  double? get unitCost;
   @override
   @JsonKey(name: "taxable_amount")
-  double? get taxableAmount => throw _privateConstructorUsedError;
+  double? get taxableAmount;
   @override
   @JsonKey(name: "selling_price_total")
-  double? get sellingPriceTotal => throw _privateConstructorUsedError;
+  double? get sellingPriceTotal;
   @override
   @JsonKey(name: "total_price")
-  double? get totalPrice => throw _privateConstructorUsedError;
+  double? get totalPrice;
   @override
   @JsonKey(name: "warranty_price")
-  double? get warrentyPrice => throw _privateConstructorUsedError;
+  double? get warrentyPrice;
   @override
   @JsonKey(name: "invoice_lines")
-  List<SalesReturnLinesOrderLines>? get lines =>
-      throw _privateConstructorUsedError;
+  List<SalesReturnLinesOrderLines>? get lines;
   @override
   @JsonKey(ignore: true)
-  _$InvoicedDatasSalesReturnCopyWith<_InvoicedDatasSalesReturn> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$_InvoicedDatasSalesReturnCopyWith<_$_InvoicedDatasSalesReturn>
+      get copyWith => throw _privateConstructorUsedError;
 }

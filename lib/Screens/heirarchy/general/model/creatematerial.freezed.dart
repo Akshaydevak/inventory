@@ -1,5 +1,6 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'creatematerial.dart';
@@ -11,45 +12,12 @@ part of 'creatematerial.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 MaterialCreationtModel _$MaterialCreationtModelFromJson(
     Map<String, dynamic> json) {
   return _MaterialCreationtModel.fromJson(json);
 }
-
-/// @nodoc
-class _$MaterialCreationtModelTearOff {
-  const _$MaterialCreationtModelTearOff();
-
-  _MaterialCreationtModel call(
-      {String? description,
-      String? status,
-      String? name,
-      int? image,
-      @JsonKey(name: "search_name") String? searchNmae,
-      @JsonKey(name: "display_name") String? displayName,
-      @JsonKey(name: "category_code") String? categoryCode,
-      @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) {
-    return _MaterialCreationtModel(
-      description: description,
-      status: status,
-      name: name,
-      image: image,
-      searchNmae: searchNmae,
-      displayName: displayName,
-      categoryCode: categoryCode,
-      isActive: isActive,
-    );
-  }
-
-  MaterialCreationtModel fromJson(Map<String, Object> json) {
-    return MaterialCreationtModel.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $MaterialCreationtModel = _$MaterialCreationtModelTearOff();
 
 /// @nodoc
 mixin _$MaterialCreationtModel {
@@ -76,7 +44,8 @@ mixin _$MaterialCreationtModel {
 abstract class $MaterialCreationtModelCopyWith<$Res> {
   factory $MaterialCreationtModelCopyWith(MaterialCreationtModel value,
           $Res Function(MaterialCreationtModel) then) =
-      _$MaterialCreationtModelCopyWithImpl<$Res>;
+      _$MaterialCreationtModelCopyWithImpl<$Res, MaterialCreationtModel>;
+  @useResult
   $Res call(
       {String? description,
       String? status,
@@ -89,14 +58,17 @@ abstract class $MaterialCreationtModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MaterialCreationtModelCopyWithImpl<$Res>
+class _$MaterialCreationtModelCopyWithImpl<$Res,
+        $Val extends MaterialCreationtModel>
     implements $MaterialCreationtModelCopyWith<$Res> {
   _$MaterialCreationtModelCopyWithImpl(this._value, this._then);
 
-  final MaterialCreationtModel _value;
   // ignore: unused_field
-  final $Res Function(MaterialCreationtModel) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -109,49 +81,50 @@ class _$MaterialCreationtModelCopyWithImpl<$Res>
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
-      description: description == freezed
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as int?,
-      searchNmae: searchNmae == freezed
+      searchNmae: freezed == searchNmae
           ? _value.searchNmae
           : searchNmae // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryCode: categoryCode == freezed
+      categoryCode: freezed == categoryCode
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$MaterialCreationtModelCopyWith<$Res>
+abstract class _$$_MaterialCreationtModelCopyWith<$Res>
     implements $MaterialCreationtModelCopyWith<$Res> {
-  factory _$MaterialCreationtModelCopyWith(_MaterialCreationtModel value,
-          $Res Function(_MaterialCreationtModel) then) =
-      __$MaterialCreationtModelCopyWithImpl<$Res>;
+  factory _$$_MaterialCreationtModelCopyWith(_$_MaterialCreationtModel value,
+          $Res Function(_$_MaterialCreationtModel) then) =
+      __$$_MaterialCreationtModelCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String? description,
       String? status,
@@ -164,16 +137,15 @@ abstract class _$MaterialCreationtModelCopyWith<$Res>
 }
 
 /// @nodoc
-class __$MaterialCreationtModelCopyWithImpl<$Res>
-    extends _$MaterialCreationtModelCopyWithImpl<$Res>
-    implements _$MaterialCreationtModelCopyWith<$Res> {
-  __$MaterialCreationtModelCopyWithImpl(_MaterialCreationtModel _value,
-      $Res Function(_MaterialCreationtModel) _then)
-      : super(_value, (v) => _then(v as _MaterialCreationtModel));
+class __$$_MaterialCreationtModelCopyWithImpl<$Res>
+    extends _$MaterialCreationtModelCopyWithImpl<$Res,
+        _$_MaterialCreationtModel>
+    implements _$$_MaterialCreationtModelCopyWith<$Res> {
+  __$$_MaterialCreationtModelCopyWithImpl(_$_MaterialCreationtModel _value,
+      $Res Function(_$_MaterialCreationtModel) _then)
+      : super(_value, _then);
 
-  @override
-  _MaterialCreationtModel get _value => super._value as _MaterialCreationtModel;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? description = freezed,
@@ -185,36 +157,36 @@ class __$MaterialCreationtModelCopyWithImpl<$Res>
     Object? categoryCode = freezed,
     Object? isActive = freezed,
   }) {
-    return _then(_MaterialCreationtModel(
-      description: description == freezed
+    return _then(_$_MaterialCreationtModel(
+      description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      status: status == freezed
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      name: name == freezed
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String?,
-      image: image == freezed
+      image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as int?,
-      searchNmae: searchNmae == freezed
+      searchNmae: freezed == searchNmae
           ? _value.searchNmae
           : searchNmae // ignore: cast_nullable_to_non_nullable
               as String?,
-      displayName: displayName == freezed
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryCode: categoryCode == freezed
+      categoryCode: freezed == categoryCode
           ? _value.categoryCode
           : categoryCode // ignore: cast_nullable_to_non_nullable
               as String?,
-      isActive: isActive == freezed
+      isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
               as bool?,
@@ -267,91 +239,83 @@ class _$_MaterialCreationtModel implements _MaterialCreationtModel {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _MaterialCreationtModel &&
+        (other.runtimeType == runtimeType &&
+            other is _$_MaterialCreationtModel &&
             (identical(other.description, description) ||
-                const DeepCollectionEquality()
-                    .equals(other.description, description)) &&
-            (identical(other.status, status) ||
-                const DeepCollectionEquality().equals(other.status, status)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
-            (identical(other.image, image) ||
-                const DeepCollectionEquality().equals(other.image, image)) &&
+                other.description == description) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.searchNmae, searchNmae) ||
-                const DeepCollectionEquality()
-                    .equals(other.searchNmae, searchNmae)) &&
+                other.searchNmae == searchNmae) &&
             (identical(other.displayName, displayName) ||
-                const DeepCollectionEquality()
-                    .equals(other.displayName, displayName)) &&
+                other.displayName == displayName) &&
             (identical(other.categoryCode, categoryCode) ||
-                const DeepCollectionEquality()
-                    .equals(other.categoryCode, categoryCode)) &&
+                other.categoryCode == categoryCode) &&
             (identical(other.isActive, isActive) ||
-                const DeepCollectionEquality()
-                    .equals(other.isActive, isActive)));
+                other.isActive == isActive));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(status) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(image) ^
-      const DeepCollectionEquality().hash(searchNmae) ^
-      const DeepCollectionEquality().hash(displayName) ^
-      const DeepCollectionEquality().hash(categoryCode) ^
-      const DeepCollectionEquality().hash(isActive);
 
   @JsonKey(ignore: true)
   @override
-  _$MaterialCreationtModelCopyWith<_MaterialCreationtModel> get copyWith =>
-      __$MaterialCreationtModelCopyWithImpl<_MaterialCreationtModel>(
+  int get hashCode => Object.hash(runtimeType, description, status, name, image,
+      searchNmae, displayName, categoryCode, isActive);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_MaterialCreationtModelCopyWith<_$_MaterialCreationtModel> get copyWith =>
+      __$$_MaterialCreationtModelCopyWithImpl<_$_MaterialCreationtModel>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_MaterialCreationtModelToJson(this);
+    return _$$_MaterialCreationtModelToJson(
+      this,
+    );
   }
 }
 
 abstract class _MaterialCreationtModel implements MaterialCreationtModel {
   const factory _MaterialCreationtModel(
-          {String? description,
-          String? status,
-          String? name,
-          int? image,
-          @JsonKey(name: "search_name") String? searchNmae,
-          @JsonKey(name: "display_name") String? displayName,
-          @JsonKey(name: "category_code") String? categoryCode,
-          @JsonKey(name: "is_active", defaultValue: false) bool? isActive}) =
-      _$_MaterialCreationtModel;
+      {final String? description,
+      final String? status,
+      final String? name,
+      final int? image,
+      @JsonKey(name: "search_name")
+          final String? searchNmae,
+      @JsonKey(name: "display_name")
+          final String? displayName,
+      @JsonKey(name: "category_code")
+          final String? categoryCode,
+      @JsonKey(name: "is_active", defaultValue: false)
+          final bool? isActive}) = _$_MaterialCreationtModel;
 
   factory _MaterialCreationtModel.fromJson(Map<String, dynamic> json) =
       _$_MaterialCreationtModel.fromJson;
 
   @override
-  String? get description => throw _privateConstructorUsedError;
+  String? get description;
   @override
-  String? get status => throw _privateConstructorUsedError;
+  String? get status;
   @override
-  String? get name => throw _privateConstructorUsedError;
+  String? get name;
   @override
-  int? get image => throw _privateConstructorUsedError;
+  int? get image;
   @override
   @JsonKey(name: "search_name")
-  String? get searchNmae => throw _privateConstructorUsedError;
+  String? get searchNmae;
   @override
   @JsonKey(name: "display_name")
-  String? get displayName => throw _privateConstructorUsedError;
+  String? get displayName;
   @override
   @JsonKey(name: "category_code")
-  String? get categoryCode => throw _privateConstructorUsedError;
+  String? get categoryCode;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
-  bool? get isActive => throw _privateConstructorUsedError;
+  bool? get isActive;
   @override
   @JsonKey(ignore: true)
-  _$MaterialCreationtModelCopyWith<_MaterialCreationtModel> get copyWith =>
+  _$$_MaterialCreationtModelCopyWith<_$_MaterialCreationtModel> get copyWith =>
       throw _privateConstructorUsedError;
 }

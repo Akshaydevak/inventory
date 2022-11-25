@@ -156,6 +156,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                     color: Colors.white,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(child: Column(
                           children: [
@@ -199,9 +200,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                           ],
                         )),
                         Expanded(child: Column(children: [
-                          SizedBox(
-                            height: height * .045,
-                          ),
+
 
                           NewInputCard(
                               controller: widget.oldSystemCode, title: "Old System Code"),
@@ -511,9 +510,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                         Expanded(child: Column(children: [
 
 
-                          SizedBox(
-                            height: height * .030,
-                          ),
+
                           FileUploadField(
                               fileName: widget.image3.text,
                               fileUrl:widget.image3.text,
@@ -810,7 +807,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "item catalog4"),
+                              label: "item Catalog4"),
                           SizedBox(
                             height: height * .030,
                           ),
@@ -868,7 +865,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                 setState(() {});
                               },
                               onCreate: true,
-                              label: "Item catalog5"),
+                              label: "Item Catalog5"),
                           SizedBox(
                             height: height * .097,
                           ),
@@ -934,7 +931,7 @@ class _TableBottomState extends State<TableBottom> {
                   children: [
                     NewInputCard(
                       height: 77,
-                        controller: widget.qrCode, title: "Qr code"),
+                        controller: widget.qrCode, title: "Qr Code"),
                   ],
                 ),
               ),

@@ -477,3 +477,28 @@ class productBehaviour with _$productBehaviour {
   factory productBehaviour.fromJson(Map<String, dynamic> json) =>
       _$productBehaviourFromJson(json);
 }
+
+
+@freezed
+class StateList with _$StateList {
+  const factory StateList({
+
+    final int? code,
+    final String? name,
+
+
+
+
+
+
+
+
+
+
+
+
+
+  }) = _StateList;
+  factory StateList.fromJson(Map<String, dynamic> json) =>
+      _$StateListFromJson(json);
+}

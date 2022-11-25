@@ -29,6 +29,7 @@ import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
+import '../commonWidget/Colors.dart';
 import 'heirarchy/general/generalscreen.dart';
 
 class RequestFormReceivigScreen extends StatefulWidget {
@@ -538,6 +539,8 @@ child: IntrinsicHeight(
                     mainAxisAlignment:
                     MainAxisAlignment.end,
                     children: [
+
+
                       TextButtonLarge(
                         text: "PREVIEW",
                         onPress: (){
@@ -573,55 +576,55 @@ child: IntrinsicHeight(
                     ]
                 ),
                 Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
                   children: [
                     Expanded(child:
-                    Column(children: [
-                      SizedBox(height: height*.030,),
-                      SizedBox(height: height*.030,),
-                      SizedBox(height:10,),
-                      NewInputCard(readOnly: true, controller: orderCodeController, title: "Order code"),
-                      SizedBox(height: height*.030,),
-                      NewInputCard(
-                          readOnly: true,
-                          controller: receivingcodeController, title: "receiving code"),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+
+                children: [
+
+
+                      NewInputCard(readOnly: true, controller: orderCodeController, title: "Order Code"),
                       SizedBox(height: height*.030,),
                       NewInputCard(
                           readOnly: true,
-                          controller: orderDateController, title: "Ordered date"),
+                          controller: receivingcodeController, title: "Receiving Code"),
                       SizedBox(height: height*.030,),
                       NewInputCard(
                           readOnly: true,
-                          controller: orderstatusController, title: "Ordered status"),
+                          controller: orderDateController, title: "Ordered Date"),
                       SizedBox(height: height*.030,),
                       NewInputCard(
                           readOnly: true,
-                          controller: paymentstatusController, title: "payment status"),
+                          controller: orderstatusController, title: "Ordered Status"),
                       SizedBox(height: height*.030,),
                       NewInputCard(
                           readOnly: true,
-                          controller: invoiceStatusController, title: "invoice status"),
+                          controller: paymentstatusController, title: "Payment Status"),
+                      SizedBox(height: height*.030,),
+                      NewInputCard(
+                          readOnly: true,
+                          controller: invoiceStatusController, title: "Invoice Status"),
                       SizedBox(height: height*.040,),
                     ],)),
                     Expanded(child:
                     Column(children: [
 
-                      SizedBox(height: height*.030,),
 
-                      SizedBox(height: height*.030,),
-
-                      SizedBox(height: 10,),
 
                       NewInputCard(
 
                           readOnly: true,
-                          controller: discountController, title: "discount"),
+                          controller: discountController, title: "Discount"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
                           readOnly: true,
 
-                          controller: focController, title: "foc"),
+                          controller: focController, title: "FOC"),
 
                       SizedBox(height: height*.030,),
 
@@ -635,21 +638,21 @@ child: IntrinsicHeight(
                       NewInputCard(
                           readOnly: true,
 
-                          controller: variableAmountController, title: "variable amount"),
+                          controller: variableAmountController, title: "Vatable Amount"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
                           readOnly: true,
 
-                          controller: excessTaxController, title: "excess tax"),
+                          controller: excessTaxController, title: "Excess Tax"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
                           readOnly: true,
 
-                          controller: vatController, title: "vat"),
+                          controller: vatController, title: "VAT"),
 
                       SizedBox(height: height*.030,),
 
@@ -661,31 +664,29 @@ child: IntrinsicHeight(
 
                     Column(children: [
 
-                      SizedBox(height: height*.030,),
+
+
+                      NewInputCard(
+                          readOnly: true,
+
+                          controller: actualCostController, title: "Actual Cost"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
                           readOnly: true,
 
-                          controller: actualCostController, title: "actual cost"),
+                          controller: grandtotalCostController, title: "Grand Total"),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
-                          readOnly: true,
-
-                          controller: grandtotalCostController, title: "grand total"),
+                          controller: noteController, title: "Note",height: 90,maxLines: 3,),
 
                       SizedBox(height: height*.030,),
 
                       NewInputCard(
-                          controller: noteController, title: "note",height: 90,maxLines: 3,),
-
-                      SizedBox(height: height*.030,),
-
-                      NewInputCard(
-                          controller: remarksController, title: "remarks",height: 90,maxLines: 3,),
+                          controller: remarksController, title: "Remarks",height: 90,maxLines: 3,),
 
                       SizedBox(height: height*.075,),
 
@@ -702,7 +703,51 @@ child: IntrinsicHeight(
                 SizedBox(height: 5,),
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    TextWidget(text: "recieving lines"),
+                    TextWidget(text: "Recieving Lines"),
+                    SizedBox(width: 10,),
+                    TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
+                      // fontSize: 50,
+                      decoration: TextDecoration.underline, // <-- SEE HERE
+                    ),),),
+                    TextButtonLarge(
+                      text: "PREVIEW",
+                      onPress: (){
+                        print("Akshay");
+                        List<RecievingLines> recievingLisnes1=[];
+                        if(recievingLisnes.isNotEmpty){
+                          for(var i=0;i<recievingLisnes.length;i++){
+                            if(recievingLisnes[i].isReceived==false){
+                              recievingLisnes1.add(recievingLisnes[i]);}
+                          }
+                        }
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>
+                              PurchaseReceivingPrintScreen2(table:recievingLisnes1,
+                                note: noteController.text,
+                                // select: select,
+                                // vendorCode:vendorCode.text,
+                                orderCode:orderCodeController.text ,
+                                orderDate:orderDateController .text,
+                                // table:table,
+                                vat: double.tryParse( vatController.text),
+                                actualCost:double.tryParse( actualCostController.text),
+                                variableAmount:double.tryParse( variableAmountController.text) ,
+                                discount:double.tryParse( discountController.text) ,
+                                unitCost:double.tryParse( unitCostController.text) ,
+                                excisetax:double.tryParse( excessTaxController.text) ,
+                                remarks: remarksController.text ,
+
+
+
+
+
+                              )),
+                        );
+
+
+                      },
+                    ),
                   ],
                 ),
                 Divider(color: Colors.grey,thickness: 1,),
@@ -740,35 +785,35 @@ child: IntrinsicHeight(
 
                             child: customTable(
 
-                              border: const TableBorder(
-
-                                verticalInside: BorderSide(
-
-                                    width:.5,
-
-                                    color: Colors.black45,
-
-                                    // color: Colors.blue,
-
-                                    style:
-
-                                    BorderStyle.solid),
-
-
-
-                                horizontalInside:
-
-                                BorderSide(
-
-                                    width:.3,
-
-                                    color: Colors.black45,
-
-                                    // color: Colors.blue,
-
-                                    style:
-
-                                    BorderStyle.solid),),
+                              // border: const TableBorder(
+                              //
+                              //   verticalInside: BorderSide(
+                              //
+                              //       width:.5,
+                              //
+                              //       color: Colors.black45,
+                              //
+                              //       // color: Colors.blue,
+                              //
+                              //       style:
+                              //
+                              //       BorderStyle.solid),
+                              //
+                              //
+                              //
+                              //   horizontalInside:
+                              //
+                              //   BorderSide(
+                              //
+                              //       width:.3,
+                              //
+                              //       color: Colors.black45,
+                              //
+                              //       // color: Colors.blue,
+                              //
+                              //       style:
+                              //
+                              //       BorderStyle.solid),),
 
                               tableWidth: .5,
 
@@ -787,25 +832,20 @@ child: IntrinsicHeight(
                                       children: [
                                         tableHeadtext(
                                           'Sno',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+
                                           size: 13,
                                         ),
                                         tableHeadtext(
-                                          'Orderline id',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+                                          'Orderline Id',
+
                                           size: 13,
                                         ),
                                         tableHeadtext(
-                                          'Variant Id', padding: EdgeInsets.all(7),
-                                          height: 46,
-                                          size: 13,
+                                          'Variant Id',
                                         ),
                                         tableHeadtext(
                                           'Variant Name',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+
                                           size: 13,
                                           // color: Palette.containerDarknew,
                                           // textColor: Palette.white
@@ -820,9 +860,7 @@ child: IntrinsicHeight(
 
                                           'Barcode',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -836,11 +874,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Current qty',
+                                          'Current Qty',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -854,9 +890,7 @@ child: IntrinsicHeight(
 
                                           'Purchase UOM',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -870,9 +904,7 @@ child: IntrinsicHeight(
 
                                           'Vendor  Id',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -884,11 +916,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Recieved qty',
+                                          'Recieved Qty',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -900,11 +930,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Is recieved',
+                                          'Is Recieved',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -916,11 +944,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Unitcost',
+                                          'Unit Cost',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -932,11 +958,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Excise tax',
+                                          'Excise Tax',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -950,9 +974,7 @@ child: IntrinsicHeight(
 
                                           'Discount',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -968,9 +990,6 @@ child: IntrinsicHeight(
 
                                           'FOC',
 
-                                          padding: EdgeInsets.all(7),
-
-                                          height: 46,
 
                                           size: 13,
 
@@ -986,9 +1005,7 @@ child: IntrinsicHeight(
 
                                           'Vatable Amount',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1000,11 +1017,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Vat',
+                                          'VAT',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1016,11 +1031,9 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
 
-                                          'Actual cost',
+                                          'Actual Cost',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1034,9 +1047,7 @@ child: IntrinsicHeight(
 
                                           'Grand Total',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1050,9 +1061,7 @@ child: IntrinsicHeight(
 
                                           'Is Invoiced',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1066,9 +1075,7 @@ child: IntrinsicHeight(
 
                                           'Expiry Date',
 
-                                          padding: EdgeInsets.all(7),
 
-                                          height: 46,
 
                                           size: 13,
 
@@ -1080,22 +1087,19 @@ child: IntrinsicHeight(
 
                                         tableHeadtext(
                                           'Is Free',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+
                                           size: 13,
 
 
                                         ),
                                         tableHeadtext(
                                           'Is Active',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+
                                           size: 13,
                                         ),
                                         tableHeadtext(
                                           '',
-                                          padding: EdgeInsets.all(7),
-                                          height: 46,
+
                                           size: 13,
                                         ),
 
@@ -1104,7 +1108,25 @@ child: IntrinsicHeight(
                                       ]),
                                   if(recievingLisnes.isEmpty)...[
                                     TableRow(
-                                      decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+
                                       children: [
                                         textPadding(""),
                                         textPadding(""),
@@ -1137,7 +1159,25 @@ child: IntrinsicHeight(
                   if (recievingLisnes != null) ...[
                 for (var i = 0; i < recievingLisnes.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(color: Colors.grey.shade200, shape: BoxShape.rectangle, border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+decoration: BoxDecoration(
+color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+        left: BorderSide(
+
+            color: Color(0xff3E4F5B).withOpacity(.1),
+            width: .4,
+            style: BorderStyle.solid),
+        bottom: BorderSide(
+
+            color:   Color(0xff3E4F5B).withOpacity(.1),
+            style: BorderStyle.solid),
+        right: BorderSide(
+            color:   Color(0xff3E4F5B).withOpacity(.1),
+            width: .4,
+
+            style: BorderStyle.solid))),
+
                                       children: [
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -2038,46 +2078,8 @@ child: IntrinsicHeight(
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidget(text: "additional variants"),
-                    TextButtonLarge(
-                      text: "PREVIEW",
-                      onPress: (){
-                        print("Akshay");
-                        List<RecievingLines> recievingLisnes1=[];
-                        if(recievingLisnes.isNotEmpty){
-                          for(var i=0;i<recievingLisnes.length;i++){
-                            if(recievingLisnes[i].isReceived==false){
-                            recievingLisnes1.add(recievingLisnes[i]);}
-                          }
-                        }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>
-                              PurchaseReceivingPrintScreen2(table:recievingLisnes1,
-                                note: noteController.text,
-                                // select: select,
-                                // vendorCode:vendorCode.text,
-                                orderCode:orderCodeController.text ,
-                                orderDate:orderDateController .text,
-                                // table:table,
-                                vat: double.tryParse( vatController.text),
-                                actualCost:double.tryParse( actualCostController.text),
-                                variableAmount:double.tryParse( variableAmountController.text) ,
-                                discount:double.tryParse( discountController.text) ,
-                                unitCost:double.tryParse( unitCostController.text) ,
-                                excisetax:double.tryParse( excessTaxController.text) ,
-                                remarks: remarksController.text ,
+                    TextWidget(text: "Additional Variants"),
 
-
-
-
-
-                              )),
-                        );
-
-
-                      },
-                    ),
 
                   ],
                 ),
@@ -2123,17 +2125,7 @@ child: IntrinsicHeight(
 
                                   child: customTable(
 
-                                      border: const TableBorder(
 
-                                        verticalInside: BorderSide(
-                                            width:.5,
-                                            color: Colors.black45,
-                                            style: BorderStyle.solid),
-                                        horizontalInside: BorderSide(
-                                            width:.3,
-                                            color: Colors.black45,
-                                            // color: Colors.blue,
-                                            style: BorderStyle.solid),),
 
                                       tableWidth: .5,
 
@@ -2155,9 +2147,7 @@ child: IntrinsicHeight(
 
                                                 'Sno',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2173,9 +2163,7 @@ child: IntrinsicHeight(
 
                                                 'Variant Id',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2189,9 +2177,7 @@ child: IntrinsicHeight(
 
                                                 'Variant Name',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2209,18 +2195,15 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
                                                 'Barcode',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                               ),
 
                                               tableHeadtext(
 
-                                                'Current qty',
+                                                'Current Qty',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2234,9 +2217,7 @@ child: IntrinsicHeight(
 
                                                 'Purchase UOM',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2248,11 +2229,9 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Vendor id',
+                                                'Vendor Id',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2264,11 +2243,9 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Recieved qty',
+                                                'Received Qty',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2280,11 +2257,9 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Is recieved',
+                                                'Is Received',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2296,11 +2271,9 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Unitcost',
+                                                'Unit Cost',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2312,11 +2285,9 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Excise tax',
+                                                'Excise Tax',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
@@ -2324,17 +2295,13 @@ child: IntrinsicHeight(
                                               ),
                                               tableHeadtext(
                                                 'Discount',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                               ),
                                               tableHeadtext(
 
                                                 'FOC',
 
-                                                padding: EdgeInsets.all(7),
-
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2350,9 +2317,7 @@ child: IntrinsicHeight(
 
                                                 'Vatable Amount',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2364,11 +2329,8 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
 
-                                                'Vat',
+                                                'VAT',
 
-                                                padding: EdgeInsets.all(7),
-
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2382,9 +2344,7 @@ child: IntrinsicHeight(
 
                                                 'Actual cost',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2398,9 +2358,7 @@ child: IntrinsicHeight(
 
                                                 'Grand Total',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2414,9 +2372,7 @@ child: IntrinsicHeight(
 
                                                 'Is Invoiced',
 
-                                                padding: EdgeInsets.all(7),
 
-                                                height: 46,
 
                                                 size: 13,
 
@@ -2425,31 +2381,27 @@ child: IntrinsicHeight(
 
                                               tableHeadtext(
                                                 'Expiry Date',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Is Free',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                                 // color: Palette.containerDarknew,
                                                 // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Is Active',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
 
                                               ),
                                               tableHeadtext(
                                                 '',
-                                                padding: EdgeInsets.all(7),
-                                                height: 46,
+
                                                 size: 13,
                                               ),
 
@@ -2459,10 +2411,25 @@ child: IntrinsicHeight(
                         if (additionalVariants != null)...[
                 for(var i=0;i<additionalVariants.length;i++)
                                         TableRow(
-                                            decoration: BoxDecoration(
-                                                color: Colors.grey.shade200,
-                                                shape: BoxShape.rectangle,
-                                                border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                decoration: BoxDecoration(
+                color: Pellet.tableRowColor,
+                    shape: BoxShape.rectangle,
+                    border:  Border(
+                        left: BorderSide(
+
+                            color: Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+                            style: BorderStyle.solid),
+                        bottom: BorderSide(
+
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            style: BorderStyle.solid),
+                        right: BorderSide(
+                            color:   Color(0xff3E4F5B).withOpacity(.1),
+                            width: .4,
+
+                            style: BorderStyle.solid))),
+
                                             children: [
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3133,9 +3100,24 @@ child: IntrinsicHeight(
                         ],
                                         TableRow(
                                             decoration: BoxDecoration(
-                                                color: Colors.grey.shade200,
+                                                color: Pellet.tableRowColor,
                                                 shape: BoxShape.rectangle,
-                                                border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                border:  Border(
+                                                    left: BorderSide(
+
+                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+                                                        style: BorderStyle.solid),
+                                                    bottom: BorderSide(
+
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        style: BorderStyle.solid),
+                                                    right: BorderSide(
+                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                        width: .4,
+
+                                                        style: BorderStyle.solid))),
+
                                             children: [
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3895,9 +3877,9 @@ child: IntrinsicHeight(
 
                   children: [
 
-                    Buttons(
+                    TextButtonLarge(
 
-                      onApply: (){
+                      onPress: (){
                         AdditionalGenerateModel model=AdditionalGenerateModel(
                           receivingId: receivingId,
 
@@ -3916,9 +3898,9 @@ child: IntrinsicHeight(
 
                       },
 
-                      icon: Icons.check,iconColor: Colors.white,
 
-                      text: "generator Order",clr: Color(0xff53A9F9),height: 24,width: 152,labelcolor: Colors.white,),
+
+                      text: "GENERATE ORDER",),
 
                   ],
 
@@ -3986,7 +3968,8 @@ child: IntrinsicHeight(
 
                       icon: Icons.check,iconColor: Colors.white,
 
-                      text: "Save",clr: Color(0xff53A9F9),height: 32,width: 90,labelcolor: Colors.white,),
+                      text: "SAVE",
+                     height: 32,width: 90,labelcolor: Colors.white,),
 
                   ],
 

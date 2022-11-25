@@ -490,3 +490,14 @@ Map<String, dynamic> _$$_productBehaviourToJson(_$_productBehaviour instance) =>
       'countries': instance.countries,
       'purpose': instance.purpose,
     };
+
+_$_StateList _$$_StateListFromJson(Map<String, dynamic> json) => _$_StateList(
+      code: json['code'] as int?,
+      name: json['name'] as String?,
+    );
+
+Map<String, dynamic> _$$_StateListToJson(_$_StateList instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'name': instance.name,
+    };
