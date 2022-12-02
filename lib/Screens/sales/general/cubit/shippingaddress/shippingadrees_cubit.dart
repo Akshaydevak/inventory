@@ -12,7 +12,7 @@ class ShippingadreesCubit extends Cubit<ShippingadreesState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getShippingId({int? id}) async {
+  Future getShippingId({String? id}) async {
     final result = await repo.getShippingId("",id:id);
     next = null;
     prev = null;

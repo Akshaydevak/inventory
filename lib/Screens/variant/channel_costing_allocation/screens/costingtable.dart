@@ -56,17 +56,6 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
             margin: EdgeInsets.symmetric(horizontal: w*.02),
             child: customTable(
 
-              border: const TableBorder(
-
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
 
               tableWidth: .5,
 
@@ -87,9 +76,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       'Pricing Type',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -101,9 +88,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       'Pricing Group',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -115,9 +100,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       'Applied GP',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -129,9 +112,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       'Applied GT type',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -143,9 +124,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       'Selling Price',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -157,9 +136,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
                       '',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -342,10 +319,23 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
                       ),
 
 
-                    ])
+                    ],
+
+                )
+
 
 
               ],
+              widths: {
+                0: FlexColumnWidth(3),
+                1: FlexColumnWidth(3),
+                3: FlexColumnWidth(3),
+                4: FlexColumnWidth(3),
+                5: FlexColumnWidth(2),
+                2: FlexColumnWidth(3),
+
+
+              },
 
             ),
 

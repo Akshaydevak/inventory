@@ -186,7 +186,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                   vatController.text=data.invoicedata?.vat.toString()??"";
                                   vatController.text=data.invoicedata?.vat.toString()??"";
                                   data.invoicedata?.invoiceLines != null
-                                      ? additionalVariants = data.invoicedata?.invoiceLines ?? []
+                                      ? additionalVariants = List.from(data.invoicedata?.invoiceLines ?? [])
                                       : additionalVariants = [];
 
 

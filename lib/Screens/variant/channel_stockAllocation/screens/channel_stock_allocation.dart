@@ -509,7 +509,8 @@ if(addVirtual==null){
 
 
 
-                        ChannelStockStableTable(addCheckLimit:addCheckLimit,
+                        ChannelStockStableTable(
+                          addCheckLimit:addCheckLimit,
 
                           addCheck:addVirtualLimit,
                           purchaseBlock:purchaseBlock,

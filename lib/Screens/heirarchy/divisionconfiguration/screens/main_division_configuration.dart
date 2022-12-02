@@ -36,7 +36,7 @@ class _DevisionConfigurationState extends State< DevisionConfiguration> {
   bool isActive=false;
   bool ismixed=false;
   bool select=false;
-  List<DataInclude>?uomList=[];
+  List<DataInclude>?uomList=List.from([]);
   List<DataInclude>?categoryList=[];
   List<DataInclude>?groupList=[];
 
@@ -61,7 +61,7 @@ class _DevisionConfigurationState extends State< DevisionConfiguration> {
     switch(type){
 
       case '1' :
-        uomList=list;
+        uomList=List.from(list??[]);
         break;
 
       case '2' :
@@ -175,9 +175,9 @@ ismixed=false;
             image1NameController.text=data.image??"";
             descriptionController.text=data.description??"";
             priorityController.text=data.priority?.toString()??"";
-            uomList=data.uom??[];
-            categoryList=data.category??[];
-            groupList=data.groupName??[];
+            uomList=List.from(data.uom??[]);
+            categoryList=List.from(data.category??[]);
+            groupList=List.from(data.groupName??[]);
             ismixed=data.isMixed??false;
             isActive=data.isActive??false;
 
@@ -320,11 +320,12 @@ ismixed=false;
                     TextButtonLarge(
                       text: "CREATE",
                       onPress: (){
+                        setState(() {
                         clear();
                         categoryList?.clear();
                         groupList?.clear();
                         uomList?.clear();
-                        setState(() {
+
                           select=true;
                         });
 

@@ -56,6 +56,8 @@ mixin _$ItemCreationModel {
   int? get itemCatelog3 => throw _privateConstructorUsedError;
   @JsonKey(name: "item_cataloge4")
   int? get itemCatelog4 => throw _privateConstructorUsedError;
+  @JsonKey(name: "item_cataloge5")
+  int? get itemCatelog5 => throw _privateConstructorUsedError;
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesBlock => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_block", defaultValue: false)
@@ -110,6 +112,8 @@ abstract class $ItemCreationModelCopyWith<$Res> {
           int? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
           int? itemCatelog4,
+      @JsonKey(name: "item_cataloge5")
+          int? itemCatelog5,
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBlock,
       @JsonKey(name: "purchase_block", defaultValue: false)
@@ -150,6 +154,7 @@ class _$ItemCreationModelCopyWithImpl<$Res, $Val extends ItemCreationModel>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? itemCatelog5 = freezed,
     Object? salesBlock = freezed,
     Object? purchaseBlock = freezed,
   }) {
@@ -238,6 +243,10 @@ class _$ItemCreationModelCopyWithImpl<$Res, $Val extends ItemCreationModel>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as int?,
+      itemCatelog5: freezed == itemCatelog5
+          ? _value.itemCatelog5
+          : itemCatelog5 // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
@@ -295,6 +304,8 @@ abstract class _$$_ItemCreationModelCopyWith<$Res>
           int? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
           int? itemCatelog4,
+      @JsonKey(name: "item_cataloge5")
+          int? itemCatelog5,
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBlock,
       @JsonKey(name: "purchase_block", defaultValue: false)
@@ -333,6 +344,7 @@ class __$$_ItemCreationModelCopyWithImpl<$Res>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? itemCatelog5 = freezed,
     Object? salesBlock = freezed,
     Object? purchaseBlock = freezed,
   }) {
@@ -421,6 +433,10 @@ class __$$_ItemCreationModelCopyWithImpl<$Res>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as int?,
+      itemCatelog5: freezed == itemCatelog5
+          ? _value.itemCatelog5
+          : itemCatelog5 // ignore: cast_nullable_to_non_nullable
+              as int?,
       salesBlock: freezed == salesBlock
           ? _value.salesBlock
           : salesBlock // ignore: cast_nullable_to_non_nullable
@@ -473,6 +489,8 @@ class _$_ItemCreationModel implements _ItemCreationModel {
           this.itemCatelog3,
       @JsonKey(name: "item_cataloge4")
           this.itemCatelog4,
+      @JsonKey(name: "item_cataloge5")
+          this.itemCatelog5,
       @JsonKey(name: "sales_block", defaultValue: false)
           this.salesBlock,
       @JsonKey(name: "purchase_block", defaultValue: false)
@@ -539,6 +557,9 @@ class _$_ItemCreationModel implements _ItemCreationModel {
   @JsonKey(name: "item_cataloge4")
   final int? itemCatelog4;
   @override
+  @JsonKey(name: "item_cataloge5")
+  final int? itemCatelog5;
+  @override
   @JsonKey(name: "sales_block", defaultValue: false)
   final bool? salesBlock;
   @override
@@ -547,7 +568,7 @@ class _$_ItemCreationModel implements _ItemCreationModel {
 
   @override
   String toString() {
-    return 'ItemCreationModel(name: $name, barcode: $barcode, description: $description, image1: $image1, image2: $image2, image3: $image3, qrCode: $qrCode, materialCode: $materialCode, uomGroupCode: $uomGroupCode, uomCode: $uomCode, groupCode: $groupCode, brandCode: $brandCode, staticGroupCode: $staticGroupCode, variantFrameWorkCode: $variantFrameWorkCode, oldsystemCode: $oldsystemCode, searchName: $searchName, displayName: $displayName, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock)';
+    return 'ItemCreationModel(name: $name, barcode: $barcode, description: $description, image1: $image1, image2: $image2, image3: $image3, qrCode: $qrCode, materialCode: $materialCode, uomGroupCode: $uomGroupCode, uomCode: $uomCode, groupCode: $groupCode, brandCode: $brandCode, staticGroupCode: $staticGroupCode, variantFrameWorkCode: $variantFrameWorkCode, oldsystemCode: $oldsystemCode, searchName: $searchName, displayName: $displayName, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, itemCatelog5: $itemCatelog5, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock)';
   }
 
   @override
@@ -590,6 +611,8 @@ class _$_ItemCreationModel implements _ItemCreationModel {
                 other.itemCatelog3 == itemCatelog3) &&
             (identical(other.itemCatelog4, itemCatelog4) ||
                 other.itemCatelog4 == itemCatelog4) &&
+            (identical(other.itemCatelog5, itemCatelog5) ||
+                other.itemCatelog5 == itemCatelog5) &&
             (identical(other.salesBlock, salesBlock) ||
                 other.salesBlock == salesBlock) &&
             (identical(other.purchaseBlock, purchaseBlock) ||
@@ -621,6 +644,7 @@ class _$_ItemCreationModel implements _ItemCreationModel {
         itemCatelog2,
         itemCatelog3,
         itemCatelog4,
+        itemCatelog5,
         salesBlock,
         purchaseBlock
       ]);
@@ -678,6 +702,8 @@ abstract class _ItemCreationModel implements ItemCreationModel {
           final int? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
           final int? itemCatelog4,
+      @JsonKey(name: "item_cataloge5")
+          final int? itemCatelog5,
       @JsonKey(name: "sales_block", defaultValue: false)
           final bool? salesBlock,
       @JsonKey(name: "purchase_block", defaultValue: false)
@@ -743,6 +769,9 @@ abstract class _ItemCreationModel implements ItemCreationModel {
   @override
   @JsonKey(name: "item_cataloge4")
   int? get itemCatelog4;
+  @override
+  @JsonKey(name: "item_cataloge5")
+  int? get itemCatelog5;
   @override
   @JsonKey(name: "sales_block", defaultValue: false)
   bool? get salesBlock;

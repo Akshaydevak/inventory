@@ -106,6 +106,10 @@ _$_VariantReadModel _$$_VariantReadModelFromJson(Map<String, dynamic> json) =>
       itemCatelog2: json['item_cataloge2'] as String?,
       itemCatelog3: json['item_cataloge3'] as String?,
       itemCatelog4: json['item_cataloge4'] as String?,
+      shelfType: json['shelf_type'] as String?,
+      shelfTime: json['shelf_time'] as int?,
+      haveGiftOption: json['have_gift_option'] as bool? ?? false,
+      haveWrapOption: json['have_wrap_option'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
@@ -179,6 +183,10 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'item_cataloge2': instance.itemCatelog2,
       'item_cataloge3': instance.itemCatelog3,
       'item_cataloge4': instance.itemCatelog4,
+      'shelf_type': instance.shelfType,
+      'shelf_time': instance.shelfTime,
+      'have_gift_option': instance.haveGiftOption,
+      'have_wrap_option': instance.haveWrapOption,
     };
 
 _$_SalesUomData _$$_SalesUomDataFromJson(Map<String, dynamic> json) =>

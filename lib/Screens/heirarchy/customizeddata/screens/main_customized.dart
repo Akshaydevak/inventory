@@ -37,8 +37,12 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   TextEditingController weightUOMController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController widthController = TextEditingController();
+  TextEditingController shelfType = TextEditingController();
+  TextEditingController shelfTime = TextEditingController();
   TextEditingController lengthController = TextEditingController();
   bool active = false;
+  bool haveGiftOption = false;
+  bool haveWrapOption = false;
   bool needMultipleIntegreation = false;
   List<BrandListModel> result = [];
   var list1;
@@ -67,6 +71,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
     lengthController.clear();
     weightUOMController.clear();
     active=false;
+    haveGiftOption=false;
+    haveWrapOption=false;
+    shelfType.clear();
+    shelfTime.clear();
 
     needMultipleIntegreation=false;
     setState(() {
@@ -85,6 +93,16 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
       case '2':
         {
           needMultipleIntegreation = active1;
+        }
+        break;
+      case '3':
+        {
+          haveGiftOption = active1;
+        }
+        break;
+      case '4':
+        {
+          haveWrapOption = active1;
         }
         break;
 
@@ -186,6 +204,8 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                     }, success: (data) {
                       print("here arrived"+data.toString());
                       setState(() {
+
+
                         codeController.text=data.groupCustomdata?.code??"";
                         groupNameController.text=data.groupCustomdata?.groupNmae??"";
                         minimumGpController.text=data.groupCustomdata?.minGp==null?"":data.groupCustomdata?.minGp?.toStringAsFixed(2).toString()??"";
@@ -201,7 +221,11 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                         heightController.text=data.groupCustomdata?.dimension?.height==null?"":data.groupCustomdata?.dimension?.height?.toStringAsFixed(2).toString()??"";
                         lengthController.text=data.groupCustomdata?.dimension?.length==null?"":data.groupCustomdata?.dimension?.length?.toStringAsFixed(2).toString()??"";
                         weightUOMController.text=data.groupCustomdata?.dimension?.weight==null?"":data.groupCustomdata?.dimension?.weight?.toStringAsFixed(2).toString()??"";
+                        shelfType.text=data.groupCustomdata?.shelpType==null?"":data.groupCustomdata?.shelpType??"";
+                        shelfTime.text=data.groupCustomdata?.shelpType==null?"":data.groupCustomdata?.shelfTime.toString()??"";
                         active=data.groupCustomdata?.isActive??false;
+                        haveGiftOption=data.groupCustomdata?.haveGiftOption??false;
+                        haveWrapOption=data.groupCustomdata?.haveWrapOption??false;
                         needMultipleIntegreation=data.groupCustomdata?.needMultipleIntegration??false;
 
                       });
@@ -330,6 +354,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                             ),
                             CustomizedStableTable(
                               select:select,
+                              shelfType:shelfType,
+                              shelfTime:shelfTime,
+                              haveGiftOption:haveGiftOption,
+                              haveWrapOption:haveWrapOption,
                               needMultipleIntegreation: needMultipleIntegreation,
                               groupNameController: groupNameController,
                               width: widthController,
@@ -420,6 +448,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                           excesstax: excessTaxController.text.isEmpty?null:double.tryParse(excessTaxController.text),
                                           returnType: returnTypeController.text.isEmpty?null:returnTypeController.text,
                                           isActive: active,
+                                          haveGiftOption: haveGiftOption,
+                                          haveWrapOption: haveWrapOption,
+                                          shelfTime:int.tryParse(shelfTime.text),
+                                          shelfType:shelfType.text,
 
                                           height: heightController.text.isEmpty?null:double.tryParse(heightController.text),
                                             width : widthController.text.isEmpty?null:double.tryParse(widthController.text),

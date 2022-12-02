@@ -93,7 +93,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
   List<SalesOrderLines> table  =[];
   tableAssign(List<SalesOrderLines> table1) {
     print("ethito");
-    table = table1;
+    table = List.from(table1);
     setState(() {
       addition();
     });
@@ -294,7 +294,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                       // setState(() {
                       //   print("taskssss");
                       data?.salesOrderData?.orderLines != null
-                          ? table = data?.salesOrderData?.orderLines ?? []
+                          ? table = List.from(data?.salesOrderData?.orderLines ?? [])
                           : table = [];
                       //   print("lll"+lines.toString());
                       //
@@ -797,6 +797,7 @@ class _StableTableState extends State<StableTable> {
   TextEditingController taxidController = TextEditingController();
   TextEditingController buisnessmodeController = TextEditingController();
   TextEditingController designation = TextEditingController();
+  String? customerUserCode="";
 
   @override
   Widget build(BuildContext context) {
@@ -919,6 +920,9 @@ class _StableTableState extends State<StableTable> {
 
                                       widget.customerName.text=va?.customerName??"";
                                       widget.customerId.text=va?.id.toString()??"";
+
+                                      customerUserCode=va?.customerUserCode??"";
+                                      print("usercode"+customerUserCode.toString());
                                       print("xxxxxxxxxxxxxxx"+widget.customerId.text.toString());
                                       widget.trnNumber.text=va?.businessData?.taxId??"";
                                       setState(() {
@@ -1047,6 +1051,8 @@ class _StableTableState extends State<StableTable> {
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
+                                    code: customerUserCode,
+
                                     id: int.tryParse(widget.customerId.text),
                                     type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
@@ -1323,7 +1329,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   late AutoScrollController recieveController;
   bool assignCheck = false;
   PurchaseOrderTableModel? purchaseTable;
-  List<SalesOrderLines> table1 = [];
+  List<SalesOrderLines> table1 =List.from( []);
   String? variantId = "";
   String? varinatname = "";
   String? returntype = "";
@@ -1354,11 +1360,11 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
   void taxableCalcutatingMethod(
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     if (type == "price") {
-      taxableAmount = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmount = double.parse(((((reqQty * unitCst) + exTaxx) - disct)).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
-      taxableAmount = (total - ((total * disct) / 100));
+      taxableAmount = double.parse(((total - ((total * disct) / 100))).toStringAsFixed(2));
     }
   }
   clearTableAddingVariables(){
@@ -1403,7 +1409,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     double taxableAmounts = 0;
     if (type == "price") {
-      taxableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmounts = double.parse(((((reqQty * unitCst) + exTaxx) - disct)).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
@@ -1485,7 +1491,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                       //   print("taskssss");
                       stockCheck=false;
                       data?.salesOrderData?.orderLines != null
-                          ? table1 = data?.salesOrderData?.orderLines ?? []
+                          ? table1 =List.from( data?.salesOrderData?.orderLines ?? [])
                           : table1 = [];
                       _getCurrentUser();
 
@@ -1541,7 +1547,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                       // setState(() {
                       //   print("taskssss");
                       data?.salesOrderData?.orderLines != null
-                          ? table1 = data?.salesOrderData?.orderLines ?? []
+                          ? table1 =List.from( data?.salesOrderData?.orderLines ?? [])
                           : table1= [];
 
 
@@ -2426,10 +2432,12 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
                                                     table1[i].isActive;
                                                 setState(() {
                                                   widget.updateCheck(true);
+                                                  print("aaaaaaaaaaa"+isActive.toString());
                                                   table1[i] = table1[i].copyWith(updatecheck: true);
                                                   // table1[i] = table1[i].copyWith(updateCheck: true);
                                                   setState(() {});
                                                   isActive = !isActive!;
+                                                  print("aaaaaaaaaaa"+isActive.toString());
                                                   table1[i] = table1[i]
                                                       .copyWith(
                                                       isActive: isActive);
@@ -2925,6 +2933,7 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 }
 class WarrantyDetailsPopUp extends StatefulWidget {
   final int? stckQty;
+  final String? code;
   // final int? indexValue;
   // final List<ReadWarranty>? warranty;
   // final Function(bool) changeActive;
@@ -2933,6 +2942,7 @@ class WarrantyDetailsPopUp extends StatefulWidget {
   const WarrantyDetailsPopUp({
     Key? key,
     this.stckQty = 0,
+    this.code,
     // required this.changeActive,
     // required this.changeAdditionalWarranty,
     // required this.changeExtendedWarranty,
@@ -3033,7 +3043,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                 ShippingAddressCreationModel model=ShippingAddressCreationModel(
                   country: countryCode??"",
                   addressTag: addresstag.text??"",
-                  addressType:"customer address",
+                  addressType:"buisness",
                   buillingName: buildingname.text??"",
                   city: city.text??"",
                   contact: "91"+contact.text.toString()??"",
@@ -3042,6 +3052,7 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
                   landmark: landmark?.text??'',
                   state: state.text??"",
                   streetName: streetname.text??"",
+                  userCode: widget.code,
                 );
                 print("aaaaaaaaaaaaaaa"+model.toString());
                 context

@@ -57,17 +57,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
             margin: EdgeInsets.symmetric(horizontal: w*.02),
             child: customTable(
 
-              border: const TableBorder(
 
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
 
               tableWidth: .5,
 
@@ -88,9 +78,6 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
                       'Sl No',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -102,9 +89,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
                       'Code',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -116,9 +101,6 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
                       'Name',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -130,9 +112,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
                       'Barcode',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -144,9 +124,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
                       'Is Active',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -165,24 +143,21 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                 ),
                 if(table?.isEmpty==true)...[
                   TableRow(
-                      decoration: BoxDecoration(
-                          color: Pellet.tableRowColor,
-                          shape: BoxShape.rectangle,
-                          border:  Border(
-                              left: BorderSide(
-
-                                  color: Color(0xff3E4F5B).withOpacity(.1),
-                                  width: .4,
-                                  style: BorderStyle.solid),
-                              bottom: BorderSide(
-
-                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                  style: BorderStyle.solid),
-                              right: BorderSide(
-                                  color:   Color(0xff3E4F5B).withOpacity(.1),
-                                  width: .4,
-
-                                  style: BorderStyle.solid))),
+    decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border: Border(
+    left: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid))),
                       children: [
 
 
@@ -236,29 +211,20 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                   for (var i = 0; i < table!.length; i++)
                     TableRow(
                         decoration: BoxDecoration(
-                            color: Colors.grey
-                                .shade200,
-                            shape: BoxShape
-                                .rectangle,
-                            border:const  Border(
+                            color: Pellet.tableRowColor,
+                            shape: BoxShape.rectangle,
+                            border: Border(
                                 left: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
+                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+                                    style: BorderStyle.solid),
                                 bottom: BorderSide(
-                                    width: .5,
-                                    color: Colors
-                                        .grey,
-                                    style: BorderStyle
-                                        .solid),
+                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                    style: BorderStyle.solid),
                                 right: BorderSide(
-                                    color: Colors
-                                        .grey,
-                                    width: .5,
-                                    style: BorderStyle
-                                        .solid))),
+                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                    width: .4,
+                                    style: BorderStyle.solid))),
                         children: [
 
 
@@ -408,12 +374,23 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
 
 
               ],
+              widths: {
+                0: FlexColumnWidth(1),
+                1: FlexColumnWidth(4),
+                2: FlexColumnWidth(4),
+                3: FlexColumnWidth(4),
+                4: FlexColumnWidth(2),
+
+
+              },
 
             ),
 
 
           ),
+
         ],
+
       );
   }
 }

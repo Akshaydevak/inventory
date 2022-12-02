@@ -111,9 +111,13 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   TextEditingController qrCodeController = TextEditingController();
   TextEditingController rfIdController = TextEditingController();
   TextEditingController weightController = TextEditingController();
+  TextEditingController shelfTypeController = TextEditingController();
+  TextEditingController shelfTimeController = TextEditingController();
   bool salesBolock = false;
   bool purchaseBolock = false;
   bool stockWarning = false;
+  bool haveGiftOption = false;
+  bool haveWrapOption = false;
   bool itmcatelog = false;
   bool itmImage = false;
   bool active = false;
@@ -549,9 +553,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
     }, error: () {
       context.showSnackBarError(Variable.errorMessege);
     }, success: (data) {
-      print("Akshayaaaaaaaaaaaa");
-      print(data.data1);
-      print(data.data2);
+
+
       if (data.data1) {
         setState(() async {
 
@@ -952,21 +955,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                         ),
                                       ),
                                       SizedBox(height: height * .10,),
-                                      VariantStabletable(
-                                          needMultipleIntegration:needMultipleIntegration,
-                                        weightUom:weightUomIdController,
-                                          weight:weightController,
-                                        seblingNameController: searchNAmeController,
-                                        height: heightController,
-                                        width: widthController,
-                                        length: lengthController,
-                                        baseGroupName: baseUomNameController,
-                                          purchaseUomName: purchaseUomNameController,
-                                          salesUomName: salesUomNameController,
-                                          uomGroupName: uomGroupNameController,
-                                          veritiaclid:veritiaclid,
-                                         catalog1: catalog1,
-                                          catalog2: catalog2,
+                                      VariantStabletable(needMultipleIntegration:needMultipleIntegration,
+                                        weightUom:weightUomIdController, weight:weightController,
+                                        seblingNameController: searchNAmeController, height: heightController, width: widthController, length: lengthController, baseGroupName: baseUomNameController, purchaseUomName: purchaseUomNameController, salesUomName: salesUomNameController,
+                                          uomGroupName: uomGroupNameController, veritiaclid:veritiaclid, catalog1: catalog1,catalog2: catalog2,
                                           catalog3: catalog3,
                                          catalog4: catalog4,
                                          catalog5: catalog5,
@@ -1030,7 +1022,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                         exciseTax: exciseTaxController,
                                         returnType: returnTypeController,
                                         returnTime: returnTimeController,
-                                        status: statusController, relatedItem: relatedController,
+                                        status: statusController,
+                                          relatedItem: relatedController,
+                                        shelfType:shelfTypeController,
+                                        shelfTime:shelfTimeController,
+                                        haveGiftOption:haveGiftOption,
+                                        haveWrapOption:haveWrapOption,
                                         imagePostCheck:imagePostCheck,
                                           trueOrFalseChange:trueOrFalseChange
 
@@ -1224,6 +1221,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   alternativeBarcode:alternativeBarcode,
                                                   alternativeQrCodeBarcode: alternativeQrCode,
                                                   returnType: returnTypeController.text,
+                                                  shelfTime: shelfTimeController.text.isEmpty?null:int.tryParse(shelfTimeController.text),
+                                                  shelfType: shelfTypeController.text.isEmpty?null:shelfTypeController.text,
+                                                  haveWrapOption: haveWrapOption,
+                                                  haveGiftOption: haveGiftOption,
                                                   returnTime: int.tryParse(returnTimeController.text),
                                                   variantStatus: "va",
                                                   isActive: active,
@@ -1273,6 +1274,10 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   vendorDetails: vendorDetails,
                                                   needMultipleIntegration: needMultipleIntegration,
                                                   weightUomId: int.tryParse(weightUomIdController.text),
+                                                  shelfTime: shelfTimeController.text.isEmpty?null:int.tryParse(shelfTimeController.text),
+                                                  shelfType: shelfTypeController.text.isEmpty?null:shelfTypeController.text,
+                                                  haveWrapOption: haveWrapOption,
+                                                  haveGiftOption: haveGiftOption,
                                                   // purchaseUomController!.text.isEmpty?null:purchaseUomController?.text,
                                                   barcode: barCodeController!.text.isEmpty?null:barCodeController.text,
                                                   qrcode: qrCodeController!.text.isEmpty?null:qrCodeController?.text,

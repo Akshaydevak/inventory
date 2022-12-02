@@ -29,6 +29,7 @@ _$_ItemCreationModel _$$_ItemCreationModelFromJson(Map<String, dynamic> json) =>
       itemCatelog2: json['item_cataloge2'] as int?,
       itemCatelog3: json['item_cataloge3'] as int?,
       itemCatelog4: json['item_cataloge4'] as int?,
+      itemCatelog5: json['item_cataloge5'] as int?,
       salesBlock: json['sales_block'] as bool? ?? false,
       purchaseBlock: json['purchase_block'] as bool? ?? false,
     );
@@ -57,6 +58,7 @@ Map<String, dynamic> _$$_ItemCreationModelToJson(
       'item_cataloge2': instance.itemCatelog2,
       'item_cataloge3': instance.itemCatelog3,
       'item_cataloge4': instance.itemCatelog4,
+      'item_cataloge5': instance.itemCatelog5,
       'sales_block': instance.salesBlock,
       'purchase_block': instance.purchaseBlock,
     };

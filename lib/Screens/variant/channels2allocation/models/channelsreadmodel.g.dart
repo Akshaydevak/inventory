@@ -27,6 +27,7 @@ _$_ChannelListModel _$$_ChannelListModelFromJson(Map<String, dynamic> json) =>
       purchaseBlockQuantity: json['purchase_blocked_qty'] as int?,
       salesblockQuantity: json['sales_blocked_qty'] as int?,
       addVirtualStock: json['add_virtual_stock'] as int?,
+      dailyStockQuantity: json['daily_stock_quantity'] as int?,
       virtualType: json['virtual_type'] as String?,
       channelTypeCode: json['channel_type_code'] as String?,
       variantCode: json['variant_code'] as String?,
@@ -38,6 +39,7 @@ _$_ChannelListModel _$$_ChannelListModelFromJson(Map<String, dynamic> json) =>
       stockWarning: json['stock_warning'] as bool? ?? false,
       salesBlock: json['sales_block'] as bool? ?? false,
       purchaseBlocked: json['purchase_blocked'] as bool? ?? false,
+      isDAilyStockAvailable: json['is_daily_stock_available'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_ChannelListModelToJson(_$_ChannelListModel instance) =>
@@ -61,6 +63,7 @@ Map<String, dynamic> _$$_ChannelListModelToJson(_$_ChannelListModel instance) =>
       'purchase_blocked_qty': instance.purchaseBlockQuantity,
       'sales_blocked_qty': instance.salesblockQuantity,
       'add_virtual_stock': instance.addVirtualStock,
+      'daily_stock_quantity': instance.dailyStockQuantity,
       'virtual_type': instance.virtualType,
       'channel_type_code': instance.channelTypeCode,
       'variant_code': instance.variantCode,
@@ -72,4 +75,5 @@ Map<String, dynamic> _$$_ChannelListModelToJson(_$_ChannelListModel instance) =>
       'stock_warning': instance.stockWarning,
       'sales_block': instance.salesBlock,
       'purchase_blocked': instance.purchaseBlocked,
+      'is_daily_stock_available': instance.isDAilyStockAvailable,
     };

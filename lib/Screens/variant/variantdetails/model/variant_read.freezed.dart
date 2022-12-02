@@ -150,6 +150,14 @@ mixin _$VariantReadModel {
   String? get itemCatelog3 => throw _privateConstructorUsedError;
   @JsonKey(name: "item_cataloge4")
   String? get itemCatelog4 => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  String? get shelfType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -290,7 +298,15 @@ abstract class $VariantReadModelCopyWith<$Res> {
       @JsonKey(name: "item_cataloge3")
           String? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          String? itemCatelog4});
+          String? itemCatelog4,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption});
 
   $BarcodeCopyWith<$Res>? get barcode;
   $QrCodeCopyWith<$Res>? get qrcode;
@@ -385,6 +401,10 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -663,6 +683,22 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -910,7 +946,15 @@ abstract class _$$_VariantReadModelCopyWith<$Res>
       @JsonKey(name: "item_cataloge3")
           String? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          String? itemCatelog4});
+          String? itemCatelog4,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption});
 
   @override
   $BarcodeCopyWith<$Res>? get barcode;
@@ -1012,6 +1056,10 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
     Object? itemCatelog2 = freezed,
     Object? itemCatelog3 = freezed,
     Object? itemCatelog4 = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
   }) {
     return _then(_$_VariantReadModel(
       id: freezed == id
@@ -1290,6 +1338,22 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
           ? _value.itemCatelog4
           : itemCatelog4 // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1424,7 +1488,15 @@ class _$_VariantReadModel implements _VariantReadModel {
       @JsonKey(name: "item_cataloge3")
           this.itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          this.itemCatelog4})
+          this.itemCatelog4,
+      @JsonKey(name: "shelf_type")
+          this.shelfType,
+      @JsonKey(name: "shelf_time")
+          this.shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          this.haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          this.haveWrapOption})
       : _alterNativeBarcode = alterNativeBarcode,
         _alterNativeQrCode = alterNativeQrCode,
         _returType = returType,
@@ -1658,10 +1730,22 @@ class _$_VariantReadModel implements _VariantReadModel {
   @override
   @JsonKey(name: "item_cataloge4")
   final String? itemCatelog4;
+  @override
+  @JsonKey(name: "shelf_type")
+  final String? shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  final int? shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  final bool? haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  final bool? haveWrapOption;
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -1776,7 +1860,11 @@ class _$_VariantReadModel implements _VariantReadModel {
             (identical(other.itemCatelog1, itemCatelog1) || other.itemCatelog1 == itemCatelog1) &&
             (identical(other.itemCatelog2, itemCatelog2) || other.itemCatelog2 == itemCatelog2) &&
             (identical(other.itemCatelog3, itemCatelog3) || other.itemCatelog3 == itemCatelog3) &&
-            (identical(other.itemCatelog4, itemCatelog4) || other.itemCatelog4 == itemCatelog4));
+            (identical(other.itemCatelog4, itemCatelog4) || other.itemCatelog4 == itemCatelog4) &&
+            (identical(other.shelfType, shelfType) || other.shelfType == shelfType) &&
+            (identical(other.shelfTime, shelfTime) || other.shelfTime == shelfTime) &&
+            (identical(other.haveGiftOption, haveGiftOption) || other.haveGiftOption == haveGiftOption) &&
+            (identical(other.haveWrapOption, haveWrapOption) || other.haveWrapOption == haveWrapOption));
   }
 
   @JsonKey(ignore: true)
@@ -1851,7 +1939,11 @@ class _$_VariantReadModel implements _VariantReadModel {
         itemCatelog1,
         itemCatelog2,
         itemCatelog3,
-        itemCatelog4
+        itemCatelog4,
+        shelfType,
+        shelfTime,
+        haveGiftOption,
+        haveWrapOption
       ]);
 
   @JsonKey(ignore: true)
@@ -1996,7 +2088,15 @@ abstract class _VariantReadModel implements VariantReadModel {
       @JsonKey(name: "item_cataloge3")
           final String? itemCatelog3,
       @JsonKey(name: "item_cataloge4")
-          final String? itemCatelog4}) = _$_VariantReadModel;
+          final String? itemCatelog4,
+      @JsonKey(name: "shelf_type")
+          final String? shelfType,
+      @JsonKey(name: "shelf_time")
+          final int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          final bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          final bool? haveWrapOption}) = _$_VariantReadModel;
 
   factory _VariantReadModel.fromJson(Map<String, dynamic> json) =
       _$_VariantReadModel.fromJson;
@@ -2197,6 +2297,18 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "item_cataloge4")
   String? get itemCatelog4;
+  @override
+  @JsonKey(name: "shelf_type")
+  String? get shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption;
   @override
   @JsonKey(ignore: true)
   _$$_VariantReadModelCopyWith<_$_VariantReadModel> get copyWith =>

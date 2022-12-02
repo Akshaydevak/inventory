@@ -44,6 +44,7 @@ import '../Screens/variant/variantdetails/model/vendormodel.dart';
 
 class TableConfigurePopup extends StatelessWidget {
   final String type;
+  final String? code;
   final String? apiType;
   final Function valueSelect;
   final int? id;
@@ -51,6 +52,7 @@ class TableConfigurePopup extends StatelessWidget {
   TableConfigurePopup(
       {Key? key,
       this.apiType,
+        this.code,
       required this.type,
       this.id = 0,
       required this.valueSelect})
@@ -149,6 +151,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "SubcategoryTabalePopup":
         {
           data = SubcategoryTabalePopup(
+            id:id,
             type: type,
             valueSelect: valueSelect,
           );
@@ -157,6 +160,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "baseUomTabalePopup":
         {
           data = baseUomTabalePopup(
+            id:id,
             type: type,
             valueSelect: valueSelect,
           );
@@ -198,6 +202,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "UomGroupTabalePopup":
         {
           data = UomGroupTabalePopup(
+            id:id,
             type: type,
             valueSelect: valueSelect,
           );
@@ -206,6 +211,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "shippingIdListPopup":
         {
           data = shippingIdListPopup(
+            code: code,
             id:id,
             type: type,
             valueSelect: valueSelect,
@@ -240,6 +246,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "GroupTabalePopup":
         {
           data = GroupTabalePopup(
+            id:id,
             type: type,
             valueSelect: valueSelect,
           );
@@ -400,17 +407,17 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -425,21 +432,19 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                                 children: [
                                   tableHeadtext(
                                     'Sl No',
-
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
-
                                     size: 13,
                                   ),
 
                                   tableHeadtext(
                                     'Division',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -457,20 +462,22 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -680,17 +687,17 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -706,9 +713,9 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -718,8 +725,8 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                                   tableHeadtext(
                                     'Groups',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -737,20 +744,22 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -969,17 +978,17 @@ class _UOMPopup extends State<UOMPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -995,9 +1004,9 @@ class _UOMPopup extends State<UOMPopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -1007,8 +1016,8 @@ class _UOMPopup extends State<UOMPopup> {
                                   tableHeadtext(
                                     'Uom Group',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -1026,20 +1035,22 @@ class _UOMPopup extends State<UOMPopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -1540,17 +1551,17 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -1566,9 +1577,9 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -1578,8 +1589,8 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                                   tableHeadtext(
                                     'Costing',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -1597,20 +1608,22 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -1826,17 +1839,17 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -1852,9 +1865,9 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -1864,8 +1877,8 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                                   tableHeadtext(
                                     'Item',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -1882,22 +1895,24 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+            decoration: BoxDecoration(
+            color: Pellet.tableRowColor,
+                shape: BoxShape.rectangle,
+                border:  Border(
+                    left: BorderSide(
+
+                        color: Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+                        style: BorderStyle.solid),
+                    bottom: BorderSide(
+
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        style: BorderStyle.solid),
+                    right: BorderSide(
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+
+                        style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
@@ -2055,7 +2070,7 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Costing  Popup",
+                label: "Costing Popup",
                 onApply: () {
                   costingTypeMethodeCheck = true;
                   showDailogPopUp(
@@ -2113,17 +2128,17 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -2141,18 +2156,18 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
 
                                     padding: EdgeInsets.all(7),
 
-                                    height: 44,
-                                    // textColor: Colors.black,
-                                    // color: Color(0xffE5E5E5),
-
-                                    size: 13,
+                                    // height: 44,
+                                    // // textColor: Colors.black,
+                                    // // color: Color(0xffE5E5E5),
+                                    //
+                                    // size: 13,
                                   ),
 
                                   tableHeadtext(
                                     'Item',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -2170,20 +2185,22 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -2399,17 +2416,17 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -2425,9 +2442,9 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -2437,8 +2454,8 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                                   tableHeadtext(
                                     'Item',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 44,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -2456,20 +2473,22 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -2686,17 +2705,17 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -2712,9 +2731,9 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -2724,8 +2743,8 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                                   tableHeadtext(
                                     'Item',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -2743,20 +2762,22 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -2986,17 +3007,17 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -3014,8 +3035,8 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                   tableHeadtext(
                                     'Manufacture name',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -3033,20 +3054,22 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
 
@@ -3242,7 +3265,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<CategorylistCubit>()
-                                  .searchCategoryist(searchContoller.text);
+                                  .searchCategoryist(searchContoller.text,id: widget.id);
                               if (va == "") {
                                 context
                                     .read<CategorylistCubit>()
@@ -3259,17 +3282,17 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -3284,10 +3307,10 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                                 children: [
                                   tableHeadtext(
                                     'Sl No',
-
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    //
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -3297,8 +3320,8 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                                   tableHeadtext(
                                     'Category',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -3316,20 +3339,22 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -3386,7 +3411,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                               : () {
                                   context
                                       .read<CategorylistCubit>()
-                                      .previuosslotSectionPageList();
+                                      .previuosslotSectionPageList(id: widget.id);
                                 },
                           next: list1.nextPageUrl == null
                               ? null
@@ -3394,7 +3419,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                                   // print(data.nextPageUrl);
                                   context
                                       .read<CategorylistCubit>()
-                                      .nextslotSectionPageList();
+                                      .nextslotSectionPageList(id:widget.id);
                                 },
                         )
                     ],
@@ -3412,10 +3437,12 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
 class SubcategoryTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
+  final int? id;
 
   SubcategoryTabalePopup({
     Key? key,
     required this.type,
+    this.id,
     required this.valueSelect,
   }) : super(key: key);
 
@@ -3458,7 +3485,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<SubcategoryCubit>().getSubCategoryList();
+      context.read<SubcategoryCubit>().getSubCategoryList(id: widget.id);
       return BlocConsumer<SubcategoryCubit, SubcategoryState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -3524,11 +3551,11 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<SubcategoryCubit>()
-                                  .searchSubCategoryList(searchContoller.text);
+                                  .searchSubCategoryList(searchContoller.text,id:widget.id);
                               if (va == "") {
                                 context
                                     .read<SubcategoryCubit>()
-                                    .getSubCategoryList();
+                                    .getSubCategoryList(id:widget.id);
                               }
                             },
                           )),
@@ -3541,17 +3568,17 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -3567,9 +3594,9 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -3579,8 +3606,8 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                                   tableHeadtext(
                                     'Sub Category',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -3598,20 +3625,22 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -3668,7 +3697,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                               : () {
                                   context
                                       .read<SubcategoryCubit>()
-                                      .previuosslotSectionPageList();
+                                      .previuosslotSectionPageList(id:widget.id);
                                 },
                           next: list1.nextPageUrl == null
                               ? null
@@ -3676,7 +3705,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                                   // print(data.nextPageUrl);
                                   context
                                       .read<SubcategoryCubit>()
-                                      .nextslotSectionPageList();
+                                      .nextslotSectionPageList(id:widget.id);
                                 },
                         )
                     ],
@@ -3694,10 +3723,13 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
 class baseUomTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
+  final int? id;
 
   baseUomTabalePopup({
     Key? key,
     required this.type,
+    this.id,
+
     required this.valueSelect,
   }) : super(key: key);
 
@@ -3740,7 +3772,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<BaseuomlistCubit>().getUomist();
+      context.read<BaseuomlistCubit>().getUomist(id: widget.id);
       return BlocConsumer<BaseuomlistCubit, BaseuomlistState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -3821,17 +3853,17 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -3847,9 +3879,9 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -3859,8 +3891,8 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                                   tableHeadtext(
                                     'Base UOM',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -3878,20 +3910,22 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -4107,17 +4141,17 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -4133,9 +4167,9 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -4145,8 +4179,8 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                                   tableHeadtext(
                                     'Sales UOM',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -4163,22 +4197,24 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+                                         decoration: BoxDecoration(
+                                                              color: Pellet.tableRowColor,
+                                                              shape: BoxShape.rectangle,
+                                                              border:  Border(
+                                                                  left: BorderSide(
+
+                                                                      color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                      width: .4,
+                                                                      style: BorderStyle.solid),
+                                                                  bottom: BorderSide(
+
+                                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                      style: BorderStyle.solid),
+                                                                  right: BorderSide(
+                                                                      color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                      width: .4,
+
+                                                                      style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
@@ -4368,11 +4404,13 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                   // setState(() {});
                 },
                 dataField: Container(
+                  alignment: Alignment.topLeft,
                   // height: 500,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                          margin: EdgeInsets.all(5),
+                          margin: EdgeInsets.all(5.6),
                           child: SearchTextfiled(
                             color: Color(0xffFAFAFA),
                             h: 40,
@@ -4397,17 +4435,17 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -4423,9 +4461,9 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -4435,8 +4473,8 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                                   tableHeadtext(
                                     'UOM',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -4453,29 +4491,36 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+            decoration: BoxDecoration(
+            color: Pellet.tableRowColor,
+                shape: BoxShape.rectangle,
+                border:  Border(
+                    left: BorderSide(
+
+                        color: Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+                        style: BorderStyle.solid),
+                    bottom: BorderSide(
+
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        style: BorderStyle.solid),
+                    right: BorderSide(
+                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                        width: .4,
+
+                        style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
                                             child:
-                                                textPadding((i + 1).toString())
+                                                textPadding((i + 1).toString(),
+                                                    padding: EdgeInsets
+                                                        .only(left: 11.5, top: 1.5),
+                                                    fontWeight: FontWeight.w500,
+
+                                                )
                                             // Text(keys[i].key??"")
 
                                             ),
@@ -4483,23 +4528,43 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
-                                                BrandListModel model =
-                                                    BrandListModel(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  uomCode: table[i].uomCode,
-                                                );
-                                                Navigator.pop(context);
+                                            child:
+                                            textOnclickPadding(
+                                              text: table[i].name ?? "",
+                                              ontap: (){
+                                                      BrandListModel model =
+                                                          BrandListModel(
+                                                        id: table[i].id,
+                                                        name: table[i].name,
+                                                        uomCode: table[i].uomCode,
+                                                      );
+                                                      Navigator.pop(context);
 
-                                                widget.valueSelect(model);
+                                                      widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
                                             )
+                                            // Container(
+                                            //
+                                            //
+                                            //   child: InkWell(
+                                            //     onTap: () {
+                                            //       BrandListModel model =
+                                            //           BrandListModel(
+                                            //         id: table[i].id,
+                                            //         name: table[i].name,
+                                            //         uomCode: table[i].uomCode,
+                                            //       );
+                                            //       Navigator.pop(context);
+                                            //
+                                            //       widget.valueSelect(model);
+                                            //     },
+                                            //     child: Container(
+                                            //         padding: EdgeInsets.all(11),
+                                            //         child:
+                                            //             Text(table[i].name ?? ""),
+                                            //         height: 45),
+                                            //   ),
+                                            // )
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -4507,8 +4572,8 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                               ],
                             ],
                             widths: {
-                              0: FlexColumnWidth(2),
-                              1: FlexColumnWidth(5),
+                              0: FlexColumnWidth(1.5),
+                              1: FlexColumnWidth(6),
                             },
                           ),
                         ),
@@ -4686,17 +4751,17 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -4712,9 +4777,9 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -4724,8 +4789,8 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                                   tableHeadtext(
                                     'Group',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -4743,20 +4808,22 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -4772,23 +4839,38 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child:
+                                            textOnclickPadding(
+                                              text: table[i].name ?? "" ,
+                                              ontap: (){
                                                 BrandListModel model =
-                                                    BrandListModel(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  code: table[i].code,
-                                                );
-                                                Navigator.pop(context);
+                                                        BrandListModel(
+                                                      id: table[i].id,
+                                                      name: table[i].name,
+                                                      code: table[i].code,
+                                                    );
+                                                    Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                                    widget.valueSelect(model);
+                                              }
                                             )
+                                            // InkWell(
+                                            //   onTap: () {
+                                            //     BrandListModel model =
+                                            //         BrandListModel(
+                                            //       id: table[i].id,
+                                            //       name: table[i].name,
+                                            //       code: table[i].code,
+                                            //     );
+                                            //     Navigator.pop(context);
+                                            //
+                                            //     widget.valueSelect(model);
+                                            //   },
+                                            //   child: Container(
+                                            //       child:
+                                            //           Text(table[i].name ?? ""),
+                                            //       height: 45),
+                                            // )
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -4796,8 +4878,8 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                               ],
                             ],
                             widths: {
-                              0: FlexColumnWidth(2),
-                              1: FlexColumnWidth(5),
+                              0: FlexColumnWidth(1.5),
+                              1: FlexColumnWidth(6),
                             },
                           ),
                         ),
@@ -4975,17 +5057,17 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -5001,9 +5083,9 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -5013,8 +5095,8 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                                   tableHeadtext(
                                     'Category',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -5032,20 +5114,22 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -5061,23 +5145,37 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
-                                                BrandListModel model =
-                                                    BrandListModel(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  code: table[i].code,
-                                                );
-                                                Navigator.pop(context);
+                                            child:textOnclickPadding(
+                                              text: table[i].name ?? "",
+                                              ontap: (){
+                                                BrandListModel model =     BrandListModel(
+                                                          id: table[i].id,
+                                                          name: table[i].name,
+                                                          code: table[i].code,
+                                                        );
+                                                        Navigator.pop(context);
 
-                                                widget.valueSelect(model);
-                                              },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
-                                            )
+                                                        widget.valueSelect(model);
+
+                                              }
+                                            ),
+                                            // InkWell(
+                                            //   onTap: () {
+                                            //     BrandListModel model =
+                                            //         BrandListModel(
+                                            //       id: table[i].id,
+                                            //       name: table[i].name,
+                                            //       code: table[i].code,
+                                            //     );
+                                            //     Navigator.pop(context);
+                                            //
+                                            //     widget.valueSelect(model);
+                                            //   },
+                                            //   child: Container(
+                                            //       child:
+                                            //           Text(table[i].name ?? ""),
+                                            //       height: 45),
+                                            // )
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -5085,8 +5183,8 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                               ],
                             ],
                             widths: {
-                              0: FlexColumnWidth(2),
-                              1: FlexColumnWidth(5),
+                              0: FlexColumnWidth(1.5),
+                              1: FlexColumnWidth(6),
                             },
                           ),
                         ),
@@ -5135,10 +5233,12 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
 class UomGroupTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
+  final int ? id;
 
   UomGroupTabalePopup({
     Key? key,
     required this.type,
+    this.id,
     required this.valueSelect,
   }) : super(key: key);
 
@@ -5264,17 +5364,17 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -5290,9 +5390,9 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -5302,8 +5402,8 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                                   tableHeadtext(
                                     'UOM Group',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -5320,22 +5420,22 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
-                                          shape: BoxShape.rectangle,
-                                          border: const Border(
-                                              left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
-                                                  style: BorderStyle.solid),
-                                              right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
-                                                  style: BorderStyle.solid))),
+                                      // decoration: BoxDecoration(
+                                      //     color: Colors.grey.shade200,
+                                      //     shape: BoxShape.rectangle,
+                                      //     border: const Border(
+                                      //         left: BorderSide(
+                                      //             width: .5,
+                                      //             color: Colors.grey,
+                                      //             style: BorderStyle.solid),
+                                      //         bottom: BorderSide(
+                                      //             width: .5,
+                                      //             color: Colors.grey,
+                                      //             style: BorderStyle.solid),
+                                      //         right: BorderSide(
+                                      //             color: Colors.grey,
+                                      //             width: .5,
+                                      //             style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
@@ -5417,6 +5517,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
 
 class shippingIdListPopup extends StatefulWidget {
   final String type;
+  final String? code;
   final Function valueSelect;
   final int? id;
 
@@ -5424,6 +5525,7 @@ class shippingIdListPopup extends StatefulWidget {
     Key? key,
     required this.type,
     required this.id,
+    this.code,
     required this.valueSelect,
   }) : super(key: key);
 
@@ -5466,7 +5568,7 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<ShippingadreesCubit>().getShippingId(id:widget.id);
+      context.read<ShippingadreesCubit>().getShippingId(id:widget.code);
       return BlocConsumer<ShippingadreesCubit, ShippingadreesState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -5498,6 +5600,7 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                       showDailogPopUp(
                           context,
                           WarrantyDetailsPopUp(
+                            code: widget.code??"",
                             // indexValue: temp,
                             // changeActive: onChangeActive,
                             // changeAdditionalWarranty: onChangeAdditionalWarranty,
@@ -5552,17 +5655,17 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -5578,9 +5681,9 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -5590,8 +5693,8 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                                   tableHeadtext(
                                     'Shipping',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -5609,20 +5712,22 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
                                       decoration: BoxDecoration(
-                                          color: Colors.grey.shade200,
+                                          color: Pellet.tableRowColor,
                                           shape: BoxShape.rectangle,
-                                          border: const Border(
+                                          border:  Border(
                                               left: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
                                                   style: BorderStyle.solid),
                                               bottom: BorderSide(
-                                                  width: .5,
-                                                  color: Colors.grey,
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
                                                   style: BorderStyle.solid),
                                               right: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: .5,
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
                                                   style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
@@ -5927,17 +6032,17 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: SingleChildScrollView(
                               child: customTable(
-                                border: const TableBorder(
-                                  verticalInside: BorderSide(
-                                      width: .5,
-                                      color: Colors.black45,
-                                      style: BorderStyle.solid),
-                                  horizontalInside: BorderSide(
-                                      width: .3,
-                                      color: Colors.black45,
-                                      // color: Colors.blue,
-                                      style: BorderStyle.solid),
-                                ),
+                                // border: const TableBorder(
+                                //   verticalInside: BorderSide(
+                                //       width: .5,
+                                //       color: Colors.black45,
+                                //       style: BorderStyle.solid),
+                                //   horizontalInside: BorderSide(
+                                //       width: .3,
+                                //       color: Colors.black45,
+                                //       // color: Colors.blue,
+                                //       style: BorderStyle.solid),
+                                // ),
                                 tableWidth: .5,
                                 childrens: [
                                   TableRow(
@@ -5953,9 +6058,9 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                                       tableHeadtext(
                                         'Sl No',
 
-                                        padding: EdgeInsets.all(7),
-
-                                        height: 46,
+                                        // padding: EdgeInsets.all(7),
+                                        //
+                                        // height: 46,
                                         // textColor: Colors.black,
                                         // color: Color(0xffE5E5E5),
 
@@ -5965,8 +6070,8 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                                       tableHeadtext(
                                         'customer Id',
                                         // textColor: Colors.black,
-                                        padding: EdgeInsets.all(7),
-                                        height: 46,
+                                        // padding: EdgeInsets.all(7),
+                                        // height: 46,
                                         size: 13,
                                         // color: Color(0xffE5E5E5),
                                       ),
@@ -6228,17 +6333,17 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -6253,10 +6358,10 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                                 children: [
                                   tableHeadtext(
                                     'Sl No',
-
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    //
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -6266,8 +6371,8 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                                   tableHeadtext(
                                     'Brand',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -6511,17 +6616,17 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -6537,9 +6642,9 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -6549,8 +6654,8 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                                   tableHeadtext(
                                     'Static',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -6666,11 +6771,13 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
 
 class GroupTabalePopup extends StatefulWidget {
   final String type;
+  final int? id;
   final Function valueSelect;
 
   GroupTabalePopup({
     Key? key,
     required this.type,
+    this.id,
     required this.valueSelect,
   }) : super(key: key);
 
@@ -6713,7 +6820,7 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
     //         ? ""
     //         : widget.warranty?[widget.indexValue!].duration.toString());
     return Builder(builder: (context) {
-      context.read<GrouplistCubit>().getGroupListList();
+      context.read<GrouplistCubit>().getGroupListList(id:widget.id);
       return BlocConsumer<GrouplistCubit, GrouplistState>(
         listener: (context, state) {
           print("state" + state.toString());
@@ -6779,11 +6886,11 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<GrouplistCubit>()
-                                  .searchGroupList(searchContoller.text);
+                                  .searchGroupList(searchContoller.text,id:widget.id);
                               if (va == "") {
                                 context
                                     .read<GrouplistCubit>()
-                                    .getGroupListList();
+                                    .getGroupListList(id:widget.id);
                               }
                             },
                           )),
@@ -6796,17 +6903,17 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -6822,9 +6929,9 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -6834,8 +6941,8 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                                   tableHeadtext(
                                     'Group',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -6926,7 +7033,7 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                               : () {
                                   context
                                       .read<GrouplistCubit>()
-                                      .previuosslotSectionPageList();
+                                      .previuosslotSectionPageList(id:widget.id);
                                 },
                           next: list1.nextPageUrl == null
                               ? null
@@ -6934,7 +7041,7 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                                   // print(data.nextPageUrl);
                                   context
                                       .read<GrouplistCubit>()
-                                      .nextslotSectionPageList();
+                                      .nextslotSectionPageList(id:widget.id);
                                 },
                         )
                     ],
@@ -7081,17 +7188,17 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -7107,9 +7214,9 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -7119,8 +7226,8 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
                                   tableHeadtext(
                                     'Material',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),
@@ -7309,7 +7416,7 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "Frame  Work Popup",
+                label: "Frame Work Popup",
                 onApply: () {setState(() {
 
 
@@ -7369,17 +7476,17 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
                           child: customTable(
-                            border: const TableBorder(
-                              verticalInside: BorderSide(
-                                  width: .5,
-                                  color: Colors.black45,
-                                  style: BorderStyle.solid),
-                              horizontalInside: BorderSide(
-                                  width: .3,
-                                  color: Colors.black45,
-                                  // color: Colors.blue,
-                                  style: BorderStyle.solid),
-                            ),
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
                             tableWidth: .5,
                             childrens: [
                               TableRow(
@@ -7395,9 +7502,9 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                                   tableHeadtext(
                                     'Sl No',
 
-                                    padding: EdgeInsets.all(7),
-
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 46,
                                     // textColor: Colors.black,
                                     // color: Color(0xffE5E5E5),
 
@@ -7407,8 +7514,8 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                                   tableHeadtext(
                                     'Frame work',
                                     // textColor: Colors.black,
-                                    padding: EdgeInsets.all(7),
-                                    height: 46,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 46,
                                     size: 13,
                                     // color: Color(0xffE5E5E5),
                                   ),

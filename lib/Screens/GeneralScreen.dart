@@ -63,7 +63,7 @@ class GeneralScreen extends StatefulWidget {
 }
 
 class _GeneralScreenState extends State<GeneralScreen> {
-  List<OrderLines> table = [];
+  List<OrderLines> table = List.from([]);
   List<OrderLines>? order = [];
   List<PurchaseOrder> result = [];
   PurchaseOrderTableModel? purchaseTable;
@@ -276,7 +276,21 @@ List<TextEditingController> vatController =[];
     vatTestContoller.clear();
     // _value=false;
   }
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
+    Vamount =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+  }
+  actualAndgrandTotal(double? vatableAmount,double? vat){
 
+    vactualCost = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    Vgrnadtotal=vactualCost;
+
+  }
   valueAddingTextEdingController(){
     if(table.isNotEmpty){
       print("checking case11");
@@ -557,7 +571,7 @@ List<TextEditingController> vatController =[];
                           stockCheck=false;
 
                           print("datasssssssssssssss"+data.toString());
-                          data.data?.orderLines != null ? table = data.data?.orderLines ?? [] : table = [];
+                          data.data?.orderLines != null ? table =List.from( data.data?.orderLines ?? []) : table = [];
                           print("tablsssssssssssssssssse"+table.toString());
                           Variable.inventory_ID =data.data?.iventoryId??"";
                           vendortrnnumber.text=data.data?.vendorTrnNumber??"";
@@ -767,10 +781,10 @@ else{
                               print("taped");
                               select=false;
                               selectedVertical=index;
-                              currentStock.clear();
+                              currentStock=[];
                               updateCheck=false;
                               clear();
-                              table.clear();
+                              table=[];
                               setState(() {});
                               veritiaclid = result[index].id;
                               context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
@@ -4330,9 +4344,11 @@ else{
                                                                       setState(() {});
                                                                     }
                                                                     else {
-                                                                      Vamount =double.parse( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                                                      vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
-                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                      vatableAmountCalculation(check,Qty,eTax,Vdiscount);
+                                                                      actualAndgrandTotal(Vamount,vvat);
+                                                                      // Vamount =double.parse( (((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                      // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                      // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
                                                                       if (Vamount != 0) {
                                                                         Vamount = (((check! * Qty!) + eTax!) -
                                                                                 Vdiscount!)
@@ -4400,9 +4416,11 @@ else{
                                                                         }
                                                                         else {
                                                                           check = double.tryParse(p0);
-                                                                          Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                                                          vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
-                                                                          Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                          vatableAmountCalculation(check,Qty,eTax,Vdiscount);
+                                                                          actualAndgrandTotal(Vamount,vvat);
+                                                                          // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                          // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
+                                                                          // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toDouble().toStringAsFixed(3));
                                                                         }
                                                                   },
                                                                   enable: true,
@@ -4433,9 +4451,11 @@ else{
                                                                         }
                                                                         else {
                                                                           if (Vamount != 0) {
-                                                                            Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                                                            vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                            Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                            vatableAmountCalculation(check,Qty,eTax,Vdiscount);
+                                                                            actualAndgrandTotal(Vamount,vvat);
+                                                                            // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                            // vactualCost = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                            // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                                                           }
                                                                         }
                                                                   },
@@ -4463,9 +4483,11 @@ else{
                                                                       Vgrnadtotal=0;
                                                                     }
                                                                     else {
-                                                                      Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
-                                                                      vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
-                                                                      Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                      vatableAmountCalculation(check,Qty,eTax,Vdiscount);
+                                                                      actualAndgrandTotal(Vamount,vvat);
+                                                                      // Vamount = double.parse((((check! * Qty!) + eTax!) - Vdiscount!).toDouble().toStringAsFixed(3));
+                                                                      // vactualCost =double.parse( (Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
+                                                                      // Vgrnadtotal = double.parse((Vamount! + ((Vamount! * vvat!) / 100)).toStringAsFixed(3));
                                                                       setState(() {});
                                                                     }
                                                                   },
@@ -4605,7 +4627,7 @@ else{
                                                                           "foc is allways less than requested qty");
                                                                     }
                                                                     else{
-                                                                      table.add(
+                                                                      table..add(
                                                                           OrderLines(
                                                                             vendorRefCode: vendorRefCode??"",
                                                                             isRecieved: isRecieved ?? false,

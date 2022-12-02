@@ -319,6 +319,7 @@ const listCategoryDivisionConfig = inventoryBaseUrl + "inventory-product/list-ca
 
 //user urlsss+++++++++++++++++++++++++++
 const shippingListUrl = userBaseUrl + "user-general_admin_address";
+const shippingCreationUrl = userBaseUrl + "user-general_admin_address/create";
 const customIdListUrl = userBaseUrl + "user-customer_list-customer";
 const customerCreationApi = userBaseUrl + "user-customer_create-customer/inventory";
 

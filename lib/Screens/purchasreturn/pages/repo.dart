@@ -98,7 +98,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> salesGeneralDelete(int? id);
   Future<Either<Failure, DoubleResponse>> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id);
-  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{int ? id});
+  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{String ? id});
   Future<Either<Failure,PaginatedResponse< List<CustomerIdListModel>>>> getCustomerId(String? code);
 //sales invoice tab*******************************
   Future<Either<Failure, SalesReturnInvoiceReadModel>> getSalesInvoiceRead(
@@ -181,11 +181,11 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postcategoryPatch(
       CategoryCreationtModel model, int? id);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getSubCategoryList(String? code);
+      getSubCategoryList(String? code,{int? id});
   Future<Either<Failure, DoubleResponse>> postCreateGroup(
       MaterialCreationtModel model);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getGroupListList(String? code, {String? type});
+      getGroupListList(String? code, {String? type,int ? id});
   Future<Either<Failure, MaterialReadModel>> getGroupRead(
     int? id,
   );
@@ -195,7 +195,7 @@ abstract class PurchaseReturnRepoAbstract {
       BaseUomCreationtModel model);
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getUomist(
       String? code,
-      {String? type});
+      {String? type,int? id });
   Future<Either<Failure, BaseUomCreationtModel>> getBaseUomRead(
     int? id,
   );
@@ -560,7 +560,7 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   }
 
   @override
-  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{int ? id}) {
+  Future<Either<Failure,PaginatedResponse< List<ShippingAddressModel>>>> getShippingId(String? code,{String ? id}) {
     return repoExecute<PaginatedResponse<List<ShippingAddressModel>>>(
         () async => remoteDataSource.getShippingId(code,id:id));
   }
@@ -837,10 +837,10 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getSubCategoryList(String? code) {
+      getSubCategoryList(String? code,{int ? id}) {
     print("enterdAAAAAAAAAAAAAAA");
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getSubCategoryList(code));
+        () async => remoteDataSource.getSubCategoryList(code,id:id));
   }
 
   @override
@@ -854,9 +854,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
 
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getGroupListList(String? code, {String? type}) {
+      getGroupListList(String? code, {String? type,int ? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getGroupListList(code, type: type));
+        () async => remoteDataSource.getGroupListList(code, type: type,id: id));
   }
 
   @override
@@ -884,9 +884,9 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   @override
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getUomist(
       String? code,
-      {String? type}) {
+      {String? type,int ? id}) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
-        () async => remoteDataSource.getUomist(code, type: type));
+        () async => remoteDataSource.getUomist(code, type: type,id: id));
   }
 
   @override

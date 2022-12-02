@@ -53,7 +53,7 @@ import 'cubits/cubit/cubit/general_purchase_read_cubit.dart';
 void main() async {
   await WidgetsFlutterBinding.ensureInitialized();
   // window_size.  DesktopWindow.setMinWindowSize(Size(600, 800));
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -159,19 +159,20 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) => UnicostCostingCubit(),
         ),
+        // BlocProvider(
+        //   create: (context) => ChannelreadCubit(),
+        // ),
         BlocProvider(
-          create: (context) => ChannelreadCubit(),
-        ),   BlocProvider(
           create: (context) => SubcategoryCubit(),
-        ),BlocProvider(
+        ), BlocProvider(
           create: (context) => VariantselectionCubit(),
-        ),BlocProvider(
+        ), BlocProvider(
           create: (context) => DeletioncostingCubit(),
-        ),BlocProvider(
+        ), BlocProvider(
           create: (context) => ListcustomverticalCubit(),
-        ),BlocProvider(
+        ), BlocProvider(
           create: (context) => ListDivisionCubit(),
-        ),BlocProvider(
+        ), BlocProvider(
           create: (context) => ShippingadreesCubit(),
         ),
       ],
@@ -206,7 +207,8 @@ class _MyHomeState extends State<MyHome> {
     // Variable.subIndex = list.map(int.parse).toList();
 
     print(
-        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" + Variable.inventory_Name.toString());
+        "therrrrrrrrrrrrrrrrrrrrreeeeeeeeeeeee" +
+            Variable.inventory_Name.toString());
 
     index = prefs.getInt('index') ?? 1;
     print("index after caching $index");
@@ -214,7 +216,7 @@ class _MyHomeState extends State<MyHome> {
     await userPref.getUser().then((user) {
       print("user.isLoggedIn" + user.isLoggedIn.toString());
       if (user.isLoggedIn == true) {
-        prefs.setString('token', user?.token??"");
+        prefs.setString('token', user?.token ?? "");
 
         Variable.loginLeage = user.legalEntiry.toString();
         Variable.token = user.token.toString();
@@ -236,7 +238,8 @@ class _MyHomeState extends State<MyHome> {
         Navigator.pushReplacement(
             context,
             new MaterialPageRoute(
-                builder: (context) => DashBoard(
+                builder: (context) =>
+                    DashBoard(
                       index: index,
                     )));
       } else {

@@ -127,6 +127,10 @@ _$_VariantPost _$$_VariantPostFromJson(Map<String, dynamic> json) =>
       productBehavior: (json['product_behaviour'] as List<dynamic>?)
           ?.map((e) => productBehaviour.fromJson(e as Map<String, dynamic>))
           .toList(),
+      shelfType: json['shelf_type'] as String?,
+      shelfTime: json['shelf_time'] as int?,
+      haveGiftOption: json['have_gift_option'] as bool? ?? false,
+      haveWrapOption: json['have_wrap_option'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
@@ -216,6 +220,10 @@ Map<String, dynamic> _$$_VariantPostToJson(_$_VariantPost instance) =>
       'usage_direction': instance.usageDirection,
       'important_info': instance.importantInfo,
       'product_behaviour': instance.productBehavior,
+      'shelf_type': instance.shelfType,
+      'shelf_time': instance.shelfTime,
+      'have_gift_option': instance.haveGiftOption,
+      'have_wrap_option': instance.haveWrapOption,
     };
 
 _$_LinkedItemPostModel _$$_LinkedItemPostModelFromJson(

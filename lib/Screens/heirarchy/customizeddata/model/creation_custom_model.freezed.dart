@@ -37,6 +37,8 @@ mixin _$CustomCreationtModel {
   double? get excesstax => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type")
   String? get returnType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  String? get shelfType => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
   int? get returnTime => throw _privateConstructorUsedError;
   @JsonKey(name: "weight_uom_id")
@@ -45,8 +47,14 @@ mixin _$CustomCreationtModel {
   double? get targetdGp => throw _privateConstructorUsedError;
   @JsonKey(name: "group_id")
   int? get groupId => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption => throw _privateConstructorUsedError;
   @JsonKey(name: "need_multiple_integration", defaultValue: false)
   bool? get needMultipleIntgration => throw _privateConstructorUsedError;
 
@@ -80,6 +88,8 @@ abstract class $CustomCreationtModelCopyWith<$Res> {
           double? excesstax,
       @JsonKey(name: "return_type")
           String? returnType,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
       @JsonKey(name: "return_time")
           int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -88,8 +98,14 @@ abstract class $CustomCreationtModelCopyWith<$Res> {
           double? targetdGp,
       @JsonKey(name: "group_id")
           int? groupId,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption,
       @JsonKey(name: "need_multiple_integration", defaultValue: false)
           bool? needMultipleIntgration});
 }
@@ -119,11 +135,15 @@ class _$CustomCreationtModelCopyWithImpl<$Res,
     Object? maximumGp = freezed,
     Object? excesstax = freezed,
     Object? returnType = freezed,
+    Object? shelfType = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? targetdGp = freezed,
     Object? groupId = freezed,
+    Object? shelfTime = freezed,
     Object? isActive = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
     Object? needMultipleIntgration = freezed,
   }) {
     return _then(_value.copyWith(
@@ -171,6 +191,10 @@ class _$CustomCreationtModelCopyWithImpl<$Res,
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
@@ -187,9 +211,21 @@ class _$CustomCreationtModelCopyWithImpl<$Res,
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
               as int?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
               as bool?,
       needMultipleIntgration: freezed == needMultipleIntgration
           ? _value.needMultipleIntgration
@@ -225,6 +261,8 @@ abstract class _$$_CustomCreationtModelCopyWith<$Res>
           double? excesstax,
       @JsonKey(name: "return_type")
           String? returnType,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
       @JsonKey(name: "return_time")
           int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -233,8 +271,14 @@ abstract class _$$_CustomCreationtModelCopyWith<$Res>
           double? targetdGp,
       @JsonKey(name: "group_id")
           int? groupId,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
       @JsonKey(name: "is_active", defaultValue: false)
           bool? isActive,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption,
       @JsonKey(name: "need_multiple_integration", defaultValue: false)
           bool? needMultipleIntgration});
 }
@@ -261,11 +305,15 @@ class __$$_CustomCreationtModelCopyWithImpl<$Res>
     Object? maximumGp = freezed,
     Object? excesstax = freezed,
     Object? returnType = freezed,
+    Object? shelfType = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? targetdGp = freezed,
     Object? groupId = freezed,
+    Object? shelfTime = freezed,
     Object? isActive = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
     Object? needMultipleIntgration = freezed,
   }) {
     return _then(_$_CustomCreationtModel(
@@ -313,6 +361,10 @@ class __$$_CustomCreationtModelCopyWithImpl<$Res>
           ? _value.returnType
           : returnType // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
       returnTime: freezed == returnTime
           ? _value.returnTime
           : returnTime // ignore: cast_nullable_to_non_nullable
@@ -329,9 +381,21 @@ class __$$_CustomCreationtModelCopyWithImpl<$Res>
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
               as int?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
               as bool?,
       needMultipleIntgration: freezed == needMultipleIntgration
           ? _value.needMultipleIntgration
@@ -362,6 +426,8 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
           this.excesstax,
       @JsonKey(name: "return_type")
           this.returnType,
+      @JsonKey(name: "shelf_type")
+          this.shelfType,
       @JsonKey(name: "return_time")
           this.returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -370,8 +436,14 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
           this.targetdGp,
       @JsonKey(name: "group_id")
           this.groupId,
+      @JsonKey(name: "shelf_time")
+          this.shelfTime,
       @JsonKey(name: "is_active", defaultValue: false)
           this.isActive,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          this.haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          this.haveWrapOption,
       @JsonKey(name: "need_multiple_integration", defaultValue: false)
           this.needMultipleIntgration});
 
@@ -407,6 +479,9 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
   @JsonKey(name: "return_type")
   final String? returnType;
   @override
+  @JsonKey(name: "shelf_type")
+  final String? shelfType;
+  @override
   @JsonKey(name: "return_time")
   final int? returnTime;
   @override
@@ -419,15 +494,24 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
   @JsonKey(name: "group_id")
   final int? groupId;
   @override
+  @JsonKey(name: "shelf_time")
+  final int? shelfTime;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  final bool? haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  final bool? haveWrapOption;
   @override
   @JsonKey(name: "need_multiple_integration", defaultValue: false)
   final bool? needMultipleIntgration;
 
   @override
   String toString() {
-    return 'CustomCreationtModel(vat: $vat, height: $height, width: $width, length: $length, weight: $weight, mappingPlaceId: $mappingPlaceId, minimumGp: $minimumGp, averageGp: $averageGp, maximumGp: $maximumGp, excesstax: $excesstax, returnType: $returnType, returnTime: $returnTime, weightUomId: $weightUomId, targetdGp: $targetdGp, groupId: $groupId, isActive: $isActive, needMultipleIntgration: $needMultipleIntgration)';
+    return 'CustomCreationtModel(vat: $vat, height: $height, width: $width, length: $length, weight: $weight, mappingPlaceId: $mappingPlaceId, minimumGp: $minimumGp, averageGp: $averageGp, maximumGp: $maximumGp, excesstax: $excesstax, returnType: $returnType, shelfType: $shelfType, returnTime: $returnTime, weightUomId: $weightUomId, targetdGp: $targetdGp, groupId: $groupId, shelfTime: $shelfTime, isActive: $isActive, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, needMultipleIntgration: $needMultipleIntgration)';
   }
 
   @override
@@ -452,6 +536,8 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
                 other.excesstax == excesstax) &&
             (identical(other.returnType, returnType) ||
                 other.returnType == returnType) &&
+            (identical(other.shelfType, shelfType) ||
+                other.shelfType == shelfType) &&
             (identical(other.returnTime, returnTime) ||
                 other.returnTime == returnTime) &&
             (identical(other.weightUomId, weightUomId) ||
@@ -459,33 +545,44 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
             (identical(other.targetdGp, targetdGp) ||
                 other.targetdGp == targetdGp) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.shelfTime, shelfTime) ||
+                other.shelfTime == shelfTime) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
+            (identical(other.haveGiftOption, haveGiftOption) ||
+                other.haveGiftOption == haveGiftOption) &&
+            (identical(other.haveWrapOption, haveWrapOption) ||
+                other.haveWrapOption == haveWrapOption) &&
             (identical(other.needMultipleIntgration, needMultipleIntgration) ||
                 other.needMultipleIntgration == needMultipleIntgration));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      vat,
-      height,
-      width,
-      length,
-      weight,
-      mappingPlaceId,
-      minimumGp,
-      averageGp,
-      maximumGp,
-      excesstax,
-      returnType,
-      returnTime,
-      weightUomId,
-      targetdGp,
-      groupId,
-      isActive,
-      needMultipleIntgration);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        vat,
+        height,
+        width,
+        length,
+        weight,
+        mappingPlaceId,
+        minimumGp,
+        averageGp,
+        maximumGp,
+        excesstax,
+        returnType,
+        shelfType,
+        returnTime,
+        weightUomId,
+        targetdGp,
+        groupId,
+        shelfTime,
+        isActive,
+        haveGiftOption,
+        haveWrapOption,
+        needMultipleIntgration
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -521,6 +618,8 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
           final double? excesstax,
       @JsonKey(name: "return_type")
           final String? returnType,
+      @JsonKey(name: "shelf_type")
+          final String? shelfType,
       @JsonKey(name: "return_time")
           final int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -529,8 +628,14 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
           final double? targetdGp,
       @JsonKey(name: "group_id")
           final int? groupId,
+      @JsonKey(name: "shelf_time")
+          final int? shelfTime,
       @JsonKey(name: "is_active", defaultValue: false)
           final bool? isActive,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          final bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          final bool? haveWrapOption,
       @JsonKey(name: "need_multiple_integration", defaultValue: false)
           final bool? needMultipleIntgration}) = _$_CustomCreationtModel;
 
@@ -566,6 +671,9 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
   @JsonKey(name: "return_type")
   String? get returnType;
   @override
+  @JsonKey(name: "shelf_type")
+  String? get shelfType;
+  @override
   @JsonKey(name: "return_time")
   int? get returnTime;
   @override
@@ -578,8 +686,17 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
   @JsonKey(name: "group_id")
   int? get groupId;
   @override
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption;
   @override
   @JsonKey(name: "need_multiple_integration", defaultValue: false)
   bool? get needMultipleIntgration;
@@ -807,6 +924,10 @@ mixin _$GroupCustomData {
   double? get excessTax => throw _privateConstructorUsedError;
   @JsonKey(name: "return_type")
   String? get returntype => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  String? get shelpType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime => throw _privateConstructorUsedError;
   @JsonKey(name: "group_name")
   String? get groupNmae => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
@@ -817,6 +938,10 @@ mixin _$GroupCustomData {
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: "need_multiple_integration")
   bool? get needMultipleIntegration => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_wrap_option")
+  bool? get haveWrapOption => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_gift_option")
+  bool? get haveGiftOption => throw _privateConstructorUsedError;
   @JsonKey(name: "group_id")
   int? get groupId => throw _privateConstructorUsedError;
 
@@ -843,11 +968,15 @@ abstract class $GroupCustomDataCopyWith<$Res> {
       @JsonKey(name: "targeted_gp") double? targetedGp,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "return_type") String? returntype,
+      @JsonKey(name: "shelf_type") String? shelpType,
+      @JsonKey(name: "shelf_time") int? shelfTime,
       @JsonKey(name: "group_name") String? groupNmae,
       @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "weight_uom_id") int? weightUomId,
       @JsonKey(name: "is_active") bool? isActive,
       @JsonKey(name: "need_multiple_integration") bool? needMultipleIntegration,
+      @JsonKey(name: "have_wrap_option") bool? haveWrapOption,
+      @JsonKey(name: "have_gift_option") bool? haveGiftOption,
       @JsonKey(name: "group_id") int? groupId});
 
   $DimensionCopyWith<$Res>? get dimension;
@@ -876,11 +1005,15 @@ class _$GroupCustomDataCopyWithImpl<$Res, $Val extends GroupCustomData>
     Object? targetedGp = freezed,
     Object? excessTax = freezed,
     Object? returntype = freezed,
+    Object? shelpType = freezed,
+    Object? shelfTime = freezed,
     Object? groupNmae = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? isActive = freezed,
     Object? needMultipleIntegration = freezed,
+    Object? haveWrapOption = freezed,
+    Object? haveGiftOption = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -924,6 +1057,14 @@ class _$GroupCustomDataCopyWithImpl<$Res, $Val extends GroupCustomData>
           ? _value.returntype
           : returntype // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelpType: freezed == shelpType
+          ? _value.shelpType
+          : shelpType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       groupNmae: freezed == groupNmae
           ? _value.groupNmae
           : groupNmae // ignore: cast_nullable_to_non_nullable
@@ -943,6 +1084,14 @@ class _$GroupCustomDataCopyWithImpl<$Res, $Val extends GroupCustomData>
       needMultipleIntegration: freezed == needMultipleIntegration
           ? _value.needMultipleIntegration
           : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
               as bool?,
       groupId: freezed == groupId
           ? _value.groupId
@@ -983,11 +1132,15 @@ abstract class _$$_GroupCustomDataCopyWith<$Res>
       @JsonKey(name: "targeted_gp") double? targetedGp,
       @JsonKey(name: "excess_tax") double? excessTax,
       @JsonKey(name: "return_type") String? returntype,
+      @JsonKey(name: "shelf_type") String? shelpType,
+      @JsonKey(name: "shelf_time") int? shelfTime,
       @JsonKey(name: "group_name") String? groupNmae,
       @JsonKey(name: "return_time") int? returnTime,
       @JsonKey(name: "weight_uom_id") int? weightUomId,
       @JsonKey(name: "is_active") bool? isActive,
       @JsonKey(name: "need_multiple_integration") bool? needMultipleIntegration,
+      @JsonKey(name: "have_wrap_option") bool? haveWrapOption,
+      @JsonKey(name: "have_gift_option") bool? haveGiftOption,
       @JsonKey(name: "group_id") int? groupId});
 
   @override
@@ -1015,11 +1168,15 @@ class __$$_GroupCustomDataCopyWithImpl<$Res>
     Object? targetedGp = freezed,
     Object? excessTax = freezed,
     Object? returntype = freezed,
+    Object? shelpType = freezed,
+    Object? shelfTime = freezed,
     Object? groupNmae = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? isActive = freezed,
     Object? needMultipleIntegration = freezed,
+    Object? haveWrapOption = freezed,
+    Object? haveGiftOption = freezed,
     Object? groupId = freezed,
   }) {
     return _then(_$_GroupCustomData(
@@ -1063,6 +1220,14 @@ class __$$_GroupCustomDataCopyWithImpl<$Res>
           ? _value.returntype
           : returntype // ignore: cast_nullable_to_non_nullable
               as String?,
+      shelpType: freezed == shelpType
+          ? _value.shelpType
+          : shelpType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
       groupNmae: freezed == groupNmae
           ? _value.groupNmae
           : groupNmae // ignore: cast_nullable_to_non_nullable
@@ -1082,6 +1247,14 @@ class __$$_GroupCustomDataCopyWithImpl<$Res>
       needMultipleIntegration: freezed == needMultipleIntegration
           ? _value.needMultipleIntegration
           : needMultipleIntegration // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
               as bool?,
       groupId: freezed == groupId
           ? _value.groupId
@@ -1105,11 +1278,15 @@ class _$_GroupCustomData implements _GroupCustomData {
       @JsonKey(name: "targeted_gp") this.targetedGp,
       @JsonKey(name: "excess_tax") this.excessTax,
       @JsonKey(name: "return_type") this.returntype,
+      @JsonKey(name: "shelf_type") this.shelpType,
+      @JsonKey(name: "shelf_time") this.shelfTime,
       @JsonKey(name: "group_name") this.groupNmae,
       @JsonKey(name: "return_time") this.returnTime,
       @JsonKey(name: "weight_uom_id") this.weightUomId,
       @JsonKey(name: "is_active") this.isActive,
       @JsonKey(name: "need_multiple_integration") this.needMultipleIntegration,
+      @JsonKey(name: "have_wrap_option") this.haveWrapOption,
+      @JsonKey(name: "have_gift_option") this.haveGiftOption,
       @JsonKey(name: "group_id") this.groupId});
 
   factory _$_GroupCustomData.fromJson(Map<String, dynamic> json) =>
@@ -1142,6 +1319,12 @@ class _$_GroupCustomData implements _GroupCustomData {
   @JsonKey(name: "return_type")
   final String? returntype;
   @override
+  @JsonKey(name: "shelf_type")
+  final String? shelpType;
+  @override
+  @JsonKey(name: "shelf_time")
+  final int? shelfTime;
+  @override
   @JsonKey(name: "group_name")
   final String? groupNmae;
   @override
@@ -1157,12 +1340,18 @@ class _$_GroupCustomData implements _GroupCustomData {
   @JsonKey(name: "need_multiple_integration")
   final bool? needMultipleIntegration;
   @override
+  @JsonKey(name: "have_wrap_option")
+  final bool? haveWrapOption;
+  @override
+  @JsonKey(name: "have_gift_option")
+  final bool? haveGiftOption;
+  @override
   @JsonKey(name: "group_id")
   final int? groupId;
 
   @override
   String toString() {
-    return 'GroupCustomData(id: $id, vat: $vat, code: $code, dimension: $dimension, minGp: $minGp, avrgGp: $avrgGp, maxGp: $maxGp, targetedGp: $targetedGp, excessTax: $excessTax, returntype: $returntype, groupNmae: $groupNmae, returnTime: $returnTime, weightUomId: $weightUomId, isActive: $isActive, needMultipleIntegration: $needMultipleIntegration, groupId: $groupId)';
+    return 'GroupCustomData(id: $id, vat: $vat, code: $code, dimension: $dimension, minGp: $minGp, avrgGp: $avrgGp, maxGp: $maxGp, targetedGp: $targetedGp, excessTax: $excessTax, returntype: $returntype, shelpType: $shelpType, shelfTime: $shelfTime, groupNmae: $groupNmae, returnTime: $returnTime, weightUomId: $weightUomId, isActive: $isActive, needMultipleIntegration: $needMultipleIntegration, haveWrapOption: $haveWrapOption, haveGiftOption: $haveGiftOption, groupId: $groupId)';
   }
 
   @override
@@ -1184,6 +1373,10 @@ class _$_GroupCustomData implements _GroupCustomData {
                 other.excessTax == excessTax) &&
             (identical(other.returntype, returntype) ||
                 other.returntype == returntype) &&
+            (identical(other.shelpType, shelpType) ||
+                other.shelpType == shelpType) &&
+            (identical(other.shelfTime, shelfTime) ||
+                other.shelfTime == shelfTime) &&
             (identical(other.groupNmae, groupNmae) ||
                 other.groupNmae == groupNmae) &&
             (identical(other.returnTime, returnTime) ||
@@ -1195,29 +1388,38 @@ class _$_GroupCustomData implements _GroupCustomData {
             (identical(
                     other.needMultipleIntegration, needMultipleIntegration) ||
                 other.needMultipleIntegration == needMultipleIntegration) &&
+            (identical(other.haveWrapOption, haveWrapOption) ||
+                other.haveWrapOption == haveWrapOption) &&
+            (identical(other.haveGiftOption, haveGiftOption) ||
+                other.haveGiftOption == haveGiftOption) &&
             (identical(other.groupId, groupId) || other.groupId == groupId));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      vat,
-      code,
-      dimension,
-      minGp,
-      avrgGp,
-      maxGp,
-      targetedGp,
-      excessTax,
-      returntype,
-      groupNmae,
-      returnTime,
-      weightUomId,
-      isActive,
-      needMultipleIntegration,
-      groupId);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        vat,
+        code,
+        dimension,
+        minGp,
+        avrgGp,
+        maxGp,
+        targetedGp,
+        excessTax,
+        returntype,
+        shelpType,
+        shelfTime,
+        groupNmae,
+        returnTime,
+        weightUomId,
+        isActive,
+        needMultipleIntegration,
+        haveWrapOption,
+        haveGiftOption,
+        groupId
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -1251,6 +1453,10 @@ abstract class _GroupCustomData implements GroupCustomData {
           final double? excessTax,
       @JsonKey(name: "return_type")
           final String? returntype,
+      @JsonKey(name: "shelf_type")
+          final String? shelpType,
+      @JsonKey(name: "shelf_time")
+          final int? shelfTime,
       @JsonKey(name: "group_name")
           final String? groupNmae,
       @JsonKey(name: "return_time")
@@ -1261,6 +1467,10 @@ abstract class _GroupCustomData implements GroupCustomData {
           final bool? isActive,
       @JsonKey(name: "need_multiple_integration")
           final bool? needMultipleIntegration,
+      @JsonKey(name: "have_wrap_option")
+          final bool? haveWrapOption,
+      @JsonKey(name: "have_gift_option")
+          final bool? haveGiftOption,
       @JsonKey(name: "group_id")
           final int? groupId}) = _$_GroupCustomData;
 
@@ -1294,6 +1504,12 @@ abstract class _GroupCustomData implements GroupCustomData {
   @JsonKey(name: "return_type")
   String? get returntype;
   @override
+  @JsonKey(name: "shelf_type")
+  String? get shelpType;
+  @override
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime;
+  @override
   @JsonKey(name: "group_name")
   String? get groupNmae;
   @override
@@ -1308,6 +1524,12 @@ abstract class _GroupCustomData implements GroupCustomData {
   @override
   @JsonKey(name: "need_multiple_integration")
   bool? get needMultipleIntegration;
+  @override
+  @JsonKey(name: "have_wrap_option")
+  bool? get haveWrapOption;
+  @override
+  @JsonKey(name: "have_gift_option")
+  bool? get haveGiftOption;
   @override
   @JsonKey(name: "group_id")
   int? get groupId;

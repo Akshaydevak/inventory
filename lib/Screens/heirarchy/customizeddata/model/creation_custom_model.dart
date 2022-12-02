@@ -17,11 +17,15 @@ class CustomCreationtModel with _$CustomCreationtModel {
     @JsonKey(name: "maximum_gp") final double? maximumGp,
     @JsonKey(name: "excess_tax") final double? excesstax,
     @JsonKey(name: "return_type") final String? returnType,
+    @JsonKey(name: "shelf_type") final String? shelfType,
     @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "weight_uom_id") final double? weightUomId,
     @JsonKey(name: "targeted_gp") final double? targetdGp,
     @JsonKey(name: "group_id") final int? groupId,
+    @JsonKey(name: "shelf_time") final int? shelfTime,
     @JsonKey(name: "is_active", defaultValue: false) final bool? isActive,
+    @JsonKey(name: "have_gift_option", defaultValue: false) final bool? haveGiftOption,
+    @JsonKey(name: "have_wrap_option", defaultValue: false) final bool? haveWrapOption,
     @JsonKey(name: "need_multiple_integration", defaultValue: false) final bool? needMultipleIntgration,
   }) = _CustomCreationtModel;
   factory CustomCreationtModel.fromJson(Map<String, dynamic> json) =>
@@ -51,12 +55,15 @@ class GroupCustomData with _$GroupCustomData {
     @JsonKey(name: "targeted_gp") final double? targetedGp,
     @JsonKey(name: "excess_tax") final double? excessTax,
     @JsonKey(name: "return_type") final String? returntype,
+    @JsonKey(name: "shelf_type") final String? shelpType,
+    @JsonKey(name: "shelf_time") final int? shelfTime,
     @JsonKey(name: "group_name") final String? groupNmae,
     @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "weight_uom_id") final int? weightUomId,
     @JsonKey(name: "is_active") final bool? isActive,
-    @JsonKey(name: "need_multiple_integration")
-        final bool? needMultipleIntegration,
+    @JsonKey(name: "need_multiple_integration") final bool? needMultipleIntegration,
+    @JsonKey(name: "have_wrap_option") final bool? haveWrapOption,
+    @JsonKey(name: "have_gift_option") final bool? haveGiftOption,
     @JsonKey(name: "group_id") final int? groupId,
   }) = _GroupCustomData;
   factory GroupCustomData.fromJson(Map<String, dynamic> json) =>

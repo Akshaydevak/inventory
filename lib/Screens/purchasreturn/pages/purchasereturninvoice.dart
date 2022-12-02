@@ -157,7 +157,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                       if (data.invoicedata?.orderLiness?.isNotEmpty==true) {
                         print("aaaaaaaaa");
                         data.invoicedata?.orderLiness != null
-                            ? lines = data.invoicedata?.orderLiness ?? []
+                            ? lines =List.from( data.invoicedata?.orderLiness ?? [])
                             : lines = [];
 
                         purchaseReturnOrderCodeController.text = data.invoicedata?.returnOrderCode ?? "";

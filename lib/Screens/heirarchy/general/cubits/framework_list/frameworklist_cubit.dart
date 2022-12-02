@@ -32,7 +32,7 @@ class FrameworklistCubit extends Cubit<FrameworklistState> {
 
   Future searchCostingList(String filter) async {
     emit(FrameworklistState.initial());
-    final result = await repo.getFrameWorklist("name="+filter);
+    final result = await repo.getFrameWorklist("?name="+filter);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

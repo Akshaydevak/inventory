@@ -48,9 +48,11 @@ class _ChannelTypeStockAllocationState
   TextEditingController virtualStockTypeController = TextEditingController();
   TextEditingController virtualStockController = TextEditingController();
   TextEditingController addVirtualStock = TextEditingController();
+  TextEditingController dailyStockQuantity = TextEditingController();
   TextEditingController channelStatusMediumPoint = TextEditingController();
   TextEditingController channelStatusCrucialPoint = TextEditingController();
   bool stockwarning = false;
+  bool dailyStockAvailable = false;
   bool salesBlock = false;
   bool purchaseBlock = false;
   TextEditingController channelTypeController = TextEditingController();
@@ -86,6 +88,12 @@ class _ChannelTypeStockAllocationState
 
         });
         break;
+        case '4' :
+          dailyStockAvailable = val;
+        setState(() {
+
+        });
+        break;
     }
   }
 
@@ -99,9 +107,11 @@ class _ChannelTypeStockAllocationState
       addVirtualStock.clear();
       channelStatusCrucialPoint.clear();
       channelStatusMediumPoint.clear();
+      dailyStockQuantity.clear();
       channelStockTypecode.clear();
       channelTypeStockcode.clear();
       stockwarning = false;
+      dailyStockAvailable=false;
       variantCodeController.clear();
       cancelledQuantityController.clear();
       channelTypeController.clear();
@@ -130,9 +140,9 @@ class _ChannelTypeStockAllocationState
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => ChannelstockverticalCubit(),
-        ),
+        // BlocProvider(
+        //   create: (context) => ChannelstockverticalCubit(),
+        // ),
         BlocProvider(
           create: (context) => ChannelpatchCubit(),
         ),
@@ -183,8 +193,10 @@ class _ChannelTypeStockAllocationState
                             data?.channelStatusCrucialPoint.toString() ?? "";
                         channelStatusMediumPoint.text =
                             data?.channelStatusMediumPoint.toString() ?? "";
-                        channelstockCodeController.text =
-                            data?.channelTypeStockId.toString() ?? "";
+                        channelstockCodeController.text = data?.channelTypeStockId.toString() ?? "";
+                        dailyStockQuantity.text = data?.dailyStockQuantity.toString() ?? "";
+                        dailyStockAvailable=data.isDAilyStockAvailable??false;
+
                         // channelAllocationRatio.text=data.chann.toString()??"";
 
                         addVirtualStock.text =
@@ -455,6 +467,8 @@ class _ChannelTypeStockAllocationState
                                   channeTypeStockCode: channelTypeStockcode,
 
                                   stockWarning: stockwarning,
+                                  dailyStockAvailable:dailyStockAvailable,
+                                  dailyStockQuantity:dailyStockQuantity,
 
                                   variantCode: variantCodeController,
 
@@ -548,6 +562,8 @@ class _ChannelTypeStockAllocationState
                                               int.tryParse(
                                                   channelStatusMediumPoint
                                                       .text),
+                                              dailyStockQuantity: int.tryParse(dailyStockQuantity.text),
+                                           isDAilyStockAvailable:dailyStockAvailable,
                                         );
                                         print("Bad Model$model");
                                         context

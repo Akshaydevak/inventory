@@ -157,6 +157,14 @@ mixin _$VariantPatch {
   Storage? get usageDirection => throw _privateConstructorUsedError;
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  String? get shelfType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
   @JsonKey(name: "alternative_barcode")
@@ -326,6 +334,14 @@ abstract class $VariantPatchCopyWith<$Res> {
           Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption,
       @JsonKey(name: "uom_code")
           String? uomCode,
       @JsonKey(name: "alternative_barcode")
@@ -450,6 +466,10 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
     Object? productBehavior = freezed,
     Object? usageDirection = freezed,
     Object? vendorDetails = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
     Object? uomCode = freezed,
     Object? alternativeBarcode = freezed,
     Object? alternativeQrCodeBarcode = freezed,
@@ -785,6 +805,22 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
           ? _value.vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
       uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
@@ -1077,6 +1113,14 @@ abstract class _$$_VariantPatchCopyWith<$Res>
           Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption,
       @JsonKey(name: "uom_code")
           String? uomCode,
       @JsonKey(name: "alternative_barcode")
@@ -1208,6 +1252,10 @@ class __$$_VariantPatchCopyWithImpl<$Res>
     Object? productBehavior = freezed,
     Object? usageDirection = freezed,
     Object? vendorDetails = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
     Object? uomCode = freezed,
     Object? alternativeBarcode = freezed,
     Object? alternativeQrCodeBarcode = freezed,
@@ -1543,6 +1591,22 @@ class __$$_VariantPatchCopyWithImpl<$Res>
           ? _value._vendorDetails
           : vendorDetails // ignore: cast_nullable_to_non_nullable
               as List<VendorDetails>?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
       uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
@@ -1722,6 +1786,14 @@ class _$_VariantPatch implements _VariantPatch {
           this.usageDirection,
       @JsonKey(name: "vendor_details")
           final List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "shelf_type")
+          this.shelfType,
+      @JsonKey(name: "shelf_time")
+          this.shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          this.haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          this.haveWrapOption,
       @JsonKey(name: "uom_code")
           this.uomCode,
       @JsonKey(name: "alternative_barcode")
@@ -1979,6 +2051,18 @@ class _$_VariantPatch implements _VariantPatch {
   }
 
   @override
+  @JsonKey(name: "shelf_type")
+  final String? shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  final int? shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  final bool? haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  final bool? haveWrapOption;
+  @override
   @JsonKey(name: "uom_code")
   final String? uomCode;
   final List<AlternativeBarcode>? _alternativeBarcode;
@@ -2022,7 +2106,7 @@ class _$_VariantPatch implements _VariantPatch {
 
   @override
   String toString() {
-    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
+    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
   }
 
   @override
@@ -2151,6 +2235,10 @@ class _$_VariantPatch implements _VariantPatch {
             const DeepCollectionEquality().equals(other._productBehavior, _productBehavior) &&
             (identical(other.usageDirection, usageDirection) || other.usageDirection == usageDirection) &&
             const DeepCollectionEquality().equals(other._vendorDetails, _vendorDetails) &&
+            (identical(other.shelfType, shelfType) || other.shelfType == shelfType) &&
+            (identical(other.shelfTime, shelfTime) || other.shelfTime == shelfTime) &&
+            (identical(other.haveGiftOption, haveGiftOption) || other.haveGiftOption == haveGiftOption) &&
+            (identical(other.haveWrapOption, haveWrapOption) || other.haveWrapOption == haveWrapOption) &&
             (identical(other.uomCode, uomCode) || other.uomCode == uomCode) &&
             const DeepCollectionEquality().equals(other._alternativeBarcode, _alternativeBarcode) &&
             const DeepCollectionEquality().equals(other._alternativeQrCodeBarcode, _alternativeQrCodeBarcode) &&
@@ -2247,6 +2335,10 @@ class _$_VariantPatch implements _VariantPatch {
         const DeepCollectionEquality().hash(_productBehavior),
         usageDirection,
         const DeepCollectionEquality().hash(_vendorDetails),
+        shelfType,
+        shelfTime,
+        haveGiftOption,
+        haveWrapOption,
         uomCode,
         const DeepCollectionEquality().hash(_alternativeBarcode),
         const DeepCollectionEquality().hash(_alternativeQrCodeBarcode),
@@ -2409,6 +2501,14 @@ abstract class _VariantPatch implements VariantPatch {
           final Storage? usageDirection,
       @JsonKey(name: "vendor_details")
           final List<VendorDetails>? vendorDetails,
+      @JsonKey(name: "shelf_type")
+          final String? shelfType,
+      @JsonKey(name: "shelf_time")
+          final int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          final bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          final bool? haveWrapOption,
       @JsonKey(name: "uom_code")
           final String? uomCode,
       @JsonKey(name: "alternative_barcode")
@@ -2647,6 +2747,18 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   @JsonKey(name: "vendor_details")
   List<VendorDetails>? get vendorDetails;
+  @override
+  @JsonKey(name: "shelf_type")
+  String? get shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption;
   @override
   @JsonKey(name: "uom_code")
   String? get uomCode;

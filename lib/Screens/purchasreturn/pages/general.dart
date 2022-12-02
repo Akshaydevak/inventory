@@ -81,7 +81,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
   List<int?> currentStock = [];
 
 
-  List<Liness>lines=[];
+  List<Liness>lines=List.from([]);
   void initState() {
     context
         .read<VertiacalCubit>()
@@ -93,7 +93,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     super.initState();
   }
   tableAssign(List<Liness>liness){
-    lines=liness;
+    lines=List.from(liness);
     setState(() {
       addition();
     });
@@ -268,7 +268,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
             success: (data) {
               setState(() {
           print("taskssss");
-          data.lines != null ? lines = data?.lines ?? [] : lines = [];
+          data.lines != null ? lines =List.from( data?.lines ?? []) : lines = [];
           print("lll"+lines.toString());
 
           orderTypeController.text=data.orderType??"";
@@ -1149,7 +1149,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                   isActive = !isActive!;
                                                                   print(isActive);
                                                                   // widget.updation(i,isActive);
-                                                                  lines?[i] = lines![i].copyWith(isActive: isActive);
+                                                                  lines[i] = lines[i].copyWith(isActive: isActive);
                                                                   addition();
 
                                                                   setState(() {});

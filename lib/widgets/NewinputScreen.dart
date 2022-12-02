@@ -49,6 +49,7 @@ class NewInputCard extends StatefulWidget {
     required this.controller,
     this.label,
     this.keyboardType,
+
     this.hint,
     this.formatter=false,
     this.readOnly=false,
@@ -58,7 +59,7 @@ class NewInputCard extends StatefulWidget {
     required this.title,
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
-    this.height = 47.6,
+    this.height = 48.7,
     this.fontsize = 13,
   }) : super(key: key);
 
@@ -180,7 +181,7 @@ class _NewInputCardState extends State<NewInputCard> {
               },
               onChanged:(va){
                 if(widget.formatter==true){
-                  if(widget.controller.text.length>9){
+                  if(widget.controller.text.length>10){
                     onChange=true;
 
                     setState(() {
@@ -201,18 +202,24 @@ class _NewInputCardState extends State<NewInputCard> {
               } ,
 
 
-              readOnly:limitOflength?limitOflength: widget.readOnly,
+              // readOnly:limitOflength?limitOflength: widget.readOnly,
+              readOnly: widget.readOnly,
+              maxLength: widget.formatter? 10:widget.maxLines!=3?25:null,
               maxLines: widget.maxLines,
               controller: widget.controller,
-              obscureText: show, keyboardType:
+              obscureText: show,
+            keyboardType:
             widget.formatter? TextInputType.phone:null ,
               inputFormatters:widget.formatter?
+
               <TextInputFormatter>[
                 FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
               ]:null,
 
 
               decoration: InputDecoration(
+                counterText: '',
+
 
 
                 filled: true,
@@ -749,10 +756,12 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
               //controller: widget.controller,
               enabled: widget.enable,
               keyboardType:
-              widget.formatter? TextInputType.number:null ,
+              // widget.formatter? TextInputType.number:null ,
+              widget.formatter? TextInputType.phone:null ,
               inputFormatters:widget.formatter?
+
               <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
+                FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
               ]:null,
               onEditingComplete: widget.onComplete,
               onChanged: widget.onChanged,
@@ -788,11 +797,14 @@ class _UnderLinedInputState extends State<UnderLinedInput> {
                 controller: widget.controller,
                 enabled: widget.enable,
 
-                keyboardType: widget.formatter? TextInputType.number:null ,
-              inputFormatters:widget.formatter?
-              <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ]:null,
+                keyboardType:
+                // widget.formatter? TextInputType.number:null ,
+                widget.formatter? TextInputType.phone:null ,
+                inputFormatters:widget.formatter?
+
+                <TextInputFormatter>[
+                  FilteringTextInputFormatter.allow(RegExp(r"[0-9.:]"))
+                ]:null,
                 onEditingComplete: widget.onComplete,
                 onChanged: widget.onChanged,
                 decoration: InputDecoration(
@@ -1154,7 +1166,7 @@ class _FileUploadFieldState extends State<FileUploadField> {
                       : null,
                   icon: Icon(Icons.attach_file)),
               contentPadding:
-              EdgeInsets.symmetric(horizontal: 10, vertical: 18),
+              EdgeInsets.symmetric(horizontal: 10, vertical: 18.7),
               isDense: true,
               hintStyle: TextStyle(fontSize: 10),
               enabledBorder:OutlineInputBorder(

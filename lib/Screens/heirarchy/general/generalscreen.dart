@@ -99,6 +99,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   bool img5 = false;
   bool img6 = false;
   bool img7 = false;
+  bool img8 = false;
   clear() {
     itemCodeController.text = "";
     itemNameController.text = "";
@@ -180,6 +181,9 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
       case '7':
         img7 = true;
         break;
+        case '8':
+        img8 = true;
+        break;
     }
   }
 
@@ -188,6 +192,30 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   var list;
+  idChange(int type,int id){
+    print("the id"+id.toString());
+    switch (type) {
+      case 1:
+        uomGroupId = id;
+        break;
+
+      case 2:
+        divisionId = id;
+        break;
+
+      case 3:
+        categoryId = id;
+        break;
+      case 4:
+        subCategoryId = id;
+
+
+    }
+
+
+    print(divisionId);
+
+  }
 
   activeChange(bool active1) {
     if (select != true) {
@@ -318,6 +346,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                       itemCatelog2Controller.text = data?.itemCatelog2 ?? '';
                       itemCatelog3Controller.text = data?.itemCatelog3 ?? '';
                       itemCatelog4Controller.text = data?.itemCatelog4 ?? '';
+                      itemCatelog5Controller.text = data?.itemCatelog5 ?? '';
                       searchNameController.text = data?.searchName ?? '';
                       displayNameController.text = data?.displayname ?? '';
                       active = data?.isActive ?? false;
@@ -470,8 +499,9 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   activeChange: activeChange,
                                   imagePostCheck: imagePostCheck,
                                   baseuomNameController: baseUomGroupName,
-                                  uomGroupNameController:
-                                      uomGroupNameController,
+                                  uomGroupNameController: uomGroupNameController,
+                                    idChange:idChange
+
                                 ),
                                 SizedBox(
                                   height: 40,
@@ -514,6 +544,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   static: staticController,
                                   category: categoryController,
                                   subCategory: subCategoryController,
+                                    idChange:idChange
                                 ),
                                 Row(
                                   children: [
@@ -630,14 +661,14 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                             ? Variable.img4
                                             : int.tryParse(""),
                                         itemCatelog2: img5
-                                            ? Variable.img5
-                                            : int.tryParse(""),
+                                            ? Variable.img5: int.tryParse(""),
                                         itemCatelog3: img6
                                             ? Variable.img6
                                             : int.tryParse(""),
                                         itemCatelog4: img7
                                             ? Variable.img7
                                             : int.tryParse(""),
+                                            itemCatelog5: img8 ? Variable.img8:int.tryParse(""),
                                         image2: img2
                                             ? Variable.img2
                                             : int.tryParse(""),
@@ -655,56 +686,48 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                       );
                                       ItemReadModel model1 = ItemReadModel(
                                         name: itemNameController?.text ?? "",
-                                        materialCode:
-                                            materialController?.text ?? "",
-                                        staticGroupCode:
-                                            staticController?.text ?? "",
-                                        uomCode:
-                                            uomCategoryController?.text ?? "",
+                                        materialCode: materialController?.text ?? "",
+                                        staticGroupCode: staticController?.text ?? "",
+                                        uomCode: uomCategoryController?.text ?? "",
+                                        groupCode:GroupController.text.isEmpty
+                                            ? null
+                                            : GroupController.text,
                                         brandCode: BrandController?.text ?? "",
-                                        variantFrameWork:
-                                            variantFrameworkController?.text ??
-                                                "",
-                                        searchName:
-                                            searchNameController?.text ?? "",
-                                        displayname:
-                                            displayNameController?.text ?? "",
+                                        variantFrameWork: variantFrameworkController?.text ?? "",
+                                        searchName: searchNameController?.text ?? "",
+                                        displayname: displayNameController?.text ?? "",
                                         isActive: active,
-                                        description:
-                                            discriptionNameController.text ??
-                                                "",
-                                        image1: img1
-                                            ? Variable.img1.toString()
-                                            : image1Controller.text ?? "",
-                                        image2: img2
-                                            ? Variable.img2.toString()
-                                            : image2Controller.text,
-                                        image3: img3
-                                            ? Variable.img3.toString()
-                                            : image3Controller.text,
-                                        itemCatelog1: img4
-                                            ? Variable.img4.toString()
-                                            : itemCatelog1Controller.text,
-                                        itemCatelog2: img5
-                                            ? Variable.img1.toString()
-                                            : itemCatelog2Controller.text,
-                                        itemCatelog3: img6
-                                            ? Variable.img1.toString()
-                                            : itemCatelog3Controller.text,
-                                        itemCatelog4: img7
-                                            ? Variable.img7.toString()
-                                            : itemCatelog4Controller.text,
+                                        oldSystemCode: oldSystemCodeNameController.text.isEmpty?null:oldSystemCodeNameController.text,
+                                        description: discriptionNameController.text ?? "",
+                                        image1: img1 ? Variable.img1.toString() : image1Controller.text ?? "",
+                                        image2: img2 ? Variable.img2.toString() : image2Controller.text,
+                                        image3: img3 ? Variable.img3.toString() : image3Controller.text,
+                                        itemCatelog1: img4 ? Variable.img4.toString() : itemCatelog1Controller.text,
+                                        itemCatelog2: img5 ? Variable.img5.toString() : itemCatelog2Controller.text,
+                                        itemCatelog3: img6 ? Variable.img6.toString() : itemCatelog3Controller.text,
+                                        itemCatelog4: img7 ? Variable.img7.toString() : itemCatelog4Controller.text,
+                                        itemCatelog5: img8 ? Variable.img8.toString() : itemCatelog5Controller.text,
+
                                       );
                                       print(model1);
+                                      print(img5);
+                                      print(itemCatelog2Controller.text);
 
-                                      select
-                                          ? context
-                                              .read<ItemcreatinCubit>()
+                                      select ? context
+                                          .read<ItemcreatinCubit>()
                                               .postCreateItem(model)
                                           : context
                                               .read<ItemcreatinCubit>()
                                               .postItemPatch(
                                                   veritiaclid, model1);
+                                      img1 = false;
+                                      img2 = false;
+                                      img3 = false;
+                                      img4 = false;
+                                      img5 = false;
+                                      img6 = false;
+                                      img7 = false;
+                                      // active = false;
                                     }),
                                     SizedBox(
                                       width: w * .008,
@@ -745,14 +768,16 @@ class ItemHeirarchyStableTable extends StatefulWidget {
   final TextEditingController subCategoryName;
   final TextEditingController variantFramework;
   final TextEditingController variantFrameworkName;
-  final int? divisionId;
-  final int? categoryid;
-  final int? subCategoryId;
+   int? divisionId;
+   int? categoryid;
+   int? subCategoryId;
+  final Function   idChange;
 
   ItemHeirarchyStableTable(
       {required this.brand,
       required this.subCategoryId,
       required this.divisionId,
+        required this.idChange,
       required this.categoryid,
       required this.brandName,
       required this.variantFramework,
@@ -860,6 +885,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 controller: widget.divisionName,
                 icondrop: true,
                 title: "Division",
+                readOnly: true,
                 ontap: () {
                   showDailogPopUp(
                     context,
@@ -870,11 +896,23 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                           divisionid = va?.id??0;
                           Variable.divisionId = va?.id;
 
-                          widget.division.text = va?.code ?? "";
-                          widget.divisionName.text = va?.name ?? "";
-                          setState(() {});
 
-                          // onChange = true;
+                          // onChan
+                                                    widget.division.text = va?.code ?? "";
+                                                    widget.divisionName.text = va?.name ?? "";
+                                                    widget.idChange(2,va?.id);
+
+                                                    widget.divisionId=va?.id;
+                          print("widget.divisionId"+va.id.toString());
+                                                    widget.category.clear();
+                                                    widget.categoryName.clear();
+                                                    widget.subCategory.clear();
+                                                    widget.subCategoryName.clear();
+                                                    widget.group.clear();
+                                                    widget.groupName.clear();
+                                                    widget.categoryid=0;
+                                                    widget.subCategoryId=0;
+                          //                           setState(() {});ge = true;
                           // orderType.text = va!;
                         });
                       },
@@ -890,17 +928,23 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 controller: widget.categoryName,
                 icondrop: true,
                 title: "Category",
+                readOnly: true,
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
-                      id: divisionid,
+                      id: widget.divisionId,
                       type: "category-TablePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
                           widget.category.text = va?.code ?? "";
                           widget.categoryName.text = va?.name ?? "";
-                          Variable.categoryId = va?.id;
+                          widget.categoryid = va?.id;
+                          widget.subCategory.clear();
+                          widget.subCategoryName.clear();
+                          widget.group.clear();
+                          widget.groupName.clear();
+                          widget.subCategoryId=0;
                           setState(() {});
 
                           // onChange = true;
@@ -957,17 +1001,21 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.subCategoryName,
                 icondrop: true,
+                readOnly: true,
                 title: "Sub Category",
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
+                      id:widget.categoryid,
                       type: "SubcategoryTabalePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
                           widget.subCategory.text = va?.code ?? "";
                           widget.subCategoryName.text = va?.name ?? "";
-                          Variable.subCategorycategory = va?.id;
+                          widget.subCategoryId = va?.id;
+                          widget.group.clear();
+                          widget.groupName.clear();
                           setState(() {});
 
                           // onChange = true;
@@ -1069,10 +1117,12 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
                 controller: widget.groupName,
                 icondrop: true,
                 title: "Group",
+                readOnly: true,
                 ontap: () {
                   showDailogPopUp(
                     context,
                     TableConfigurePopup(
+                      id:widget.subCategoryId!=0?widget.subCategoryId:widget.categoryid,
                       type: "GroupTabalePopup",
                       valueSelect: (BrandListModel va) {
                         setState(() {
@@ -1096,6 +1146,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.materialName,
                 icondrop: true,
+                readOnly: true,
                 title: "Material",
                 ontap: () {
                   showDailogPopUp(
@@ -1159,6 +1210,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.variantFrameworkName,
                 icondrop: true,
+                readOnly: true,
                 title: "Variant Framework",
                 ontap: () {
                   showDailogPopUp(
@@ -1232,6 +1284,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.staticName,
                 icondrop: true,
+                readOnly: true,
                 title: "Static Group",
                 ontap: () {
                   showDailogPopUp(
@@ -1307,6 +1360,7 @@ class _ItemHeirarchyStableTableState extends State<ItemHeirarchyStableTable> {
               NewInputCard(
                 controller: widget.brandName,
                 icondrop: true,
+                readOnly: true,
                 title: "Brand",
                 ontap: () {
                   showDailogPopUp(

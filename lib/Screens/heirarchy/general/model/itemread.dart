@@ -23,6 +23,7 @@ class ItemReadModel with _$ItemReadModel {
     @JsonKey(name: "division_id") final int? divisionId,
     @JsonKey(name: "category_id") final int? categoryId,
     @JsonKey(name: "sub_category_id") final int? subCategoryId,
+
     @JsonKey(name: "group_code") final String? groupCode,
     @JsonKey(name: "group_name") final String? groupName,
     @JsonKey(name: "brand_code") final String? brandCode,

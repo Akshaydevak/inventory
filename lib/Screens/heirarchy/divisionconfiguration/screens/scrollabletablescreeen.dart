@@ -10,7 +10,7 @@ import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
 bool onChange=false;
 class UomTable extends StatefulWidget {
-  List<DataInclude>?list;
+ final List<DataInclude>?list;
   final Function uomTableEdit;
   UomTable({required this.list,required this.uomTableEdit});
   @override
@@ -21,7 +21,7 @@ class _UomTableState extends State<UomTable> {
 
 
   bool onChange=false;
-  List<DataInclude>uomList=[];
+  List<DataInclude>uomList=List.from([]);
   List<bool>upDate=[];
 
   List<bool>upDateButton=[];
@@ -57,7 +57,7 @@ class _UomTableState extends State<UomTable> {
 setState(() {
 
 
-      uomList=widget.list??[];
+      uomList=List.from(widget.list??[]);
       if(uomList.isNotEmpty==true){
         for( var i=0;i<uomList.length; i++){
           upDate.add(false);

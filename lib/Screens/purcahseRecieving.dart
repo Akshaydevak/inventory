@@ -181,7 +181,24 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
     });
 
   }
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
+    vatableAmount1 =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+  }
+  vatableFocAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount,double? foc ){
+    vatableAmount1=double.parse(((((qty!*unitCost!)-(foc!*unitCost!))+excessTax!)-discount!).toStringAsFixed(2));
+  }
+  actualAndgrandTotal(double? vatableAmount,double? vat){
 
+    actualCost1 = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    grandTotal1=actualCost1;
+
+  }
   clear(){
     setState(() {
 
@@ -292,7 +309,7 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                           // setState(() {
                           print("dataSSSSSSSSSSSSSS" + data.toString());
                           data.receivingLines != null
-                              ? recievingLisnes = data.receivingLines ?? []
+                              ? recievingLisnes =List.from( data.receivingLines ?? [])
                               : recievingLisnes = [];
                           if(recievingLisnes.isNotEmpty)
                           for(var i=0;i<recievingLisnes.length;i++){
@@ -3179,33 +3196,42 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                               }
                                                                                               else{
                                                                                                 if(foc1==0 ||foc1==""){
-                                                                                                  vatableAmount1 = (((unitcost! *
-                                                                                                      recievedQty!) +
-                                                                                                      excess1!) -
-                                                                                                      discount!)
-                                                                                                      .toDouble();
-                                                                                                  actualCost1 = double.parse((vatableAmount1! +
-                                                                                                      ((vatableAmount1! *
-                                                                                                          vat1!) /
-                                                                                                          100)).toStringAsFixed(2));
-                                                                                                  grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                      ((vatableAmount1! *
-                                                                                                          vat1!) /
-                                                                                                          100)).toStringAsFixed(2));
+                                                                                                  vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                                                                  // vatableAmount1 = (((unitcost! *
+                                                                                                  //     recievedQty!) +
+                                                                                                  //     excess1!) -
+                                                                                                  //     discount!)
+                                                                                                  //     .toDouble();
+                                                                                                  actualAndgrandTotal(vatableAmount1,vat1);
+                                                                                                  // actualCost1 = double.parse((vatableAmount1! +
+                                                                                                  //     ((vatableAmount1! *
+                                                                                                  //         vat1!) /
+                                                                                                  //         100)).toStringAsFixed(2));
+                                                                                                  // grandTotal1 =double.parse( (vatableAmount1! +
+                                                                                                  //     ((vatableAmount1! *
+                                                                                                  //         vat1!) /
+                                                                                                  //         100)).toStringAsFixed(2));
 
 
 
                                                                                                 }
                                                                                                 else{
-                                                                                                  vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                                  actualCost1 = double.parse((vatableAmount1! +
-                                                                                                      ((vatableAmount1! *
-                                                                                                          vat1!) /
-                                                                                                          100)).toStringAsFixed(2));
-                                                                                                  grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                      ((vatableAmount1! *
-                                                                                                          vat1!) /
-                                                                                                          100)).toStringAsFixed(2));
+                                                                                                  vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                                                                  // vatableAmount1 = (((unitcost! *
+                                                                                                  //     recievedQty!) +
+                                                                                                  //     excess1!) -
+                                                                                                  //     discount!)
+                                                                                                  //     .toDouble();
+                                                                                                  actualAndgrandTotal(vatableAmount1,vat1);
+                                                                                                  // vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
+                                                                                                  // actualCost1 = double.parse((vatableAmount1! +
+                                                                                                  //     ((vatableAmount1! *
+                                                                                                  //         vat1!) /
+                                                                                                  //         100)).toStringAsFixed(2));
+                                                                                                  // grandTotal1 =double.parse( (vatableAmount1! +
+                                                                                                  //     ((vatableAmount1! *
+                                                                                                  //         vat1!) /
+                                                                                                  //         100)).toStringAsFixed(2));
 
                                                                                                 }
 
@@ -3263,33 +3289,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 = double.parse((((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
+                                                                                              vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
+                                                                                              vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                                             }
 
@@ -3332,34 +3342,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 =double.parse( (((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
+                                                                                              vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                                                             }
                                                                                             else{
 
-                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse(((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2)));
-                                                                                              grandTotal1 =double.parse(( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2)));
+                                                                                              vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                                             }
 
@@ -3403,33 +3397,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 =double.parse( (((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 = (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100));
+                                                                                              vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+
+                                                                                            actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                              actualCost1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
+                                                                                              vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                                             }
 
@@ -3472,33 +3450,15 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           }
                                                                                           else{
                                                                                             if(foc1==0 ||foc1==""){
-                                                                                              vatableAmount1 =double.parse( (((unitcost! *
-                                                                                                  recievedQty!) +
-                                                                                                  excess1!) -
-                                                                                                  discount!)
-                                                                                                  .toStringAsFixed(2));
-                                                                                              actualCost1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 =double.parse( (vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-
+                                                                                              vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
 
                                                                                             }
                                                                                             else{
-                                                                                              vatableAmount1=double.parse(((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!).toStringAsFixed(2));
-                                                                                              actualCost1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
-                                                                                              grandTotal1 = double.parse((vatableAmount1! +
-                                                                                                  ((vatableAmount1! *
-                                                                                                      vat1!) /
-                                                                                                      100)).toStringAsFixed(2));
+                                                                                              vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+
+                                                                                              actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                                             }
 
@@ -3839,13 +3799,18 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                         children: [
                                                           Buttons(
                                                             onApply: () {
-                                                              for(var i=0;i<recievingLisnes.length;i++){
-                                                                recievingLisnes[i]= recievingLisnes[i].copyWith(currentStock: currentStock[i]);
-                                                                setState(() {
+                                                              print("akkkakkaa");
+                                                              if(recievingLisnes.isNotEmpty==true){
+                                                                for(var i=0;i<recievingLisnes.length-1;i++){
+                                                                  print("ssssssssss"+ currentStock[i].toString());
+                                                                  recievingLisnes[i]= recievingLisnes[i].copyWith(currentStock: currentStock[i]);
+                                                                  setState(() {
 
-                                                                });
+                                                                  });
+                                                                }
                                                               }
-                                                              print(recievingLisnes.toString());
+
+
                                                               PurchaseRecievingRead model = PurchaseRecievingRead(
                                                                   orderCode: orderCodeController.text ?? "",
                                                                   receivingCode: recievingCodeController.text ?? "",

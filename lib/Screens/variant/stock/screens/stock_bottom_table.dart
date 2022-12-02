@@ -56,19 +56,6 @@ class StockBottomTableState extends State<StockBottomTable> {
             // width: w/5,
             margin: EdgeInsets.symmetric(horizontal: w*.02),
             child: customTable(
-
-              border: const TableBorder(
-
-                verticalInside: BorderSide(
-                    width:.5,
-                    color: Colors.black45,
-                    style: BorderStyle.solid),
-                horizontalInside: BorderSide(
-                    width:.3,
-                    color: Colors.black45,
-                    // color: Colors.blue,
-                    style: BorderStyle.solid),),
-
               tableWidth: .5,
 
               childrens:[
@@ -88,9 +75,7 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       'Invoice Code',
 
-                      padding: EdgeInsets.all(7),
 
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -102,9 +87,6 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       'Invoice Line Code',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -116,9 +98,6 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       'Quantity',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -130,9 +109,6 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       'Invoiced Date',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -144,9 +120,6 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       'Actual Cost',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 
@@ -158,9 +131,6 @@ class StockBottomTableState extends State<StockBottomTable> {
 
                       '',
 
-                      padding: EdgeInsets.all(7),
-
-                      height: 46,
                       textColor: Colors.white,
 
 

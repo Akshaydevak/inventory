@@ -20,11 +20,15 @@ _$_CustomCreationtModel _$$_CustomCreationtModelFromJson(
       maximumGp: (json['maximum_gp'] as num?)?.toDouble(),
       excesstax: (json['excess_tax'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
+      shelfType: json['shelf_type'] as String?,
       returnTime: json['return_time'] as int?,
       weightUomId: (json['weight_uom_id'] as num?)?.toDouble(),
       targetdGp: (json['targeted_gp'] as num?)?.toDouble(),
       groupId: json['group_id'] as int?,
+      shelfTime: json['shelf_time'] as int?,
       isActive: json['is_active'] as bool? ?? false,
+      haveGiftOption: json['have_gift_option'] as bool? ?? false,
+      haveWrapOption: json['have_wrap_option'] as bool? ?? false,
       needMultipleIntgration:
           json['need_multiple_integration'] as bool? ?? false,
     );
@@ -43,11 +47,15 @@ Map<String, dynamic> _$$_CustomCreationtModelToJson(
       'maximum_gp': instance.maximumGp,
       'excess_tax': instance.excesstax,
       'return_type': instance.returnType,
+      'shelf_type': instance.shelfType,
       'return_time': instance.returnTime,
       'weight_uom_id': instance.weightUomId,
       'targeted_gp': instance.targetdGp,
       'group_id': instance.groupId,
+      'shelf_time': instance.shelfTime,
       'is_active': instance.isActive,
+      'have_gift_option': instance.haveGiftOption,
+      'have_wrap_option': instance.haveWrapOption,
       'need_multiple_integration': instance.needMultipleIntgration,
     };
 
@@ -82,11 +90,15 @@ _$_GroupCustomData _$$_GroupCustomDataFromJson(Map<String, dynamic> json) =>
       targetedGp: (json['targeted_gp'] as num?)?.toDouble(),
       excessTax: (json['excess_tax'] as num?)?.toDouble(),
       returntype: json['return_type'] as String?,
+      shelpType: json['shelf_type'] as String?,
+      shelfTime: json['shelf_time'] as int?,
       groupNmae: json['group_name'] as String?,
       returnTime: json['return_time'] as int?,
       weightUomId: json['weight_uom_id'] as int?,
       isActive: json['is_active'] as bool?,
       needMultipleIntegration: json['need_multiple_integration'] as bool?,
+      haveWrapOption: json['have_wrap_option'] as bool?,
+      haveGiftOption: json['have_gift_option'] as bool?,
       groupId: json['group_id'] as int?,
     );
 
@@ -102,11 +114,15 @@ Map<String, dynamic> _$$_GroupCustomDataToJson(_$_GroupCustomData instance) =>
       'targeted_gp': instance.targetedGp,
       'excess_tax': instance.excessTax,
       'return_type': instance.returntype,
+      'shelf_type': instance.shelpType,
+      'shelf_time': instance.shelfTime,
       'group_name': instance.groupNmae,
       'return_time': instance.returnTime,
       'weight_uom_id': instance.weightUomId,
       'is_active': instance.isActive,
       'need_multiple_integration': instance.needMultipleIntegration,
+      'have_wrap_option': instance.haveWrapOption,
+      'have_gift_option': instance.haveGiftOption,
       'group_id': instance.groupId,
     };
 

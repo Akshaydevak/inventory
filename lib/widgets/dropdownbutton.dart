@@ -104,9 +104,12 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     type: widget.type!)
                     :TypeAheadFormField(
 
+
                   textFieldConfiguration: TextFieldConfiguration(
 
+
                       controller: widget.controller,
+
                       onChanged: (va){
                         widget?.onchange!(va!);
 
@@ -114,17 +117,17 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
 
                       decoration: InputDecoration(
 
+
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
-
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           focusedBorder:   OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           isDense: true,
-                          border: OutlineInputBorder(),
+                          // border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.more_horiz_rounded))),
                   onSuggestionSelected: (suggestion) {
                     widget.onSelection(suggestion);
@@ -154,13 +157,13 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
             ),
             SizedBox(height:3),
             Container(
-              height: 48,
+              height: 49,
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,
                   border: Border.all(
                     color: Color(0xff3E4F5B).withOpacity(.1),
-                    width: 0.5, //width of border
+                    width: .1, //width of border
                   ),
                   borderRadius: BorderRadius.circular(5)
 
@@ -178,6 +181,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     code: widget.code,
                     onchange:widget.onchange,
                     enable: widget.enable,
+
                     type: widget.type!)
                     :
                 TypeAheadFormField(
@@ -192,12 +196,11 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
-
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           focusedBorder:   OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
 
-                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.06))),
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           isDense: true,
                           border: OutlineInputBorder(),
                           suffixIcon: Icon(Icons.more_horiz_rounded))),

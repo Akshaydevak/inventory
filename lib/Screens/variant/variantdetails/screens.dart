@@ -99,7 +99,7 @@ class _IdentificationState extends State<Identification> {
           upDateButton.add(false);
         }
 
-        alternativeBarcode = widget?.alternativeBarcode ?? [];
+        alternativeBarcode =List.from( widget?.alternativeBarcode ?? []);
       }
       if (widget.alternativeBarcode?.isNotEmpty == true) {
         alterNativeQrCode = widget?.alternativeQrCode ?? [];
@@ -1477,10 +1477,15 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController returnType;
   final TextEditingController returnTime;
   final TextEditingController status;
+  final TextEditingController shelfType;
+  final TextEditingController shelfTime;
+
   final bool purchaseBlock;
   final int? veritiaclid;
   final bool stockWarning;
   final bool itmCatelog;
+  final bool haveGiftOption;
+  final bool haveWrapOption;
   final bool itmImage;
   final bool active;
   final bool needMultipleIntegration;
@@ -1568,7 +1573,7 @@ class VariantStabletable extends StatefulWidget {
     required this.purchaseUomName,
     required this.length,
     required this.width,
-    required this.height,
+    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption,
   });
 
   @override
@@ -1963,10 +1968,10 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.weightUom,
-                        title: "Weight UOM Id"),
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller: widget.weightUom,
+                    //     title: "Weight UOM Id"),
 
                     SizedBox(
                       height: height * .030,
@@ -2214,6 +2219,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.minPurchaseOrderLimit,
+                        title: "Min purchase  Order Limit"),
+
 
                     SizedBox(
                       height: height * .209,
@@ -2223,13 +2233,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.minPurchaseOrderLimit,
-                        title: "Min purchase  Order Limit"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+
 
                     NewInputCard(
                         formatter: true,
@@ -2270,10 +2274,36 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+                    SelectableDropDownpopUp(
+                      id: widget.veritiaclid,
+                      label: "Shelf Type",
+                      type: "ReturnTypePopupCall",
+                      value: widget.shelfType.text,
+                      onSelection: (String? va) {
+                        print("+++++++++++++++++++++++");
+                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                        setState(() {
+                          widget.shelfType.text = va ?? "";
+                        });
+                      },
+                      restricted: true,
+                    ),
+                    // NewInputCard(
+                    //     controller: widget.returnType, title: "Return Type"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
                     NewInputCard(
                         formatter: true,
                         controller: widget.returnTime,
                         title: "Return Time"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.shelfTime,
+                        title: "Shelf Time"),
                     SizedBox(
                       height: height * .030,
                     ),
@@ -3012,8 +3042,11 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         onCreate: true,
                         label: "Catalog8"),
                     SizedBox(
-                      height: height * .262,
+                      height: height * .140,
                     ),
+                    // SizedBox(
+                    //   height: height * .262,
+                    // ),
                   ],
                 ))
               ],
@@ -3085,7 +3118,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
             height: height * .035,
           ),
           Container(
-            width: MediaQuery.of(context).size.width / 1.9,
+            // width: MediaQuery.of(context).size.width / 1.9,
             alignment: Alignment.topLeft,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -3124,6 +3157,34 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       bool val = widget.needMultipleIntegration;
                       val = !val;
                       widget.trueOrFalseChange(type: "Multiple", val: val);
+                      // widget.activeChange(!widget.active);
+
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
+                PopUpSwitchTile(
+                    value: widget.haveGiftOption ?? false,
+                    title: "Have Gift Option",
+                    onClick: (gg) {
+                      bool val = widget.haveGiftOption;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "GiftOption", val: val);
+                      // widget.activeChange(!widget.active);
+
+                      // extendedWarranty = gg;
+                      // widget.changeExtendedWarranty(gg);
+                      // onChangeExtWarranty = gg;
+                      setState(() {});
+                    }),
+                PopUpSwitchTile(
+                    value: widget.haveWrapOption ?? false,
+                    title: "Have Wrap Option",
+                    onClick: (gg) {
+                      bool val = widget.haveWrapOption;
+                      val = !val;
+                      widget.trueOrFalseChange(type: "GiftWrap", val: val);
                       // widget.activeChange(!widget.active);
 
                       // extendedWarranty = gg;
@@ -3184,6 +3245,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
     double width = MediaQuery.of(context).size.width;
     if (onChange == false) {
       upDate.clear();
+      vendorDetails.clear();
       upDateButton.clear();
       onSaveActive = false;
       codeListTextEditingController.clear();
@@ -3195,8 +3257,8 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
         print(vendorDetails);
         if (widget.vendorDetails?.isNotEmpty == true) {
           for (var i = 0; i < widget.vendorDetails!.length - 1; i++) {
-            if (vendorDetails[i].vendorName != null &&
-                vendorDetails[i].vendorCode != null) {
+            if (widget.vendorDetails?[i].vendorName != null &&
+             widget.vendorDetails?[i].vendorCode != null) {
               upDate.add(false);
               upDateButton.add(false);
               var nameValue = new TextEditingController(

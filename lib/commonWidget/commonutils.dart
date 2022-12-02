@@ -173,6 +173,7 @@ class _OpenSettingsState extends State<OpenSettings> {
                         leading: Radio(
                             value: index,
                             groupValue: grpValue,
+
                             onChanged: (int? value) {
                               setState(() async {
                                 grpValue = value!;
@@ -199,10 +200,13 @@ class _OpenSettingsState extends State<OpenSettings> {
                                     inventoryList![index].name.toString());
                                 Navigator.pop(context);
 
+
+
                                 // print("Value");
                                 // print(value);
                                 // print("grpvalue");
                                 // print(grpValue);
+                                // ModalRoute.of(context)?.settings.name;
                                 // Navigator.of(context).push(MaterialPageRoute(
                                 //   builder: (context) => DashBoard(),
                                 // ));
@@ -1002,7 +1006,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     setState(() {
                       context.read<Listbrand2Cubit>().getSlotSectionPage();
@@ -1772,7 +1776,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,
@@ -3907,7 +3911,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     print("success case");
                     showDailogPopUp(
@@ -4071,21 +4075,29 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                 SizedBox(
                                   height: 10,
                                 ),
-                                NewInputCard(
-                                  height: 60,
-                                  controller: statuscontroller,
-                                  title: "Status",
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+                                // NewInputCard(
+                                //   height: 60,
+                                //   controller: statuscontroller,
+                                //   title: "Status",
+                                // ),
+                                // SizedBox(
+                                //   height: 10,
+                                // ),
                                 FileUploadField(
                                     fileName: imageName,
                                     fileUrl: imageName,
                                     onChangeTap: (p0) {
-                                      onChange = true;
-                                      // loading = true;
-                                      setState(() {});
+                                      // onChange = true;
+                                      // // loading = true;
+                                      // setState(() {});
+                                    },
+                                    onCancel: (){
+
+                                      setState(() {
+                                        imageName="";
+
+                                      });
+
                                     },
                                     onChange: (myFile) {
                                       onChange = true;
@@ -4107,7 +4119,9 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                       onChange = true;
                                       // Variable.popUp = false;
 
-                                      if (newFile.length <= 160000) {
+                                      if (newFile.length <= 150000) {
+                                        print("akshayaaa"+Variable.imageName.toString());
+                                        print(imageEncode);
                                         context.read<ImagepostCubit>().postImage(
                                             Variable.imageName, imageEncode);
                                         // loading
@@ -4117,9 +4131,13 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Banner of size Lesser than 150kb");
-                                      setState(() {});
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:"Please upload Banner of size Lesser than 200kb",
+                                              // table:table,
+                                            ));
+
                                     },
                                     onCreate: true,
                                     label: "Image"),
@@ -4664,7 +4682,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     context.read<ListstaticCubit>().getStaticList();
                     showDailogPopUp(
@@ -5029,7 +5047,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     print("here after  creation");
 
@@ -5251,46 +5269,46 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                         height: 10,
                                                       ),
 
-                                                      NewInputCard(
-                                                        controller:
-                                                            categoryNameController,
-                                                        icondrop: true,
-                                                        title: "Category ",
-                                                        ontap: () {
-                                                          showDailogPopUp(
-                                                            context,
-                                                            TableConfigurePopup(
-                                                              apiType: "all",
-                                                              type:
-                                                                  "category-TablePopup",
-                                                              valueSelect:
-                                                                  (BrandListModel
-                                                                      va) {
-                                                                setState(() {
-                                                                  onChange =
-                                                                      true;
-                                                                  categoryNameController
-                                                                          .text =
-                                                                      va?.name ??
-                                                                          "";
-                                                                  categoryController
-                                                                          .text =
-                                                                      va?.code ??
-                                                                          "";
-                                                                  categoryid =
-                                                                      va?.id;
-                                                                  // Variable.categoryId = va?.id;
-                                                                  setState(
-                                                                      () {});
-
-                                                                  // onChange = true;
-                                                                  // orderType.text = va!;
-                                                                });
-                                                              },
-                                                            ),
-                                                          );
-                                                        },
-                                                      ),
+                                                      // NewInputCard(
+                                                      //   controller:
+                                                      //       categoryNameController,
+                                                      //   icondrop: true,
+                                                      //   title: "Category ",
+                                                      //   ontap: () {
+                                                      //     showDailogPopUp(
+                                                      //       context,
+                                                      //       TableConfigurePopup(
+                                                      //         apiType: "all",
+                                                      //         type:
+                                                      //             "category-TablePopup",
+                                                      //         valueSelect:
+                                                      //             (BrandListModel
+                                                      //                 va) {
+                                                      //           setState(() {
+                                                      //             onChange =
+                                                      //                 true;
+                                                      //             categoryNameController
+                                                      //                     .text =
+                                                      //                 va?.name ??
+                                                      //                     "";
+                                                      //             categoryController
+                                                      //                     .text =
+                                                      //                 va?.code ??
+                                                      //                     "";
+                                                      //             categoryid =
+                                                      //                 va?.id;
+                                                      //             // Variable.categoryId = va?.id;
+                                                      //             setState(
+                                                      //                 () {});
+                                                      //
+                                                      //             // onChange = true;
+                                                      //             // orderType.text = va!;
+                                                      //           });
+                                                      //         },
+                                                      //       ),
+                                                      //     );
+                                                      //   },
+                                                      // ),
                                                       // SelectableDropDownpopUp(
                                                       //   apiType: "all",
                                                       //   controller:
@@ -7049,7 +7067,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                       context
                           .read<PricingroupcreateCubit>()
                           .getPricingGroupList();
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
                       showDailogPopUp(
                           context,
                           SuccessPopup(
@@ -7058,7 +7076,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                           ));
                     });
                   } else {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
                     showDailogPopUp(
                         context,
                         FailiurePopup(
@@ -7373,12 +7391,24 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        SuccessPopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                    // context.showSnackBarSuccess(data.data2);
+                    // Navigator.pop(context);
                     setState(() {});
                   } else {
-                    context.showSnackBarError(data.data2);
-                    Navigator.pop(context);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+
+                    // Navigator.pop(context);
                   }
                   ;
                 });
@@ -7562,6 +7592,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                                     child: Column(
                                   children: [
                                     NewInputCard(
+                                      readOnly: true,
                                       controller: pricingTypeNamecontroller,
                                       icondrop: true,
                                       title: "Pricing Type Id",
@@ -9370,7 +9401,7 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     setState(() {
                       context.read<UomgruoplistCubit>().getUomGroupist();
@@ -9412,9 +9443,9 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                         veritiaclid = result[0].id;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
-                        context
-                            .read<UomgroupreadCubit>()
-                            .getUomGroupRead(veritiaclid!);
+                        // context
+                        //     .read<UomgroupreadCubit>()
+                        //     .getUomGroupRead(veritiaclid!);
                       } else {
                         print("common");
                         // select=true;
@@ -9979,7 +10010,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,
@@ -11162,6 +11193,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
   TextEditingController itemsearch = TextEditingController();
   String parentName = "";
   bool changer = false;
+  int ? divisionid=0;
 
   TextEditingController codeController = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
@@ -11242,8 +11274,8 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  print(data.data1);
-                  Navigator.pop(context);
+                  // print(data.data1);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,
@@ -11406,6 +11438,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                 NewInputCard(
                                   controller: divisionCodeNameController,
                                   icondrop: true,
+                                  readOnly: true,
                                   title: "Division code",
                                   ontap: () {
                                     showDailogPopUp(
@@ -11417,7 +11450,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                             onChange = true;
 
                                             print(va?.id ?? "");
-                                            // divisionid=va?.id;
+                                            divisionid=va?.id;
 
                                             divisionCodeController.text =
                                                 va?.code ?? "";
@@ -11481,11 +11514,13 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                 NewInputCard(
                                   controller: parentCodeNameController,
                                   icondrop: true,
+                                  readOnly: true,
                                   title: "Parent Code",
                                   ontap: () {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
+                                        id:divisionid,
                                         type: "category-TablePopup",
                                         valueSelect: (BrandListModel va) {
                                           setState(() {
@@ -11566,6 +11601,12 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                       onChange = true;
                                       // loading = true;
                                       setState(() {});
+                                    },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                      });
+
                                     },
                                     onChange: (myFile) {
                                       onChange = true;
@@ -11678,6 +11719,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
   TextEditingController itemsearch = TextEditingController();
   String parentName = "";
   bool changer = false;
+  int ? divisionId=0;
 
   TextEditingController codeController = TextEditingController();
   TextEditingController namecontroller = TextEditingController();
@@ -11759,7 +11801,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,
@@ -11918,6 +11960,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                 NewInputCard(
                                   controller: divisionCodeNameController,
                                   icondrop: true,
+                                  readOnly: true,
                                   title: "Division code",
                                   ontap: () {
                                     showDailogPopUp(
@@ -11932,6 +11975,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                             divisionCodeController.text =
                                                 va?.code ?? "";
                                             Variable.divisionId = va?.id;
+                                            divisionId = va?.id;
                                             divisionCodeNameController.text =
                                                 va?.name ?? "";
                                             setState(() {});
@@ -11990,11 +12034,13 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                 NewInputCard(
                                   controller: parentCodeNameController,
                                   icondrop: true,
+                                  readOnly: true,
                                   title: "Parent Code",
                                   ontap: () {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
+                                        id:divisionId,
                                         type: "category-TablePopup",
                                         valueSelect: (BrandListModel va) {
                                           setState(() {
@@ -12075,6 +12121,12 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                                       onChange = true;
                                       // loading = true;
                                       setState(() {});
+                                    },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                      });
+
                                     },
                                     onChange: (myFile) {
                                       onChange = true;
@@ -12266,7 +12318,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   print(data.data1);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     showDailogPopUp(
                         context,

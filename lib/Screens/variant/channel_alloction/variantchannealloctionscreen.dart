@@ -123,9 +123,11 @@ class _VariantChannelAllocationScreenState
         ),
         BlocProvider(
           create: (context) => ChannelfilterCubit(),
-        ), BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ChannelreadCubit(),
-        ), BlocProvider(
+        ),
+        BlocProvider(
           create: (context) => ChannelpostCubit(),
         ),
       ],

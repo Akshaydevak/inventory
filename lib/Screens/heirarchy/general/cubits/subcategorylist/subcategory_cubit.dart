@@ -11,13 +11,13 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getSubCategoryList() async {
+  Future getSubCategoryList({int? id}) async {
     next = null;
     prev = null;
     print("enterdAAAAAAAAAAAAAAA");
     // items = [];
     emit(SubcategoryState.initial());
-    final result = await repo.getSubCategoryList(null);
+    final result = await repo.getSubCategoryList(null,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -25,9 +25,9 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
     });
   }
 
-  Future searchSubCategoryList(String filter) async {
+  Future searchSubCategoryList(String filter,{int ? id}) async {
     emit(SubcategoryState.initial());
-    final result = await repo.getSubCategoryList("name="+ filter);
+    final result = await repo.getSubCategoryList("name="+ filter,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -37,8 +37,8 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
     });
   }
 
-  Future nextslotSectionPageList() async {
-    final result = await repo.getSubCategoryList(next);
+  Future nextslotSectionPageList({int ? id}) async {
+    final result = await repo.getSubCategoryList(next,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -47,9 +47,9 @@ class SubcategoryCubit extends Cubit<SubcategoryState> {
     });
   }
 
-  Future previuosslotSectionPageList() async {
+  Future previuosslotSectionPageList({int ? id}) async {
     // print(previous);
-    final result = await repo.getSubCategoryList(prev);
+    final result = await repo.getSubCategoryList(prev,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

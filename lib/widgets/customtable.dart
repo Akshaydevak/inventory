@@ -63,6 +63,30 @@ Widget textPadding(String label,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
       ),
     );
+Widget textOnclickPadding(
+{String? text,Function? ontap }
+
+    ){
+  return  Container(
+
+
+  child: InkWell(
+  onTap: () {
+    ontap!();
+
+},
+child: Container(
+padding: EdgeInsets.all(11),
+child:
+Text(text??""),
+height: 45),
+),
+);
+
+}
+
+
+
 Widget childPadding(Widget child, {EdgeInsets? padding}) => Padding(
   padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 4),
   child: child,

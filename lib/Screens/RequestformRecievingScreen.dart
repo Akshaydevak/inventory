@@ -301,7 +301,7 @@ bool  recievlinequantityCheck=false;
                  stockCheck==false;
 
     data?.receivingLines != null
-                    ? recievingLisnes = data?.receivingLines ?? []
+                    ? recievingLisnes = List.from(data?.receivingLines ?? [])
                     : recievingLisnes = [];
                 print("tablsssssssssssssssssse"+recievingLisnes.toString());
                 setState(() {
@@ -929,11 +929,7 @@ child: IntrinsicHeight(
                                         ),
 
                                         tableHeadtext(
-
                                           'Is Recieved',
-
-
-
                                           size: 13,
 
                                           // color: Palette.containerDarknew,

@@ -785,11 +785,11 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     double taxableAmounts = 0;
     if (type == "price") {
-      taxableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmounts =double.parse ((((reqQty * unitCst) + exTaxx) - disct).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
-      taxableAmounts = (total - ((total * disct) / 100));
+      taxableAmounts =double.parse ((total - ((total * disct) / 100)).toStringAsFixed(2));
     }
     return taxableAmounts;
   }
@@ -798,7 +798,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
   double sellingPriceUpdation(double taxableAmount, double vatt) {
     double sellingPrice1 = 0;
-    sellingPrice1 = (taxableAmount + ((taxableAmount * vatt) / 100));
+    sellingPrice1 = double.parse((taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
 
     setState(() {});
     return sellingPrice1;
@@ -854,7 +854,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
           if(data.invoicedData?.lines?.isNotEmpty==true)
           {
             data.invoicedData?.lines != null
-                ? table1 =  data.invoicedData?.lines ?? []
+                ? table1 = List.from( data.invoicedData?.lines ?? [])
                 : table1 = [];
 
 
@@ -864,7 +864,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
           }
           else{
             data.returnOrrder != null
-                ? table1 =  data.returnOrrder ?? []
+                ? table1 =  List.from(data.returnOrrder ?? [])
                 : table1 = [];
 
 

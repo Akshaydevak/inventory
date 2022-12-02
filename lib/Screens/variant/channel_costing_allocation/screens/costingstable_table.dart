@@ -110,6 +110,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                         NewInputCard(
                           controller: widget.costingName,
                           icondrop: true,
+                          readOnly: true,
                           title: "Costing Method Id",
                           ontap: () {
                             showDailogPopUp(
@@ -168,6 +169,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                           height: height * .030,
                         ),
                         NewInputCard(
+                          readOnly: true,
                           controller: widget.pricingName,
                           icondrop: true,
                           title: "Pricing  GroupId Id",

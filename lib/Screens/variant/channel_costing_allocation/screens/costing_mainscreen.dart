@@ -107,6 +107,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("the reallllllllllllllllllll");
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
     return MultiBlocProvider(
@@ -118,12 +119,12 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
         create: (context) => ChannelsttocktablereadCubit(),
         ), BlocProvider(
         create: (context) => CostingCreationCubit(),
-        ), BlocProvider(
+        ),
+    BlocProvider(
         create: (context) => ChannelreadCubit(),
         ),
   ],
-  child: Builder(
-      builder: (context) {return MultiBlocListener(
+  child:  MultiBlocListener(
   listeners: [
     BlocListener<
         ChannelstockverticalCubit, ChannelstockverticalState>(
@@ -161,7 +162,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             success: (data) {
               setState(() {
                 print("arion");
-                checkBoxLis=data.data;
+                checkBoxLis=List.from(data.data);
                 print(data.data);
                 // print(checkBoxLis);
                 // group = data.data;
@@ -176,7 +177,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
     ),
     BlocListener<ChannelreadCubit, ChannelreadState>(
       listener: (context, state) {
-        print(state);
+        print("shifasssssssssssssssssssssss"+state.toString());
         state.maybeWhen(
             orElse: () {},
             error: () {
@@ -184,6 +185,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             },
             success: (data) {
               setState(() {
+                // List<Object> get props => [this.verificationCode, this.status];
                 print("appuz"+data.toString());
              unitCostController.text=data.unitCost.toString();
                 sellingPriceController.text=data.sellingPrice.toString();
@@ -222,7 +224,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             success: (data) {
               setState(() {
                 print("aaaayiram");
-                table=data;
+                table=List.from(data);
 
                 print(data);
                 // checkBoxLis=data.data;
@@ -315,7 +317,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                       // Variable.verticalid=result[0].id;
                       // print("Variable.ak"+Variable.verticalid.toString());
                       context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
-                      context.read<ChannelreadCubit>().getCostingRead(tableId);
+                      // context.read<ChannelreadCubit>().getCostingRead(tableId);
                       // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                     }
                     else {
@@ -330,8 +332,8 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 });
   },
   builder: (context, state) {
-        return Builder(
-          builder: (context) {
+
+
             if(onChange==false){
               if(checkBoxLis.isNotEmpty==true)
                 for(var i=0;i<checkBoxLis.length;i++)
@@ -485,13 +487,24 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                         CostingGrowableTable(
                             table:table,
                           ontap:(int? id){
+                              print("the id is"+id.toString());
+                            onChange=true;
+                            setState(() {
                               print(id);
                               tableId=id;
                               select=false;
                               channelTableSelcteddId=id;
-                              onChange=true;
 
-                                context.read<ChannelreadCubit>().getCostingRead(tableId);
+                            });
+                              context.read<ChannelreadCubit>().getCostingRead(tableId);
+                              context.read<ListvraiantCubit>().getVariantList();
+
+                              setState(() {
+
+                              });
+
+
+
 
 
 
@@ -556,11 +569,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                       variantCode: variantCode,
                                       inventoryId: Variable.inventory_ID,
                                       pricingGpType: pricingGptypeController.text,
-                                      createdBy: "afy",
+                                      createdBy: Variable.created_by,
                                       pricingGroupId: int.tryParse(pricingGroupIdController.text),
                                       costingMethodId: int.tryParse(costingMethodController.text),
-                                      gpPercentage:12,
-                                      // double.tryParse(gpPercentegeController.text),
+                                      gpPercentage:
+                                      double.tryParse(gpPercentegeController.text),
 
                                       // double.tryParse(gpPercentegeController.text),
                                       unitCost:  double.tryParse(unitCostController.text),
@@ -576,7 +589,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                                   else{
 
                                     CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                                      createdBy: "afy",
+                                      createdBy: Variable.created_by,
                                       pricingGroupId: int.tryParse(pricingGroupIdController.text),
                                       costingMethodId: int.tryParse(costingMethodController.text),
                                       gpPercentage: double.tryParse(gpPercentegeController.text),
@@ -616,13 +629,11 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                 ),
               ),
             );
-          }
-        );
+
   },
 ),
-);
-      }
-    ),
-);
+
+
+));
   }
 }

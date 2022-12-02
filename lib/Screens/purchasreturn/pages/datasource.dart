@@ -92,7 +92,7 @@ abstract class PurchaseSourceAbstract {
   Future<DoubleResponse> salesGeneralDelete(int? id);
   Future<DoubleResponse> getSalesGeneralPatch(
       SalesGeneralPostModel model, int? id);
-  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String code,{int ? id});
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String code,{String ? id});
   Future<PaginatedResponse<List<CustomerIdListModel>>> getCustomerId(String? code);
 //Sales invoice screen*******************************
   Future<SalesReturnInvoiceReadModel> getSalesInvoiceRead(int id);
@@ -155,12 +155,12 @@ abstract class PurchaseSourceAbstract {
     int? id,
   );
   Future<PaginatedResponse<List<BrandListModel>>> getSubCategoryList(
-      String? code);
+      String? code,{int ? id});
   Future<DoubleResponse> postCreateGroup(
     MaterialCreationtModel model,
   );
   Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
-      {String? type});
+      {String? type,int ? id});
   Future<MaterialReadModel> getGroupRead(
     int? id,
   );
@@ -170,7 +170,7 @@ abstract class PurchaseSourceAbstract {
   );
   Future<DoubleResponse> postCreateBaseUom(BaseUomCreationtModel model);
   Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
-      {String? type});
+      {String? type,int? id});
   Future<BaseUomCreationtModel> getBaseUomRead(
     int? id,
   );
@@ -430,10 +430,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       PurchaseReturnGeneralRead dataa =
           PurchaseReturnGeneralRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print(e);
@@ -451,10 +451,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    // print("responsesssssd" + response.toString());
     PurchaseReturnGeneralRead dataa =
         PurchaseReturnGeneralRead.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
+    // print("rwead" + dataa.toString());
     return dataa;
   }
 
@@ -558,10 +558,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       ReturnGeneralRead dataa =
           ReturnGeneralRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print(e);
@@ -583,9 +583,9 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    // print("responsesssssd" + response.toString());
     ReturnGeneralRead dataa = ReturnGeneralRead.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
+    // print("rwead" + dataa.toString());
     return dataa;
   }
 
@@ -658,7 +658,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
       print("responsesssssd" + response.toString());
       PurchaseInvoiceReadModel dataa =
           PurchaseInvoiceReadModel.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print(e);
@@ -678,10 +678,10 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    // print("responsesssssd" + response.toString());
     PurchaseInvoiceReadModel dataa =
         PurchaseInvoiceReadModel.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
+    // print("rwead" + dataa.toString());
     return dataa;
   }
 
@@ -1140,7 +1140,7 @@ class PurchaseSourceImpl extends PurchaseSourceAbstract {
   }
 
   @override
-  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{int ? id}) async {
+  Future<PaginatedResponse<List<ShippingAddressModel>>> getShippingId(String? code,{String ? id}) async {
     print("token" + Variable.token.toString());
 
     UserPreferences().getUser().then((value) {
@@ -1223,9 +1223,12 @@ catch(e){
     UserPreferences().getUser().then((value) {
       token = value.token;
     });
+    String path=shippingCreationUrl;
+    print(path);
+    print(model);
     try {
       final response = await client.post(
-          "https://api-rgc-user.hilalcart.com/user-general_addresscreate",
+          shippingCreationUrl,
           data: model.toJson(),
           options: Options(headers: {
             'Content-Type': 'application/json',
@@ -1245,7 +1248,7 @@ catch(e){
     }
 
     final response = await client.post(
-        "https://api-rgc-user.hilalcart.com/user-general_addresscreate",
+        "https://api-rgc-user.hilalcart.com/user-general_admin_address/create",
         data: model.toJson(),
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -2663,17 +2666,17 @@ catch(e){
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
       {String? type,int ?id}) async {
     print(code);
-    print("akakka" + type.toString());
+    print("akakka" + id.toString());
     String path = "";
-    print("Akshara" + type.toString());
+
 
     code = code == null ? "" : code;
     if (type == null || type == "") {
       if (code == "")
-        path = listCategoryGroupApi + Variable.divisionId.toString();
+        path = listCategoryGroupApi + id.toString();
       else
         path = listCategoryGroupApi +
-            Variable.divisionId.toString() +
+            id.toString() +
             "?$code";
     } else if (type == "all") {
       print("entered to All case");
@@ -2810,16 +2813,16 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getSubCategoryList(
-      String? code) async {
+      String? code,{int? id }) async {
     print("enterdAAAAAAAAAAAAAAA");
     String path = "";
 
     code = code == null ? "" : code;
 
     if (code == "")
-      path = listSubCategoryGroupApi + Variable.categoryId.toString();
+      path = listSubCategoryGroupApi + id.toString();
     else
-      path = listSubCategoryGroupApi + Variable.categoryId.toString() +"?$code";
+      path = listSubCategoryGroupApi + id.toString() +"?$code";
 
 
     print("the existing path"+path.toString());
@@ -2883,7 +2886,7 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getGroupListList(String? code,
-      {String? type}) async {
+      {String? type,int ? id}) async {
     String path;
     print("ttttppp" + type.toString());
 
@@ -2898,26 +2901,21 @@ catch(e){
       code = code == null ? "" : code;
 
       if (code == ""){
-        if(Variable.subCategorycategory!=0){
 
-          path = listGroupApi + Variable.subCategorycategory.toString();
 
-        }
-        else{
+          path = listGroupApi + id.toString();
 
-          path = listGroupApi + Variable.categoryId.toString();}
-      }
+
+
+          }
+
 
 
       else {
-        if(Variable.subCategorycategory!=0){
 
-          path = listGroupApi + Variable.subCategorycategory.toString() + "?$code";
 
-        }
-        else{
+          path = listGroupApi + id.toString() + "?$code";
 
-          path = listGroupApi + Variable.categoryId.toString() + "?$code";}
 
       }
     }
@@ -3062,7 +3060,7 @@ catch(e){
 
   @override
   Future<PaginatedResponse<List<BrandListModel>>> getUomist(String? code,
-      {String? type}) async {
+      {String? type,int ? id}) async {
     String path = "";
     if (type == "all") {
       code = code == null ? "" : code;
@@ -3075,10 +3073,10 @@ catch(e){
       code = code == null ? "" : code;
 
       if (code == "")
-        path = listBaseUomGroupApi + Variable.uomGroupId.toString();
+        path = listBaseUomGroupApi + id.toString();
       else
         path = listBaseUomGroupApi +
-            Variable.uomGroupId.toString() +
+            id.toString() +
             "?$code";
     }
     print(path);
@@ -3660,6 +3658,10 @@ catch(e){
         "vedio_url": model.vedioUrl,
         "height":model.height,
         "width":model.width,
+          "shelf_type":model.shelfType,
+          "shelf_time":model.shelfTime,
+          "have_gift_option":model.haveGiftOption,
+          "have_wrap_option":model.haveWrapOption,
         "length":model.length,
         "alternative_barcode": model.alternativeBarcode,
         "alternative_qrcode":model.alternativeQrCodeBarcode,
@@ -3766,28 +3768,25 @@ catch(e){
           "is_active": model.isActive,
           "sebling_id": model.sibilingCode,
           "sibling_code": model.sibilingCode,
+          "shelf_type":model.shelfType,
+          "shelf_time":model.shelfTime,
+          "have_gift_option":model.haveGiftOption,
+          "have_wrap_option":model.haveWrapOption,
+
 
           "retail_selling_price_percentage": model.retailSellingPricePercentage,
           "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
           "online_selling_price_percentage": model.onlineSellingPercenage,
           "image1": model.image1,
-          "image2":
-             model.image2,
-          "image3":
-              model.image3,
-          "image4":
-              model.image4,
-          "image5":
-             model.image5,
-          "catalog1":
-              model.catalog1,
-          "catalog2":
-              model.catalog2,
+          "image2": model.image2,
+          "image3": model.image3,
+          "image4": model.image4,
+          "image5": model.image5,
+          "catalog1": model.catalog1,
+          "catalog2": model.catalog2,
           "catalog3":
-              model.catalog3,
-          "catalog4": model.catalog4,
-          "catalog5":
-             model.catalog5,
+          model.catalog3, "catalog4": model.catalog4,
+          "catalog5": model.catalog5,
           "catalog6": model.catalog6,
           "catalog7":model.catalog7,
           "catalog8":model.catalog8,
@@ -4492,9 +4491,16 @@ catch(e){
   @override
   Future<PaginatedResponse<List<FrameWorkListModel>>> getFrameWorklist(
       String? filter) async {
-    String path = frameWorkListApi;
+    String path = "";
+    filter=filter==null?"":filter;
+    if (filter == "")
+      path = frameWorkListApi ;
+    else
+      path =
+          frameWorkListApi+"$filter";
+
     try {
-      print("ppppath" + path.toString());
+
       print(path);
       final response = await client.get(
         path,
@@ -4577,6 +4583,8 @@ catch(e){
           "purchase_blocked": model.purchaseBlocked,
           "purchase_blocked_qty": model.purchaseBlockQuantity,
           "sales_blocked_qty": model.salesblockQuantity,
+          "is_daily_stock_available": model.isDAilyStockAvailable,
+          "daily_stock_quantity": model.dailyStockQuantity,
         },
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -5410,7 +5418,7 @@ catch(e){
       print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
-      print(e);
+      print("the mistake is"+e.toString());
     }
 
     print(path);
@@ -5424,9 +5432,11 @@ catch(e){
         },
       ),
     );
-    print("brand response" + response.toString());
+
+
     CostingPageCreationPostModel dataa =
-        CostingPageCreationPostModel.fromJson(response.data['data']);
+    CostingPageCreationPostModel.fromJson(
+        response.data['data']['costing_data']);
     print("rwead" + dataa.toString());
     return dataa;
   }

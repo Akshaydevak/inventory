@@ -64,6 +64,7 @@ class PopUpCall extends StatefulWidget {
   final String type;
   final String? inventory;
   final String? vendorId;
+  final List<dynamic>? listOfList;
   final Function(String)? onchange;
 
   final bool enable;
@@ -72,6 +73,7 @@ class PopUpCall extends StatefulWidget {
       {Key? key,
       this.onchange,
       this.apiType,
+        this.listOfList,
       this.id,
       this.bindType,
       this.value,
@@ -172,6 +174,7 @@ class _PopUpCallState extends State<PopUpCall> {
         {
           data = AttributeListPopUpCall(
               inventory: widget.inventory,
+              listOfList: widget.listOfList,
               onSelection: widget.onSelection,
               onAddNew: widget.onAddNew,
               value: widget.value,
@@ -611,7 +614,14 @@ class _SellingPriceBasedPopUpCallState
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                             suffixIcon: Icon(Icons.arrow_downward_outlined))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
@@ -1008,7 +1018,14 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                             suffixIcon: Icon(Icons.arrow_downward_outlined))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
@@ -1354,12 +1371,14 @@ class AttributeListPopUpCall extends StatefulWidget {
   final String type;
   final bool enable;
   final List<String>? list;
+  final List<dynamic>? listOfList;
   const AttributeListPopUpCall(
       {Key? key,
       this.value,
       this.onAddNew,
       this.inventory = "",
       this.vendorId,
+        this.listOfList,
       required this.onSelection,
       required this.type,
       required this.enable,
@@ -1398,11 +1417,27 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
               // error: () => {errorLoader(widget.onAddNew)},
               success: (data) {
                 print("data===" + data.toString());
+                print("data===" + widget.listOfList.toString());
                 List<String?> list = [];
                 int length = data.data.length;
                 // list=data.orderTypes;
                 for (var i = 0; i < length; i++) {
                   list.add(data.data[i].attributeName);
+                }
+                for(var i =0;i<=list.length-1;i++){
+                  if( widget.  listOfList?.isNotEmpty==true){
+                    widget.  listOfList!.forEach((n) {
+                   print("AAAAAAAAAAAAAAAAAA"+n.toString());
+                   if(list[i]==n.name){
+                     print("AAAAAAAAAAAAAAAAAA"+n.name.toString());
+                     print("AAAAAAAAAAAAAAAAAA"+list[i].toString());
+                     list.removeAt(i);
+                     print(list);
+                   }
+
+                    });
+                  }
+
                 }
 
                 AttributeListModel? onSellingBasedSelect(
@@ -1578,7 +1613,14 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                             suffixIcon: Icon(Icons.arrow_downward_outlined))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")

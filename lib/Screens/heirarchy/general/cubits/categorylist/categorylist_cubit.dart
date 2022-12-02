@@ -27,10 +27,10 @@ class CategorylistCubit extends Cubit<CategorylistState> {
     });
   }
 
-  Future searchCategoryist(String filter,{String? type}) async {
+  Future searchCategoryist(String filter,{String? type,int ? id}) async {
     print(filter);
     emit(CategorylistState.initial());
-    final result = await repo.getCategoryist( "name="+filter.toString(),type: type);
+    final result = await repo.getCategoryist( "name="+filter.toString(),type: type,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -40,8 +40,8 @@ class CategorylistCubit extends Cubit<CategorylistState> {
     });
   }
 
-  Future nextslotSectionPageList({String? type}) async {
-    final result = await repo.getCategoryist(next,type: type);
+  Future nextslotSectionPageList({String? type,int ? id}) async {
+    final result = await repo.getCategoryist(next,type: type,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -50,9 +50,9 @@ class CategorylistCubit extends Cubit<CategorylistState> {
     });
   }
 
-  Future previuosslotSectionPageList({String? type}) async {
+  Future previuosslotSectionPageList({String? type,int ? id}) async {
     // print(previous);
-    final result = await repo.getCategoryist(prev,type: type);
+    final result = await repo.getCategoryist(prev,type: type,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

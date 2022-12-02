@@ -12,13 +12,13 @@ class GrouplistCubit extends Cubit<GrouplistState> {
 
   String? prev;
   String? next;
-  Future getGroupListList({String ? type}) async {
+  Future getGroupListList({String ? type,int ? id}) async {
     next = null;
     prev = null;
     print("enterd");
     // items = [];
     emit(GrouplistState.initial());
-    final result = await repo.getGroupListList(null,type:type);
+    final result = await repo.getGroupListList(null,type:type,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -26,9 +26,9 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future searchGroupList(String filter,{String ? type}) async {
+  Future searchGroupList(String filter,{String ? type,int ? id}) async {
     emit(GrouplistState.initial());
-    final result = await repo.getGroupListList("name=" + filter,type: type);
+    final result = await repo.getGroupListList("name=" + filter,type: type,id: id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -38,8 +38,8 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future nextslotSectionPageList({String ? type}) async {
-    final result = await repo.getGroupListList(next,type: type);
+  Future nextslotSectionPageList({String ? type,int ? id}) async {
+    final result = await repo.getGroupListList(next,type: type,id: id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -48,9 +48,9 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future previuosslotSectionPageList({String ? type}) async {
+  Future previuosslotSectionPageList({String ? type,int ? id}) async {
     // print(previous);
-    final result = await repo.getGroupListList(prev,type: type);
+    final result = await repo.getGroupListList(prev,type: type,id: id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -59,7 +59,7 @@ class GrouplistCubit extends Cubit<GrouplistState> {
     });
   }
 
-  Future refresh({String ? type}) async {
+  Future refresh({String ? type,int ? id}) async {
     emit(GrouplistState.initial());
     getGroupListList(type: type);
   }

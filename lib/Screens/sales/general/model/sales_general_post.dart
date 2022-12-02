@@ -81,6 +81,7 @@ class ShippingAddressCreationModel with _$ShippingAddressCreationModel {
     @JsonKey(name: "street_name") final String? streetName,
     @JsonKey(name: "building_name") final String? buillingName,
     @JsonKey(name: "address_tag") final String? addressTag,
+    @JsonKey(name: "user_code") final String? userCode,
 
   }) = _ShippingAddressCreationModel;
   factory ShippingAddressCreationModel.fromJson(Map<String, dynamic> json) =>

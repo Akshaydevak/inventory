@@ -96,6 +96,10 @@ class VariantPatch with _$VariantPatch {
     @JsonKey(name: "product_behaviour") final List<productBehaviour>? productBehavior,
     @JsonKey(name: "usage_direction") final Storage? usageDirection,
     @JsonKey(name: "vendor_details") final List<VendorDetails>? vendorDetails,
+    @JsonKey(name: "shelf_type") final String? shelfType,
+    @JsonKey(name: "shelf_time") final int? shelfTime,
+    @JsonKey(name: "have_gift_option",defaultValue: false) final bool? haveGiftOption,
+    @JsonKey(name: "have_wrap_option",defaultValue: false) final bool? haveWrapOption,
 
 
 

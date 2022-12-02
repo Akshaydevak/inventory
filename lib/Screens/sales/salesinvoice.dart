@@ -193,6 +193,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       sellingPriceController.text=data.invoicedData?.sellingPriceTotal.toString()??"";
                       totalPricePriceController.text=data.invoicedData?.totalPrice.toString()??"";
 
+
                     }
                     else{
                       data.lines != null
@@ -213,6 +214,8 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                       vatController.text=data.vat.toString()??"";
                       sellingPriceController.text=data.sellingPriceTotal.toString()??"";
                       totalPricePriceController.text=data.totalPrice.toString()??"";
+                      trnController.text=data.trnNumber??"";
+                      orderStatusController.text=data.orderStatus??"";
 
 
 
@@ -372,7 +375,7 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     note: noteController,
                                     discount: discountController,
                                     paymentMethod: paymentMethodController,
-                                    invoiceDate: invoiceStatusController,
+                                    invoiceDate: invoiceDateController,
                                     invoiceCode: invoiceCodeController,
                                     vat: vatController,
                                     assignedto: assignToController,
@@ -531,7 +534,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     double taxableAmounts = 0;
     if (type == "price") {
-      taxableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmounts =double.parse (((((reqQty * unitCst) + exTaxx) - disct)).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
@@ -587,7 +590,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                   print("algorithm1" + data.toString());
                   print(data?.invoicedData?.lines.toString());
                   data.invoicedData?.lines != null
-                      ? table1 =  data.invoicedData?.lines ?? []
+                      ? table1 =List.from(  data.invoicedData?.lines ?? [])
                       : table1 = [];
 
 
@@ -596,7 +599,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                   print("algorithm2" + data.toString());
                   print(  data.lines.toString());
                   data.lines != null
-                      ? table1 =  data.lines ?? []
+                      ? table1 = List.from( data.lines ?? [])
                       : table1 = [];
                   print("algorithm2" + table1[0].quantity.toString());
 

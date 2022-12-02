@@ -82,6 +82,10 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "item_cataloge2") final String? itemCatelog2,
     @JsonKey(name: "item_cataloge3") final String? itemCatelog3,
     @JsonKey(name: "item_cataloge4") final String? itemCatelog4,
+    @JsonKey(name: "shelf_type") final String? shelfType,
+    @JsonKey(name: "shelf_time") final int? shelfTime,
+    @JsonKey(name: "have_gift_option",defaultValue: false) final bool? haveGiftOption,
+    @JsonKey(name: "have_wrap_option",defaultValue: false) final bool? haveWrapOption,
 
 
   }) = _VariantReadModel;

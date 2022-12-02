@@ -1385,6 +1385,8 @@ mixin _$ShippingAddressCreationModel {
   String? get buillingName => throw _privateConstructorUsedError;
   @JsonKey(name: "address_tag")
   String? get addressTag => throw _privateConstructorUsedError;
+  @JsonKey(name: "user_code")
+  String? get userCode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -1411,7 +1413,8 @@ abstract class $ShippingAddressCreationModelCopyWith<$Res> {
       @JsonKey(name: "full_name") String? fullName,
       @JsonKey(name: "street_name") String? streetName,
       @JsonKey(name: "building_name") String? buillingName,
-      @JsonKey(name: "address_tag") String? addressTag});
+      @JsonKey(name: "address_tag") String? addressTag,
+      @JsonKey(name: "user_code") String? userCode});
 }
 
 /// @nodoc
@@ -1439,6 +1442,7 @@ class _$ShippingAddressCreationModelCopyWithImpl<$Res,
     Object? streetName = freezed,
     Object? buillingName = freezed,
     Object? addressTag = freezed,
+    Object? userCode = freezed,
   }) {
     return _then(_value.copyWith(
       country: freezed == country
@@ -1485,6 +1489,10 @@ class _$ShippingAddressCreationModelCopyWithImpl<$Res,
           ? _value.addressTag
           : addressTag // ignore: cast_nullable_to_non_nullable
               as String?,
+      userCode: freezed == userCode
+          ? _value.userCode
+          : userCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -1509,7 +1517,8 @@ abstract class _$$_ShippingAddressCreationModelCopyWith<$Res>
       @JsonKey(name: "full_name") String? fullName,
       @JsonKey(name: "street_name") String? streetName,
       @JsonKey(name: "building_name") String? buillingName,
-      @JsonKey(name: "address_tag") String? addressTag});
+      @JsonKey(name: "address_tag") String? addressTag,
+      @JsonKey(name: "user_code") String? userCode});
 }
 
 /// @nodoc
@@ -1536,6 +1545,7 @@ class __$$_ShippingAddressCreationModelCopyWithImpl<$Res>
     Object? streetName = freezed,
     Object? buillingName = freezed,
     Object? addressTag = freezed,
+    Object? userCode = freezed,
   }) {
     return _then(_$_ShippingAddressCreationModel(
       country: freezed == country
@@ -1582,6 +1592,10 @@ class __$$_ShippingAddressCreationModelCopyWithImpl<$Res>
           ? _value.addressTag
           : addressTag // ignore: cast_nullable_to_non_nullable
               as String?,
+      userCode: freezed == userCode
+          ? _value.userCode
+          : userCode // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1600,7 +1614,8 @@ class _$_ShippingAddressCreationModel implements _ShippingAddressCreationModel {
       @JsonKey(name: "full_name") this.fullName,
       @JsonKey(name: "street_name") this.streetName,
       @JsonKey(name: "building_name") this.buillingName,
-      @JsonKey(name: "address_tag") this.addressTag});
+      @JsonKey(name: "address_tag") this.addressTag,
+      @JsonKey(name: "user_code") this.userCode});
 
   factory _$_ShippingAddressCreationModel.fromJson(Map<String, dynamic> json) =>
       _$$_ShippingAddressCreationModelFromJson(json);
@@ -1632,10 +1647,13 @@ class _$_ShippingAddressCreationModel implements _ShippingAddressCreationModel {
   @override
   @JsonKey(name: "address_tag")
   final String? addressTag;
+  @override
+  @JsonKey(name: "user_code")
+  final String? userCode;
 
   @override
   String toString() {
-    return 'ShippingAddressCreationModel(country: $country, state: $state, city: $city, contact: $contact, landmark: $landmark, instructions: $instructions, addressType: $addressType, fullName: $fullName, streetName: $streetName, buillingName: $buillingName, addressTag: $addressTag)';
+    return 'ShippingAddressCreationModel(country: $country, state: $state, city: $city, contact: $contact, landmark: $landmark, instructions: $instructions, addressType: $addressType, fullName: $fullName, streetName: $streetName, buillingName: $buillingName, addressTag: $addressTag, userCode: $userCode)';
   }
 
   @override
@@ -1660,7 +1678,9 @@ class _$_ShippingAddressCreationModel implements _ShippingAddressCreationModel {
             (identical(other.buillingName, buillingName) ||
                 other.buillingName == buillingName) &&
             (identical(other.addressTag, addressTag) ||
-                other.addressTag == addressTag));
+                other.addressTag == addressTag) &&
+            (identical(other.userCode, userCode) ||
+                other.userCode == userCode));
   }
 
   @JsonKey(ignore: true)
@@ -1677,7 +1697,8 @@ class _$_ShippingAddressCreationModel implements _ShippingAddressCreationModel {
       fullName,
       streetName,
       buillingName,
-      addressTag);
+      addressTag,
+      userCode);
 
   @JsonKey(ignore: true)
   @override
@@ -1707,7 +1728,8 @@ abstract class _ShippingAddressCreationModel
           @JsonKey(name: "full_name") final String? fullName,
           @JsonKey(name: "street_name") final String? streetName,
           @JsonKey(name: "building_name") final String? buillingName,
-          @JsonKey(name: "address_tag") final String? addressTag}) =
+          @JsonKey(name: "address_tag") final String? addressTag,
+          @JsonKey(name: "user_code") final String? userCode}) =
       _$_ShippingAddressCreationModel;
 
   factory _ShippingAddressCreationModel.fromJson(Map<String, dynamic> json) =
@@ -1740,6 +1762,9 @@ abstract class _ShippingAddressCreationModel
   @override
   @JsonKey(name: "address_tag")
   String? get addressTag;
+  @override
+  @JsonKey(name: "user_code")
+  String? get userCode;
   @override
   @JsonKey(ignore: true)
   _$$_ShippingAddressCreationModelCopyWith<_$_ShippingAddressCreationModel>

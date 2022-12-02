@@ -120,7 +120,7 @@ class _DivisionStableTableState extends State<DivisionStableTable> {
                             },
                             onChangeTap: (p0) {
                               // loading = true;
-                              setState(() {});
+                              // setState(() {});
                             },
                             onChange: (myFile) {
                               // widget.imagePostCheck(type: "1");

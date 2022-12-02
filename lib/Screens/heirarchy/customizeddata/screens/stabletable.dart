@@ -22,16 +22,20 @@ class CustomizedStableTable extends StatefulWidget {
   final TextEditingController height;
   final TextEditingController width;
   final TextEditingController length;
+  final TextEditingController shelfType;
+  final TextEditingController shelfTime;
 
   final bool active;
   final bool select;
+  final bool haveGiftOption;
+  final bool haveWrapOption;
   final bool needMultipleIntegreation;
   final Function activeChange;
 
 
   CustomizedStableTable({
     required this.groupNameController,required this.needMultipleIntegreation,required this.select,
-    required this.group, required this.code, required this.minimumGp, required this.averageGp, required this.maximumGp, required this.targetedGp, required this.vat, required this.excessTax, required this.returnType, required this.returnTime, required this.weightUomId, required this.height, required this.width, required this.length, required this.active, required this.activeChange});
+    required this.group, required this.code, required this.minimumGp, required this.averageGp, required this.maximumGp, required this.targetedGp, required this.vat, required this.excessTax, required this.returnType, required this.returnTime, required this.weightUomId, required this.height, required this.width, required this.length, required this.active, required this.activeChange, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption});
   @override
   _CustomizedStableTableState createState() => _CustomizedStableTableState();
 }
@@ -118,6 +122,13 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                               formatter: true,
 
                               controller: widget.maximumGp, title: "Maximum Gp"),
+                          SizedBox(
+                            height: height * .030,
+                          ),
+                          NewInputCard(
+                              formatter: true,
+                              controller: widget.targetedGp, title: "Targeted Gp"),
+
                           // SizedBox(
                           //   height: height * .030,
                           // ),
@@ -131,19 +142,6 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                         ],
                       )),
                       Expanded(child: Column(children: [
-
-
-
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.targetedGp, title: "Targeted Gp"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
-
-
-
-
 
                         NewInputCard(controller: widget.vat,
                           formatter: true,
@@ -181,35 +179,61 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                         SizedBox(
                           height: height * .030,
                         ),
+                        SelectableDropDownpopUp(
+
+
+                          label: "Shelf Type",
+                          type:"CustomReturnTypePopupCall",
+                          value: widget.shelfType.text,
+                          onSelection: (String? va) {
+                            print(
+                                "+++++++++++++++++++++++");
+                            //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                            setState(() {
+                              widget.shelfType.text=va??"";
+                            });
+                          },
+
+                          restricted: true,
+                        ),
+                        SizedBox(
+                          height: height * .030,
+                        ),
 
                         NewInputCard(
                             formatter: true,
                             controller: widget.returnTime, title: "Return Time"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
 
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.shelfTime, title: "Shelf Time"),
                       ],)),
                       Expanded(child: Column(children: [
 
                         NewInputCard(
                           formatter: true,
-                            controller: widget.weightUomId, title: "Weight In Kilogram"),
+                            controller: widget.weightUomId, title: "Weight(Kg)"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
                             formatter: true,
-                            controller: widget.height, title: "Height in Meter"),
+                            controller: widget.height, title: "Height(meter)"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
                             formatter: true,
-                            controller: widget.width, title: "Width in Meter"),
+                            controller: widget.width, title: "Width(meter)"),
                         SizedBox(
                           height: height * .030,
                         ),
                         NewInputCard(
                             formatter: true,
-                            controller: widget.length, title: "Length in Meter"),
+                            controller: widget.length, title: "Length(meter)"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -235,6 +259,31 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
 
                               setState(() {});
                             }),
+                        SizedBox(height: height*.030,),
+                        PopUpSwitchTile(
+                            value:widget. haveGiftOption??false,
+                            title: "Have Gift Option",
+                            onClick: (gg) {
+                              widget.activeChange(!widget.haveGiftOption,type:"3");
+
+
+
+
+                              setState(() {});
+                            }),
+                        SizedBox(height: height*.030,),
+                        PopUpSwitchTile(
+                            value:widget. haveWrapOption??false,
+                            title: "Have Wrap Option",
+                            onClick: (gg) {
+                              widget.activeChange(!widget.haveWrapOption,type:"4");
+
+
+
+
+                              setState(() {});
+                            }),
+
 
 
                       ],))

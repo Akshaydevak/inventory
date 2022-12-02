@@ -103,8 +103,11 @@ class VariantPost with _$VariantPost {
         final ProductFeatures? nutriantsFacts,
     @JsonKey(name: "usage_direction") final Storage? usageDirection,
     @JsonKey(name: "important_info") final ProductFeatures? importantInfo,
-    @JsonKey(name: "product_behaviour")
-        final List<productBehaviour>? productBehavior,
+    @JsonKey(name: "product_behaviour") final List<productBehaviour>? productBehavior,
+    @JsonKey(name: "shelf_type") final String? shelfType,
+    @JsonKey(name: "shelf_time") final int? shelfTime,
+    @JsonKey(name: "have_gift_option",defaultValue: false) final bool? haveGiftOption,
+    @JsonKey(name: "have_wrap_option",defaultValue: false) final bool? haveWrapOption,
   }) = _VariantPost;
   factory VariantPost.fromJson(Map<String, dynamic> json) =>
       _$VariantPostFromJson(json);

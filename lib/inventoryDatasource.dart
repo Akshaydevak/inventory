@@ -516,10 +516,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       PurchaseOrderRead dataa =
           PurchaseOrderRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print(e);
@@ -541,9 +541,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    // print("responsesssssd" + response.toString());
     PurchaseOrderRead dataa = PurchaseOrderRead.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
+    // print("rwead" + dataa.toString());
     return dataa;
   }
 
@@ -673,10 +673,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       PurchaseRecievingRead dataa =
           PurchaseRecievingRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print("errorr" + e.toString());
@@ -697,10 +697,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       PurchaseRecievingRead dataa =
           PurchaseRecievingRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     }
   }
@@ -816,10 +816,10 @@ class InventoryDataSourceImpl extends LogisticDataSource {
           },
         ),
       );
-      print("responsesssssd" + response.toString());
+      // print("responsesssssd" + response.toString());
       PurchaseOrderRead dataa =
           PurchaseOrderRead.fromJson(response.data['data']);
-      print("rwead" + dataa.toString());
+      // print("rwead" + dataa.toString());
       return dataa;
     } catch (e) {
       print("error" + e.toString());
@@ -841,9 +841,9 @@ class InventoryDataSourceImpl extends LogisticDataSource {
         },
       ),
     );
-    print("responsesssssd" + response.toString());
+    // print("responsesssssd" + response.toString());
     PurchaseOrderRead dataa = PurchaseOrderRead.fromJson(response.data['data']);
-    print("rwead" + dataa.toString());
+    // print("rwead" + dataa.toString());
     return dataa;
   }
 

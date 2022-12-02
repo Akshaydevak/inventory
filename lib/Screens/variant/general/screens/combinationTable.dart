@@ -31,17 +31,7 @@ class _CombinationTableState extends State<CombinationTable> {
       padding: EdgeInsets.all(10),
       child: customTable(
 
-        border:  TableBorder(
 
-          verticalInside: BorderSide(
-              width:.5,
-              color: Colors.black45,
-              style: BorderStyle.solid),
-          horizontalInside: BorderSide(
-              width:.3,
-              color: Colors.black45,
-              // color: Colors.blue,
-              style: BorderStyle.solid),),
 
         tableWidth: .5,
 
@@ -89,24 +79,21 @@ class _CombinationTableState extends State<CombinationTable> {
           ), if(widget.list.isNotEmpty)...[
             for(var i=0;i<widget.list.length;i++)...[
           TableRow(
-              decoration: BoxDecoration(
-                  color: Pellet.tableRowColor,
-                  shape: BoxShape.rectangle,
-                  border:  Border(
-                      left: BorderSide(
-
-                          color: Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-                          style: BorderStyle.solid),
-                      bottom: BorderSide(
-
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          style: BorderStyle.solid),
-                      right: BorderSide(
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-
-                          style: BorderStyle.solid))),
+          decoration: BoxDecoration(
+          color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border: Border(
+    left: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid))),
               children: [
 
                 TableCell(
@@ -141,23 +128,20 @@ class _CombinationTableState extends State<CombinationTable> {
 ],]else
           TableRow(
               decoration: BoxDecoration(
-                  color: Pellet.tableRowColor,
-                  shape: BoxShape.rectangle,
-                  border:  Border(
-                      left: BorderSide(
-
-                          color: Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-                          style: BorderStyle.solid),
-                      bottom: BorderSide(
-
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          style: BorderStyle.solid),
-                      right: BorderSide(
-                          color:   Color(0xff3E4F5B).withOpacity(.1),
-                          width: .4,
-
-                          style: BorderStyle.solid))),
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border: Border(
+    left: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid))),
               children: [
 
                 TableCell(
@@ -181,6 +165,7 @@ class _CombinationTableState extends State<CombinationTable> {
         widths: {
           0: FlexColumnWidth(1),
           1: FlexColumnWidth(4),
+          1: FlexColumnWidth(2),
 
 
         },

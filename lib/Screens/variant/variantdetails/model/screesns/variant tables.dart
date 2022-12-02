@@ -79,7 +79,7 @@ class ProductTableState extends State<ProductTable> {
       });
       aboutProducts = widget.aboutProducts;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
-        keys = aboutProducts?.keyValues ?? [];
+        keys =List.from( aboutProducts?.keyValues ?? []);
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -421,7 +421,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
       heading =
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
-        keys = productDetails?.keyValues ?? [];
+        keys =List.from( productDetails?.keyValues ?? []);
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -847,7 +847,7 @@ class PrtoductFeaturesState extends State<PrtoductFeatures> {
       heading =
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
-        keys = productDetails?.keyValues ?? [];
+        keys = List.from(productDetails?.keyValues ?? []);
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -1273,7 +1273,7 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
       heading =
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
-        keys = productDetails?.keyValues ?? [];
+        keys =List.from( productDetails?.keyValues ?? []);
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -1697,7 +1697,7 @@ class NeutrialFactsState extends State<NeutrialFacts> {
       heading =
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
-        keys = productDetails?.keyValues ?? [];
+        keys =List.from( productDetails?.keyValues ?? []);
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -2121,7 +2121,7 @@ class IngrediansState extends State<Ingredians> {
       });
       aboutProducts = widget.ingredians;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
-        keys = aboutProducts?.keyValues ?? [];
+        keys =List.from( aboutProducts?.keyValues ?? []);
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -2462,7 +2462,7 @@ class _UsageDirectionState extends State<UsageDirection> {
       });
       aboutProducts = widget.usageDirection;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
-        keys = aboutProducts?.keyValues ?? [];
+        keys = List.from(aboutProducts?.keyValues ?? []);
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -2802,7 +2802,7 @@ class _StoragesWidgetState extends State<StoragesWidget> {
       });
       aboutProducts = widget.storage;
       if (aboutProducts?.keyValues?.isNotEmpty == true) {
-        keys = aboutProducts?.keyValues ?? [];
+        keys =List.from( aboutProducts?.keyValues ?? []);
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
           upDateButton.add(false);
@@ -3143,7 +3143,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
       heading =
           TextEditingController(text: productDetails?.name ?? "");
       if (productDetails?.keyValues?.isNotEmpty == true) {
-        keys = productDetails?.keyValues ?? [];
+        keys = List.from(productDetails?.keyValues ?? []);
 
         for( var i =0;i<keys.length;i++){
           upDate.add(false);
@@ -3550,7 +3550,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
         upDateButton.clear();
       });
       if (widget.inforMationList?.isNotEmpty == true) {
-        inforMationList = widget?.inforMationList ?? [];
+        inforMationList =List.from( widget?.inforMationList ?? []);
         if(inforMationList.isNotEmpty==true){
           for( var i =0;i<inforMationList.length;i++){
             upDate.add(false);

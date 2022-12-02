@@ -26,6 +26,7 @@ class ItemCreationModel with _$ItemCreationModel {
     @JsonKey(name: "item_cataloge2") final int? itemCatelog2,
     @JsonKey(name: "item_cataloge3") final int? itemCatelog3,
     @JsonKey(name: "item_cataloge4") final int? itemCatelog4,
+    @JsonKey(name: "item_cataloge5") final int? itemCatelog5,
     @JsonKey(name: "sales_block", defaultValue: false) final bool? salesBlock,
     @JsonKey(name: "purchase_block", defaultValue: false)
         final bool? purchaseBlock,

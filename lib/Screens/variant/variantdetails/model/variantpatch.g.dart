@@ -120,6 +120,10 @@ _$_VariantPatch _$$_VariantPatchFromJson(Map<String, dynamic> json) =>
       vendorDetails: (json['vendor_details'] as List<dynamic>?)
           ?.map((e) => VendorDetails.fromJson(e as Map<String, dynamic>))
           .toList(),
+      shelfType: json['shelf_type'] as String?,
+      shelfTime: json['shelf_time'] as int?,
+      haveGiftOption: json['have_gift_option'] as bool? ?? false,
+      haveWrapOption: json['have_wrap_option'] as bool? ?? false,
       uomCode: json['uom_code'] as String?,
       alternativeBarcode: (json['alternative_barcode'] as List<dynamic>?)
           ?.map((e) => AlternativeBarcode.fromJson(e as Map<String, dynamic>))
@@ -219,6 +223,10 @@ Map<String, dynamic> _$$_VariantPatchToJson(_$_VariantPatch instance) =>
       'product_behaviour': instance.productBehavior,
       'usage_direction': instance.usageDirection,
       'vendor_details': instance.vendorDetails,
+      'shelf_type': instance.shelfType,
+      'shelf_time': instance.shelfTime,
+      'have_gift_option': instance.haveGiftOption,
+      'have_wrap_option': instance.haveWrapOption,
       'uom_code': instance.uomCode,
       'alternative_barcode': instance.alternativeBarcode,
       'alternative_qrcode': instance.alternativeQrCodeBarcode,

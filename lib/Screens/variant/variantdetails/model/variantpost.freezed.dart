@@ -168,6 +168,14 @@ mixin _$VariantPost {
   @JsonKey(name: "product_behaviour")
   List<productBehaviour>? get productBehavior =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  String? get shelfType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption => throw _privateConstructorUsedError;
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -325,7 +333,15 @@ abstract class $VariantPostCopyWith<$Res> {
       @JsonKey(name: "important_info")
           ProductFeatures? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<productBehaviour>? productBehavior});
+          List<productBehaviour>? productBehavior,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption});
 
   $StorageCopyWith<$Res>? get Ingrediants;
   $StorageCopyWith<$Res>? get storage;
@@ -435,6 +451,10 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
     Object? usageDirection = freezed,
     Object? importantInfo = freezed,
     Object? productBehavior = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -773,6 +793,22 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
           ? _value.productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
               as List<productBehaviour>?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 
@@ -1037,7 +1073,15 @@ abstract class _$$_VariantPostCopyWith<$Res>
       @JsonKey(name: "important_info")
           ProductFeatures? importantInfo,
       @JsonKey(name: "product_behaviour")
-          List<productBehaviour>? productBehavior});
+          List<productBehaviour>? productBehavior,
+      @JsonKey(name: "shelf_type")
+          String? shelfType,
+      @JsonKey(name: "shelf_time")
+          int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          bool? haveWrapOption});
 
   @override
   $StorageCopyWith<$Res>? get Ingrediants;
@@ -1154,6 +1198,10 @@ class __$$_VariantPostCopyWithImpl<$Res>
     Object? usageDirection = freezed,
     Object? importantInfo = freezed,
     Object? productBehavior = freezed,
+    Object? shelfType = freezed,
+    Object? shelfTime = freezed,
+    Object? haveGiftOption = freezed,
+    Object? haveWrapOption = freezed,
   }) {
     return _then(_$_VariantPost(
       id: freezed == id
@@ -1492,6 +1540,22 @@ class __$$_VariantPostCopyWithImpl<$Res>
           ? _value._productBehavior
           : productBehavior // ignore: cast_nullable_to_non_nullable
               as List<productBehaviour>?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shelfTime: freezed == shelfTime
+          ? _value.shelfTime
+          : shelfTime // ignore: cast_nullable_to_non_nullable
+              as int?,
+      haveGiftOption: freezed == haveGiftOption
+          ? _value.haveGiftOption
+          : haveGiftOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      haveWrapOption: freezed == haveWrapOption
+          ? _value.haveWrapOption
+          : haveWrapOption // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -1643,7 +1707,15 @@ class _$_VariantPost implements _VariantPost {
       @JsonKey(name: "important_info")
           this.importantInfo,
       @JsonKey(name: "product_behaviour")
-          final List<productBehaviour>? productBehavior})
+          final List<productBehaviour>? productBehavior,
+      @JsonKey(name: "shelf_type")
+          this.shelfType,
+      @JsonKey(name: "shelf_time")
+          this.shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          this.haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          this.haveWrapOption})
       : _alternativeBarcode = alternativeBarcode,
         _alternativeQrCodeBarcode = alternativeQrCodeBarcode,
         _vendorDetails = vendorDetails,
@@ -1909,8 +1981,21 @@ class _$_VariantPost implements _VariantPost {
   }
 
   @override
+  @JsonKey(name: "shelf_type")
+  final String? shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  final int? shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  final bool? haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  final bool? haveWrapOption;
+
+  @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -2039,7 +2124,11 @@ class _$_VariantPost implements _VariantPost {
             (identical(other.nutriantsFacts, nutriantsFacts) || other.nutriantsFacts == nutriantsFacts) &&
             (identical(other.usageDirection, usageDirection) || other.usageDirection == usageDirection) &&
             (identical(other.importantInfo, importantInfo) || other.importantInfo == importantInfo) &&
-            const DeepCollectionEquality().equals(other._productBehavior, _productBehavior));
+            const DeepCollectionEquality().equals(other._productBehavior, _productBehavior) &&
+            (identical(other.shelfType, shelfType) || other.shelfType == shelfType) &&
+            (identical(other.shelfTime, shelfTime) || other.shelfTime == shelfTime) &&
+            (identical(other.haveGiftOption, haveGiftOption) || other.haveGiftOption == haveGiftOption) &&
+            (identical(other.haveWrapOption, haveWrapOption) || other.haveWrapOption == haveWrapOption));
   }
 
   @JsonKey(ignore: true)
@@ -2129,7 +2218,11 @@ class _$_VariantPost implements _VariantPost {
         nutriantsFacts,
         usageDirection,
         importantInfo,
-        const DeepCollectionEquality().hash(_productBehavior)
+        const DeepCollectionEquality().hash(_productBehavior),
+        shelfType,
+        shelfTime,
+        haveGiftOption,
+        haveWrapOption
       ]);
 
   @JsonKey(ignore: true)
@@ -2291,7 +2384,15 @@ abstract class _VariantPost implements VariantPost {
       @JsonKey(name: "important_info")
           final ProductFeatures? importantInfo,
       @JsonKey(name: "product_behaviour")
-          final List<productBehaviour>? productBehavior}) = _$_VariantPost;
+          final List<productBehaviour>? productBehavior,
+      @JsonKey(name: "shelf_type")
+          final String? shelfType,
+      @JsonKey(name: "shelf_time")
+          final int? shelfTime,
+      @JsonKey(name: "have_gift_option", defaultValue: false)
+          final bool? haveGiftOption,
+      @JsonKey(name: "have_wrap_option", defaultValue: false)
+          final bool? haveWrapOption}) = _$_VariantPost;
 
   factory _VariantPost.fromJson(Map<String, dynamic> json) =
       _$_VariantPost.fromJson;
@@ -2524,6 +2625,18 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "product_behaviour")
   List<productBehaviour>? get productBehavior;
+  @override
+  @JsonKey(name: "shelf_type")
+  String? get shelfType;
+  @override
+  @JsonKey(name: "shelf_time")
+  int? get shelfTime;
+  @override
+  @JsonKey(name: "have_gift_option", defaultValue: false)
+  bool? get haveGiftOption;
+  @override
+  @JsonKey(name: "have_wrap_option", defaultValue: false)
+  bool? get haveWrapOption;
   @override
   @JsonKey(ignore: true)
   _$$_VariantPostCopyWith<_$_VariantPost> get copyWith =>

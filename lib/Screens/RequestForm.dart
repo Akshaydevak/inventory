@@ -191,6 +191,43 @@ var  paginatedList;
   //     }
   //   }
   // }
+
+
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
+    vatableAmount1 =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+  }
+
+  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,int? discount){
+    double vatableAmountupdation=0;
+    vatableAmountupdation =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+    return vatableAmountupdation;
+
+
+  }
+  double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
+    double actualCost=0;
+    actualCost = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    return actualCost;
+
+  }
+  actualAndgrandTotal(double? vatableAmount,double? vat){
+
+    actualCost1 = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    grandTotal1=actualCost1;
+
+  }
   clear(){
     print("shammmma"+table.toString());
     orderTypeController.text="";
@@ -371,7 +408,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
            stockCheck=false;
             print("datasssssssssssssss"+data.toString());
             data.data?.orderLines != null
-                ? table = data.data?.orderLines ?? []
+                ? table = List.from(data.data?.orderLines ?? [])
                 : table = [];
 
             print("tablsssssssssssssssssse"+table.toString());
@@ -628,7 +665,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                             mainAxisAlignment:MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                             
+
                               Container(
 
                                 child: Row(
@@ -636,8 +673,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                   children: [
                                     TextButtonLarge(
                                       marginCheck: true,
-                                      
-                                    
+
+
 
                                       onPress: () {
                                         setState(() {
@@ -1191,6 +1228,50 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                               PurchaseStockCubit>()
                                                                               .getCurrentStock(
                                                                              inventoryIdController.text, va?.code);
+                                                                          var qty = table[i]
+                                                                              .requestedQty;
+
+                                                                          var excess = table[i]
+                                                                              .excessTax;
+
+                                                                          var unitcost = table[i]
+                                                                              .unitCost;
+
+                                                                          var vat = table[i].vat;
+                                                                          var disc = table[i].discount;
+
+
+                                                                          if (unitcost ==
+                                                                              0 ||
+                                                                              qty ==
+                                                                                  0) {
+                                                                            table[i] =
+                                                                                table[i]
+                                                                                    .copyWith(
+                                                                                    variableAmount: 0,
+                                                                                    actualCost: 0,
+                                                                                    grandTotal: 0,
+                                                                                    discount: disc);
+                                                                          }
+
+                                                                          else {
+                                                                            var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
+
+
+                                                                            var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+
+                                                                            table[i] =
+                                                                                table[i]
+                                                                                    .copyWith(
+                                                                                    variableAmount: Vamount,
+                                                                                    actualCost: vactualCost,
+                                                                                    grandTotal: vactualCost,
+                                                                                    discount: disc);
+                                                                            setState(() {});
+
+                                                                          }
+
 
                                                                           // orderType = va!;
                                                                         });
@@ -1276,20 +1357,13 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           }else {
                                                                             var Vamount;
                                                                             var vactualCost;
-
-                                                                            Vamount  = (((unitcost! *
-                                                                                qty!) +
-                                                                                excess!) -
-                                                                                dis!)
-                                                                                .toDouble();
+                                                                            Vamount=vatableAmountUpdation(unitcost,qty,excess,dis);
                                                                             if(vat==0 ||vat==""){
                                                                               vactualCost=Vamount;
                                                                             }
                                                                             else{
-                                                                              vactualCost  = (Vamount! +
-                                                                                  ((Vamount! *
-                                                                                      vat!) /
-                                                                                      100));
+                                                                              vactualCost=   actualAndgrandTotalUpdation(Vamount,vat);
+
                                                                             }
 
 
@@ -1446,25 +1520,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                           table[i] = table[i].copyWith(variableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                                           setState(() {});
                                                                         } else {
+                                                                          var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
 
-                                                                          var Vamount = (((unitcost! *
-                                                                              qty!) +
-                                                                              excess!) -
-                                                                              disc!)
-                                                                              .toDouble();
-                                                                          print(
-                                                                              "Vamount" +
-                                                                                  Vamount
-                                                                                      .toString());
 
-                                                                          var vactualCost = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                          print(
-                                                                              "vactualCost" +
-                                                                                  vactualCost
-                                                                                      .toString());
+                                                                          var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
@@ -1515,27 +1575,16 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                         }else {
                                                                           var Vamount;
 
+                                                                           Vamount =         vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
 
-                                                                          Vamount =
-                                                                              (((unitcost! *
-                                                                                  qty!) +
-                                                                                  excess!) -
-                                                                                  Vdiscount!)
-                                                                                  .toDouble();
 
-                                                                          var vactualCost = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                          var Vgrnadtotal = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
+                                                                          var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
                                                                                   actualCost: vactualCost,
-                                                                                  grandTotal: Vgrnadtotal,
+                                                                                  grandTotal: vactualCost,
                                                                                   variableAmount: Vamount,
                                                                                   excessTax: excess);
                                                                           setState(() {});
@@ -1562,47 +1611,29 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                               "entered");
                                                                           disc =
                                                                           0;
-                                                                          print(
-                                                                              "disc" +
-                                                                                  disc
-                                                                                      .toString());
+
                                                                         } else {
                                                                           disc =
                                                                               int
                                                                                   .tryParse(
                                                                                   va);
-                                                                          print(
-                                                                              "disc1" +
-                                                                                  disc
-                                                                                      .toString());
+
                                                                         }
 
                                                                         var qty = table[i]
                                                                             .requestedQty;
-                                                                        print(
-                                                                            "qty" +
-                                                                                qty
-                                                                                    .toString());
+
                                                                         var excess = table[i]
                                                                             .excessTax;
-                                                                        print(
-                                                                            "excess" +
-                                                                                excess
-                                                                                    .toString());
+
                                                                         var unitcost = table[i]
                                                                             .unitCost;
-                                                                        print(
-                                                                            "unitcost" +
-                                                                                unitcost
-                                                                                    .toString());
+
                                                                         var vat = table[i].vat;
                                                                         var foc = table[i]
                                                                             .foc;
 
-                                                                        print(
-                                                                            "vat" +
-                                                                                vat
-                                                                                    .toString());
+
                                                                         if (unitcost ==
                                                                             0 ||
                                                                             qty ==
@@ -1617,25 +1648,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                         }
 
                                                                         else {
+                                                                          var Vamount =         vatableAmountUpdation(unitcost,qty,excess,disc);
 
-                                                                          var Vamount = (((unitcost! *
-                                                                              qty!) +
-                                                                              excess!) -
-                                                                              disc!)
-                                                                              .toDouble();
-                                                                          print(
-                                                                              "Vamount" +
-                                                                                  Vamount
-                                                                                      .toString());
 
-                                                                          var vactualCost = (Vamount! +
-                                                                              ((Vamount! *
-                                                                                  vat!) /
-                                                                                  100));
-                                                                          print(
-                                                                              "vactualCost" +
-                                                                                  vactualCost
-                                                                                      .toString());
+                                                                          var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+
+
                                                                           table[i] =
                                                                               table[i]
                                                                                   .copyWith(
@@ -1992,6 +2010,8 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                     context
                                                                         .read<PurchaseStockCubit>()
                                                                         .getCurrentStock(inventoryIdController.text,variantId);
+                                                                    vatableAmountCalculation(unitcost, recievedQty, excessTax, discount);
+                                                                    actualAndgrandTotal(vatableAmount1,vat1);
 
                                                                     // orderType = va!;
                                                                   });
@@ -2054,20 +2074,22 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                         }
                                                                         else{
+                                                                          vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
 
-                                                                            vatableAmount1 = (((unitcost! *
-                                                                                recievedQty!) +
-                                                                                excess1!) -
-                                                                                discount!)
-                                                                                .toDouble();
-                                                                            actualCost1 = (vatableAmount1! +
-                                                                                ((vatableAmount1! *
-                                                                                    vat1!) /
-                                                                                    100));
-                                                                            grandTotal1 = (vatableAmount1! +
-                                                                                ((vatableAmount1! *
-                                                                                    vat1!) /
-                                                                                    100));
+                                                                            // vatableAmount1 = (((unitcost! *
+                                                                            //     recievedQty!) +
+                                                                            //     excess1!) -
+                                                                            //     discount!)
+                                                                            //     .toDouble();
+                                                                          actualAndgrandTotal(vatableAmount1,vat1);
+                                                                            // actualCost1 = (vatableAmount1! +
+                                                                            //     ((vatableAmount1! *
+                                                                            //         vat1!) /
+                                                                            //         100));
+                                                                            // grandTotal1 = (vatableAmount1! +
+                                                                            //     ((vatableAmount1! *
+                                                                            //         vat1!) /
+                                                                            //         100));
 
 
 
@@ -2190,22 +2212,25 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       grandTotal1=0;
                                                                     }
                                                                     else{
+                                                                      vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
 
-                                                                        vatableAmount1 = (((unitcost! *
-                                                                            recievedQty!) +
-                                                                            excess1!) -
-                                                                            discount!)
-                                                                            .toDouble();
-                                                                        actualCost1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
-                                                                        grandTotal1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
+                                                                      actualAndgrandTotal(vatableAmount1,vat1);
 
-
+                                                                        // vatableAmount1 = (((unitcost! *
+                                                                        //     recievedQty!) +
+                                                                        //     excess1!) -
+                                                                        //     discount!)
+                                                                        //     .toDouble();
+                                                                        // actualCost1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
+                                                                        // grandTotal1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
+                                                                        //
+                                                                        //
 
 
 
@@ -2250,20 +2275,23 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       grandTotal1=0;
                                                                     }
                                                                     else{
+                                                                      vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
 
-                                                                        vatableAmount1 = (((unitcost! *
-                                                                            recievedQty!) +
-                                                                            excess1!) -
-                                                                            discount!)
-                                                                            .toDouble();
-                                                                        actualCost1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
-                                                                        grandTotal1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
+                                                                      actualAndgrandTotal(vatableAmount1,vat1);
+                                                                        //
+                                                                        // vatableAmount1 = (((unitcost! *
+                                                                        //     recievedQty!) +
+                                                                        //     excess1!) -
+                                                                        //     discount!)
+                                                                        //     .toDouble();
+                                                                        // actualCost1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
+                                                                        // grandTotal1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
                                                                     }
                                                                     setState(() {});
                                                                   },
@@ -2298,20 +2326,23 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       grandTotal1=0;
                                                                     }
                                                                     else{
+                                                                      vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
 
-                                                                        vatableAmount1 = (((unitcost! *
-                                                                            recievedQty!) +
-                                                                            excess1!) -
-                                                                            discount!)
-                                                                            .toDouble();
-                                                                        actualCost1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
-                                                                        grandTotal1 = (vatableAmount1! +
-                                                                            ((vatableAmount1! *
-                                                                                vat1!) /
-                                                                                100));
+                                                                      actualAndgrandTotal(vatableAmount1,vat1);
+
+                                                                        // vatableAmount1 = (((unitcost! *
+                                                                        //     recievedQty!) +
+                                                                        //     excess1!) -
+                                                                        //     discount!)
+                                                                        //     .toDouble();
+                                                                        // actualCost1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
+                                                                        // grandTotal1 = (vatableAmount1! +
+                                                                        //     ((vatableAmount1! *
+                                                                        //         vat1!) /
+                                                                        //         100));
 
 
 

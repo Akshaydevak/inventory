@@ -1244,11 +1244,11 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
   void taxableCalcutatingMethod(
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     if (type == "price") {
-      taxableAmount = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmount = double.parse((((reqQty * unitCst) + exTaxx) - disct).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
-      taxableAmount = (total - ((total * disct) / 100));
+      taxableAmount =double.parse ((total - ((total * disct) / 100)).toStringAsFixed(2));
     }
   }
 
@@ -1256,7 +1256,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
       int reqQty, double unitCst, double exTaxx, double disct, String? type) {
     double taxableAmounts = 0;
     if (type == "price") {
-      taxableAmounts = (((reqQty * unitCst) + exTaxx) - disct);
+      taxableAmounts = double.parse((((reqQty * unitCst) + exTaxx) - disct).toStringAsFixed(2));
     } else if (type == "percentage") {
       double total = 0;
       total = (reqQty * unitCst) + exTaxx;
@@ -1266,15 +1266,15 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
   }
 
   void selliPriceCalculation(double taxableAmount, double vatt) {
-    sellingPrice = (taxableAmount + ((taxableAmount * vatt) / 100));
-    print("sellingPrice" + sellingPrice.toString());
+    sellingPrice = double.parse((taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
+
     setState(() {});
   }
 
   double sellingPriceUpdation(double taxableAmount, double vatt) {
     double sellingPrice1 = 0;
-    sellingPrice1 = (taxableAmount + ((taxableAmount * vatt) / 100));
-    print("sellingPrice" + sellingPrice.toString());
+    sellingPrice1 =double.parse( (taxableAmount + ((taxableAmount * vatt) / 100)).toStringAsFixed(2));
+
     setState(() {});
     return sellingPrice1;
   }
@@ -1332,14 +1332,14 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                       table1.clear();
                       if(data.invoicedData?.lines?.isNotEmpty==true){
                         data?.invoicedData?.lines != null
-                            ? table1 = data?.invoicedData?.lines ?? []
+                            ? table1 =List.from( data?.invoicedData?.lines ?? [])
                             : table1 = [];
 
 
                       }
                       else{
                         data?.lines != null
-                            ? table1 =  data?.lines  ?? []
+                            ? table1 = List.from(data?.lines  ?? [])
                             : table1 = [];
 
                       }

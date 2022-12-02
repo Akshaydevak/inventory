@@ -27,11 +27,13 @@ class AllocationStockStableTable extends StatefulWidget {
   final TextEditingController addVirtualStock;
   final TextEditingController channelStatusMediumPoint;
   final TextEditingController channelStatusCrucialPoint;
+  final TextEditingController dailyStockQuantity;
 
 
   final Function trueOrFalseChange;
   final bool stockWarning;
   final bool salesBolck;
+  final bool dailyStockAvailable;
   final bool purchaseBlock;
 
 
@@ -48,12 +50,14 @@ class AllocationStockStableTable extends StatefulWidget {
     required this.stockWarning,
     required this.safetyStock,
     required this.purchaseBlock,
+    required this.dailyStockAvailable,
     required this.trueOrFalseChange,
     required this.addVirtualStock,
     required this.channelStatusCrucialPoint,
     required this.channelStatusMediumPoint,
     required this.channelStockTypeCode,
     required this.channelStockCode,
+    required this.dailyStockQuantity,
 
 
     required this.reOrderPoint,
@@ -104,6 +108,7 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
       Builder(
           builder: (context) {
             return Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
 
                 Container(
@@ -113,9 +118,7 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                     children: [
                       Expanded(child: Column(
                         children: [
-                          SizedBox(
-                            height: height * .035,
-                          ),
+
 
                           NewInputCard(
                               readOnly: true,
@@ -239,17 +242,8 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                             readOnly: true,
                             controller: widget.replacementQuantity, title: "Replacement Quantity"),
                         SizedBox(
-                          height: height * .12,
+                          height: height * .030,
                         ),
-
-
-
-
-
-
-
-                      ],)),
-                      Expanded(child: Column(children: [
                         SelectableDropDownpopUp(
                           label: "Virtual Stock Type",
                           type: "VirtualStockTypePopupCall",
@@ -271,9 +265,20 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
 
                           restricted: true,
                         ),
+
                         SizedBox(
-                          height: height * .030,
+                          height: height * .038,
                         ),
+
+
+
+
+
+
+
+                      ],)),
+                      Expanded(child: Column(children: [
+
                         NewInputCard(
                           readOnly: true,
                             controller: widget.virtualStock, title: "Virtual Stock"),
@@ -285,6 +290,13 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                           formatter: true,
 
                             controller: widget.addVirtualStock, title: "Add Virtual Stock"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
+                        NewInputCard(
+                          formatter: true,
+
+                            controller: widget.dailyStockQuantity, title: "Daily Stock Refreshing Quantity"),
                         SizedBox(
                           height: height * .030,
                         ),
@@ -349,8 +361,19 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .05,
-                        ),
+                          height: height * .08,
+                        ),    PopUpSwitchTile(
+                            value:widget?. dailyStockAvailable??false,
+                            title: "Is Daily Stock Available",
+                            onClick: (gg) {
+                              bool val=widget.dailyStockAvailable;
+                              val=!val;
+                              widget.trueOrFalseChange(type: "4",val:val);
+                              setState(() {});
+                            }),
+                        // SizedBox(
+                        //   height: height * .08,
+                        // ),
 
 
 

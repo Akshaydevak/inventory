@@ -57,6 +57,8 @@ mixin _$ChannelListModel {
   int? get salesblockQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "add_virtual_stock")
   int? get addVirtualStock => throw _privateConstructorUsedError;
+  @JsonKey(name: "daily_stock_quantity")
+  int? get dailyStockQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "virtual_type")
   String? get virtualType => throw _privateConstructorUsedError;
   @JsonKey(name: "channel_type_code")
@@ -79,6 +81,8 @@ mixin _$ChannelListModel {
   bool? get salesBlock => throw _privateConstructorUsedError;
   @JsonKey(name: "purchase_blocked", defaultValue: false)
   bool? get purchaseBlocked => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+  bool? get isDAilyStockAvailable => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -130,6 +134,8 @@ abstract class $ChannelListModelCopyWith<$Res> {
           int? salesblockQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "daily_stock_quantity")
+          int? dailyStockQuantity,
       @JsonKey(name: "virtual_type")
           String? virtualType,
       @JsonKey(name: "channel_type_code")
@@ -151,7 +157,9 @@ abstract class $ChannelListModelCopyWith<$Res> {
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBlock,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked});
+          bool? purchaseBlocked,
+      @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+          bool? isDAilyStockAvailable});
 }
 
 /// @nodoc
@@ -186,6 +194,7 @@ class _$ChannelListModelCopyWithImpl<$Res, $Val extends ChannelListModel>
     Object? purchaseBlockQuantity = freezed,
     Object? salesblockQuantity = freezed,
     Object? addVirtualStock = freezed,
+    Object? dailyStockQuantity = freezed,
     Object? virtualType = freezed,
     Object? channelTypeCode = freezed,
     Object? variantCode = freezed,
@@ -197,6 +206,7 @@ class _$ChannelListModelCopyWithImpl<$Res, $Val extends ChannelListModel>
     Object? stockWarning = freezed,
     Object? salesBlock = freezed,
     Object? purchaseBlocked = freezed,
+    Object? isDAilyStockAvailable = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -275,6 +285,10 @@ class _$ChannelListModelCopyWithImpl<$Res, $Val extends ChannelListModel>
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
+      dailyStockQuantity: freezed == dailyStockQuantity
+          ? _value.dailyStockQuantity
+          : dailyStockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
       virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
@@ -318,6 +332,10 @@ class _$ChannelListModelCopyWithImpl<$Res, $Val extends ChannelListModel>
       purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isDAilyStockAvailable: freezed == isDAilyStockAvailable
+          ? _value.isDAilyStockAvailable
+          : isDAilyStockAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
     ) as $Val);
   }
@@ -369,6 +387,8 @@ abstract class _$$_ChannelListModelCopyWith<$Res>
           int? salesblockQuantity,
       @JsonKey(name: "add_virtual_stock")
           int? addVirtualStock,
+      @JsonKey(name: "daily_stock_quantity")
+          int? dailyStockQuantity,
       @JsonKey(name: "virtual_type")
           String? virtualType,
       @JsonKey(name: "channel_type_code")
@@ -390,7 +410,9 @@ abstract class _$$_ChannelListModelCopyWith<$Res>
       @JsonKey(name: "sales_block", defaultValue: false)
           bool? salesBlock,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          bool? purchaseBlocked});
+          bool? purchaseBlocked,
+      @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+          bool? isDAilyStockAvailable});
 }
 
 /// @nodoc
@@ -423,6 +445,7 @@ class __$$_ChannelListModelCopyWithImpl<$Res>
     Object? purchaseBlockQuantity = freezed,
     Object? salesblockQuantity = freezed,
     Object? addVirtualStock = freezed,
+    Object? dailyStockQuantity = freezed,
     Object? virtualType = freezed,
     Object? channelTypeCode = freezed,
     Object? variantCode = freezed,
@@ -434,6 +457,7 @@ class __$$_ChannelListModelCopyWithImpl<$Res>
     Object? stockWarning = freezed,
     Object? salesBlock = freezed,
     Object? purchaseBlocked = freezed,
+    Object? isDAilyStockAvailable = freezed,
   }) {
     return _then(_$_ChannelListModel(
       id: freezed == id
@@ -512,6 +536,10 @@ class __$$_ChannelListModelCopyWithImpl<$Res>
           ? _value.addVirtualStock
           : addVirtualStock // ignore: cast_nullable_to_non_nullable
               as int?,
+      dailyStockQuantity: freezed == dailyStockQuantity
+          ? _value.dailyStockQuantity
+          : dailyStockQuantity // ignore: cast_nullable_to_non_nullable
+              as int?,
       virtualType: freezed == virtualType
           ? _value.virtualType
           : virtualType // ignore: cast_nullable_to_non_nullable
@@ -555,6 +583,10 @@ class __$$_ChannelListModelCopyWithImpl<$Res>
       purchaseBlocked: freezed == purchaseBlocked
           ? _value.purchaseBlocked
           : purchaseBlocked // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isDAilyStockAvailable: freezed == isDAilyStockAvailable
+          ? _value.isDAilyStockAvailable
+          : isDAilyStockAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
     ));
   }
@@ -601,6 +633,8 @@ class _$_ChannelListModel implements _ChannelListModel {
           this.salesblockQuantity,
       @JsonKey(name: "add_virtual_stock")
           this.addVirtualStock,
+      @JsonKey(name: "daily_stock_quantity")
+          this.dailyStockQuantity,
       @JsonKey(name: "virtual_type")
           this.virtualType,
       @JsonKey(name: "channel_type_code")
@@ -622,7 +656,9 @@ class _$_ChannelListModel implements _ChannelListModel {
       @JsonKey(name: "sales_block", defaultValue: false)
           this.salesBlock,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          this.purchaseBlocked});
+          this.purchaseBlocked,
+      @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+          this.isDAilyStockAvailable});
 
   factory _$_ChannelListModel.fromJson(Map<String, dynamic> json) =>
       _$$_ChannelListModelFromJson(json);
@@ -684,6 +720,9 @@ class _$_ChannelListModel implements _ChannelListModel {
   @JsonKey(name: "add_virtual_stock")
   final int? addVirtualStock;
   @override
+  @JsonKey(name: "daily_stock_quantity")
+  final int? dailyStockQuantity;
+  @override
   @JsonKey(name: "virtual_type")
   final String? virtualType;
   @override
@@ -716,10 +755,13 @@ class _$_ChannelListModel implements _ChannelListModel {
   @override
   @JsonKey(name: "purchase_blocked", defaultValue: false)
   final bool? purchaseBlocked;
+  @override
+  @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+  final bool? isDAilyStockAvailable;
 
   @override
   String toString() {
-    return 'ChannelListModel(id: $id, channelName: $channelName, channelId: $channelId, channelCode: $channelCode, channelStockType: $channelStockType, channelStockCode: $channelStockCode, channelStockQuantity: $channelStockQuantity, safetyStockQuantity: $safetyStockQuantity, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, availableQuantity: $availableQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnedQuantity: $returnedQuantity, replaceMentQuantity: $replaceMentQuantity, virtualStock: $virtualStock, purchaseBlockQuantity: $purchaseBlockQuantity, salesblockQuantity: $salesblockQuantity, addVirtualStock: $addVirtualStock, virtualType: $virtualType, channelTypeCode: $channelTypeCode, variantCode: $variantCode, channelTypeStockId: $channelTypeStockId, stockId: $stockId, varaintId: $varaintId, channelStatusCrucialPoint: $channelStatusCrucialPoint, channelStatusMediumPoint: $channelStatusMediumPoint, stockWarning: $stockWarning, salesBlock: $salesBlock, purchaseBlocked: $purchaseBlocked)';
+    return 'ChannelListModel(id: $id, channelName: $channelName, channelId: $channelId, channelCode: $channelCode, channelStockType: $channelStockType, channelStockCode: $channelStockCode, channelStockQuantity: $channelStockQuantity, safetyStockQuantity: $safetyStockQuantity, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, availableQuantity: $availableQuantity, reservedQuantity: $reservedQuantity, damagedQuantity: $damagedQuantity, returnedQuantity: $returnedQuantity, replaceMentQuantity: $replaceMentQuantity, virtualStock: $virtualStock, purchaseBlockQuantity: $purchaseBlockQuantity, salesblockQuantity: $salesblockQuantity, addVirtualStock: $addVirtualStock, dailyStockQuantity: $dailyStockQuantity, virtualType: $virtualType, channelTypeCode: $channelTypeCode, variantCode: $variantCode, channelTypeStockId: $channelTypeStockId, stockId: $stockId, varaintId: $varaintId, channelStatusCrucialPoint: $channelStatusCrucialPoint, channelStatusMediumPoint: $channelStatusMediumPoint, stockWarning: $stockWarning, salesBlock: $salesBlock, purchaseBlocked: $purchaseBlocked, isDAilyStockAvailable: $isDAilyStockAvailable)';
   }
 
   @override
@@ -764,6 +806,8 @@ class _$_ChannelListModel implements _ChannelListModel {
                 other.salesblockQuantity == salesblockQuantity) &&
             (identical(other.addVirtualStock, addVirtualStock) ||
                 other.addVirtualStock == addVirtualStock) &&
+            (identical(other.dailyStockQuantity, dailyStockQuantity) ||
+                other.dailyStockQuantity == dailyStockQuantity) &&
             (identical(other.virtualType, virtualType) ||
                 other.virtualType == virtualType) &&
             (identical(other.channelTypeCode, channelTypeCode) ||
@@ -786,7 +830,9 @@ class _$_ChannelListModel implements _ChannelListModel {
             (identical(other.salesBlock, salesBlock) ||
                 other.salesBlock == salesBlock) &&
             (identical(other.purchaseBlocked, purchaseBlocked) ||
-                other.purchaseBlocked == purchaseBlocked));
+                other.purchaseBlocked == purchaseBlocked) &&
+            (identical(other.isDAilyStockAvailable, isDAilyStockAvailable) ||
+                other.isDAilyStockAvailable == isDAilyStockAvailable));
   }
 
   @JsonKey(ignore: true)
@@ -812,6 +858,7 @@ class _$_ChannelListModel implements _ChannelListModel {
         purchaseBlockQuantity,
         salesblockQuantity,
         addVirtualStock,
+        dailyStockQuantity,
         virtualType,
         channelTypeCode,
         variantCode,
@@ -822,7 +869,8 @@ class _$_ChannelListModel implements _ChannelListModel {
         channelStatusMediumPoint,
         stockWarning,
         salesBlock,
-        purchaseBlocked
+        purchaseBlocked,
+        isDAilyStockAvailable
       ]);
 
   @JsonKey(ignore: true)
@@ -878,6 +926,8 @@ abstract class _ChannelListModel implements ChannelListModel {
           final int? salesblockQuantity,
       @JsonKey(name: "add_virtual_stock")
           final int? addVirtualStock,
+      @JsonKey(name: "daily_stock_quantity")
+          final int? dailyStockQuantity,
       @JsonKey(name: "virtual_type")
           final String? virtualType,
       @JsonKey(name: "channel_type_code")
@@ -899,7 +949,9 @@ abstract class _ChannelListModel implements ChannelListModel {
       @JsonKey(name: "sales_block", defaultValue: false)
           final bool? salesBlock,
       @JsonKey(name: "purchase_blocked", defaultValue: false)
-          final bool? purchaseBlocked}) = _$_ChannelListModel;
+          final bool? purchaseBlocked,
+      @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+          final bool? isDAilyStockAvailable}) = _$_ChannelListModel;
 
   factory _ChannelListModel.fromJson(Map<String, dynamic> json) =
       _$_ChannelListModel.fromJson;
@@ -961,6 +1013,9 @@ abstract class _ChannelListModel implements ChannelListModel {
   @JsonKey(name: "add_virtual_stock")
   int? get addVirtualStock;
   @override
+  @JsonKey(name: "daily_stock_quantity")
+  int? get dailyStockQuantity;
+  @override
   @JsonKey(name: "virtual_type")
   String? get virtualType;
   @override
@@ -993,6 +1048,9 @@ abstract class _ChannelListModel implements ChannelListModel {
   @override
   @JsonKey(name: "purchase_blocked", defaultValue: false)
   bool? get purchaseBlocked;
+  @override
+  @JsonKey(name: "is_daily_stock_available", defaultValue: false)
+  bool? get isDAilyStockAvailable;
   @override
   @JsonKey(ignore: true)
   _$$_ChannelListModelCopyWith<_$_ChannelListModel> get copyWith =>

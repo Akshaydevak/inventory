@@ -11,14 +11,14 @@ class BaseuomlistCubit extends Cubit<BaseuomlistState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   String? prev;
   String? next;
-  Future getUomist({String? type }) async {
+  Future getUomist({String? type,int ? id }) async {
     next = null;
     prev = null;
     print("enterd");
     // items = [];
     emit(BaseuomlistState.initial());
     final result = await repo.getUomist(
-      null,type:type
+      null,type:type,id:id
     );
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -27,9 +27,9 @@ class BaseuomlistCubit extends Cubit<BaseuomlistState> {
     });
   }
 
-  Future searchUomList(String filter,{String? type}) async {
+  Future searchUomList(String filter,{String? type,int? id}) async {
     emit(BaseuomlistState.initial());
-    final result = await repo.getUomist("name="+filter);
+    final result = await repo.getUomist("name="+filter,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -39,8 +39,8 @@ class BaseuomlistCubit extends Cubit<BaseuomlistState> {
     });
   }
 
-  Future nextslotSectionPageList({String? type}) async {
-    final result = await repo.getUomist(next);
+  Future nextslotSectionPageList({String? type,int? id }) async {
+    final result = await repo.getUomist(next,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;
@@ -49,9 +49,9 @@ class BaseuomlistCubit extends Cubit<BaseuomlistState> {
     });
   }
 
-  Future previuosslotSectionPageList({String? type}) async {
+  Future previuosslotSectionPageList({String? type,int? id}) async {
     // print(previous);
-    final result = await repo.getUomist(prev);
+    final result = await repo.getUomist(prev,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

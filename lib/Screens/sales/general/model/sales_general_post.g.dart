@@ -128,6 +128,7 @@ _$_ShippingAddressCreationModel _$$_ShippingAddressCreationModelFromJson(
       streetName: json['street_name'] as String?,
       buillingName: json['building_name'] as String?,
       addressTag: json['address_tag'] as String?,
+      userCode: json['user_code'] as String?,
     );
 
 Map<String, dynamic> _$$_ShippingAddressCreationModelToJson(
@@ -144,4 +145,5 @@ Map<String, dynamic> _$$_ShippingAddressCreationModelToJson(
       'street_name': instance.streetName,
       'building_name': instance.buillingName,
       'address_tag': instance.addressTag,
+      'user_code': instance.userCode,
     };
