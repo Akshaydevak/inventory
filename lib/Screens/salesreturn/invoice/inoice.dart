@@ -413,62 +413,66 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                   assignto: assignToController,
 
                                 ),
-                                SizedBox(height: 80,),
+                                SizedBox(height: 35,),
                                 Row(mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     TextWidget(text: "Invoice Lines"),
                                   ],
                                 ),
-                                Divider(color: Colors.grey,thickness: 1,),
-                                SizedBox(height: 5,),
+                                // Divider(color: Colors.grey,thickness: 1,),
+                                SizedBox(height: height*.01,),
                                 SalesReturnInvoiceGrowableTable(
                                   updation: tableAssign,
                                   updateCheck: updateCheckFucction,
                                 ),
                                 SizedBox(height: 20,),
 
-                                Row(
-                                  children: [
-                                    Spacer(),
-                                    Button(Icons.delete, Colors.red,ctx: context,
-                                        text: "DISCARD",height: 29,
-                                        onApply: (){print("Akkk");},
-                                        width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                    SizedBox(width: width*.008,),
+                                Container(
+                                  margin: EdgeInsets.only(right:width*.015,),
+                                  child: Row(
+                                    children: [
+                                      Spacer(),
+                                      Button(Icons.delete, Colors.red,ctx: context,
+                                          text: "DISCARD",height: 29,
+                                          onApply: (){print("Akkk");},
+                                          width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                                      SizedBox(width: width*.008,),
 
-                                    Button(Icons.check, Colors.grey,ctx: context,
-                                        onApply: (){
-                                          SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
-                                              inventoryid: inventoryId?.text??"",
-                                              customerId:customerIdController?.text??"",
-                                            customerTrnNumber: trnController.text??"",
-                                            inVoicedBy: "baba",
-                                            notes: noteController.text??"",
-                                            remarks: remarksController.text??"",
-                                            discount: double.tryParse(discountController.text??""),
-                                            unitCost: double.tryParse(unitCostController.text??""),
-                                            excessTax: double.tryParse(exciseTaxController.text??""),
-                                            taxableAmount: double.tryParse(taxableController.text??""),
-                                            vat: double.tryParse(vatController.text??""),
-                                            sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
-                                            totalPrice: double.tryParse(totalPriceController.text??""),
-                                            assignTo: assignToController.text??"",
-                                            orderLines: table??[],
-
-
-
-
-
-                                          );
+                                      Button(Icons.check, Colors.grey,ctx: context,
+                                          bdr: true,
+                                          onApply: (){
+                                            SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                                                inventoryid: inventoryId?.text??"",
+                                                customerId:customerIdController?.text??"",
+                                              customerTrnNumber: trnController.text??"",
+                                              inVoicedBy: "baba",
+                                              notes: noteController.text??"",
+                                              remarks: remarksController.text??"",
+                                              discount: double.tryParse(discountController.text??""),
+                                              unitCost: double.tryParse(unitCostController.text??""),
+                                              excessTax: double.tryParse(exciseTaxController.text??""),
+                                              taxableAmount: double.tryParse(taxableController.text??""),
+                                              vat: double.tryParse(vatController.text??""),
+                                              sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                                              totalPrice: double.tryParse(totalPriceController.text??""),
+                                              assignTo: assignToController.text??"",
+                                              orderLines: table??[],
 
 
-                                          context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
 
-                                        },
-                                        text: "SAVE",height: 29,
-                                        width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                                    SizedBox(width: width*.008,),
-                                  ],
+
+
+                                            );
+
+
+                                            context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+
+                                          },
+                                          text: "SAVE",height: 29,
+                                          width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                                      SizedBox(width: width*.008,),
+                                    ],
+                                  ),
                                 )
 
                               ],
@@ -828,6 +832,8 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     // if (assignCheck == false) table1 = widget.table ?? [];
     // if(widget.select && clear==true)table1.clear();
     // clear=false;
@@ -885,10 +891,10 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
   },
 ),
   ],
-  child: Scrollbar(
+  child: CustomScrollBar(
           controller: recieveController,
-          isAlwaysShown: true,
-          child: Container(
+
+          childs: Container(
             color: Colors.white,
             alignment: Alignment.topRight,
             child: SingleChildScrollView(
@@ -901,7 +907,7 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                   SingleChildScrollView(
                     child: Container(
                       width: 2200,
-                      padding: EdgeInsets.all(10),
+                      // padding: EdgeInsets.all(10),
                       child: customTable(
 
                           tableWidth: .5,
@@ -1616,7 +1622,8 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                             ]
                           ]),
                     ),
-                  )
+                  ),
+                  SizedBox(height: 20,)
                 ],
               ),
             ),

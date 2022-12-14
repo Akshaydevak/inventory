@@ -14,6 +14,7 @@ import 'package:intl/intl.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/core/uttils/variable.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart'as http;
 import 'package:photo_view/photo_view.dart';
@@ -35,6 +36,7 @@ class NewInputCard extends StatefulWidget {
   final String? keyboardType;
   final Function? onChange;
   final Function? ontap;
+  final int? textLimit;
 
   final String title;
   final String? hint;
@@ -46,6 +48,7 @@ class NewInputCard extends StatefulWidget {
     Key? key,
     this.onChange,
     this.ontap,
+    this.textLimit=100,
     required this.controller,
     this.label,
     this.keyboardType,
@@ -204,9 +207,9 @@ class _NewInputCardState extends State<NewInputCard> {
 
               // readOnly:limitOflength?limitOflength: widget.readOnly,
               readOnly: widget.readOnly,
-              maxLength: widget.formatter? 10:widget.maxLines!=3?25:null,
+              maxLength: widget.formatter? 10:widget.maxLines!=3?widget.textLimit:null,
               maxLines: widget.maxLines,
-              controller: widget.controller,
+              controller: widget.controller.text=="null"?TextEditingController(text: ""):widget.controller,
               obscureText: show,
             keyboardType:
             widget.formatter? TextInputType.phone:null ,
@@ -324,6 +327,46 @@ class _NewInputCardState extends State<NewInputCard> {
       ));
   }
 }
+class CustomScrollBar extends StatefulWidget {
+  final Widget childs;
+  final AutoScrollController controller;
+  CustomScrollBar({required this.childs,required this.controller});
+
+  @override
+  State<CustomScrollBar> createState() => _CustomScrollBarState();
+}
+
+class _CustomScrollBarState extends State<CustomScrollBar> {
+  late AutoScrollController scontroller;
+
+  @override
+  void initState() {
+    scontroller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+     double width=MediaQuery.of(context).size.width;
+    return Container(
+      margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+      child: Scrollbar(
+        isAlwaysShown: true,
+        thickness: 5,
+        controller: widget.controller,
+        child: widget.childs,
+
+      ),
+
+    );
+  }
+}
+
 
 
 class NewInputCreateCard extends StatefulWidget {
@@ -1385,10 +1428,12 @@ class PopUpSwitchTile extends StatefulWidget {
   final bool value;
   final String title;
   final Color color;
+  final bool paddingCheck;
   final Function(bool) onClick;
   const PopUpSwitchTile(
       {Key? key,
         required this.value,
+        this.paddingCheck=true,
         required this.title,
         this.color=Colors.black,
         required this.onClick})
@@ -1401,53 +1446,56 @@ class PopUpSwitchTile extends StatefulWidget {
 class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Container(
+    return  Padding(
+      padding: widget.paddingCheck? EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.009):EdgeInsets.symmetric(horizontal: 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
 
-            padding: EdgeInsets.only(top: 3,left: 22),
-            child: Text(
-              widget.title,
-              style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
-            )),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Transform.scale(
-            scale: 0.6,
-            child: CupertinoSwitch(
-              activeColor: widget.color,
-              value: widget.value,
-              onChanged: widget.onClick,
+              padding: EdgeInsets.only(top: 3,left: 22),
+              child: Text(
+                widget.title,
+                style:  GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+              )),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Transform.scale(
+              scale: 0.6,
+              child: CupertinoSwitch(
+                activeColor: widget.color,
+                value: widget.value,
+                onChanged: widget.onClick,
+              ),
             ),
-          ),
-        )
-        // ListTile(
-        //     contentPadding: EdgeInsets.symmetric(
-        //       //horizontal: 10,
-        //       //vertical: 5
-        //     ),
-        //     leading:
-        //     Container(
-        //         width: 300,
-        //         padding: EdgeInsets.only(top: 10),
-        //         child: Text(
-        //           widget.title,
-        //           style: TextStyle(fontSize: 12),
-        //         )),
-        //     title:
-        //     Align(
-        //       alignment: Alignment.centerLeft,
-        //       child: Transform.scale(
-        //         scale: 0.6,
-        //         child: CupertinoSwitch(
-        //           activeColor: widget.color,
-        //           value: widget.value,
-        //           onChanged: widget.onClick,
-        //         ),
-        //       ),
-        //     )),
-      ],
+          )
+          // ListTile(
+          //     contentPadding: EdgeInsets.symmetric(
+          //       //horizontal: 10,
+          //       //vertical: 5
+          //     ),
+          //     leading:
+          //     Container(
+          //         width: 300,
+          //         padding: EdgeInsets.only(top: 10),
+          //         child: Text(
+          //           widget.title,
+          //           style: TextStyle(fontSize: 12),
+          //         )),
+          //     title:
+          //     Align(
+          //       alignment: Alignment.centerLeft,
+          //       child: Transform.scale(
+          //         scale: 0.6,
+          //         child: CupertinoSwitch(
+          //           activeColor: widget.color,
+          //           value: widget.value,
+          //           onChanged: widget.onClick,
+          //         ),
+          //       ),
+          //     )),
+        ],
+      ),
     );
   }
 }
@@ -1476,11 +1524,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
   Widget build(BuildContext context) {
     return Container(
       height: 48,
+      width: 85,
       alignment: Alignment.center,
       decoration: BoxDecoration(
        color:   widget.clr,
         border: widget.border?Border.all(
-          color: Colors.grey
+          color: Colors.grey,
+          width: .4
         ):null
       ),
       child:Center(child:
@@ -1493,7 +1543,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
 
        borderRadius:BorderRadius.zero ,
 
-       focusColor: Pellet.tableBlueHeaderPrint,
+       // focusColor: Pellet.tableBlueHeaderPrint,
           dropdownColor: Colors.white,
 
 

@@ -34,6 +34,7 @@ class ProductModulGeneralScreen extends StatefulWidget {
 class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController controller = TextEditingController();
   TextEditingController variantFrameWorkController = TextEditingController();
+  TextEditingController variantFrameWorkNameController = TextEditingController();
   int? veritiaclid = 0;
   var result_value;
   List<BrandListModel> result = [];
@@ -574,8 +575,8 @@ print("the list is"+variantList.toString());
 
                       setState(() {
                         group = data;
-                        variantFrameWorkController.text =
-                            group.variantFrameWork ?? "";
+                        variantFrameWorkController.text = group.variantFrameWork ?? "";
+                        variantFrameWorkNameController.text = group.variantFrameWorkName ?? "";
                         if (group.variantFrameWork?.isNotEmpty == true) {
                           context
                               .read<VariantCreationRead2Cubit>()
@@ -722,7 +723,7 @@ print("the list is"+variantList.toString());
                                                     setState(() {
                                                       print(va?.id ?? "");
                                                       variantController.text = va.code.toString();
-                                                      variantNameController.text = va.name.toString();
+                                                      variantNameController.text = va.name??"";
                                                       setState(() {});
 
                                                       // onChange = true;
@@ -768,7 +769,7 @@ print("the list is"+variantList.toString());
                                           child: NewInputCard(
                                               readOnly: true,
                                               controller:
-                                                  variantFrameWorkController,
+                                              variantFrameWorkNameController,
                                               title: "Variant Frame Work"),
                                         )
                                       ],
@@ -777,18 +778,18 @@ print("the list is"+variantList.toString());
                                   SizedBox(
                                     height: height / 7,
                                   ),
-                                  TextButton.icon(
-                                      label: Text(
-                                        'Add New',
-                                        style: TextStyle(fontSize: 11),
-                                      ),
-                                      icon: Icon(
-                                        Icons.add,
-                                        size: 11,
-                                      ),
-                                      onPressed: () {
-                                        print('Pressed');
-                                      }),
+                                  // TextButton.icon(
+                                  //     label: Text(
+                                  //       'Add New',
+                                  //       style: TextStyle(fontSize: 11),
+                                  //     ),
+                                  //     icon: Icon(
+                                  //       Icons.add,
+                                  //       size: 11,
+                                  //     ),
+                                  //     onPressed: () {
+                                  //       print('Pressed');
+                                  //     }),
                                   SizedBox(
                                     height: 10,
                                   ),
@@ -909,6 +910,7 @@ class _NewCheckBoxTextState extends State<NewCheckBoxText> {
   @override
   Widget build(BuildContext context) {
     return Container(
+
       child: Row(
         children: [
           if (widget.labelI1st != true)

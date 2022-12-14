@@ -346,39 +346,39 @@ ismixed=false;
                       activeChange: activeChange,
                       isMoxed: ismixed,
                     ),
-                    SizedBox(height: 10,),
+                    SizedBox(height: 34,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWidget(text: "UOM"),
                       ],
                     ),
-                    Divider(color: Colors.grey,thickness: 1,),
-                    SizedBox(height: height*.04,),
+                    // Divider(color: Colors.grey,thickness: 1,),
+                    SizedBox(height: height*.01,),
 
-                    UomTable(list: uomList,uomTableEdit: TableAssign),
-                    SizedBox(height: 10,),
+                    UomTable(list: uomList,uomTableEdit: TableAssign,isMixed:ismixed),
+                    SizedBox(height: 20,),
                     Row(mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWidget(text: "Group"),
                       ],
                     ),
-                    Divider(color: Colors.grey,thickness: 1,),
-                    SizedBox(height: height*.04,),
-                    GroupTable(list: groupList,uomTableEdit:TableAssign ),
-                    SizedBox(height: 10,),
+                    // Divider(color: Colors.grey,thickness: 1,),
+                      SizedBox(height: height*.01,),
+                    GroupTable(list: groupList,uomTableEdit:TableAssign,isMixed: ismixed, ),
+                      SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         TextWidget(text: "Category"),
                       ],
                     ),
-                    Divider(color: Colors.grey,thickness: 1,),
-                    SizedBox(height: height*.04,),
-                    CategoryTable(list: categoryList,uomTableEdit:TableAssign ),
+                    // Divider(color: Colors.grey,thickness: 1,),
+                      SizedBox(height: height*.01,),
+                    CategoryTable(list: categoryList,uomTableEdit:TableAssign, isMixed: ismixed),
                     SizedBox(height: height * .13,),
                     Container(
-                      margin:EdgeInsets.only(right: width*.004) ,
+                      margin:EdgeInsets.only(right: width*.015) ,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -465,9 +465,9 @@ ismixed=false;
                                   description: descriptionController.text.isEmpty?null:descriptionController.text,
                                   image: image1Controller.text.isEmpty?null:image1Controller.text,
                                   priority:int.tryParse(priorityController.text),
-                                  uomCode: uomlist1,
-                                  categoryCode: category1,
-                                  groupCode: grouplist1,
+                                  uomCode: ismixed?[]:uomlist1,
+                                  categoryCode:ismixed?[]: category1,
+                                  groupCode: ismixed?[]:grouplist1,
                                 isMixed: ismixed,
 
                                 );

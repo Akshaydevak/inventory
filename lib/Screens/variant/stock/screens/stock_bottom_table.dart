@@ -53,8 +53,9 @@ class StockBottomTableState extends State<StockBottomTable> {
         children: [
 
           Container(
+            margin:  EdgeInsets.symmetric(horizontal:w *.0155 ),
             // width: w/5,
-            margin: EdgeInsets.symmetric(horizontal: w*.02),
+            // margin: EdgeInsets.symmetric(horizontal: w*.02),
             child: customTable(
               tableWidth: .5,
 

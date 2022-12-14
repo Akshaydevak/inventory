@@ -513,73 +513,76 @@ class _StockScreenState extends State<StockScreen> {
                                  addVirtualStockType: addVirtualStockController,
 
                                 ),
-                                SizedBox(height: 15,),
+                                SizedBox(height: 35,),
                                 Row(mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
                                     TextWidget(text: "Based On Batch"),
                                   ],
                                 ),
-                                Divider(color: Colors.grey, thickness: 1,),
-                                SizedBox(height: 15,),
+                                // Divider(color: Colors.grey, thickness: 1,),
+                                SizedBox(height: height*.01,),
+
                                 StockBottomTable(
                                     data:data
                                 ),
 
 
-                                SizedBox(height: height * .13,),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Button(Icons.delete, Colors.red,
-                                        ctx: context,
-                                        text: "DISCARD",
-                                        onApply: () {
-                                          // if(updateCheck){
-                                          //   // clears();
-                                          //
-                                          //
-                                          // }
+                                SizedBox(height: height * .1,),
+                                Container(
+                                  margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Button(Icons.delete, Colors.red,
+                                          ctx: context,
+                                          text: "DISCARD",
+                                          onApply: () {
+                                            // if(updateCheck){
+                                            //   // clears();
+                                            //
+                                            //
+                                            // }
 
-                                        },
-                                        height: 29,
-                                        width: 90,
-                                        labelcolor: Colors.red,
-                                        iconColor: Colors.red,
-                                        bdr: true),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                    Button(Icons.check, Colors.grey,
-                                        ctx: context,
-                                        text: "SAVE",
-                                        height: 29,
-                                        Color: Color(0xff3E4F5B),
-                                        width: 90,
-                                        labelcolor: Colors.white,
-                                        iconColor: Colors.white,
-                                        onApply: () {
-                                  ratiooCheck(minMaxRatioController.text,"");
-                                  ratiooCheck(channelTypeController.text,"1");
+                                          },
+                                          height: 29,
+                                          width: 90,
+                                          labelcolor: Colors.red,
+                                          iconColor: Colors.red,
+                                          bdr: true),
+                                      SizedBox(
+                                        width: width * .008,
+                                      ),
+                                      Button(Icons.check, Colors.grey,
+                                          ctx: context,
+                                          text: "SAVE",
+                                          height: 29,
+                                          Color: Color(0xff3E4F5B),
+                                          width: 90,
+                                          labelcolor: Colors.white,
+                                          iconColor: Colors.white,
+                                          onApply: () {
+                                    ratiooCheck(minMaxRatioController.text,"");
+                                    ratiooCheck(channelTypeController.text,"1");
                                if(check!=true){
-                                 StockData model=StockData(
-                                   inventoryId: Variable.inventory_ID,
-                                   variantId: variantId,
-                                   stockWarning: stockwarning,
-                                   reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
-                                   reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
-                                   channelTypeAllocationRatio: channelTypeController?.text??"",
-                                   minMaxRatio: minMaxRatioController?.text??"",
-                                   salesBlocked: salesBlock??false,
-                                   maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
-                                   minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
-                                   addVirtualStock:int.tryParse(addVirtualStockController.text),
-                                   // int.tryParse(virtualStockController.text)??null,
-                                   virtualType: virtualStockTypeController?.text??"",
-                                   purchaseBlocked: purchaseBlock??false,
+                                   StockData model=StockData(
+                                     inventoryId: Variable.inventory_ID,
+                                     variantId: variantId,
+                                     stockWarning: stockwarning,
+                                     reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
+                                     reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
+                                     channelTypeAllocationRatio: channelTypeController?.text??"",
+                                     minMaxRatio: minMaxRatioController?.text??"",
+                                     salesBlocked: salesBlock??false,
+                                     maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
+                                     minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
+                                     addVirtualStock:int.tryParse(addVirtualStockController.text),
+                                     // int.tryParse(virtualStockController.text)??null,
+                                     virtualType: virtualStockTypeController?.text??"",
+                                     purchaseBlocked: purchaseBlock??false,
 
-                                 );
-                                 print(model);
-                                 context.read<StockpostCubit>().postStock(model);
+                                   );
+                                   print(model);
+                                   context.read<StockpostCubit>().postStock(model);
                                }
 
 
@@ -587,11 +590,12 @@ class _StockScreenState extends State<StockScreen> {
 
 
 
-                                        }),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                  ],
+                                          }),
+                                      SizedBox(
+                                        width: width * .008,
+                                      ),
+                                    ],
+                                  ),
                                 ),
 
                               ],

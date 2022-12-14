@@ -83,7 +83,7 @@ class _ProductModuleTabState extends State<ProductModuleTab>with TickerProviderS
 
 
                               Container(
-                                width:MediaQuery.of(context).size.width*.6,
+                                width:MediaQuery.of(context).size.width*.74,
                                 height: width*.052,
                                 margin: EdgeInsets.only(top:22),
 
@@ -223,6 +223,7 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
             );
           },),
+          greyDivider(),
           DrawerCared(label: "Costing Method ",ontap: (){
             costingTypeMethodeCheck = false;
 
@@ -235,7 +236,8 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
             );
           },),
-          DrawerCared(label: "pricing  type group ",ontap: (){
+          greyDivider(),
+          DrawerCared(label: "Pricing  Type Group ",ontap: (){
             costingTypeMethodeCheck = false;
 
             showDailogPopUp(
@@ -246,7 +248,9 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
 
             );
-          },), DrawerCared(label: "pricing group ",ontap: (){
+          },),
+          greyDivider(),
+          DrawerCared(label: "Pricing Group ",ontap: (){
             costingTypeMethodeCheck = false;
 
             showDailogPopUp(
@@ -257,18 +261,19 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
 
 
             );
-          },),DrawerCared(label: "Linked Item ",ontap: (){
-            costingTypeMethodeCheck = false;
-
-            showDailogPopUp(
-              context,
-              ConfigurePopup(
-                type: "LinkedItemCreatePopUp",
-              ),
-
-
-            );
           },),
+          // DrawerCared(label: "Linked Item ",ontap: (){
+          //   costingTypeMethodeCheck = false;
+          //
+          //   showDailogPopUp(
+          //     context,
+          //     ConfigurePopup(
+          //       type: "LinkedItemCreatePopUp",
+          //     ),
+          //
+          //
+          //   );
+          // },),
           // DrawerCared(label: "Linked Item ",ontap: (){
           //   costingTypeMethodeCheck = false;
           //

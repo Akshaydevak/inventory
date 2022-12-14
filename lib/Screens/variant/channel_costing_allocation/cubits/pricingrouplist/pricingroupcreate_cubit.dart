@@ -27,7 +27,7 @@ class PricingroupcreateCubit extends Cubit<PricingroupcreateState> {
 
   Future searchCostingTypeList(String filter) async {
     emit(PricingroupcreateState.initial());
-    final result = await repo.getPricingGroupList(filter);
+    final result = await repo.getPricingGroupList("code=$filter");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/Screens/logi/login.dart';
+import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/widgets/MenuIcon.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -93,22 +94,36 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
             },selected: selected5, size: .03,),
             MenuIcon(iconurl: "asset/menuicon6.png",ontap: (){
               setState(() async {
+                showDailogPopUp(
+                    context,
+                    LogoutPopup(
+                      // table:table,
+                      // clear:clear(),
+
+                      onPressed:() async {
 
 
-                final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-                sharedPreferences.remove('isLoggedIn');
-                sharedPreferences.clear();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) =>   LoginScreen()),
-                );
-                selected6=!selected6;
-                selected1=false;
+                        final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+                        sharedPreferences.remove('isLoggedIn');
+                        sharedPreferences.clear();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>   LoginScreen()),
+                        );
+                        selected6=!selected6;
+                        selected1=false;
 
-                selected3=false;
-                selected4=false;
-                selected5=false;
-                selected2=false;
+                        selected3=false;
+                        selected4=false;
+                        selected5=false;
+                        selected2=false;
+
+                      },
+
+
+                    ));
+
+
               });
 
             },selected: selected6, size: .03,),

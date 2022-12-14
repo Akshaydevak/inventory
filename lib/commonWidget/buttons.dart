@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/popupinputfield.dart';
+
+import '../Screens/GeneralScreen.dart';
 
 class Buttons extends StatelessWidget {
   final Color clr;
@@ -176,6 +179,74 @@ class _TableTextButtonState extends State<TableTextButton> {
     );
   }
 }
+
+
+
+class SaveUpdateResponsiveButton extends StatelessWidget {
+final Function discardFunction;
+final Function saveFunction;
+final String label;
+SaveUpdateResponsiveButton({required this.label,required this.saveFunction,required this.discardFunction});
+
+
+  @override
+  Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    return   Column(
+      children: [
+        CustomDivider(),
+        SizedBox(height: 10,),
+        Container(
+          margin:EdgeInsets.only(right: width*.011) ,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+
+
+              Button(Icons.delete, Colors.red,
+                  ctx: context,
+                  text: "DISCARD",
+                  onApply: (){
+                discardFunction();
+                  },
+                  height: 29,
+                  width: 90,
+                  labelcolor: Colors.red,
+                  iconColor: Colors.red,
+                  bdr: true),
+              SizedBox(
+                width: width * .008,
+              ),
+              Button(Icons.check, Colors.grey,
+                  ctx: context,
+                  text:label,
+                  height: 29,
+                  Color: Color(0xff3E4F5B),
+                  width: 90,
+                  labelcolor: Colors.white,
+                  iconColor: Colors.white,
+                  onApply: () {
+                saveFunction();
+                  }),
+              SizedBox(
+                width: width * .008,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+
+
+
+
+
+
 class TableIconTextButton extends StatefulWidget {
   final String label;
   final Function onPress;

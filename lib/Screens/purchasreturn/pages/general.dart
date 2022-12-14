@@ -485,6 +485,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     return Builder(
     builder: (context) {
       return Scaffold(
+        backgroundColor: Pellet.bagroundColor,
               body: SingleChildScrollView(
                 child: IntrinsicHeight(
                   child: Row(
@@ -608,18 +609,19 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                               ),
                               Container(
                                 color: Colors.white,
-                                height: 50,
+                                height: 35,
                               ),
                               Row(children: [
                                 TextWidget(text: "Order Lines"),
                               ],),
+                              SizedBox(height: height*.01,),
 
-                              Divider(color: Colors.grey,thickness: 1,),
+                              // Divider(color: Colors.grey,thickness: 1,),
                               // GrowableTable(lines:lines,updation: update,),
-                          Scrollbar(
+                          CustomScrollBar(
                             controller: recieveController,
-                            isAlwaysShown: true,
-                            child: Container(
+
+                            childs: Container(
                               color: Colors.white,
                               alignment: Alignment.topRight,
                               child: SingleChildScrollView(
@@ -632,20 +634,20 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                     SingleChildScrollView(
                                       child: Container(
                                         width: 2200,
-                                        padding: EdgeInsets.all(10),
+                                        // padding: EdgeInsets.all(10),
                                         child: customTable(
 
-                                            border: const TableBorder(
-
-                                              verticalInside: BorderSide(
-                                                  width:.5,
-                                                  color: Colors.black45,
-                                                  style: BorderStyle.solid),
-                                              horizontalInside: BorderSide(
-                                                  width:.3,
-                                                  color: Colors.black45,
-                                                  // color: Colors.blue,
-                                                  style: BorderStyle.solid),),
+                                            // border: const TableBorder(
+                                            //
+                                            //   verticalInside: BorderSide(
+                                            //       width:.5,
+                                            //       color: Colors.black45,
+                                            //       style: BorderStyle.solid),
+                                            //   horizontalInside: BorderSide(
+                                            //       width:.3,
+                                            //       color: Colors.black45,
+                                            //       // color: Colors.blue,
+                                            //       style: BorderStyle.solid),),
 
                                             tableWidth: .5,
 
@@ -1181,7 +1183,8 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                         ),
                                       ),
 
-                                    )
+                                    ),
+                                    SizedBox(height: 20,)
 
                                   ],
                                 ),
@@ -1198,159 +1201,162 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 color: Colors.white,
                                 height: 50,
                               ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Button(Icons.delete, Colors.red,ctx: context,
-                                      text: "DISCARD",
-                                      onApply: (){
-                                        if(select){
-                                          clear();
-                                          lines?.clear();
-                                          setState(() {
+                              Container(
+                                margin: EdgeInsets.only(right:width*.015,),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Button(Icons.delete, Colors.red,ctx: context,
+                                        text: "DISCARD",
+                                        onApply: (){
+                                          if(select){
+                                            clear();
+                                            lines?.clear();
+                                            setState(() {
 
-                                          });
-                                        }
-                                        else{
-                                          showDailogPopUp(
-                                              context,
-                                              ConfirmationPopup(
-                                                // table:table,
-                                                // clear:clear(),
-                                                verticalId:veritiaclid ,
-                                                onPressed:(){
+                                            });
+                                          }
+                                          else{
+                                            showDailogPopUp(
+                                                context,
+                                                ConfirmationPopup(
+                                                  // table:table,
+                                                  // clear:clear(),
+                                                  verticalId:veritiaclid ,
+                                                  onPressed:(){
 
-                                                  Navigator.pop(context);
-                                            context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
+                                                    Navigator.pop(context);
+                                              context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
 
-                                                },
+                                                  },
 
 
-                                              ));
+                                                ));
 
-                                        }
-                                      },
+                                          }
+                                        },
+                                        height: 29,
+                                        width: 90,
+                                        labelcolor: Colors.red,
+                                        iconColor: Colors.red,
+                                        bdr: true),
+                                    SizedBox(
+                                      width: width * .008,
+                                    ),
+                                    Button(Icons.check, Colors.grey,ctx: context,
+                                      text: select?"SAVE":"UPDATE",
                                       height: 29,
+                                        Color: Color(0xff3E4F5B),
                                       width: 90,
-                                      labelcolor: Colors.red,
-                                      iconColor: Colors.red,
-                                      bdr: true),
-                                  SizedBox(
-                                    width: width * .008,
-                                  ),
-                                  Button(Icons.check, Colors.grey,ctx: context,
-                                    text: select?"SAVE":"UPDATE",
-                                    height: 29,
-                                      Color: Color(0xff3E4F5B),
-                                    width: 90,
-                                    labelcolor: Colors.white,
-                                    iconColor: Colors.white,
-                                    onApply: (){
-                                    if( updateCheck)  context.showSnackBarError("please click the update button");
+                                      labelcolor: Colors.white,
+                                      iconColor: Colors.white,
+                                      onApply: (){
+                                      if( updateCheck)  context.showSnackBarError("please click the update button");
                             else{
-                              print(lines);
-                              if(lines.isNotEmpty){
-                                for(var i=0;i<lines.length;i++) {
-                                  if(select) {
-                                    lines[i] = lines[i].copyWith(
-                                        purchaseInvoiceLineCode: lines[i]
-                                            .invoiceLineCode ?? "");
-                                    lines[i] = lines[i].copyWith(
-                                        returnOrderLineCode: lines[i]
-                                            .invoiceLineCode ?? "");
-                                    lines[i] = lines[i].copyWith(
-                                        purchaseInvoiceLineId: lines[i]
-                                            .purchaseInvoiceLineCode ?? "");
-                                    setState(() {
+                                print(lines);
+                                if(lines.isNotEmpty){
+                                  for(var i=0;i<lines.length;i++) {
+                                    if(select) {
+                                      lines[i] = lines[i].copyWith(
+                                          purchaseInvoiceLineCode: lines[i]
+                                              .invoiceLineCode ?? "");
+                                      lines[i] = lines[i].copyWith(
+                                          returnOrderLineCode: lines[i]
+                                              .invoiceLineCode ?? "");
+                                      lines[i] = lines[i].copyWith(
+                                          purchaseInvoiceLineId: lines[i]
+                                              .purchaseInvoiceLineCode ?? "");
+                                      setState(() {
 
-                                    });
+                                      });
+                                    }
                                   }
                                 }
-                              }
-                              print("lines"+noteController.text.toString());
-                              List<PatchLiness>patchLists=[];
+                                print("lines"+noteController.text.toString());
+                                List<PatchLiness>patchLists=[];
 
-                              if(lines.isNotEmpty) {
-                                for (var i = 0; i < lines.length; i++) {
-                                  patchLists.add(PatchLiness(
-                                    foc: lines[i].foc ?? 0,
-                                    totalQty: lines[i].totalQty ?? 0,
-                                    returnOrderLineCode: lines[i]
-                                        .returnOrderLineCode ?? "",
-                                    isActive: lines[i].isActive ?? false,
-                                    purchaseInvoiceLineId: lines[i]
-                                        .purchaseInvoiceLineId ?? "",
-                                    variantId: lines[i].variantId ?? "",
-                                    unitCost: lines[i].unitCost ?? 0,
-                                    discount: lines[i].discount ?? 0,
-                                    vatableAmount: lines[i].vatableAmount ?? 0,
-                                    excessTax: lines[i].excessTax ?? 0,
-                                    vat: lines[i].vat ?? 0,
-                                    actualCost: lines[i].actualCost ?? 0,
-                                    grandTotal: lines[i].grandTotal ?? 0,
+                                if(lines.isNotEmpty) {
+                                  for (var i = 0; i < lines.length; i++) {
+                                    patchLists.add(PatchLiness(
+                                      foc: lines[i].foc ?? 0,
+                                      totalQty: lines[i].totalQty ?? 0,
+                                      returnOrderLineCode: lines[i]
+                                          .returnOrderLineCode ?? "",
+                                      isActive: lines[i].isActive ?? false,
+                                      purchaseInvoiceLineId: lines[i]
+                                          .purchaseInvoiceLineId ?? "",
+                                      variantId: lines[i].variantId ?? "",
+                                      unitCost: lines[i].unitCost ?? 0,
+                                      discount: lines[i].discount ?? 0,
+                                      vatableAmount: lines[i].vatableAmount ?? 0,
+                                      excessTax: lines[i].excessTax ?? 0,
+                                      vat: lines[i].vat ?? 0,
+                                      actualCost: lines[i].actualCost ?? 0,
+                                      grandTotal: lines[i].grandTotal ?? 0,
 
-                                  ));
+                                    ));
+                                  }
+                                  setState(() {
+
+                                  });
                                 }
-                                setState(() {
+                                print("patcghhhhhj"+patchLists.toString());
 
-                                });
-                              }
-                              print("patcghhhhhj"+patchLists.toString());
+                                ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
+                                        note: noteController.text??"",
+                                        remarks: remarksController.text??"",
+                                        unitCost: double.tryParse( unitCostController.text),
+                                        grandTotal: double.tryParse( grandTotalCostController.text),
+                                        vatableAmount: double.tryParse( vatableAmountController.text),
+                                        discount: double.tryParse( discountController.text),
 
-                              ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
-                                      note: noteController.text??"",
-                                      remarks: remarksController.text??"",
-                                      unitCost: double.tryParse( unitCostController.text),
-                                      grandTotal: double.tryParse( grandTotalCostController.text),
-                                      vatableAmount: double.tryParse( vatableAmountController.text),
-                                      discount: double.tryParse( discountController.text),
-
-                                      excessTax: double.tryParse(excessTaxController.text),
-                                      actualCost: double.tryParse(actualCostController.text),
-                                      vat: double.tryParse(vatController.text),
+                                        excessTax: double.tryParse(excessTaxController.text),
+                                        actualCost: double.tryParse(actualCostController.text),
+                                        vat: double.tryParse(vatController.text),
 
 
-                                      foc: double.tryParse(focController.text),
-                                      editedBy: "",
-                                      lines: patchLists??[],
+                                        foc: double.tryParse(focController.text),
+                                        editedBy: "",
+                                        lines: patchLists??[],
 
 
 
 
-                                    );
-                              PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
-                                      orderType: orderTypeController?.text??"",
-                                      inventoryId: inventory?.text??"",
-                                      purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
-                                      vendorAddress: vendorAddressController?.text??"",
-                                      vendorCode: vendorCodeController?.text??"",
-                                      vendorMailId: vendorMailId?.text??"",
-                                      vendorTrnNumber: vendorTrnNumberController?.text??"",
-                                      note: noteController?.text??"",
-                                      remarks: remarksController.text??"",
-                                      unitCost: double.tryParse( unitCostController.text),
-                                      grandTotal: double.tryParse( grandTotalCostController.text),
-                                      vatableAmount: double.tryParse( vatableAmountController.text),
-                                      discount: double.tryParse( discountController.text),
-                                      excessTax: double.tryParse(excessTaxController.text),
-                                      actualCost: double.tryParse(actualCostController.text),
-                                      vat: double.tryParse(vatController.text),
-                                      foc: double.tryParse(focController.text),
-                                      createdBy: "test",
-                                      lines: lines??[],
-                                    );
-                                    print("Rkaramodel"+model.toString());
+                                      );
+                                PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
+                                        orderType: orderTypeController?.text??"",
+                                        inventoryId: inventory?.text??"",
+                                        purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
+                                        vendorAddress: vendorAddressController?.text??"",
+                                        vendorCode: vendorCodeController?.text??"",
+                                        vendorMailId: vendorMailId?.text??"",
+                                        vendorTrnNumber: vendorTrnNumberController?.text??"",
+                                        note: noteController?.text??"",
+                                        remarks: remarksController.text??"",
+                                        unitCost: double.tryParse( unitCostController.text),
+                                        grandTotal: double.tryParse( grandTotalCostController.text),
+                                        vatableAmount: double.tryParse( vatableAmountController.text),
+                                        discount: double.tryParse( discountController.text),
+                                        excessTax: double.tryParse(excessTaxController.text),
+                                        actualCost: double.tryParse(actualCostController.text),
+                                        vat: double.tryParse(vatController.text),
+                                        foc: double.tryParse(focController.text),
+                                        createdBy: "test",
+                                        lines: lines??[],
+                                      );
+                                      print("Rkaramodel"+model.toString());
 
-                                    // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
-                                    select? context.read<GeneralpostCubit>().postGeneral(model):
-                                    context.read<PurchasereturngeneralpatchCubit>().getGeneralFormPatch(veritiaclid,model1);}
-                                    }
-                                  ),
-                                  SizedBox(
-                                    width: width * .008,
-                                  ),
+                                      // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
+                                      select? context.read<GeneralpostCubit>().postGeneral(model):
+                                      context.read<PurchasereturngeneralpatchCubit>().getGeneralFormPatch(veritiaclid,model1);}
+                                      }
+                                    ),
+                                    SizedBox(
+                                      width: width * .008,
+                                    ),
 
-                                ],
+                                  ],
+                                ),
                               ),
 
                             ],

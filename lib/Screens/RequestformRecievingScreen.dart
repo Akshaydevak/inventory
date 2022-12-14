@@ -57,6 +57,11 @@ class _RequestFormReceivigScreenState extends State<RequestFormReceivigScreen> {
   TextEditingController noteController = TextEditingController();
   TextEditingController remarksController = TextEditingController();
   TextEditingController unitCostCheck = TextEditingController();//
+  TextEditingController recievedClearController = TextEditingController();
+  TextEditingController unitCostClearController = TextEditingController();
+  TextEditingController excessClearController = TextEditingController();
+  TextEditingController discountClearController = TextEditingController();
+  TextEditingController focClearController = TextEditingController();
   var expirydateControllerList = <TextEditingController>[];
   var expirydateControllerList2 = <TextEditingController>[];
   late AutoScrollController recieveController;
@@ -140,6 +145,11 @@ bool  recievlinequantityCheck=false;
     isFree1=false;
     isInvoiced1=false;
     stock=0;
+    recievedClearController.clear();
+    excessClearController.clear();
+    focClearController.clear();
+    discountClearController.clear();
+
   });
 
 
@@ -700,15 +710,15 @@ child: IntrinsicHeight(
 
                 ),
 
-                SizedBox(height: 5,),
+                SizedBox(height: 34,),
                 Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     TextWidget(text: "Recieving Lines"),
                     SizedBox(width: 10,),
-                    TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
-                      // fontSize: 50,
-                      decoration: TextDecoration.underline, // <-- SEE HERE
-                    ),),),
+                    // TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
+                    //   // fontSize: 50,
+                    //   decoration: TextDecoration.underline, // <-- SEE HERE
+                    // ),),),
                     TextButtonLarge(
                       text: "PREVIEW",
                       onPress: (){
@@ -750,19 +760,18 @@ child: IntrinsicHeight(
                     ),
                   ],
                 ),
-                Divider(color: Colors.grey,thickness: 1,),
-                SizedBox(height: 5,),
-                Scrollbar(
+                SizedBox(height: height*.01,),
+                CustomScrollBar(
                controller: recieveController,
-              isAlwaysShown: true,
-              child:Container(
+
+              childs:Container(
                 color: Colors.white,
                 alignment: Alignment.topRight,
 
 
                 child: SingleChildScrollView(
 
-                  controller:recieveController ,
+                  controller: ScrollController() ,
 
                   physics: ScrollPhysics(),
 
@@ -777,11 +786,12 @@ child: IntrinsicHeight(
                       children: [
 
                         SingleChildScrollView(
+                          controller:recieveController ,
 
                           child:Container(
                             width:  2200,
 
-                  padding: EdgeInsets.all(10),
+                  // padding: EdgeInsets.all(10),
 
                             child: customTable(
 
@@ -1940,11 +1950,11 @@ color: Pellet.tableRowColor,
 
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: Checkbox(
-                                            value: recievingLisnes[i]
+                                          child: CheckedBoxs(
+                                            valueChanger: recievingLisnes[i]
                                                 .isActive==null?false:recievingLisnes[i]
                                                 .isActive,
-                                            onChanged: (bool?
+                                            onSelection: (bool?
                                             value) {
                                               updateCheck=true;
                                               recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
@@ -1964,60 +1974,63 @@ color: Pellet.tableRowColor,
                                             },
                                           ),
                                         ),
-                                        TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"",
+                                        TableCell(
+                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                          child: TableTextButton(label:recievingLisnes[i].updateCheck==true? 'Update':"",
 
-                                          onPress: (){
+                                            onPress: (){
 
-                                            var variant = recievingLisnes[i].variantId??0;
-
-
-                                            var excess = recievingLisnes[i].excessTax??0;
-                                            print("excess" + excess.toString());
-                                            var unitcosts = recievingLisnes[i].unitCost??0;
-                                            var qty = recievingLisnes[i].receivedQty??0;
-                                            var foc = recievingLisnes[i].foc??0;
-                                            var dis = recievingLisnes[i].discount??0;
-                                            var exp = recievingLisnes[i].expiryDate??"";
-                                            if(variant=="null"||unitcosts==0){
-                                              context.showSnackBarError("please fill all the fields");
-                                            }
-                                            else if(qty==0||qty==""){
-                                              context.showSnackBarError(
-                                                  "the requested quantity not be 0 or empty");
-
-                                            }
-                                            else if(qty!<foc!){
-                                              context.showSnackBarError("the received qty allways greater than  foc");
-
-                                            }
-                                            else if(exp==null||exp=="null"||exp=="")
-                                              context.showSnackBarError("please select expiry date");
-
-                                            else{
-                                              updateCheck=false;
-                                              addition();
-                                              unitcost1= 0;
-                                              recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
-                                              setState(() {
-
-                                              });
+                                              var variant = recievingLisnes[i].variantId??0;
 
 
-                                              grands = 0;
-                                              actualValue = 0;
-                                              vatValue = 0;
-                                              discountValue = 0;
-                                              focValue =0;
+                                              var excess = recievingLisnes[i].excessTax??0;
+                                              print("excess" + excess.toString());
+                                              var unitcosts = recievingLisnes[i].unitCost??0;
+                                              var qty = recievingLisnes[i].receivedQty??0;
+                                              var foc = recievingLisnes[i].foc??0;
+                                              var dis = recievingLisnes[i].discount??0;
+                                              var exp = recievingLisnes[i].expiryDate??"";
+                                              if(variant=="null"||unitcosts==0){
+                                                context.showSnackBarError("please fill all the fields");
+                                              }
+                                              else if(qty==0||qty==""){
+                                                context.showSnackBarError(
+                                                    "the requested quantity not be 0 or empty");
 
-                                              VatableValue = 0;
+                                              }
+                                              else if(qty!<foc!){
+                                                context.showSnackBarError("the received qty allways greater than  foc");
 
-                                              excessTAxValue = 0;
-                                              setState(() {
+                                              }
+                                              else if(exp==null||exp=="null"||exp=="")
+                                                context.showSnackBarError("please select expiry date");
 
-                                              });
-                                            }
+                                              else{
+                                                updateCheck=false;
+                                                addition();
+                                                unitcost1= 0;
+                                                recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: false);
+                                                setState(() {
 
-                                          },)
+                                                });
+
+
+                                                grands = 0;
+                                                actualValue = 0;
+                                                vatValue = 0;
+                                                discountValue = 0;
+                                                focValue =0;
+
+                                                VatableValue = 0;
+
+                                                excessTAxValue = 0;
+                                                setState(() {
+
+                                                });
+                                              }
+
+                                            },),
+                                        )
 
 
                                       ],
@@ -2049,9 +2062,9 @@ color: Pellet.tableRowColor,
                                 17: FlexColumnWidth(3),
                                 18: FlexColumnWidth(2),
                                 19: FlexColumnWidth(4),
-                                20: FlexColumnWidth(2),
+                                20: FlexColumnWidth(2.4),
                                 21: FlexColumnWidth(2.4),
-                                22: FlexColumnWidth(2.4),
+                                22: FlexColumnWidth(3),
 
                               },
 
@@ -2062,7 +2075,8 @@ color: Pellet.tableRowColor,
                             )
 
                           ) ,
-                        )
+                        ),
+                        SizedBox(height: 10,)
 
                       ],
                     )
@@ -2075,19 +2089,16 @@ color: Pellet.tableRowColor,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TextWidget(text: "Additional Variants"),
-
-
                   ],
                 ),
-                Divider(color: Colors.grey,thickness: 1,),
-                SizedBox(height: 5,),
-                Scrollbar(
+                SizedBox(height: height*.01,),
+                CustomScrollBar(
 
                     controller: recieveController,
 
-                    isAlwaysShown: true,
 
-                    child:Container(
+
+                    childs:Container(
 
                       color: Colors.white,
 
@@ -2117,7 +2128,7 @@ color: Pellet.tableRowColor,
 
                                   width: 2200,
 
-                                  padding: EdgeInsets.all(10),
+                                  // padding: EdgeInsets.all(10),
 
                                   child: customTable(
 
@@ -2596,9 +2607,9 @@ color: Pellet.tableRowColor,
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: Checkbox(
-                                                  value: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
-                                                  onChanged: (bool? value) {
+                                                child: CheckedBoxs(
+                                                  valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
+                                                  onSelection: (bool? value) {
                                                     bool? isRecieved = additionalVariants[i].isReceived;
                                                     setState(() {
                                                       isRecieved = !isRecieved!;
@@ -3026,9 +3037,9 @@ color: Pellet.tableRowColor,
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: textPadding(additionalVariants[i].grandTotal.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                               ),
-                                              Checkbox(
-                                                value: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
-                                                onChanged: (bool? value) {
+                                              CheckedBoxs(
+                                                valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
+                                                onSelection: (bool? value) {
                                                   setState(() {});
                                                 },
                                               ),
@@ -3055,9 +3066,9 @@ color: Pellet.tableRowColor,
 
 
                                               TableCell(
-                                                child: Checkbox(
-                                                  value: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
-                                                  onChanged: (bool? value) {
+                                                child: CheckedBoxs(
+                                                  valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
+                                                  onSelection: (bool? value) {
                                                     setState(() {});
                                                   },
                                                 ),
@@ -3065,17 +3076,20 @@ color: Pellet.tableRowColor,
 
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: Checkbox(
-                                                  value: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
-                                                  onChanged: (bool? value) {
+                                                child: CheckedBoxs(
+                                                  valueChanger: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
+                                                  onSelection: (bool? value) {
                                                     setState(() {});
                                                   },
                                                 ),
                                               ),
-                                              TableTextButton(label: "Update",
-                                              onPress: (){
+                                              TableCell(
+                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                child: TableTextButton(label: "Update",
+                                                onPress: (){
 
-                                              },)
+                                                },),
+                                              )
 
 
 
@@ -3232,6 +3246,7 @@ color: Pellet.tableRowColor,
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                  controller: recievedClearController,
 
                                                   last:"",
                                                   onChanged: (p0) {
@@ -3306,9 +3321,9 @@ color: Pellet.tableRowColor,
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: Checkbox(
-                                                  value: isReceived1,
-                                                  onChanged: (bool? value) {
+                                                child: CheckedBoxs(
+                                                  valueChanger: isReceived1,
+                                                  onSelection: (bool? value) {
 
                                                     setState(() {
                                                       isReceived1 = !isReceived1!;
@@ -3389,6 +3404,7 @@ color: Pellet.tableRowColor,
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                    controller: excessClearController,
 
 
                                                   onChanged: (p0) {
@@ -3460,6 +3476,7 @@ color: Pellet.tableRowColor,
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
+                                                  controller: discountClearController,
 
 
                                                   onChanged: (p0) {
@@ -3693,9 +3710,9 @@ color: Pellet.tableRowColor,
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: Checkbox(
-                                                  value: isInvoiced1,
-                                                  onChanged: (bool? value) {
+                                                child: CheckedBoxs(
+                                                  valueChanger: isInvoiced1,
+                                                  onSelection: (bool? value) {
 
                                                     setState(() {
                                                      // isInvoiced1 = !isInvoiced1!;
@@ -3727,10 +3744,10 @@ color: Pellet.tableRowColor,
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: Checkbox(
+                                                child: CheckedBoxs(
 
-                                                  value: isFree1,
-                                                  onChanged: (bool? value) {
+                                                  valueChanger: isFree1,
+                                                  onSelection: (bool? value) {
 
                                                     setState(() {
                                                       isFree1 = !isFree1!;
@@ -3755,57 +3772,60 @@ color: Pellet.tableRowColor,
 
                                                 ),
                                               ),
-                                              TableTextButton(label: "Set",
-                                                onPress: (){
-                                               foc1= foc1==null?0:foc1;
-                                               recievedQty= recievedQty==null?0:recievedQty;
-                                                  setState(() {
-                                                    if(variantId=="null"||recievedQty==0||unitcost==0||expirydateController.text==""){
-                                                      context.showSnackBarError("please fill all the fields");
-                                                    }
-                                                    else if( foc1!>recievedQty!){
-                                                         context.showSnackBarError("foc always less than received qty");
-                                                    }
-                                                    else if(isReceived1==false||isActive1==false){
-                                                      context.showSnackBarError(
-                                                          "isreceived and isActive always true in this");
-                                                    }
-                                                    else{
-                                                      var date = new TextEditingController(text:expirydateController?.text??"");
-                                                      expirydateControllerList.add(date);
-                                                      additionalVariants.add(RecievingLines(
-                                                        variantId: variantId??"",
-                                                        currentStock: stock,
-                                                        supplierCode: supplierRefCode,
-                                                        variantName: varinatname??"",
-                                                        barcode: barcode??"",
-                                                        purchaseUom: purchaseUomName??"",
-                                                        receivedQty: recievedQty,
-                                                        isReceived: isReceived1,
-                                                        discount: discount,
-                                                        foc: foc1,
-                                                        unitCost: unitcost,
-                                                        vatableAmount: vatableAmount1,vat: vat1,
-                                                        excessTax: excess1,
-                                                        actualCost: actualCost1,
-                                                        grandTotal: grandTotal1,
-                                                        isInvoiced: isInvoiced1,
-                                                        vendorId: vendorCode,
-                                                        vendorTrnNumber: vendorTrn??"",
-                                                        vendorAddress:vendorAddress??"" ,
-                                                        isFree: isFree1,
-                                                        isActive:isActive1,
-                                                        expiryDate: expirydateController.text,
-                                                      ));
-                                                      clear();
+                                              TableCell(
+                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                child: TableTextButton(label: "Set",
+                                                  onPress: (){
+                                                 foc1= foc1==null?0:foc1;
+                                                 recievedQty= recievedQty==null?0:recievedQty;
+                                                    setState(() {
+                                                      if(variantId=="null"||recievedQty==0||unitcost==0||expirydateController.text==""){
+                                                        context.showSnackBarError("please fill all the fields");
+                                                      }
+                                                      else if( foc1!>recievedQty!){
+                                                           context.showSnackBarError("foc always less than received qty");
+                                                      }
+                                                      else if(isReceived1==false||isActive1==false){
+                                                        context.showSnackBarError(
+                                                            "isreceived and isActive always true in this");
+                                                      }
+                                                      else{
+                                                        var date = new TextEditingController(text:expirydateController?.text??"");
+                                                        expirydateControllerList.add(date);
+                                                        additionalVariants.add(RecievingLines(
+                                                          variantId: variantId??"",
+                                                          currentStock: stock,
+                                                          supplierCode: supplierRefCode,
+                                                          variantName: varinatname??"",
+                                                          barcode: barcode??"",
+                                                          purchaseUom: purchaseUomName??"",
+                                                          receivedQty: recievedQty,
+                                                          isReceived: isReceived1,
+                                                          discount: discount,
+                                                          foc: foc1,
+                                                          unitCost: unitcost,
+                                                          vatableAmount: vatableAmount1,vat: vat1,
+                                                          excessTax: excess1,
+                                                          actualCost: actualCost1,
+                                                          grandTotal: grandTotal1,
+                                                          isInvoiced: isInvoiced1,
+                                                          vendorId: vendorCode,
+                                                          vendorTrnNumber: vendorTrn??"",
+                                                          vendorAddress:vendorAddress??"" ,
+                                                          isFree: isFree1,
+                                                          isActive:isActive1,
+                                                          expiryDate: expirydateController.text,
+                                                        ));
+                                                        clear();
 
 
-                                                    }
-                                                  });
+                                                      }
+                                                    });
 
 
 
-                                                },)
+                                                  },),
+                                              )
                                             ])
 
 
@@ -3833,7 +3853,7 @@ color: Pellet.tableRowColor,
                                       18: FlexColumnWidth(4),
                                       19: FlexColumnWidth(2),
                                       20: FlexColumnWidth(2),
-                                      21: FlexColumnWidth(2.4),
+                                      21: FlexColumnWidth(3),
 
                                     },
 
@@ -3845,7 +3865,8 @@ color: Pellet.tableRowColor,
 
 
                                 ) ,
-                              )
+                              ),
+                              SizedBox(height: 10,)
 
                             ],
 

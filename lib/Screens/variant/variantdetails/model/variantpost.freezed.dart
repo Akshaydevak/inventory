@@ -26,18 +26,18 @@ mixin _$VariantPost {
   String? get description => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get image1 => throw _privateConstructorUsedError;
-  int? get image2 => throw _privateConstructorUsedError;
-  int? get image3 => throw _privateConstructorUsedError;
-  int? get image4 => throw _privateConstructorUsedError;
-  int? get image5 => throw _privateConstructorUsedError;
-  int? get catalog1 => throw _privateConstructorUsedError;
-  int? get catalog2 => throw _privateConstructorUsedError;
-  int? get catalog3 => throw _privateConstructorUsedError;
-  int? get catalog4 => throw _privateConstructorUsedError;
-  int? get catalog5 => throw _privateConstructorUsedError;
-  int? get catalog6 => throw _privateConstructorUsedError;
-  int? get catalog7 => throw _privateConstructorUsedError;
-  int? get catalog8 => throw _privateConstructorUsedError;
+  String? get image2 => throw _privateConstructorUsedError;
+  String? get image3 => throw _privateConstructorUsedError;
+  String? get image4 => throw _privateConstructorUsedError;
+  String? get image5 => throw _privateConstructorUsedError;
+  String? get catalog1 => throw _privateConstructorUsedError;
+  String? get catalog2 => throw _privateConstructorUsedError;
+  String? get catalog3 => throw _privateConstructorUsedError;
+  String? get catalog4 => throw _privateConstructorUsedError;
+  String? get catalog5 => throw _privateConstructorUsedError;
+  String? get catalog6 => throw _privateConstructorUsedError;
+  String? get catalog7 => throw _privateConstructorUsedError;
+  String? get catalog8 => throw _privateConstructorUsedError;
   double? get length => throw _privateConstructorUsedError;
   double? get width => throw _privateConstructorUsedError;
   double? get weight => throw _privateConstructorUsedError;
@@ -196,18 +196,18 @@ abstract class $VariantPostCopyWith<$Res> {
       String? description,
       String? name,
       String? image1,
-      int? image2,
-      int? image3,
-      int? image4,
-      int? image5,
-      int? catalog1,
-      int? catalog2,
-      int? catalog3,
-      int? catalog4,
-      int? catalog5,
-      int? catalog6,
-      int? catalog7,
-      int? catalog8,
+      String? image2,
+      String? image3,
+      String? image4,
+      String? image5,
+      String? catalog1,
+      String? catalog2,
+      String? catalog3,
+      String? catalog4,
+      String? catalog5,
+      String? catalog6,
+      String? catalog7,
+      String? catalog8,
       double? length,
       double? width,
       double? weight,
@@ -484,51 +484,51 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
       image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image4: freezed == image4
           ? _value.image4
           : image4 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image5: freezed == image5
           ? _value.image5
           : image5 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog1: freezed == catalog1
           ? _value.catalog1
           : catalog1 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog2: freezed == catalog2
           ? _value.catalog2
           : catalog2 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog3: freezed == catalog3
           ? _value.catalog3
           : catalog3 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog4: freezed == catalog4
           ? _value.catalog4
           : catalog4 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog5: freezed == catalog5
           ? _value.catalog5
           : catalog5 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog6: freezed == catalog6
           ? _value.catalog6
           : catalog6 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog7: freezed == catalog7
           ? _value.catalog7
           : catalog7 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog8: freezed == catalog8
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       length: freezed == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
@@ -936,18 +936,18 @@ abstract class _$$_VariantPostCopyWith<$Res>
       String? description,
       String? name,
       String? image1,
-      int? image2,
-      int? image3,
-      int? image4,
-      int? image5,
-      int? catalog1,
-      int? catalog2,
-      int? catalog3,
-      int? catalog4,
-      int? catalog5,
-      int? catalog6,
-      int? catalog7,
-      int? catalog8,
+      String? image2,
+      String? image3,
+      String? image4,
+      String? image5,
+      String? catalog1,
+      String? catalog2,
+      String? catalog3,
+      String? catalog4,
+      String? catalog5,
+      String? catalog6,
+      String? catalog7,
+      String? catalog8,
       double? length,
       double? width,
       double? weight,
@@ -1231,51 +1231,51 @@ class __$$_VariantPostCopyWithImpl<$Res>
       image2: freezed == image2
           ? _value.image2
           : image2 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image3: freezed == image3
           ? _value.image3
           : image3 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image4: freezed == image4
           ? _value.image4
           : image4 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       image5: freezed == image5
           ? _value.image5
           : image5 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog1: freezed == catalog1
           ? _value.catalog1
           : catalog1 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog2: freezed == catalog2
           ? _value.catalog2
           : catalog2 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog3: freezed == catalog3
           ? _value.catalog3
           : catalog3 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog4: freezed == catalog4
           ? _value.catalog4
           : catalog4 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog5: freezed == catalog5
           ? _value.catalog5
           : catalog5 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog6: freezed == catalog6
           ? _value.catalog6
           : catalog6 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog7: freezed == catalog7
           ? _value.catalog7
           : catalog7 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       catalog8: freezed == catalog8
           ? _value.catalog8
           : catalog8 // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       length: freezed == length
           ? _value.length
           : length // ignore: cast_nullable_to_non_nullable
@@ -1737,29 +1737,29 @@ class _$_VariantPost implements _VariantPost {
   @override
   final String? image1;
   @override
-  final int? image2;
+  final String? image2;
   @override
-  final int? image3;
+  final String? image3;
   @override
-  final int? image4;
+  final String? image4;
   @override
-  final int? image5;
+  final String? image5;
   @override
-  final int? catalog1;
+  final String? catalog1;
   @override
-  final int? catalog2;
+  final String? catalog2;
   @override
-  final int? catalog3;
+  final String? catalog3;
   @override
-  final int? catalog4;
+  final String? catalog4;
   @override
-  final int? catalog5;
+  final String? catalog5;
   @override
-  final int? catalog6;
+  final String? catalog6;
   @override
-  final int? catalog7;
+  final String? catalog7;
   @override
-  final int? catalog8;
+  final String? catalog8;
   @override
   final double? length;
   @override
@@ -2247,18 +2247,18 @@ abstract class _VariantPost implements VariantPost {
       final String? description,
       final String? name,
       final String? image1,
-      final int? image2,
-      final int? image3,
-      final int? image4,
-      final int? image5,
-      final int? catalog1,
-      final int? catalog2,
-      final int? catalog3,
-      final int? catalog4,
-      final int? catalog5,
-      final int? catalog6,
-      final int? catalog7,
-      final int? catalog8,
+      final String? image2,
+      final String? image3,
+      final String? image4,
+      final String? image5,
+      final String? catalog1,
+      final String? catalog2,
+      final String? catalog3,
+      final String? catalog4,
+      final String? catalog5,
+      final String? catalog6,
+      final String? catalog7,
+      final String? catalog8,
       final double? length,
       final double? width,
       final double? weight,
@@ -2410,29 +2410,29 @@ abstract class _VariantPost implements VariantPost {
   @override
   String? get image1;
   @override
-  int? get image2;
+  String? get image2;
   @override
-  int? get image3;
+  String? get image3;
   @override
-  int? get image4;
+  String? get image4;
   @override
-  int? get image5;
+  String? get image5;
   @override
-  int? get catalog1;
+  String? get catalog1;
   @override
-  int? get catalog2;
+  String? get catalog2;
   @override
-  int? get catalog3;
+  String? get catalog3;
   @override
-  int? get catalog4;
+  String? get catalog4;
   @override
-  int? get catalog5;
+  String? get catalog5;
   @override
-  int? get catalog6;
+  String? get catalog6;
   @override
-  int? get catalog7;
+  String? get catalog7;
   @override
-  int? get catalog8;
+  String? get catalog8;
   @override
   double? get length;
   @override

@@ -273,8 +273,9 @@ class _DropDownTileState extends State<DropDownTile> {
 class CheckedBoxs extends StatefulWidget {
   final bool? valueChanger;
   final Color color;
+  final double hght;
   final Function(bool?) onSelection;
-  CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.transparent});
+  CheckedBoxs({required this.onSelection,this.valueChanger=false,this.color=Colors.transparent,this.hght=50});
 
   @override
   _CheckedBoxState createState() => _CheckedBoxState();
@@ -285,8 +286,17 @@ class _CheckedBoxState extends State<CheckedBoxs> {
   Widget build(BuildContext context) {
     return Container(
       color: widget.color,
-      height: 50,
+      height: widget.hght,
       child: Checkbox(
+       side: BorderSide(
+         width: 1,
+         color:  Color(0xff3E4F5B).withOpacity(.5)
+
+
+
+
+       ),
+
 
         activeColor: Color(0xff3E4F5B),
         value: widget.valueChanger,
@@ -295,6 +305,32 @@ class _CheckedBoxState extends State<CheckedBoxs> {
     );
   }
 }
+
+
+
+class CustomDivider extends StatelessWidget {
+  final double thickness;
+  final Color clr;
+  CustomDivider({
+    this.clr=Colors.grey,
+    this.thickness=1,
+});
+
+
+  @override
+  Widget build(BuildContext context) {
+    double? width=MediaQuery.of(context).size.width;
+    return Divider(
+      thickness: thickness,
+      color: clr,
+      indent: width*.017, //spacing at the start of divider
+      endIndent: width*.017,
+
+
+    );
+  }
+}
+
 
 class CustomCheckBox extends StatefulWidget {
   final bool value;

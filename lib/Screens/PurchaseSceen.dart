@@ -161,27 +161,27 @@ class _PurchaseScreenState extends State<PurchaseScreen>with TickerProviderState
                         //   color: Colors.red,
                         //   thickness: 2,
                         // ),
-                        Container(
-
-                          child: Row(
-                            children: [
-                              TitleIcon( image:"asset/purchase.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-                              TitleIcon( image:"asset/purchase2.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-                              TitleIcon( image:"asset/purchase3.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-                              TitleIcon( image:"asset/purchase4.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-                              TitleIcon( image:"asset/purchase5.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-                              TitleIcon( image:"asset/purchase6.png",color: Colors.black54,top:0,size: 0.010,),
-                              SizedBox(width: width*.011,),
-
-
-                            ],
-                          ),
-                        )
+                        // Container(
+                        //
+                        //   child: Row(
+                        //     children: [
+                        //       TitleIcon( image:"asset/purchase.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //       TitleIcon( image:"asset/purchase2.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //       TitleIcon( image:"asset/purchase3.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //       TitleIcon( image:"asset/purchase4.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //       TitleIcon( image:"asset/purchase5.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //       TitleIcon( image:"asset/purchase6.png",color: Colors.black54,top:0,size: 0.010,),
+                        //       SizedBox(width: width*.011,),
+                        //
+                        //
+                        //     ],
+                        //   ),
+                        // )
                       ],
                     ),
                   ),

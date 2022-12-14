@@ -307,7 +307,7 @@ class _TitleScreenState extends State<TitleScreen> {
                 width: size.width * .023,
               ),
               CommonIcon(
-                toolTip: "settings",
+                toolTip: "Settings",
                 size: 20,
                 iconData: Icons.settings_outlined,
                 onTap: () {
@@ -514,7 +514,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
             height: 20,
           ),
           DrawerCared(
-            label: "Uom Group patch",
+            label: "Uom Group",
             ontap: () {
               showDailogPopUp(
                 context,
@@ -558,17 +558,17 @@ class _RihtDrawerState extends State<RihtDrawer> {
                 );
               },
               label: "Category"),
-          greyDivider(),
-          DrawerCared(
-              ontap: () {
-                showDailogPopUp(
-                  context,
-                  ConfigurePopup(
-                    type: "categoryPatch_group",
-                  ),
-                );
-              },
-              label: "Sub Category"),
+          // greyDivider(),
+          // DrawerCared(
+          //     ontap: () {
+          //       showDailogPopUp(
+          //         context,
+          //         ConfigurePopup(
+          //           type: "categoryPatch_group",
+          //         ),
+          //       );
+          //     },
+          //     label: "Sub Category"),
           greyDivider(),
           DrawerCared(
               ontap: () {
@@ -590,7 +590,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "Create Material"),
+              label: "Material"),
           greyDivider(),
           DrawerCared(
               ontap: () {
@@ -601,7 +601,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "Create Static"),
+              label: "Static Group"),
           greyDivider(),
           DrawerCared(
               ontap: () {
@@ -612,7 +612,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "Create Brand"),
+              label: "Brand"),
           greyDivider(),
           DrawerCared(
               ontap: () {
@@ -623,7 +623,7 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "frame work"),
+              label: "Frame Work"),
         ],
       ),
     );

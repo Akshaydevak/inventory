@@ -64,6 +64,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  Map<int, Color> coloru =
+  {
+    50:Color.fromRGBO(7, 39, 87, 0.10196078431372549),
+    100:Color.fromRGBO(17, 20, 81, 0.2),
+    200:Color.fromRGBO(4, 7, 69, 0.30196078431372547),
+    300:Color.fromRGBO(14, 38, 136, 0.4),
+    400:Color.fromRGBO(14, 57, 136, 0.5019607843137255),
+    500:Color.fromRGBO(14, 38, 136, 0.6),
+    600:Color.fromRGBO(14, 30, 136, 0.7019607843137254),
+    700:Color.fromRGBO(14, 16, 136, 0.8),
+    800:Color.fromRGBO(14, 34, 136, 0.9019607843137255),
+    900:Color.fromRGBO(14, 38, 136, 1.0),
+  };
+  // MaterialColor colorCustom = MaterialColor(0xFF880E4F, coloru);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -180,8 +194,8 @@ class _MyAppState extends State<MyApp> {
         debugShowCheckedModeBanner: false,
         title: '',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+
+          primarySwatch: MaterialColor(0xff3E4F5B, coloru)),
         home: MyHome(),
       ),
     );
@@ -272,4 +286,5 @@ class _MyHomeState extends State<MyHome> {
       },
     );
   }
+
 }

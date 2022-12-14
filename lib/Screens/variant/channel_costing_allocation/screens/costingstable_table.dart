@@ -172,7 +172,7 @@ class _CostingStableTableState extends State<CostingStableTable> {
                           readOnly: true,
                           controller: widget.pricingName,
                           icondrop: true,
-                          title: "Pricing  GroupId Id",
+                          title: "Pricing GroupId Id",
                           ontap: () {
                             showDailogPopUp(
                               context,

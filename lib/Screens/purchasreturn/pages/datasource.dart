@@ -336,6 +336,7 @@ abstract class PurchaseSourceAbstract {
       {String? type, int? id});
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code,
       {String? type, int? id});
+  Future<CostingPageCreationPostModel> getChannelCostingRead(int? id);
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -1172,7 +1173,7 @@ try{
   //print(response.data['results']);
   List<ShippingAddressModel> items = [];
   print(response.data['data']['customer_user_data']['results']);
-  (response.data['data']['customer_user_data']['results'] as List)
+  (response.data['data']['results'] as List)
       .forEach((element) {
     // print("data");
 
@@ -1180,9 +1181,9 @@ try{
   });
   return PaginatedResponse<List<ShippingAddressModel>>(
     items,
-    response.data['data']['customer_user_data']['next'],
-    response.data['data']['customer_user_data']['count'].toString(),
-    previousUrl: response.data['data']['customer_user_data']['previous'],
+    response.data['data']['next'],
+    response.data['data']['count'].toString(),
+    previousUrl: response.data['data']['previous'],
   );
 }
 catch(e){
@@ -1202,8 +1203,8 @@ catch(e){
     print("Prabhaakaran" + response.toString());
     //print(response.data['results']);
     List<ShippingAddressModel> items = [];
-    print(response.data['data']['customer_user_data']['results']);
-    (response.data['data']['customer_user_data']['results'] as List)
+    print(response.data['data']['results']);
+    (response.data['data']['results'] as List)
         .forEach((element) {
       // print("data");
 
@@ -1211,9 +1212,9 @@ catch(e){
     });
     return PaginatedResponse<List<ShippingAddressModel>>(
       items,
-      response.data['data']['customer_user_data']['next'],
-      response.data['data']['customer_user_data']['count'].toString(),
-      previousUrl: response.data['data']['customer_user_data']['previous'],
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
     );
   }
 
@@ -3063,6 +3064,7 @@ catch(e){
       {String? type,int ? id}) async {
     String path = "";
     if (type == "all") {
+      print("all case");
       code = code == null ? "" : code;
 
       if (code == "")
@@ -3177,6 +3179,7 @@ catch(e){
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }));
+    print(path);
 
     List<BrandListModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
@@ -3445,9 +3448,9 @@ catch(e){
     String path = "";
 
     if (code == "")
-      path = salesListApi + Variable.uomId.toString();
+      path = salesListApi + id.toString();
     else
-      path = salesListApi + Variable.uomId.toString() + "?$code";
+      path = salesListApi +id.toString() + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -3478,7 +3481,7 @@ catch(e){
     code = code == null ? "" : code;
     String path = "";
 
-    path = variantSearchListApi + "?name=$code";
+    path = variantSearchListApi + "?$code";
 
     print(path);
     final response = await client.get(path,
@@ -3517,6 +3520,8 @@ catch(e){
             "weight":model.weight,
             "inventory_name":model.inventoryName,
             "pos_name": model.posName,
+            "shelf_type":model.shelfType,
+            "shelf_time":model.shelfTime,
             "display_name": model.displayName,
             "arabic_description": model.arabicDescription,
             "additional_description": model.additionalInfo,
@@ -3568,6 +3573,7 @@ catch(e){
             "variant_status": model.variantStatus,
             "is_active": model.isActive,
             "image2": model.image2,
+            "image1": model.image1,
             "image3": model.image3,
             "image4": model.image4,
             "image5": model.image5,
@@ -4065,7 +4071,8 @@ catch(e){
     return PaginatedResponse<List<ChannelTypeModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4187,7 +4194,8 @@ catch(e){
     return PaginatedResponse<List<StockVerticalReadModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4445,7 +4453,8 @@ catch(e){
     return PaginatedResponse<List<ChannelListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4520,7 +4529,8 @@ catch(e){
       return PaginatedResponse<List<FrameWorkListModel>>(
           items,
           response.data['data']['next'],
-          response.data['data']['count'].toString());
+          response.data['data']['count'].toString(),
+          previousUrl: response.data['data']['previous']);
     } catch (e) {
       print(e);
     }
@@ -4545,7 +4555,8 @@ catch(e){
     return PaginatedResponse<List<FrameWorkListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4705,7 +4716,15 @@ catch(e){
   @override
   Future<PaginatedResponse<List<CostingMetodTypePostModel>>> getCostingTypeList(
       String? code) async {
-    String path = listcostingMethodApi;
+    code = code == null ? "" : code;
+    String path = "";
+
+    if (code == "")
+      path = listcostingMethodApi;
+    else
+      path = listcostingMethodApi+"?$code";
+
+
     print(path);
     final response = await client.get(path,
         options: Options(headers: {
@@ -4716,12 +4735,13 @@ catch(e){
     List<CostingMetodTypePostModel> items = [];
     (response.data['data']['results'] as List).forEach((element) {
       items.add(CostingMetodTypePostModel.fromJson(element));
-      print("itemsAk" + items.toString());
+      print("thereeeeeeeeeeeeeeeeeeeee" + items.toString());
     });
     return PaginatedResponse<List<CostingMetodTypePostModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4844,8 +4864,18 @@ catch(e){
   @override
   Future<PaginatedResponse<List<CostingCreatePostModel>>> getCostingCreateList(
       String? code) async {
-    String path = listcostingCreationMethodApi;
+    String path = "";
+    code = code == null ? "" : code;
+
+
+    if (code == "")
+      path = listcostingCreationMethodApi;
+    else
+      path = listcostingCreationMethodApi+"?$code";
+
+
     print(path);
+
     final response = await client.get(path,
         options: Options(headers: {
           'Content-Type': 'application/json',
@@ -4860,7 +4890,8 @@ catch(e){
     return PaginatedResponse<List<CostingCreatePostModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -4932,7 +4963,21 @@ catch(e){
   @override
   Future<PaginatedResponse<List<PricingGroupListModel>>> getPricingGroupList(
       String? code) async {
-    String path = pricingGroupListApi;
+
+
+
+
+    String path = "";
+    code = code == null ? "" : code;
+
+
+    if (code == "")
+      path = pricingGroupListApi;
+    else
+      path = pricingGroupListApi+"?$code";
+
+
+
     print(path);
     final response = await client.get(path,
         options: Options(headers: {
@@ -5171,7 +5216,16 @@ catch(e){
   @override
   Future<PaginatedResponse<List<PricingTypeListModel>>> getPricingList(
       String? code) async {
-    String path = pricinglistReadApi;
+
+
+    String path = "";
+    code = code == null ? "" : code;
+
+
+    if (code == "")
+      path = pricinglistReadApi;
+    else
+      path = pricinglistReadApi+"?$code";
     print(path);
     final response = await client.get(path,
         options: Options(headers: {
@@ -5187,7 +5241,8 @@ catch(e){
     return PaginatedResponse<List<PricingTypeListModel>>(
         items,
         response.data['data']['next'],
-        response.data['data']['count'].toString());
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']);
   }
 
   @override
@@ -5472,6 +5527,7 @@ catch(e){
   Future<DoubleResponse> percentageGp(int? id, String? gpType) async {
     String path = pricingPgPercentageApi;
     print("alallal" + id.toString());
+    print("alallal" + gpType.toString());
     try {
       print(path);
       final response = await client.post(
@@ -6731,5 +6787,48 @@ catch(e){
       print("itemsAk" + items.toString());
     });
     return items;
+  }
+
+  @override
+  Future<CostingPageCreationPostModel> getChannelCostingRead(int? id) async {
+    String path = readCostingApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("akshayaaas" + response.data['data']['costing_data'].toString());
+      CostingPageCreationPostModel dataa =
+      CostingPageCreationPostModel.fromJson(
+          response.data['data']['costing_data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the datasa error is"+e.toString());
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    CostingPageCreationPostModel dataa =
+    CostingPageCreationPostModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
   }
 }

@@ -170,10 +170,10 @@ class _HeirarchyTabScreenState extends State<HeirarchyTabScreen>with TickerProvi
               duration: Duration(microseconds: 1000),
               right: isClossed?-250:0,
               child: RihtDrawer()
-              ,
+
             )
           ],
-        )
+        ),
     );
 
   }

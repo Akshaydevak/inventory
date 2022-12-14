@@ -622,7 +622,7 @@ class _SellingPriceBasedPopUpCallState
                                 borderRadius:BorderRadius.circular(2),
 
                                 borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -753,8 +753,15 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -886,8 +893,15 @@ class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -1026,7 +1040,7 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                                 borderRadius:BorderRadius.circular(2),
 
                                 borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -1153,8 +1167,15 @@ class _VirtualStockTypePopupCallState extends State<VirtualStockTypePopupCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -1291,7 +1312,7 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                 if (widget.onAddNew != null) list.add("");
                 _controller = TextEditingController(text: label);
                 return Container(
-                  margin: EdgeInsets.only(top: 9, left: 9),
+                  margin: EdgeInsets.only(top: 14, left: 9),
                   child: TypeAheadFormField(
                     // hideKeyboard: true,
                     enabled: widget.enable,
@@ -1309,7 +1330,9 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                             border: InputBorder.none,
                             isDense: true,
                             // border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            suffixIcon: Container(
+                              margin: EdgeInsets.only(bottom: 20),
+                                child: Icon(Icons.keyboard_arrow_down)))),
                     onSuggestionSelected: (suggestion) {
                       print("suggestion" + suggestion.toString());
                       if (suggestion == "Add new")
@@ -1482,7 +1505,7 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
                             border: InputBorder.none,
                             isDense: true,
                             // border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       print("suggestion" + suggestion.toString());
                       if (suggestion == "Add new")
@@ -1621,7 +1644,7 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                                 borderRadius:BorderRadius.circular(2),
 
                                 borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -1762,7 +1785,7 @@ class _OrderedPersonRequestState extends State<OrderedPersonRequest> {
                         border: InputBorder.none,
                         isDense: true,
                         // border: OutlineInputBorder(),
-                        // suffixIcon: Icon(Icons.arrow_downward_outlined)
+                        suffixIcon: Icon(Icons.keyboard_arrow_down)
                       )),
                   onSuggestionSelected: (suggestion) {
                     print("suggestion" + suggestion.toString());
@@ -1909,7 +1932,7 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                           border: InputBorder.none,
                           isDense: true,
                           // border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     print("suggestion" + suggestion.toString());
                     if (suggestion == "Add new")
@@ -2052,10 +2075,17 @@ class _PurchaseInvoiceState extends State<PurchaseInvoices> {
                       ),
                       controller: _controller,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
+                          // border: InputBorder.none,
                           isDense: true,
-                          // border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                          enabledBorder:OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                          focusedBorder:   OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     print("suggestion" + suggestion.toString());
                     if (suggestion == "Add new")
@@ -2187,8 +2217,15 @@ class _SalesOrderTypePopUpCallState extends State<SalesOrderTypePopUpCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       print("WWWWWWWWWWWWWWWWWWWWWWWWWWWWwww");
                       if (suggestion == "Add new")
@@ -2319,8 +2356,15 @@ class _SalesOrderModePopUpCallState extends State<SalesOrderModePopUpCall> {
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
                     onSuggestionSelected: (suggestion) {
                       if (suggestion == "Add new")
                         widget.onAddNew!();
@@ -2438,47 +2482,50 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
 
                   if (widget.onAddNew != null) list.add("");
                   _controller = TextEditingController(text: label);
-                  return TypeAheadFormField(
-                    enabled: widget.enable,
-                    validator: (value) {
-                      if (value != null && value.isEmpty) {
-                        return "required";
-                      }
-                    },
-                    textFieldConfiguration: TextFieldConfiguration(
-                        controller: _controller,
-                        decoration: InputDecoration(
-                            isDense: true,
-                            border: InputBorder.none,
-                            suffixIcon: Icon(Icons.arrow_downward_outlined))),
-                    onSuggestionSelected: (suggestion) {
-                      if (suggestion == "Add new")
-                        widget.onAddNew!();
-                      else {
-                        widget.onSelection(onSellingBasedSelect(
-                            suggestion.toString(), data!.discountType!));
-                        // data.sellingPercntageBasedOn?.forEach((element) {
-                        //   if (element == suggestion)
-                        //     Variable.methodId = element.id;
-                        // });
-                      }
-                    },
-                    itemBuilder: (context, suggestion) {
-                      // if (suggestion == "Add new")
-                      //   return ListTile(
-                      //     leading: Icon(Icons.add_circle_outline_outlined),
-                      //     title: Text(suggestion.toString()),
-                      //   );
-                      return ListTile(
-                        ////leading: Icon(Icons.shopping_cart_outlined),
-                        title: Text(suggestion.toString()),
-                      );
-                    },
-                    suggestionsCallback: (String? value) async {
-                      return value == null || value.isEmpty
-                          ? list
-                          : search(value, list, widget.onAddNew);
-                    },
+                  return Container(
+                    margin: EdgeInsets.only(top: 13, left: 9),
+                    child: TypeAheadFormField(
+                      enabled: widget.enable,
+                      validator: (value) {
+                        if (value != null && value.isEmpty) {
+                          return "required";
+                        }
+                      },
+                      textFieldConfiguration: TextFieldConfiguration(
+                          controller: _controller,
+                          decoration: InputDecoration(
+                              isDense: true,
+                              border: InputBorder.none,
+                              suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                      onSuggestionSelected: (suggestion) {
+                        if (suggestion == "Add new")
+                          widget.onAddNew!();
+                        else {
+                          widget.onSelection(onSellingBasedSelect(
+                              suggestion.toString(), data!.discountType!));
+                          // data.sellingPercntageBasedOn?.forEach((element) {
+                          //   if (element == suggestion)
+                          //     Variable.methodId = element.id;
+                          // });
+                        }
+                      },
+                      itemBuilder: (context, suggestion) {
+                        // if (suggestion == "Add new")
+                        //   return ListTile(
+                        //     leading: Icon(Icons.add_circle_outline_outlined),
+                        //     title: Text(suggestion.toString()),
+                        //   );
+                        return ListTile(
+                          ////leading: Icon(Icons.shopping_cart_outlined),
+                          title: Text(suggestion.toString()),
+                        );
+                      },
+                      suggestionsCallback: (String? value) async {
+                        return value == null || value.isEmpty
+                            ? list
+                            : search(value, list, widget.onAddNew);
+                      },
+                    ),
                   );
                 },
               );
@@ -2891,7 +2938,7 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -3331,7 +3378,7 @@ class _BrandListPopUpCallState extends State<BrandListPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -3486,7 +3533,7 @@ class _MaterialListPopUpCall extends State<MaterialListPopUpCall> {
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
                         // border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -3643,7 +3690,7 @@ class _CostingMethodeTypePopUpCallPopUpCall
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
                         // border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -3800,7 +3847,7 @@ class _CostingCreateMethodePopUpCall
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
                         // border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -3954,7 +4001,7 @@ class _PricingGroupPopUpCall extends State<PricingGroupPopUpCall> {
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
                         // border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -4111,7 +4158,7 @@ class _PricingPopUpCall extends State<PricingPopUpCall> {
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
                           // border: OutlineInputBorder(),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -4276,7 +4323,7 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -4471,7 +4518,7 @@ class _VariantSerachPopUpCall extends State<VariantSerachPopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -4643,7 +4690,7 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -4802,7 +4849,7 @@ class _GroupPopUpCall extends State<GroupPopUpCall> {
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
                         // border: OutlineInputBorder(),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -4958,7 +5005,7 @@ class _StaticListPopUpCall extends State<StaticListPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -5112,7 +5159,7 @@ class _FrameWorkPopUpCallPopUpCall extends State<FrameWorkPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -5269,7 +5316,7 @@ class _UomgroupPopUpCall extends State<UomgroupPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -5424,7 +5471,7 @@ class _UomPopUpCall extends State<UomPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();
@@ -5534,7 +5581,7 @@ class _SalesUomPopUpCall extends State<SalesUomPopUpCall> {
                           color: Color(0xff3E4F5B).withOpacity(.06))),
                   isDense: true,
                   border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.more_horiz_rounded)),
+                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
             ),
             // errorLoader(widget.onAddNew),
             success: (data) {
@@ -5598,7 +5645,7 @@ class _SalesUomPopUpCall extends State<SalesUomPopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -5711,7 +5758,7 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
                           color: Color(0xff3E4F5B).withOpacity(.06))),
                   isDense: true,
                   border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.more_horiz_rounded)),
+                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
             ),
             // errorLoader(widget.onAddNew),
             success: (data) {
@@ -5775,7 +5822,7 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -5889,7 +5936,7 @@ class _StatePopUpCall extends State<StatePopUpCall> {
                           color: Color(0xff3E4F5B).withOpacity(.06))),
                   isDense: true,
                   border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.more_horiz_rounded)),
+                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
             ),
             // errorLoader(widget.onAddNew),
             success: (data) {
@@ -5953,7 +6000,7 @@ class _StatePopUpCall extends State<StatePopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -6069,7 +6116,7 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
                           color: Color(0xff3E4F5B).withOpacity(.06))),
                   isDense: true,
                   border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.more_horiz_rounded)),
+                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
             ),
             // errorLoader(widget.onAddNew),
             success: (data) {
@@ -6133,7 +6180,7 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
                               borderRadius: BorderRadius.circular(2),
                               borderSide: BorderSide(
                                   color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.more_horiz_rounded))),
+                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     if (suggestion == "Add new")
                       widget.onAddNew!();
@@ -6290,7 +6337,7 @@ class _SubcategoryPopUpCall extends State<SubcategoryPopUpCall> {
                             borderRadius: BorderRadius.circular(2),
                             borderSide: BorderSide(
                                 color: Color(0xff3E4F5B).withOpacity(.1))),
-                        suffixIcon: Icon(Icons.more_horiz_rounded))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
                 onSuggestionSelected: (suggestion) {
                   if (suggestion == "Add new")
                     widget.onAddNew!();

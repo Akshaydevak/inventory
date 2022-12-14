@@ -6,6 +6,7 @@ import 'package:inventory/Screens/GeneralScreen.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/channelStocktableread/channelsttocktableread_cubit.dart';
+import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/costingchannel_read_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/creation/costing_creation_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/cubit/unicost_costing_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/read/channelread_cubit.dart';
@@ -121,7 +122,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
         create: (context) => CostingCreationCubit(),
         ),
     BlocProvider(
-        create: (context) => ChannelreadCubit(),
+        create: (context) => CostingchannelReadCubit(),
         ),
   ],
   child:  MultiBlocListener(
@@ -175,7 +176,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
         // TODO: implement listener
       },
     ),
-    BlocListener<ChannelreadCubit, ChannelreadState>(
+    BlocListener<CostingchannelReadCubit, CostingchannelReadState>(
       listener: (context, state) {
         print("shifasssssssssssssssssssssss"+state.toString());
         state.maybeWhen(
@@ -496,7 +497,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                               channelTableSelcteddId=id;
 
                             });
-                              context.read<ChannelreadCubit>().getCostingRead(tableId);
+                              context.read<CostingchannelReadCubit>().getChannelCostingRead(tableId);
                               context.read<ListvraiantCubit>().getVariantList();
 
                               setState(() {
@@ -527,98 +528,101 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             channelId:id
                         ),
                         SizedBox(height: height * .13,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Button(Icons.delete, Colors.red,
-                                ctx: context,
-                                text: "DISCARD",
-                                onApply: () {
-                                  // if(updateCheck){
-                                  //   // clears();
-                                  //
-                                  //
-                                  // }
+                        Container(
+                          margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Button(Icons.delete, Colors.red,
+                                  ctx: context,
+                                  text: "DISCARD",
+                                  onApply: () {
+                                    // if(updateCheck){
+                                    //   // clears();
+                                    //
+                                    //
+                                    // }
 
-                                },
-                                height: 29,
-                                width: 90,
-                                labelcolor: Colors.red,
-                                iconColor: Colors.red,
-                                bdr: true),
-                            SizedBox(
-                              width: width * .008,
-                            ),
-                            Button(Icons.check, Colors.grey,
-                                ctx: context,
-                                text:select?"SAVE":"UPDATE",
-                                height: 29,
-                                Color: Color(0xff3E4F5B),
-                                width: 90,
-                                labelcolor: Colors.white,
-                                iconColor: Colors.white,
-                                onApply: () {
-                                  print(costingMethodController.text);
-                                  if(select){
+                                  },
+                                  height: 29,
+                                  width: 90,
+                                  labelcolor: Colors.red,
+                                  iconColor: Colors.red,
+                                  bdr: true),
+                              SizedBox(
+                                width: width * .008,
+                              ),
+                              Button(Icons.check, Colors.grey,
+                                  ctx: context,
+                                  text:select?"SAVE":"UPDATE",
+                                  height: 29,
+                                  Color: Color(0xff3E4F5B),
+                                  width: 90,
+                                  labelcolor: Colors.white,
+                                  iconColor: Colors.white,
+                                  onApply: () {
+                                    print(costingMethodController.text);
+                                    if(select){
 
-                                    CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                                      channelId: channelId,
-                                      channelCode:channelCode,
-                                      channelStockId: channelStockId,
-                                      variantId: veritiaclid,
-                                      variantCode: variantCode,
-                                      inventoryId: Variable.inventory_ID,
-                                      pricingGpType: pricingGptypeController.text,
-                                      createdBy: Variable.created_by,
-                                      pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                                      costingMethodId: int.tryParse(costingMethodController.text),
-                                      gpPercentage:
-                                      double.tryParse(gpPercentegeController.text),
+                                      CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                                        channelId: channelId,
+                                        channelCode:channelCode,
+                                        channelStockId: channelStockId,
+                                        variantId: veritiaclid,
+                                        variantCode: variantCode,
+                                        inventoryId: Variable.inventory_ID,
+                                        pricingGpType: pricingGptypeController.text,
+                                        createdBy: Variable.created_by,
+                                        pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                                        costingMethodId: int.tryParse(costingMethodController.text),
+                                        gpPercentage:
+                                        double.tryParse(gpPercentegeController.text),
 
-                                      // double.tryParse(gpPercentegeController.text),
-                                      unitCost:  double.tryParse(unitCostController.text),
-                                      sellingPrice:  double.tryParse(sellingPriceController.text),
+                                        // double.tryParse(gpPercentegeController.text),
+                                        unitCost:  double.tryParse(unitCostController.text),
+                                        sellingPrice:  double.tryParse(sellingPriceController.text),
 
-                                    );
-                                    print("the serching model is here${model}");
-                                    print("the serching model is here${model.gpPercentage}");
-                                    context.read<CostingCreationCubit>().postCosting(model);
+                                      );
+                                      print("the serching model is here${model}");
+                                      print("the serching model is here${model.gpPercentage}");
+                                      context.read<CostingCreationCubit>().postCosting(model);
+
+
+                                    }
+                                    else{
+
+                                      CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                                        createdBy: Variable.created_by,
+                                        pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                                        costingMethodId: int.tryParse(costingMethodController.text),
+                                        gpPercentage: double.tryParse(gpPercentegeController.text),
+                                        pricingGpType: pricingGptypeController.text,
+                                        unitCost:  double.tryParse(unitCostController.text),
+                                        sellingPrice:  double.tryParse(sellingPriceController.text),
+
+
+                                      );
+                                      print(model);
+                                      context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
+                                    }
+
+
+
+
+
+
+
+
+
 
 
                                   }
-                                  else{
-
-                                    CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                                      createdBy: Variable.created_by,
-                                      pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                                      costingMethodId: int.tryParse(costingMethodController.text),
-                                      gpPercentage: double.tryParse(gpPercentegeController.text),
-                                      pricingGpType: pricingGptypeController.text,
-                                      unitCost:  double.tryParse(unitCostController.text),
-                                      sellingPrice:  double.tryParse(sellingPriceController.text),
-
-
-                                    );
-                                    print(model);
-                                    context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
-                                  }
-
-
-
-
-
-
-
-
-
-
-
-                                }
-                            ),
-                            SizedBox(
-                              // width: width * .008,
-                            ),
-                          ],
+                              ),
+                              SizedBox(
+                                // width: width * .008,
+                              ),
+                            ],
+                          ),
                         ),
 
 

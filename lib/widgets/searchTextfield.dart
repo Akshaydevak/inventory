@@ -3,6 +3,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 
 class SearchTextfiled extends StatefulWidget {
   final Color color;
+  final Color suffixColor;
   final String hintText;
   final double h;
   final double w;
@@ -11,8 +12,9 @@ class SearchTextfiled extends StatefulWidget {
 
   final VoidCallback? onComplete;
   final VoidCallback? suffixOnComplete;
+  final VoidCallback? onTap;
   final TextEditingController ctrlr;
-  SearchTextfiled({required this.color,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=600});
+  SearchTextfiled({required this.color,this.onTap,this.suffixColor=Colors.black,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=600});
 
   @override
   State<SearchTextfiled> createState() => _SearchTextfiledState();
@@ -27,7 +29,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
        // margin: EdgeInsets.only(top:3,),
         width: widget.w,
         height: widget.h,
-        // color: Palette.white,
+        // color: ,
        // color:Color(0xFF423E3F),
         // padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 10),
         child: Theme(
@@ -40,6 +42,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
             controller: widget.ctrlr,
             maxLines: 1,
             autofocus: true,
+            onTap: widget.onTap,
 
             decoration: InputDecoration(
 
@@ -74,8 +77,8 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
                       // alignment: Alignment.center,
                       padding: const EdgeInsets.only(right: 10),
                       child: GestureDetector(
-                        child: const Icon(
-                          Icons.search,color: Colors.grey,
+                        child:  Icon(
+                          Icons.search,color: widget.suffixColor,
                         ),
                       ))):Container(
                   // color: Colors.red,

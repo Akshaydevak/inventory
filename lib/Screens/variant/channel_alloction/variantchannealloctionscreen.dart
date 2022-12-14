@@ -13,6 +13,9 @@ import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allo
 import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allocation_topscreen.dart';
 import 'package:inventory/Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
+import 'package:inventory/commonWidget/Textwidget.dart';
+import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -45,7 +48,7 @@ class _VariantChannelAllocationScreenState
   List<Category> channels1 = [];
   List<String> channelCodeList = [];
   TextEditingController itemsearch = TextEditingController();
-  int selectedVertical = 0;
+  int selectedVertical = 0;bool selectAll=false;
   var list;
   int? veritiaclid = 0;
   filterTable(List<bool?>selections){
@@ -76,11 +79,23 @@ class _VariantChannelAllocationScreenState
 
 
   }
+  selectUnSelect(){
+    for(var i=0;i<table.length;i++){
+      if(selectAll){
+        table[i]=table[i].copyWith(isActive: true);
+      }
+      else{
+        table[i]=table[i].copyWith(isActive: false);
+      }
+    }
+  }
 
   listAssign(List<ChannelTypeModel>table1, PaginatedResponse<dynamic> data) {
     setState(() {
       table = table1;
       paginated = data;
+      selectUnSelect();
+
     });
   }
   tableAssign(List<ChannelTypeModel>table1) {
@@ -306,36 +321,101 @@ class _VariantChannelAllocationScreenState
                                   SizedBox(
                                     height: h * .09,
                                   ),
-                                  Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Container(
-                                          margin: EdgeInsets.symmetric(horizontal: w * .02),
-                                          child: CustomDropDown(
-                                            border: true,
-                                            choosenValue: choosenValue,
-                                            onChange: (val) {
-                                              setState(() {
-                                                apiChecking = false;
-                                                choosenValue = val;
-                                              });
-                                              print(val);
-                                              context
-                                                  .read<ChanneltypelistCubit>()
-                                                  .getChannelTypeList(val);
-                                              // choosenValue=val;
-                                            },
-                                            items: items,
-                                          ),
+                                  Row(mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TextWidget(text: "Allocation Table"),
+                                      SizedBox(width: 5,),
+                                            Container(
+                                              // margin: EdgeInsets.symmetric(horizontal: w * .02),
+                                              child: CustomDropDown(
+                                                // border: true,
+                                                choosenValue: choosenValue,
+                                                onChange: (val) {
+                                                  setState(() {
+                                                    apiChecking = false;
+                                                    choosenValue = val;
+                                                  });
+                                                  print(val);
+                                                  context
+                                                      .read<ChanneltypelistCubit>()
+                                                      .getChannelTypeList(val);
+                                                  // choosenValue=val;
+                                                },
+                                                items: items,
+                                              ),
+                                            ),
+                                      Spacer(),
+                                      Container(
+                                        margin: EdgeInsets.only(top: h*.022,right:w *.0198),
+                                        child: Row(
+                                          children: [
+
+                                            CheckedBoxs(
+                                              hght: 30,
+                                              onSelection: (va){
+                                                setState(() {
+                                                  selectAll=!selectAll;
+                                                  print(table.length);
+                                                  selectUnSelect();
+                                                });
+
+
+                                              },
+                                              valueChanger: selectAll,
+                                            ),
+
+                                            Text(selectAll?"Unselect All":"Select All"),
+                                            SizedBox(width: w *.0198,)
+
+                                          ],
                                         ),
-                                      ]),
-                                  SizedBox(
-                                    height: 15,
+                                      )
+
+                                      // TextButtonLarge(
+                                      //
+                                      //   text: "Select All",
+                                      //   onPress: (){},
+                                      //
+                                      // )
+                                      // TextButton.icon(onPressed: (){}, icon: Icon(Icons.visibility), label:Text( "Preview", style: TextStyle(
+                                      //   // fontSize: 50,
+                                      //   decoration: TextDecoration.underline, // <-- SEE HERE
+                                      // ),),),
+
+                                    ],
                                   ),
+
+                                  // Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.end,
+                                  //     children: [
+                                  //       Container(
+                                  //         margin: EdgeInsets.symmetric(horizontal: w * .02),
+                                  //         child: CustomDropDown(
+                                  //           border: true,
+                                  //           choosenValue: choosenValue,
+                                  //           onChange: (val) {
+                                  //             setState(() {
+                                  //               apiChecking = false;
+                                  //               choosenValue = val;
+                                  //             });
+                                  //             print(val);
+                                  //             context
+                                  //                 .read<ChanneltypelistCubit>()
+                                  //                 .getChannelTypeList(val);
+                                  //             // choosenValue=val;
+                                  //           },
+                                  //           items: items,
+                                  //         ),
+                                  //       ),
+                                  //     ]),
+                                  // SizedBox(
+                                  //   height: 5,
+                                  // ),
                                   ChannelAllocationBottomTable(
                                     table: table,
                                       tableAssign:tableAssign,
                                   ),
+                                  SizedBox(height: 8,),
                                   tablePagination(
                                         () {
                                       apiChecking ?

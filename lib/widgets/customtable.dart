@@ -10,25 +10,28 @@ Widget customTable({
   double tableWidth = 1,
   TableBorder? border,
 }) =>
-    Table(
-      columnWidths: widths,
-      border: border ??
-          TableBorder(
-            verticalInside: BorderSide(
-                width: .5, color:   Color(0xff3E4F5B).withOpacity(.1), style: BorderStyle.solid),
-            horizontalInside: BorderSide(
-                width: .3,
-                color:   Color(0xff3E4F5B).withOpacity(.1),
-                // color: Colors.blue,
-                style: BorderStyle.solid),
-          ),
-      children: childrens,
+    Container(
+
+      child: Table(
+        columnWidths: widths,
+        border: border ??
+            TableBorder(
+              verticalInside: BorderSide(
+                  width: .5, color:   Color(0xff3E4F5B).withOpacity(.1), style: BorderStyle.solid),
+              horizontalInside: BorderSide(
+                  width: .3,
+                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                  // color: Colors.blue,
+                  style: BorderStyle.solid),
+            ),
+        children: childrens,
+      ),
     );
 
 Widget tableHeadtext(
     String label, {
       bool center=false,
-      double height = 43,
+      double height = 46,
       double? size,
       Color? textColor = Colors.white,
        Color? color =  Pellet.tableBlueHeaderPrint,
@@ -37,7 +40,7 @@ Widget tableHeadtext(
     Container(
       alignment: center?Alignment.topLeft:Alignment.topLeft,
       height: height,
-      padding: padding ?? EdgeInsets.only(left: 13,top: 12,bottom:2),
+      padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:5,right:  12),
       color: color,
       child: Text(
         label,
@@ -53,10 +56,10 @@ Widget textPadding(String label,
       FontWeight fontWeight = FontWeight.w100}) =>
     Container(
       height: height,
-      alignment: Alignment.center,
+      alignment: Alignment.topLeft,
 
       color: color,
-      padding: padding ?? EdgeInsets.fromLTRB(3, 3, 0, 0),
+      padding: padding ?? EdgeInsets.fromLTRB(15, 3, 0, 0),
       child:label=="0"||label=="null"?Text(''):Text(
         label,
         textAlign: TextAlign.left,

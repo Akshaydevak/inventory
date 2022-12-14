@@ -9,6 +9,7 @@ import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
 import 'package:inventory/widgets/customtable.dart';
+import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 
 class ProductTable extends StatefulWidget {
   final Storage? aboutProducts;
@@ -212,11 +213,13 @@ class ProductTableState extends State<ProductTable> {
                               // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                               onPress: () {
+                                onChange=true;
+
 
 
                                 setState(() {
                                   upDate[i]=!upDate[i];
-                                  if( upDate[i]==true){
+                                  if( upDateButton[i]==true){
                                     widget.storageTableEdit(
                                         type: "1", list: aboutProducts);
                                     upDateButton[i]=false;
@@ -373,7 +376,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
   TextEditingController value = TextEditingController();
   TextEditingController heading = TextEditingController();
   List<bool>upDate=[];
-  List<bool>upDateButton=[];
+  List<bool>upDateButton=List.from([]);
 
   List<TextEditingController> keyListTextEditingController = [];
   List<TextEditingController> valueListTextEditingController = [];
@@ -606,10 +609,12 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                     setState(() {
                                       upDate[i]=!upDate[i];
 
+
                                       if( upDateButton[i]==true){
                                         widget.productTableEdit(
                                             type: "1", list: productDetails);
                                         upDateButton[i]=false;
+
 
 
 
@@ -2254,11 +2259,12 @@ class IngrediansState extends State<Ingredians> {
                                   // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                                   onPress: () {
+                                    onChange=true;
 
 
                                     setState(() {
                                       upDate[i]=!upDate[i];
-                                      if( upDate[i]==true){
+                                      if( upDateButton[i]==true){
                                         widget.storageTableEdit(
                                             type: "2", list: aboutProducts);
                                         upDateButton[i]=false;
@@ -2595,11 +2601,12 @@ class _UsageDirectionState extends State<UsageDirection> {
                                   // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                                   onPress: () {
+                                    onChange=true;
 
 
                                     setState(() {
                                       upDate[i]=!upDate[i];
-                                      if( upDate[i]==true){
+                                      if( upDateButton[i]==true){
                                         widget.storageTableEdit(
                                             type: "3", list: aboutProducts);
                                         upDateButton[i]=false;
@@ -2935,11 +2942,12 @@ class _StoragesWidgetState extends State<StoragesWidget> {
                                   // icon: upDate[i]==true?Icons.coronavirus_rounded:null,
 
                                   onPress: () {
+                                    onChange=true;
 
 
                                     setState(() {
                                       upDate[i]=!upDate[i];
-                                      if( upDate[i]==true){
+                                      if( upDateButton[i]==true){
                                         widget.storageTableEdit(
                                             type: "4", list: aboutProducts);
                                         upDateButton[i]=false;
@@ -3747,53 +3755,83 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       //   },
                       // ),
                     ):textPadding(inforMationList?[i].ethinik ?? "",height: 48),
-                    TableCell(
+     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
-                      child: Container(
-                        height: 48,
+                      child:
+                      upDate[i]?        Container(
+                        height: 50,
                         color:upDate[i]?Colors.white:Colors.transparent,
+                        child: PopUpCall(
 
-                        // width: 100,
-                        child:upDate[i]? DropdownSearch<String>(
 
-                          dropdownSearchDecoration: InputDecoration(
+                          type: "ProducedCountryPopUpCall",
 
-                            border: InputBorder.none,
-                          ),
-
-                          // mode of dropdown
-                          mode: Mode.DIALOG,
-                          //to show search box
-                          showSearchBox: true,
-                          showSelectedItem: true,
-
-                          //list of dropdown items
-                          items: [
-                            "India",
-                            "USA",
-                            "Brazil",
-                            "Canada",
-                            "Australia",
-                            "Singapore"
-                          ],
-                          // label: "Country",
-                          onChanged: (String? va) {
-                            print(va);
-                            onChange=true;
-
-                            setState(() {
-                              upDateButton[i]=true;
-                            });
-
-                            inforMationList?[i]=inforMationList[i].copyWith(countries: va);
-                            print(inforMationList);
-                            widget.productFeaturesableAssign(
-                                list: inforMationList);
+                          value: inforMationList[i].countries ?? "",
+                          onchange: (vale) {
+                            // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
                           },
-                          //show selected item
-                          selectedItem: inforMationList[i].countries ?? "",
-                        ):  textPadding(inforMationList?[i].countries ?? "",height: 48),
-                      ),
+                          enable: true,
+                          onSelection: (VariantReadModel? va) {
+
+                                  print(va);
+                                  onChange=true;
+
+                                  setState(() {
+                                    upDateButton[i]=true;
+                                  });
+
+                                  inforMationList?[i]=inforMationList[i].copyWith(countries: va?.name??"");
+                                  print(inforMationList);
+                                  widget.productFeaturesableAssign(
+                                      list: inforMationList);
+                          },
+                        ),
+                      ):textPadding(inforMationList?[i].countries ?? "",height: 48),
+                      // Container(
+                      //   height: 48,
+                      //   color:upDate[i]?Colors.white:Colors.transparent,
+                      //
+                      //   // width: 100,
+                      //   child:upDate[i]? DropdownSearch<String>(
+                      //
+                      //     dropdownSearchDecoration: InputDecoration(
+                      //
+                      //       border: InputBorder.none,
+                      //     ),
+                      //
+                      //     // mode of dropdown
+                      //     mode: Mode.DIALOG,
+                      //     //to show search box
+                      //     showSearchBox: true,
+                      //     showSelectedItem: true,
+                      //
+                      //     //list of dropdown items
+                      //     items: [
+                      //       "India",
+                      //       "USA",
+                      //       "Brazil",
+                      //       "Canada",
+                      //       "Australia",
+                      //       "Singapore"
+                      //     ],
+                      //     // label: "Country",
+                      //     onChanged: (String? va) {
+                      //       print(va);
+                      //       onChange=true;
+                      //
+                      //       setState(() {
+                      //         upDateButton[i]=true;
+                      //       });
+                      //
+                      //       inforMationList?[i]=inforMationList[i].copyWith(countries: va);
+                      //       print(inforMationList);
+                      //       widget.productFeaturesableAssign(
+                      //           list: inforMationList);
+                      //     },
+                      //     //show selected item
+                      //     selectedItem: inforMationList[i].countries ?? "",
+                      //   ):  textPadding(inforMationList?[i].countries ?? "",height: 48),
+                      // ),
                     ),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
@@ -3946,45 +3984,70 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
 
 
                 ),*/
-                TableCell(
-                  verticalAlignment: TableCellVerticalAlignment.middle,
-                  child: Container(
-                    // width: 100,
-                    child: DropdownSearch<String>(
-                      dropdownSearchDecoration: InputDecoration(
-                        border: InputBorder.none,
-                      ),
 
-                      // mode of dropdown
-                      mode: Mode.DIALOG,
-                      //to show search box
-                      showSearchBox: true,
-                      showSelectedItem: true,
 
-                      //list of dropdown items
-                      items: [
-                        "India",
-                        "USA",
-                        "Brazil",
-                        "Canada",
-                        "Australia",
-                        "Singapore"
-                      ],
-                      // label: "Country",
-                      onChanged: (String? va) {
-                        onChange = true;
-                        setState(() {
-                          countryController?.text = va ?? "";
-                          print("weldone ");
-                          print(
-                              " countryController?.text${countryController?.text}");
-                        });
-                      },
-                      //show selected item
-                      // selectedItem: "India",
-                    ),
-                  ),
+                PopUpCall(
+
+
+                  type: "ProducedCountryPopUpCall",
+
+                  value: countryController.text,
+                  onchange: (vale) {
+                    // context.read<Listbrand2Cubit>().searchSlotSectionPageList(vale);
+                  },
+                  enable: true,
+                  onSelection: (VariantReadModel? va) {
+                    onChange=true;
+                    setState(() {
+                      countryController?.text = va?.name ?? "";
+
+                      setState(() {});
+
+                      // onChange = true;
+                      // orderType.text = va!;
+                    });
+                  },
                 ),
+                // TableCell(
+                //   verticalAlignment: TableCellVerticalAlignment.middle,
+                //   child: Container(
+                //     // width: 100,
+                //     child:
+                //     DropdownSearch<String>(
+                //       dropdownSearchDecoration: InputDecoration(
+                //         border: InputBorder.none,
+                //       ),
+                //
+                //       // mode of dropdown
+                //       mode: Mode.DIALOG,
+                //       //to show search box
+                //       showSearchBox: true,
+                //       showSelectedItem: true,
+                //
+                //       //list of dropdown items
+                //       items: [
+                //         "India",
+                //         "USA",
+                //         "Brazil",
+                //         "Canada",
+                //         "Australia",
+                //         "Singapore"
+                //       ],
+                //       // label: "Country",
+                //       onChanged: (String? va) {
+                //         onChange = true;
+                //         setState(() {
+                //           countryController?.text = va ?? "";
+                //           print("weldone ");
+                //           print(
+                //               " countryController?.text${countryController?.text}");
+                //         });
+                //       },
+                //       //show selected item
+                //       // selectedItem: "India",
+                //     ),
+                //   ),
+                // ),
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: UnderLinedInput(
@@ -3995,7 +4058,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                 TableCell(
                   verticalAlignment: TableCellVerticalAlignment.middle,
                   child: TableTextButton(
-                    label: "Add",
+                    label: "Save",
                     onPress: () {
                       setState(() {
                         upDate.add(false);

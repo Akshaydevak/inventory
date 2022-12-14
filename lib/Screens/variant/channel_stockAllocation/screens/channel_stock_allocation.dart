@@ -461,6 +461,7 @@ if(addVirtual==null){
                           SizedBox(height: 30,),
                           Container(
                             height: height*.08,
+                            margin: EdgeInsets.symmetric(horizontal:width *.0155 ),
                             child: ListView.separated(
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {

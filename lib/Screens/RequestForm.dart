@@ -944,10 +944,10 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                         ) )
                                       ],
                                     ),
-                                    Scrollbar(
+                                    CustomScrollBar(
                                       controller: scontroller,
-                                      isAlwaysShown: true,
-                                      child: Container(
+
+                                      childs: Container(
 
                                         color: Colors.white,
                                         alignment: Alignment.topRight,
@@ -963,11 +963,12 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
 
+
                                                 SingleChildScrollView(
                                                   child: Container(
                                                     // height: 500,
                                                     width:  2200,
-                                                    padding: EdgeInsets.all(10),
+                                                    // padding: EdgeInsets.all(10),
                                                     child: customTable(
 
                                                       tableWidth: .5,
@@ -1877,11 +1878,11 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
                                                                   TableCell(
                                                                     verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                    child: Checkbox(
-                                                                      value: table[i]
+                                                                    child: CheckedBoxs(
+                                                                      valueChanger: table[i]
                                                                           .isActive==null?false:table[i]
                                                                           .isActive,
-                                                                      onChanged: (bool?value) {
+                                                                      onSelection: (bool?value) {
                                                                         bool? isActive = table[i].isActive;
                                                                         setState(() {
                                                                           updateCheck=true;
@@ -1898,57 +1899,61 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                                       },
                                                                     ),
                                                                   ),
-                                                                  TableTextButton(label:table[i].updateCheck==true?'Update':"",
-                                                                  onPress: (){
-                                                                    var Vamount = table[i].variableAmount??0;
-                                                                    var variant = table[i].variantId??0;
-                                                                    var mins = table[i].minimumQty??0;
-                                                                    var maxs = table[i].maximumQty??0;
-                                                                    var vat = table[i].vat??0;
 
-                                                                    var excess = table[i].excessTax??0;
-                                                                    print("excess" + excess.toString());
-                                                                    var unitcosts = table[i].unitCost??0;
-                                                                    var qty = table[i].requestedQty??0;
-                                                                    var foc = table[i].foc??0;
-                                                                    var dis = table[i].discount??0;
-                                                                    if(variant=="null"||qty==0||unitcosts==0||foc==0||vat==0){
-                                                                      context.showSnackBarError("please fill all the fields");
-                                                                    }
-                                                                    else if(qty==0||qty==""){
-                                                                      context.showSnackBarError(
-                                                                          "the requested quantity not be 0 or empty");
+                                                                  TableCell(
+                                                                    verticalAlignment: TableCellVerticalAlignment.middle,
+                                                                    child: TableTextButton(label:table[i].updateCheck==true?'Update':"",
+                                                                    onPress: (){
+                                                                      var Vamount = table[i].variableAmount??0;
+                                                                      var variant = table[i].variantId??0;
+                                                                      var mins = table[i].minimumQty??0;
+                                                                      var maxs = table[i].maximumQty??0;
+                                                                      var vat = table[i].vat??0;
 
-                                                                    }
-                                                                    else if(qty!<foc!){
-                                                                      context.showSnackBarError("the received qty allways greater than  foc");
+                                                                      var excess = table[i].excessTax??0;
+                                                                      print("excess" + excess.toString());
+                                                                      var unitcosts = table[i].unitCost??0;
+                                                                      var qty = table[i].requestedQty??0;
+                                                                      var foc = table[i].foc??0;
+                                                                      var dis = table[i].discount??0;
+                                                                      if(variant=="null"||qty==0||unitcosts==0||foc==0||vat==0){
+                                                                        context.showSnackBarError("please fill all the fields");
+                                                                      }
+                                                                      else if(qty==0||qty==""){
+                                                                        context.showSnackBarError(
+                                                                            "the requested quantity not be 0 or empty");
 
-                                                                    }
-                                                                    else if(mins>maxs){
-                                                                      context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
-                                                                    }
-                                                                    else{
-                                                                      updateCheck=false;
-                                                                      addition();
-                                                                      table[i] = table[i].copyWith(updateCheck: false);
-                                                                      setState(() {
+                                                                      }
+                                                                      else if(qty!<foc!){
+                                                                        context.showSnackBarError("the received qty allways greater than  foc");
 
-                                                                      });
+                                                                      }
+                                                                      else if(mins>maxs){
+                                                                        context.showSnackBarError("the minimum qty  allways less than than  maximum qty");
+                                                                      }
+                                                                      else{
+                                                                        updateCheck=false;
+                                                                        addition();
+                                                                        table[i] = table[i].copyWith(updateCheck: false);
+                                                                        setState(() {
 
-                                                                      unitcost2= 0;
-                                                                      grands = 0;
-                                                                      actualValue = 0;
-                                                                      vatValue = 0;
-                                                                      discountValue = 0;
-                                                                      focValue =0;
-                                                                      VatableValue = 0;
-                                                                      excessTAxValue = 0;
-                                                                    }
+                                                                        });
 
-                                                                  setState(() {
+                                                                        unitcost2= 0;
+                                                                        grands = 0;
+                                                                        actualValue = 0;
+                                                                        vatValue = 0;
+                                                                        discountValue = 0;
+                                                                        focValue =0;
+                                                                        VatableValue = 0;
+                                                                        excessTAxValue = 0;
+                                                                      }
 
-                                                                  });
-                                                                  },)
+                                                                    setState(() {
+
+                                                                    });
+                                                                    },),
+                                                                  )
 
                                                                 ]),],
                                                         TableRow(
@@ -2635,122 +2640,131 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                                         18: FlexColumnWidth(2),
                                                         19: FlexColumnWidth(2),
                                                         20: FlexColumnWidth(2),
-                                                        21: FlexColumnWidth(2.4),
+                                                        21: FlexColumnWidth(3),
 
                                                       },
                                                     ),
                                                   ),
                                                 ),
+                                                SizedBox(height: 20,)
 
                                               ],
                                             ),
                                         ),
                                       ),
                                     ),
-                                    SizedBox(height: 20,),
-                                    Row(
-                                      children: [
-                                        Spacer(),
-                                        Button(Icons.delete, Colors.red,ctx: context,
-                                            bdr: true,
-                                            onApply: (){print("Akkk");
-                                            if(select){
-                                              clear();
-                                              updateCheck=false;
-                                              table.clear();
-                                              setState(() {
+                                    SizedBox(height: 30,),
+                                    SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
+                                      saveFunction: (){},
+                                      discardFunction: (){},
 
-                                              });
-                                            }
-                                            else{
-                                              showDailogPopUp(
-                                                  context,
-                                                  ConfirmationPopup(
-                                                    // table:table,
-                                                    // clear:clear(),
-                                                    verticalId:veritiaclid ,
-                                                    onPressed:(){
-                                                      print("akshay");
-                                                      Navigator.pop(context);
-                                                     context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
-
-                                                    },
-
-
-                                                  ));
-
-                                            }
-
-                                            },
-                                        text: "DISCARD",height: 29,
-                                        width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                        SizedBox(width: width*.008,),
-
-                    InkWell(
-                      onTap: () {
-                        if(updateCheck){
-                          context.showSnackBarError("please click the update button ");
-                        }
-                        else{
-                          PurchaseOrderPost model =
-                          PurchaseOrderPost(
-                              purchaseOrderType: orderType.text??"",
-                              orderedPerson:orderedPersonController.text??"",
-                              iventoryId: Variable.inventory_ID,
-                              address1: "akshay",
-                              address2: "anmaika",
-                              discount:double.tryParse( discountController.text),
-                              plannedRecieptDate: plannedRecieptDate.text??"",
-                              promisedReceiptdate:promisedRecieptDate.text??"",
-                              note: noteController.text??"",
-                              remarks: remarksController.text??"",
-                              unitcost: double.tryParse(unitCostController.text),
-                              excessTax: double.tryParse(excessTaxController.text),
-                              actualCost: double.tryParse(actualCostController.text),
-                              vat: double.tryParse(vatController.text),
-                              grandTotal: double.tryParse(grandTotalController.text),
-                              variableAmount: double.tryParse(vatableAmountController.text),
-                              foc: double.tryParse(focController.text),
-                              createdBy: "12",
-                              edited_by: "anvar",
-
-                              orderLines: table
-
-                          );
-                          print("sPBHSSMODEL"+model.toString());
-
-                          // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
-                          select? context.read<RequestformpostCubit>().postRequest(model):
-                          context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
-                        }
-
-
-
-                      },
-                      child: Container(
-                        color: Color(0xff3E4F5B),
-                        alignment: Alignment.center,
-                        height: 29,
-                        width: 90,
-
-                        child: Row(
-                          mainAxisAlignment:
-                          MainAxisAlignment.center,
-                          children: [
-
-                            Text(
-                              select?"SAVE":"UPDATE",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          ],
-                        ), //BoxDecoration
-                      ),
-                    ),
-                                        SizedBox(width: width*.008,),
-                                      ],
-                                    )
+                                    ),
+                    //                 Container(
+                    //                     margin: EdgeInsets.only(right:width*.011,),
+                    //                   child: Row(
+                    //                     children: [
+                    //                       Spacer(),
+                    //                       Button(Icons.delete, Colors.red,ctx: context,
+                    //                           bdr: true,
+                    //                           onApply: (){print("Akkk");
+                    //                           if(select){
+                    //                             clear();
+                    //                             updateCheck=false;
+                    //                             table.clear();
+                    //                             setState(() {
+                    //
+                    //                             });
+                    //                           }
+                    //                           else{
+                    //                             showDailogPopUp(
+                    //                                 context,
+                    //                                 ConfirmationPopup(
+                    //                                   // table:table,
+                    //                                   // clear:clear(),
+                    //                                   verticalId:veritiaclid ,
+                    //                                   onPressed:(){
+                    //                                     print("akshay");
+                    //                                     Navigator.pop(context);
+                    //                                    context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
+                    //
+                    //                                   },
+                    //
+                    //
+                    //                                 ));
+                    //
+                    //                           }
+                    //
+                    //                           },
+                    //                       text: "DISCARD",height: 29,
+                    //                       width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                    //                       SizedBox(width: width*.008,),
+                    //
+                    // InkWell(
+                    //   onTap: () {
+                    //     if(updateCheck){
+                    //       context.showSnackBarError("please click the update button ");
+                    //     }
+                    //     else{
+                    //       PurchaseOrderPost model =
+                    //       PurchaseOrderPost(
+                    //           purchaseOrderType: orderType.text??"",
+                    //           orderedPerson:orderedPersonController.text??"",
+                    //           iventoryId: Variable.inventory_ID,
+                    //           address1: "akshay",
+                    //           address2: "anmaika",
+                    //           discount:double.tryParse( discountController.text),
+                    //           plannedRecieptDate: plannedRecieptDate.text??"",
+                    //           promisedReceiptdate:promisedRecieptDate.text??"",
+                    //           note: noteController.text??"",
+                    //           remarks: remarksController.text??"",
+                    //           unitcost: double.tryParse(unitCostController.text),
+                    //           excessTax: double.tryParse(excessTaxController.text),
+                    //           actualCost: double.tryParse(actualCostController.text),
+                    //           vat: double.tryParse(vatController.text),
+                    //           grandTotal: double.tryParse(grandTotalController.text),
+                    //           variableAmount: double.tryParse(vatableAmountController.text),
+                    //           foc: double.tryParse(focController.text),
+                    //           createdBy: "12",
+                    //           edited_by: "anvar",
+                    //
+                    //           orderLines: table
+                    //
+                    //       );
+                    //       print("sPBHSSMODEL"+model.toString());
+                    //
+                    //       // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
+                    //       select? context.read<RequestformpostCubit>().postRequest(model):
+                    //       context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
+                    //     }
+                    //
+                    //
+                    //
+                    //   },
+                    //   child: Container(
+                    //     color: Color(0xff3E4F5B),
+                    //     alignment: Alignment.center,
+                    //     height: 29,
+                    //     width: 90,
+                    //
+                    //     child: Row(
+                    //       mainAxisAlignment:
+                    //       MainAxisAlignment.center,
+                    //       children: [
+                    //
+                    //         Text(
+                    //           select?"SAVE":"UPDATE",
+                    //           style: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold),
+                    //         )
+                    //       ],
+                    //     ), //BoxDecoration
+                    //   ),
+                    // ),
+                    //                       SizedBox(width: width*.008,),
+                    //                     ],
+                    //                   ),
+                    //                 )
 
                                   ],
                                 ),

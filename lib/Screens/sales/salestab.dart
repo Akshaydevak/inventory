@@ -103,7 +103,7 @@ class _SalesScreenState extends State<SalesScreen>with TickerProviderStateMixin 
                                 // padding: EdgeInsets.only(bottom: 10),
 
                                 controller: _tabController,
-                                tabs: [ Text("general",style: TextStyle(color: Colors.black,fontSize: 13),),
+                                tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
                                   Text("Sales Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
                                 ]),
                           ),

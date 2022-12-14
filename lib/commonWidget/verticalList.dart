@@ -137,63 +137,63 @@ class _VerticalListState extends State<VerticalList> {
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: width * 0.009,
-                              right: width * 0.007,
-                            ),
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RectangleContainer(
-                                    "asset/rect1.png", context),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                Container(
-                                  color: Color(0xffFFFFFF),
-
-                                  height: width * .0197,
-                                  width: width * .111,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: width * .001,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: width * .007,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Add a Varient",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: width * .010,
-                                              overflow:
-                                              TextOverflow.ellipsis),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                RectangleContainer(
-                                    "asset/rect2.png", context),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: height * .015,
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     left: width * 0.009,
+                          //     right: width * 0.007,
+                          //   ),
+                          //   child: Row(
+                          //     //mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       RectangleContainer(
+                          //           "asset/rect1.png", context),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       Container(
+                          //         color: Color(0xffFFFFFF),
+                          //
+                          //         height: width * .0197,
+                          //         width: width * .111,
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(
+                          //               width: width * .001,
+                          //             ),
+                          //             Icon(
+                          //               Icons.add,
+                          //               color: Colors.black,
+                          //               size: 14,
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * .007,
+                          //             ),
+                          //             Container(
+                          //               child: Text(
+                          //                 "Add a Varient",
+                          //                 style: TextStyle(
+                          //                     color: Colors.black,
+                          //                     fontSize: width * .010,
+                          //                     overflow:
+                          //                     TextOverflow.ellipsis),
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       RectangleContainer(
+                          //           "asset/rect2.png", context),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: height * .015,
+                          // ),
 
                           Expanded(
                               child: Container(
@@ -347,63 +347,63 @@ class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList>
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: width * 0.009,
-                              right: width * 0.007,
-                            ),
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RectangleContainer(
-                                    "asset/rect1.png", context),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                Container(
-                                  color: Color(0xffFFFFFF),
-
-                                  height: width * .0197,
-                                  width: width * .111,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: width * .001,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: width * .007,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Add a Varient",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: width * .010,
-                                              overflow:
-                                              TextOverflow.ellipsis),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                RectangleContainer(
-                                    "asset/rect2.png", context),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: height * .015,
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     left: width * 0.009,
+                          //     right: width * 0.007,
+                          //   ),
+                          //   child: Row(
+                          //     //mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       RectangleContainer(
+                          //           "asset/rect1.png", context),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       Container(
+                          //         color: Color(0xffFFFFFF),
+                          //
+                          //         height: width * .0197,
+                          //         width: width * .111,
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(
+                          //               width: width * .001,
+                          //             ),
+                          //             Icon(
+                          //               Icons.add,
+                          //               color: Colors.black,
+                          //               size: 14,
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * .007,
+                          //             ),
+                          //             Container(
+                          //               child: Text(
+                          //                 "Add a Varient",
+                          //                 style: TextStyle(
+                          //                     color: Colors.black,
+                          //                     fontSize: width * .010,
+                          //                     overflow:
+                          //                     TextOverflow.ellipsis),
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       RectangleContainer(
+                          //           "asset/rect2.png", context),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: height * .015,
+                          // ),
 
                           Expanded(
                               child: Container(
@@ -1707,25 +1707,6 @@ class _CostingTypeVerticalListState extends State<CostingTypeVerticalList> {
       // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
       child: Builder(
           builder: (context) {
-            return BlocConsumer<ListvraiantCubit, ListvraiantState>(
-              listener: (context, state) {
-                print("this portion is working");
-                state.maybeWhen(orElse:(){},
-                    error: (){
-                      print("error");
-                    },
-                    success: (list){
-                      print("listtt"+list.toString());
-                      result=list.data;setState(() {
-                        print("Here is the result");
-                        print(result);
-
-                      });
-
-                    }
-                );
-              },
-              builder: (context, state) {
                 return Container(
                   height: double.infinity,
                   width: width * .112,
@@ -1838,8 +1819,7 @@ class _CostingTypeVerticalListState extends State<CostingTypeVerticalList> {
                     ),
                   ),
                 );
-              },
-            );
+
           }
       ),
 
@@ -2871,149 +2851,128 @@ class _StaticVerticalListState extends State<StaticVerticalList> {
     double width = MediaQuery.of(context).size.width;
 
     vm = Provider.of<NavigationProvider>(context);
-    return BlocProvider(
-  create: (context) => ListstaticCubit(),
-  child: Container(
-      //     child: BlocProvider(
-      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
-      child: Builder(
-          builder: (context) {
-            return BlocConsumer<ListstaticCubit, ListstaticState>(
-              listener: (context, state) {
-                print("this portion is working");
-                state.maybeWhen(orElse:(){},
-                    error: (){
-                      print("error");
-                    },
-                    success: (list){
-                      print("listtt"+list.toString());
-                      result=list.data;setState(() {
-                        print("Here is the result");
-                        print(result);
+    return Container(
+        //     child: BlocProvider(
+        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+        child: Builder(
+            builder: (context) {
 
-                      });
-
-                    }
-                );
-              },
-              builder: (context, state) {
-                return Container(
-                  height: double.infinity,
-                  width: width * .112,
-                  margin: EdgeInsets.all(10),
-                  child:
-                  Visibility(
-                    visible:  !vm.isCollapsed,
-                    child: Container(
-                      height: height,
-                      // height: double.minPositive,
-                      width: width * .112,
-                      //width: 232,
-                      color: Color(0xffEDF1F2),
-                      child: Column(
-                        children: [
-                          Container(
-                              margin: EdgeInsets.all(5),
-                              child:
-                              SearchTextfiled(
-                                color: Color(0xffFAFAFA),
-                                hintText: "Search...",
-                                ctrlr:widget. itemsearch,
-                                onChanged: (va) {
-                                  print("searching case"+va.toString());
-                                  context
-                                      .read<ListstaticCubit>()
-                                      .searchStaticPageList(widget.itemsearch.text);
-                                  if(va==""){
+                  return Container(
+                    height: double.infinity,
+                    width: width * .112,
+                    margin: EdgeInsets.all(10),
+                    child:
+                    Visibility(
+                      visible:  !vm.isCollapsed,
+                      child: Container(
+                        height: height,
+                        // height: double.minPositive,
+                        width: width * .112,
+                        //width: 232,
+                        color: Color(0xffEDF1F2),
+                        child: Column(
+                          children: [
+                            Container(
+                                margin: EdgeInsets.all(5),
+                                child:
+                                SearchTextfiled(
+                                  color: Color(0xffFAFAFA),
+                                  hintText: "Search...",
+                                  ctrlr:widget. itemsearch,
+                                  onChanged: (va) {
+                                    print("searching case"+va.toString());
                                     context
                                         .read<ListstaticCubit>()
-                                        .getStaticList();
+                                        .searchStaticPageList(widget.itemsearch.text);
+                                    if(va==""){
 
-                                  }
+                                      context
+                                          .read<ListstaticCubit>()
+                                          .getStaticList();
 
-                                },
-                              )
-                          ),
-                          SizedBox(
-                            height:
-                            MediaQuery.of(context).size.height * .008,
-                          ),
+                                    }
 
-
-                          Expanded(
-                              child: Container(
-                                  height: 0,
-                                  child: ListView.separated(
-
+                                  },
+                                )
+                            ),
+                            SizedBox(
+                              height:
+                              MediaQuery.of(context).size.height * .008,
+                            ),
 
 
-                                    separatorBuilder: (context, index) {
+                            Expanded(
+                                child: Container(
+                                    height: 0,
+                                    child: ListView.separated(
 
-                                      return Divider(
-                                        height: 0,
-                                        color: Color(0xff2B3944)
-                                            .withOpacity(0.3),
-                                        // thickness: 1,
-                                      );
-                                    },
-                                    physics: ScrollPhysics(),
-                                    controller: controller,
-                                    itemBuilder: (context, index) {
-                                      return AutoScrollTag(
-                                          highlightColor: Colors.red,
-                                          controller: controller,
-                                          key: ValueKey(index),
-                                          index: index,
-                                          child: ItemCard(
+
+
+                                      separatorBuilder: (context, index) {
+
+                                        return Divider(
+                                          height: 0,
+                                          color: Color(0xff2B3944)
+                                              .withOpacity(0.3),
+                                          // thickness: 1,
+                                        );
+                                      },
+                                      physics: ScrollPhysics(),
+                                      controller: controller,
+                                      itemBuilder: (context, index) {
+                                        return AutoScrollTag(
+                                            highlightColor: Colors.red,
+                                            controller: controller,
+                                            key: ValueKey(index),
                                             index: index,
-                                            selectedVertical:widget. selectedVertical,
-                                            item: widget.result[index].name,
-                                            id:widget. result[index]
-                                                .id
-                                                .toString(),
-                                            onClick: () {
-                                              widget.ontap( index);
+                                            child: ItemCard(
+                                              index: index,
+                                              selectedVertical:widget. selectedVertical,
+                                              item: widget.result[index].name,
+                                              id:widget. result[index]
+                                                  .id
+                                                  .toString(),
+                                              onClick: () {
+                                                widget.ontap( index);
 
-                                            },
-                                          ));
-                                    },
-                                    itemCount: widget.result.length,
-                                  )
+                                              },
+                                            ));
+                                      },
+                                      itemCount: widget.result.length,
+                                    )
 
 
-                              )),
-                          tablePagination(
-                                () => context
-                                .read<ListstaticCubit>()
-                                .refresh(),
-                            back: widget.list?.previousUrl == null
-                                ? null
-                                : () {
-                              context
+                                )),
+                            tablePagination(
+                                  () => context
                                   .read<ListstaticCubit>()
-                                  .previuosslotSectionPageList();
-                            },
-                            next: widget.list?.nextPageUrl == null
-                                ? null
-                                : () {
-                              // print(data.nextPageUrl);
-                              context
-                                  .read<ListstaticCubit>()
-                                  .nextslotSectionPageList();
-                            },
-                          )
-                        ],
+                                  .refresh(),
+                              back: widget.list?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
+                                    .read<ListstaticCubit>()
+                                    .previuosslotSectionPageList();
+                              },
+                              next: widget.list?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<ListstaticCubit>()
+                                    .nextslotSectionPageList();
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                );
-              },
-            );
-          }
-      ),
+                  );
 
-    ),
-);
+            }
+        ),
+
+      );
 
   }
 }
@@ -3254,151 +3213,130 @@ class _CategoryVerticalListState extends State<CategoryVerticalList> {
     double width = MediaQuery.of(context).size.width;
 
     vm = Provider.of<NavigationProvider>(context);
-    return BlocProvider(
-      create: (context) => CategorylistCubit(),
-      child: Container(
-        //     child: BlocProvider(
-        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
-        child: Builder(
-            builder: (context) {
-              return BlocConsumer<CategorylistCubit, CategorylistState>(
-                listener: (context, state) {
-                  print("this portion is working");
-                  state.maybeWhen(orElse:(){},
-                      error: (){
-                        print("error");
-                      },
-                      success: (list){
-                        print("listtt"+list.toString());
-                        result=list.data;setState(() {
-                          print("Here is the result");
-                          print(result);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+
+                return Container(
+                  height: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  child:
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .112,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+
+                                  context
+                                      .read<CategorylistCubit>()
+                                      .searchCategoryist(widget.itemsearch.text,type:"all" );
+                                  setState(() {
+
+                                  });
+                                  if(va==""){
+                                    context.read<CategorylistCubit>().getCategoryist(type: "all");
+                                    setState(() {
+
+                                    });
+
+                                  }
+
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
 
 
-                        });
-
-                      }
-                  );
-                },
-                builder: (context, state) {
-                  return Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.all(10),
-                    child:
-                    Visibility(
-                      visible:  !vm.isCollapsed,
-                      child: Container(
-                        height: height,
-                        // height: double.minPositive,
-                        width: width * .112,
-                        //width: 232,
-                        color: Color(0xffEDF1F2),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(5),
-                                child:
-                                SearchTextfiled(
-                                  color: Color(0xffFAFAFA),
-                                  hintText: "Search...",
-                                  ctrlr:widget. itemsearch,
-                                  onChanged: (va) {
-                                    print("searching case"+va.toString());
-                                    context
-                                        .read<CategorylistCubit>()
-                                        .searchCategoryist(widget.itemsearch.text,);
-                                    if(va==""){
-                                      context
-                                          .read<CategorylistCubit>()
-                                          .getCategoryist();
-                                      setState(() {
-
-                                      });
-
-                                    }
-
-                                  },
-                                )
-                            ),
-                            SizedBox(
-                              height:
-                              MediaQuery.of(context).size.height * .008,
-                            ),
-
-
-                            Expanded(
-                                child: Container(
-                                    height: 0,
-                                    child: ListView.separated(
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
 
 
 
-                                      separatorBuilder: (context, index) {
+                                    separatorBuilder: (context, index) {
 
-                                        return Divider(
-                                          height: 0,
-                                          color: Color(0xff2B3944)
-                                              .withOpacity(0.3),
-                                          // thickness: 1,
-                                        );
-                                      },
-                                      physics: ScrollPhysics(),
-                                      controller: controller,
-                                      itemBuilder: (context, index) {
-                                        return AutoScrollTag(
-                                            highlightColor: Colors.red,
-                                            controller: controller,
-                                            key: ValueKey(index),
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
                                             index: index,
-                                            child: ItemCard(
-                                              index: index,
-                                              selectedVertical:widget. selectedVertical,
-                                              item: widget.result[index].name,
-                                              id:widget. result[index]
-                                                  .id
-                                                  .toString(),
-                                              onClick: () {
-                                                widget.ontap( index);
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
 
-                                              },
-                                            ));
-                                      },
-                                      itemCount: widget.result.length,
-                                    )
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
 
 
-                                )),
-                            tablePagination(
-                                  () => context
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<Listbrand2Cubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<Listbrand2Cubit>()
-                                  .refresh(),
-                              back: widget.list?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next: widget.list?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            )
-                          ],
-                        ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            }
-        ),
+                  ),
+                );
 
+          }
       ),
+
     );
 
   }
@@ -3447,147 +3385,124 @@ class _GroupVerticalListState extends State<GroupVerticalList> {
     double width = MediaQuery.of(context).size.width;
 
     vm = Provider.of<NavigationProvider>(context);
-    return BlocProvider(
-      create: (context) => GrouplistCubit(),
-      child: Container(
-        //     child: BlocProvider(
-        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
-        child: Builder(
-            builder: (context) {
-              return BlocConsumer<GrouplistCubit, GrouplistState>(
-                listener: (context, state) {
-                  print("this portion is working");
-                  state.maybeWhen(orElse:(){},
-                      error: (){
-                        print("error");
-                      },
-                      success: (list){
-                        print("listtt"+list.toString());
-                        result=list.data;setState(() {
-                          print("Here is the result");
-                          print(result);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
 
-                        });
+                return Container(
+                  height: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  child:
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .112,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
 
-                      }
-                  );
-                },
-                builder: (context, state) {
-                  return Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.all(10),
-                    child:
-                    Visibility(
-                      visible:  !vm.isCollapsed,
-                      child: Container(
-                        height: height,
-                        // height: double.minPositive,
-                        width: width * .112,
-                        //width: 232,
-                        color: Color(0xffEDF1F2),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(5),
-                                child:
-                                SearchTextfiled(
-                                  color: Color(0xffFAFAFA),
-                                  hintText: "Search...",
-                                  ctrlr:widget. itemsearch,
-                                  onChanged: (va) {
-                                    print("searching case"+va.toString());
-                                    context
-                                        .read<GrouplistCubit>()
-                                        .searchGroupList(widget.itemsearch.text);
-                                    if(va==""){
-                                      // context
-                                      //     .read<VertiacalCubit>()
-                                      //     .getGeneralVertical();
+                                  context
+                                      .read<GrouplistCubit>()
+                                      .searchGroupList(widget.itemsearch.text,type:"all" );
+                                  if(va==""){
+                                    context.read<GrouplistCubit>().getGroupListList(type: "all");
 
-                                    }
+                                  }
 
-                                  },
-                                )
-                            ),
-                            SizedBox(
-                              height:
-                              MediaQuery.of(context).size.height * .008,
-                            ),
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
 
 
-                            Expanded(
-                                child: Container(
-                                    height: 0,
-                                    child: ListView.separated(
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
 
 
 
-                                      separatorBuilder: (context, index) {
+                                    separatorBuilder: (context, index) {
 
-                                        return Divider(
-                                          height: 0,
-                                          color: Color(0xff2B3944)
-                                              .withOpacity(0.3),
-                                          // thickness: 1,
-                                        );
-                                      },
-                                      physics: ScrollPhysics(),
-                                      controller: controller,
-                                      itemBuilder: (context, index) {
-                                        return AutoScrollTag(
-                                            highlightColor: Colors.red,
-                                            controller: controller,
-                                            key: ValueKey(index),
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
                                             index: index,
-                                            child: ItemCard(
-                                              index: index,
-                                              selectedVertical:widget. selectedVertical,
-                                              item: widget.result[index].name,
-                                              id:widget. result[index]
-                                                  .id
-                                                  .toString(),
-                                              onClick: () {
-                                                widget.ontap( index);
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
 
-                                              },
-                                            ));
-                                      },
-                                      itemCount: widget.result.length,
-                                    )
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
 
 
-                                )),
-                            tablePagination(
-                                  () => context
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<Listbrand2Cubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<Listbrand2Cubit>()
-                                  .refresh(),
-                              back: widget.list?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next: widget.list?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            )
-                          ],
-                        ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            }
-        ),
+                  ),
+                );
+              },
 
       ),
+
     );
 
   }
@@ -3670,7 +3585,7 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width:  width * .172,
+                      width:  width * .111,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -3684,13 +3599,10 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
                                   print("searching case"+va.toString());
-                                  context
-                                      .read<ItemcreationListCubit>()
-                                      .searchItemList(widget.itemsearch.text);
+
+                                  context.read<BaseuomlistCubit>().searchUomList(va,type:"all");
                                   if(va==""){
-                                    context
-                                        .read<ItemcreationListCubit>()
-                                        .getItemListList();
+                                    context.read<BaseuomlistCubit>().getUomist(type: "all");
 
                                   }
 
@@ -3822,147 +3734,123 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
     double width = MediaQuery.of(context).size.width;
 
     vm = Provider.of<NavigationProvider>(context);
-    return BlocProvider(
-      create: (context) => ItemcreationListCubit(),
-      child: Container(
-        //     child: BlocProvider(
-        // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
-        child: Builder(
-            builder: (context) {
-              return BlocConsumer<ItemcreationListCubit, ItemcreationListState>(
-                listener: (context, state) {
-                  print("this portion is working");
-                  state.maybeWhen(orElse:(){},
-                      error: (){
-                        print("error");
-                      },
-                      success: (list){
-                        print("listtt"+list.toString());
-                        result=list.data;setState(() {
-                          print("Here is the result");
-                          print(result);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
 
-                        });
+                return Container(
+                  height: double.infinity,
+                  margin: EdgeInsets.all(10),
+                  child:
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .172,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  context
+                                      .read<ItemcreationListCubit>()
+                                      .searchItemList(widget.itemsearch.text);
+                                  if(va==""){
+                                    context.read<ItemcreationListCubit>().getItemListList();
 
-                      }
-                  );
-                },
-                builder: (context, state) {
-                  return Container(
-                    height: double.infinity,
-                    margin: EdgeInsets.all(10),
-                    child:
-                    Visibility(
-                      visible:  !vm.isCollapsed,
-                      child: Container(
-                        height: height,
-                        // height: double.minPositive,
-                        width: width * .112,
-                        //width: 232,
-                        color: Color(0xffEDF1F2),
-                        child: Column(
-                          children: [
-                            Container(
-                                margin: EdgeInsets.all(5),
-                                child:
-                                SearchTextfiled(
-                                  color: Color(0xffFAFAFA),
-                                  hintText: "Search...",
-                                  ctrlr:widget. itemsearch,
-                                  onChanged: (va) {
-                                    print("searching case"+va.toString());
-                                    context
-                                        .read<ItemcreationListCubit>()
-                                        .searchItemList(widget.itemsearch.text);
-                                    if(va==""){
-                                      // context
-                                      //     .read<VertiacalCubit>()
-                                      //     .getGeneralVertical();
+                                  }
 
-                                    }
-
-                                  },
-                                )
-                            ),
-                            SizedBox(
-                              height:
-                              MediaQuery.of(context).size.height * .008,
-                            ),
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
 
 
-                            Expanded(
-                                child: Container(
-                                    height: 0,
-                                    child: ListView.separated(
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
 
 
 
-                                      separatorBuilder: (context, index) {
+                                    separatorBuilder: (context, index) {
 
-                                        return Divider(
-                                          height: 0,
-                                          color: Color(0xff2B3944)
-                                              .withOpacity(0.3),
-                                          // thickness: 1,
-                                        );
-                                      },
-                                      physics: ScrollPhysics(),
-                                      controller: controller,
-                                      itemBuilder: (context, index) {
-                                        return AutoScrollTag(
-                                            highlightColor: Colors.red,
-                                            controller: controller,
-                                            key: ValueKey(index),
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
                                             index: index,
-                                            child: ItemCard(
-                                              index: index,
-                                              selectedVertical:widget. selectedVertical,
-                                              item: widget.result[index].code,
-                                              id:widget. result[index]
-                                                  .id
-                                                  .toString(),
-                                              onClick: () {
-                                                widget.ontap( index);
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].name,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
 
-                                              },
-                                            ));
-                                      },
-                                      itemCount: widget.result.length,
-                                    )
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
 
 
-                                )),
-                            tablePagination(
-                                  () => context
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<Listbrand2Cubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<Listbrand2Cubit>()
-                                  .refresh(),
-                              back: widget.list?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next: widget.list?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<Listbrand2Cubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            )
-                          ],
-                        ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<Listbrand2Cubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
                       ),
                     ),
-                  );
-                },
-              );
-            }
-        ),
+                  ),
+                );
 
+          }
       ),
+
     );
 
   }
@@ -4430,7 +4318,7 @@ class _channelVerticalListtState extends State<channelVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .172,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(

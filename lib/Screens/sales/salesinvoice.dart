@@ -388,13 +388,14 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
 
                                   Container(
                                     color: Colors.white,
-                                    height: 50,
+                                    height: 35
                                   ),
                                   Row(children: [
                                     TextWidget(text: "Invoice Lines"),
                                   ],),
+                                  SizedBox(height: height*.01,),
 
-                                  Divider(color: Colors.grey,thickness: 1,),
+                                  // Divider(color: Colors.grey,thickness: 1,),
                                   SalesInvoiceGrowableTable(
                                     table:table,
                                     updateCheck: updateCheckFucction,
@@ -402,99 +403,99 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     // select:select,
                                     updation: tableAssign,
                                   ),
+                                  SizedBox(height: height*.04,),
                                   Container(
-                                    color: Colors.white,
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      // Button(Icons.delete, Colors.red,ctx: context,
-                                      //     text: "Discard",
-                                      //     onApply: (){
-                                      //
-                                      //
-                                      //
-                                      //
-                                      //
-                                      //     },
-                                      //     height: 29,
-                                      //     width: 90,
-                                      //     labelcolor: Colors.red,
-                                      //     iconColor: Colors.red,
-                                      //     bdr: true),
-                                      SizedBox(
-                                        width: width * .003,
-                                      ),
-                                      Button(Icons.check, Colors.grey,ctx: context,
-                                          text: "SAVE",
-                                          height: 29,
-                                          Color: Color(0xff3E4F5B),
-                                          width: 90,
-                                          labelcolor: Colors.white,
-                                          iconColor: Colors.white,
-                                          onApply: (){
-                                            if (updateCheck)
-                                              context.showSnackBarError(
-                                                  "please click the update button ");
-                                            else {
-                                              List<Postlines>  table1=[];
-                                              if(table.isNotEmpty){
-                                                for(var i=0;i<table.length;i++)
-                                                  table1.add(Postlines(
-                                                    isInvoiced: table[i].isInvoiced??false,
-                                                    quantity: table[i].quantity ,
-                                                    isActive: table[i].isInvoiced??false,
-                                                    totalPrice: table[i].totalPrice,
-                                                    warrentyPrice: table[i].warrentyPrice,
-                                                    sellingPrice: table[i].sellingPriceTotal,
-                                                    vat: table[i].vat,
-                                                    taxableAmoubt: table[i].taxableAmount,
-                                                    unitCost: table[i].unitCost,
-                                                    excessTax: table[i].excessTax,
-                                                    salesOrderLineCode: table[i].salesOrderLineCode,
+                                    margin: EdgeInsets.only(right:width*.015,),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // Button(Icons.delete, Colors.red,ctx: context,
+                                        //     text: "Discard",
+                                        //     onApply: (){
+                                        //
+                                        //
+                                        //
+                                        //
+                                        //
+                                        //     },
+                                        //     height: 29,
+                                        //     width: 90,
+                                        //     labelcolor: Colors.red,
+                                        //     iconColor: Colors.red,
+                                        //     bdr: true),
+                                        SizedBox(
+                                          width: width * .003,
+                                        ),
+                                        Button(Icons.check, Colors.grey,ctx: context,
+                                            text: "SAVE",
+                                            height: 29,
+                                            Color: Color(0xff3E4F5B),
+                                            width: 90,
+                                            labelcolor: Colors.white,
+                                            iconColor: Colors.white,
+                                            onApply: (){
+                                              if (updateCheck)
+                                                context.showSnackBarError(
+                                                    "please click the update button ");
+                                              else {
+                                                List<Postlines>  table1=[];
+                                                if(table.isNotEmpty){
+                                                  for(var i=0;i<table.length;i++)
+                                                    table1.add(Postlines(
+                                                      isInvoiced: table[i].isInvoiced??false,
+                                                      quantity: table[i].quantity ,
+                                                      isActive: table[i].isInvoiced??false,
+                                                      totalPrice: table[i].totalPrice,
+                                                      warrentyPrice: table[i].warrentyPrice,
+                                                      sellingPrice: table[i].sellingPriceTotal,
+                                                      vat: table[i].vat,
+                                                      taxableAmoubt: table[i].taxableAmount,
+                                                      unitCost: table[i].unitCost,
+                                                      excessTax: table[i].excessTax,
+                                                      salesOrderLineCode: table[i].salesOrderLineCode,
 
-                                                  ));
+                                                    ));
+
+                                                }
+                                                else{
+                                                  table1=[];
+                                                }
+                                                SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
+                                                    salesOrderId: veritiaclid,
+                                                    inventoryId: inventoryId?.text??"",
+                                                    invoicedBy: "inv",
+                                                    notes: noteController?.text??'',
+                                                    remarks: remarksController?.text??"",
+                                                    assignedTo: assignToController?.text??"",
+                                                    discount:double.tryParse( discountController?.text??""),
+                                                    unitCost:double.tryParse( unitCostController?.text??""),
+                                                    excessTax:double.tryParse( exciseTaxController?.text??""),
+                                                    taxableAmount:double.tryParse( taxableController?.text??""),
+                                                    vat:double.tryParse( vatController?.text??""),
+                                                    sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
+                                                    totalPrice:double.tryParse( totalPricePriceController?.text??""),
+
+
+                                                    ivoiceLines:
+                                                    table1??[]
+                                                );
+                                                print("modelllls" + model.toString());
+
+                                                context
+                                                    .read<InvoicepostCubit>()
+                                                    .postSalesInvoice(model);
 
                                               }
-                                              else{
-                                                table1=[];
-                                              }
-                                              SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
-                                                  salesOrderId: veritiaclid,
-                                                  inventoryId: inventoryId?.text??"",
-                                                  invoicedBy: "inv",
-                                                  notes: noteController?.text??'',
-                                                  remarks: remarksController?.text??"",
-                                                  assignedTo: assignToController?.text??"",
-                                                  discount:double.tryParse( discountController?.text??""),
-                                                  unitCost:double.tryParse( unitCostController?.text??""),
-                                                  excessTax:double.tryParse( exciseTaxController?.text??""),
-                                                  taxableAmount:double.tryParse( taxableController?.text??""),
-                                                  vat:double.tryParse( vatController?.text??""),
-                                                  sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
-                                                  totalPrice:double.tryParse( totalPricePriceController?.text??""),
 
-
-                                                  ivoiceLines:
-                                                  table1??[]
-                                              );
-                                              print("modelllls" + model.toString());
-
-                                              context
-                                                  .read<InvoicepostCubit>()
-                                                  .postSalesInvoice(model);
 
                                             }
+                                        ),
+                                        SizedBox(
+                                          width: width * .008,
+                                        ),
 
-
-                                          }
-                                      ),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-
-                                    ],
+                                      ],
+                                    ),
                                   ),
 
                                 ],
@@ -572,6 +573,8 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
   }
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
 
     return
@@ -620,13 +623,14 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
         },
         child: Builder(
                   builder: (context) {
-                    return Scrollbar(
+                    return CustomScrollBar(
                       controller: recieveController,
-                      isAlwaysShown: true,
-                      child: Container(
+
+                      childs: Container(
                         color: Colors.white,
                         alignment: Alignment.topRight,
-                        child: SingleChildScrollView(
+                        child:
+                        SingleChildScrollView(
                           controller:recieveController ,
                           physics: ScrollPhysics(),
                           scrollDirection: Axis.horizontal,
@@ -637,7 +641,7 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                 child:
                                 Container(
                                   width: 2200,
-                                  padding: EdgeInsets.all(10),
+                                  // padding: EdgeInsets.all(10),
                                   child: customTable(
 
 
@@ -1361,13 +1365,17 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                                           });
                                                         }),
                                                   ),
-                                                  TableTextButton(
-                                                    onPress: () {
-                                                      widget.updateCheck(false);
-                                                      widget.updation(table1);
-                                                      // table1[i].copyWith(updatecheck: false);
-                                                    },
-                                                    label: "UPDATE",
+                                                  TableCell(
+                                                    verticalAlignment:
+                                                    TableCellVerticalAlignment.middle,
+                                                    child: TableTextButton(
+                                                      onPress: () {
+                                                        widget.updateCheck(false);
+                                                        widget.updation(table1);
+                                                        // table1[i].copyWith(updatecheck: false);
+                                                      },
+                                                      label: "UPDATE",
+                                                    ),
                                                   )
 
 
@@ -1427,12 +1435,14 @@ class _SalesInvoiceGrowableTableState extends State<SalesInvoiceGrowableTable> {
                                   ),
                                 ),
 
-                              )
+                              ),
+                              SizedBox(height: 20,),
 
                             ],
                           ),
 
                         ),
+
                       ),
                     );
                   }

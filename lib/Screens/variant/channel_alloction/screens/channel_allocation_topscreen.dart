@@ -69,7 +69,7 @@ class _ChanneAllocationTopScreenState extends State<ChanneAllocationTopScreen> {
                 children: [
                   Container(
                     height: 100,
-                    width: w-500,
+                    width: w-1000,
                     // color: Colors.red,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,

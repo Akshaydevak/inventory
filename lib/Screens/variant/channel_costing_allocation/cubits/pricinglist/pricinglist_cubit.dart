@@ -27,7 +27,7 @@ class PricinglistCubit extends Cubit<PricinglistState> {
 
   Future searchCostingTypeList(String filter) async {
     emit(PricinglistState.initial());
-    final result = await repo.getPricingList(filter);
+    final result = await repo.getPricingList("code=$filter");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

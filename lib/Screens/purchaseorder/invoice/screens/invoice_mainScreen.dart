@@ -13,6 +13,7 @@ import 'package:inventory/Screens/purchaseorder/invoice/screens/purchase_order_s
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
+import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -217,8 +218,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 unitCostController.text=data.calculationData?.unitCost.toString()??"";
                                 exciseTaxController.text=data.calculationData?.excessTax.toString()??"";
                                 data.lines != null
-                                    ? additionalVariants = data.lines ?? []
-                                    : additionalVariants = [];
+                                    ? additionalVariants = List.from(data.lines ?? [])
+                                    : additionalVariants =List.from( []);
                                 setState(() {
 
                                 });
@@ -486,18 +487,18 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               //
                               //   ],
                               // ),
-                              SizedBox(height: 80,),
+                              SizedBox(height: 35,),
                               Row(mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   TextWidget(text: "Receiving lines"),
                                 ],
                               ),
-                              Divider(color: Colors.grey,thickness: 1,),
-                              SizedBox(height: 5,),
-                              Scrollbar(
+                              // Divider(color: Colors.grey,thickness: 1,),
+                              SizedBox(height: height*.01,),
+                              CustomScrollBar(
                                   controller: recieveController,
-                                  isAlwaysShown: true,
-                                  child:Container(
+
+                                  childs:Container(
                                       color: Colors.white,
                                       alignment: Alignment.topRight,
 
@@ -513,7 +514,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                             SingleChildScrollView(
                                               child: Container(
                                                 width: 2200,
-                                                padding: EdgeInsets.all(10),
+                                                // padding: EdgeInsets.all(10),
                                                 child:customTable(
                                                   // border: const TableBorder(
                                                   //   verticalInside: BorderSide(
@@ -699,7 +700,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                           textPadding(""),
                                                           textPadding(""),
                                                           textPadding(""),
-                                                          Container(height: 42,),
+                                                          Container(height: 48,),
                                                           textPadding(""),
                                                           textPadding(""),
                                                           textPadding(""),
@@ -721,9 +722,23 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                       for(var i=0;i<additionalVariants.length;i++)
                                                         TableRow(
                                                             decoration: BoxDecoration(
-                                                                color: Colors.grey.shade200,
+                                                                color: Pellet.tableRowColor,
                                                                 shape: BoxShape.rectangle,
-                                                                border: const Border(left: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), bottom: BorderSide(width: .5, color: Colors.grey, style: BorderStyle.solid), right: BorderSide(color: Colors.grey, width: .5, style: BorderStyle.solid))),
+                                                                border:  Border(
+                                                                    left: BorderSide(
+
+                                                                        color: Color(0xff3E4F5B).withOpacity(.1),
+                                                                        width: .4,
+                                                                        style: BorderStyle.solid),
+                                                                    bottom: BorderSide(
+
+                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                        style: BorderStyle.solid),
+                                                                    right: BorderSide(
+                                                                        color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                                        width: .4,
+
+                                                                        style: BorderStyle.solid))),
                                                             children: [
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -794,9 +809,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: Checkbox(
-                                                                  value: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
-                                                                  onChanged: (bool? value) {
+                                                                child: CheckedBoxs(
+                                                                  valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
+                                                                  onSelection: (bool? value) {
                                                                     // bool? isRecieved = additionalVariants[i].isReceived;
                                                                     // setState(() {
                                                                     //   isRecieved = !isRecieved!;
@@ -837,7 +852,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: textPadding(additionalVariants[i].actualCost.toString() ?? "", fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
+                                                                child: textPadding(
+                                                                    additionalVariants[i].actualCost.toString() ?? "",fontSize: 12, padding: EdgeInsets.only(left: 11.5, top: 1.5), fontWeight: FontWeight.w500),
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
@@ -845,9 +861,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                                               ),
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: Checkbox(
-                                                                  value: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
-                                                                  onChanged: (bool? value) {
+                                                                child: CheckedBoxs(
+                                                                  valueChanger: additionalVariants[i].isInvoiced == null ? false : additionalVariants[i].isInvoiced,
+                                                                  onSelection: (bool? value) {
                                                                     bool? isInvoiced = additionalVariants[i].isInvoiced??false;
                                                                     setState(() {
                                                                       isInvoiced = !isInvoiced!;
@@ -862,9 +878,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                               TableCell(
                                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                child: Checkbox(
-                                                                  value: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
-                                                                  onChanged: (bool? value) {
+                                                                child: CheckedBoxs(
+                                                                  valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
+                                                                  onSelection: (bool? value) {
                                                                     setState(() {});
                                                                   },
                                                                 ),
@@ -920,7 +936,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                                 ) ,
                                               ),
-                                            )
+                                            ),
+                                            SizedBox(height: 20,)
                                             ,
 
                                           ],
@@ -933,62 +950,65 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               // ScrollableTable(),
                               SizedBox(height: 20,),
 
-                              Row(
-                                children: [
-                                  Spacer(),
-                                  Button(Icons.delete, Colors.red,ctx: context,
-                                      text: "DISCARD",height: 29,
-                                      bdr: true,
-                                      onApply: (){print("Akkk");},
-                                      width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                  SizedBox(width: width*.008,),
+                              Container(
+                                margin: EdgeInsets.only(right:width*.011,),
+                                child: Row(
+                                  children: [
+                                    Spacer(),
+                                    Button(Icons.delete, Colors.red,ctx: context,
+                                        text: "DISCARD",height: 29,
+                                        bdr: true,
+                                        onApply: (){print("Akkk");},
+                                        width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                                    SizedBox(width: width*.008,),
 
-                                  Button(Icons.check, Colors.grey,ctx: context,
-                                      onApply: (){
-                                        for(var i=0;i<additionalVariants.length;i++){
-                                          List result = additionalVariants.where((o) => o.isInvoiced == true).toList();
-
-
-                                        }
-                                        print("additionalvariants"+additionalVariants.toString());
-                                        InventoryPostModel model =
-                                        InventoryPostModel(
-                                          purchaseOrderCode: purchaseCodeController.text??"",
-                                          inventoryId: inventoryId??"",
-                                          // invoicedBy: ,
-                                          notes: noteController.text,
-                                          remarks: remarksController.text,
-                                          unitCost:double.tryParse( unitCostController.text),
-                                          foc:double.tryParse( focController.text),
-                                          discount:double.tryParse( discountController.text),
-                                          grandtotal:double.tryParse( grandTotalController.text),
-                                          vatableAmount:double.tryParse( variableAmountController.text),
-                                          excessTax:double.tryParse( exciseTaxController.text),
-                                          actualCost:double.tryParse( actualCostController.text),
-                                          vat:double.tryParse( vatController.text),
-                                          invoicedBy: "akshay",
-                                          invoiceLines: additionalVariants,
+                                    Button(Icons.check, Colors.grey,ctx: context,
+                                        onApply: (){
+                                          for(var i=0;i<additionalVariants.length;i++){
+                                            List result = additionalVariants.where((o) => o.isInvoiced == true).toList();
 
 
-
-
-
-                                          // orderLines: table,
-                                        );
-                                        context.read<InventorypostCubit>().postInventory(model);
+                                          }
+                                          print("additionalvariants"+additionalVariants.toString());
+                                          InventoryPostModel model =
+                                          InventoryPostModel(
+                                            purchaseOrderCode: purchaseCodeController.text??"",
+                                            inventoryId: inventoryId??"",
+                                            // invoicedBy: ,
+                                            notes: noteController.text,
+                                            remarks: remarksController.text,
+                                            unitCost:double.tryParse( unitCostController.text),
+                                            foc:double.tryParse( focController.text),
+                                            discount:double.tryParse( discountController.text),
+                                            grandtotal:double.tryParse( grandTotalController.text),
+                                            vatableAmount:double.tryParse( variableAmountController.text),
+                                            excessTax:double.tryParse( exciseTaxController.text),
+                                            actualCost:double.tryParse( actualCostController.text),
+                                            vat:double.tryParse( vatController.text),
+                                            invoicedBy: "akshay",
+                                            invoiceLines: additionalVariants,
 
 
 
 
 
+                                            // orderLines: table,
+                                          );
+                                          context.read<InventorypostCubit>().postInventory(model);
 
 
 
-                                      },
-                                      text: "SAVE",height: 29,
-                                      width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                                  SizedBox(width: width*.008,),
-                                ],
+
+
+
+
+
+                                        },
+                                        text: "SAVE",height: 29,
+                                        width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                                    SizedBox(width: width*.008,),
+                                  ],
+                                ),
                               )
 
                             ],

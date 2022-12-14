@@ -5,6 +5,7 @@ import 'package:inventory/Screens/heirarchy/general/cubits/listbrand2/listbrand2
 import 'package:inventory/Screens/heirarchy/general/model/frameworklistmodel.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -441,7 +442,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -501,7 +502,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 150kb");
+                                      "Please upload Image of size Lesser than 150kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -577,7 +578,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -642,7 +643,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -703,7 +704,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -765,7 +766,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -826,7 +827,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Iamge of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -886,7 +887,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                                   //     .createMobImage();
                                 } else
                                   context.showSnackBarError(
-                                      "Please upload Banner of size Lesser than 200kb");
+                                      "Please upload Image of size Lesser than 200kb");
                                 setState(() {});
                               },
                               onCreate: true,
@@ -944,6 +945,7 @@ class _TableBottomState extends State<TableBottom> {
 
                   children: [
                     NewInputCard(
+                      textLimit: 17,
                       formatter: false,
                         readOnly: widget.select?false:true,
                         controller: widget.barCode, title: "Barcode"),
@@ -1147,7 +1149,7 @@ class VariantFrameWorkBottomTable extends StatefulWidget {
 
 class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable> {
   bool isTableRead=false;
-  List<VariantLinesLiostModel>table=[];
+  List<VariantLinesLiostModel>table=List.from([]);
   TextEditingController name=TextEditingController();
   TextEditingController type=TextEditingController();
   TextEditingController val=TextEditingController();
@@ -1155,18 +1157,18 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
   int ? attributeid;
   bool onChange=false;
 
-  List<String>values=[];
-  List<String>values1=[];
+  List<String>values=List.from([]);
+  List<String>values1=List.from([]);
 
   @override
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
     if(onChange==false){
-      table=[];
-      values1=[];
+      table=List.from([]);
+      values1=List.from([]);
 
-        table=widget.table;
+        table=List.from(widget.table);
         if(table.isNotEmpty){
           for(var i =0;i<table.length;i++){
             values1.add("");}
@@ -1215,17 +1217,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
           margin: EdgeInsets.symmetric(horizontal: w*.02),
           child: customTable(
 
-            border: const TableBorder(
 
-              verticalInside: BorderSide(
-                  width:.5,
-                  color: Colors.black45,
-                  style: BorderStyle.solid),
-              horizontalInside: BorderSide(
-                  width:.3,
-                  color: Colors.black45,
-                  // color: Colors.blue,
-                  style: BorderStyle.solid),),
 
             tableWidth: .5,
 
@@ -1246,9 +1238,6 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                     'Attribute Name',
 
-                    padding: EdgeInsets.all(7),
-
-                    height: 46,
                     textColor: Colors.white,
 
 
@@ -1260,9 +1249,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                     'Type',
 
-                    padding: EdgeInsets.all(7),
 
-                    height: 46,
                     textColor: Colors.white,
 
 
@@ -1274,9 +1261,7 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                     'Values',
 
-                    padding: EdgeInsets.all(7),
 
-                    height: 46,
                     textColor: Colors.white,
 
 
@@ -1290,9 +1275,6 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                     'Action',
 
-                    padding: EdgeInsets.all(7),
-
-                    height: 46,
                     textColor: Colors.white,
 
 
@@ -1313,36 +1295,34 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                 for (var i = 0; i < table.length; i++)
                   TableRow(
-                      decoration: BoxDecoration(
-                          color: Colors.grey
-                              .shade200,
-                          shape: BoxShape
-                              .rectangle,
-                          border:const  Border(
-                              left: BorderSide(
-                                  width: .5,
-                                  color: Colors
-                                      .grey,
-                                  style: BorderStyle
-                                      .solid),
-                              bottom: BorderSide(
-                                  width: .5,
-                                  color: Colors
-                                      .grey,
-                                  style: BorderStyle
-                                      .solid),
-                              right: BorderSide(
-                                  color: Colors
-                                      .grey,
-                                  width: .5,
-                                  style: BorderStyle
-                                      .solid))),
+    decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+    left: BorderSide(
+
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
                       children: [
 
                              TableCell(
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
-                            child:textPadding(table[i].name??"")
+                            child:textPadding(table[i].name??"",
+                                fontSize: 12,
+                                padding: EdgeInsets.only(left: 11.5, top: 1.5),
+
+                            )
 
 
 
@@ -1350,7 +1330,9 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
                  TableCell(
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
-                            child:textPadding(table[i].type??"")
+                            child:textPadding(table[i].type??"",
+                              fontSize: 12,
+                              padding: EdgeInsets.only(left: 1.5, top: 1.5),)
 
 
 
@@ -1360,11 +1342,51 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
 
 
-                     values1.isNotEmpty?   TableCell(
+                     table[i].values?.isNotEmpty==true?
+                     TableCell(
 
                             verticalAlignment: TableCellVerticalAlignment.middle,
 
-                            child:textPadding(values1?[i]??"")
+                            child:Wrap(
+                              direction : Axis.horizontal,
+                              children: [
+                                if(table[i].values?.isNotEmpty==true)
+                                  for(var k=0;k<=table[i].values!.length-1;k++)
+                                Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius:BorderRadius.circular(12),
+                                ),
+                                margin: EdgeInsets.all(6),
+                                // padding: EdgeInsets.all(9),
+                                child: TextButton.icon(onPressed: (){
+                                  print("akkkk");
+                                  onChange=true
+;                                 List<String> list=List.from( table[i]?.values??[]);
+                                 print(list);
+                                 list.removeAt(k);
+
+                                  print(list);
+                                 table[i]=table[i].copyWith(values: list);
+                                 if(list.isEmpty)
+                                   table.removeAt(i);
+                                  print(table);
+                                  widget.listAssign(table);
+                                  setState(() {
+
+                                  });
+
+
+                                  print(table);
+                                }, icon: Icon(Icons.clear,color: Colors.white,size: 13,), label: Text(table[i].values?[k]??"",style: TextStyle(color: Colors.white,fontSize: 13),)))
+
+
+
+
+
+
+                              ],
+                            )
 
    //                          SingleChildScrollView(
    //  scrollDirection: Axis.horizontal,
@@ -1541,102 +1563,99 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                       child:
 
-    SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-
-      child: Container(
-        width: 230,
-        // // height: 40,
-        child: Wrap(
-      direction : Axis.horizontal,
-        children: [
-      if (values.isNotEmpty==true ) ...[
+    Wrap(
+    direction : Axis.horizontal,
+    children: [
+    if (values.isNotEmpty==true ) ...[
 
 
-        for (var i = 0; i < values.length; i++)...[
+    for (var i = 0; i < values.length; i++)...[
 
-      Container(
-        // height: 30,
-        width: 100,
-        child: UnderLinedInput(
-        formatter: false,
-        initialCheck: true,
-        last: values[i],
-        onChanged: (va){
-          onChange=true;
-            print(va);
+    Container(
+    // height: 30,
+    width: 85,
+    child: UnderLinedInput(
+    formatter: false,
+    initialCheck: true,
+    last: values[i],
+    onChanged: (va){
+      onChange=true;
+        print(va);
 
-            setState(() {
-        values[i]=va;
-            });
+        setState(() {
+    values[i]=va;
+        });
 
-        },
-        ),
-      ),
+    },
+    ),
+    ),
 
-         ] ],
-      UnderLinedInput(
-        formatter: false,
-        controller: val,
-      onComplete: (){
-         setState(() {
-           onChange=true;
-             values.add(val.text);
-             print(values.length);
-             val.text='';
-         });
-      },
-      ),
-        ],
-        ),
-      ),
+     ] ],
+    UnderLinedInput(
+
+    formatter: false,
+    controller: val,
+    onComplete: (){
+     setState(() {
+       onChange=true;
+         values.add(val.text);
+         print(values.length);
+         val.text='';
+     });
+    },
+    ),
+    ],
     )
 
                     ),
-                    TableTextButton(
-                      label: "",
-                      actionCheck: true,
-                      designCheck: true,
-                      onPress: (){
-                        onChange=true;
-                        if(values.isNotEmpty) {
-                          String str="";
-                          for(var j=0;j<values.length;j++) {
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: TableTextButton(
+                        label: "Save",
+                        // actionCheck: true,
+                        // designCheck: true,
+                        onPress: (){
+                          onChange=true;
+                          if(values.isNotEmpty) {
+                            String str="";
+                            for(var j=0;j<values.length;j++) {
 
 
-                            String value = values[j].isEmpty?"": values[j];
-                            str = str + "  " + value.toString();
+                              String value = values[j].isEmpty?"": values[j];
+                              str = str + "  " + value.toString();
+                            }
+                            values1.add(str);
+
                           }
-                          values1.add(str);
+                          else{
+                            values1.add("");
+                          }
+                          // setState(() {
+                            table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: List.from(values),attributeId: attributeid));
+                            print(table.length);
 
-                        }
-                        else{
-                          values1.add("");
-                        }
-                        // setState(() {
-                          table.add(VariantLinesLiostModel(name: name.text, type: type.text, values: values,attributeId: attributeid));
-                          print(table.length);
+                             isTableRead=true;
+
+
+                            widget.listAssign(table);
+                            name.text='';
+                            type.text="";
+                            val.text="";
+                            attributeid=null;
+                            values.clear();
                           print("the table is"+table.toString());
-                           isTableRead=true;
+                          // });
 
+                          setState(() {
 
-                          widget.listAssign(table);
-                          name.text='';
-                          type.text="";
-                          val.text="";
-                          attributeid=null;
-                          values.clear();
-                        // });
-
-                        setState(() {
-
-                        });
+                          });
 
 
 
 
-                      },
+                        },
 
+                      ),
                     )
 
 
@@ -1644,9 +1663,9 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
             ],
             widths: {
               0: FlexColumnWidth(2),
-              1: FlexColumnWidth(2),
-              2: FlexColumnWidth(5),
-              3: FlexColumnWidth(1),
+              1: FlexColumnWidth(1.7),
+              2: FlexColumnWidth(4.6),
+              3: FlexColumnWidth(1.5),
 
 
             },

@@ -52,9 +52,9 @@ class _CombinationTableState extends State<CombinationTable> {
 
                 'Status',
 
-                padding: EdgeInsets.all(7),
-
-                height: 46,
+                // padding: EdgeInsets.all(7),
+                //
+                // height: 46,
                 textColor: Colors.white,
                 // color: Color(0xffE5E5E5),
 
@@ -67,8 +67,8 @@ class _CombinationTableState extends State<CombinationTable> {
               tableHeadtext(
                 'Variant list',
                 textColor: Colors.white,
-                padding: EdgeInsets.all(7),
-                height: 46,
+                // padding: EdgeInsets.all(7),
+                // height: 46,
                 size: 13,
                 // color: Color(0xffE5E5E5),
               ),
@@ -163,7 +163,7 @@ class _CombinationTableState extends State<CombinationTable> {
               ]),
         ],
         widths: {
-          0: FlexColumnWidth(1),
+          0: FlexColumnWidth(.5),
           1: FlexColumnWidth(4),
           1: FlexColumnWidth(2),
 

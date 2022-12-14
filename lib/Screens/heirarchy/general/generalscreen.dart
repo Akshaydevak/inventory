@@ -422,7 +422,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          BaseUomVerticalList(
+                          ItemVerticalList(
                             list: list,
                             selectedVertical: selectedVertical,
                             itemsearch: itemsearch,
@@ -551,14 +551,11 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                     TextWidget(text: "Identification"),
                                   ],
                                 ),
-                                Divider(
-                                  color: Colors.grey,
-                                  thickness: 2,
-                                ),
-                                Container(
-                                  height: h / 15,
-                                  color: Colors.white,
-                                ),
+                                // Divider(
+                                //   color: Colors.grey,
+                                //   thickness: 2,
+                                // ),
+                                SizedBox(height: h*.02,),
                                 TableBottom(
                                   select: select,
                                   barCode: barCodeController,
@@ -567,172 +564,175 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                 ),
                                 Container(
                                   color: Colors.white,
-                                  height: 50,
+                                  height: 35,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Button(Icons.delete, Colors.red,
-                                        ctx: context,
-                                        text: "DISCARD", onApply: () {
-                                      // if(updateCheck){
-                                      //   // clears();
-                                      //
-                                      //
-                                      // }
-                                      showDailogPopUp(
-                                          context,
-                                          ConfirmationPopup(
-                                            // table:table,
-                                            // clear:clear(),
-                                            verticalId: veritiaclid,
-                                            onPressed: () {
-                                              print("akshay");
-                                              Navigator.pop(context);
+                                Container(
+                                  margin: EdgeInsets.only(right:w*.015,),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Button(Icons.delete, Colors.red,
+                                          ctx: context,
+                                          text: "DISCARD", onApply: () {
+                                        // if(updateCheck){
+                                        //   // clears();
+                                        //
+                                        //
+                                        // }
+                                        showDailogPopUp(
+                                            context,
+                                            ConfirmationPopup(
+                                              // table:table,
+                                              // clear:clear(),
+                                              verticalId: veritiaclid,
+                                              onPressed: () {
+                                                print("akshay");
+                                                Navigator.pop(context);
 
-                                              context
-                                                  .read<MaterialdeleteCubit>()
-                                                  .materialDelete(veritiaclid,
-                                                      "item_create");
-                                              // context
-                                              //     .read<
-                                              //     SalesgeneraldeleteCubit>()
-                                              //     .salesGeneralDelete(
-                                              //     veritiaclid);
-                                            },
-                                          ));
-                                    },
-                                        height: 29,
-                                        width: 90,
-                                        labelcolor: Colors.red,
-                                        iconColor: Colors.red,
-                                        bdr: true),
-                                    SizedBox(
-                                      width: w * .008,
-                                    ),
-                                    Button(Icons.check, Colors.grey,
-                                        ctx: context,
-                                        text: select ? "SAVE" : "UPDATE",
-                                        height: 29,
-                                        Color: Color(0xff3E4F5B),
-                                        width: 90,
-                                        labelcolor: Colors.white,
-                                        iconColor: Colors.white, onApply: () {
-                                      ItemCreationModel model =
-                                          ItemCreationModel(
-                                        name: itemNameController.text.isEmpty
-                                            ? null
-                                            : itemNameController?.text,
-                                        barcode: barCodeController.text.isEmpty
-                                            ? null
-                                            : barCodeController?.text,
-                                        qrCode: qrCodeController.text.isEmpty
-                                            ? null
-                                            : qrCodeController?.text,
-                                        materialCode:
-                                            materialController.text.isEmpty
-                                                ? null
-                                                : materialController?.text,
-                                        uomGroupCode:
-                                            uomGroupController.text.isEmpty
-                                                ? null
-                                                : uomGroupController?.text,
-                                        uomCode:
-                                            uomCategoryController.text.isEmpty
-                                                ? null
-                                                : uomCategoryController?.text,
-                                        groupCode: GroupController.text.isEmpty
-                                            ? null
-                                            : GroupController.text,
-                                        brandCode: BrandController.text.isEmpty
-                                            ? null
-                                            : BrandController.text,
-                                        staticGroupCode:
-                                            staticController.text ?? "",
-                                        variantFrameWorkCode:
-                                            variantFrameworkController.text ??
-                                                "",
-                                        image1: Variable.img1,
-                                        searchName:
-                                            searchNameController.text ?? "",
-                                        displayName:
-                                            displayNameController?.text ?? "",
-                                        itemCatelog1: img4
-                                            ? Variable.img4
-                                            : int.tryParse(""),
-                                        itemCatelog2: img5
-                                            ? Variable.img5: int.tryParse(""),
-                                        itemCatelog3: img6
-                                            ? Variable.img6
-                                            : int.tryParse(""),
-                                        itemCatelog4: img7
-                                            ? Variable.img7
-                                            : int.tryParse(""),
-                                            itemCatelog5: img8 ? Variable.img8:int.tryParse(""),
-                                        image2: img2
-                                            ? Variable.img2
-                                            : int.tryParse(""),
-                                        image3: img3
-                                            ? Variable.img3
-                                            : int.tryParse(""),
-                                        description:
-                                            discriptionNameController?.text ??
-                                                "",
-                                        oldsystemCode:
-                                            oldSystemCodeNameController?.text ??
-                                                "",
-                                        salesBlock: false,
-                                        purchaseBlock: false,
-                                      );
-                                      ItemReadModel model1 = ItemReadModel(
-                                        name: itemNameController?.text ?? "",
-                                        materialCode: materialController?.text ?? "",
-                                        staticGroupCode: staticController?.text ?? "",
-                                        uomCode: uomCategoryController?.text ?? "",
-                                        groupCode:GroupController.text.isEmpty
-                                            ? null
-                                            : GroupController.text,
-                                        brandCode: BrandController?.text ?? "",
-                                        variantFrameWork: variantFrameworkController?.text ?? "",
-                                        searchName: searchNameController?.text ?? "",
-                                        displayname: displayNameController?.text ?? "",
-                                        isActive: active,
-                                        oldSystemCode: oldSystemCodeNameController.text.isEmpty?null:oldSystemCodeNameController.text,
-                                        description: discriptionNameController.text ?? "",
-                                        image1: img1 ? Variable.img1.toString() : image1Controller.text ?? "",
-                                        image2: img2 ? Variable.img2.toString() : image2Controller.text,
-                                        image3: img3 ? Variable.img3.toString() : image3Controller.text,
-                                        itemCatelog1: img4 ? Variable.img4.toString() : itemCatelog1Controller.text,
-                                        itemCatelog2: img5 ? Variable.img5.toString() : itemCatelog2Controller.text,
-                                        itemCatelog3: img6 ? Variable.img6.toString() : itemCatelog3Controller.text,
-                                        itemCatelog4: img7 ? Variable.img7.toString() : itemCatelog4Controller.text,
-                                        itemCatelog5: img8 ? Variable.img8.toString() : itemCatelog5Controller.text,
+                                                context
+                                                    .read<MaterialdeleteCubit>()
+                                                    .materialDelete(veritiaclid,
+                                                        "item_create");
+                                                // context
+                                                //     .read<
+                                                //     SalesgeneraldeleteCubit>()
+                                                //     .salesGeneralDelete(
+                                                //     veritiaclid);
+                                              },
+                                            ));
+                                      },
+                                          height: 29,
+                                          width: 90,
+                                          labelcolor: Colors.red,
+                                          iconColor: Colors.red,
+                                          bdr: true),
+                                      SizedBox(
+                                        width: w * .008,
+                                      ),
+                                      Button(Icons.check, Colors.grey,
+                                          ctx: context,
+                                          text: select ? "SAVE" : "UPDATE",
+                                          height: 29,
+                                          Color: Color(0xff3E4F5B),
+                                          width: 90,
+                                          labelcolor: Colors.white,
+                                          iconColor: Colors.white, onApply: () {
+                                        ItemCreationModel model =
+                                            ItemCreationModel(
+                                          name: itemNameController.text.isEmpty
+                                              ? null
+                                              : itemNameController?.text,
+                                          barcode: barCodeController.text.isEmpty
+                                              ? null
+                                              : barCodeController?.text,
+                                          qrCode: qrCodeController.text.isEmpty
+                                              ? null
+                                              : qrCodeController?.text,
+                                          materialCode:
+                                              materialController.text.isEmpty
+                                                  ? null
+                                                  : materialController?.text,
+                                          uomGroupCode:
+                                              uomGroupController.text.isEmpty
+                                                  ? null
+                                                  : uomGroupController?.text,
+                                          uomCode:
+                                              uomCategoryController.text.isEmpty
+                                                  ? null
+                                                  : uomCategoryController?.text,
+                                          groupCode: GroupController.text.isEmpty
+                                              ? null
+                                              : GroupController.text,
+                                          brandCode: BrandController.text.isEmpty
+                                              ? null
+                                              : BrandController.text,
+                                          staticGroupCode:
+                                              staticController.text ?? "",
+                                          variantFrameWorkCode:
+                                              variantFrameworkController.text ??
+                                                  "",
+                                          image1: Variable.img1,
+                                          searchName:
+                                              searchNameController.text ?? "",
+                                          displayName:
+                                              displayNameController?.text ?? "",
+                                          itemCatelog1: img4
+                                              ? Variable.img4
+                                              : int.tryParse(""),
+                                          itemCatelog2: img5
+                                              ? Variable.img5: int.tryParse(""),
+                                          itemCatelog3: img6
+                                              ? Variable.img6
+                                              : int.tryParse(""),
+                                          itemCatelog4: img7
+                                              ? Variable.img7
+                                              : int.tryParse(""),
+                                              itemCatelog5: img8 ? Variable.img8:int.tryParse(""),
+                                          image2: img2
+                                              ? Variable.img2
+                                              : int.tryParse(""),
+                                          image3: img3
+                                              ? Variable.img3
+                                              : int.tryParse(""),
+                                          description:
+                                              discriptionNameController?.text ??
+                                                  "",
+                                          oldsystemCode:
+                                              oldSystemCodeNameController?.text ??
+                                                  "",
+                                          salesBlock: false,
+                                          purchaseBlock: false,
+                                        );
+                                        ItemReadModel model1 = ItemReadModel(
+                                          name: itemNameController?.text ?? "",
+                                          materialCode: materialController?.text ?? "",
+                                          staticGroupCode: staticController?.text ?? "",
+                                          uomCode: uomCategoryController?.text ?? "",
+                                          groupCode:GroupController.text.isEmpty
+                                              ? null
+                                              : GroupController.text,
+                                          brandCode: BrandController?.text ?? "",
+                                          variantFrameWork: variantFrameworkController?.text ?? "",
+                                          searchName: searchNameController?.text ?? "",
+                                          displayname: displayNameController?.text ?? "",
+                                          isActive: active,
+                                          oldSystemCode: oldSystemCodeNameController.text.isEmpty?null:oldSystemCodeNameController.text,
+                                          description: discriptionNameController.text ?? "",
+                                          image1: img1 ? Variable.img1.toString() : image1Controller.text ?? "",
+                                          image2: img2 ? Variable.img2.toString() : image2Controller.text,
+                                          image3: img3 ? Variable.img3.toString() : image3Controller.text,
+                                          itemCatelog1: img4 ? Variable.img4.toString() : itemCatelog1Controller.text,
+                                          itemCatelog2: img5 ? Variable.img5.toString() : itemCatelog2Controller.text,
+                                          itemCatelog3: img6 ? Variable.img6.toString() : itemCatelog3Controller.text,
+                                          itemCatelog4: img7 ? Variable.img7.toString() : itemCatelog4Controller.text,
+                                          itemCatelog5: img8 ? Variable.img8.toString() : itemCatelog5Controller.text,
 
-                                      );
-                                      print(model1);
-                                      print(img5);
-                                      print(itemCatelog2Controller.text);
+                                        );
+                                        print(model1);
+                                        print(img5);
+                                        print(itemCatelog2Controller.text);
 
-                                      select ? context
-                                          .read<ItemcreatinCubit>()
-                                              .postCreateItem(model)
-                                          : context
-                                              .read<ItemcreatinCubit>()
-                                              .postItemPatch(
-                                                  veritiaclid, model1);
-                                      img1 = false;
-                                      img2 = false;
-                                      img3 = false;
-                                      img4 = false;
-                                      img5 = false;
-                                      img6 = false;
-                                      img7 = false;
-                                      // active = false;
-                                    }),
-                                    SizedBox(
-                                      width: w * .008,
-                                    ),
-                                  ],
+                                        select ? context
+                                            .read<ItemcreatinCubit>()
+                                                .postCreateItem(model)
+                                            : context
+                                                .read<ItemcreatinCubit>()
+                                                .postItemPatch(
+                                                    veritiaclid, model1);
+                                        img1 = false;
+                                        img2 = false;
+                                        img3 = false;
+                                        img4 = false;
+                                        img5 = false;
+                                        img6 = false;
+                                        img7 = false;
+                                        // active = false;
+                                      }),
+                                      SizedBox(
+                                        width: w * .008,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -1997,25 +1997,25 @@ class _BlockPageIdTableState extends State<BlockPageIdTable> {
 Widget tablePagination(VoidCallback reset,
         {VoidCallback? next, VoidCallback? back}) =>
     Transform.scale(
-      scale: 0.7,
+      scale: .95,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Spacer(),
           TextButton.icon(
               onPressed: back,
               icon: Icon(
                 Icons.arrow_back_ios,
-                size: 18,
+                size: 16,
               ),
-              label: Text("Back")),
+              label: Text("Back",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
           TextButton.icon(
               onPressed: next,
               label: Icon(
                 Icons.arrow_forward_ios,
-                size: 18,
+                size: 19,
               ),
-              icon: Text("Next")),
+              icon: Text("Next",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
         ],
       ),
     );

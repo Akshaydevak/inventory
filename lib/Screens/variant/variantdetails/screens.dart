@@ -155,7 +155,7 @@ class _IdentificationState extends State<Identification> {
                         child: Column(
                           children: [
                             NewInputCard(
-                                readOnly: widget.select ? false : true,
+                                // readOnly: widget.select ? false : true,
                                 controller: widget.barCode,
                                 title: "Barcode"),
                           ],
@@ -186,8 +186,8 @@ class _IdentificationState extends State<Identification> {
                       Expanded(
                         child: Column(
                           children: [
-                            NewInputCard(
-                                controller: widget.rfId, title: "RF Id"),
+                            // NewInputCard(
+                            //     controller: widget.rfId, title: "RF Id"),
                           ],
                         ),
                       ),
@@ -449,6 +449,7 @@ class _IdentificationState extends State<Identification> {
                                       TableCellVerticalAlignment.middle,
                                   child: UnderLinedInput(
                                     controller: barCodeTextEditingController,
+                                    formatter: false,
                                     onChanged: (va) {
                                       onChange = true;
                                       saveButtonActovde(
@@ -1488,6 +1489,7 @@ class VariantStabletable extends StatefulWidget {
   final bool haveWrapOption;
   final bool itmImage;
   final bool active;
+  final int ? baseUomId;
   final bool needMultipleIntegration;
   final Function({String type}) imagePostCheck;
   final Function({String type, bool val}) trueOrFalseChange;
@@ -1497,6 +1499,7 @@ class VariantStabletable extends StatefulWidget {
     required this.imagePostCheck,
     required this.itemId,
     required this.weight,
+    required this.baseUomId,
     required this.image3,
     required this.seblingNameController,
     required this.needMultipleIntegration,
@@ -1602,6 +1605,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
   @override
   Widget build(BuildContext context) {
+    print("hiiiiiiiiiiiiiiiiiiiiiiiiiiiiii${widget.width}");
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Builder(builder: (context) {
@@ -1637,13 +1641,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        readOnly: true,
-                        controller: widget.variantValue,
-                        title: "Variant Value"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+                    // NewInputCard(
+                    //     readOnly: true,
+                    //     controller: widget.variantValue,
+                    //     title: "Variant Value"),
+                    // SizedBox(
+                    //   height: height * .030,
+                    // ),
                     NewInputCard(
                         readOnly: true,
                         controller: widget.variantFrameWork,
@@ -1683,34 +1687,34 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-                    NewInputCard(
-                      readOnly: true,
-                      controller: widget.uomGroupName,
-                      // icondrop: true,
-                      title: "Uom Group",
-                      // ontap: () {
-                      //   showDailogPopUp(
-                      //     context,
-                      //     TableConfigurePopup(
-                      //
-                      //       type: "UOMPopup",
-                      //       valueSelect: (BrandListModel va) {
-                      //         setState(() {
-                      //           print(va?.id ?? "");
-                      //           widget.uomGroup.text = va?.id.toString() ?? "";
-                      //           widget.uomGroupName.text = va?.name.toString() ?? "";
-                      //           Variable.uomGroupId = va?.id;
-                      //           setState(() {});
-                      //           setState(() {});
-                      //
-                      //           // onChange = true;
-                      //           // orderType.text = va!;
-                      //         });
-                      //       },
-                      //     ),
-                      //   );
-                      // },
-                    ),
+                    // NewInputCard(
+                    //   readOnly: true,
+                    //   controller: widget.uomGroupName,
+                    //   // icondrop: true,
+                    //   title: "Uom Group",
+                    //   // ontap: () {
+                    //   //   showDailogPopUp(
+                    //   //     context,
+                    //   //     TableConfigurePopup(
+                    //   //
+                    //   //       type: "UOMPopup",
+                    //   //       valueSelect: (BrandListModel va) {
+                    //   //         setState(() {
+                    //   //           print(va?.id ?? "");
+                    //   //           widget.uomGroup.text = va?.id.toString() ?? "";
+                    //   //           widget.uomGroupName.text = va?.name.toString() ?? "";
+                    //   //           Variable.uomGroupId = va?.id;
+                    //   //           setState(() {});
+                    //   //           setState(() {});
+                    //   //
+                    //   //           // onChange = true;
+                    //   //           // orderType.text = va!;
+                    //   //         });
+                    //   //       },
+                    //   //     ),
+                    //   //   );
+                    //   // },
+                    // ),
                     // SelectableDropDownpopUp(
                     //   controller: widget.uomGroupName,
                     //   label: "Uom Group",
@@ -1810,6 +1814,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
+                            id: widget.baseUomId,
                             type: "SalesUomTabalePopup",
                             valueSelect: (BrandListModel va) {
                               setState(() {
@@ -1865,6 +1870,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         showDailogPopUp(
                           context,
                           TableConfigurePopup(
+                            id: widget.baseUomId,
                             type: "SalesUomTabalePopup",
                             valueSelect: (BrandListModel va) {
                               setState(() {
@@ -1940,6 +1946,14 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
                     NewInputCard(controller: widget.length, title: "Length"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.height,
+                        title: "Height(meter)"),
+
 
                     SizedBox(
                       height: height * .259,
@@ -1949,21 +1963,20 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
+widget.width.text !="null"?
                     NewInputCard(
                         formatter: true,
-                        controller: widget.height,
-                        title: "Height"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
-                    NewInputCard(controller: widget.width, title: "Width"),
+                        controller:
+
+                        widget.width, title: "Width(meter)"):
+                    Container(color:Colors.green,width:10,height:10),
                     SizedBox(
                       height: height * .030,
                     ),
                     NewInputCard(
                         formatter: true,
                         controller: widget.weight,
-                        title: "Weight"),
+                        title: "Weight(kg)"),
 
                     SizedBox(
                       height: height * .030,
@@ -1973,9 +1986,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     //     controller: widget.weightUom,
                     //     title: "Weight UOM Id"),
 
-                    SizedBox(
-                      height: height * .030,
-                    ),
+                    // SizedBox(
+                    //   height: height * .030,
+                    // ),
                     NewInputCard(
                         formatter: true,
                         controller: widget.actualCost,
@@ -2083,13 +2096,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       height: height * .030,
                     ),
 
-                    NewInputCard(
-                        controller: widget.ratioEccomerce,
-                        title: "Ratio to Ecommerce"),
-
-                    SizedBox(
-                      height: height * .030,
-                    ),
+                    // NewInputCard(
+                    //     controller: widget.ratioEccomerce,
+                    //     title: "Ratio to Ecommerce"),
+                    //
+                    // SizedBox(
+                    //   height: height * .030,
+                    // ),
                     // NewInputCard(
                     //     formatter: true,
                     //     controller: widget.minMax,
@@ -2149,7 +2162,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       title: "Linked Item",
                       controller: widget.linkedItem,
                       ontap: () {
-                        // costingTypeMethodeCheck=true;
+                        costingTypeMethodeCheck=true;
                         showDailogPopUp(
                           context,
                           ConfigurePopup(
@@ -2223,10 +2236,19 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         formatter: true,
                         controller: widget.minPurchaseOrderLimit,
                         title: "Min purchase  Order Limit"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
+
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.maxPurchaseOrderLimit,
+                        title: "Max Purchase Order Limit"),
+
 
 
                     SizedBox(
-                      height: height * .209,
+                      height: height * .239,
                     ),
                   ],
                 )),
@@ -2235,13 +2257,6 @@ class _VariantStabletableState extends State<VariantStabletable> {
                   children: [
 
 
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.maxPurchaseOrderLimit,
-                        title: "Max Purchase Order Limit"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
                     NewInputCard(
                         formatter: true, controller: widget.vat, title: "VAT"),
                     SizedBox(
@@ -2274,6 +2289,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+                    NewInputCard(
+                        formatter: true,
+                        controller: widget.returnTime,
+                        title: "Return Time"),
+                    SizedBox(
+                      height: height * .030,
+                    ),
                     SelectableDropDownpopUp(
                       id: widget.veritiaclid,
                       label: "Shelf Type",
@@ -2293,13 +2315,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.returnTime,
-                        title: "Return Time"),
-                    SizedBox(
-                      height: height * .030,
-                    ),
+
                     NewInputCard(
                         formatter: true,
                         controller: widget.shelfTime,
@@ -2355,7 +2371,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 130kb");
+                                "Please upload Image of size Lesser than 130kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2412,7 +2428,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 130kb");
+                                "Please upload Image of size Lesser than 130kb");
                           ;
                           setState(() {});
                         },
@@ -2470,7 +2486,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2526,7 +2542,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2583,7 +2599,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2644,7 +2660,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Iamge of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2700,7 +2716,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Iamge of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2756,7 +2772,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Iamge of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2812,7 +2828,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Iamge of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2868,7 +2884,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2924,7 +2940,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Iamge of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -2980,7 +2996,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
@@ -3036,14 +3052,18 @@ class _VariantStabletableState extends State<VariantStabletable> {
                             //     .createMobImage();
                           } else
                             context.showSnackBarError(
-                                "Please upload Banner of size Lesser than 150kb");
+                                "Please upload Image of size Lesser than 150kb");
                           setState(() {});
                         },
                         onCreate: true,
                         label: "Catalog8"),
+
                     SizedBox(
-                      height: height * .140,
+                      height: height * .129,
                     ),
+                    // SizedBox(
+                    //   height: height * .140,
+                    // ),
                     // SizedBox(
                     //   height: height * .262,
                     // ),
@@ -3059,6 +3079,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PopUpSwitchTile(
+                paddingCheck: false,
                   value: widget?.salesBlock ?? false,
                   title: "Sales Block",
                   onClick: (gg) {
@@ -3074,6 +3095,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     setState(() {});
                   }),
               PopUpSwitchTile(
+                  paddingCheck: false,
                   value: widget?.purchaseBlock ?? false,
                   title: "Purchase Block",
                   onClick: (gg) {
@@ -3087,6 +3109,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     setState(() {});
                   }),
               PopUpSwitchTile(
+                  paddingCheck: false,
                   value: widget?.stockWarning ?? false,
                   title: "Stock Warning",
                   onClick: (gg) {
@@ -3100,6 +3123,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     setState(() {});
                   }),
               PopUpSwitchTile(
+                  paddingCheck: false,
                   value: widget?.itmCatelog ?? false,
                   title: "Itemm Catalog",
                   onClick: (gg) {
@@ -3124,6 +3148,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 PopUpSwitchTile(
+                    paddingCheck: false,
                     value: widget?.itmImage ?? false,
                     title: "Item Image",
                     onClick: (gg) {
@@ -3137,6 +3162,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       setState(() {});
                     }),
                 PopUpSwitchTile(
+                    paddingCheck: false,
                     value: widget.active ?? false,
                     title: "Active",
                     onClick: (gg) {
@@ -3151,6 +3177,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       setState(() {});
                     }),
                 PopUpSwitchTile(
+                    paddingCheck: false,
                     value: widget.needMultipleIntegration ?? false,
                     title: "Need Multiple Integration",
                     onClick: (gg) {
@@ -3165,6 +3192,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       setState(() {});
                     }),
                 PopUpSwitchTile(
+                    paddingCheck: false,
                     value: widget.haveGiftOption ?? false,
                     title: "Have Gift Option",
                     onClick: (gg) {
@@ -3179,6 +3207,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       setState(() {});
                     }),
                 PopUpSwitchTile(
+                    paddingCheck: false,
                     value: widget.haveWrapOption ?? false,
                     title: "Have Wrap Option",
                     onClick: (gg) {

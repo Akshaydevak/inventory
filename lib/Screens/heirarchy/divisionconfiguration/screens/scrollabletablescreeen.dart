@@ -12,7 +12,8 @@ bool onChange=false;
 class UomTable extends StatefulWidget {
  final List<DataInclude>?list;
   final Function uomTableEdit;
-  UomTable({required this.list,required this.uomTableEdit});
+  final bool isMixed;
+  UomTable({required this.list,required this.uomTableEdit,required this.isMixed});
   @override
   _UomTableState createState() => _UomTableState();
 }
@@ -50,6 +51,8 @@ class _UomTableState extends State<UomTable> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     print(widget.list);
     if(onChange==false){
       codeListController.clear();
@@ -77,21 +80,22 @@ setState(() {
 
     return
       Container(
+        margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
         width: 2200,
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
         child: customTable(
 
-          border:  TableBorder(
-
-            verticalInside: BorderSide(
-                width:.5,
-                color: Colors.black45,
-                style: BorderStyle.solid),
-            horizontalInside: BorderSide(
-                width:.3,
-                color: Colors.black45,
-                // color: Colors.blue,
-                style: BorderStyle.solid),),
+          // border:  TableBorder(
+          //
+          //   verticalInside: BorderSide(
+          //       width:.5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width:.3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),),
 
           tableWidth: .5,
 
@@ -112,9 +116,9 @@ setState(() {
 
                   'UOM Code',
 
-                  padding: EdgeInsets.all(7),
-
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 46,
                   textColor: Colors.white,
 
                   size: 13,
@@ -126,15 +130,15 @@ setState(() {
                 tableHeadtext(
                   'UOM Name',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
                   'Status',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
@@ -149,6 +153,45 @@ setState(() {
               ],
 
             ),
+            if(widget.isMixed==true)
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border:  Border(
+                          left: BorderSide(
+
+                              color:  Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+
+
+                  ]),
+    if(widget.isMixed!=true)...[
     if(uomList.isNotEmpty)...[
               for(var i=0;i<uomList.length;i++)...[
                 TableRow(
@@ -447,7 +490,7 @@ setState(() {
 
 
                 ]),
-          ],
+          ]],
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),
@@ -467,7 +510,8 @@ setState(() {
 class GroupTable extends StatefulWidget {
   List<DataInclude>?list;
   final Function uomTableEdit;
-  GroupTable({required this.list,required this.uomTableEdit});
+  final bool isMixed;
+  GroupTable({required this.list,required this.uomTableEdit,required this.isMixed});
   @override
   _GroupTableState createState() => _GroupTableState();
 }
@@ -505,6 +549,8 @@ class _GroupTableState extends State<GroupTable> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     print(widget.list);
     if(onChange==false){
       // codeListController.clear();
@@ -532,21 +578,22 @@ class _GroupTableState extends State<GroupTable> {
 
     return
       Container(
+        margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
         width: 2200,
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
         child: customTable(
 
-          border:  TableBorder(
-
-            verticalInside: BorderSide(
-                width:.5,
-                color: Colors.black45,
-                style: BorderStyle.solid),
-            horizontalInside: BorderSide(
-                width:.3,
-                color: Colors.black45,
-                // color: Colors.blue,
-                style: BorderStyle.solid),),
+          // border:  TableBorder(
+          //
+          //   verticalInside: BorderSide(
+          //       width:.5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width:.3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),),
 
           tableWidth: .5,
 
@@ -567,9 +614,9 @@ class _GroupTableState extends State<GroupTable> {
 
                   'Group Code',
 
-                  padding: EdgeInsets.all(7),
-
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 46,
                   textColor: Colors.white,
 
                   size: 13,
@@ -581,22 +628,22 @@ class _GroupTableState extends State<GroupTable> {
                 tableHeadtext(
                   'Group Name',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
                   'Status',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
                   '',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
 
@@ -604,6 +651,45 @@ class _GroupTableState extends State<GroupTable> {
               ],
 
             ),
+            if(widget.isMixed==true)
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border:  Border(
+                          left: BorderSide(
+
+                              color:  Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+
+
+                  ]),
+            if(widget.isMixed!=true)...[
             if(groupList.isNotEmpty)...[
               for(var i=0;i<groupList.length;i++)...[
                 TableRow(
@@ -902,7 +988,7 @@ class _GroupTableState extends State<GroupTable> {
 
 
                 ]),
-          ],
+          ]],
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),
@@ -923,8 +1009,9 @@ class _GroupTableState extends State<GroupTable> {
 
 class CategoryTable extends StatefulWidget {
   List<DataInclude>?list;
+  final bool isMixed;
   final Function uomTableEdit;
-  CategoryTable({required this.list,required this.uomTableEdit});
+  CategoryTable({required this.list,required this.uomTableEdit,required this.isMixed});
   @override
   _CategoryTableState createState() => _CategoryTableState();
 }
@@ -962,6 +1049,8 @@ class _CategoryTableState extends State<CategoryTable> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     print(widget.list);
     if(onChange==false){
 
@@ -989,21 +1078,22 @@ class _CategoryTableState extends State<CategoryTable> {
 
     return
       Container(
+        margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
         width: 2200,
-        padding: EdgeInsets.all(10),
+        // padding: EdgeInsets.all(10),
         child: customTable(
 
-          border:  TableBorder(
-
-            verticalInside: BorderSide(
-                width:.5,
-                color: Colors.black45,
-                style: BorderStyle.solid),
-            horizontalInside: BorderSide(
-                width:.3,
-                color: Colors.black45,
-                // color: Colors.blue,
-                style: BorderStyle.solid),),
+          // border:  TableBorder(
+          //
+          //   verticalInside: BorderSide(
+          //       width:.5,
+          //       color: Colors.black45,
+          //       style: BorderStyle.solid),
+          //   horizontalInside: BorderSide(
+          //       width:.3,
+          //       color: Colors.black45,
+          //       // color: Colors.blue,
+          //       style: BorderStyle.solid),),
 
           tableWidth: .5,
 
@@ -1024,9 +1114,9 @@ class _CategoryTableState extends State<CategoryTable> {
 
                   'Category Code',
 
-                  padding: EdgeInsets.all(7),
-
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  //
+                  // height: 46,
                   textColor: Colors.white,
 
                   size: 13,
@@ -1038,22 +1128,22 @@ class _CategoryTableState extends State<CategoryTable> {
                 tableHeadtext(
                   'Category Name',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
                   'Status',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
                 tableHeadtext(
                   '',
                   textColor: Colors.white,
-                  padding: EdgeInsets.all(7),
-                  height: 46,
+                  // padding: EdgeInsets.all(7),
+                  // height: 46,
                   size: 13,
                 ),
 
@@ -1061,7 +1151,46 @@ class _CategoryTableState extends State<CategoryTable> {
               ],
 
             ),
-            if(categoryList.isNotEmpty)...[
+            if(widget.isMixed==true)
+              TableRow(
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border:  Border(
+                          left: BorderSide(
+
+                              color:  Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
+
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+
+                              style: BorderStyle.solid))),
+                  children: [
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+                    TableCell(
+                      verticalAlignment: TableCellVerticalAlignment.middle,
+                      child: textPadding("",height: 48),
+                    )  ,
+
+
+                  ]),
+            if(widget.isMixed!=true)...[
+         if(categoryList.isNotEmpty)...[
               for(var i=0;i<categoryList.length;i++)...[
                 TableRow(
                     decoration: BoxDecoration(
@@ -1359,7 +1488,7 @@ class _CategoryTableState extends State<CategoryTable> {
 
 
                 ]),
-          ],
+          ]],
           widths: {
             0: FlexColumnWidth(3),
             1: FlexColumnWidth(3),

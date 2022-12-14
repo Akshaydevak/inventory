@@ -25,6 +25,8 @@ mixin _$BrandListModel {
   String? get code => throw _privateConstructorUsedError;
   @JsonKey(name: "standard_code")
   String? get standardCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "variant_framework_name")
+  String? get variantFrameWorkName => throw _privateConstructorUsedError;
   @JsonKey(name: "uom_code")
   String? get uomCode => throw _privateConstructorUsedError;
 
@@ -45,6 +47,7 @@ abstract class $BrandListModelCopyWith<$Res> {
       String? name,
       String? code,
       @JsonKey(name: "standard_code") String? standardCode,
+      @JsonKey(name: "variant_framework_name") String? variantFrameWorkName,
       @JsonKey(name: "uom_code") String? uomCode});
 }
 
@@ -65,6 +68,7 @@ class _$BrandListModelCopyWithImpl<$Res, $Val extends BrandListModel>
     Object? name = freezed,
     Object? code = freezed,
     Object? standardCode = freezed,
+    Object? variantFrameWorkName = freezed,
     Object? uomCode = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +87,10 @@ class _$BrandListModelCopyWithImpl<$Res, $Val extends BrandListModel>
       standardCode: freezed == standardCode
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
+              as String?,
+      variantFrameWorkName: freezed == variantFrameWorkName
+          ? _value.variantFrameWorkName
+          : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
               as String?,
       uomCode: freezed == uomCode
           ? _value.uomCode
@@ -105,6 +113,7 @@ abstract class _$$_BrandListModelCopyWith<$Res>
       String? name,
       String? code,
       @JsonKey(name: "standard_code") String? standardCode,
+      @JsonKey(name: "variant_framework_name") String? variantFrameWorkName,
       @JsonKey(name: "uom_code") String? uomCode});
 }
 
@@ -123,6 +132,7 @@ class __$$_BrandListModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? code = freezed,
     Object? standardCode = freezed,
+    Object? variantFrameWorkName = freezed,
     Object? uomCode = freezed,
   }) {
     return _then(_$_BrandListModel(
@@ -142,6 +152,10 @@ class __$$_BrandListModelCopyWithImpl<$Res>
           ? _value.standardCode
           : standardCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      variantFrameWorkName: freezed == variantFrameWorkName
+          ? _value.variantFrameWorkName
+          : variantFrameWorkName // ignore: cast_nullable_to_non_nullable
+              as String?,
       uomCode: freezed == uomCode
           ? _value.uomCode
           : uomCode // ignore: cast_nullable_to_non_nullable
@@ -158,6 +172,7 @@ class _$_BrandListModel implements _BrandListModel {
       this.name,
       this.code,
       @JsonKey(name: "standard_code") this.standardCode,
+      @JsonKey(name: "variant_framework_name") this.variantFrameWorkName,
       @JsonKey(name: "uom_code") this.uomCode});
 
   factory _$_BrandListModel.fromJson(Map<String, dynamic> json) =>
@@ -173,12 +188,15 @@ class _$_BrandListModel implements _BrandListModel {
   @JsonKey(name: "standard_code")
   final String? standardCode;
   @override
+  @JsonKey(name: "variant_framework_name")
+  final String? variantFrameWorkName;
+  @override
   @JsonKey(name: "uom_code")
   final String? uomCode;
 
   @override
   String toString() {
-    return 'BrandListModel(id: $id, name: $name, code: $code, standardCode: $standardCode, uomCode: $uomCode)';
+    return 'BrandListModel(id: $id, name: $name, code: $code, standardCode: $standardCode, variantFrameWorkName: $variantFrameWorkName, uomCode: $uomCode)';
   }
 
   @override
@@ -191,13 +209,15 @@ class _$_BrandListModel implements _BrandListModel {
             (identical(other.code, code) || other.code == code) &&
             (identical(other.standardCode, standardCode) ||
                 other.standardCode == standardCode) &&
+            (identical(other.variantFrameWorkName, variantFrameWorkName) ||
+                other.variantFrameWorkName == variantFrameWorkName) &&
             (identical(other.uomCode, uomCode) || other.uomCode == uomCode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, code, standardCode, uomCode);
+  int get hashCode => Object.hash(
+      runtimeType, id, name, code, standardCode, variantFrameWorkName, uomCode);
 
   @JsonKey(ignore: true)
   @override
@@ -218,8 +238,12 @@ abstract class _BrandListModel implements BrandListModel {
       {final int? id,
       final String? name,
       final String? code,
-      @JsonKey(name: "standard_code") final String? standardCode,
-      @JsonKey(name: "uom_code") final String? uomCode}) = _$_BrandListModel;
+      @JsonKey(name: "standard_code")
+          final String? standardCode,
+      @JsonKey(name: "variant_framework_name")
+          final String? variantFrameWorkName,
+      @JsonKey(name: "uom_code")
+          final String? uomCode}) = _$_BrandListModel;
 
   factory _BrandListModel.fromJson(Map<String, dynamic> json) =
       _$_BrandListModel.fromJson;
@@ -233,6 +257,9 @@ abstract class _BrandListModel implements BrandListModel {
   @override
   @JsonKey(name: "standard_code")
   String? get standardCode;
+  @override
+  @JsonKey(name: "variant_framework_name")
+  String? get variantFrameWorkName;
   @override
   @JsonKey(name: "uom_code")
   String? get uomCode;

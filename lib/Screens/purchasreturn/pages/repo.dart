@@ -282,6 +282,7 @@ abstract class PurchaseReturnRepoAbstract {
       getCostingTypeList(
     String? code,
   );
+  Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(int? id);
   Future<Either<Failure, DoubleResponse>> postPatchCostingType(int? verticalId,
       String typeName, String description, String createdBy, bool? isActive,
       {int? id});
@@ -330,7 +331,7 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DoubleResponse>> postCosting(
     CostingPageCreationPostModel model,
   );
-  Future<Either<Failure, CostingPageCreationPostModel>> getCostingRead(int? id);
+  Future<Either<Failure, CostingPageCreationPostModel>> getChannelCostingRead(int? id);
   Future<Either<Failure, PurchaseOrdertype>> getPricingPgtype();
   Future<Either<Failure, DoubleResponse>> percentageGp(int? id, String? gpType);
   Future<Either<Failure, DoubleResponse>> patchCosting(
@@ -1516,5 +1517,11 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, List<StateList>>> getStateList(String? code) {
     return repoExecute<List<StateList>>(
             () async => remoteDataSource.getStateList(code));
+  }
+
+  @override
+  Future<Either<Failure, CostingPageCreationPostModel>> getChannelCostingRead(int? id) {
+    return repoExecute<CostingPageCreationPostModel>(
+            () async => remoteDataSource.getChannelCostingRead(id));
   }
 }

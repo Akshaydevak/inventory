@@ -27,6 +27,7 @@ class VariantReadModel with _$VariantReadModel {
     @JsonKey(name: "inventory_id") final String? inventoryId,
     @JsonKey(name: "uom_group_name") final String? uomGroupName,
     @JsonKey(name: "reorder_point") final int? reOrderPoint,
+    @JsonKey(name: "sibling_code") final String? siblingCode,
     @JsonKey(name: "reorder_quantity") final int? reOrderQuantity,
     @JsonKey(name: "linked_item") final String? linkedItem,
     @JsonKey(name: "var_alternative_barcode") final List<AlternativeBarcode>? alterNativeBarcode,

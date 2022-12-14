@@ -44,37 +44,40 @@ class _ItemCardState extends State<ItemCard> {
         isHover = false;
         setState(() {});
       },
-      child: InkWell(
-        onTap:widget.onClick,
-        //widget.onClick,
-        child: Container(
-          // height: height * .084,
-          // decoration: BoxDecoration(
-          //   // color: Colors.red,
-          //     color: widget.isSelected
-          //         ? Palette.searchInputColor.withOpacity(0.2)
-          //         : isHover
-          //         ? Palette.searchInputColor.withOpacity(0.2)
-          //         : null,
-          //     border: widget.isSelected
-          //         ? Border(
-          //         left: BorderSide(
-          //             color: Palette.Grey.withOpacity(.4), width: 2))
-          //         : null),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap:widget.onClick,
+          //widget.onClick,
           child: Container(
-            decoration: BoxDecoration(
-              border:widget.selectedVertical==widget.index? Border(
-                left:  BorderSide(width: 4.0, color: Color(0xff3E4F5B)),
-              ):  Border(left:  BorderSide(width:0, color:Colors.transparent),),
-              color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):Color(0xffEDF1F2),
-            ),
+            // height: height * .084,
+            // decoration: BoxDecoration(
+            //   // color: Colors.red,
+            //     color: widget.isSelected
+            //         ? Palette.searchInputColor.withOpacity(0.2)
+            //         : isHover
+            //         ? Palette.searchInputColor.withOpacity(0.2)
+            //         : null,
+            //     border: widget.isSelected
+            //         ? Border(
+            //         left: BorderSide(
+            //             color: Palette.Grey.withOpacity(.4), width: 2))
+            //         : null),
+            child: Container(
 
-            child: Center(
+              decoration: BoxDecoration(
+                border:widget.selectedVertical==widget.index? Border(
+                  left:  BorderSide(width: 4.0, color: Color(0xff3E4F5B)),
+                ):  Border(left:  BorderSide(width:0, color:Colors.transparent),),
+                color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):Color(0xffEDF1F2),
+              ),
+
+              child: Center(
     child: ListTile(
     title: Column(
     children: [
     SizedBox(
-    height: height * .012,
+    height: height * .010,
     ),
     Container(
     alignment:
@@ -88,21 +91,21 @@ class _ItemCardState extends State<ItemCard> {
     ),
     fontWeight:
     FontWeight
-        .bold,
+          .bold,
     fontSize: height *
     .018),
     ),
     ),
-      SizedBox(
-        height: height * .005,
-      ),
+        SizedBox(
+          height: height * .002,
+        ),
     Container(
     alignment:
     Alignment.topLeft,
     child: Text(
     widget.item.toString(),
     style: TextStyle(
-      fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w400,
     color:Colors.black,
     // Color(
     // 0x000000,
@@ -111,14 +114,18 @@ class _ItemCardState extends State<ItemCard> {
     height *
     .0215),
     )),
+      SizedBox(
+        height: height * .010,
+      ),
     ],
     ),
     // subtitle:
     key: UniqueKey(),
     ),
+            ),
           ),
-        ),
-      ),)
+        ),),
+      )
     );
   },
 );

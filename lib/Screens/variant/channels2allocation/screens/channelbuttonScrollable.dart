@@ -18,6 +18,7 @@ class _ChannelScrollableScreenState extends State<ChannelScrollableScreen> {
     double width=MediaQuery.of(context).size.width;
     return Container(
       height: height*.08,
+      margin:   EdgeInsets.symmetric(horizontal:width *.0155 ),
 
       child: ListView.separated(
         scrollDirection: Axis.horizontal,

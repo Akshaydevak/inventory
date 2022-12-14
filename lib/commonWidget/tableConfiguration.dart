@@ -40,6 +40,7 @@ import 'package:inventory/widgets/searchTextfield.dart';
 
 import '../Screens/heirarchy/general/model/listbrand.dart';
 import '../Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
+import '../Screens/variant/variantdetails/cubits/variantsearch/variantsearch_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
 
 class TableConfigurePopup extends StatelessWidget {
@@ -64,6 +65,13 @@ class TableConfigurePopup extends StatelessWidget {
       case "division-TablePopup":
         {
           data = divisionTabalePopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;   case "Search_tablePopup":
+        {
+          data = SearchTabalePopup(
             type: type,
             valueSelect: valueSelect,
           );
@@ -170,6 +178,7 @@ class TableConfigurePopup extends StatelessWidget {
       case "SalesUomTabalePopup":
         {
           data = SalesUomTabalePopup(
+            id:id,
             type: type,
             valueSelect: valueSelect,
           );
@@ -350,7 +359,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "division  Popup",
+                label: "Division Popup",
                 onApply: () {
                   showDailogPopUp(
                     context,
@@ -378,9 +387,10 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                 dataField: Container(
                   // height: 500,
                   child: Column(
+
                     children: [
                       Container(
-                          margin: EdgeInsets.all(5),
+                          // margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
                             color: Color(0xffFAFAFA),
                             h: 40,
@@ -404,7 +414,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                       Container(
                         height: h / 1.86,
                         // width: w/7,
-                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         child: SingleChildScrollView(
                           child: customTable(
                             // border: const TableBorder(
@@ -485,7 +495,7 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                                                 TableCellVerticalAlignment
                                                     .middle,
                                             child:
-                                                textPadding((i + 1).toString())
+                                                textPadding((i + 1).toString(),)
                                             // Text(keys[i].key??"")
 
                                             ),
@@ -493,8 +503,8 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -505,11 +515,8 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -557,6 +564,296 @@ class _divisionTabalePopup extends State<divisionTabalePopup> {
     });
   }
 }
+
+
+
+
+class SearchTabalePopup extends StatefulWidget {
+  final String type;
+  final Function valueSelect;
+
+  SearchTabalePopup({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _SearchTabalePopup createState() => _SearchTabalePopup();
+}
+
+class _SearchTabalePopup extends State<SearchTabalePopup> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  List<BrandListModel> table = [];
+  var list1;
+  TextEditingController searchContoller = TextEditingController();
+
+  void changeAddNew(bool va) {
+    // addNew = va;
+    // onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return BlocProvider(
+  create: (context) => VariantsearchCubit(),
+  child: Builder(builder: (context) {
+      // context.read<DevisionListCubit>().getDevisionList();
+      return BlocConsumer<VariantsearchCubit, VariantsearchState>(
+        listener: (context, state) {
+          print("state" + state.toString());
+          state.maybeWhen(
+              orElse: () {},
+              error: () {
+                print("error");
+              },
+              success: (list) {
+                print("Welcome" + list.toString());
+                table = list.data;
+                list1 = list;
+              });
+        },
+        builder: (context, state) {
+          return Builder(builder: (context) {
+            double h = MediaQuery.of(context).size.height;
+            double w = MediaQuery.of(context).size.width;
+            return AlertDialog(
+              content: PopUpHeader(
+                functionChane: true,
+                buttonCheck: true,
+                buttonName: "ADD NEW",
+                onTap: () {},
+                isDirectCreate: true,
+                addNew: false,
+                label: "Search  Variant",
+                onApply: () {
+                  // showDailogPopUp(
+                  //   context,
+                  //   ConfigurePopup(
+                  //     type: "devision-group",
+                  //   ),
+                  // );
+
+                  // widget.onTap();
+                  setState(() {});
+                },
+                onEdit: () {},
+                onCancel: () {
+                  // context
+                  //     .read<MaterialdeleteCubit>()
+                  //     .materialDelete(veritiaclid,"material");
+                },
+                onAddNew: (v) {
+                  print("Akshay" + v.toString());
+                  // changeAddNew(v);
+                  // setState(() {});
+                  //
+                  // setState(() {});
+                },
+                dataField: Container(
+                  // height: 500,
+                  child: Column(
+                    children: [
+                      Container(
+                          margin: EdgeInsets.all(5),
+                          child: SearchTextfiled(
+                            color: Color(0xffFAFAFA),
+                            h: 40,
+                            hintText: "Search...",
+                            ctrlr: searchContoller,
+                            onChanged: (va) {
+                              print("searching case" + va.toString());
+                              context.read<VariantsearchCubit>().getVariantSearch(va??"");
+
+                            },
+                          )),
+                      SizedBox(
+                        height: h * .005,
+                      ),
+                      Container(
+                        height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
+                        // width: w/7,
+                        // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                        child: SingleChildScrollView(
+                          child: customTable(
+                            // border: const TableBorder(
+                            //   verticalInside: BorderSide(
+                            //       width: .5,
+                            //       color: Colors.black45,
+                            //       style: BorderStyle.solid),
+                            //   horizontalInside: BorderSide(
+                            //       width: .3,
+                            //       color: Colors.black45,
+                            //       // color: Colors.blue,
+                            //       style: BorderStyle.solid),
+                            // ),
+                            tableWidth: .5,
+                            childrens: [
+                              TableRow(
+                                // decoration: BoxDecoration(
+
+                                //     color: Colors.green.shade200,
+
+                                //     shape: BoxShape.rectangle,
+
+                                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                children: [
+                                  tableHeadtext(
+                                    'Sl No',
+                                    // padding: EdgeInsets.all(7),
+                                    //
+                                    // height: 44,
+                                    // textColor: Colors.black,
+                                    // color: Color(0xffE5E5E5),
+                                    size: 13,
+                                  ),
+
+                                  tableHeadtext(
+                                    'Variants',
+                                    // textColor: Colors.black,
+                                    // padding: EdgeInsets.all(7),
+                                    // height: 44,
+                                    size: 13,
+                                    // color: Color(0xffE5E5E5),
+                                  ),
+                                  // tableHeadtext(
+                                  //   '',
+                                  //   textColor: Colors.black,
+                                  //   padding: EdgeInsets.all(7),
+                                  //   height: 46,
+                                  //   size: 13,
+                                  //   // color: Color(0xffE5E5E5),
+                                  // ),
+                                ],
+                              ),
+                              if (table?.isNotEmpty == true) ...[
+                                for (var i = 0; i < table.length; i++)
+                                  TableRow(
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
+                                      children: [
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child:
+                                                textPadding((i + 1).toString())
+                                            // Text(keys[i].key??"")
+
+                                            ),
+                                        TableCell(
+                                            verticalAlignment:
+                                                TableCellVerticalAlignment
+                                                    .middle,
+                                            child: textOnclickPadding(
+                                              ontap: () {
+                                                BrandListModel model =
+                                                    BrandListModel(
+                                                  id: table[i].id,
+                                                  name: table[i].name,
+                                                  code: table[i].code,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.valueSelect(model);
+                                              },
+                                              text:
+
+                                                      table[i].name ?? "",
+
+                                            )
+                                            // Text(keys[i].value??"",)
+
+                                            ),
+                                      ]),
+                              ],
+                            ],
+                            widths: {
+                              0: FlexColumnWidth(1),
+                              1: FlexColumnWidth(5),
+                            },
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .004,
+                      ),
+                      if (list1 != null)
+                        tablePagination(
+                          () => context.read<VariantsearchCubit>().refresh(),
+                          back: list1?.previousUrl == null
+                              ? null
+                              : () {
+                                  context
+                                      .read<VariantsearchCubit>()
+                                      .previuosslotSectionPageList();
+                                },
+                          next: list1.nextPageUrl == null
+                              ? null
+                              : () {
+                                  // print(data.nextPageUrl);
+                                  context
+                                      .read<VariantsearchCubit>()
+                                      .nextslotSectionPageList();
+                                },
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            );
+          });
+        },
+      );
+    }),
+);
+  }
+}
+
+
+
+
+
+
 
 
 
@@ -683,6 +980,7 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -775,8 +1073,8 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
                                             verticalAlignment:
                                             TableCellVerticalAlignment
                                                 .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                 BrandListModel(
                                                   id: table[i].id,
@@ -787,12 +1085,11 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                  Text(table[i].name ?? ""),
-                                                  height: 45),
-                                            )
+                                              text:
+
+                                                  table[i].name ?? "",
+                                            ),
+
                                           // Text(keys[i].value??"",)
 
                                         ),
@@ -974,6 +1271,7 @@ class _UOMPopup extends State<UOMPopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -1066,8 +1364,8 @@ class _UOMPopup extends State<UOMPopup> {
                                             verticalAlignment:
                                             TableCellVerticalAlignment
                                                 .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                 BrandListModel(
                                                   id: table[i].id,
@@ -1078,11 +1376,9 @@ class _UOMPopup extends State<UOMPopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                  Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text:
+                                                  table[i].name ?? "",
+
                                             )
                                           // Text(keys[i].value??"",)
 
@@ -1547,6 +1843,7 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -1639,8 +1936,8 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 CostingCreatePostModel model =
                                                     CostingCreatePostModel(
                                                   id: table[i].id,
@@ -1651,13 +1948,11 @@ class _CostingTabalePopup extends State<CostingTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
+                                              text:
+
                                                       table[i].methodName ??
                                                           ""),
-                                                  height: 45),
-                                            )
+
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -1835,6 +2130,7 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -1927,8 +2223,8 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 PricingTypeListModel model =
                                                     PricingTypeListModel(
                                                   pricingGroupName:
@@ -1940,13 +2236,13 @@ class _PricingTabalePopup extends State<PricingTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(table[i]
+                                              text:
+
+                                                  table[i]
                                                           .pricingGroupName ??
                                                       ""),
-                                                  height: 45),
-                                            )
+
+
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -2124,6 +2420,7 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -2216,8 +2513,8 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 PricingGroupListModel model =
                                                     PricingGroupListModel(
                                                   pricingTypeName:
@@ -2228,15 +2525,11 @@ class _Pricing2TabalePopup extends State<Pricing2TabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(table[i]
+                                              text:
+
+                                                  table[i]
                                                           .pricingTypeName ??
                                                       ""),
-                                                  height: 45),
-                                            )
-                                            // Text(keys[i].value??"",)
-
                                             ),
                                       ]),
                               ],
@@ -2412,6 +2705,7 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                       ),
                       Container(
                         height: h / 1.86,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -2504,8 +2798,8 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 CostingMetodTypePostModel
                                                     model =
                                                     CostingMetodTypePostModel(
@@ -2516,12 +2810,12 @@ class _CostingTypeTabalePopup extends State<CostingTypeTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child: Text(
+                                              text:
+
+
                                                       table[i].typeName ?? ""),
-                                                  height: 45),
-                                            )
+
+
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -2643,11 +2937,12 @@ class _varientTabalePopup extends State<varientTabalePopup> {
               content: PopUpHeader(
                 functionChane: true,
                 buttonCheck: true,
+                buttonVisible: false,
                 buttonName: "ADD NEW",
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "division  Popup",
+                label: "Variant Popup",
                 onApply: () {
                   // showDailogPopUp(
                   //   context,
@@ -2701,6 +2996,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                       ),
                       Container(
                         height: h / 1.9,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -2793,8 +3089,8 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -2804,12 +3100,7 @@ class _varientTabalePopup extends State<varientTabalePopup> {
                                                 Navigator.pop(context);
 
                                                 widget.valueSelect(model);
-                                              },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              },text:table[i].name,
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -3003,6 +3294,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                       ),
                       Container(
                         height: h / 1.9,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -3077,8 +3369,8 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 VendorDetailsModel model =
                                                 VendorDetailsModel(
                                                   id: table[i].id,
@@ -3089,11 +3381,7 @@ class _ManuFacturedPopup extends State<ManuFacturedPopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].manuFactureName ?? ""),
-                                                  height: 45),
+                                              text: table[i].manuFactureName ?? "",
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -3225,7 +3513,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                 onTap: () {},
                 isDirectCreate: true,
                 addNew: false,
-                label: "category  Popup",
+                label: "Category  Popup",
                 onApply: () {
                   showDailogPopUp(
                     context,
@@ -3278,6 +3566,7 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -3370,8 +3659,8 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -3382,10 +3671,8 @@ class _categoryTabalePopup extends State<categoryTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -3564,6 +3851,7 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -3656,8 +3944,8 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -3668,11 +3956,9 @@ class _SubcategoryTabalePopup extends State<SubcategoryTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
-                                            )
+                                              text: table[i].name ?? ""),
+
+
                                             // Text(keys[i].value??"",)
 
                                             ),
@@ -3804,6 +4090,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                   showDailogPopUp(
                     context,
                     ConfigurePopup(
+                      veritiaclid: widget.id,
                       type: "base_uom",
                     ),
                   );
@@ -3838,9 +4125,9 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                               print("searching case" + va.toString());
                               context
                                   .read<BaseuomlistCubit>()
-                                  .searchUomList(searchContoller.text);
+                                  .searchUomList(searchContoller.text,id:widget.id);
                               if (va == "") {
-                                context.read<BaseuomlistCubit>().getUomist();
+                                context.read<BaseuomlistCubit>().getUomist(id: widget.id);
                               }
                             },
                           )),
@@ -3849,6 +4136,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -3941,8 +4229,8 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -3953,10 +4241,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -4009,7 +4294,7 @@ class _baseUomTabalePopup extends State<baseUomTabalePopup> {
 class SalesUomTabalePopup extends StatefulWidget {
   final String type;
   final Function valueSelect;
-  final int id;
+  final int? id;
 
   SalesUomTabalePopup({
     Key? key,
@@ -4137,6 +4422,7 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -4229,8 +4515,8 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -4241,10 +4527,8 @@ class _SalesUomTabalePopup extends State<SalesUomTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text:table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -4431,6 +4715,7 @@ class _UomDivisionPopup extends State<UomDivisionPopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -4747,6 +5032,7 @@ class _GroupDivisionPopup extends State<GroupDivisionPopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -5053,6 +5339,7 @@ class _CategoryDivisionPopup extends State<CategoryDivisionPopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -5360,6 +5647,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -5420,22 +5708,24 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                               if (table?.isNotEmpty == true) ...[
                                 for (var i = 0; i < table.length; i++)
                                   TableRow(
-                                      // decoration: BoxDecoration(
-                                      //     color: Colors.grey.shade200,
-                                      //     shape: BoxShape.rectangle,
-                                      //     border: const Border(
-                                      //         left: BorderSide(
-                                      //             width: .5,
-                                      //             color: Colors.grey,
-                                      //             style: BorderStyle.solid),
-                                      //         bottom: BorderSide(
-                                      //             width: .5,
-                                      //             color: Colors.grey,
-                                      //             style: BorderStyle.solid),
-                                      //         right: BorderSide(
-                                      //             color: Colors.grey,
-                                      //             width: .5,
-                                      //             style: BorderStyle.solid))),
+                                      decoration: BoxDecoration(
+                                          color: Pellet.tableRowColor,
+                                          shape: BoxShape.rectangle,
+                                          border:  Border(
+                                              left: BorderSide(
+
+                                                  color: Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+                                                  style: BorderStyle.solid),
+                                              bottom: BorderSide(
+
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  style: BorderStyle.solid),
+                                              right: BorderSide(
+                                                  color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                  width: .4,
+
+                                                  style: BorderStyle.solid))),
                                       children: [
                                         TableCell(
                                             verticalAlignment:
@@ -5450,22 +5740,26 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
-                                                BrandListModel model =
-                                                    BrandListModel(
-                                                  id: table[i].id,
-                                                  name: table[i].name,
-                                                  code: table[i].code,
-                                                );
-                                                Navigator.pop(context);
+                                            child: Material(
 
-                                                widget.valueSelect(model);
-                                              },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              color: Colors.transparent,
+                                              child: textOnclickPadding(
+                                                ontap: () {
+                                                  BrandListModel model =
+                                                      BrandListModel(
+                                                    id: table[i].id,
+                                                    name: table[i].name,
+                                                    code: table[i].code,
+                                                  );
+                                                  Navigator.pop(context);
+
+                                                  widget.valueSelect(model);
+                                                },
+                                                text:
+
+                                                        table[i].name ?? "",
+
+                                              ),
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -5651,6 +5945,7 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -5743,8 +6038,8 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 ShippingAddressModel model =
                                                 ShippingAddressModel(
                                                   id: table[i].id,
@@ -5755,10 +6050,8 @@ class _shippingIdListPopup extends State<shippingIdListPopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].fullName ?? ""),
-                                                  height: 45),
+                                              text: table[i].fullName ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -5887,7 +6180,7 @@ class _customerIdListPopup extends State<customerIdListPopup> {
             print("postssssssss" + state.toString());
             state.maybeWhen(orElse: () {
               // context.
-              context.showSnackBarError("Loadingggg");
+              context.showSnackBarError("Loading");
             }, error: () {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
@@ -5974,6 +6267,7 @@ class _customerIdListPopup extends State<customerIdListPopup> {
 
 
 
+
                                   );
 
                                   context
@@ -6028,6 +6322,7 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                           ),
                           Container(
                             height: h / 2,
+                            margin: EdgeInsets.symmetric(horizontal: w*.006),
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: SingleChildScrollView(
@@ -6120,8 +6415,8 @@ class _customerIdListPopup extends State<customerIdListPopup> {
                                                 verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                                child: InkWell(
-                                                  onTap: () {
+                                                child: textOnclickPadding(
+                                                  ontap: () {
                                                     CustomerIdListModel model =
                                                     CustomerIdListModel(
                                                       customerUserCode:table[i].customerUserCode ,
@@ -6137,10 +6432,9 @@ class _customerIdListPopup extends State<customerIdListPopup> {
 
                                                     widget.valueSelect(model);
                                                   },
-                                                  child: Container(
-                                                      child:
-                                                      Text(table[i].customerUserCode ?? ""),
-                                                      height: 45),
+                                                  text:
+                                                      table[i].customerUserCode ?? "",
+
                                                 )
                                               // Text(keys[i].value??"",)
 
@@ -6329,6 +6623,7 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -6421,8 +6716,8 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -6433,11 +6728,7 @@ class _BrandTabalePopup extends State<BrandTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text:table[i].name ?? "",
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -6612,6 +6903,7 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -6704,8 +6996,8 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -6716,11 +7008,7 @@ class _StaticTabalePopup extends State<StaticTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -6991,8 +7279,8 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -7003,11 +7291,8 @@ class _GroupTabalePopup extends State<GroupTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -7276,8 +7561,8 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 BrandListModel model =
                                                     BrandListModel(
                                                   id: table[i].id,
@@ -7288,10 +7573,8 @@ class _MaterialTabalePopup extends State<MaterialTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text: table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 
@@ -7472,6 +7755,7 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                       ),
                       Container(
                         height: h / 2,
+                        margin: EdgeInsets.symmetric(horizontal: w*.006),
                         // width: w/7,
                         // margin: EdgeInsets.symmetric(horizontal: w*.02),
                         child: SingleChildScrollView(
@@ -7564,8 +7848,8 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
                                             verticalAlignment:
                                                 TableCellVerticalAlignment
                                                     .middle,
-                                            child: InkWell(
-                                              onTap: () {
+                                            child: textOnclickPadding(
+                                              ontap: () {
                                                 FrameWorkListModel model =
                                                     FrameWorkListModel(
                                                   id: table[i].id,
@@ -7576,10 +7860,9 @@ class _FrameWorkTabalePopup extends State<FrameWorkTabalePopup> {
 
                                                 widget.valueSelect(model);
                                               },
-                                              child: Container(
-                                                  child:
-                                                      Text(table[i].name ?? ""),
-                                                  height: 45),
+                                              text:
+                                                      table[i].name ?? "",
+
                                             )
                                             // Text(keys[i].value??"",)
 

@@ -359,6 +359,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
           builder: (context, state) {
             return Builder(builder: (context) {
               return Scaffold(
+                backgroundColor: Pellet.bagroundColor,
                 body: SingleChildScrollView(
                   child: IntrinsicHeight(
                     child: Row(
@@ -505,23 +506,21 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                 ),
                                 Container(
                                   color: Colors.white,
-                                  height: 50,
+                                  height: 35,
                                 ),
                                 Row(
                                   children: [
                                     TextWidget(text: "Order Lines"),
                                   ],
                                 ),
+                                SizedBox(height: height*.01,),
 
-                                Divider(
-                                  color: Colors.grey,
-                                  thickness: 1,
-                                ),
+
                                 // GrowableTable(),
-                                Scrollbar(
+                                CustomScrollBar(
                                   controller: recieveController,
-                                  isAlwaysShown: true,
-                                  child: Container(
+
+                                  childs: Container(
                                     color: Colors.white,
                                     alignment: Alignment.topRight,
                                     child: SingleChildScrollView(
@@ -535,7 +534,7 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                           SingleChildScrollView(
                                             child: Container(
                                               width: 2200,
-                                              padding: EdgeInsets.all(10),
+                                              // padding: EdgeInsets.all(10),
                                               child: customTable(
 
                                                   tableWidth: .5,
@@ -1183,7 +1182,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                     ]
                                                   ]),
                                             ),
-                                          )
+                                          ),
+                                          SizedBox(height: 20,)
                                         ],
                                       ),
                                     ),
@@ -1198,80 +1198,83 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                   color: Colors.white,
                                   height: 50,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Button(Icons.delete, Colors.red,
-                                        ctx: context,
-                                        text: "DISCARD",
-                                        onApply: () {},
-                                        height: 29,
-                                        width: 90,
-                                        labelcolor: Colors.red,
-                                        iconColor: Colors.red,
-                                        bdr: true),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                    Button(Icons.check, Colors.grey,
-                                        ctx: context,
-                                        text: "SAVE",
-                                        height: 29,
-                                        Color: Color(0xff3E4F5B),
-                                        width: 90,
-                                        labelcolor: Colors.white,
-                                        iconColor: Colors.white, onApply: () {
-                                      print("apppa"+lines.toString());
-                                      if(updateCheck)  context.showSnackBarError("please click the update button");
-                                         else{ PurchaseReturnInvoicePostModel model =
-                                      PurchaseReturnInvoicePostModel(
-                                          purchaseInvoiceId:purchaseInvoiceidController.text??"",
-                                          returnOrderCode:purchaseReturnOrderCodeController?.text??"",
-                                          inventoryId: inventoryContoller?.text??"",
-                                          invoicedBy: 'test',
-                                          venderId: vendoridContoller?.text??"",
-                                          notes:noteController?.text??"",
-                                          remarks: remarksController?.text??"",
-                                          unitCost: double.tryParse( unitCostController?.text??""),
-                                          foc: double.tryParse( focController?.text??""),
-                                          discount: double.tryParse( discountController?.text??""),
-                                          grandTotal: double.tryParse( grandTotalCostController?.text??""),
-                                          vatableAmount: double.tryParse( vatableAmountController?.text??""),
-                                          excessTax: double.tryParse( excessTaxController?.text??""),
-                                          actualCost:  double.tryParse( actualCostController?.text??""),
-                                          vat:  double.tryParse( vatController?.text??""),
-                                          vendorTrnNumber: vendorTrnnumberController?.text??"",
-                                          lines: lines
-                                          // purchaseReturnOrderId: 1,
-                                          // lines:[
-                                          //
-                                          // Order(
-                                          //   returnOrderLineCode: "SZ6VTDTEOH",
-                                          //   purchaseInvoiceId:"977FWCJCYP",
-                                          //   isInvoiced: true,
-                                          //   variantId:"gcvd" ,
-                                          //   variantName: "test",
-                                          //   totalQty: 1,
-                                          //   unitCost: 100.0,
-                                          //   isFree: true,
-                                          //   purchaseUom: "akskk",
-                                          //   suppliercode: "djhcb",
-                                          //   barcode: "dchjbdhj",
-                                          //   grandTotal: 100.0,
-                                          //   vat: 100.0,
-                                          //   vatableAmount: 100.0,
-                                          //   actualCost: 100.0,
-                                          //   excessTax: 100.0,
-                                          //   discount: 100.0,
-                                          //   foc: 100.0
-                                          // )]
-                                      );
-                                      context.read<InvoicepostCubit>().invoicePost(model);}
-                                    }),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                  ],
+                                Container(
+                                  margin: EdgeInsets.only(right:width*.015,),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Button(Icons.delete, Colors.red,
+                                          ctx: context,
+                                          text: "DISCARD",
+                                          onApply: () {},
+                                          height: 29,
+                                          width: 90,
+                                          labelcolor: Colors.red,
+                                          iconColor: Colors.red,
+                                          bdr: true),
+                                      SizedBox(
+                                        width: width * .008,
+                                      ),
+                                      Button(Icons.check, Colors.grey,
+                                          ctx: context,
+                                          text: "SAVE",
+                                          height: 29,
+                                          Color: Color(0xff3E4F5B),
+                                          width: 90,
+                                          labelcolor: Colors.white,
+                                          iconColor: Colors.white, onApply: () {
+                                        print("apppa"+lines.toString());
+                                        if(updateCheck)  context.showSnackBarError("please click the update button");
+                                           else{ PurchaseReturnInvoicePostModel model =
+                                        PurchaseReturnInvoicePostModel(
+                                            purchaseInvoiceId:purchaseInvoiceidController.text??"",
+                                            returnOrderCode:purchaseReturnOrderCodeController?.text??"",
+                                            inventoryId: inventoryContoller?.text??"",
+                                            invoicedBy: 'test',
+                                            venderId: vendoridContoller?.text??"",
+                                            notes:noteController?.text??"",
+                                            remarks: remarksController?.text??"",
+                                            unitCost: double.tryParse( unitCostController?.text??""),
+                                            foc: double.tryParse( focController?.text??""),
+                                            discount: double.tryParse( discountController?.text??""),
+                                            grandTotal: double.tryParse( grandTotalCostController?.text??""),
+                                            vatableAmount: double.tryParse( vatableAmountController?.text??""),
+                                            excessTax: double.tryParse( excessTaxController?.text??""),
+                                            actualCost:  double.tryParse( actualCostController?.text??""),
+                                            vat:  double.tryParse( vatController?.text??""),
+                                            vendorTrnNumber: vendorTrnnumberController?.text??"",
+                                            lines: lines
+                                            // purchaseReturnOrderId: 1,
+                                            // lines:[
+                                            //
+                                            // Order(
+                                            //   returnOrderLineCode: "SZ6VTDTEOH",
+                                            //   purchaseInvoiceId:"977FWCJCYP",
+                                            //   isInvoiced: true,
+                                            //   variantId:"gcvd" ,
+                                            //   variantName: "test",
+                                            //   totalQty: 1,
+                                            //   unitCost: 100.0,
+                                            //   isFree: true,
+                                            //   purchaseUom: "akskk",
+                                            //   suppliercode: "djhcb",
+                                            //   barcode: "dchjbdhj",
+                                            //   grandTotal: 100.0,
+                                            //   vat: 100.0,
+                                            //   vatableAmount: 100.0,
+                                            //   actualCost: 100.0,
+                                            //   excessTax: 100.0,
+                                            //   discount: 100.0,
+                                            //   foc: 100.0
+                                            // )]
+                                        );
+                                        context.read<InvoicepostCubit>().invoicePost(model);}
+                                      }),
+                                      SizedBox(
+                                        width: width * .008,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),

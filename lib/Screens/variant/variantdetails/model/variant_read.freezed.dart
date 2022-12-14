@@ -43,6 +43,8 @@ mixin _$VariantReadModel {
   String? get uomGroupName => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_point")
   int? get reOrderPoint => throw _privateConstructorUsedError;
+  @JsonKey(name: "sibling_code")
+  String? get siblingCode => throw _privateConstructorUsedError;
   @JsonKey(name: "reorder_quantity")
   int? get reOrderQuantity => throw _privateConstructorUsedError;
   @JsonKey(name: "linked_item")
@@ -195,6 +197,8 @@ abstract class $VariantReadModelCopyWith<$Res> {
           String? uomGroupName,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
+      @JsonKey(name: "sibling_code")
+          String? siblingCode,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
       @JsonKey(name: "linked_item")
@@ -349,6 +353,7 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
     Object? inventoryId = freezed,
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
+    Object? siblingCode = freezed,
     Object? reOrderQuantity = freezed,
     Object? linkedItem = freezed,
     Object? alterNativeBarcode = freezed,
@@ -475,6 +480,10 @@ class _$VariantReadModelCopyWithImpl<$Res, $Val extends VariantReadModel>
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
+      siblingCode: freezed == siblingCode
+          ? _value.siblingCode
+          : siblingCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
@@ -843,6 +852,8 @@ abstract class _$$_VariantReadModelCopyWith<$Res>
           String? uomGroupName,
       @JsonKey(name: "reorder_point")
           int? reOrderPoint,
+      @JsonKey(name: "sibling_code")
+          String? siblingCode,
       @JsonKey(name: "reorder_quantity")
           int? reOrderQuantity,
       @JsonKey(name: "linked_item")
@@ -1004,6 +1015,7 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
     Object? inventoryId = freezed,
     Object? uomGroupName = freezed,
     Object? reOrderPoint = freezed,
+    Object? siblingCode = freezed,
     Object? reOrderQuantity = freezed,
     Object? linkedItem = freezed,
     Object? alterNativeBarcode = freezed,
@@ -1130,6 +1142,10 @@ class __$$_VariantReadModelCopyWithImpl<$Res>
           ? _value.reOrderPoint
           : reOrderPoint // ignore: cast_nullable_to_non_nullable
               as int?,
+      siblingCode: freezed == siblingCode
+          ? _value.siblingCode
+          : siblingCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       reOrderQuantity: freezed == reOrderQuantity
           ? _value.reOrderQuantity
           : reOrderQuantity // ignore: cast_nullable_to_non_nullable
@@ -1385,6 +1401,8 @@ class _$_VariantReadModel implements _VariantReadModel {
           this.uomGroupName,
       @JsonKey(name: "reorder_point")
           this.reOrderPoint,
+      @JsonKey(name: "sibling_code")
+          this.siblingCode,
       @JsonKey(name: "reorder_quantity")
           this.reOrderQuantity,
       @JsonKey(name: "linked_item")
@@ -1545,6 +1563,9 @@ class _$_VariantReadModel implements _VariantReadModel {
   @override
   @JsonKey(name: "reorder_point")
   final int? reOrderPoint;
+  @override
+  @JsonKey(name: "sibling_code")
+  final String? siblingCode;
   @override
   @JsonKey(name: "reorder_quantity")
   final int? reOrderQuantity;
@@ -1745,7 +1766,7 @@ class _$_VariantReadModel implements _VariantReadModel {
 
   @override
   String toString() {
-    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantReadModel(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, barcode: $barcode, qrcode: $qrcode, dimension: $dimension, uomCode: $uomCode, variantFrameWorkId: $variantFrameWorkId, uomId: $uomId, inventoryId: $inventoryId, uomGroupName: $uomGroupName, reOrderPoint: $reOrderPoint, siblingCode: $siblingCode, reOrderQuantity: $reOrderQuantity, linkedItem: $linkedItem, alterNativeBarcode: $alterNativeBarcode, alterNativeQrCode: $alterNativeQrCode, unitCost: $unitCost, weightUomId: $weightUomId, maxSaleOrderLimit: $maxSaleOrderLimit, minSaleOrderLimit: $minSaleOrderLimit, actualCost: $actualCost, returType: $returType, safetyStock: $safetyStock, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, needMultipleIntegration: $needMultipleIntegration, avgGp: $avgGp, returnType: $returnType, returnTime: $returnTime, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, landingCost: $landingCost, uomNameData: $uomNameData, salesUomData: $salesUomData, vendorDetails: $vendorDetails, purchaseUomdata: $purchaseUomdata, variantframeWork: $variantframeWork, variantMeta: $variantMeta, itemData: $itemData, searchName: $searchName, SalesUom: $SalesUom, grossWeight: $grossWeight, producedCountry: $producedCountry, netWeight: $netWeight, posName: $posName, displayname: $displayname, purchaseuom: $purchaseuom, vdeioUrl: $vdeioUrl, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, isActive: $isActive, salesBlock: $salesBlock, purchaseBlock: $purchaseBlock, itemCatalog: $itemCatalog, itemImage: $itemImage, stockWarning: $stockWarning, itemCatelog1: $itemCatelog1, itemCatelog2: $itemCatelog2, itemCatelog3: $itemCatelog3, itemCatelog4: $itemCatelog4, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -1776,6 +1797,8 @@ class _$_VariantReadModel implements _VariantReadModel {
                 other.uomGroupName == uomGroupName) &&
             (identical(other.reOrderPoint, reOrderPoint) ||
                 other.reOrderPoint == reOrderPoint) &&
+            (identical(other.siblingCode, siblingCode) ||
+                other.siblingCode == siblingCode) &&
             (identical(other.reOrderQuantity, reOrderQuantity) ||
                 other.reOrderQuantity == reOrderQuantity) &&
             (identical(other.linkedItem, linkedItem) ||
@@ -1843,8 +1866,7 @@ class _$_VariantReadModel implements _VariantReadModel {
                 other.grossWeight == grossWeight) &&
             (identical(other.producedCountry, producedCountry) ||
                 other.producedCountry == producedCountry) &&
-            (identical(other.netWeight, netWeight) ||
-                other.netWeight == netWeight) &&
+            (identical(other.netWeight, netWeight) || other.netWeight == netWeight) &&
             (identical(other.posName, posName) || other.posName == posName) &&
             (identical(other.displayname, displayname) || other.displayname == displayname) &&
             (identical(other.purchaseuom, purchaseuom) || other.purchaseuom == purchaseuom) &&
@@ -1888,6 +1910,7 @@ class _$_VariantReadModel implements _VariantReadModel {
         inventoryId,
         uomGroupName,
         reOrderPoint,
+        siblingCode,
         reOrderQuantity,
         linkedItem,
         const DeepCollectionEquality().hash(_alterNativeBarcode),
@@ -1985,6 +2008,8 @@ abstract class _VariantReadModel implements VariantReadModel {
           final String? uomGroupName,
       @JsonKey(name: "reorder_point")
           final int? reOrderPoint,
+      @JsonKey(name: "sibling_code")
+          final String? siblingCode,
       @JsonKey(name: "reorder_quantity")
           final int? reOrderQuantity,
       @JsonKey(name: "linked_item")
@@ -2141,6 +2166,9 @@ abstract class _VariantReadModel implements VariantReadModel {
   @override
   @JsonKey(name: "reorder_point")
   int? get reOrderPoint;
+  @override
+  @JsonKey(name: "sibling_code")
+  String? get siblingCode;
   @override
   @JsonKey(name: "reorder_quantity")
   int? get reOrderQuantity;

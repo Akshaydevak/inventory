@@ -53,7 +53,7 @@ class CostingGrowableTableState extends State<CostingGrowableTable> {
 
           Container(
             // width: w/5,
-            margin: EdgeInsets.symmetric(horizontal: w*.02),
+            margin: EdgeInsets.symmetric(horizontal: w*.0155),
             child: customTable(
 
 

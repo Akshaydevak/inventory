@@ -27,7 +27,7 @@ class CostingcreatelistCubit extends Cubit<CostingcreatelistState> {
 
   Future searchCostingList(String filter) async {
     emit(CostingcreatelistState.initial());
-    final result = await repo.getCostingCreateList(filter);
+    final result = await repo.getCostingCreateList("code=$filter");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

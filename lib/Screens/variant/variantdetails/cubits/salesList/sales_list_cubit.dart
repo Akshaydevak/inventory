@@ -17,7 +17,7 @@ class SalesListCubit extends Cubit<SalesListState> {
     print("enterd");
     // items = [];
     emit(SalesListState.initial());
-    final result = await repo.getSalesList(null, type: type);
+    final result = await repo.getSalesList(null, type: type,id:id);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

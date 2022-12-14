@@ -174,7 +174,7 @@ List<  InventoryListModel> inventoryList=[];
                   NewInputCard(controller: passwordController, title: "PASSWORD",password: true),
 
                   SizedBox(height: 9,),
-                  NewInputCard(controller: empCode, title: "EMP code",password: true),
+                  NewInputCard(controller: empCode, title: "Employee Code",password: true),
                   SizedBox(height: 9,),
                   LoginButton(
                     label: "sign in",

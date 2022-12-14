@@ -27,7 +27,7 @@ class CostingtypelistCubit extends Cubit<CostingtypelistState> {
 
   Future searchCostingTypeList(String filter) async {
     emit(CostingtypelistState.initial());
-    final result = await repo.getCostingTypeList(filter);
+    final result = await repo.getCostingTypeList("code=$filter");
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
       prev = r.previousPage;

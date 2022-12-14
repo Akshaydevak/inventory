@@ -9,6 +9,7 @@ class BrandListModel with _$BrandListModel {
     final String? name,
     final String? code,
     @JsonKey(name: "standard_code") final String? standardCode,
+    @JsonKey(name: "variant_framework_name") final String? variantFrameWorkName,
     @JsonKey(name: "uom_code") final String? uomCode,
   }) = _BrandListModel;
   factory BrandListModel.fromJson(Map<String, dynamic> json) =>

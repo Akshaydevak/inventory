@@ -79,11 +79,11 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,
-                  border: Border.all(
-                    color: Color(0xff3E4F5B).withOpacity(.1),
-                    width: 0.5, //width of border
-                  ),
-                  borderRadius: BorderRadius.circular(5)
+                  // border: Border.all(
+                  //   color: Color(0xff3E4F5B).withOpacity(.1),
+                  //   width: 0.5, //width of border
+                  // ),
+                  // borderRadius: BorderRadius.circular(5)
 
               ),
 
@@ -161,11 +161,12 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
               child:Container(  decoration: BoxDecoration(
                   color:
                   widget.restricted ? Colors.white.withOpacity(.2) : null,
-                  border: Border.all(
-                    color: Color(0xff3E4F5B).withOpacity(.1),
-                    width: .1, //width of border
-                  ),
-                  borderRadius: BorderRadius.circular(5)
+                  // border: Border.all(
+                  //   color: Color(0xff3E4F5B).withOpacity(.1),
+                  //   width: .1, //// width of border
+                  // ),
+
+                    // borderRadius: BorderRadius.circular(5)
 
               ),
 
@@ -185,6 +186,7 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                     type: widget.type!)
                     :
                 TypeAheadFormField(
+
 
 
                   textFieldConfiguration: TextFieldConfiguration(

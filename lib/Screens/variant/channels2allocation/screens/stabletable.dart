@@ -361,7 +361,7 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               setState(() {});
                             }),
                         SizedBox(
-                          height: height * .08,
+                          height: height * .03,
                         ),    PopUpSwitchTile(
                             value:widget?. dailyStockAvailable??false,
                             title: "Is Daily Stock Available",

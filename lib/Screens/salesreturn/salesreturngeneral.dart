@@ -558,85 +558,88 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                         color: Colors.white,
                                         height: 30,
                                       ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.end,
-                                        children: [
-                                          Button(Icons.delete, Colors.red,
-                                              ctx: context,
-                                              text: "Discard", onApply: () {
-                                                showDailogPopUp(
-                                                    context,
-                                                    ConfirmationPopup(
-                                                      // table:table,
-                                                      // clear:clear(),
-                                                      verticalId: veritiaclid,
-                                                      onPressed: () {
-                                                        print("akshay");
-                                                        Navigator.pop(context);
-                                                        context
-                                                            .read<
-                                                            SalesreturngeneraldeleteCubit>()
-                                                            .salesreturnGeneralDelete(
-                                                            veritiaclid);
-                                                      },
-                                                    ));
-                                              },
-                                              height: 29,
-                                              width: 90,
-                                              labelcolor: Colors.red,
-                                              iconColor: Colors.red,
-                                              bdr: true),
-                                          SizedBox(
-                                            width: width * .008,
-                                          ),
-                                          Button(Icons.check, Colors.grey,
-                                              ctx: context,
-                                              text: select ? "Save" : "update",
-                                              height: 29,
-                                              Color: Color(0xff3E4F5B),
-                                              width: 90,
-                                              labelcolor: Colors.white,
-                                              iconColor: Colors.white, onApply: () {
-                                                print("updateCheck" +
-                                                    remarksController.text.toString());
-                                                if (updateCheck)
-                                                  context.showSnackBarError(
-                                                      "please click the update button ");
-                                                else {
-                                                  SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
-                                                      orderType: orderTypeController?.text ?? "",
-                                                      orderMode: orderModeController?.text ?? "",
-                                                      inventoryid:Variable.inventory_ID,
-                                                      customerId: cstomerIdController?.text ?? "",
-                                                      trnNumber: trnController?.text ?? "",
-                                                      salesInvoiceId: salesInvoiceCodeController.text??"",
-                                                      shippingAddressId: shippingAddressIdController?.text ?? "",
-                                                      billingAddressId: billingAddressIdController?.text??"",
-                                                      reason: reasonController?.text ?? "",
-                                                      remarks: remarksController?.text ?? "",
-                                                      discount: double.tryParse(discountController?.text ?? ""),
-                                                      unitCost: double.tryParse(unitCostController?.text ?? ""),
-                                                      excessTax: double.tryParse(exciseTAxController?.text ?? ""),
-                                                      taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                                      vat: double.tryParse(vatController?.text ?? ""),
-                                                      sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                                      totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                                      createdBy: "akaka",
-                                                      // editedBy: "",
-                                                      orderLines: table);
-                                                  print("modelllls" + model.toString());
-                                                  select
-                                                      ? context
-                                                      .read<SalesreturnpostCubit>()
-                                                      .postSalesReturnGeneral(model)
-                                                      :  context
-                                                      .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
-                                                }
-                                              }),
-                                          SizedBox(
-                                            width: width * .008,
-                                          ),
-                                        ],
+                                      Container(
+                                        margin: EdgeInsets.only(right:width*.015,),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            Button(Icons.delete, Colors.red,
+                                                ctx: context,
+                                                text: "Discard", onApply: () {
+                                                  showDailogPopUp(
+                                                      context,
+                                                      ConfirmationPopup(
+                                                        // table:table,
+                                                        // clear:clear(),
+                                                        verticalId: veritiaclid,
+                                                        onPressed: () {
+                                                          print("akshay");
+                                                          Navigator.pop(context);
+                                                          context
+                                                              .read<
+                                                              SalesreturngeneraldeleteCubit>()
+                                                              .salesreturnGeneralDelete(
+                                                              veritiaclid);
+                                                        },
+                                                      ));
+                                                },
+                                                height: 29,
+                                                width: 90,
+                                                labelcolor: Colors.red,
+                                                iconColor: Colors.red,
+                                                bdr: true),
+                                            SizedBox(
+                                              width: width * .008,
+                                            ),
+                                            Button(Icons.check, Colors.grey,
+                                                ctx: context,
+                                                text: select ? "Save" : "update",
+                                                height: 29,
+                                                Color: Color(0xff3E4F5B),
+                                                width: 90,
+                                                labelcolor: Colors.white,
+                                                iconColor: Colors.white, onApply: () {
+                                                  print("updateCheck" +
+                                                      remarksController.text.toString());
+                                                  if (updateCheck)
+                                                    context.showSnackBarError(
+                                                        "please click the update button ");
+                                                  else {
+                                                    SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
+                                                        orderType: orderTypeController?.text ?? "",
+                                                        orderMode: orderModeController?.text ?? "",
+                                                        inventoryid:Variable.inventory_ID,
+                                                        customerId: cstomerIdController?.text ?? "",
+                                                        trnNumber: trnController?.text ?? "",
+                                                        salesInvoiceId: salesInvoiceCodeController.text??"",
+                                                        shippingAddressId: shippingAddressIdController?.text ?? "",
+                                                        billingAddressId: billingAddressIdController?.text??"",
+                                                        reason: reasonController?.text ?? "",
+                                                        remarks: remarksController?.text ?? "",
+                                                        discount: double.tryParse(discountController?.text ?? ""),
+                                                        unitCost: double.tryParse(unitCostController?.text ?? ""),
+                                                        excessTax: double.tryParse(exciseTAxController?.text ?? ""),
+                                                        taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+                                                        vat: double.tryParse(vatController?.text ?? ""),
+                                                        sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+                                                        totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+                                                        createdBy: "akaka",
+                                                        // editedBy: "",
+                                                        orderLines: table);
+                                                    print("modelllls" + model.toString());
+                                                    select
+                                                        ? context
+                                                        .read<SalesreturnpostCubit>()
+                                                        .postSalesReturnGeneral(model)
+                                                        :  context
+                                                        .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
+                                                  }
+                                                }),
+                                            SizedBox(
+                                              width: width * .008,
+                                            ),
+                                          ],
+                                        ),
                                       ),
 
                                     ],
@@ -987,7 +990,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
-                                    id: int.tryParse(widget.customerId.text),
+                                    code: widget.customerId.text,
                                     type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
                                     setState(() {
@@ -1018,7 +1021,7 @@ class _SalesReturnGenealStableTableState extends State<SalesReturnGenealStableTa
                                 showDailogPopUp(
                                   context,
                                   TableConfigurePopup(
-                                    id: int.tryParse(widget.customerId.text),
+                                    code: widget.customerId.text,
                                     type: "shippingIdListPopup", valueSelect: (ShippingAddressModel va){
 
                                     setState(() {
@@ -1303,6 +1306,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     if (assignCheck == false) table1 = widget.table ?? [];
 
     // if(widget.select && clear==true)table1.clear();
@@ -1411,10 +1416,10 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
             ),
 
           ],
-          child: Scrollbar(
+          child: CustomScrollBar(
             controller: recieveController,
-            isAlwaysShown: true,
-            child: Container(
+
+            childs: Container(
               color: Colors.white,
               alignment: Alignment.topRight,
               child: SingleChildScrollView(
@@ -1427,7 +1432,7 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                     SingleChildScrollView(
                       child: Container(
                         width: 2200,
-                        padding: EdgeInsets.all(10),
+                        // padding: EdgeInsets.all(10),
                         child: customTable(
 
                             tableWidth: .5,
@@ -2289,7 +2294,8 @@ class _SalesReturnGeneralGrowableTableState extends State<SalesReturnGeneralGrow
                               ]
                             ]),
                       ),
-                    )
+                    ),
+                    SizedBox(height: 20,)
                   ],
                 ),
               ),

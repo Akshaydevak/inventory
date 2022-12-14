@@ -19,6 +19,7 @@ import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/NewinputScreen.dart';
@@ -123,6 +124,7 @@ class _VariantDetailScreenState extends State<VariantDetailScreen> {
   bool active = false;
   bool needMultipleIntegration = false;
   int? veritiaclid = 0;
+  int? baseUomId = 0;
   int? checkIdid = 0;
   bool select=false;
   bool addNew=false;
@@ -161,6 +163,7 @@ ProductFeatures? importantInfo;
   bool cata6=false;
   bool cata7=false;
   bool cata8=false;
+  bool suffixIcon=false;
 
 
   trueOrFalseChange({String? type,bool val=false}){
@@ -206,6 +209,17 @@ ProductFeatures? importantInfo;
         break;
         case 'Multiple' :
         needMultipleIntegration=val;
+        setState(() {
+
+        });
+        break;  case 'GiftOption' :
+      haveGiftOption=val;
+        setState(() {
+
+        });
+        break;
+        case 'GiftWrap' :
+          haveWrapOption=val;
         setState(() {
 
         });
@@ -431,6 +445,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
        variantCodeController.clear();
        variantFrameWorkController.clear();
        variantNameController.clear();
+       shelfTimeController.clear();
+       shelfTypeController.clear();
       variantValueController.clear();
        descriptionController.clear();
        arabicDescriptionController.clear();
@@ -529,9 +545,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         BlocProvider(
           create: (context) => VariantreadCubit(),
         ),
-        BlocProvider(
-          create: (context) => VariantsearchCubit(),
-        ),
+        // BlocProvider(
+        //   create: (context) => VariantsearchCubit(),
+        // ),
         BlocProvider(
           create: (context) => VariantpostCubit(),
         ),  BlocProvider(
@@ -586,13 +602,15 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         },
         success: (data) {
           // print("aval ethito" + data.toString());
-        setState(() {
+
 
           // group=data;
 
           variantNameController.text=data.name??"";
           itemCodeController.text=data.itemData?.itemName??"";
           variantNameController.text=data.name??"";
+          shelfTypeController.text=data.shelfType??"";
+          shelfTimeController.text=data.shelfTime.toString()??"";
           minSalesOrderLimitController.text=data?.minSaleOrderLimit.toString()??"";
           maxSalesOrderLimitController.text=data?.maxSaleOrderLimit.toString()??"";
           salesUomController.text=data.SalesUom??"";
@@ -602,6 +620,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           searchNAmeController.text=data?.searchName??"";
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
+          seblingController.text=data?.siblingCode??"";
           heightController.text=data?.dimension?.height.toString()??"";
           widthController.text=data?.dimension?.width.toString()??"";
           lengthController.text=data?.dimension?.length.toString()??"";
@@ -631,7 +650,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           grossWeightController.text=data.grossWeight??"";
           baseUomController.text=data.uomId??"";
           uomGroupNameController.text=data.uomGroupName??"";
-          Variable.uomId=int.tryParse(data.uomId.toString())??0;
+          baseUomId =int.tryParse(data.uomId.toString())??0;
           netWeightController.text=data.netWeight??"";
           weightController.text=data.dimension?.weight.toString()??"";
 
@@ -650,7 +669,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           itmImage=data.itemImage??false;
           active=data.isActive??false;
           weightUomIdController.text=data.weightUomId.toString();
-          returnTypeController.text=data?.returnType.toString()??"";
+          returnTypeController.text=data?.returnType??"";
           returnTimeController.text=data?.returnTime.toString()??"";
           vatController.text=data.vat.toString()??"";
           exciseTaxController.text=data.vat.toString()??"";
@@ -683,7 +702,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           print(alternativeBarcode);
           print("alternativeBarcode");
           // addNew=false;
-        });
+
 
 
 
@@ -704,10 +723,24 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           if (data.data1) {
             context.showSnackBarSuccess(data.data2);
             Timer(Duration(seconds: 5), () {
-              setState(() {
+
+                img1=false;
+                img2=false;
+                img3=false;
+                img4=false;
+                img5=false;
+                img5=false;
+                cata1=false;
+                cata2=false;
+                cata3=false;
+                cata4=false;
+                cata5=false;
+                cata6=false;
+                cata7=false;
+                cata8=false;
                 context.read<ListvraiantCubit>().getVariantList();
                 // select=false;
-              });
+
             });
           } else {
             context.showSnackBarError(data.data2);
@@ -737,51 +770,31 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
         });
       },
     ),
-    BlocListener<VariantsearchCubit, VariantsearchState>(
-      listener: (context, state) {
-        print("state++++++++++++++++++++++++++++++++");
-        state.maybeWhen(
-            orElse: () {},
-            error: () {
-              print("error");
-            },
-            success: (data) {
-              if(data.data.length==0){
-    setState(() {
-      exportCheck = false;
-      context.showSnackBarError("Does not exist");
-    }); }
-              else{
-    setState(() {
-      print("aaaayyiram" + data.data.toString());
-      exportCheck = true;
-      checkIdid = data.data[0].id;
-      }); }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            });
-      },
-    ),
+    // BlocListener<VariantsearchCubit, VariantsearchState>(
+    //   listener: (context, state) {
+    //     print("state++++++++++++++++++++++++++++++++");
+    //     state.maybeWhen(
+    //         orElse: () {},
+    //         error: () {
+    //           print("error");
+    //         },
+    //         success: (data) {
+    //           if(data.data.length==0){
+    // setState(() {
+    //   exportCheck = false;
+    //   context.showSnackBarError("Does not exist");
+    // }); }
+    //           else{
+    // setState(() {
+    //   print("aaaayyiram" + data.data.toString());
+    //   exportCheck = true;
+    //   checkIdid = data.data[0].id;
+    //   }); }
+    //
+    //
+    //         });
+    //   },
+    // ),
 
   ],
   child: BlocConsumer<ListvraiantCubit, ListvraiantState>(
@@ -798,7 +811,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
                     result = list.data;
                     print("seee" + result.toString());
-                    setState(() {
+
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
                         Variable.variantCode=result[0].code.toString();
@@ -815,7 +828,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
 
 
 
-                    });
+
                   });
             },
             builder: (context, state) {
@@ -888,11 +901,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                               margin: EdgeInsets.only(
                                                   left: width * .02),
                                               child: SearchTextfiled(
+                                                suffixColor: suffixIcon?Pellet.bagroundColor:Colors.grey,
                                                 suffiXCheck: true,
-                                                suffixOnComplete: (){
-                                                  print("aksa");
-                                                  context.read<VariantsearchCubit>().getVariantSearch(searchController.text??"");
-                                                },
+
                                                 w: width * .3,
                                                 h: 48,
 
@@ -900,7 +911,34 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                 color: Color(0xffFAFAFA),
                                                 hintText: "Search....",
                                                 ctrlr: searchController,
-                                                onChanged: (va) {
+                                                onTap: () {
+                                                  showDailogPopUp(
+                                                    context,
+                                                    TableConfigurePopup(
+
+                                                      type: "Search_tablePopup",
+                                                      valueSelect: (BrandListModel va) {
+                                                        setState(() {
+                                                          checkIdid = va.id;
+                                                          exportCheck = true;
+                                                          searchController.text=va.name??"";
+
+
+                                                          // onChange = true;
+                                                          // orderType.text = va!;
+                                                        });
+                                                      },
+                                                    ),
+                                                  );
+                                                  setState(() {
+
+                                                  //
+                                                  // if(va!=""){
+                                                  //   suffixIcon=true;
+                                                  // }
+                                                  // else
+                                                  //   suffixIcon=false;
+                                                  });
 
 
                                                 },
@@ -957,7 +995,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       SizedBox(height: height * .10,),
                                       VariantStabletable(needMultipleIntegration:needMultipleIntegration,
                                         weightUom:weightUomIdController, weight:weightController,
-                                        seblingNameController: searchNAmeController, height: heightController, width: widthController, length: lengthController, baseGroupName: baseUomNameController, purchaseUomName: purchaseUomNameController, salesUomName: salesUomNameController,
+                                          baseUomId:baseUomId,
+                                        seblingNameController: seblingNameController, height: heightController, width: widthController, length: lengthController, baseGroupName: baseUomNameController, purchaseUomName: purchaseUomNameController, salesUomName: salesUomNameController,
                                           uomGroupName: uomGroupNameController, veritiaclid:veritiaclid, catalog1: catalog1,catalog2: catalog2,
                                           catalog3: catalog3,
                                          catalog4: catalog4,
@@ -1029,20 +1068,15 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                         haveGiftOption:haveGiftOption,
                                         haveWrapOption:haveWrapOption,
                                         imagePostCheck:imagePostCheck,
-                                          trueOrFalseChange:trueOrFalseChange
-
-
-
-
-                                      ),
+                                          trueOrFalseChange:trueOrFalseChange),
                                       SizedBox(height: height * .07,),
                                       Row(mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
                                           TextWidget(text: "Vendor Details"),
                                         ],
                                       ),
-                                      Divider(color: Colors.grey,thickness: 1,),
-                                      SizedBox(height: height * .07,),
+                                      // Divider(color: Colors.grey,thickness: 1,),
+                                      SizedBox(height: height * .01,),
 
                                       VendorDetailsVarient(
                                           vendorDetails:vendorDetails,
@@ -1054,8 +1088,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                           TextWidget(text: "Identification"),
                                         ],
                                       ),
-                                      Divider(color: Colors.grey,thickness: 1,),
-                                      SizedBox(height: height * .04,),
+                                      // Divider(color: Colors.grey,thickness: 1,),
+                                      SizedBox(height: height * .01,),
                                       Identification(
                                         select:select,
                                         veritiaclid:veritiaclid ,
@@ -1094,7 +1128,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                       ),
                                       SizedBox(height: height * .13,),
                                       Container(
-                                        margin:EdgeInsets.only(right: width*.004) ,
+                                        margin:EdgeInsets.only(right: width*.015) ,
                                         child: Row(
                                           mainAxisAlignment: MainAxisAlignment.end,
                                           children: [
@@ -1228,18 +1262,19 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
                                                   returnTime: int.tryParse(returnTimeController.text),
                                                   variantStatus: "va",
                                                   isActive: active,
-                                                  image2:img2?Variable.img2:  int.tryParse(image2Controller?.text??""),
-                                                  image3:img3?Variable.img3: int.tryParse(image3Controller?.text??""),
-                                                  image4:img4?Variable.img4: int.tryParse(image4Controller?.text??""),
-                                                  image5:img5?Variable.img5: int.tryParse(image5Controller?.text??""),
-                                                  catalog1:cata1?Variable.catalog1:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog1??""),
-                                                  catalog2:cata2?Variable.catalog2:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog2??""),
-                                                  catalog3:cata3?Variable.catalog3:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog3??""),
-                                                  catalog4:cata4?Variable.catalog4:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog4??""),
-                                                  catalog5:cata5?Variable.catalog5:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog5??""),
-                                                  catalog6:cata6?Variable.catalog6:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog6??""),
-                                                  catalog7:cata7?Variable.catalog7:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog7??""),
-                                                  catalog8:cata8?Variable.catalog8:int.tryParse( group.variantMeta?.catelog?.keyValues?.catelog8??""),
+                                                  image1: img1?Variable.imageName.toString():image1Controller.text??"",
+                                                  image2:img2?Variable.img2.toString():  image2Controller?.text??"",
+                                                  image3:img3?Variable.img3.toString():image3Controller?.text??"",
+                                                  image4:img4?Variable.img4.toString().toString(): image4Controller?.text??"",
+                                                  image5:img5?Variable.img5.toString(): image5Controller?.text??"",
+                                                  catalog1:cata1?Variable.catalog1.toString(): group.variantMeta?.catelog?.keyValues?.catelog1??"",
+                                                  catalog2:cata2?Variable.catalog2.toString(): group.variantMeta?.catelog?.keyValues?.catelog2??"",
+                                                  catalog3:cata3?Variable.catalog3.toString():group.variantMeta?.catelog?.keyValues?.catelog3??"",
+                                                  catalog4:cata4?Variable.catalog4.toString(): group.variantMeta?.catelog?.keyValues?.catelog4??"",
+                                                  catalog5:cata5?Variable.catalog5.toString():group.variantMeta?.catelog?.keyValues?.catelog5??"",
+                                                  catalog6:cata6?Variable.catalog6.toString(): group.variantMeta?.catelog?.keyValues?.catelog6??"",
+                                                  catalog7:cata7?Variable.catalog7.toString():group.variantMeta?.catelog?.keyValues?.catelog7??"",
+                                                  catalog8:cata8?Variable.catalog8.toString(): group.variantMeta?.catelog?.keyValues?.catelog8??"",
                                                   aboutProducts: aboutProducts,
                                                   productDetails: productDetails,
                                                   productFeatures:productFeatures,

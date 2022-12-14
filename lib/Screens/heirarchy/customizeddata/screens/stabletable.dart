@@ -179,6 +179,12 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                         SizedBox(
                           height: height * .030,
                         ),
+                        NewInputCard(
+                            formatter: true,
+                            controller: widget.returnTime, title: "Return Time"),
+                        SizedBox(
+                          height: height * .030,
+                        ),
                         SelectableDropDownpopUp(
 
 
@@ -200,12 +206,7 @@ class _CustomizedStableTableState extends State<CustomizedStableTable> {
                           height: height * .030,
                         ),
 
-                        NewInputCard(
-                            formatter: true,
-                            controller: widget.returnTime, title: "Return Time"),
-                        SizedBox(
-                          height: height * .030,
-                        ),
+
 
                         NewInputCard(
                             formatter: true,

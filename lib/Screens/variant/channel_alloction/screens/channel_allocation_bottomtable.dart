@@ -379,7 +379,7 @@ class ChannelAllocationBottomTableState extends State<ChannelAllocationBottomTab
                 1: FlexColumnWidth(4),
                 2: FlexColumnWidth(4),
                 3: FlexColumnWidth(4),
-                4: FlexColumnWidth(2),
+                4: FlexColumnWidth(1.8),
 
 
               },
