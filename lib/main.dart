@@ -233,6 +233,9 @@ class _MyHomeState extends State<MyHome> {
         prefs.setString('token', user?.token ?? "");
 
         Variable.loginLeage = user.legalEntiry.toString();
+        Variable.email = user.email.toString();
+        Variable.mobileNumber = user.mobile.toString();
+        Variable.loginLeage = user.legalEntiry.toString();
         Variable.token = user.token.toString();
         Variable.username = user.fname.toString();
         Variable.created_by = user.employeeCode.toString();

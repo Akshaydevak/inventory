@@ -565,7 +565,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
     print("postssssssss" + state.toString());
     state.maybeWhen(orElse: () {
       // context.
-      context.showSnackBarError("Loadingggg");
+      context.showSnackBarError("Loading");
     }, error: () {
       context.showSnackBarError(Variable.errorMessege);
     }, success: (data) {
@@ -622,7 +622,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           displayNAmeController.text=data?.displayname??"";
           seblingController.text=data?.siblingCode??"";
           heightController.text=data?.dimension?.height.toString()??"";
-          widthController.text=data?.dimension?.width.toString()??"";
+          widthController.text=data?.dimension?.width?.toString()??"";
           lengthController.text=data?.dimension?.length.toString()??"";
           descriptionController.text=data?.description??"";
           variantCodeController.text=data?.code??"";
@@ -652,12 +652,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           uomGroupNameController.text=data.uomGroupName??"";
           baseUomId =int.tryParse(data.uomId.toString())??0;
           netWeightController.text=data.netWeight??"";
-          weightController.text=data.dimension?.weight.toString()??"";
+          weightController.text=data.dimension?.weight?.toString()??"";
 
           // maxSalesOrderLimitController.text=data.max
-          unitCostController.text=data.unitCost.toString()??"";
-          landingCostController.text=data.landingCost.toString()??"";
-          actualCostController.text=data.actualCost.toString()??"";
+          unitCostController.text=data.unitCost?.toString()??"";
+          landingCostController.text=data.landingCost?.toString()??"";
+          actualCostController.text=data.actualCost?.toString()??"";
           producedCountryController.text=data?.producedCountry??"";
           manuFactreNameController.text=data?.manuFacturedName??"";
           manuFactreIdController.text=data?.manuFacturedId.toString()??"";
@@ -670,12 +670,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           active=data.isActive??false;
           weightUomIdController.text=data.weightUomId.toString();
           returnTypeController.text=data?.returnType??"";
-          returnTimeController.text=data?.returnTime.toString()??"";
-          vatController.text=data.vat.toString()??"";
-          exciseTaxController.text=data.vat.toString()??"";
-          minimumGpController.text=data.minGap.toString()??"";
-          maximumGpController.text=data.maxGp.toString()??"";
-          targetedGpController.text=data.targetedGp.toString()??"";
+          returnTimeController.text=data?.returnTime?.toString()??"";
+          vatController.text=data.vat?.toString()??"";
+          exciseTaxController.text=data.excessTax?.toString()??"";
+          minimumGpController.text=data.minGap?.toString()??"";
+          maximumGpController.text=data.maxGp?.toString()??"";
+          targetedGpController.text=data.targetedGp?.toString()??"";
           alternativeBarcode=data.alterNativeBarcode??[];
           alternativeQrCode=data.alterNativeQrCode??[];
           barCodeController.text=data?.barcode?.barcodeNumber??"";
@@ -684,7 +684,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           importantInfo=data.variantMeta?.importantInfo;
           productDetails=data.variantMeta?.productDetails;
           nutriantsFacts=data.variantMeta?.nutriantFacts;
-          reorederPointController.text=data.reOrderPoint.toString();
+          reorederPointController.text=data?.reOrderPoint.toString()??"";
           averageGpController.text=data.avgGp.toString();
           saftyStockController.text=data.safetyStock.toString();
           minPurchaseOrderLimitController.text=data.minPurchaseOrderLimit.toString();

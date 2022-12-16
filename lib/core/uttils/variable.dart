@@ -11,8 +11,11 @@ class Variable{
   static String  inventory_ID="";
   static String  inventory_Name="";
   static String  created_by="";
+  static String  mobileNumber="";
+
   static String  username="";
   static String  loginLeage="";
+
   static String  linkedVaue="";
   static int?  variantSearchId=0;
  static List<List<Map<String,dynamic>>> combinationArray=[];

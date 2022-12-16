@@ -18,6 +18,7 @@ class ListcustomverticalCubit extends Cubit<ListcustomverticalState> {
     // items = [];
     emit(ListcustomverticalState.initial());
     final result = await repo.getCustomVerticalList(
+      
       null,
     );
     result.fold((l) => emit(_Error()), (r) {

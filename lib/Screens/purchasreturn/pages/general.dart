@@ -360,7 +360,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
         print("patch" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -384,7 +384,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
 
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -1064,12 +1064,13 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                           child: textPadding(lines?[i].unitCost.toString()??"", fontSize: 12,
                                                               padding: EdgeInsets.only(left: 11.5, top:
                                                               1.5), fontWeight: FontWeight.w500),
-                                                        ),    TableCell(
+                                                        ),
+                                                        TableCell(
                                                           verticalAlignment: TableCellVerticalAlignment.middle,
                                                           child: textPadding(
 
                                                              lines?[i].discount.toString()??"", fontSize: 12,
-                                                              height:42,
+
                                                               padding: EdgeInsets.only(left: 11.5, top:
                                                               1.5), fontWeight: FontWeight.w500),
                                                         ),    TableCell(
@@ -1157,17 +1158,20 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                                                   setState(() {});
                                                                 });}),
                                                         ),
-                                                        TableTextButton(
-                                                          label:updateCheck? "update":"",
-                                                          onPress: (){
-                                                            updateCheck=false;
-                                                            addition();
-                                                            setState(() {
+                                                        TableCell(
+                                                          verticalAlignment: TableCellVerticalAlignment.middle,
+                                                          child: TableTextButton(
+                                                            label:updateCheck? "update":"",
+                                                            onPress: (){
+                                                              updateCheck=false;
+                                                              addition();
+                                                              setState(() {
 
-                                                            });
+                                                              });
 
 
-                                                          },
+                                                            },
+                                                          ),
                                                         ),
 
                                                         TableCell(
@@ -1341,7 +1345,7 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                         actualCost: double.tryParse(actualCostController.text),
                                         vat: double.tryParse(vatController.text),
                                         foc: double.tryParse(focController.text),
-                                        createdBy: "test",
+                                        createdBy: Variable.created_by,
                                         lines: lines??[],
                                       );
                                       print("Rkaramodel"+model.toString());

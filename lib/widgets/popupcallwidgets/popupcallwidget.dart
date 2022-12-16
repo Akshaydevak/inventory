@@ -712,7 +712,7 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
         create: (context) =>  VariantreadCubit(),
         child: Builder(
           builder: (context) {
-            context.read<VariantreadCubit>().getVariantRead(widget.id);
+            // context.read<VariantreadCubit>().getVariantRead(widget.id);
             return BlocBuilder<VariantreadCubit,
                 VariantreadState>(builder: (context, state) {
               print(state);
@@ -1782,7 +1782,14 @@ class _OrderedPersonRequestState extends State<OrderedPersonRequest> {
                   textFieldConfiguration: TextFieldConfiguration(
                       controller: _controller,
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                          enabledBorder:OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                          focusedBorder:   OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                         isDense: true,
                         // border: OutlineInputBorder(),
                         suffixIcon: Icon(Icons.keyboard_arrow_down)
@@ -1929,9 +1936,16 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                       ),
                       controller: _controller,
                       decoration: InputDecoration(
-                          border: InputBorder.none,
+                          // border: InputBorder.none,
                           isDense: true,
-                          // border: OutlineInputBorder(),
+                          enabledBorder:OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                          focusedBorder:   OutlineInputBorder(
+                              borderRadius:BorderRadius.circular(2),
+
+                              borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
                           suffixIcon: Icon(Icons.keyboard_arrow_down))),
                   onSuggestionSelected: (suggestion) {
                     print("suggestion" + suggestion.toString());

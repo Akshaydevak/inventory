@@ -119,7 +119,7 @@ class _IdentificationState extends State<Identification> {
             print("postssssssss" + state.toString());
             state.maybeWhen(orElse: () {
               // context.
-              context.showSnackBarError("Loadingggg");
+              context.showSnackBarError("Loading");
             }, error: () {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
@@ -1963,13 +1963,13 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
-widget.width.text !="null"?
+
                     NewInputCard(
                         formatter: true,
                         controller:
 
-                        widget.width, title: "Width(meter)"):
-                    Container(color:Colors.green,width:10,height:10),
+                        widget.width, title: "Width(meter)"),
+
                     SizedBox(
                       height: height * .030,
                     ),

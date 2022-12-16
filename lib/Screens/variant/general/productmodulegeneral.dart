@@ -547,7 +547,7 @@ print("the list is"+variantList.toString());
                 print("patch" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {

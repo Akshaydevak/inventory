@@ -313,7 +313,7 @@ class _StockScreenState extends State<StockScreen> {
                     print("postssssssss" + state.toString());
                     state.maybeWhen(orElse: () {
                       // context.
-                      context.showSnackBarError("Loadingggg");
+                      context.showSnackBarError("Loading");
                     }, error: () {
                       context.showSnackBarError(Variable.errorMessege);
                     }, success: (data) {

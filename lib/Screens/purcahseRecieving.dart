@@ -2517,9 +2517,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                           ),
                                                                                           TableCell(
                                                                                             verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                            child: Checkbox(
-                                                                                              value: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
-                                                                                              onChanged: (bool? value) {
+                                                                                            child: CheckedBoxs(
+                                                                                              valueChanger: additionalVariants[i].isReceived == null ? false : additionalVariants[i].isReceived,
+                                                                                              onSelection
+                                                                                                  : (bool? value) {
                                                                                                 bool? isRecieved = additionalVariants[i].isReceived;
                                                                                                 setState(() {
                                                                                                   updateCheck1=true;
@@ -2993,6 +2994,11 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                                   setState(() {
 
                                                                                                   });
+                                                                                                  expiryDate2tControllers[i]=TextEditingController(text:newValue
+                                                                                                      ?.toIso8601String()
+                                                                                                      .split("T")[0] ??
+                                                                                                      ""  );
+
                                                                                                   additionalVariants[i] =
                                                                                                       additionalVariants[i]
                                                                                                           .copyWith(
@@ -3008,9 +3014,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                         
 
                                                                                           TableCell(
-                                                                                            child: Checkbox(
-                                                                                              value: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
-                                                                                              onChanged: (bool? value) {
+                                                                                            child: CheckedBoxs(
+                                                                                              valueChanger: additionalVariants[i].isFree == null ? false : additionalVariants[i].isFree,
+                                                                                              onSelection: (bool? value) {
                                                                                                 updateCheck1=true;
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
                                                                                                 setState(() {
@@ -3028,9 +3034,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                           TableCell(
                                                                                             verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                            child: Checkbox(
-                                                                                              value: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
-                                                                                              onChanged: (bool? value) {
+                                                                                            child: CheckedBoxs(
+                                                                                              valueChanger: additionalVariants[i].isActive == null ? false : additionalVariants[i].isActive,
+                                                                                              onSelection: (bool? value) {
                                                                                                 updateCheck1=true;
                                                                                                 additionalVariants[i] = additionalVariants[i].copyWith(updateCheck: false);
                                                                                                 setState(() {
@@ -3270,9 +3276,9 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       ),
                                                                                       TableCell(
                                                                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                        child: Checkbox(
-                                                                                          value: isReceived1,
-                                                                                          onChanged: (bool? value) {
+                                                                                        child: CheckedBoxs(
+                                                                                          valueChanger: isReceived1,
+                                                                                          onSelection: (bool? value) {
 
                                                                                             setState(() {
                                                                                               isReceived1 = !isReceived1!;
@@ -3599,9 +3605,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       ),
                                                                                       TableCell(
                                                                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                        child: Checkbox(
-                                                                                          value: isInvoiced1,
-                                                                                          onChanged: (bool? value) {
+                                                                                        child: CheckedBoxs(
+
+                                                                                         valueChanger : isInvoiced1,
+                                                                                          onSelection: (bool? value) {
 
                                                                                             setState(() {
                                                                                              // isInvoiced1 = !isInvoiced1!;
@@ -3633,10 +3640,10 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
                                                                                       ),
                                                                                       TableCell(
                                                                                         verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                                        child: Checkbox(
+                                                                                        child: CheckedBoxs(
 
-                                                                                          value: isFree1,
-                                                                                          onChanged: (bool? value) {
+                                                                                          valueChanger: isFree1,
+                                                                                          onSelection: (bool? value) {
 
                                                                                             setState(() {
                                                                                               isFree1 = !isFree1!;
@@ -4684,12 +4691,12 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
                             pw.  SizedBox(height: height*.06,),
-                            pw.  Text("8606200441",
+                            pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.  SizedBox(height: height*.005,),
-                            pw. Text("akshaygmail,com",
+                            pw. Text(Variable.email,
                               style:pw. TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
@@ -4697,7 +4704,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             pw. Text("PURCHASE ORDER",
                               style:pw. TextStyle(
 
-                                color: PdfColor.fromInt(0xAA1F6BA9),
+                                color: PdfColor.fromInt(0xff3E4F5B),
                                 fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
                             pw.  SizedBox(height: height*.009,)
 
@@ -4780,7 +4787,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                               "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
+                                          padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
                                           decoration: pw. BoxDecoration(
                                               border: pw.Border(
                                                 bottom: pw. BorderSide(width: .5,
@@ -4822,7 +4829,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             pw.Container(
                               height:height*.04,
                               width: width,
-                              color: PdfColor.fromInt(0xAA1F6BA9),
+                              color: PdfColor.fromInt(0xff3E4F5B),
                               child:  pw.Center(
                                 child: pw. Container(
                                     alignment:  pw.Alignment.topLeft,
@@ -4954,14 +4961,14 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                 children: [
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.012, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -4969,20 +4976,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -4991,19 +4998,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
 
                                   pw.   Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -5011,20 +5018,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   ),
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: height*.012,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize:height*.012,color: PdfColors.white,)),
                                     height: 35,
@@ -5171,7 +5178,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw. Text(discount.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
+                                    pw. Text(discount?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -5180,7 +5187,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child: pw.Row(
                                   children: [
                                     pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
-                                    pw. Text(unitCost.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
+                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -5188,7 +5195,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw. Text(excisetax.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -5196,7 +5203,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(vat.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -5204,7 +5211,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.  Text("Vatable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw.Text(variableAmount.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -5212,7 +5219,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw. Text("Actual cost:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(actualCost.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               )

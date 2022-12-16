@@ -236,7 +236,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -353,7 +353,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                 print("patch" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -375,7 +375,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
               listener: (context, state) {
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -687,7 +687,7 @@ class _SalesGeneralState extends State<SalesGeneral> {
                                                   vat: double.tryParse(vatController?.text ?? ""),
                                                   sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
                                                   totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                                  createdBy: "akaka",
+                                                  createdBy: Variable.created_by,
                                                   // editedBy: "",
                                                   orderLines: table);
                                               print("modelllls" + model.toString());
@@ -3669,7 +3669,7 @@ class _CustomerIdCreationPopUpState extends State<CustomerIdCreationPopUp> {
             print("postssssssss" + state.toString());
             state.maybeWhen(orElse: () {
               // context.
-              context.showSnackBarError("Loadingggg");
+              context.showSnackBarError("Loading");
             }, error: () {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {

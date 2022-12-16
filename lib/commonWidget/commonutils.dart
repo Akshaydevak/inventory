@@ -123,7 +123,9 @@ class _OpenSettingsState extends State<OpenSettings> {
   Widget build(BuildContext context) {
     // Variable.inventory_ID = inventoryList![0].businessUnitCode.toString();
     return AlertDialog(
+        insetPadding:EdgeInsets.zero,
         titlePadding: EdgeInsets.zero, contentPadding: EdgeInsets.zero,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
         content: BlocConsumer<InventorylistCubit, InventorylistState>(
       listener: (context, state) {
         state.maybeWhen(
@@ -140,188 +142,186 @@ class _OpenSettingsState extends State<OpenSettings> {
       },
       builder: (context, state) {
         return SingleChildScrollView(
-          child: Container(
-            margin: EdgeInsets.all(20),
+          child:
+          Container(
+            height: 110,
+            width: 10,
+            // color: Colors.red,
 
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                state.maybeWhen(orElse: () {
-                  return Column(
-                    children: [
-                      CircularProgressIndicator(),
-                    ],
-                  );
-                }, success: (d) {
-                  if (d.data.length != null)
-                    for (var i = 0; i < d.data.length; i++) {
-                      print(d.data.length);
+            margin: EdgeInsets.all(10),
 
-                      //   if (inventoryList?[i].inventoryCode ==
-                      //       Variable.inventory_ID) grpValue = i;
-                      //   // setState(() {});
-                      // }
+            child: state.maybeWhen(orElse: () {
+              return Column(
+                children: [
+                  CircularProgressIndicator(),
+                ],
+              );
+            }, success: (d) {
+              if (d.data.length != null)
+                for (var i = 0; i < d.data.length; i++) {
+                  print(d.data.length);
 
-                      if (inventoryList?[i].businessUnitCode ==
-                          Variable.inventory_ID) grpValue = i;
-                      // setState(() {});
-                    }
-                  return Container(
+                  //   if (inventoryList?[i].inventoryCode ==
+                  //       Variable.inventory_ID) grpValue = i;
+                  //   // setState(() {});
+                  // }
 
-                    alignment: Alignment.topLeft,
-                    height: 110,
-                    width: 160,
-                    // color: Colors.red,
-                    child: Container(
-                      alignment: Alignment.topLeft,
-                        child: ListView.separated(
-                          separatorBuilder:(context, index){
-                            return SizedBox(height: 5,);
-                          } ,
-                          padding: EdgeInsets.all(0),
+                  if (inventoryList?[i].businessUnitCode ==
+                      Variable.inventory_ID) grpValue = i;
+                  // setState(() {});
+                }
+              return Container(
+                margin:EdgeInsets.symmetric(horizontal: 7),
 
-                      itemCount: inventoryList?.length??1,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) => Container(
-                        child:Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Radio(
-                                value: index,
-                                groupValue: grpValue,
+                alignment: Alignment.topLeft,
 
-                                onChanged: (int? value) {
-                                  setState(() async {
-                                    grpValue = value!;
-                                    print("inventory" +
-                                        Variable.inventory_ID.toString());
-                                    // print(inventoryList?[index]
-                                    //     .inventoryCode);
-                                    Variable.inventory_ID = inventoryList![index]
+                child: Container(
+                  alignment: Alignment.topLeft,
+                    child: ListView.separated(
+                      separatorBuilder:(context, index){
+                        return SizedBox(height: 5,);
+                      } ,
+                      padding: EdgeInsets.all(0),
+
+                  itemCount: inventoryList?.length??1,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => Container(
+                    child:Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                            value: index,
+                            groupValue: grpValue,
+
+                            onChanged: (int? value) {
+                              setState(() async {
+                                grpValue = value!;
+                                print("inventory" +
+                                    Variable.inventory_ID.toString());
+                                // print(inventoryList?[index]
+                                //     .inventoryCode);
+                                Variable.inventory_ID = inventoryList![index]
+                                    .businessUnitCode
+                                    .toString();
+                                Variable.inventory_Name =
+                                    inventoryList![index].name.toString();
+
+
+
+                                final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                                prefs.setString(
+                                    "inventory",
+                                    inventoryList![index]
                                         .businessUnitCode
-                                        .toString();
-                                    Variable.inventory_Name =
-                                        inventoryList![index].name.toString();
+                                        .toString());
+                                prefs.setString("inventory_name",
+                                    inventoryList![index].name.toString());
+                                var val=  prefs.getInt('index');
+
+                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            DashBoard(
+                                              index: val??1,
+                                            )));
 
 
 
-                                    final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                    prefs.setString(
-                                        "inventory",
-                                        inventoryList![index]
-                                            .businessUnitCode
-                                            .toString());
-                                    prefs.setString("inventory_name",
-                                        inventoryList![index].name.toString());
-                                    var val=  prefs.getInt('index');
+                                // print("Value");
+                                // print(value);
+                                // print("grpvalue");
+                                // print(grpValue);
+                                // ModalRoute.of(context)?.settings.name;
+                                // Navigator.of(context).push(MaterialPageRoute(
+                                //   builder: (context) => super.widget,
+                                // )
+                                // );
+                              });
 
-                                    Navigator.pop(context);
-                                    Navigator.pushReplacement(
-                                        context,
-                                        new MaterialPageRoute(
-                                            builder: (context) =>
-                                                DashBoard(
-                                                  index: val??0,
-                                                )));
-
-
-
-                                    // print("Value");
-                                    // print(value);
-                                    // print("grpvalue");
-                                    // print(grpValue);
-                                    // ModalRoute.of(context)?.settings.name;
-                                    // Navigator.of(context).push(MaterialPageRoute(
-                                    //   builder: (context) => super.widget,
-                                    // )
-                                    // );
-                                  });
-
-                                  // print(Variable.inventory_ID);
-                                  // modulePageState.setState(() {});
-                                },
-                                // value: selected == index,
-                                activeColor:Pellet.tableBlueHeaderPrint),
-                            SizedBox(width: 10,),
-                            Text(inventoryList?[index].name ?? ""),
+                              // print(Variable.inventory_ID);
+                              // modulePageState.setState(() {});
+                            },
+                            // value: selected == index,
+                            activeColor:Pellet.tableBlueHeaderPrint),
+                        SizedBox(width: 10,),
+                        Text(inventoryList?[index].name ?? ""),
 
 
 
-                          ],
-                        ),
+                      ],
+                    ),
 
-                        // ListTile(
-                        //   trailing: Text(inventoryList?[index].name ?? ""),
-                        //   title:
-                        //   Radio(
-                        //       value: index,
-                        //       groupValue: grpValue,
-                        //
-                        //       onChanged: (int? value) {
-                        //         setState(() async {
-                        //           grpValue = value!;
-                        //           print("inventory" +
-                        //               Variable.inventory_ID.toString());
-                        //           // print(inventoryList?[index]
-                        //           //     .inventoryCode);
-                        //           Variable.inventory_ID = inventoryList![index]
-                        //               .businessUnitCode
-                        //               .toString();
-                        //           Variable.inventory_Name =
-                        //               inventoryList![index].name.toString();
-                        //
-                        //
-                        //
-                        //           final SharedPreferences prefs =
-                        //               await SharedPreferences.getInstance();
-                        //           prefs.setString(
-                        //               "inventory",
-                        //               inventoryList![index]
-                        //                   .businessUnitCode
-                        //                   .toString());
-                        //           prefs.setString("inventory_name",
-                        //               inventoryList![index].name.toString());
-                        //         var val=  prefs.getInt('index');
-                        //
-                        //           Navigator.pop(context);
-                        //           Navigator.pushReplacement(
-                        //               context,
-                        //               new MaterialPageRoute(
-                        //                   builder: (context) =>
-                        //                       DashBoard(
-                        //                         index: val??0,
-                        //                       )));
-                        //
-                        //
-                        //
-                        //           // print("Value");
-                        //           // print(value);
-                        //           // print("grpvalue");
-                        //           // print(grpValue);
-                        //           // ModalRoute.of(context)?.settings.name;
-                        //           // Navigator.of(context).push(MaterialPageRoute(
-                        //           //   builder: (context) => super.widget,
-                        //           // )
-                        //           // );
-                        //         });
-                        //
-                        //         // print(Variable.inventory_ID);
-                        //         // modulePageState.setState(() {});
-                        //       },
-                        //       // value: selected == index,
-                        //       activeColor:Pellet.tableBlueHeaderPrint),
-                        // ),
-                      ),
+                    // ListTile(
+                    //   trailing: Text(inventoryList?[index].name ?? ""),
+                    //   title:
+                    //   Radio(
+                    //       value: index,
+                    //       groupValue: grpValue,
+                    //
+                    //       onChanged: (int? value) {
+                    //         setState(() async {
+                    //           grpValue = value!;
+                    //           print("inventory" +
+                    //               Variable.inventory_ID.toString());
+                    //           // print(inventoryList?[index]
+                    //           //     .inventoryCode);
+                    //           Variable.inventory_ID = inventoryList![index]
+                    //               .businessUnitCode
+                    //               .toString();
+                    //           Variable.inventory_Name =
+                    //               inventoryList![index].name.toString();
+                    //
+                    //
+                    //
+                    //           final SharedPreferences prefs =
+                    //               await SharedPreferences.getInstance();
+                    //           prefs.setString(
+                    //               "inventory",
+                    //               inventoryList![index]
+                    //                   .businessUnitCode
+                    //                   .toString());
+                    //           prefs.setString("inventory_name",
+                    //               inventoryList![index].name.toString());
+                    //         var val=  prefs.getInt('index');
+                    //
+                    //           Navigator.pop(context);
+                    //           Navigator.pushReplacement(
+                    //               context,
+                    //               new MaterialPageRoute(
+                    //                   builder: (context) =>
+                    //                       DashBoard(
+                    //                         index: val??0,
+                    //                       )));
+                    //
+                    //
+                    //
+                    //           // print("Value");
+                    //           // print(value);
+                    //           // print("grpvalue");
+                    //           // print(grpValue);
+                    //           // ModalRoute.of(context)?.settings.name;
+                    //           // Navigator.of(context).push(MaterialPageRoute(
+                    //           //   builder: (context) => super.widget,
+                    //           // )
+                    //           // );
+                    //         });
+                    //
+                    //         // print(Variable.inventory_ID);
+                    //         // modulePageState.setState(() {});
+                    //       },
+                    //       // value: selected == index,
+                    //       activeColor:Pellet.tableBlueHeaderPrint),
+                    // ),
+                  ),
 
-                    )),
-                  );
+                )),
+              );
 
-                }),
-
-              ],
-            ),
+            }),
           ),
         );
       },
@@ -589,7 +589,7 @@ class _VendorPopupState extends State<VendorPopup> {
                                               // modulePageState.setState(() {});
                                             },
                                             // value: selected == index,
-                                            activeColor: Colors.green),
+                                            activeColor: Pellet.tableBlueHeaderPrint),
                                       ),
                                     )),
                       ));
@@ -1538,7 +1538,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
               listener: (context, state) {
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -2838,8 +2838,7 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                                     tableHeadtext(
                                       'Vendors',
                                       // textColor: Colors.black,
-                                      padding: EdgeInsets.all(7),
-                                      height: 46,
+
                                       size: 13,
                                       // color: Color(0xffE5E5E5),
                                     ),
@@ -12865,7 +12864,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loadingggg");
+                  context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {

@@ -345,7 +345,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
       print("postssssssss" + state.toString());
       state.maybeWhen(orElse: () {
         // context.
-        context.showSnackBarError("Loadingggg");
+        context.showSnackBarError("Loading");
       }, error: () {
         context.showSnackBarError(Variable.errorMessege);
       }, success: (data) {
@@ -376,7 +376,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
         print("patch" + state.toString());
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -550,7 +550,7 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
 
         state.maybeWhen(orElse: () {
           // context.
-          context.showSnackBarError("Loadingggg");
+          context.showSnackBarError("Loading");
         }, error: () {
           context.showSnackBarError(Variable.errorMessege);
         }, success: (data) {
@@ -2655,8 +2655,72 @@ create: (context) => InventorysearchCubit()..getInventorySearch("code",tab:"RF")
                                     ),
                                     SizedBox(height: 30,),
                                     SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",
-                                      saveFunction: (){},
-                                      discardFunction: (){},
+                                      saveFunction: (){
+                                        if(updateCheck){
+                                          context.showSnackBarError("please click the update button ");
+                                        }
+                                        else{
+                                          PurchaseOrderPost model =
+                                          PurchaseOrderPost(
+                                              purchaseOrderType: orderType.text??"",
+                                              orderedPerson:orderedPersonController.text??"",
+                                              iventoryId: Variable.inventory_ID,
+                                              address1: "akshay",
+                                              address2: "anmaika",
+                                              discount:double.tryParse( discountController.text),
+                                              plannedRecieptDate: plannedRecieptDate.text??"",
+                                              promisedReceiptdate:promisedRecieptDate.text??"",
+                                              note: noteController.text??"",
+                                              remarks: remarksController.text??"",
+                                              unitcost: double.tryParse(unitCostController.text),
+                                              excessTax: double.tryParse(excessTaxController.text),
+                                              actualCost: double.tryParse(actualCostController.text),
+                                              vat: double.tryParse(vatController.text),
+                                              grandTotal: double.tryParse(grandTotalController.text),
+                                              variableAmount: double.tryParse(vatableAmountController.text),
+                                              foc: double.tryParse(focController.text),
+                                              createdBy: "12",
+                                              edited_by: "anvar",
+
+                                              orderLines: table
+
+                                          );
+                                          print("sPBHSSMODEL"+model.toString());
+
+                                          // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
+                                          select? context.read<RequestformpostCubit>().postRequest(model):
+                                          context.read<RequestpatchCubit>().getRequestFormPatch(veritiaclid,model);
+                                        }
+
+                                      },
+                                      discardFunction: (){
+                                        if(select){
+                                          clear();
+                                          updateCheck=false;
+                                          table.clear();
+                                          setState(() {
+
+                                          });
+                                        }
+                                        else{
+                                          showDailogPopUp(
+                                              context,
+                                              ConfirmationPopup(
+                                                // table:table,
+                                                // clear:clear(),
+                                                verticalId:veritiaclid ,
+                                                onPressed:(){
+                                                  print("akshay");
+                                                  Navigator.pop(context);
+                                                  context.read<DeleterequestformCubit>().requestFormDelete(veritiaclid);
+
+                                                },
+
+
+                                              ));
+
+                                        }
+                                      },
 
                                     ),
                     //                 Container(

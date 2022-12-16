@@ -266,7 +266,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                       print("postssssssss" + state.toString());
                       state.maybeWhen(orElse: () {
                         // context.
-                        context.showSnackBarError("Loadingggg");
+                        context.showSnackBarError("Loading");
                       }, error: () {
                         context.showSnackBarError(Variable.errorMessege);
                       }, success: (data) {
@@ -964,8 +964,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                     Button(Icons.check, Colors.grey,ctx: context,
                                         onApply: (){
+                                          List<Lines>? result;
                                           for(var i=0;i<additionalVariants.length;i++){
-                                            List result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+                                             result = additionalVariants.where((o) => o.isInvoiced == true).toList();
 
 
                                           }
@@ -985,8 +986,8 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                             excessTax:double.tryParse( exciseTaxController.text),
                                             actualCost:double.tryParse( actualCostController.text),
                                             vat:double.tryParse( vatController.text),
-                                            invoicedBy: "akshay",
-                                            invoiceLines: additionalVariants,
+                                            invoicedBy: Variable.created_by,
+                                            invoiceLines: result??[],
 
 
 
@@ -994,6 +995,9 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
                                             // orderLines: table,
                                           );
+
+
+                                          print(model);
                                           context.read<InventorypostCubit>().postInventory(model);
 
 
@@ -1291,12 +1295,12 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                           crossAxisAlignment:pw. CrossAxisAlignment.end,
                           children: [
                             pw.  SizedBox(height: height*.06,),
-                            pw.  Text("8606200441",
+                            pw.  Text(Variable.mobileNumber,
                               style: pw.TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
                             pw.  SizedBox(height: height*.005,),
-                            pw. Text("akshaygmail,com",
+                            pw. Text(Variable.email,
                               style:pw. TextStyle(
                                 // color:Color(0xff565555) ,
                                   fontSize:7 ),),
@@ -1304,7 +1308,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             pw. Text("PURCHASE ORDER",
                               style:pw. TextStyle(
 
-                                color: PdfColor.fromInt(0xAA1F6BA9),
+                                color: PdfColor.fromInt(0xff3E4F5B),
                                 fontSize:height*.029,fontWeight: pw.FontWeight.bold ,  letterSpacing: 2.0,),),
                             pw.  SizedBox(height: height*.009,)
 
@@ -1373,7 +1377,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   pw. Column(
                                     children: [
                                       pw. Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
+                                          padding:  pw.EdgeInsets.only( top:9),
                                           decoration:  pw.BoxDecoration(
                                               border: pw.Border(
                                                 bottom:pw. BorderSide(width: .5,),
@@ -1386,7 +1390,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                               "".toString():orderDate.toString(),style:  pw.TextStyle(fontSize:9))
                                       ),
                                       pw.  Container(
-                                          padding:  pw.EdgeInsets.only(top: 9),
+                                          padding:  pw.EdgeInsets.only(top:orderCode==""?18:9),
                                           decoration: pw. BoxDecoration(
                                               border: pw.Border(
                                                 bottom: pw. BorderSide(width: .5,
@@ -1395,7 +1399,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                               )
                                           ),
                                           width: 120,
-                                          child: pw.Text(orderCode==""?" Empty":orderCode,style:  pw.TextStyle(fontSize:9))
+                                          child: pw.Text(orderCode==""?"":orderCode,style:  pw.TextStyle(fontSize:9))
                                       ),
 
                                     ],
@@ -1428,7 +1432,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                             pw.Container(
                               height:height*.04,
                               width: width,
-                              color: PdfColor.fromInt(0xAA1F6BA9),
+                              color: PdfColor.fromInt(0xff3E4F5B),
                               child:  pw.Center(
                                 child: pw. Container(
                                     alignment:  pw.Alignment.topLeft,
@@ -1560,14 +1564,14 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
                                 children: [
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Sl.No',style:pw. TextStyle(fontSize:height*.013, color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Variant Id ',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1575,20 +1579,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Barcode',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Purchase UOM',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Requested Qty',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1597,19 +1601,19 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
 
 
                                   pw.   Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(   'Unit cost',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text(  'Exsise tax',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text('Discount',style:pw. TextStyle(fontSize:height*.013,color: PdfColors.white,)),
                                     height: 35,
@@ -1617,20 +1621,20 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                   ),
 
                                   pw.  Container(
-                                    color: PdfColor.fromInt(0xAA1F6BA9),
+                                    color: PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vatable amount',style:pw. TextStyle(fontSize: height*.013,color: PdfColors.white,)),
                                     height: 35,
                                   ),
                                   pw.       Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Vat',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
 
                                   ),
                                   pw. Container(
-                                    color:  PdfColor.fromInt(0xAA1F6BA9),
+                                    color:  PdfColor.fromInt(0xff3E4F5B),
                                     alignment:pw. Alignment.center,
                                     child:pw.Text( 'Actual cost',style:pw. TextStyle(fontSize: 7,color: PdfColors.white,)),
                                     height: 35,
@@ -1777,7 +1781,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.Text("Discount:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw. Text(discount.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
+                                    pw. Text(discount?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -1786,7 +1790,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child: pw.Row(
                                   children: [
                                     pw. Text("UnitCost:",style: pw.TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),),
-                                    pw. Text(unitCost.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
+                                    pw. Text(unitCost?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold ,fontSize: 8 ),)
                                   ],
                                 ),
                               ),
@@ -1794,7 +1798,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.  Text("Excise Tax:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw. Text(excisetax.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw. Text(excisetax?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -1802,7 +1806,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw. Text("VAT Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(vat.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(vat?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -1810,7 +1814,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw.  Text("Vatable Amount:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8 ),),
-                                    pw.Text(variableAmount.toString(),style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(variableAmount?.toString()??"",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               ),
@@ -1818,7 +1822,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                                 child:pw. Row(
                                   children: [
                                     pw. Text("Actual cost:",style:pw. TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),),
-                                    pw.Text(actualCost.toString(),style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
+                                    pw.Text(actualCost?.toString()??"",style: pw.TextStyle(fontWeight:pw.FontWeight.bold,fontSize: 8  ),)
                                   ],
                                 ),
                               )

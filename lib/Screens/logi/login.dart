@@ -65,6 +65,7 @@ List<  InventoryListModel> inventoryList=[];
           //     .getInventoryIdList();
 
           if (data.data1) {
+            print("DATAAAA OF LOGIN"+data.data2.toString());
             // final SharedPreferences sharedPreferences =
             //     await SharedPreferences.getInstance();
             // sharedPreferences.setString('token',
@@ -73,6 +74,8 @@ List<  InventoryListModel> inventoryList=[];
             Variable.loginLeage=user.legalEntiry.toString();
             Variable.username=user.fname.toString();
             Variable.created_by=user.employeeCode.toString();
+            Variable.mobileNumber=user.mobile.toString();
+            Variable.email=user.email.toString();
             // Variable.inventory_ID=user.fname.toString();
             context.read<InventorylistCubit>().getInventoryListRead(user.legalEntiry.toString());
 
@@ -106,7 +109,7 @@ List<  InventoryListModel> inventoryList=[];
               context.showSnackBarNormal("Loading");
             },
             success: (data)  {
-              print("welcome ther is something happening "+data.data.toString());
+              print("welcome ther is something happening"+data.data.toString());
               inventoryList=data.data;
 
               if(inventoryList.isNotEmpty==true){

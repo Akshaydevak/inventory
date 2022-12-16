@@ -1709,6 +1709,25 @@ catch(e){
   Future<DoubleResponse> postSalesRequestGeneralPatch(
       SalesReturnGeneralPostModel model, int? id) async {
     String path = salesReturngeneralPAtchApi + id.toString();
+    print(path);
+    try {
+      final response = await client.patch(path,
+          data: model.toJson(),
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("+++++++++++");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    }catch(e){
+      print("the error is here going to be"+e.toString());
+    }
     final response = await client.patch(path,
         data: model.toJson(),
         options: Options(headers: {
@@ -2782,7 +2801,7 @@ catch(e){
         },
       ),
     );
-    print("uomGroup response" + response.toString());
+    print("DATATHE HANGING " + response.toString());
     CategoryReadModel dataa = CategoryReadModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;
@@ -3434,7 +3453,7 @@ catch(e){
         },
       ),
     );
-    print("uomGroup response" + response.data['data'].toString());
+    print("hANGING DATA" + response.data['data'].toString());
     VariantReadModel dataa = VariantReadModel.fromJson(response.data['data']);
     print("uomGroup read" + dataa.toString());
     return dataa;

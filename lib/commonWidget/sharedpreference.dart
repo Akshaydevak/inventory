@@ -16,7 +16,9 @@ print(user);
     prefs.setString('organizationCode', user?.organizationCode??"");
     prefs.setString('legalEntiry', user?.legalEntiry??"");
     prefs.setString('username', user?.fname??"");
+    prefs.setString('email', user?.email??"");
     prefs.setString('empcode', user?.employeeCode??"");
+    prefs.setString('mobile', user?.mobile??"");
 
 
     prefs.setBool("isLoggedIn", true);
@@ -38,8 +40,7 @@ print(user);
     prefs.setString(
         "inventory",
         user.businessUnitCode.toString());
-    prefs.setString("inventory_name",
-        user.name.toString());
+    prefs.setString("inventory_name", user.name.toString());
 
     // prefs.setString("token", user.t);
     // prefs.setString("role", user.role);
@@ -92,6 +93,8 @@ print(user);
     String?  token = prefs.getString("token");
     String?  legalEntiry = prefs.getString("legalEntiry");
     String?  emplCode = prefs.getString("empcode");
+    String?  email = prefs.getString("email");
+    String?  phoneNumber = prefs.getString("mobile");
 
     print("username"+token.toString());
     // String password = prefs.getString("password");
@@ -109,7 +112,9 @@ print(user);
       isLoggedIn: isLoggedIn,
       token: token,
       legalEntiry: legalEntiry,
-      employeeCode: emplCode
+      employeeCode: emplCode,
+      email: email,
+      mobile:phoneNumber ,
 
       // password: password,
       //   msg:msg,

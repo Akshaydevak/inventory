@@ -88,7 +88,7 @@ class _NewInputCardState extends State<NewInputCard> {
     }
     onChange=false;
 
-    widget.controller?.text=="null"|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
+    widget.controller?.text=='null'|| widget.controller?.text==null?widget.controller?.text="":widget.controller?.text;
 
     return Padding(
       padding:  EdgeInsets.symmetric(horizontal:MediaQuery.of(context).size.width*.018),
@@ -287,7 +287,7 @@ class _NewInputCardState extends State<NewInputCard> {
     child: TextFormField(
       textAlignVertical: TextAlignVertical.center,
     maxLines: widget.maxLines,
-    controller: widget.controller,
+    controller: widget.controller.text=="null"?TextEditingController(text: ""):widget.controller,
     obscureText: show,
     decoration: InputDecoration(
     suffixIcon: widget.password

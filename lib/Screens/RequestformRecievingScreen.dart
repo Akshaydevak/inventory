@@ -475,7 +475,7 @@ bool  recievlinequantityCheck=false;
       listener: (context, state) {
       state.maybeWhen(orElse: () {
       // context.
-      context.showSnackBarError("Loadingggg");
+      context.showSnackBarError("Loading");
       }, error: () {
       context.showSnackBarError(Variable.errorMessege);
       }, success: (data) {
@@ -1903,6 +1903,11 @@ color: Pellet.tableRowColor,
                                                 setState(() {
 
                                                 });
+                                                print("expiry date"+expirydateControllerList2.length.toString());
+                                                expirydateControllerList2[i]=TextEditingController(text:newValue
+                                                    ?.toIso8601String()
+                                                    .split("T")[0] ??
+                                                    "" );
                                                 recievingLisnes[i] =
                                                     recievingLisnes[i]
                                                         .copyWith(
@@ -3965,6 +3970,7 @@ color: Pellet.tableRowColor,
 
                               remarks: remarksController.text ?? "",
                               receivingLines: recieve??[]);
+                          print(model);
                           context
                               .read<PatchreceiveCubit>()
                               .requestFormReceivingPatch(
