@@ -1592,30 +1592,17 @@ class _PurchaseRecievinScreenState extends State<PurchaseRecievinScreen> {
 
                                                                                                 var qty = recievingLisnes[i]
                                                                                                     .receivedQty;
-                                                                                                print(
-                                                                                                    "qty" +
-                                                                                                        qty
-                                                                                                            .toString());
+
                                                                                                 var excess = recievingLisnes[i]
                                                                                                     .excessTax;
-                                                                                                print(
-                                                                                                    "excess" +
-                                                                                                        excess
-                                                                                                            .toString());
+
                                                                                                 var unitcost = recievingLisnes[i]
                                                                                                     .unitCost;
-                                                                                                print(
-                                                                                                    "unitcost" +
-                                                                                                        unitcost
-                                                                                                            .toString());
+
                                                                                                 var vat = recievingLisnes[i].vat;
                                                                                                 var foc = recievingLisnes[i]
                                                                                                     .foc;
 
-                                                                                                print(
-                                                                                                    "vat" +
-                                                                                                        vat
-                                                                                                            .toString());
                                                                                                 if (unitcost ==
                                                                                                     0 ||
                                                                                                     qty ==

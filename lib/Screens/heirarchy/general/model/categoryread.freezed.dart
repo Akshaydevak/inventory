@@ -36,6 +36,8 @@ mixin _$CategoryReadModel {
   String? get parentCode => throw _privateConstructorUsedError;
   @JsonKey(name: "division_code")
   String? get divisionCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "division_id")
+  int? get divisionId => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
 
@@ -63,6 +65,7 @@ abstract class $CategoryReadModelCopyWith<$Res> {
       @JsonKey(name: "parent_name") String? parentname,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
+      @JsonKey(name: "division_id") int? divisionId,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -90,6 +93,7 @@ class _$CategoryReadModelCopyWithImpl<$Res, $Val extends CategoryReadModel>
     Object? parentname = freezed,
     Object? parentCode = freezed,
     Object? divisionCode = freezed,
+    Object? divisionId = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
@@ -137,6 +141,10 @@ class _$CategoryReadModelCopyWithImpl<$Res, $Val extends CategoryReadModel>
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionId: freezed == divisionId
+          ? _value.divisionId
+          : divisionId // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -165,6 +173,7 @@ abstract class _$$_CategoryReadModelCopyWith<$Res>
       @JsonKey(name: "parent_name") String? parentname,
       @JsonKey(name: "parent_code") String? parentCode,
       @JsonKey(name: "division_code") String? divisionCode,
+      @JsonKey(name: "division_id") int? divisionId,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -190,6 +199,7 @@ class __$$_CategoryReadModelCopyWithImpl<$Res>
     Object? parentname = freezed,
     Object? parentCode = freezed,
     Object? divisionCode = freezed,
+    Object? divisionId = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_$_CategoryReadModel(
@@ -237,6 +247,10 @@ class __$$_CategoryReadModelCopyWithImpl<$Res>
           ? _value.divisionCode
           : divisionCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      divisionId: freezed == divisionId
+          ? _value.divisionId
+          : divisionId // ignore: cast_nullable_to_non_nullable
+              as int?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -260,6 +274,7 @@ class _$_CategoryReadModel implements _CategoryReadModel {
       @JsonKey(name: "parent_name") this.parentname,
       @JsonKey(name: "parent_code") this.parentCode,
       @JsonKey(name: "division_code") this.divisionCode,
+      @JsonKey(name: "division_id") this.divisionId,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
 
   factory _$_CategoryReadModel.fromJson(Map<String, dynamic> json) =>
@@ -293,12 +308,15 @@ class _$_CategoryReadModel implements _CategoryReadModel {
   @JsonKey(name: "division_code")
   final String? divisionCode;
   @override
+  @JsonKey(name: "division_id")
+  final int? divisionId;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
 
   @override
   String toString() {
-    return 'CategoryReadModel(description: $description, code: $code, status: $status, name: $name, image: $image, id: $id, alternativename: $alternativename, divisionName: $divisionName, parentname: $parentname, parentCode: $parentCode, divisionCode: $divisionCode, isActive: $isActive)';
+    return 'CategoryReadModel(description: $description, code: $code, status: $status, name: $name, image: $image, id: $id, alternativename: $alternativename, divisionName: $divisionName, parentname: $parentname, parentCode: $parentCode, divisionCode: $divisionCode, divisionId: $divisionId, isActive: $isActive)';
   }
 
   @override
@@ -323,6 +341,8 @@ class _$_CategoryReadModel implements _CategoryReadModel {
                 other.parentCode == parentCode) &&
             (identical(other.divisionCode, divisionCode) ||
                 other.divisionCode == divisionCode) &&
+            (identical(other.divisionId, divisionId) ||
+                other.divisionId == divisionId) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive));
   }
@@ -342,6 +362,7 @@ class _$_CategoryReadModel implements _CategoryReadModel {
       parentname,
       parentCode,
       divisionCode,
+      divisionId,
       isActive);
 
   @JsonKey(ignore: true)
@@ -377,6 +398,8 @@ abstract class _CategoryReadModel implements CategoryReadModel {
           final String? parentCode,
       @JsonKey(name: "division_code")
           final String? divisionCode,
+      @JsonKey(name: "division_id")
+          final int? divisionId,
       @JsonKey(name: "is_active", defaultValue: false)
           final bool? isActive}) = _$_CategoryReadModel;
 
@@ -410,6 +433,9 @@ abstract class _CategoryReadModel implements CategoryReadModel {
   @override
   @JsonKey(name: "division_code")
   String? get divisionCode;
+  @override
+  @JsonKey(name: "division_id")
+  int? get divisionId;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive;

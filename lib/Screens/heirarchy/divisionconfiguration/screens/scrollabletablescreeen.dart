@@ -347,6 +347,8 @@ setState(() {
                                     upDate.removeAt(i);
                                     codeListController.removeAt(i);
                                     upDateButton.removeAt(i);
+                                    widget.uomTableEdit(
+                                        type: "1", list: uomList);
                                     // nameListTextEditingController.removeAt(i);
                                     //
                                     // print(keys);
@@ -845,6 +847,8 @@ class _GroupTableState extends State<GroupTable> {
                                     upDate.removeAt(i);
                                     codeListController.removeAt(i);
                                     upDateButton.removeAt(i);
+                                    widget.uomTableEdit(
+                                        type: "2", list: groupList);
                                     // nameListTextEditingController.removeAt(i);
                                     //
                                     // print(keys);
@@ -1345,6 +1349,8 @@ class _CategoryTableState extends State<CategoryTable> {
                                     upDate.removeAt(i);
                                     codeListController.removeAt(i);
                                     upDateButton.removeAt(i);
+                                    widget.uomTableEdit(
+                                        type: "3", list: categoryList);
                                     // nameListTextEditingController.removeAt(i);
                                     //
                                     // print(keys);

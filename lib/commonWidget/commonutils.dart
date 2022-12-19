@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomread/readbaseuom_cubit.dart';
@@ -1461,6 +1462,20 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
 
     super.initState();
   }
+  clear(){
+    codeController.text =  "";
+    nameController.text =  "";
+
+    imageController.text = "";
+    imageName =  "";
+    parentIdController.text =  "";
+    descriptionController.text =  "";
+    brandIdentifierUrl.text =  "";
+    parentName =  "";
+    parendNameController.text =  "";
+    active =  false;
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1528,7 +1543,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                         descriptionController.text = data.description ?? "";
                         brandIdentifierUrl.text = data.brandIdentifierUrl ?? "";
                         parentName = data.parentCode ?? "";
-                        parendNameController.text = data.name ?? "";
+                        parendNameController.text = data.parentName ?? "";
                         active = data.isActive ?? false;
                       });
                     });
@@ -1538,18 +1553,20 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
               listener: (context, state) {
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  print("checkingdata" + data.data1.toString());
+                  // print("checkingdata" + data.data1.toString());
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    clear();
+                    // Navigator.pop(context);
+                    // context.showSnackBarSuccess(data.data2);
                     context.read<Listbrand2Cubit>().getSlotSectionPage();
 
                     // select = true;
                   } else {
+                    Navigator.pop(context);
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
@@ -1663,6 +1680,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                               ontap: (int index) {
                                 setState(() {
                                   selectedVertical = index;
+                                  clear();
                                   // select=false;
                                   // updateCheck=false;
 
@@ -1699,6 +1717,12 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageController.clear();
+                                      });
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
                                       imageName = myFile?.fileName ?? "";
@@ -1728,8 +1752,14 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:"Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -1989,7 +2019,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                     onApply: () {
                       MaterialCreationtModel model = MaterialCreationtModel(
                         description: descriptionContollercontroller?.text ?? "",
-                        image: int.tryParse(imageContollercontroller.text),
+                        image: imageContollercontroller.text,
                         searchNmae: searchNamecontroller?.text ?? "",
                         name: namecontroller?.text ?? "",
                       );
@@ -2356,7 +2386,7 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                     onApply: () {
                       MaterialCreationtModel model = MaterialCreationtModel(
                         description: descriptionContollercontroller?.text ?? "",
-                        image: int.tryParse(imageContollercontroller.text),
+                        image: imageContollercontroller.text,
                         searchNmae: searchNamecontroller?.text ?? "",
                         name: namecontroller?.text ?? "",
                       );
@@ -2812,17 +2842,17 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                             // width: w/7,
                             // margin: EdgeInsets.symmetric(horizontal: w*.02),
                             child: customTable(
-                              border: const TableBorder(
-                                verticalInside: BorderSide(
-                                    width: .5,
-                                    color: Colors.black45,
-                                    style: BorderStyle.solid),
-                                horizontalInside: BorderSide(
-                                    width: .3,
-                                    color: Colors.black45,
-                                    // color: Colors.blue,
-                                    style: BorderStyle.solid),
-                              ),
+                              // border: const TableBorder(
+                              //   verticalInside: BorderSide(
+                              //       width: .5,
+                              //       color: Colors.black45,
+                              //       style: BorderStyle.solid),
+                              //   horizontalInside: BorderSide(
+                              //       width: .3,
+                              //       color: Colors.black45,
+                              //       // color: Colors.blue,
+                              //       style: BorderStyle.solid),
+                              // ),
                               tableWidth: .5,
                               childrens: [
                                 TableRow(
@@ -2856,45 +2886,43 @@ class _VendorDetailsList extends State<VendorDetailsList> {
                                   for (var i = 0; i < table.length; i++)
                                     TableRow(
                                         decoration: BoxDecoration(
-                                            color: Colors.grey.shade200,
+                                            color: Pellet.tableRowColor,
                                             shape: BoxShape.rectangle,
-                                            border: const Border(
+                                            border:  Border(
                                                 left: BorderSide(
-                                                    width: .5,
-                                                    color: Colors.grey,
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
                                                     style: BorderStyle.solid),
                                                 bottom: BorderSide(
-                                                    width: .5,
-                                                    color: Colors.grey,
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
                                                     style: BorderStyle.solid),
                                                 right: BorderSide(
-                                                    color: Colors.grey,
-                                                    width: .5,
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
                                                     style: BorderStyle.solid))),
                                         children: [
                                           TableCell(
                                               verticalAlignment:
                                                   TableCellVerticalAlignment
                                                       .middle,
-                                              child: InkWell(
-                                                onTap: () {
+                                              child: textOnclickPadding(
+                                                ontap: () {
                                                   VendorDetailsModel model =
                                                       VendorDetailsModel(
                                                     id: table[i].id,
                                                     manuFactureName: table[i]
                                                         .manuFactureName,
-                                                    manuFactureuserCode: table[
-                                                            i]
-                                                        .manuFactureuserCode,
+                                                    manuFactureuserCode: table[i].manuFactureuserCode,
+                                                        trnNumber: table[i].trnNumber,
+                                                        address: table[i].address,
                                                   );
                                                   widget.listAssign!(model);
                                                   Navigator.pop(context);
                                                 },
-                                                child: Container(
-                                                    child: Text(table[i]
-                                                            .manuFactureName ??
-                                                        ""),
-                                                    height: 45),
+                                                text: table[i].manuFactureName ??   "",
                                               )
                                               // Text(keys[i].value??"",)
 
@@ -3057,6 +3085,16 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
     context.read<MaterialListCubit>().getMaterialList();
     super.initState();
   }
+  clear(){
+    codeController.text =  "";
+    imageName = "";
+    namecontroller.text = "";
+    descriptionContollercontroller.text =
+         "";
+    searchNamecontroller.text = "";
+
+    active =  false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -3153,15 +3191,16 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    // Navigator.pop(context);
+                    // context.showSnackBarSuccess(data.data2);
                     context.read<MaterialListCubit>().getMaterialList();
                   } else {
+                    Navigator.pop(context);
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
@@ -3186,6 +3225,8 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
+                        selectedVertical=0;
+                        clear();
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         context
@@ -3253,6 +3294,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
 
                                   veritiaclid = result[index].id;
                                   changer = false;
+                                  clear();
 
                                   context
                                       .read<MaterialreadCubit>()
@@ -3295,6 +3337,14 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel:(){
+                                      setState(() {
+                                        imageName="";
+                                        imageContollercontroller.clear();
+
+                                      });
+
+                                    } ,
                                     onChange: (myFile) {
                                       onChange = true;
                                       imageName = myFile?.fileName ?? "";
@@ -4130,7 +4180,7 @@ class _CreateDevisionPopUpState extends State<CreateDevisionPopUp> {
                       MaterialCreationtModel model = MaterialCreationtModel(
                           description:
                               descriptionContollercontroller?.text ?? "",
-                          image: int.tryParse(imageContollercontroller.text),
+                          image:imageContollercontroller.text,
                           searchNmae: searchNamecontroller?.text ?? "",
                           name: namecontroller?.text ?? "",
                           displayName: displayContollercontroller.text ?? "",
@@ -4467,9 +4517,10 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    context.read<DevisionListCubit>().getDevisionList();
+                    // context.showSnackBarSuccess(data.data2);
                   } else {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
@@ -4654,6 +4705,15 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageContollercontroller.clear();
+                                      });
+
+
+
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
                                       imageName = myFile?.fileName ?? "";
@@ -4684,8 +4744,13 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:"Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -4696,7 +4761,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                                   ),
                                   PopUpSwitchTile(
                                       value: active ?? false,
-                                      title: "isActive",
+                                      title: "is Active",
                                       onClick: (gg) {
                                         onChange = true;
                                      active = !active!;
@@ -4899,7 +4964,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                       print("save");
                       MaterialCreationtModel model = MaterialCreationtModel(
                         description: descriptionContollercontroller?.text ?? "",
-                        image: int.tryParse(imageContollercontroller.text),
+                        image: imageContollercontroller.text,
                         searchNmae: searchNamecontroller?.text ?? "",
                         name: namecontroller?.text ?? "",
                       );
@@ -5129,17 +5194,22 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    showDailogPopUp(
-                        context,
-                        SuccessPopup(
-                          content: data.data2,
-                          // table:table,
-                        ));
+
+                    setState(() {
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<FrameworklistCubit>().getFrameWorklist();
+
+                    });
                   } else {
                     context.showSnackBarError(data.data2);
                     showDailogPopUp(
@@ -8724,6 +8794,17 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
     context.read<ListstaticCubit>().getStaticList();
     super.initState();
   }
+  clear(){
+    codeController.text = "";
+    namecontroller.text = "";
+    imageContollercontroller.text = "";
+    imageName = "";
+    descriptionContollercontroller.text = "";
+    searchNamecontroller.text = "";
+
+    active = false;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -8823,14 +8904,17 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
-                    Navigator.pop(context);
-                    context.showSnackBarSuccess(data.data2);
+                    clear();
+                    context.read<ListstaticCubit>().getStaticList();
+                    // Navigator.pop(context);
+                    // context.showSnackBarSuccess(data.data2);
                   } else {
+                    Navigator.pop(context);
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
@@ -8856,6 +8940,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
+                        selectedVertical=0;
                         // Variable.verticalid=result[0].id;
                         print("Variable.ak" + Variable.verticalid.toString());
                         context
@@ -8924,6 +9009,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                                 setState(() {
                                   selectedVertical = index;
                                   addNew = false;
+                                  clear();
                                   // select=false;
                                   // updateCheck=false;
 
@@ -8976,6 +9062,13 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageContollercontroller.clear();
+
+                                      });
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
                                       // Variable.mobileBannerImage = myFile.toUint8List();
@@ -9004,8 +9097,13 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:  "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -9015,7 +9113,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                                 ),
                                 PopUpSwitchTile(
                                     value: active ?? false,
-                                    title: "isActive",
+                                    title: "is Active",
                                     onClick: (gg) {
                                       onChange = true;
                                       if (!addNew) active = !active!;
@@ -9784,6 +9882,14 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
     context.read<UomgruoplistCubit>().getUomGroupist();
     super.initState();
   }
+  clear(){
+    codeController.text =  "";
+    namecontroller.text = "";
+    shortNamecontroller.text = "";
+    descriptionContollercontroller.text = "";
+    active = false;
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -9888,13 +9994,13 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
-                    context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
                     context.read<UomgruoplistCubit>().getUomGroupist();
                     setState(() {});
                   } else {
@@ -10013,6 +10119,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                                 setState(() {
                                   selectedVertical = index;
                                   addNew = false;
+                                  clear();
                                   // select=false;
                                   // updateCheck=false;
 
@@ -10059,7 +10166,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                                 ),
                                 PopUpSwitchTile(
                                     value: active ?? false,
-                                    title: "isActive",
+                                    title: "is Active",
                                     onClick: (gg) {
                                       onChange = true;
                                       if (!addNew) active = !active!;
@@ -10554,18 +10661,19 @@ class _UomPopUpState extends State<UomPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                   if (data.data1) {
                     setState(() {
                       context.read<BaseuomlistCubit>().getUomist(type: "all");
                     });
 
-                    context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
                   } else {
+                    Navigator.pop(context);
                     context.showSnackBarError(data.data2);
                     print(data.data1);
                   }
@@ -10798,7 +10906,7 @@ class _UomPopUpState extends State<UomPopUp> {
                                 ),
                                 PopUpSwitchTile(
                                     value: active ?? false,
-                                    title: "isActive",
+                                    title: "is Active",
                                     onClick: (gg) {
                                       onChange = true;
                                       if (!addNew) active = !active!;
@@ -10867,7 +10975,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
       TextEditingController();
   bool addNew = false;
   var list;
-
+  int? divisionId=0;
   final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
       GlobalKey<_CreateStaticPopUpState>();
 
@@ -10877,8 +10985,23 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
   }
 
   void initState() {
-    context.read<CategorylistCubit>().getCategoryist(type: "all");
+    context.read<AllcategorylistCubit>().getAllCategoryist();
     super.initState();
+  }
+  clear(){
+    codeController.clear();
+    namecontroller.clear();
+    parentCodeController.clear();
+    divisionCodeController.clear();
+    divisionNameController.clear();
+    parentNameController. clear();
+    imageCodeController.clear();
+    imageName ='';
+    alternativeController.clear();
+    divisionId=0;
+    // shortNamecontroller.text=data.shortName??"";
+
+    descriptionContollercontroller.clear();
   }
 
   @override
@@ -10951,6 +11074,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                         imageCodeController.text = data.image ?? '';
                         imageName = data.image ?? '';
                         alternativeController.text = data.alternativename ?? "";
+                        divisionId=data.divisionId;
                         // shortNamecontroller.text=data.shortName??"";
 
                         descriptionContollercontroller.text =
@@ -10975,8 +11099,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                   if (data.data1) {
                     Navigator.pop(context);
                     context.showSnackBarSuccess(data.data2);
-                    context
-                        .read<CategorylistCubit>().getCategoryist(type: "all");
+                    context.read<AllcategorylistCubit>().getAllCategoryist();
                     setState(() {});
                   } else {
                     context.showSnackBarError(data.data2);
@@ -10992,18 +11115,18 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
                   if (data.data1) {
                     setState(() {
-                      context
-                          .read<CategorylistCubit>()
-                          .getCategoryist(type: "all");
+                      context.read<AllcategorylistCubit>().getAllCategoryist();
+                      clear();
+
                     });
 
-                    context.showSnackBarSuccess(data.data2);
+                    // context.showSnackBarSuccess(data.data2);
                   } else {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
@@ -11013,7 +11136,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
               },
             ),
           ],
-          child: BlocConsumer<CategorylistCubit, CategorylistState>(
+          child: BlocConsumer<AllcategorylistCubit, AllcategorylistState>(
             listener: (context, state) {
               print("state" + state.toString());
               state.maybeWhen(
@@ -11030,6 +11153,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
+                        selectedVertical = 0;
                         Variable.divisionId = result[0].id;
 
                         // Variable.verticalid=result[0].id;
@@ -11038,7 +11162,6 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                             .read<CategoryreadCubit>()
                             .getCategoryRead(veritiaclid!);
                       } else {
-                        print("common");
                         // select=true;
                         setState(() {});
                       }
@@ -11061,7 +11184,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                     addNew: addNew,
                     // isDirectCreate:changer,
 
-                    label: " Category",
+                    label: "Category",
                     onApply: () {
                       print("save");
 
@@ -11120,6 +11243,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                                 setState(() {
                                   selectedVertical = index;
                                   addNew = false;
+                                  clear();
                                   // select=false;
                                   // updateCheck=false;
 
@@ -11167,7 +11291,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
 
                                             print(va?.id ?? "");
                                             // divisionid=va?.id;
-                                            Variable.divisionId = va?.id;
+                                            divisionId = va?.id;
 
                                             divisionCodeController.text =
                                                 va?.code ?? "";
@@ -11223,6 +11347,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                                     showDailogPopUp(
                                       context,
                                       TableConfigurePopup(
+                                        id: divisionId,
                                         type: "category-TablePopup",
                                         valueSelect: (BrandListModel va) {
                                           setState(() {
@@ -11277,6 +11402,15 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageCodeController.clear();
+
+                                      });
+
+
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
 
@@ -11304,8 +11438,13 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:  "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -12589,9 +12728,8 @@ class _GroupPopUpState extends State<GroupPopUp> {
                           searchNmae: searchNameContollercontroller?.text ?? "",
                           description:
                               descriptionContollercontroller?.text ?? "",
-                          image: int.tryParse(imageCodeController.text),
-                          displayName:
-                              displayNameContollercontroller?.text ?? "",
+                          image: imageCodeController.text,
+                          displayName: displayNameContollercontroller?.text ?? "",
                           categoryCode: categoryCodeController.text ?? "");
 
                       print(model);
@@ -12833,6 +12971,21 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
     context.read<GrouplistCubit>().getGroupListList(type: "all");
     super.initState();
   }
+  clear(){
+    codeController.clear();
+    namecontroller.clear();
+    displayNameContollercontroller.clear();
+    searchNameContollercontroller.clear();
+    imageCodeController.clear();
+    imageName =  '';
+    categoryCodeController.clear();
+    categoryNameController.clear();
+    // // shortNamecontroller.text=data.shortName??"";
+
+    descriptionContollercontroller.clear();
+
+    active = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12864,7 +13017,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -12944,7 +13097,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+                  // context.showSnackBarError("Loading");
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -12952,7 +13105,8 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                     context
                         .read<GrouplistCubit>()
                         .getGroupListList(type: "all");
-                    context.showSnackBarSuccess(data.data2);
+                    clear();
+                    // context.showSnackBarSuccess(data.data2);
                   } else {
                     context.showSnackBarError(data.data2);
                     print(data.data1);
@@ -12979,6 +13133,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                     setState(() {
                       if (result.isNotEmpty) {
                         veritiaclid = result[0].id;
+                        selectedVertical = 0;
                         Variable.divisionId = result[0].id;
 
                         // Variable.verticalid=result[0].id;
@@ -13022,7 +13177,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                         categoryCode: categoryCodeController?.text ?? "",
                         displayName: displayNameContollercontroller?.text ?? "",
                         searchNmae: searchNameContollercontroller?.text ?? "",
-                        image: int.tryParse(imageCodeController.text),
+                        image: imageCodeController.text,
                         isActive: active,
                         description: descriptionContollercontroller?.text ?? "",
                       );
@@ -13053,6 +13208,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                 setState(() {
                                   selectedVertical = index;
                                   addNew = false;
+                                  clear();
                                   // select=false;
                                   // updateCheck=false;
 
@@ -13097,6 +13253,13 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageCodeController.clear();
+                                      });
+
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
 
@@ -13125,8 +13288,13 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content:" Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -14614,15 +14782,17 @@ class PopUpHeader extends StatefulWidget {
 class _PopUpHeaderState extends State<PopUpHeader> {
   @override
   Widget build(BuildContext context) {
+    double width=MediaQuery.of(context).size.width;
     changer() {
       widget.isDirectCreate != false;
     }
 
     return Container(
+
       // height:100,
 
       padding: EdgeInsets.all(10),
-      width: 640,
+      width: width/2,
       child: GeneralSavePage(
 
         onEdit: widget.onEdit,

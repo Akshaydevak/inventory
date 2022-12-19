@@ -17,6 +17,7 @@ class CategoryReadModel with _$CategoryReadModel {
     @JsonKey(name: "parent_name") final String? parentname,
     @JsonKey(name: "parent_code") final String? parentCode,
     @JsonKey(name: "division_code") final String? divisionCode,
+    @JsonKey(name: "division_id") final int? divisionId,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
   }) = _CategoryReadModel;
   factory CategoryReadModel.fromJson(Map<String, dynamic> json) =>

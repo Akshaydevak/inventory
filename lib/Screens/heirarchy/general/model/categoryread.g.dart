@@ -19,6 +19,7 @@ _$_CategoryReadModel _$$_CategoryReadModelFromJson(Map<String, dynamic> json) =>
       parentname: json['parent_name'] as String?,
       parentCode: json['parent_code'] as String?,
       divisionCode: json['division_code'] as String?,
+      divisionId: json['division_id'] as int?,
       isActive: json['is_active'] as bool? ?? false,
     );
 
@@ -36,5 +37,6 @@ Map<String, dynamic> _$$_CategoryReadModelToJson(
       'parent_name': instance.parentname,
       'parent_code': instance.parentCode,
       'division_code': instance.divisionCode,
+      'division_id': instance.divisionId,
       'is_active': instance.isActive,
     };

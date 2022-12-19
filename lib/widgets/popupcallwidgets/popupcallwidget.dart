@@ -712,12 +712,13 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
         create: (context) =>  VariantreadCubit(),
         child: Builder(
           builder: (context) {
-            // context.read<VariantreadCubit>().getVariantRead(widget.id);
+            context.read<VariantreadCubit>().getVariantRead(widget.id);
             return BlocBuilder<VariantreadCubit,
                 VariantreadState>(builder: (context, state) {
               print(state);
               return state.maybeWhen(
-                orElse: () => Center(
+                orElse: () =>
+                    Center(
                   child: CircularProgressIndicator(),
                 ),
                 // error: () => {errorLoader(widget.onAddNew)},

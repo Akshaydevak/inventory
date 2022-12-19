@@ -12,7 +12,7 @@ _$_MaterialCreationtModel _$$_MaterialCreationtModelFromJson(
       description: json['description'] as String?,
       status: json['status'] as String?,
       name: json['name'] as String?,
-      image: json['image'] as int?,
+      image: json['image'] as String?,
       searchNmae: json['search_name'] as String?,
       displayName: json['display_name'] as String?,
       categoryCode: json['category_code'] as String?,

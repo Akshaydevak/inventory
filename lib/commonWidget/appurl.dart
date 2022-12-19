@@ -201,7 +201,7 @@ const salesListApi = inventoryBaseUrl +
 const variantSearchListApi =
     inventoryBaseUrl + "inventory-product/list-variants";
 const variantCreatetApi =
-    inventoryBaseUrl + "inventory-product/create-variant-new/";
+    "http://192.168.1.37:8080/" + "inventory-product/create-variant-new/";
 const variantPatchApi = inventoryBaseUrl + "inventory-product/variant-update/";
 //variant creation Apisssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const variantCreationListApi = inventoryBaseUrl + "inventory-product/list-item";
@@ -299,8 +299,7 @@ const postFrameWorkApi =
     inventoryBaseUrl + "inventory-product/create-newvariantframework";
 const listAttributeTypeApi =
     inventoryBaseUrl + "inventory-product/list-attribute";
-const frameworkDeleteApi =
-    inventoryBaseUrl + "inventory-product/patch-variantframework/";
+const frameworkDeleteApi = inventoryBaseUrl + "inventory-product/patch-variantframework/";
 const stockPostkDeleteApi = inventoryBaseUrl + "inventory-stock/create-stock";
 const vendorDetailsApi = hilalBaseUrl + "user-manufacturer_manufactureruserlist";
 //custom api+++++++++++++++++++++++++++++++++++++++++++++++++++++++++

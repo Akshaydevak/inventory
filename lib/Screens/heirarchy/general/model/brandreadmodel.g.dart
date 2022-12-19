@@ -15,6 +15,7 @@ _$_BrandReadModel _$$_BrandReadModelFromJson(Map<String, dynamic> json) =>
       id: json['id'] as int?,
       brandIdentifierUrl: json['brand_identifier_url'] as String?,
       parentCode: json['parent_code'] as String?,
+      parentName: json['parent_name'] as String?,
       isActive: json['is_active'] as bool? ?? false,
     );
 
@@ -27,5 +28,6 @@ Map<String, dynamic> _$$_BrandReadModelToJson(_$_BrandReadModel instance) =>
       'id': instance.id,
       'brand_identifier_url': instance.brandIdentifierUrl,
       'parent_code': instance.parentCode,
+      'parent_name': instance.parentName,
       'is_active': instance.isActive,
     };

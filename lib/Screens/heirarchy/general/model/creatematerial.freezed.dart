@@ -24,7 +24,7 @@ mixin _$MaterialCreationtModel {
   String? get description => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  int? get image => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: "search_name")
   String? get searchNmae => throw _privateConstructorUsedError;
   @JsonKey(name: "display_name")
@@ -50,7 +50,7 @@ abstract class $MaterialCreationtModelCopyWith<$Res> {
       {String? description,
       String? status,
       String? name,
-      int? image,
+      String? image,
       @JsonKey(name: "search_name") String? searchNmae,
       @JsonKey(name: "display_name") String? displayName,
       @JsonKey(name: "category_code") String? categoryCode,
@@ -96,7 +96,7 @@ class _$MaterialCreationtModelCopyWithImpl<$Res,
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       searchNmae: freezed == searchNmae
           ? _value.searchNmae
           : searchNmae // ignore: cast_nullable_to_non_nullable
@@ -129,7 +129,7 @@ abstract class _$$_MaterialCreationtModelCopyWith<$Res>
       {String? description,
       String? status,
       String? name,
-      int? image,
+      String? image,
       @JsonKey(name: "search_name") String? searchNmae,
       @JsonKey(name: "display_name") String? displayName,
       @JsonKey(name: "category_code") String? categoryCode,
@@ -173,7 +173,7 @@ class __$$_MaterialCreationtModelCopyWithImpl<$Res>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       searchNmae: freezed == searchNmae
           ? _value.searchNmae
           : searchNmae // ignore: cast_nullable_to_non_nullable
@@ -217,7 +217,7 @@ class _$_MaterialCreationtModel implements _MaterialCreationtModel {
   @override
   final String? name;
   @override
-  final int? image;
+  final String? image;
   @override
   @JsonKey(name: "search_name")
   final String? searchNmae;
@@ -281,7 +281,7 @@ abstract class _MaterialCreationtModel implements MaterialCreationtModel {
       {final String? description,
       final String? status,
       final String? name,
-      final int? image,
+      final String? image,
       @JsonKey(name: "search_name")
           final String? searchNmae,
       @JsonKey(name: "display_name")
@@ -301,7 +301,7 @@ abstract class _MaterialCreationtModel implements MaterialCreationtModel {
   @override
   String? get name;
   @override
-  int? get image;
+  String? get image;
   @override
   @JsonKey(name: "search_name")
   String? get searchNmae;

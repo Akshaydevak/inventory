@@ -5,13 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Screens/heirarchy/general/generalscreen.dart';
+import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/logi/login.dart';
 import 'package:inventory/Screens/register/screens/registerscreen.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
+import 'package:inventory/commonWidget/tableConfiguration.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -971,59 +974,85 @@ else{
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
-                                                    SelectableDropDownpopUp(
-                                                      label: "Vendor Code",
-                                                      type:"VendorCodeGeneral",
-                                                      value: vendorCodeName.text==null|| vendorCodeName.text=="null"?"":vendorCodeName.text,
-                                                      onSelection: (Result? va) {
 
-                                                        print(
-                                                            "+++++++++++++++++++++++"+va.toString());
-                                                        //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                                        // setState(() {
-                                                        vendorCode.text=va?.partnerCode??"";
-                                                        vendorCodeName.text=va?.name??"";
-                                                        var id=va?.partnerCode;
-
-                                                        print("vendorssss"+id.toString());
-                                                        setState(() {
-                                                          context.read<VariantIdCubitDartCubit>().getVariantId(vendorId: vendorCode.text);
-                                                          context
-                                                              .read<
-                                                              VendordetailsCubit>()
-                                                              .getVendorDetails(
-                                                              id);
-
-                                                        });
-                                                        showDailogPopUp(
-                                                            context,
-                                                            VendorPopup(
-                                                              assign:  assigniningDetails,
-
-                                                            ));
-
-
-
-
-
-
-                                                      },
-
-                                                    ),
-
-                                                    SizedBox(
-                                                      height: height * .035,
-                                                    ),
                                                     NewInputCard(
+                                                      controller: vendorCodeName,
+                                                      icondrop: true,
+                                                      title: "Vendor Code",
                                                       readOnly: true,
-                                                      controller: vendoraddress,
-                                                      title: "Vender Address",
-                                                      height: 90,
-                                                      maxLines: 3,
+                                                      ontap: () {
+                                                        showDailogPopUp(
+                                                          context,
+                                                          TableConfigurePopup(type: "VendorDetails_Popup",
+                                                            valueSelect: (VendorDetailsModel va) {
+                                                              setState(() {
+                                                                vendorCode.text=va.manuFactureuserCode ?? "";
+                                                                vendorCodeName.text=va.manuFactureName ?? "";
+                                                                // vendoraddress.text=va.address.;
+                                                                vendortrnnumber.text=va.trnNumber.toString();
+
+                                                                //                           setState(() {});ge = true;
+                                                                // orderType.text = va!;
+                                                              });
+                                                            },
+                                                          ),
+                                                        );
+                                                      },
                                                     ),
+
+                                                    // SelectableDropDownpopUp(
+                                                    //   label: "Vendor Code",
+                                                    //   type:"VendorCodeGeneral",
+                                                    //   value: vendorCodeName.text==null|| vendorCodeName.text=="null"?"":vendorCodeName.text,
+                                                    //   onSelection: (Result? va) {
+                                                    //
+                                                    //     print(
+                                                    //         "+++++++++++++++++++++++"+va.toString());
+                                                    //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                    //     // setState(() {
+                                                    //     vendorCode.text=va?.partnerCode??"";
+                                                    //     vendorCodeName.text=va?.name??"";
+                                                    //     var id=va?.partnerCode;
+                                                    //
+                                                    //     print("vendorssss"+id.toString());
+                                                    //     setState(() {
+                                                    //       context.read<VariantIdCubitDartCubit>().getVariantId(vendorId: vendorCode.text);
+                                                    //       context
+                                                    //           .read<
+                                                    //           VendordetailsCubit>()
+                                                    //           .getVendorDetails(
+                                                    //           id);
+                                                    //
+                                                    //     });
+                                                    //     showDailogPopUp(
+                                                    //         context,
+                                                    //         VendorPopup(
+                                                    //           assign:  assigniningDetails,
+                                                    //
+                                                    //         ));
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //
+                                                    //   },
+                                                    //
+                                                    // ),
+
                                                     SizedBox(
                                                       height: height * .035,
                                                     ),
+                                                    // NewInputCard(
+                                                    //   readOnly: true,
+                                                    //   controller: vendoraddress,
+                                                    //   title: "Vender Address",
+                                                    //   height: 90,
+                                                    //   maxLines: 3,
+                                                    // ),
+                                                    // SizedBox(
+                                                    //   height: height * .035,
+                                                    // ),
                                                     NewInputCard(
                                                         readOnly: true,
                                                         controller: vendortrnnumber,
@@ -1048,18 +1077,8 @@ else{
                                                         },
                                                         enable: true),
                                                     SizedBox(
-                                                      height: height * .065,
-                                                    ),    SizedBox(
-                                                      height: height * .11,
+                                                      height: height * .035,
                                                     ),
-
-
-                                                  ],
-                                                )),
-                                                Expanded(
-                                                    child: Column(
-                                                  children: [
-                                                    SizedBox(height: height*.032,),
 
 
                                                     PopUpDateFormField(
@@ -1080,9 +1099,21 @@ else{
 
 
 
+
                                                     SizedBox(
-                                                      height: height * .035,
+                                                      height: height * .065,
+                                                    ),    SizedBox(
+                                                      height: height * .18,
                                                     ),
+
+
+                                                  ],
+                                                )),
+                                                Expanded(
+                                                    child: Column(
+                                                  children: [
+                                                    // SizedBox(height: height*.032,),
+
                                                     NewInputCard(
                                                         controller: Paymentcode,
                                                         title: "Payment Code",
@@ -1139,7 +1170,7 @@ else{
                                                       maxLines: 3,
                                                     ),
                                                     SizedBox(
-                                                      height: height * .005,
+                                                      height: height * .110,
                                                     ),
 
 
@@ -1261,22 +1292,17 @@ else{
                                                     child: customTable(
 
                                                       tableWidth: .5,
-                                                      childrens: [
-//
-           TableRow(
+                                                      childrens: [TableRow(
 
                                                             children: [
                                                               tableHeadtext(
                                                                 'Sno',
-
                                                                 size: 13,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white,
                                                               ),
                                                               tableHeadtext(
                                                                 'Variant Id',
-
-
                                                                 size: 12,
                                                                 // color: Palette.containerDarknew,
                                                                 // textColor: Palette.white
@@ -2789,7 +2815,7 @@ else{
                                               vendorId: vendorCode.text == "" ? "" : vendorCode.text,
                                               vendorTrnNumber: vendortrnnumber.text == "" ? "" : vendortrnnumber.text,
                                               vendorMailId: Variable.email,
-                                              vendorAddress: vendoraddress.text == "" ? "" : vendoraddress.text,
+                                              vendorAddress:null,
                                               address1:"akkk",
                                               address2:"ass",
                                               promisedReceiptdate: promised_receipt_date.text,

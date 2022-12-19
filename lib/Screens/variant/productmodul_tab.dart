@@ -204,12 +204,9 @@ class _VariantRightDrawerState extends State<VariantRightDrawer> {
   Widget build(BuildContext context) {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
-    return Container(
-      margin: EdgeInsets.only(top: h / 6.5),
-      height: h,
-      width: w*.14,
-      color:  Color(0xffEDF1F2),
-      child: Column(
+    return ConfigureDesign(
+        childs: Column(
+
         children: [
           SizedBox(height: 20,),
           DrawerCared(label: "Costing Method Type",ontap: (){

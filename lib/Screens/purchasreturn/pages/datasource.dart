@@ -146,6 +146,7 @@ abstract class PurchaseSourceAbstract {
   );
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryist(String? code,
       {String? type});
+  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(String? code);
   Future<DoubleResponse> postCreateCategory(CategoryCreationtModel model);
   Future<CategoryReadModel> getCategoryRead(
     int? id,
@@ -3572,6 +3573,8 @@ catch(e){
             "wholesale_selling_price_percentage": model.wholeSellingPricePercentage,
             "online_selling_price_percentage": model.onlineSellingPercenage,
             "need_multiple_integration":model.needMultipleIntegration,
+            "have_gift_option":model.haveGiftOption,
+            "have_wrap_option":model.haveWrapOption,
             "vat": model.vat,
             "excess_tax": model.excessTax,
             "minimum_gp": model.minGap,
@@ -6849,5 +6852,38 @@ catch(e){
     CostingPageCreationPostModel.fromJson(response.data['data']);
     print("rwead" + dataa.toString());
     return dataa;
+  }
+
+  @override
+  Future<PaginatedResponse<List<BrandListModel>>> getAllCategoryist(String? code) async {
+    String path="";
+    code = code == null ? "" : code;
+
+
+
+      if (code == "")
+        path = listCategoryAllGroupApi;
+      else
+        path = listCategoryAllGroupApi + "?$code";
+
+    print("Searching path" + path.toString());
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<BrandListModel> items = [];
+    print("searching case" + response.data['data']['results'].toString());
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(BrandListModel.fromJson(element));
+      print("itemsAk" + items.toString());
+    });
+    return PaginatedResponse<List<BrandListModel>>(
+      items,
+      response.data['data']['next'],
+      response.data['data']['count'].toString(),
+      previousUrl: response.data['data']['previous'],
+    );
   }
 }

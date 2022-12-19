@@ -16,6 +16,7 @@ class BrandReadModel with _$BrandReadModel {
 
     @JsonKey(name: "brand_identifier_url") final String? brandIdentifierUrl,
     @JsonKey(name: "parent_code") final String? parentCode,
+    @JsonKey(name: "parent_name") final String? parentName,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,
 
 

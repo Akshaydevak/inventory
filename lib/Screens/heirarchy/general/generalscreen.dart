@@ -687,7 +687,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                           name: itemNameController?.text ?? "",
                                           materialCode: materialController?.text ?? "",
                                           staticGroupCode: staticController?.text ?? "",
-                                          uomCode: uomCategoryController?.text ?? "",
+                                          uomGroupCode: uomGroupController?.text ?? "",
                                           groupCode:GroupController.text.isEmpty
                                               ? null
                                               : GroupController.text,

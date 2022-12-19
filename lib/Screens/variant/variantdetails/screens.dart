@@ -3524,7 +3524,8 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                     suffixIconEnable: true,
                     formatter: false,
                     controller: code,
-                    onClick: () {
+                    onClick: ()
+                    {
                       showDailogPopUp(
                         context,
                         ConfigurePopup(

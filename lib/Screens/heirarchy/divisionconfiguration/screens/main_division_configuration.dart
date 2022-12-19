@@ -101,6 +101,7 @@ isActive=false;
 ismixed=false;
 
 
+
   }
 
 
@@ -202,6 +203,9 @@ ismixed=false;
         }, success: (data) {
           if (data.data1) {
             clear();
+            categoryList?.clear();
+            groupList?.clear();
+            uomList?.clear();
 
             setState(() {
               context.read<ListDivisionCubit>().getDivisionVerticalList();
@@ -240,6 +244,9 @@ ismixed=false;
             else {
               setState(() {
                 clear();
+                categoryList?.clear();
+                groupList?.clear();
+                uomList?.clear();
 
               });
 

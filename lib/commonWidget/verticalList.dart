@@ -1188,7 +1188,7 @@ class _BrandVerticalListState extends State<BrandVerticalList> {
                         child: Container(
                           height: height,
                           // height: double.minPositive,
-                          width: width * .112,
+                          width: width * .128,
                           //width: 232,
                           color: Color(0xffEDF1F2),
                           child: Column(
@@ -1368,7 +1368,7 @@ class _MaterialVerticalListState extends State<MaterialVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -1550,7 +1550,7 @@ class _DebvisionVerticalListState extends State<DebvisionVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -1709,7 +1709,7 @@ class _CostingTypeVerticalListState extends State<CostingTypeVerticalList> {
           builder: (context) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -1718,7 +1718,7 @@ class _CostingTypeVerticalListState extends State<CostingTypeVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                     width: width * .112,
+                     width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -1899,7 +1899,7 @@ class _CostingCreateVerticalListState extends State<CostingCreateVerticalList> {
               builder: (context, state) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -1908,7 +1908,7 @@ class _CostingCreateVerticalListState extends State<CostingCreateVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -2090,7 +2090,7 @@ class _PricingGroupVerticalListState extends State<PricingGroupVerticalList> {
               builder: (context, state) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -2099,7 +2099,7 @@ class _PricingGroupVerticalListState extends State<PricingGroupVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -2281,7 +2281,7 @@ class _FrameWorkVerticalListState extends State<FrameWorkVerticalList> {
               builder: (context, state) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -2290,7 +2290,7 @@ class _FrameWorkVerticalListState extends State<FrameWorkVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -2476,7 +2476,7 @@ class _PricingVerticalListState extends State<PricingVerticalList> {
               builder: (context, state) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -2485,7 +2485,7 @@ class _PricingVerticalListState extends State<PricingVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -2668,7 +2668,7 @@ class _LinkedItemVerticalList extends State<LinkedItemVerticalList> {
               builder: (context, state) {
                 return Container(
                   height: double.infinity,
-                  width: width * .112,
+                  width: width * .128,
                   margin: EdgeInsets.all(10),
                   child:
 
@@ -2677,8 +2677,7 @@ class _LinkedItemVerticalList extends State<LinkedItemVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
-                      //width: 232,
+                      width: width * .128,                     //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
                         children: [
@@ -2859,7 +2858,7 @@ class _StaticVerticalListState extends State<StaticVerticalList> {
 
                   return Container(
                     height: double.infinity,
-                    width: width * .112,
+                    width: width * .128,
                     margin: EdgeInsets.all(10),
                     child:
                     Visibility(
@@ -2867,7 +2866,7 @@ class _StaticVerticalListState extends State<StaticVerticalList> {
                       child: Container(
                         height: height,
                         // height: double.minPositive,
-                        width: width * .112,
+                        width: width * .128,
                         //width: 232,
                         color: Color(0xffEDF1F2),
                         child: Column(
@@ -3055,7 +3054,7 @@ class _UomGroupVerticalListState extends State<UomGroupVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -3228,7 +3227,7 @@ class _CategoryVerticalListState extends State<CategoryVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -3400,7 +3399,7 @@ class _GroupVerticalListState extends State<GroupVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width: width * .112,
+                      width: width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(
@@ -3585,7 +3584,7 @@ class _BaseUomVerticalListState extends State<BaseUomVerticalList> {
                     child: Container(
                       height: height,
                       // height: double.minPositive,
-                      width:  width * .111,
+                      width:  width * .128,
                       //width: 232,
                       color: Color(0xffEDF1F2),
                       child: Column(

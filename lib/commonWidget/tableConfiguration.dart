@@ -38,7 +38,9 @@ import 'package:inventory/core/uttils/variable.dart';
 import 'package:inventory/widgets/customtable.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 
+import '../Screens/heirarchy/general/cubits/materialRead/materialread_cubit.dart';
 import '../Screens/heirarchy/general/model/listbrand.dart';
+import '../Screens/heirarchy/general/model/materialread.dart';
 import '../Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import '../Screens/variant/variantdetails/cubits/variantsearch/variantsearch_cubit.dart';
 import '../Screens/variant/variantdetails/model/vendormodel.dart';
@@ -82,6 +84,15 @@ class TableConfigurePopup extends StatelessWidget {
         case "GroupAllTabale_Popup":
         {
           data = GroupAllTabalePopup(
+            type: type,
+            valueSelect: valueSelect,
+          );
+        }
+        break;
+
+      case "VendorDetails_Popup":
+        {
+          data = VendorDetailsList(
             type: type,
             valueSelect: valueSelect,
           );
@@ -1134,6 +1145,349 @@ class _GroupAllTabalePopup extends State<GroupAllTabalePopup> {
         },
       );
     });
+  }
+}
+
+
+class VendorDetailsList extends StatefulWidget {
+  final String type;
+  final Function? valueSelect;
+
+  VendorDetailsList({
+    Key? key,
+    required this.type,
+    required this.valueSelect,
+  }) : super(key: key);
+
+  @override
+  _VendorDetailsList createState() => _VendorDetailsList();
+}
+
+class _VendorDetailsList extends State<VendorDetailsList> {
+  bool? active = true;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  MaterialReadModel? group;
+  int? veritiaclid = 0;
+  List<BrandListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  TextEditingController searchContoller = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+
+  bool addNew = false;
+  List<VendorDetailsModel> table = [];
+  List<int> list = [];
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  void initState() {
+    // context
+    //     .read<MaterialListCubit>()
+    //     .getMaterialList();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => VendordetailslistCubit()..getVendorDetailList(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<VendordetailslistCubit, VendordetailslistState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // // context.
+                  // context.showSnackBarError("Loadingggg");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  setState(() {
+                    table = data.data;
+                  });
+
+                  print("the vendor Akshay" + table.toString());
+
+                  // context.showSnackBarSuccess(data.data2);
+
+                      ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<MaterialListCubit, MaterialListState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    onTap: () {},
+                    buttonVisible: false,
+                    isDirectCreate: true,
+                    addNew: addNew,
+                    label: "Vendor Details",
+                    onApply: () {},
+                    onEdit: () {},
+                    onCancel: () {
+                      // context
+                      //     .read<MaterialdeleteCubit>()
+                      //     .materialDelete(veritiaclid,"material");
+                    },
+                    onAddNew: (v) {
+                      print("Akshay" + v.toString());
+                      // changeAddNew(v);
+                      // setState(() {});
+                      //
+                      // setState(() {});
+                    },
+                    dataField: Container(
+                      // height: 500,
+                      child: Column(
+                        children: [
+                          // Container(
+                          //     margin: EdgeInsets.all(5),
+                          //     child: SearchTextfiled(
+                          //       color: Color(0xffFAFAFA),
+                          //       h: 40,
+                          //       hintText: "Search...",
+                          //       ctrlr:searchContoller,
+                          //       onChanged: (va) {
+                          //         // print("searching case"+va.toString());
+                          //         // context
+                          //         //     .read<InventorysearchCubit>()
+                          //         //     .getSearch(widget.itemsearch.text,tab: widget.tab);
+                          //         // if(va==""){
+                          //         //   context
+                          //         //       .read<InventorysearchCubit>()
+                          //         //       .getInventorySearch("code",tab: widget.tab);
+                          //
+                          //         // }
+                          //
+                          //       },
+                          //     )),
+                          Container(
+                            // width: w/7,
+                            // margin: EdgeInsets.symmetric(horizontal: w*.02),
+                            child: customTable(
+
+                              tableWidth: .5,
+                              childrens: [
+                                TableRow(
+                                  // decoration: BoxDecoration(
+
+                                  //     color: Colors.green.shade200,
+
+                                  //     shape: BoxShape.rectangle,
+
+                                  //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+
+                                  children: [
+                                    tableHeadtext(
+                                      'Vendors',
+                                      // textColor: Colors.black,
+
+                                      size: 13,
+                                      // color: Color(0xffE5E5E5),
+                                    ),
+                                    // tableHeadtext(
+                                    //   '',
+                                    //   textColor: Colors.black,
+                                    //   padding: EdgeInsets.all(7),
+                                    //   height: 46,
+                                    //   size: 13,
+                                    //   // color: Color(0xffE5E5E5),
+                                    // ),
+                                  ],
+                                ),
+                                if (table?.isNotEmpty == true) ...[
+                                  for (var i = 0; i < table.length; i++)
+                                    TableRow(
+                                        decoration: BoxDecoration(
+                                            color: Pellet.tableRowColor,
+                                            shape: BoxShape.rectangle,
+                                            border:  Border(
+                                                left: BorderSide(
+
+                                                    color: Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+                                                    style: BorderStyle.solid),
+                                                bottom: BorderSide(
+
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    style: BorderStyle.solid),
+                                                right: BorderSide(
+                                                    color:   Color(0xff3E4F5B).withOpacity(.1),
+                                                    width: .4,
+
+                                                    style: BorderStyle.solid))),
+                                        children: [
+                                          TableCell(
+                                              verticalAlignment:
+                                              TableCellVerticalAlignment
+                                                  .middle,
+                                              child: textOnclickPadding(
+                                                ontap: () {
+                                                  VendorDetailsModel model =
+                                                  VendorDetailsModel(
+                                                    id: table[i].id,
+                                                    manuFactureName: table[i]
+                                                        .manuFactureName,
+                                                    manuFactureuserCode: table[i].manuFactureuserCode,
+                                                    trnNumber: table[i].trnNumber,
+                                                    address: table[i].address,
+                                                  );
+                                                  widget.valueSelect!(model);
+                                                  Navigator.pop(context);
+                                                },
+                                                text: table[i]
+                                                    .manuFactureName ??
+                                                    "",
+                                              )
+                                            // Text(keys[i].value??"",)
+
+                                          ),
+                                        ]),
+                                ],
+                                //
+                                // TableRow(
+                                //     decoration: BoxDecoration(
+                                //         color: Colors.grey
+                                //             .shade200,
+                                //         shape: BoxShape
+                                //             .rectangle,
+                                //         border:const  Border(
+                                //             left: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             bottom: BorderSide(
+                                //                 width: .5,
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 style: BorderStyle
+                                //                     .solid),
+                                //             right: BorderSide(
+                                //                 color: Colors
+                                //                     .grey,
+                                //                 width: .5,
+                                //                 style: BorderStyle
+                                //                     .solid))),
+                                //     children: [
+                                //
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child: UnderLinedInput(
+                                //           onChanged: (va){
+                                //             key.text=va;
+                                //
+                                //           },
+                                //
+                                //           formatter: false,
+                                //
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableCell(
+                                //         verticalAlignment: TableCellVerticalAlignment.middle,
+                                //
+                                //         child:
+                                //
+                                //         UnderLinedInput(
+                                //           onChanged: (va){
+                                //             value.text=va;
+                                //           },
+                                //           formatter: false,
+                                //         ),
+                                //
+                                //
+                                //       ),
+                                //       TableTextButton(label: "", onPress: (){
+                                //         if(key.text.isNotEmpty==true && value.text.isNotEmpty){
+                                //           Keys model=Keys(
+                                //             key: key.text??"",
+                                //             value: value.text??'',
+                                //           );
+                                //           setState(() {
+                                //             onChange=true;
+                                //
+                                //
+                                //             keys?.add(model);
+                                //
+                                //
+                                //             productFeatures?.add(ProductFeatures(
+                                //
+                                //                 keyValues: keys
+                                //             ));
+                                //             widget.productTableEdit(type:"3",list:productFeatures);
+                                //             key.text="";
+                                //             value.text="";
+                                //           });
+                                //
+                                //
+                                //
+                                //
+                                //         }
+                                //
+                                //       })
+                                //
+                                //
+                                //     ])
+                              ],
+                              widths: {
+                                0: FlexColumnWidth(2),
+                                1: FlexColumnWidth(5),
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
   }
 }
 
@@ -5624,7 +5978,7 @@ class _UomGroupTabalePopup extends State<UomGroupTabalePopup> {
                   child: Column(
                     children: [
                       Container(
-                          margin: EdgeInsets.all(5),
+                          // margin: EdgeInsets.all(5),
                           child: SearchTextfiled(
                             color: Color(0xffFAFAFA),
                             h: 40,

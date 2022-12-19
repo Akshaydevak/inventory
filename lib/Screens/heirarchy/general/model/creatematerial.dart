@@ -9,7 +9,7 @@ class MaterialCreationtModel with _$MaterialCreationtModel {
     final String? description,
     final String? status,
     final String? name,
-    final int? image,
+    final String? image,
     @JsonKey(name: "search_name") final String? searchNmae,
     @JsonKey(name: "display_name") final String? displayName,
     @JsonKey(name: "category_code") final String? categoryCode,

@@ -70,6 +70,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
     heightController.clear();
     lengthController.clear();
     weightUOMController.clear();
+    groupController.clear();
     active=false;
     haveGiftOption=false;
     haveWrapOption=false;
@@ -208,6 +209,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
 
                         codeController.text=data.groupCustomdata?.code??"";
                         groupNameController.text=data.groupCustomdata?.groupNmae??"";
+                        groupController.text=data.groupCustomdata?.groupId.toString()??"";
                         minimumGpController.text=data.groupCustomdata?.minGp==null?"":data.groupCustomdata?.minGp?.toStringAsFixed(2).toString()??"";
                         averageGpController.text=data.groupCustomdata?.avrgGp==null?"":data.groupCustomdata?.avrgGp?.toStringAsFixed(2).toString()??"";
                         maximumGpController.text=data.groupCustomdata?.maxGp==null?"":data.groupCustomdata?.maxGp?.toStringAsFixed(2).toString()??"";
@@ -352,7 +354,9 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                 ),
                               ],
                             ),
-                            CustomizedStableTable(
+                            BlocBuilder<ReadcustomCubit, ReadcustomState>(
+  builder: (context, state) {
+    return CustomizedStableTable(
                               select:select,
                               shelfType:shelfType,
                               shelfTime:shelfTime,
@@ -377,7 +381,9 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                               group: groupController,
                               targetedGp: targetedGpController,
 
-                            ),
+                            );
+  },
+),
                             SizedBox(height: height * .13,),
                             Container(
 

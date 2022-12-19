@@ -171,8 +171,9 @@ abstract class PurchaseReturnRepoAbstract {
   Future<Either<Failure, DevisionReadModel>> getUomGroupRead(
     int? id,
   );
-  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
-      getCategoryist(String? code, {String? type, int? id});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getCategoryist(String? code, {String? type, int? id});
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getAllCategoryist(String? code);
+
   Future<Either<Failure, DoubleResponse>> postCreateCategory(
       CategoryCreationtModel model);
   Future<Either<Failure, CategoryReadModel>> getCategoryRead(
@@ -1523,5 +1524,11 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, CostingPageCreationPostModel>> getChannelCostingRead(int? id) {
     return repoExecute<CostingPageCreationPostModel>(
             () async => remoteDataSource.getChannelCostingRead(id));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getAllCategoryist(String? code) {
+    return repoExecute<PaginatedResponse<List<BrandListModel>>>(
+            () async => remoteDataSource.getAllCategoryist(code));
   }
 }

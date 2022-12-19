@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/purcahseRecieving.dart';
+import 'package:inventory/Screens/variant/variantdetails/model/vendormodel.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/commonutils.dart';
@@ -151,6 +152,48 @@ bool  recievlinequantityCheck=false;
     discountClearController.clear();
 
   });
+
+
+  }
+
+
+  vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount){
+    vatableAmount1 =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+  }
+  vatableFocAmountCalculation(double? unitCost,int? qty,double? excessTax,double? discount,double? foc ){
+    vatableAmount1=double.parse(((((qty!*unitCost!)-(foc!*unitCost!))+excessTax!)-discount!).toStringAsFixed(2));
+  }
+  actualAndgrandTotal(double? vatableAmount,double? vat){
+
+    actualCost1 = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+    grandTotal1=actualCost1;
+
+  }
+
+  double vatableAmountUpdation(double? unitCost,int? qty,double? excessTax,double? discount){
+ double   vatableAmount =double.parse( (((unitCost! *
+        qty!) +
+        excessTax!) -
+        discount!).toStringAsFixed(2));
+ return vatableAmount;
+  }
+  double vatableAmountFocUpdation(double? unitCost,int? qty,double? excessTax,double? discount,double? foc ){
+   double  vatableAmount=double.parse(((((qty!*unitCost!)-(foc!*unitCost!))+excessTax!)-discount!).toStringAsFixed(2));
+   return vatableAmount;
+  }
+   double actualAndgrandTotalUpdation(double? vatableAmount,double? vat){
+
+   double actualCosts = double.parse((vatableAmount! +
+        ((vatableAmount *
+            vat!) /
+            100)).toStringAsFixed(2));
+   return actualCosts;
 
 
   }
@@ -1053,13 +1096,8 @@ child: IntrinsicHeight(
 
                                           'Grand Total',
 
-
-
                                           size: 13,
 
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
 
                                         ),
 
@@ -1067,13 +1105,8 @@ child: IntrinsicHeight(
 
                                           'Is Invoiced',
 
-
-
                                           size: 13,
 
-                                          // color: Palette.containerDarknew,
-
-                                          // textColor: Palette.white
 
                                         ),
 
@@ -1082,12 +1115,9 @@ child: IntrinsicHeight(
                                           'Expiry Date',
 
 
-
                                           size: 13,
 
-                                          // color: Palette.containerDarknew,
 
-                                          // textColor: Palette.white
 
                                         ),
 
@@ -1249,53 +1279,118 @@ color: Pellet.tableRowColor,
                                         ),
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
-                                          child: PopUpCall(
+                                          child:
+                                          UnderLinedInput(
+                                            suffixIconEnable: true,
+                                            formatter: false,
+                                            controller: TextEditingController(text:  recievingLisnes[i].vendorId ??""),
+                                            onClick: ()
+                                            {
+                                              showDailogPopUp(
+                                                context,
+                                                ConfigurePopup(
+                                                  listAssign: (VendorDetailsModel model) {
+                                                    print("akkk");
+                                                    print(model.toString());
+                                                    setState(() {
+                                                      updateCheck=true;
+                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                                      setState(() {
 
-                                            type:
-                                            "VendorCodeGeneral",
-                                            value: recievingLisnes[i].vendorId ??"",
-                                            onSelection:
-                                                (Result? va) {
-                                                  updateCheck=true;
-                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
-                                                  setState(() {
+                                                      });
 
-                                                  });
+                                                      recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:model.manuFactureuserCode??"",vendorTrnNumber: model.trnNumber.toString() );
+                                                      setState(() {
 
-                                                  recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:va?.partnerCode??"" );
-                                              setState(() {
-                                                var  variant=
-                                                    va?.partnerCode;
-                                                int? id = va!.id;
-                                                Variable.tableindex =i;
-                                                Variable.tableedit=true;
-                                                vendorcheck=true;
-                                                context.read<
-                                                    VendordetailsCubit>()
-                                                    .getVendorDetails(
-                                                    variant);
+                                                        Variable.tableindex =i;
+                                                        Variable.tableedit=true;
+                                                        vendorcheck=true;
+                                                        // context.read<
+                                                        //     VendordetailsCubit>()
+                                                        //     .getVendorDetails(
+                                                        //     variant);
 
 
-                                                showDailogPopUp(
-                                                    context,
-                                                    VendorPopup(
-                                                      assign:  assigniningDetails,
+                                                        // showDailogPopUp(
+                                                        //     context,
+                                                        //     VendorPopup(
+                                                        //       assign:  assigniningDetails,
+                                                        //
+                                                        //     ));
+                                                        // context
+                                                        //     .read<
+                                                        //     TableDetailsCubitDartCubit>()
+                                                        //     .getTableDetails(
+                                                        //     id);
+                                                        // context
+                                                        //     .read<PurchaseStockCubit>()
+                                                        //     .getCurrentStock(Variable.inventory_ID, variant);
 
-                                                    ));
-                                                // context
-                                                //     .read<
-                                                //     TableDetailsCubitDartCubit>()
-                                                //     .getTableDetails(
-                                                //     id);
-                                                // context
-                                                //     .read<PurchaseStockCubit>()
-                                                //     .getCurrentStock(Variable.inventory_ID, variant);
+                                                        // orderType = va!;
+                                                      });
 
-                                                // orderType = va!;
-                                              });
-                                            }, // restricted: true,
+
+
+
+
+
+                                                    });
+                                                  },
+                                                  type: "vendorDetailList_popup",
+                                                ),
+                                              );
+                                            },
                                           ),
                                         ),
+                                        // TableCell(
+                                        //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                        //   child: PopUpCall(
+                                        //
+                                        //     type:
+                                        //     "VendorCodeGeneral",
+                                        //     value: recievingLisnes[i].vendorId ??"",
+                                        //     onSelection:
+                                        //         (Result? va) {
+                                        //           updateCheck=true;
+                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(updateCheck: true);
+                                        //           setState(() {
+                                        //
+                                        //           });
+                                        //
+                                        //           recievingLisnes[i] = recievingLisnes[i].copyWith(vendorId:va?.partnerCode??"" );
+                                        //       setState(() {
+                                        //         var  variant=
+                                        //             va?.partnerCode;
+                                        //         int? id = va!.id;
+                                        //         Variable.tableindex =i;
+                                        //         Variable.tableedit=true;
+                                        //         vendorcheck=true;
+                                        //         context.read<
+                                        //             VendordetailsCubit>()
+                                        //             .getVendorDetails(
+                                        //             variant);
+                                        //
+                                        //
+                                        //         showDailogPopUp(
+                                        //             context,
+                                        //             VendorPopup(
+                                        //               assign:  assigniningDetails,
+                                        //
+                                        //             ));
+                                        //         // context
+                                        //         //     .read<
+                                        //         //     TableDetailsCubitDartCubit>()
+                                        //         //     .getTableDetails(
+                                        //         //     id);
+                                        //         // context
+                                        //         //     .read<PurchaseStockCubit>()
+                                        //         //     .getCurrentStock(Variable.inventory_ID, variant);
+                                        //
+                                        //         // orderType = va!;
+                                        //       });
+                                        //     }, // restricted: true,
+                                        //   ),
+                                        // ),
 
                                         TableCell(
                                           verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1325,20 +1420,22 @@ color: Pellet.tableRowColor,
                                                   var Vamount;
                                                 var vactualCost;
                                                 if(foc==0 || foc==""){
-                                                  Vamount  = (((unitcost! *
-                                                      qty!) +
-                                                      excess!) -
-                                                      dis!)
-                                                      .toDouble();
+                                                  Vamount  = vatableAmountUpdation(unitcost,qty,excess,dis);
+                                                      // (((unitcost! *
+                                                      // qty!) +
+                                                      // excess!) -
+                                                      // dis!)
+                                                      // .toDouble();
                                                   if(vat==0 ||vat==""){
                                                     vactualCost=Vamount;
                                                   }
                                                   else{
 
-                                                    vactualCost  = (Vamount! +
-                                                        ((Vamount! *
-                                                            vat!) /
-                                                            100));
+                                                    vactualCost  =actualAndgrandTotalUpdation(Vamount,vat);
+                                                    // (Vamount! +
+                                                    //     ((Vamount! *
+                                                    //         vat!) /
+                                                    //         100));
                                                   }
 
 
@@ -1352,11 +1449,13 @@ color: Pellet.tableRowColor,
                                                 }
                                                 else{
 
-                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-                                                  var vactualCost = (Vamount! +
-                                                      ((Vamount! *
-                                                          vat!) /
-                                                          100));
+                                                  var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,dis,foc);
+                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
+                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                  // (Vamount! +
+                                                  //     ((Vamount! *
+                                                  //         vat!) /
+                                                  //         100));
 
                                                   recievingLisnes[i] =
                                                       recievingLisnes[i]
@@ -1450,20 +1549,19 @@ color: Pellet.tableRowColor,
                                                 setState(() {});
                                               } else {
                                                 if(foc==0 || foc=="") {
-                                                  var Vamount = (((unitcost! *
-                                                      qty!) +
-                                                      excess!) -
-                                                      disc!)
-                                                      .toDouble();
-                                                  print(
-                                                      "Vamount" +
-                                                          Vamount
-                                                              .toString());
+                                                  var Vamount = vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                  // (((unitcost! *
+                                                  //     qty!) +
+                                                  //     excess!) -
+                                                  //     disc!)
+                                                  //     .toDouble();
 
-                                                  var vactualCost = (Vamount! +
-                                                      ((Vamount! *
-                                                          vat!) /
-                                                          100));
+
+                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                  // (Vamount! +
+                                                  //     ((Vamount! *
+                                                  //         vat!) /
+                                                  //         100));
                                                   print(
                                                       "vactualCost" +
                                                           vactualCost
@@ -1477,11 +1575,13 @@ color: Pellet.tableRowColor,
                                                           unitCost: unitcost);
                                                   setState(() {});
                                                 }else{
-                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                  var vactualCost = (Vamount! +
-                                                      ((Vamount! *
-                                                          vat!) /
-                                                          100));
+                                                  var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,disc,foc);
+                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                  // (Vamount! +
+                                                  //     ((Vamount! *
+                                                  //         vat!) /
+                                                  //         100));
                                                   recievingLisnes[i] =
                                                       recievingLisnes[i]
                                                           .copyWith(
@@ -1535,24 +1635,27 @@ color: Pellet.tableRowColor,
                                                 var Vamount;
 
                                                 if(foc==0 ||foc=="") {
-                                                  Vamount =
-                                                      (((unitcost! *
-                                                          qty!) +
-                                                          excess!) -
-                                                          Vdiscount!)
-                                                          .toDouble();
+                                                  Vamount =vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
+                                                      // (((unitcost! *
+                                                      //     qty!) +
+                                                      //     excess!) -
+                                                      //     Vdiscount!)
+                                                      //     .toDouble();
                                                 }else{
-                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+                                                  Vamount=vatableAmountFocUpdation(unitcost,qty,excess,Vdiscount,foc);
+                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
 
                                                 }
-                                                var vactualCost = (Vamount! +
-                                                    ((Vamount! *
-                                                        vat!) /
-                                                        100));
-                                                var Vgrnadtotal = (Vamount! +
-                                                    ((Vamount! *
-                                                        vat!) /
-                                                        100));
+                                                var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                // (Vamount! +
+                                                //     ((Vamount! *
+                                                //         vat!) /
+                                                //         100));
+                                                var Vgrnadtotal = actualAndgrandTotalUpdation(Vamount,vat);
+                                                // (Vamount! +
+                                                //     ((Vamount! *
+                                                //         vat!) /
+                                                //         100));
                                                 recievingLisnes[i] =
                                                     recievingLisnes[i]
                                                         .copyWith(
@@ -1582,47 +1685,29 @@ color: Pellet.tableRowColor,
                                                     "entered");
                                                 disc =
                                                 0;
-                                                print(
-                                                    "disc" +
-                                                        disc
-                                                            .toString());
+
                                               } else {
                                                 disc =
                                                     double
                                                         .tryParse(
                                                         va);
-                                                print(
-                                                    "disc1" +
-                                                        disc
-                                                            .toString());
+
                                               }
 
                                               var qty = recievingLisnes[i]
                                                   .receivedQty;
-                                              print(
-                                                  "qty" +
-                                                      qty
-                                                          .toString());
+
                                               var excess = recievingLisnes[i]
                                                   .excessTax;
-                                              print(
-                                                  "excess" +
-                                                      excess
-                                                          .toString());
+
                                               var unitcost = recievingLisnes[i]
                                                   .unitCost;
-                                              print(
-                                                  "unitcost" +
-                                                      unitcost
-                                                          .toString());
+
                                               var vat = recievingLisnes[i].vat;
                                               var foc = recievingLisnes[i]
                                                   .foc;
 
-                                              print(
-                                                  "vat" +
-                                                      vat
-                                                          .toString());
+
                                               if (unitcost ==
                                                   0 ||
                                                   qty ==
@@ -1638,24 +1723,20 @@ color: Pellet.tableRowColor,
 
                                               else {
                                                 if(foc==0 ||foc=="") {
-                                                  var Vamount = (((unitcost! *
-                                                      qty!) +
-                                                      excess!) -
-                                                      disc!)
-                                                      .toDouble();
-                                                  print(
-                                                      "Vamount" +
-                                                          Vamount
-                                                              .toString());
+                                                  var Vamount =vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                  // (((unitcost! *
+                                                  //     qty!) +
+                                                  //     excess!) -
+                                                  //     disc!)
+                                                  //     .toDouble();
 
-                                                  var vactualCost = (Vamount! +
-                                                      ((Vamount! *
-                                                          vat!) /
-                                                          100));
-                                                  print(
-                                                      "vactualCost" +
-                                                          vactualCost
-                                                              .toString());
+
+                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                  // (Vamount! +
+                                                  //     ((Vamount! *
+                                                  //         vat!) /
+                                                  //         100));
+
                                                   recievingLisnes[i] =
                                                       recievingLisnes[i]
                                                           .copyWith(
@@ -1666,11 +1747,9 @@ color: Pellet.tableRowColor,
                                                   setState(() {});
                                                 }
                                                 else{
-                                                  var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                  var vactualCost = (Vamount! +
-                                                      ((Vamount! *
-                                                          vat!) /
-                                                          100));
+                                                  var   Vamount=vatableFocAmountCalculation(unitcost,qty,excess,disc,foc);
+                                                  // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                  var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
                                                   recievingLisnes[i] =
                                                       recievingLisnes[i]
                                                           .copyWith(
@@ -1735,26 +1814,28 @@ color: Pellet.tableRowColor,
                                               else{
                                                 var Vamount;
                                                 if(foc==0 ||foc==""){
-                                                  Vamount = (((unitcost! *
-                                                      qty!) +
-                                                      excess!) -
-                                                      disc!)
-                                                      .toDouble();
+                                                  Vamount =vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                      // (((unitcost! *
+                                                      // qty!) +
+                                                      // excess!) -
+                                                      // disc!)
+                                                      // .toDouble();
                                                   setState(() {
 
                                                   });
 
                                                 }else{
-                                                  Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                  Vamount=vatableFocAmountCalculation(unitcost,qty,excess,disc,foc);
                                                   setState(() {
 
                                                   });
 
                                                 }
-                                                var vactualCost = (Vamount! +
-                                                    ((Vamount! *
-                                                        vat!) /
-                                                        100));
+                                                var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                // (Vamount! +
+                                                //     ((Vamount! *
+                                                //         vat!) /
+                                                //         100));
                                                 recievingLisnes[i] =
                                                     recievingLisnes[i]
                                                         .copyWith(
@@ -2244,35 +2325,19 @@ color: Pellet.tableRowColor,
                                                 'Vendor Id',
 
 
-
                                                 size: 13,
-
                                                 // color: Palette.containerDarknew,
-
                                                 // textColor: Palette.white
 
                                               ),
-
                                               tableHeadtext(
-
                                                 'Received Qty',
-
-
-
                                                 size: 13,
-
                                                 // color: Palette.containerDarknew,
-
                                                 // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Is Received',
-
-
-
                                                 size: 13,
 
                                                 // color: Palette.containerDarknew,
@@ -2282,143 +2347,60 @@ color: Pellet.tableRowColor,
                                               ),
 
                                               tableHeadtext(
-
                                                 'Unit Cost',
-
-
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Excise Tax',
-
-
-
                                                 size: 13,
-                                                // color: Palette.containerDarknew,
-                                                // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Discount',
-
                                                 size: 13,
                                               ),
                                               tableHeadtext(
-
                                                 'FOC',
-
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
-
-
                                               tableHeadtext(
-
                                                 'Vatable Amount',
-
-
-
                                                 size: 13,
 
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'VAT',
-
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
 
                                               tableHeadtext(
-
                                                 'Actual cost',
-
-
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Grand Total',
-
-
-
                                                 size: 13,
-
-                                                // color: Palette.containerDarknew,
-
-                                                // textColor: Palette.white
-
                                               ),
-
                                               tableHeadtext(
-
                                                 'Is Invoiced',
-
-
-
                                                 size: 13,
-
-
                                               ),
-
                                               tableHeadtext(
                                                 'Expiry Date',
-
                                                 size: 13,
-                                                // color: Palette.containerDarknew,
-                                                // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Is Free',
-
                                                 size: 13,
-                                                // color: Palette.containerDarknew,
-                                                // textColor: Palette.white
                                               ),
                                               tableHeadtext(
                                                 'Is Active',
-
                                                 size: 13,
-
                                               ),
                                               tableHeadtext(
                                                 '',
-
                                                 size: 13,
                                               ),
-
                                               // if (widget.onAddNew) textPadding(''),
-
                                             ]),
                         if (additionalVariants != null)...[
                 for(var i=0;i<additionalVariants.length;i++)
@@ -2501,41 +2483,97 @@ color: Pellet.tableRowColor,
                                               ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
-                                                child: PopUpCall(
+                                                child:
+                                                UnderLinedInput(
+                                                  suffixIconEnable: true,
+                                                  formatter: false,
+                                                  controller: TextEditingController(text:  additionalVariants[i].vendorId ??""),
+                                                  onClick: ()
+                                                  {
+                                                    showDailogPopUp(
+                                                      context,
+                                                      ConfigurePopup(
+                                                        listAssign: (VendorDetailsModel model) {
+                                                          print("akkk");
+                                                          print(model.toString());
+                                                          setState(() {
 
-                                                  type:
-                                                  "VendorCodeGeneral",
-                                                  value: additionalVariants[i].vendorId ??"",
-                                                  onSelection:
-                                                      (Result? va) {
 
-                                                    additionalVariants[i] = additionalVariants[i].copyWith(vendorId:va?.partnerCode??"" );
-                                                    setState(() {
-                                                      var  variant=
-                                                          va?.partnerCode;
-                                                      int? id = va!.id;
-                                                      Variable.tableindex =i;
-                                                      recievlinequantityCheck=false;
-                                                      stockCheck=true;
-                                                      Variable.tableedit=true;
-                                                      vendorcheck=false;
-                                                      context.read<VendordetailsCubit>().getVendorDetails(variant);
-                                                      showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
 
-                                                      // context
-                                                      //     .read<
-                                                      //     TableDetailsCubitDartCubit>()
-                                                      //     .getTableDetails(
-                                                      //     id);
-                                                      // context
-                                                      //     .read<PurchaseStockCubit>()
-                                                      //     .getCurrentStock(Variable.inventory_ID, variant);
+                                                            additionalVariants[i] = additionalVariants[i].copyWith(vendorId:model?.manuFactureuserCode??"",vendorTrnNumber:model?.trnNumber.toString()??""  );
+                                                            setState(() {
+                                                              // var  variant=
+                                                              //     va?.partnerCode;
+                                                              // int? id = model!.id;
+                                                              Variable.tableindex =i;
+                                                              recievlinequantityCheck=false;
+                                                              stockCheck=true;
+                                                              Variable.tableedit=true;
+                                                              vendorcheck=false;
+                                                              // context.read<VendordetailsCubit>().getVendorDetails(variant);
+                                                              // showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
 
-                                                      // orderType = va!;
-                                                    });
-                                                  }, // restricted: true,
+                                                              // context
+                                                              //     .read<
+                                                              //     TableDetailsCubitDartCubit>()
+                                                              //     .getTableDetails(
+                                                              //     id);
+                                                              // context
+                                                              //     .read<PurchaseStockCubit>()
+                                                              //     .getCurrentStock(Variable.inventory_ID, variant);
+
+                                                              // orderType = va!;
+                                                            });
+
+
+                                                          });
+                                                        },
+                                                        type: "vendorDetailList_popup",
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ),
+                                              
+                                              
+
+                                              // TableCell(
+                                              //   verticalAlignment: TableCellVerticalAlignment.middle,
+                                              //   child: PopUpCall(
+                                              //
+                                              //     type:
+                                              //     "VendorCodeGeneral",
+                                              //     value: additionalVariants[i].vendorId ??"",
+                                              //     onSelection:
+                                              //         (Result? va) {
+                                              //
+                                              //       additionalVariants[i] = additionalVariants[i].copyWith(vendorId:va?.partnerCode??"" );
+                                              //       setState(() {
+                                              //         var  variant=
+                                              //             va?.partnerCode;
+                                              //         int? id = va!.id;
+                                              //         Variable.tableindex =i;
+                                              //         recievlinequantityCheck=false;
+                                              //         stockCheck=true;
+                                              //         Variable.tableedit=true;
+                                              //         vendorcheck=false;
+                                              //         context.read<VendordetailsCubit>().getVendorDetails(variant);
+                                              //         showDailogPopUp(context, VendorPopup(assign:  assigniningDetails,));
+                                              //
+                                              //         // context
+                                              //         //     .read<
+                                              //         //     TableDetailsCubitDartCubit>()
+                                              //         //     .getTableDetails(
+                                              //         //     id);
+                                              //         // context
+                                              //         //     .read<PurchaseStockCubit>()
+                                              //         //     .getCurrentStock(Variable.inventory_ID, variant);
+                                              //
+                                              //         // orderType = va!;
+                                              //       });
+                                              //     }, // restricted: true,
+                                              //   ),
+                                              // ),
 
 
                                               TableCell(
@@ -2561,20 +2599,17 @@ color: Pellet.tableRowColor,
                                                         var Vamount;
                                                         var vactualCost;
                                                         if(foc==0 || foc==""){
-                                                          Vamount  = (((unitcost! *
-                                                              qty!) +
-                                                              excess!) -
-                                                              dis!)
-                                                              .toDouble();
+                                                          Vamount  = vatableAmountUpdation(unitcost,qty,excess,dis);
                                                           if(vat==0 ||vat==""){
                                                             vactualCost=Vamount;
                                                           }
                                                           else{
 
-                                                            vactualCost  = (Vamount! +
-                                                                ((Vamount! *
-                                                                    vat!) /
-                                                                    100));
+                                                            vactualCost  =actualAndgrandTotalUpdation(Vamount,vat);
+                                                            // (Vamount! +
+                                                            //     ((Vamount! *
+                                                            //         vat!) /
+                                                            //         100));
                                                           }
 
 
@@ -2588,11 +2623,12 @@ color: Pellet.tableRowColor,
                                                         }
                                                         else{
 
-                                                          var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-dis!);
-                                                          var vactualCost = (Vamount! +
-                                                              ((Vamount! *
-                                                                  vat!) /
-                                                                  100));
+                                                          var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,dis,foc);
+                                                          var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                          // (Vamount! +
+                                                          //     ((Vamount! *
+                                                          //         vat!) /
+                                                          //         100));
 
                                                           additionalVariants[i] =
                                                               additionalVariants[i]
@@ -2651,40 +2687,27 @@ color: Pellet.tableRowColor,
                                                     print("vat" + vat.toString());
                                                     print("qty" + qty.toString());
                                                     if (qty == 0 || qty == null) {
-                                                      print("checking case");
-
                                                       additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: 0, actualCost: 0, grandTotal: 0, unitCost: 0);
                                                       setState(() {});
                                                     } else {
                                                       if(foc==0 || foc=="") {
-                                                        var Vamount = (((unitcost! *
-                                                            qty!) +
-                                                            excess!) -
-                                                            disc!)
-                                                            .toDouble();
-                                                        print(
-                                                            "Vamount" +
-                                                                Vamount
-                                                                    .toString());
-
-                                                        var vactualCost = (Vamount! +
-                                                            ((Vamount! *
-                                                                vat!) /
-                                                                100));
-                                                        print(
-                                                            "vactualCost" +
-                                                                vactualCost
-                                                                    .toString());
-                                                        additionalVariants[i] =
-                                                            additionalVariants[i]
-                                                                .copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, unitCost: unitcost);
+                                                        var Vamount = vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                        // (((unitcost! *
+                                                        //     qty!) +
+                                                        //     excess!) -
+                                                        //     disc!)
+                                                        //     .toDouble();
+                                                        var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
+                                                        // (Vamount! +
+                                                        //     ((Vamount! *
+                                                        //         vat!) /
+                                                        //         100));
+                                                        additionalVariants[i] = additionalVariants[i].copyWith(vatableAmount: Vamount, actualCost: vactualCost, grandTotal: vactualCost, unitCost: unitcost);
                                                         setState(() {});
                                                       }else{
-                                                        var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                        var vactualCost = (Vamount! +
-                                                            ((Vamount! *
-                                                                vat!) /
-                                                                100));
+                                                        var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,disc,foc);
+                                                        // ((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
+                                                        var vactualCost =actualAndgrandTotalUpdation(Vamount,vat);
                                                         additionalVariants[i] =
                                                             additionalVariants[i]
                                                                 .copyWith(
@@ -2733,29 +2756,19 @@ color: Pellet.tableRowColor,
                                                       var Vamount;
 
                                                       if(foc==0 ||foc=="") {
-                                                        Vamount =
-                                                            (((unitcost! *
-                                                                qty!) +
-                                                                excess!) -
-                                                                Vdiscount!)
-                                                                .toDouble();
+                                                        Vamount =vatableAmountUpdation(unitcost,qty,excess,Vdiscount);
+
                                                       }else{
-                                                        Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-Vdiscount!);
+                                                        Vamount=vatableFocAmountCalculation(unitcost,qty,excess,Vdiscount,foc);
 
                                                       }
-                                                      var vactualCost = (Vamount! +
-                                                          ((Vamount! *
-                                                              vat!) /
-                                                              100));
-                                                      var Vgrnadtotal = (Vamount! +
-                                                          ((Vamount! *
-                                                              vat!) /
-                                                              100));
+                                                      var vactualCost = actualAndgrandTotalUpdation(Vamount,vat);
+
                                                       additionalVariants[i] =
                                                           additionalVariants[i]
                                                               .copyWith(
                                                               actualCost: vactualCost,
-                                                              grandTotal: Vgrnadtotal,
+                                                              grandTotal: vactualCost,
                                                               vatableAmount: Vamount,
                                                               excessTax: excess);
                                                       setState(() {});
@@ -2771,51 +2784,32 @@ color: Pellet.tableRowColor,
                                                     double? disc;
                                                     if (va ==
                                                         "") {
-                                                      print(
-                                                          "entered");
+
                                                       disc =
                                                       0;
-                                                      print(
-                                                          "disc" +
-                                                              disc
-                                                                  .toString());
+
                                                     } else {
                                                       disc =
                                                           double
                                                               .tryParse(
                                                               va);
-                                                      print(
-                                                          "disc1" +
-                                                              disc
-                                                                  .toString());
+
                                                     }
 
                                                     var qty = additionalVariants[i]
                                                         .receivedQty;
-                                                    print(
-                                                        "qty" +
-                                                            qty
-                                                                .toString());
+
                                                     var excess = additionalVariants[i]
                                                         .excessTax;
-                                                    print(
-                                                        "excess" +
-                                                            excess
-                                                                .toString());
+
                                                     var unitcost = additionalVariants[i]
                                                         .unitCost;
-                                                    print(
-                                                        "unitcost" +
-                                                            unitcost
-                                                                .toString());
+
                                                     var vat = additionalVariants[i].vat;
                                                     var foc = additionalVariants[i]
                                                         .foc;
 
-                                                    print(
-                                                        "vat" +
-                                                            vat
-                                                                .toString());
+
                                                     if (unitcost ==
                                                         0 ||
                                                         qty ==
@@ -2831,24 +2825,10 @@ color: Pellet.tableRowColor,
 
                                                     else {
                                                       if(foc==0 ||foc=="") {
-                                                        var Vamount = (((unitcost! *
-                                                            qty!) +
-                                                            excess!) -
-                                                            disc!)
-                                                            .toDouble();
-                                                        print(
-                                                            "Vamount" +
-                                                                Vamount
-                                                                    .toString());
+                                                        var Vamount=vatableAmountUpdation(unitcost,qty,excess,disc);
+                                                        var vactualCost = actualAndgrandTotalUpdation(Vamount,vat);
 
-                                                        var vactualCost = (Vamount! +
-                                                            ((Vamount! *
-                                                                vat!) /
-                                                                100));
-                                                        print(
-                                                            "vactualCost" +
-                                                                vactualCost
-                                                                    .toString());
+
                                                         additionalVariants[i] =
                                                             additionalVariants[i]
                                                                 .copyWith(
@@ -2859,11 +2839,8 @@ color: Pellet.tableRowColor,
                                                         setState(() {});
                                                       }
                                                       else{
-                                                        var   Vamount=((((qty!*unitcost!)-(foc!*unitcost!))+excess!)-disc!);
-                                                        var vactualCost = (Vamount! +
-                                                            ((Vamount! *
-                                                                vat!) /
-                                                                100));
+                                                        var   Vamount=vatableAmountFocUpdation(unitcost,qty,excess,disc,foc);
+                                                        var vactualCost = actualAndgrandTotalUpdation(Vamount,vat);
                                                         additionalVariants[i] =
                                                             additionalVariants[i]
                                                                 .copyWith(
@@ -2911,11 +2888,8 @@ color: Pellet.tableRowColor,
                                                     else{
                                                       var Vamount;
                                                       if(foc==0 ||foc==""){
-                                                        Vamount = (((unitcost! *
-                                                            qty!) +
-                                                            excess!) -
-                                                            disc!)
-                                                            .toDouble();
+                                                        Vamount = vatableAmountUpdation(unitcost,qty,excess,disc);
+
                                                         setState(() {
 
                                                         });
@@ -3211,43 +3185,99 @@ color: Pellet.tableRowColor,
                                                     padding: EdgeInsets.only(left: 11.5, top: 1.5),
                                                     fontWeight: FontWeight.w500),
                                               ),
-                                              PopUpCall(
-
-                                                type:"VendorCodeGeneral",
-                                                value: vendorCode,
-                                                onSelection: (Result? va) {
-
-                                                  print(
-                                                      "+++++++++++++++++++++++"+va.toString());
-                                                  //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
-                                                  // setState(() {
-                                                  vendorCode=va?.partnerCode??"";
-                                                  var id=va?.partnerCode;
-                                                  print(vendorCode);
-                                                  Variable.tableedit=false;
-                                                  setState(() {
-                                                    context
-                                                        .read<
-                                                        VendordetailsCubit>()
-                                                        .getVendorDetails(
-                                                        id);
-
-                                                  });
-                                                  showDailogPopUp(
+                                              TableCell(
+                                                verticalAlignment: TableCellVerticalAlignment.middle,
+                                                child:
+                                                UnderLinedInput(
+                                                  suffixIconEnable: true,
+                                                  formatter: false,
+                                                  controller: TextEditingController(text: vendorCode),
+                                                  onClick: ()
+                                                  {
+                                                    showDailogPopUp(
                                                       context,
-                                                      VendorPopup(
-                                                        assign:  assigniningDetails,
-
-                                                      ));
-
-
-
-
+                                                      ConfigurePopup(
+                                                        listAssign: (VendorDetailsModel model) {
+                                                          setState(() {
+                                                            vendorCode=model?.manuFactureuserCode??"";
+                                                            // vendorAddress=address;
+                                                            vendorTrn=model.trnNumber.toString();
 
 
-                                                },
+                                                            Variable.tableedit=false;
 
+                                                          });
+
+                                                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                          // setState(() {
+
+                                                          // setState(() {
+                                                          //   context
+                                                          //       .read<
+                                                          //       VendordetailsCubit>()
+                                                          //       .getVendorDetails(
+                                                          //       id);
+                                                          //
+                                                          // });
+                                                          // showDailogPopUp(
+                                                          //     context,
+                                                          //     VendorPopup(
+                                                          //       assign:  assigniningDetails,
+                                                          //
+                                                          //     ));
+
+
+
+
+
+
+
+
+
+                                                        },
+                                                        type: "vendorDetailList_popup",
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
                                               ),
+                                              // PopUpCall(
+                                              //
+                                              //   type:"VendorCodeGeneral",
+                                              //   value: vendorCode,
+                                              //   onSelection: (Result? va) {
+                                              //
+                                              //     print(
+                                              //         "+++++++++++++++++++++++"+va.toString());
+                                              //     //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                              //     // setState(() {
+                                              //     vendorCode=va?.partnerCode??"";
+                                              //     var id=va?.partnerCode;
+                                              //     print(vendorCode);
+                                              //     Variable.tableedit=false;
+                                              //     setState(() {
+                                              //       context
+                                              //           .read<
+                                              //           VendordetailsCubit>()
+                                              //           .getVendorDetails(
+                                              //           id);
+                                              //
+                                              //     });
+                                              //     showDailogPopUp(
+                                              //         context,
+                                              //         VendorPopup(
+                                              //           assign:  assigniningDetails,
+                                              //
+                                              //         ));
+                                              //
+                                              //
+                                              //
+                                              //
+                                              //
+                                              //
+                                              //   },
+                                              //
+                                              // ),
                                               TableCell(
                                                 verticalAlignment: TableCellVerticalAlignment.middle,
                                                 child: UnderLinedInput(
@@ -3279,33 +3309,30 @@ color: Pellet.tableRowColor,
                                                         }
                                                         else{
                                                           if(foc1==0 ||foc1==""){
-                                                            vatableAmount1 = (((unitcost! *
-                                                                recievedQty!) +
-                                                                excess1!) -
-                                                                discount!)
-                                                                .toDouble();
-                                                            actualCost1 = (vatableAmount1! +
-                                                                ((vatableAmount1! *
-                                                                    vat1!) /
-                                                                    100));
-                                                            grandTotal1 = (vatableAmount1! +
-                                                                ((vatableAmount1! *
-                                                                    vat1!) /
-                                                                    100));
+                                                            vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                            actualAndgrandTotal(vatableAmount1,vat1);
+
+                                                            // vatableAmount1 = (((unitcost! *
+                                                            //     recievedQty!) +
+                                                            //     excess1!) -
+                                                            //     discount!)
+                                                            //     .toDouble();
+                                                            // actualCost1 = (vatableAmount1! +
+                                                            //     ((vatableAmount1! *
+                                                            //         vat1!) /
+                                                            //         100));
+                                                            // grandTotal1 = (vatableAmount1! +
+                                                            //     ((vatableAmount1! *
+                                                            //         vat1!) /
+                                                            //         100));
 
 
 
                                                           }
                                                           else{
-                                                            vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                            actualCost1 = (vatableAmount1! +
-                                                                ((vatableAmount1! *
-                                                                    vat1!) /
-                                                                    100));
-                                                            grandTotal1 = (vatableAmount1! +
-                                                                ((vatableAmount1! *
-                                                                    vat1!) /
-                                                                    100));
+                                                            vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                            // vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
+                                                            actualAndgrandTotal(vatableAmount1,vat1);
 
                                                           }
 
@@ -3362,33 +3389,15 @@ color: Pellet.tableRowColor,
                                                     }
                                                     else{
                                                       if(foc1==0 ||foc1==""){
-                                                        vatableAmount1 = (((unitcost! *
-                                                            recievedQty!) +
-                                                            excess1!) -
-                                                            discount!)
-                                                            .toDouble();
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                       }
                                                       else{
-                                                        vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
                                                       }
 
@@ -3432,34 +3441,16 @@ color: Pellet.tableRowColor,
                                                     }
                                                     else{
                                                       if(foc1==0 ||foc1==""){
-                                                        vatableAmount1 = (((unitcost! *
-                                                            recievedQty!) +
-                                                            excess1!) -
-                                                            discount!)
-                                                            .toDouble();
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                       }
                                                       else{
 
-                                                        vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
                                                       }
 
@@ -3504,33 +3495,15 @@ color: Pellet.tableRowColor,
                                                     }
                                                     else{
                                                       if(foc1==0 ||foc1==""){
-                                                        vatableAmount1 = (((unitcost! *
-                                                            recievedQty!) +
-                                                            excess1!) -
-                                                            discount!)
-                                                            .toDouble();
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
 
 
                                                       }
                                                       else{
-                                                        vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
+                                                        vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
                                                       }
 
@@ -3573,38 +3546,15 @@ color: Pellet.tableRowColor,
                                                     }
                                                     else{
                                                       if(foc1==0 ||foc1==""){
-                                                        vatableAmount1 = (((unitcost! *
-                                                            recievedQty!) +
-                                                            excess1!) -
-                                                            discount!)
-                                                            .toDouble();
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-
-
+                                                        vatableAmountCalculation(unitcost,recievedQty,excess1,discount);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
 
                                                       }
                                                       else{
-                                                        vatableAmount1=((((recievedQty!*unitcost!)-(foc1!*unitcost!))+excess1!)-discount!);
-                                                        actualCost1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-                                                        grandTotal1 = (vatableAmount1! +
-                                                            ((vatableAmount1! *
-                                                                vat1!) /
-                                                                100));
-
+                                                        vatableFocAmountCalculation(unitcost,recievedQty,excess1,discount,foc1);
+                                                        actualAndgrandTotal(vatableAmount1,vat1);
                                                       }
-
                                                     }
-
 
                                                     setState(() {});
                                                     // print(Qty);

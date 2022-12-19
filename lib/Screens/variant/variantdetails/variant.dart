@@ -578,12 +578,12 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           await launch(qrCodeController.text);
         });
 
-        // Timer(Duration(seconds: 5), () {
-        //   setState(() {
-        //     context.read<ListvraiantCubit>().getVariantList();
-        //     // select=false;
-        //   });
-        // });
+        Timer(Duration(seconds: 5), () {
+          setState(() {
+            context.read<ListvraiantCubit>().getVariantList();
+            // select=false;
+          });
+        });
       } else {
         context.showSnackBarError(Variable.errorMessege);
         print(data.data1);
@@ -610,7 +610,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           itemCodeController.text=data.itemData?.itemName??"";
           variantNameController.text=data.name??"";
           shelfTypeController.text=data.shelfType??"";
-          shelfTimeController.text=data.shelfTime.toString()??"";
+          shelfTimeController.text=data.shelfTime?.toString()??"";
           minSalesOrderLimitController.text=data?.minSaleOrderLimit.toString()??"";
           maxSalesOrderLimitController.text=data?.maxSaleOrderLimit.toString()??"";
           salesUomController.text=data.SalesUom??"";
@@ -668,7 +668,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           itmcatelog=data.itemCatalog??false;
           itmImage=data.itemImage??false;
           active=data.isActive??false;
-          weightUomIdController.text=data.weightUomId.toString();
+          weightUomIdController.text=data?.weightUomId.toString()??"";
           returnTypeController.text=data?.returnType??"";
           returnTimeController.text=data?.returnTime?.toString()??"";
           vatController.text=data.vat?.toString()??"";
@@ -684,11 +684,11 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           importantInfo=data.variantMeta?.importantInfo;
           productDetails=data.variantMeta?.productDetails;
           nutriantsFacts=data.variantMeta?.nutriantFacts;
-          reorederPointController.text=data?.reOrderPoint.toString()??"";
+          reorederPointController.text=data?.reOrderPoint?.toString()??"";
           averageGpController.text=data.avgGp.toString();
-          saftyStockController.text=data.safetyStock.toString();
-          minPurchaseOrderLimitController.text=data.minPurchaseOrderLimit.toString();
-          maxPurchaseOrderLimitController.text=data.maxPurchaseOrderLimit.toString();
+          saftyStockController.text=data.safetyStock?.toString()??"";
+          minPurchaseOrderLimitController.text=data?.minPurchaseOrderLimit?.toString()??"";
+          maxPurchaseOrderLimitController.text=data?.maxPurchaseOrderLimit?.toString()??"";
 
           usageDirection=data.variantMeta?.usageDirection;
           vendorDetails=data.vendorDetails??[];

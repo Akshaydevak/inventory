@@ -29,6 +29,8 @@ mixin _$BrandReadModel {
   String? get brandIdentifierUrl => throw _privateConstructorUsedError;
   @JsonKey(name: "parent_code")
   String? get parentCode => throw _privateConstructorUsedError;
+  @JsonKey(name: "parent_name")
+  String? get parentName => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive => throw _privateConstructorUsedError;
 
@@ -52,6 +54,7 @@ abstract class $BrandReadModelCopyWith<$Res> {
       int? id,
       @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
       @JsonKey(name: "parent_code") String? parentCode,
+      @JsonKey(name: "parent_name") String? parentName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -75,6 +78,7 @@ class _$BrandReadModelCopyWithImpl<$Res, $Val extends BrandReadModel>
     Object? id = freezed,
     Object? brandIdentifierUrl = freezed,
     Object? parentCode = freezed,
+    Object? parentName = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_value.copyWith(
@@ -106,6 +110,10 @@ class _$BrandReadModelCopyWithImpl<$Res, $Val extends BrandReadModel>
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      parentName: freezed == parentName
+          ? _value.parentName
+          : parentName // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -130,6 +138,7 @@ abstract class _$$_BrandReadModelCopyWith<$Res>
       int? id,
       @JsonKey(name: "brand_identifier_url") String? brandIdentifierUrl,
       @JsonKey(name: "parent_code") String? parentCode,
+      @JsonKey(name: "parent_name") String? parentName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
 }
 
@@ -151,6 +160,7 @@ class __$$_BrandReadModelCopyWithImpl<$Res>
     Object? id = freezed,
     Object? brandIdentifierUrl = freezed,
     Object? parentCode = freezed,
+    Object? parentName = freezed,
     Object? isActive = freezed,
   }) {
     return _then(_$_BrandReadModel(
@@ -182,6 +192,10 @@ class __$$_BrandReadModelCopyWithImpl<$Res>
           ? _value.parentCode
           : parentCode // ignore: cast_nullable_to_non_nullable
               as String?,
+      parentName: freezed == parentName
+          ? _value.parentName
+          : parentName // ignore: cast_nullable_to_non_nullable
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -201,6 +215,7 @@ class _$_BrandReadModel implements _BrandReadModel {
       this.id,
       @JsonKey(name: "brand_identifier_url") this.brandIdentifierUrl,
       @JsonKey(name: "parent_code") this.parentCode,
+      @JsonKey(name: "parent_name") this.parentName,
       @JsonKey(name: "is_active", defaultValue: false) this.isActive});
 
   factory _$_BrandReadModel.fromJson(Map<String, dynamic> json) =>
@@ -223,12 +238,15 @@ class _$_BrandReadModel implements _BrandReadModel {
   @JsonKey(name: "parent_code")
   final String? parentCode;
   @override
+  @JsonKey(name: "parent_name")
+  final String? parentName;
+  @override
   @JsonKey(name: "is_active", defaultValue: false)
   final bool? isActive;
 
   @override
   String toString() {
-    return 'BrandReadModel(description: $description, name: $name, code: $code, image: $image, id: $id, brandIdentifierUrl: $brandIdentifierUrl, parentCode: $parentCode, isActive: $isActive)';
+    return 'BrandReadModel(description: $description, name: $name, code: $code, image: $image, id: $id, brandIdentifierUrl: $brandIdentifierUrl, parentCode: $parentCode, parentName: $parentName, isActive: $isActive)';
   }
 
   @override
@@ -246,6 +264,8 @@ class _$_BrandReadModel implements _BrandReadModel {
                 other.brandIdentifierUrl == brandIdentifierUrl) &&
             (identical(other.parentCode, parentCode) ||
                 other.parentCode == parentCode) &&
+            (identical(other.parentName, parentName) ||
+                other.parentName == parentName) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive));
   }
@@ -253,7 +273,7 @@ class _$_BrandReadModel implements _BrandReadModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, description, name, code, image,
-      id, brandIdentifierUrl, parentCode, isActive);
+      id, brandIdentifierUrl, parentCode, parentName, isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -280,6 +300,8 @@ abstract class _BrandReadModel implements BrandReadModel {
           final String? brandIdentifierUrl,
       @JsonKey(name: "parent_code")
           final String? parentCode,
+      @JsonKey(name: "parent_name")
+          final String? parentName,
       @JsonKey(name: "is_active", defaultValue: false)
           final bool? isActive}) = _$_BrandReadModel;
 
@@ -302,6 +324,9 @@ abstract class _BrandReadModel implements BrandReadModel {
   @override
   @JsonKey(name: "parent_code")
   String? get parentCode;
+  @override
+  @JsonKey(name: "parent_name")
+  String? get parentName;
   @override
   @JsonKey(name: "is_active", defaultValue: false)
   bool? get isActive;
