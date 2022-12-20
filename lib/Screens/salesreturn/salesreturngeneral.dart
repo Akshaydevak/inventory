@@ -558,89 +558,149 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                         color: Colors.white,
                                         height: 30,
                                       ),
-                                      Container(
-                                        margin: EdgeInsets.only(right:width*.015,),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            Button(Icons.delete, Colors.red,
-                                                ctx: context,
-                                                text: "Discard", onApply: () {
-                                                  showDailogPopUp(
-                                                      context,
-                                                      ConfirmationPopup(
-                                                        // table:table,
-                                                        // clear:clear(),
-                                                        verticalId: veritiaclid,
-                                                        onPressed: () {
-                                                          print("akshay");
-                                                          Navigator.pop(context);
-                                                          context
-                                                              .read<
-                                                              SalesreturngeneraldeleteCubit>()
-                                                              .salesreturnGeneralDelete(
-                                                              veritiaclid);
-                                                        },
-                                                      ));
+                                      SaveUpdateResponsiveButton(
+                                        discardFunction: (){
+                                          showDailogPopUp(
+                                              context,
+                                              ConfirmationPopup(
+                                                // table:table,
+                                                // clear:clear(),
+                                                verticalId: veritiaclid,
+                                                onPressed: () {
+                                                  print("akshay");
+                                                  Navigator.pop(context);
+                                                  context
+                                                      .read<
+                                                      SalesreturngeneraldeleteCubit>()
+                                                      .salesreturnGeneralDelete(
+                                                      veritiaclid);
                                                 },
-                                                height: 29,
-                                                width: 90,
-                                                labelcolor: Colors.red,
-                                                iconColor: Colors.red,
-                                                bdr: true),
-                                            SizedBox(
-                                              width: width * .008,
-                                            ),
-                                            Button(Icons.check, Colors.grey,
-                                                ctx: context,
-                                                text: select ? "Save" : "update",
-                                                height: 29,
-                                                Color: Color(0xff3E4F5B),
-                                                width: 90,
-                                                labelcolor: Colors.white,
-                                                iconColor: Colors.white, onApply: () {
-                                                  print("updateCheck" +
-                                                      remarksController.text.toString());
-                                                  if (updateCheck)
-                                                    context.showSnackBarError(
-                                                        "please click the update button ");
-                                                  else {
-                                                    SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
-                                                        orderType: orderTypeController?.text ?? "",
-                                                        orderMode: orderModeController?.text ?? "",
-                                                        inventoryid:Variable.inventory_ID,
-                                                        customerId: cstomerIdController?.text ?? "",
-                                                        trnNumber: trnController?.text ?? "",
-                                                        salesInvoiceId: salesInvoiceCodeController.text??"",
-                                                        shippingAddressId: shippingAddressIdController?.text ?? "",
-                                                        billingAddressId: billingAddressIdController?.text??"",
-                                                        reason: reasonController?.text ?? "",
-                                                        remarks: remarksController?.text ?? "",
-                                                        discount: double.tryParse(discountController?.text ?? ""),
-                                                        unitCost: double.tryParse(unitCostController?.text ?? ""),
-                                                        excessTax: double.tryParse(exciseTAxController?.text ?? ""),
-                                                        taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
-                                                        vat: double.tryParse(vatController?.text ?? ""),
-                                                        sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
-                                                        totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
-                                                        createdBy: "akaka",
-                                                        // editedBy: "",
-                                                        orderLines: table);
-                                                    print("modelllls" + model.toString());
-                                                    select
-                                                        ? context
-                                                        .read<SalesreturnpostCubit>()
-                                                        .postSalesReturnGeneral(model)
-                                                        :  context
-                                                        .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
-                                                  }
-                                                }),
-                                            SizedBox(
-                                              width: width * .008,
-                                            ),
-                                          ],
-                                        ),
+                                              ));
+
+                                        },
+                                        saveFunction: (){
+                                          print("updateCheck" +
+                                              remarksController.text.toString());
+                                          if (updateCheck)
+                                            context.showSnackBarError(
+                                                "please click the update button ");
+                                          else {
+                                            SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
+                                                orderType: orderTypeController?.text ?? "",
+                                                orderMode: orderModeController?.text ?? "",
+                                                inventoryid:Variable.inventory_ID,
+                                                customerId: cstomerIdController?.text ?? "",
+                                                trnNumber: trnController?.text ?? "",
+                                                salesInvoiceId: salesInvoiceCodeController.text??"",
+                                                shippingAddressId: shippingAddressIdController?.text ?? "",
+                                                billingAddressId: billingAddressIdController?.text??"",
+                                                reason: reasonController?.text ?? "",
+                                                remarks: remarksController?.text ?? "",
+                                                discount: double.tryParse(discountController?.text ?? ""),
+                                                unitCost: double.tryParse(unitCostController?.text ?? ""),
+                                                excessTax: double.tryParse(exciseTAxController?.text ?? ""),
+                                                taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+                                                vat: double.tryParse(vatController?.text ?? ""),
+                                                sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+                                                totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+                                                createdBy: "akaka",
+                                                // editedBy: "",
+                                                orderLines: table);
+                                            print("modelllls" + model.toString());
+                                            select
+                                                ? context
+                                                .read<SalesreturnpostCubit>()
+                                                .postSalesReturnGeneral(model)
+                                                :  context
+                                                .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
+                                          }
+
+                                        },
+                                        label:select ? "Save" : "update" ,
                                       ),
+                                      // Container(
+                                      //   margin: EdgeInsets.only(right:width*.015,),
+                                      //   child: Row(
+                                      //     mainAxisAlignment: MainAxisAlignment.end,
+                                      //     children: [
+                                      //       Button(Icons.delete, Colors.red,
+                                      //           ctx: context,
+                                      //           text: "Discard", onApply: () {
+                                      //             showDailogPopUp(
+                                      //                 context,
+                                      //                 ConfirmationPopup(
+                                      //                   // table:table,
+                                      //                   // clear:clear(),
+                                      //                   verticalId: veritiaclid,
+                                      //                   onPressed: () {
+                                      //                     print("akshay");
+                                      //                     Navigator.pop(context);
+                                      //                     context
+                                      //                         .read<
+                                      //                         SalesreturngeneraldeleteCubit>()
+                                      //                         .salesreturnGeneralDelete(
+                                      //                         veritiaclid);
+                                      //                   },
+                                      //                 ));
+                                      //           },
+                                      //           height: 29,
+                                      //           width: 90,
+                                      //           labelcolor: Colors.red,
+                                      //           iconColor: Colors.red,
+                                      //           bdr: true),
+                                      //       SizedBox(
+                                      //         width: width * .008,
+                                      //       ),
+                                      //       Button(Icons.check, Colors.grey,
+                                      //           ctx: context,
+                                      //           text: select ? "Save" : "update",
+                                      //           height: 29,
+                                      //           Color: Color(0xff3E4F5B),
+                                      //           width: 90,
+                                      //           labelcolor: Colors.white,
+                                      //           iconColor: Colors.white, onApply: () {
+                                      //             print("updateCheck" +
+                                      //                 remarksController.text.toString());
+                                      //             if (updateCheck)
+                                      //               context.showSnackBarError(
+                                      //                   "please click the update button ");
+                                      //             else {
+                                      //               SalesReturnGeneralPostModel model = SalesReturnGeneralPostModel(
+                                      //                   orderType: orderTypeController?.text ?? "",
+                                      //                   orderMode: orderModeController?.text ?? "",
+                                      //                   inventoryid:Variable.inventory_ID,
+                                      //                   customerId: cstomerIdController?.text ?? "",
+                                      //                   trnNumber: trnController?.text ?? "",
+                                      //                   salesInvoiceId: salesInvoiceCodeController.text??"",
+                                      //                   shippingAddressId: shippingAddressIdController?.text ?? "",
+                                      //                   billingAddressId: billingAddressIdController?.text??"",
+                                      //                   reason: reasonController?.text ?? "",
+                                      //                   remarks: remarksController?.text ?? "",
+                                      //                   discount: double.tryParse(discountController?.text ?? ""),
+                                      //                   unitCost: double.tryParse(unitCostController?.text ?? ""),
+                                      //                   excessTax: double.tryParse(exciseTAxController?.text ?? ""),
+                                      //                   taxableAmount: double.tryParse(taxableAmountController?.text ?? ""),
+                                      //                   vat: double.tryParse(vatController?.text ?? ""),
+                                      //                   sellingPriceTotal: double.tryParse(sellingPriceController?.text ?? ""),
+                                      //                   totalPrice: double.tryParse(toatalPriceController?.text ?? ""),
+                                      //                   createdBy: "akaka",
+                                      //                   // editedBy: "",
+                                      //                   orderLines: table);
+                                      //               print("modelllls" + model.toString());
+                                      //               select
+                                      //                   ? context
+                                      //                   .read<SalesreturnpostCubit>()
+                                      //                   .postSalesReturnGeneral(model)
+                                      //                   :  context
+                                      //                   .read<SalesreturngeneralpatchCubit>().postSalesRequestGeneralPatch(veritiaclid,model);
+                                      //             }
+                                      //           }),
+                                      //       SizedBox(
+                                      //         width: width * .008,
+                                      //       ),
+                                      //     ],
+                                      //   ),
+                                      // ),
 
                                     ],
                                   ))

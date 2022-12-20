@@ -426,54 +426,89 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                                   updateCheck: updateCheckFucction,
                                 ),
                                 SizedBox(height: 20,),
-
-                                Container(
-                                  margin: EdgeInsets.only(right:width*.015,),
-                                  child: Row(
-                                    children: [
-                                      Spacer(),
-                                      Button(Icons.delete, Colors.red,ctx: context,
-                                          text: "DISCARD",height: 29,
-                                          onApply: (){print("Akkk");},
-                                          width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                      SizedBox(width: width*.008,),
-
-                                      Button(Icons.check, Colors.grey,ctx: context,
-                                          bdr: true,
-                                          onApply: (){
-                                            SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
-                                                inventoryid: inventoryId?.text??"",
-                                                customerId:customerIdController?.text??"",
-                                              customerTrnNumber: trnController.text??"",
-                                              inVoicedBy: "baba",
-                                              notes: noteController.text??"",
-                                              remarks: remarksController.text??"",
-                                              discount: double.tryParse(discountController.text??""),
-                                              unitCost: double.tryParse(unitCostController.text??""),
-                                              excessTax: double.tryParse(exciseTaxController.text??""),
-                                              taxableAmount: double.tryParse(taxableController.text??""),
-                                              vat: double.tryParse(vatController.text??""),
-                                              sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
-                                              totalPrice: double.tryParse(totalPriceController.text??""),
-                                              assignTo: assignToController.text??"",
-                                              orderLines: table??[],
+                                SaveUpdateResponsiveButton(
+                                  saveFunction: (){
+                                    SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                                      inventoryid: inventoryId?.text??"",
+                                      customerId:customerIdController?.text??"",
+                                      customerTrnNumber: trnController.text??"",
+                                      inVoicedBy: "baba",
+                                      notes: noteController.text??"",
+                                      remarks: remarksController.text??"",
+                                      discount: double.tryParse(discountController.text??""),
+                                      unitCost: double.tryParse(unitCostController.text??""),
+                                      excessTax: double.tryParse(exciseTaxController.text??""),
+                                      taxableAmount: double.tryParse(taxableController.text??""),
+                                      vat: double.tryParse(vatController.text??""),
+                                      sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                                      totalPrice: double.tryParse(totalPriceController.text??""),
+                                      assignTo: assignToController.text??"",
+                                      orderLines: table??[],
 
 
 
 
 
-                                            );
+                                    );
 
 
-                                            context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                                    context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                                  },
+                                  discardFunction: (){
+                                    print("Akkk");
 
-                                          },
-                                          text: "SAVE",height: 29,
-                                          width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                                      SizedBox(width: width*.008,),
-                                    ],
-                                  ),
-                                )
+                                  },
+                                  label: "SAVE",
+
+                                ),
+
+                                // Container(
+                                //   margin: EdgeInsets.only(right:width*.015,),
+                                //   child: Row(
+                                //     children: [
+                                //       Spacer(),
+                                //       Button(Icons.delete, Colors.red,ctx: context,
+                                //           text: "DISCARD",height: 29,
+                                //           onApply: (){print("Akkk");},
+                                //           width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                                //       SizedBox(width: width*.008,),
+                                //
+                                //       Button(Icons.check, Colors.grey,ctx: context,
+                                //           bdr: true,
+                                //           onApply: (){
+                                //             SalesReturnInvoicePostModel2 model=SalesReturnInvoicePostModel2(
+                                //                 inventoryid: inventoryId?.text??"",
+                                //                 customerId:customerIdController?.text??"",
+                                //               customerTrnNumber: trnController.text??"",
+                                //               inVoicedBy: "baba",
+                                //               notes: noteController.text??"",
+                                //               remarks: remarksController.text??"",
+                                //               discount: double.tryParse(discountController.text??""),
+                                //               unitCost: double.tryParse(unitCostController.text??""),
+                                //               excessTax: double.tryParse(exciseTaxController.text??""),
+                                //               taxableAmount: double.tryParse(taxableController.text??""),
+                                //               vat: double.tryParse(vatController.text??""),
+                                //               sellingPriceTotal: double.tryParse(sellingPriceController.text??""),
+                                //               totalPrice: double.tryParse(totalPriceController.text??""),
+                                //               assignTo: assignToController.text??"",
+                                //               orderLines: table??[],
+                                //
+                                //
+                                //
+                                //
+                                //
+                                //             );
+                                //
+                                //
+                                //             context.read<SalesreturninvoicepostCubit>().postSalesReturnInvoice(model);
+                                //
+                                //           },
+                                //           text: "SAVE",height: 29,
+                                //           width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                                //       SizedBox(width: width*.008,),
+                                //     ],
+                                //   ),
+                                // )
 
                               ],
 

@@ -2758,53 +2758,36 @@ else{
                                 SizedBox(
                                   height: height * .08,
                                 ),
-                                Container(
-                                    margin: EdgeInsets.only(right:width*.011,),
-                                  child: Row(
-                                    children: [
-                                      Spacer(),
-                                      Button(Icons.delete, Colors.red,
-                                          ctx: context,
-                                          text: "Discard",
-                                          onApply: () {
-                                        print("aaaaaa");
-                                        setState(() {
-                                          if(select){
-                                          clear();
-                                            table.clear();
-                                            setState(() {});
-                                          }
-                                          else {
-                                            showDailogPopUp(
-                                                context,
-                                                ConfirmationPopup(
-                                                  // table:table,
-                                                  // clear:clear(),
-                                                  verticalId:veritiaclid ,
-                                                  onPressed:(){
-                                                    print("akshay");
-                                                    Navigator.pop(context);
-                                                 context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+                                SaveUpdateResponsiveButton(label: select?"SAVE":"UPDATE",discardFunction: (){
+                                  print("aaaaaa");
+                                  setState(() {
+                                    if(select){
+                                      clear();
+                                      table.clear();
+                                      setState(() {});
+                                    }
+                                    else {
+                                      showDailogPopUp(
+                                          context,
+                                          ConfirmationPopup(
+                                            // table:table,
+                                            // clear:clear(),
+                                            verticalId:veritiaclid ,
+                                            onPressed:(){
+                                              print("akshay");
+                                              Navigator.pop(context);
+                                              context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
 
-                                                  },
+                                            },
 
 
-                                                ));
-                                            // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
-                                          }
-                                        });
-                                          },
-                                          height: 29,
-                                          width: 90,
-                                          labelcolor: Colors.red,
-                                          iconColor: Colors.red,
-                                          bdr: true),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          if(updateCheck==true){
+                                          ));
+                                      // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+                                    }
+                                  });
+
+                                },saveFunction: (){
+                                                  if(updateCheck==true){
                                             context.showSnackBarError(
                                                 "please press update");
                                           }
@@ -2839,39 +2822,123 @@ else{
                                             ;
                                           }
 
-                                        },
-                                        child: Container(
-                                          color: Color(0xff3E4F5B),
-                                          alignment: Alignment.center,
-                                          height: 29,
-                                          width: 90,
+                                },
 
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              // Icon(
-                                              //   select?   Icons.check:Icons.update,
-                                              //   color: Colors.white,
-                                              // ),
-                                              // SizedBox(width:3,),
-                                              Text(
-                                               select?"SAVE":"UPDATE",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight: FontWeight.bold),
-                                              )
-                                            ],
-                                          ), //BoxDecoration
-                                        ),
-                                      ),
+                                ),
+//                                 Container(
+//                                     margin: EdgeInsets.only(right:width*.011,),
+//                                   child: Row(
+//                                     children: [
+//                                       Spacer(),
+//                                       Button(Icons.delete, Colors.red,
+//                                           ctx: context,
+//                                           text: "Discard",
+//                                           onApply: () {
+//                                         print("aaaaaa");
+//                                         setState(() {
+//                                           if(select){
+//                                           clear();
+//                                             table.clear();
+//                                             setState(() {});
+//                                           }
+//                                           else {
+//                                             showDailogPopUp(
+//                                                 context,
+//                                                 ConfirmationPopup(
+//                                                   // table:table,
+//                                                   // clear:clear(),
+//                                                   verticalId:veritiaclid ,
+//                                                   onPressed:(){
+//                                                     print("akshay");
+//                                                     Navigator.pop(context);
+//                                                  context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
 //
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                    ],
-                                  ),
-                                )
+//                                                   },
+//
+//
+//                                                 ));
+//                                             // context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(veritiaclid);
+//                                           }
+//                                         });
+//                                           },
+//                                           height: 29,
+//                                           width: 90,
+//                                           labelcolor: Colors.red,
+//                                           iconColor: Colors.red,
+//                                           bdr: true),
+//                                       SizedBox(
+//                                         width: width * .008,
+//                                       ),
+//                                       InkWell(
+//                                         onTap: () {
+//                                           if(updateCheck==true){
+//                                             context.showSnackBarError(
+//                                                 "please press update");
+//                                           }
+//                                           else{
+//                                             PurchaseOrderPost model = PurchaseOrderPost(
+//                                               purchaseOrderType: orderType == "" ? "" : orderType,
+//                                               iventoryId: Variable.inventory_ID,
+//                                               vendorId: vendorCode.text == "" ? "" : vendorCode.text,
+//                                               vendorTrnNumber: vendortrnnumber.text == "" ? "" : vendortrnnumber.text,
+//                                               vendorMailId: Variable.email,
+//                                               vendorAddress:null,
+//                                               address1:"akkk",
+//                                               address2:"ass",
+//                                               promisedReceiptdate: promised_receipt_date.text,
+//                                               plannedRecieptDate:planned_receipt_date.text,
+//                                               note: note.text == "" ? "" : note.text,
+//                                               remarks: remarks.text == "" ? "" : remarks.text,
+//                                               discount: discount.text == "" ? 0 : double.parse(discount.text),
+//                                               foc: foc.text == "" ? 0 : double.parse(foc.text),
+//                                               unitcost: unitcourse.text == "" ? 0 : double.parse(unitcourse.text),
+//                                               excessTax: excesstax.text == "" ? 0 : double.parse(excesstax.text),
+//                                               actualCost: actualcost.text == "" ? 0 : double.parse(actualcost.text),
+//                                               vat: vat.text == "" ? 0 : double.parse(vat.text),
+//                                               grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
+//                                               variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
+//                                               createdBy: Variable.username,
+//                                               orderLines: table,
+//                                             );
+//                                             print("selecting "+model.toString());
+//                                             select? context.read<PurchaseorderpostCubit>().postPurchase(model):
+//                                             context.read<PurchaseOrderPatchCubit>().getGeneralPurchasePatch(veritiaclid, model)
+//                                             ;
+//                                           }
+//
+//                                         },
+//                                         child: Container(
+//                                           color: Color(0xff3E4F5B),
+//                                           alignment: Alignment.center,
+//                                           height: 29,
+//                                           width: 90,
+//
+//                                           child: Row(
+//                                             mainAxisAlignment:
+//                                                 MainAxisAlignment.center,
+//                                             children: [
+//                                               // Icon(
+//                                               //   select?   Icons.check:Icons.update,
+//                                               //   color: Colors.white,
+//                                               // ),
+//                                               // SizedBox(width:3,),
+//                                               Text(
+//                                                select?"SAVE":"UPDATE",
+//                                                 style: TextStyle(
+//                                                     color: Colors.white,
+//                                                     fontWeight: FontWeight.bold),
+//                                               )
+//                                             ],
+//                                           ), //BoxDecoration
+//                                         ),
+//                                       ),
+// //
+//                                       SizedBox(
+//                                         width: width * .008,
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 )
                               ],
                             ),
                           ),

@@ -611,8 +611,8 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           variantNameController.text=data.name??"";
           shelfTypeController.text=data.shelfType??"";
           shelfTimeController.text=data.shelfTime?.toString()??"";
-          minSalesOrderLimitController.text=data?.minSaleOrderLimit.toString()??"";
-          maxSalesOrderLimitController.text=data?.maxSaleOrderLimit.toString()??"";
+          minSalesOrderLimitController.text=data?.minSaleOrderLimit?.toString()??"";
+          maxSalesOrderLimitController.text=data?.maxSaleOrderLimit?.toString()??"";
           salesUomController.text=data.SalesUom??"";
           salesUomNameController.text=data.salesUomData?.salesUomName??"";
           purchaseUomController.text=data.purchaseuom??"";
@@ -621,9 +621,9 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           posNameController.text=data?.posName??"";
           displayNAmeController.text=data?.displayname??"";
           seblingController.text=data?.siblingCode??"";
-          heightController.text=data?.dimension?.height.toString()??"";
+          heightController.text=data?.dimension?.height?.toString()??"";
           widthController.text=data?.dimension?.width?.toString()??"";
-          lengthController.text=data?.dimension?.length.toString()??"";
+          lengthController.text=data?.dimension?.length?.toString()??"";
           descriptionController.text=data?.description??"";
           variantCodeController.text=data?.code??"";
           linkedItemController.text=data?.linkedItem??"";
@@ -685,7 +685,7 @@ barQrCodeTableAssign({String? type,List<AlternativeBarcode>?list}){
           productDetails=data.variantMeta?.productDetails;
           nutriantsFacts=data.variantMeta?.nutriantFacts;
           reorederPointController.text=data?.reOrderPoint?.toString()??"";
-          averageGpController.text=data.avgGp.toString();
+          averageGpController.text=data.avgGp?.toString()??"";
           saftyStockController.text=data.safetyStock?.toString()??"";
           minPurchaseOrderLimitController.text=data?.minPurchaseOrderLimit?.toString()??"";
           maxPurchaseOrderLimitController.text=data?.maxPurchaseOrderLimit?.toString()??"";

@@ -385,103 +385,163 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   },
 ),
                             SizedBox(height: height * .13,),
-                            Container(
+                            SaveUpdateResponsiveButton(
+                              discardFunction: (){
+                                if(select==true)
+                                  clear();
+                                else{
+                                  showDailogPopUp(
+                                      context,
+                                      ConfirmationPopup(
+                                        // table:table,
+                                        // clear:clear(),
+                                        verticalId:veritiaclid ,
+                                        onPressed:(){
+                                          print("akshay");
+                                          Navigator.pop(context);
+                                          context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"7");
+
+                                        },
 
 
-                                margin:EdgeInsets.only(right: width*.02)  ,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Button(Icons.delete, Colors.red,
-                                      ctx: context,
-                                      text: "DISCARD",
-                                      onApply: () {
-                                    if(select==true)
-                                      clear();
-                                    else{
-                                      showDailogPopUp(
-                                          context,
-                                          ConfirmationPopup(
-                                            // table:table,
-                                            // clear:clear(),
-                                            verticalId:veritiaclid ,
-                                            onPressed:(){
-                                              print("akshay");
-                                              Navigator.pop(context);
-                                              context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"7");
+                                      ));
 
-                                            },
+                                }
 
+                              },
+                              saveFunction: (){
+                                CustomCreationtModel model=CustomCreationtModel(
+                                  mappingPlaceId: Variable.inventory_ID,
+                                  needMultipleIntgration: needMultipleIntegreation,
+                                  groupId:groupController.text.isEmpty?null: int.tryParse(groupController.text),
+                                  returnTime:returnTimeController.text.isEmpty?null: int.tryParse(returnTimeController.text),
+                                  minimumGp: minimumGpController.text.isEmpty?null:double.tryParse(minimumGpController.text),
+                                  averageGp: averageGpController.text.isEmpty?null:double.tryParse(averageGpController.text),
+                                  maximumGp: maximumGpController.text.isEmpty?null:double.tryParse(maximumGpController.text),
+                                  targetdGp: targetedGpController.text.isEmpty?null:double.tryParse(targetedGpController.text),
+                                  vat: vatGpController.text.isEmpty?null:double.tryParse(vatGpController.text),
+                                  excesstax: excessTaxController.text.isEmpty?null:double.tryParse(excessTaxController.text),
+                                  returnType: returnTypeController.text.isEmpty?null:returnTypeController.text,
+                                  isActive: active,
+                                  haveGiftOption: haveGiftOption,
+                                  haveWrapOption: haveWrapOption,
+                                  shelfTime:int.tryParse(shelfTime.text),
+                                  shelfType:shelfType.text,
 
-                                          ));
-
-                                    }
-
-                                        // if(updateCheck){
-                                        //   // clears();
-                                        //
-                                        //
-                                        // }
-
-                                      },
-                                      height: 29,
-                                      width: 90,
-                                      labelcolor: Colors.red,
-                                      iconColor: Colors.red,
-                                      bdr: true),
-                                  SizedBox(
-                                    width: width * .008,
-                                  ),
-                                  Button(Icons.check, Colors.grey,
-                                      ctx: context,
-                                      text:select? "SAVE":"UPDATE",
-                                      height: 29,
-                                      Color: Color(0xff3E4F5B),
-                                      width: 90,
-                                      labelcolor: Colors.white,
-                                      iconColor: Colors.white,
-                                      onApply: () {
-                                        CustomCreationtModel model=CustomCreationtModel(
-                                          mappingPlaceId: Variable.inventory_ID,
-                                          needMultipleIntgration: needMultipleIntegreation,
-                                          groupId:groupController.text.isEmpty?null: int.tryParse(groupController.text),
-                                          returnTime:returnTimeController.text.isEmpty?null: int.tryParse(returnTimeController.text),
-                                          minimumGp: minimumGpController.text.isEmpty?null:double.tryParse(minimumGpController.text),
-                                          averageGp: averageGpController.text.isEmpty?null:double.tryParse(averageGpController.text),
-                                          maximumGp: maximumGpController.text.isEmpty?null:double.tryParse(maximumGpController.text),
-                                          targetdGp: targetedGpController.text.isEmpty?null:double.tryParse(targetedGpController.text),
-                                          vat: vatGpController.text.isEmpty?null:double.tryParse(vatGpController.text),
-                                          excesstax: excessTaxController.text.isEmpty?null:double.tryParse(excessTaxController.text),
-                                          returnType: returnTypeController.text.isEmpty?null:returnTypeController.text,
-                                          isActive: active,
-                                          haveGiftOption: haveGiftOption,
-                                          haveWrapOption: haveWrapOption,
-                                          shelfTime:int.tryParse(shelfTime.text),
-                                          shelfType:shelfType.text,
-
-                                          height: heightController.text.isEmpty?null:double.tryParse(heightController.text),
-                                            width : widthController.text.isEmpty?null:double.tryParse(widthController.text),
-                                            length : lengthController.text.isEmpty?null:double.tryParse(lengthController.text),
-                                            weight : weightUOMController.text.isEmpty?null:double.tryParse(weightUOMController.text),
+                                  height: heightController.text.isEmpty?null:double.tryParse(heightController.text),
+                                  width : widthController.text.isEmpty?null:double.tryParse(widthController.text),
+                                  length : lengthController.text.isEmpty?null:double.tryParse(lengthController.text),
+                                  weight : weightUOMController.text.isEmpty?null:double.tryParse(weightUOMController.text),
 
 
-                                        );
-                                        print(model);
-                                     select?   context
-                                            .read<CustomcreationCubit>()
-                                            .postCreateCustom(model):  context
-                                         .read<CustomcreationCubit>()
-                                         .patchCreateCustom(model,veritiaclid);
+                                );
+                                print(model);
+                                select?   context
+                                    .read<CustomcreationCubit>()
+                                    .postCreateCustom(model):  context
+                                    .read<CustomcreationCubit>()
+                                    .patchCreateCustom(model,veritiaclid);
 
-
-                                      }
-                                  ),
-                                  SizedBox(
-                                    // width: width * .008,
-                                  ),
-                                ],
-                              ),
+                              },
+                              label: select? "SAVE":"UPDATE",
                             ),
+                            // Container(
+                            //
+                            //
+                            //     margin:EdgeInsets.only(right: width*.02)  ,
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.end,
+                            //     children: [
+                            //       Button(Icons.delete, Colors.red,
+                            //           ctx: context,
+                            //           text: "DISCARD",
+                            //           onApply: () {
+                            //         if(select==true)
+                            //           clear();
+                            //         else{
+                            //           showDailogPopUp(
+                            //               context,
+                            //               ConfirmationPopup(
+                            //                 // table:table,
+                            //                 // clear:clear(),
+                            //                 verticalId:veritiaclid ,
+                            //                 onPressed:(){
+                            //                   print("akshay");
+                            //                   Navigator.pop(context);
+                            //                   context.read<DeletioncostingCubit>().CostingDelete(veritiaclid,type:"7");
+                            //
+                            //                 },
+                            //
+                            //
+                            //               ));
+                            //
+                            //         }
+                            //
+                            //             // if(updateCheck){
+                            //             //   // clears();
+                            //             //
+                            //             //
+                            //             // }
+                            //
+                            //           },
+                            //           height: 29,
+                            //           width: 90,
+                            //           labelcolor: Colors.red,
+                            //           iconColor: Colors.red,
+                            //           bdr: true),
+                            //       SizedBox(
+                            //         width: width * .008,
+                            //       ),
+                            //       Button(Icons.check, Colors.grey,
+                            //           ctx: context,
+                            //           text:select? "SAVE":"UPDATE",
+                            //           height: 29,
+                            //           Color: Color(0xff3E4F5B),
+                            //           width: 90,
+                            //           labelcolor: Colors.white,
+                            //           iconColor: Colors.white,
+                            //           onApply: () {
+                            //             CustomCreationtModel model=CustomCreationtModel(
+                            //               mappingPlaceId: Variable.inventory_ID,
+                            //               needMultipleIntgration: needMultipleIntegreation,
+                            //               groupId:groupController.text.isEmpty?null: int.tryParse(groupController.text),
+                            //               returnTime:returnTimeController.text.isEmpty?null: int.tryParse(returnTimeController.text),
+                            //               minimumGp: minimumGpController.text.isEmpty?null:double.tryParse(minimumGpController.text),
+                            //               averageGp: averageGpController.text.isEmpty?null:double.tryParse(averageGpController.text),
+                            //               maximumGp: maximumGpController.text.isEmpty?null:double.tryParse(maximumGpController.text),
+                            //               targetdGp: targetedGpController.text.isEmpty?null:double.tryParse(targetedGpController.text),
+                            //               vat: vatGpController.text.isEmpty?null:double.tryParse(vatGpController.text),
+                            //               excesstax: excessTaxController.text.isEmpty?null:double.tryParse(excessTaxController.text),
+                            //               returnType: returnTypeController.text.isEmpty?null:returnTypeController.text,
+                            //               isActive: active,
+                            //               haveGiftOption: haveGiftOption,
+                            //               haveWrapOption: haveWrapOption,
+                            //               shelfTime:int.tryParse(shelfTime.text),
+                            //               shelfType:shelfType.text,
+                            //
+                            //               height: heightController.text.isEmpty?null:double.tryParse(heightController.text),
+                            //                 width : widthController.text.isEmpty?null:double.tryParse(widthController.text),
+                            //                 length : lengthController.text.isEmpty?null:double.tryParse(lengthController.text),
+                            //                 weight : weightUOMController.text.isEmpty?null:double.tryParse(weightUOMController.text),
+                            //
+                            //
+                            //             );
+                            //             print(model);
+                            //          select?   context
+                            //                 .read<CustomcreationCubit>()
+                            //                 .postCreateCustom(model):  context
+                            //              .read<CustomcreationCubit>()
+                            //              .patchCreateCustom(model,veritiaclid);
+                            //
+                            //
+                            //           }
+                            //       ),
+                            //       SizedBox(
+                            //         // width: width * .008,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
 
                           ],
                         ))

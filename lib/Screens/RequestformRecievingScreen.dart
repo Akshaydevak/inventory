@@ -3880,6 +3880,7 @@ color: Pellet.tableRowColor,
 
                 SizedBox(height: 20,),
 
+
                 Row(
 
                   mainAxisAlignment: MainAxisAlignment.end,

@@ -949,56 +949,43 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               ),
                               // ScrollableTable(),
                               SizedBox(height: 20,),
-
-                              Container(
-                                margin: EdgeInsets.only(right:width*.011,),
-                                child: Row(
-                                  children: [
-                                    Spacer(),
-                                    Button(Icons.delete, Colors.red,ctx: context,
-                                        text: "DISCARD",height: 29,
-                                        bdr: true,
-                                        onApply: (){print("Akkk");},
-                                        width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                                    SizedBox(width: width*.008,),
-
-                                    Button(Icons.check, Colors.grey,ctx: context,
-                                        onApply: (){
-                                          List<Lines>? result;
-                                          for(var i=0;i<additionalVariants.length;i++){
-                                             result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+                              SaveUpdateResponsiveButton(
+                                saveFunction: (){
+                                  List<Lines>? result;
+                                  for(var i=0;i<additionalVariants.length;i++){
+                                    result = additionalVariants.where((o) => o.isInvoiced == true).toList();
 
 
-                                          }
-                                          print("additionalvariants"+additionalVariants.toString());
-                                          InventoryPostModel model =
-                                          InventoryPostModel(
-                                            purchaseOrderCode: purchaseCodeController.text??"",
-                                            inventoryId: inventoryId??"",
-                                            // invoicedBy: ,
-                                            notes: noteController.text,
-                                            remarks: remarksController.text,
-                                            unitCost:double.tryParse( unitCostController.text),
-                                            foc:double.tryParse( focController.text),
-                                            discount:double.tryParse( discountController.text),
-                                            grandtotal:double.tryParse( grandTotalController.text),
-                                            vatableAmount:double.tryParse( variableAmountController.text),
-                                            excessTax:double.tryParse( exciseTaxController.text),
-                                            actualCost:double.tryParse( actualCostController.text),
-                                            vat:double.tryParse( vatController.text),
-                                            invoicedBy: Variable.created_by,
-                                            invoiceLines: result??[],
+                                  }
+                                  print("additionalvariants"+additionalVariants.toString());
+                                  InventoryPostModel model =
+                                  InventoryPostModel(
+                                    purchaseOrderCode: purchaseCodeController.text??"",
+                                    inventoryId: inventoryId??"",
+                                    // invoicedBy: ,
+                                    notes: noteController.text,
+                                    remarks: remarksController.text,
+                                    unitCost:double.tryParse( unitCostController.text),
+                                    foc:double.tryParse( focController.text),
+                                    discount:double.tryParse( discountController.text),
+                                    grandtotal:double.tryParse( grandTotalController.text),
+                                    vatableAmount:double.tryParse( variableAmountController.text),
+                                    excessTax:double.tryParse( exciseTaxController.text),
+                                    actualCost:double.tryParse( actualCostController.text),
+                                    vat:double.tryParse( vatController.text),
+                                    invoicedBy: Variable.created_by,
+                                    invoiceLines: result??[],
 
 
 
 
 
-                                            // orderLines: table,
-                                          );
+                                    // orderLines: table,
+                                  );
 
 
-                                          print(model);
-                                          context.read<InventorypostCubit>().postInventory(model);
+                                  print(model);
+                                  context.read<InventorypostCubit>().postInventory(model);
 
 
 
@@ -1007,13 +994,80 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
 
 
 
-                                        },
-                                        text: "SAVE",height: 29,
-                                        width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                                    SizedBox(width: width*.008,),
-                                  ],
-                                ),
-                              )
+
+                                },
+                                discardFunction: (){
+                                  print("Akkk");
+
+                                },
+                                label: "SAVE",
+                              ),
+
+
+                              // Container(
+                              //   margin: EdgeInsets.only(right:width*.011,),
+                              //   child: Row(
+                              //     children: [
+                              //       Spacer(),
+                              //       Button(Icons.delete, Colors.red,ctx: context,
+                              //           text: "DISCARD",height: 29,
+                              //           bdr: true,
+                              //           onApply: (){print("Akkk");},
+                              //           width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                              //       SizedBox(width: width*.008,),
+                              //
+                              //       Button(Icons.check, Colors.grey,ctx: context,
+                              //           onApply: (){
+                              //             List<Lines>? result;
+                              //             for(var i=0;i<additionalVariants.length;i++){
+                              //                result = additionalVariants.where((o) => o.isInvoiced == true).toList();
+                              //
+                              //
+                              //             }
+                              //             print("additionalvariants"+additionalVariants.toString());
+                              //             InventoryPostModel model =
+                              //             InventoryPostModel(
+                              //               purchaseOrderCode: purchaseCodeController.text??"",
+                              //               inventoryId: inventoryId??"",
+                              //               // invoicedBy: ,
+                              //               notes: noteController.text,
+                              //               remarks: remarksController.text,
+                              //               unitCost:double.tryParse( unitCostController.text),
+                              //               foc:double.tryParse( focController.text),
+                              //               discount:double.tryParse( discountController.text),
+                              //               grandtotal:double.tryParse( grandTotalController.text),
+                              //               vatableAmount:double.tryParse( variableAmountController.text),
+                              //               excessTax:double.tryParse( exciseTaxController.text),
+                              //               actualCost:double.tryParse( actualCostController.text),
+                              //               vat:double.tryParse( vatController.text),
+                              //               invoicedBy: Variable.created_by,
+                              //               invoiceLines: result??[],
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //               // orderLines: table,
+                              //             );
+                              //
+                              //
+                              //             print(model);
+                              //             context.read<InventorypostCubit>().postInventory(model);
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //
+                              //           },
+                              //           text: "SAVE",height: 29,
+                              //           width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                              //       SizedBox(width: width*.008,),
+                              //     ],
+                              //   ),
+                              // )
 
                             ],
                           )),

@@ -1205,163 +1205,296 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                                 color: Colors.white,
                                 height: 50,
                               ),
-                              Container(
-                                margin: EdgeInsets.only(right:width*.015,),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Button(Icons.delete, Colors.red,ctx: context,
-                                        text: "DISCARD",
-                                        onApply: (){
-                                          if(select){
-                                            clear();
-                                            lines?.clear();
-                                            setState(() {
+                              SaveUpdateResponsiveButton(
+                                label:select?"SAVE":"UPDATE",
+                                discardFunction: (){
+                                  if(select){
+                                    clear();
+                                    lines?.clear();
+                                    setState(() {
 
-                                            });
-                                          }
-                                          else{
-                                            showDailogPopUp(
-                                                context,
-                                                ConfirmationPopup(
-                                                  // table:table,
-                                                  // clear:clear(),
-                                                  verticalId:veritiaclid ,
-                                                  onPressed:(){
+                                    });
+                                  }
+                                  else{
+                                    showDailogPopUp(
+                                        context,
+                                        ConfirmationPopup(
+                                          // table:table,
+                                          // clear:clear(),
+                                          verticalId:veritiaclid ,
+                                          onPressed:(){
 
-                                                    Navigator.pop(context);
-                                              context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
+                                            Navigator.pop(context);
+                                            context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
 
-                                                  },
+                                          },
 
 
-                                                ));
+                                        ));
 
-                                          }
-                                        },
-                                        height: 29,
-                                        width: 90,
-                                        labelcolor: Colors.red,
-                                        iconColor: Colors.red,
-                                        bdr: true),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                    Button(Icons.check, Colors.grey,ctx: context,
-                                      text: select?"SAVE":"UPDATE",
-                                      height: 29,
-                                        Color: Color(0xff3E4F5B),
-                                      width: 90,
-                                      labelcolor: Colors.white,
-                                      iconColor: Colors.white,
-                                      onApply: (){
-                                      if( updateCheck)  context.showSnackBarError("please click the update button");
-                            else{
-                                print(lines);
-                                if(lines.isNotEmpty){
-                                  for(var i=0;i<lines.length;i++) {
-                                    if(select) {
-                                      lines[i] = lines[i].copyWith(
-                                          purchaseInvoiceLineCode: lines[i]
-                                              .invoiceLineCode ?? "");
-                                      lines[i] = lines[i].copyWith(
+                                  }
+
+                                },
+                                saveFunction: (){
+                                  if( updateCheck)  context.showSnackBarError("please click the update button");
+                                  else{
+                                    print(lines);
+                                    if(lines.isNotEmpty){
+                                      for(var i=0;i<lines.length;i++) {
+                                        if(select) {
+                                          lines[i] = lines[i].copyWith(
+                                              purchaseInvoiceLineCode: lines[i]
+                                                  .invoiceLineCode ?? "");
+                                          lines[i] = lines[i].copyWith(
+                                              returnOrderLineCode: lines[i]
+                                                  .invoiceLineCode ?? "");
+                                          lines[i] = lines[i].copyWith(
+                                              purchaseInvoiceLineId: lines[i]
+                                                  .purchaseInvoiceLineCode ?? "");
+                                          setState(() {
+
+                                          });
+                                        }
+                                      }
+                                    }
+                                    print("lines"+noteController.text.toString());
+                                    List<PatchLiness>patchLists=[];
+
+                                    if(lines.isNotEmpty) {
+                                      for (var i = 0; i < lines.length; i++) {
+                                        patchLists.add(PatchLiness(
+                                          foc: lines[i].foc ?? 0,
+                                          totalQty: lines[i].totalQty ?? 0,
                                           returnOrderLineCode: lines[i]
-                                              .invoiceLineCode ?? "");
-                                      lines[i] = lines[i].copyWith(
+                                              .returnOrderLineCode ?? "",
+                                          isActive: lines[i].isActive ?? false,
                                           purchaseInvoiceLineId: lines[i]
-                                              .purchaseInvoiceLineCode ?? "");
+                                              .purchaseInvoiceLineId ?? "",
+                                          variantId: lines[i].variantId ?? "",
+                                          unitCost: lines[i].unitCost ?? 0,
+                                          discount: lines[i].discount ?? 0,
+                                          vatableAmount: lines[i].vatableAmount ?? 0,
+                                          excessTax: lines[i].excessTax ?? 0,
+                                          vat: lines[i].vat ?? 0,
+                                          actualCost: lines[i].actualCost ?? 0,
+                                          grandTotal: lines[i].grandTotal ?? 0,
+
+                                        ));
+                                      }
                                       setState(() {
 
                                       });
                                     }
-                                  }
-                                }
-                                print("lines"+noteController.text.toString());
-                                List<PatchLiness>patchLists=[];
+                                    print("patcghhhhhj"+patchLists.toString());
 
-                                if(lines.isNotEmpty) {
-                                  for (var i = 0; i < lines.length; i++) {
-                                    patchLists.add(PatchLiness(
-                                      foc: lines[i].foc ?? 0,
-                                      totalQty: lines[i].totalQty ?? 0,
-                                      returnOrderLineCode: lines[i]
-                                          .returnOrderLineCode ?? "",
-                                      isActive: lines[i].isActive ?? false,
-                                      purchaseInvoiceLineId: lines[i]
-                                          .purchaseInvoiceLineId ?? "",
-                                      variantId: lines[i].variantId ?? "",
-                                      unitCost: lines[i].unitCost ?? 0,
-                                      discount: lines[i].discount ?? 0,
-                                      vatableAmount: lines[i].vatableAmount ?? 0,
-                                      excessTax: lines[i].excessTax ?? 0,
-                                      vat: lines[i].vat ?? 0,
-                                      actualCost: lines[i].actualCost ?? 0,
-                                      grandTotal: lines[i].grandTotal ?? 0,
+                                    ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
+                                      note: noteController.text??"",
+                                      remarks: remarksController.text??"",
+                                      unitCost: double.tryParse( unitCostController.text),
+                                      grandTotal: double.tryParse( grandTotalCostController.text),
+                                      vatableAmount: double.tryParse( vatableAmountController.text),
+                                      discount: double.tryParse( discountController.text),
 
-                                    ));
-                                  }
-                                  setState(() {
-
-                                  });
-                                }
-                                print("patcghhhhhj"+patchLists.toString());
-
-                                ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
-                                        note: noteController.text??"",
-                                        remarks: remarksController.text??"",
-                                        unitCost: double.tryParse( unitCostController.text),
-                                        grandTotal: double.tryParse( grandTotalCostController.text),
-                                        vatableAmount: double.tryParse( vatableAmountController.text),
-                                        discount: double.tryParse( discountController.text),
-
-                                        excessTax: double.tryParse(excessTaxController.text),
-                                        actualCost: double.tryParse(actualCostController.text),
-                                        vat: double.tryParse(vatController.text),
+                                      excessTax: double.tryParse(excessTaxController.text),
+                                      actualCost: double.tryParse(actualCostController.text),
+                                      vat: double.tryParse(vatController.text),
 
 
-                                        foc: double.tryParse(focController.text),
-                                        editedBy: "",
-                                        lines: patchLists??[],
+                                      foc: double.tryParse(focController.text),
+                                      editedBy: "",
+                                      lines: patchLists??[],
 
 
 
 
-                                      );
-                                PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
-                                        orderType: orderTypeController?.text??"",
-                                        inventoryId: inventory?.text??"",
-                                        purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
-                                        vendorAddress: vendorAddressController?.text??"",
-                                        vendorCode: vendorCodeController?.text??"",
-                                        vendorMailId: vendorMailId?.text??"",
-                                        vendorTrnNumber: vendorTrnNumberController?.text??"",
-                                        note: noteController?.text??"",
-                                        remarks: remarksController.text??"",
-                                        unitCost: double.tryParse( unitCostController.text),
-                                        grandTotal: double.tryParse( grandTotalCostController.text),
-                                        vatableAmount: double.tryParse( vatableAmountController.text),
-                                        discount: double.tryParse( discountController.text),
-                                        excessTax: double.tryParse(excessTaxController.text),
-                                        actualCost: double.tryParse(actualCostController.text),
-                                        vat: double.tryParse(vatController.text),
-                                        foc: double.tryParse(focController.text),
-                                        createdBy: Variable.created_by,
-                                        lines: lines??[],
-                                      );
-                                      print("Rkaramodel"+model.toString());
+                                    );
+                                    PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
+                                      orderType: orderTypeController?.text??"",
+                                      inventoryId: inventory?.text??"",
+                                      purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
+                                      vendorAddress: vendorAddressController?.text??"",
+                                      vendorCode: vendorCodeController?.text??"",
+                                      vendorMailId: vendorMailId?.text??"",
+                                      vendorTrnNumber: vendorTrnNumberController?.text??"",
+                                      note: noteController?.text??"",
+                                      remarks: remarksController.text??"",
+                                      unitCost: double.tryParse( unitCostController.text),
+                                      grandTotal: double.tryParse( grandTotalCostController.text),
+                                      vatableAmount: double.tryParse( vatableAmountController.text),
+                                      discount: double.tryParse( discountController.text),
+                                      excessTax: double.tryParse(excessTaxController.text),
+                                      actualCost: double.tryParse(actualCostController.text),
+                                      vat: double.tryParse(vatController.text),
+                                      foc: double.tryParse(focController.text),
+                                      createdBy: Variable.created_by,
+                                      lines: lines??[],
+                                    );
+                                    print("Rkaramodel"+model.toString());
 
-                                      // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
-                                      select? context.read<GeneralpostCubit>().postGeneral(model):
-                                      context.read<PurchasereturngeneralpatchCubit>().getGeneralFormPatch(veritiaclid,model1);}
-                                      }
-                                    ),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
+                                    // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
+                                    select? context.read<GeneralpostCubit>().postGeneral(model):
+                                    context.read<PurchasereturngeneralpatchCubit>().getGeneralFormPatch(veritiaclid,model1);}
 
-                                  ],
-                                ),
-                              ),
+                                },
+                              )
+                              ,
+                            //   Container(
+                            //     margin: EdgeInsets.only(right:width*.015,),
+                            //     child: Row(
+                            //       mainAxisAlignment: MainAxisAlignment.end,
+                            //       children: [
+                            //         Button(Icons.delete, Colors.red,ctx: context,
+                            //             text: "DISCARD",
+                            //             onApply: (){
+                            //               if(select){
+                            //                 clear();
+                            //                 lines?.clear();
+                            //                 setState(() {
+                            //
+                            //                 });
+                            //               }
+                            //               else{
+                            //                 showDailogPopUp(
+                            //                     context,
+                            //                     ConfirmationPopup(
+                            //                       // table:table,
+                            //                       // clear:clear(),
+                            //                       verticalId:veritiaclid ,
+                            //                       onPressed:(){
+                            //
+                            //                         Navigator.pop(context);
+                            //                   context.read<ReturdeleteCubit>().returnGeneralDelete(veritiaclid);
+                            //
+                            //                       },
+                            //
+                            //
+                            //                     ));
+                            //
+                            //               }
+                            //             },
+                            //             height: 29,
+                            //             width: 90,
+                            //             labelcolor: Colors.red,
+                            //             iconColor: Colors.red,
+                            //             bdr: true),
+                            //         SizedBox(
+                            //           width: width * .008,
+                            //         ),
+                            //         Button(Icons.check, Colors.grey,ctx: context,
+                            //           text: select?"SAVE":"UPDATE",
+                            //           height: 29,
+                            //             Color: Color(0xff3E4F5B),
+                            //           width: 90,
+                            //           labelcolor: Colors.white,
+                            //           iconColor: Colors.white,
+                            //           onApply: (){
+                            //           if( updateCheck)  context.showSnackBarError("please click the update button");
+                            // else{
+                            //     print(lines);
+                            //     if(lines.isNotEmpty){
+                            //       for(var i=0;i<lines.length;i++) {
+                            //         if(select) {
+                            //           lines[i] = lines[i].copyWith(
+                            //               purchaseInvoiceLineCode: lines[i]
+                            //                   .invoiceLineCode ?? "");
+                            //           lines[i] = lines[i].copyWith(
+                            //               returnOrderLineCode: lines[i]
+                            //                   .invoiceLineCode ?? "");
+                            //           lines[i] = lines[i].copyWith(
+                            //               purchaseInvoiceLineId: lines[i]
+                            //                   .purchaseInvoiceLineCode ?? "");
+                            //           setState(() {
+                            //
+                            //           });
+                            //         }
+                            //       }
+                            //     }
+                            //     print("lines"+noteController.text.toString());
+                            //     List<PatchLiness>patchLists=[];
+                            //
+                            //     if(lines.isNotEmpty) {
+                            //       for (var i = 0; i < lines.length; i++) {
+                            //         patchLists.add(PatchLiness(
+                            //           foc: lines[i].foc ?? 0,
+                            //           totalQty: lines[i].totalQty ?? 0,
+                            //           returnOrderLineCode: lines[i]
+                            //               .returnOrderLineCode ?? "",
+                            //           isActive: lines[i].isActive ?? false,
+                            //           purchaseInvoiceLineId: lines[i]
+                            //               .purchaseInvoiceLineId ?? "",
+                            //           variantId: lines[i].variantId ?? "",
+                            //           unitCost: lines[i].unitCost ?? 0,
+                            //           discount: lines[i].discount ?? 0,
+                            //           vatableAmount: lines[i].vatableAmount ?? 0,
+                            //           excessTax: lines[i].excessTax ?? 0,
+                            //           vat: lines[i].vat ?? 0,
+                            //           actualCost: lines[i].actualCost ?? 0,
+                            //           grandTotal: lines[i].grandTotal ?? 0,
+                            //
+                            //         ));
+                            //       }
+                            //       setState(() {
+                            //
+                            //       });
+                            //     }
+                            //     print("patcghhhhhj"+patchLists.toString());
+                            //
+                            //     ReturnGeneralPatchModel model1 = ReturnGeneralPatchModel(
+                            //             note: noteController.text??"",
+                            //             remarks: remarksController.text??"",
+                            //             unitCost: double.tryParse( unitCostController.text),
+                            //             grandTotal: double.tryParse( grandTotalCostController.text),
+                            //             vatableAmount: double.tryParse( vatableAmountController.text),
+                            //             discount: double.tryParse( discountController.text),
+                            //
+                            //             excessTax: double.tryParse(excessTaxController.text),
+                            //             actualCost: double.tryParse(actualCostController.text),
+                            //             vat: double.tryParse(vatController.text),
+                            //
+                            //
+                            //             foc: double.tryParse(focController.text),
+                            //             editedBy: "",
+                            //             lines: patchLists??[],
+                            //
+                            //
+                            //
+                            //
+                            //           );
+                            //     PurchaseReturnGeneralPost model = PurchaseReturnGeneralPost(
+                            //             orderType: orderTypeController?.text??"",
+                            //             inventoryId: inventory?.text??"",
+                            //             purchaseInvoiceId: purchaseInvoiceIdController?.text??"",
+                            //             vendorAddress: vendorAddressController?.text??"",
+                            //             vendorCode: vendorCodeController?.text??"",
+                            //             vendorMailId: vendorMailId?.text??"",
+                            //             vendorTrnNumber: vendorTrnNumberController?.text??"",
+                            //             note: noteController?.text??"",
+                            //             remarks: remarksController.text??"",
+                            //             unitCost: double.tryParse( unitCostController.text),
+                            //             grandTotal: double.tryParse( grandTotalCostController.text),
+                            //             vatableAmount: double.tryParse( vatableAmountController.text),
+                            //             discount: double.tryParse( discountController.text),
+                            //             excessTax: double.tryParse(excessTaxController.text),
+                            //             actualCost: double.tryParse(actualCostController.text),
+                            //             vat: double.tryParse(vatController.text),
+                            //             foc: double.tryParse(focController.text),
+                            //             createdBy: Variable.created_by,
+                            //             lines: lines??[],
+                            //           );
+                            //           print("Rkaramodel"+model.toString());
+                            //
+                            //           // //context.read<PurchaseorderdeleteCubit>().generalPurchaseDelet(1);
+                            //           select? context.read<GeneralpostCubit>().postGeneral(model):
+                            //           context.read<PurchasereturngeneralpatchCubit>().getGeneralFormPatch(veritiaclid,model1);}
+                            //           }
+                            //         ),
+                            //         SizedBox(
+                            //           width: width * .008,
+                            //         ),
+                            //
+                            //       ],
+                            //     ),
+                            //   ),
 
                             ],
                           ),

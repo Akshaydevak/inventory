@@ -12,6 +12,7 @@ import 'package:inventory/Screens/variant/general/model/variant_read_model.dart'
 import 'package:inventory/Screens/variant/general/screens/attributescreen.dart';
 import 'package:inventory/Screens/variant/general/screens/combinationTable.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/tableConfiguration.dart';
@@ -803,74 +804,104 @@ print("the list is"+variantList.toString());
                                   SizedBox(
                                     height: height / 9,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Button(Icons.delete, Colors.red,
-                                          ctx: context,
-                                          text: "DISCARD",
-                                          onApply: () {},
-                                          height: 29,
-                                          width: 90,
-                                          labelcolor: Colors.red,
-                                          iconColor: Colors.red,
-                                          bdr: true),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                      Button(
-                                        Icons.check,
-                                        Colors.grey,
-                                        ctx: context,
-                                        text: "SAVE",
-                                        onApply: () {
-
-                                              var filterList;
-
-
-                                              print("filterList"+ result_value.toString());
-                                          if(result_value.isNotEmpty){
-                                            for (int i=0;i<result_value.length;i++){
-                                              if(vals[i].isActive==true){
-                                                variantList.add(result_value[i]);
+                                  SaveUpdateResponsiveButton(
+                                    label: "SAVE",
+                                    saveFunction: (){
+                                      print("filterList"+ result_value.toString());
+                                      if(result_value.isNotEmpty){
+                                        for (int i=0;i<result_value.length;i++){
+                                          if(vals[i].isActive==true){
+                                            variantList.add(result_value[i]);
 
                                           }
-                                            }
-                                          }
-                                          print("filterList"+variantList.runtimeType.toString());
+                                        }
+                                      }
+                                      print("filterList"+variantList.runtimeType.toString());
 
 
 
-                                          context
-                                              .read<
-                                                  VariantFrameworkcombinationpostCubit>()
-                                              .postCombinationFrameWork(
-                                                  uomCode: uomCode,
-                                                  itemCode: itemCode,
-                                                  variantCode:
-                                                      group.variantFrameWork,
-                                                  variantlist: variantList);
+                                      context
+                                          .read<
+                                          VariantFrameworkcombinationpostCubit>()
+                                          .postCombinationFrameWork(
+                                          uomCode: uomCode,
+                                          itemCode: itemCode,
+                                          variantCode:
+                                          group.variantFrameWork,
+                                          variantlist: variantList);
+                                    },
+                                    discardFunction: (){
 
-                                          // showDailogPopUp(
-                                          //     context,
-                                          //     ProductModulePopUp(
-                                          //       // indexValue: temp,
-                                          //       // changeActive: onChangeActive,
-                                          //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
-                                          //       // changeExtendedWarranty: onChangeExtendedWarranty,
-                                          //     ));
-                                        },
-                                        height: 29,
-                                        Color: Color(0xff3E4F5B),
-                                        width: 90,
-                                        labelcolor: Colors.white,
-                                        iconColor: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                    ],
+                                    },
                                   ),
+                                  // Row(
+                                  //   mainAxisAlignment: MainAxisAlignment.end,
+                                  //   children: [
+                                  //     Button(Icons.delete, Colors.red,
+                                  //         ctx: context,
+                                  //         text: "DISCARD",
+                                  //         onApply: () {},
+                                  //         height: 29,
+                                  //         width: 90,
+                                  //         labelcolor: Colors.red,
+                                  //         iconColor: Colors.red,
+                                  //         bdr: true),
+                                  //     SizedBox(
+                                  //       width: width * .008,
+                                  //     ),
+                                  //     Button(
+                                  //       Icons.check,
+                                  //       Colors.grey,
+                                  //       ctx: context,
+                                  //       text: "SAVE",
+                                  //       onApply: () {
+                                  //
+                                  //             var filterList;
+                                  //
+                                  //
+                                  //             print("filterList"+ result_value.toString());
+                                  //         if(result_value.isNotEmpty){
+                                  //           for (int i=0;i<result_value.length;i++){
+                                  //             if(vals[i].isActive==true){
+                                  //               variantList.add(result_value[i]);
+                                  //
+                                  //         }
+                                  //           }
+                                  //         }
+                                  //         print("filterList"+variantList.runtimeType.toString());
+                                  //
+                                  //
+                                  //
+                                  //         context
+                                  //             .read<
+                                  //                 VariantFrameworkcombinationpostCubit>()
+                                  //             .postCombinationFrameWork(
+                                  //                 uomCode: uomCode,
+                                  //                 itemCode: itemCode,
+                                  //                 variantCode:
+                                  //                     group.variantFrameWork,
+                                  //                 variantlist: variantList);
+                                  //
+                                  //         // showDailogPopUp(
+                                  //         //     context,
+                                  //         //     ProductModulePopUp(
+                                  //         //       // indexValue: temp,
+                                  //         //       // changeActive: onChangeActive,
+                                  //         //       // changeAdditionalWarranty: onChangeAdditionalWarranty,
+                                  //         //       // changeExtendedWarranty: onChangeExtendedWarranty,
+                                  //         //     ));
+                                  //       },
+                                  //       height: 29,
+                                  //       Color: Color(0xff3E4F5B),
+                                  //       width: 90,
+                                  //       labelcolor: Colors.white,
+                                  //       iconColor: Colors.white,
+                                  //     ),
+                                  //     SizedBox(
+                                  //       width: width * .008,
+                                  //     ),
+                                  //   ],
+                                  // ),
                                   SizedBox(
                                     height: height / 12,
                                   ),

@@ -404,99 +404,159 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                     updation: tableAssign,
                                   ),
                                   SizedBox(height: height*.04,),
-                                  Container(
-                                    margin: EdgeInsets.only(right:width*.015,),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        // Button(Icons.delete, Colors.red,ctx: context,
-                                        //     text: "Discard",
-                                        //     onApply: (){
-                                        //
-                                        //
-                                        //
-                                        //
-                                        //
-                                        //     },
-                                        //     height: 29,
-                                        //     width: 90,
-                                        //     labelcolor: Colors.red,
-                                        //     iconColor: Colors.red,
-                                        //     bdr: true),
-                                        SizedBox(
-                                          width: width * .003,
-                                        ),
-                                        Button(Icons.check, Colors.grey,ctx: context,
-                                            text: "SAVE",
-                                            height: 29,
-                                            Color: Color(0xff3E4F5B),
-                                            width: 90,
-                                            labelcolor: Colors.white,
-                                            iconColor: Colors.white,
-                                            onApply: (){
-                                              if (updateCheck)
-                                                context.showSnackBarError(
-                                                    "please click the update button ");
-                                              else {
-                                                List<Postlines>  table1=[];
-                                                if(table.isNotEmpty){
-                                                  for(var i=0;i<table.length;i++)
-                                                    table1.add(Postlines(
-                                                      isInvoiced: table[i].isInvoiced??false,
-                                                      quantity: table[i].quantity ,
-                                                      isActive: table[i].isInvoiced??false,
-                                                      totalPrice: table[i].totalPrice,
-                                                      warrentyPrice: table[i].warrentyPrice,
-                                                      sellingPrice: table[i].sellingPriceTotal,
-                                                      vat: table[i].vat,
-                                                      taxableAmoubt: table[i].taxableAmount,
-                                                      unitCost: table[i].unitCost,
-                                                      excessTax: table[i].excessTax,
-                                                      salesOrderLineCode: table[i].salesOrderLineCode,
+                                  SaveUpdateResponsiveButton(
+                                    label:"SAVE" ,
+                                    saveFunction: (){
+                                      if (updateCheck)
+                                        context.showSnackBarError(
+                                            "please click the update button ");
+                                      else {
+                                        List<Postlines>  table1=[];
+                                        if(table.isNotEmpty){
+                                          for(var i=0;i<table.length;i++)
+                                            table1.add(Postlines(
+                                              isInvoiced: table[i].isInvoiced??false,
+                                              quantity: table[i].quantity ,
+                                              isActive: table[i].isInvoiced??false,
+                                              totalPrice: table[i].totalPrice,
+                                              warrentyPrice: table[i].warrentyPrice,
+                                              sellingPrice: table[i].sellingPriceTotal,
+                                              vat: table[i].vat,
+                                              taxableAmoubt: table[i].taxableAmount,
+                                              unitCost: table[i].unitCost,
+                                              excessTax: table[i].excessTax,
+                                              salesOrderLineCode: table[i].salesOrderLineCode,
 
-                                                    ));
+                                            ));
 
-                                                }
-                                                else{
-                                                  table1=[];
-                                                }
-                                                SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
-                                                    salesOrderId: veritiaclid,
-                                                    inventoryId: inventoryId?.text??"",
-                                                    invoicedBy: "inv",
-                                                    notes: noteController?.text??'',
-                                                    remarks: remarksController?.text??"",
-                                                    assignedTo: assignToController?.text??"",
-                                                    discount:double.tryParse( discountController?.text??""),
-                                                    unitCost:double.tryParse( unitCostController?.text??""),
-                                                    excessTax:double.tryParse( exciseTaxController?.text??""),
-                                                    taxableAmount:double.tryParse( taxableController?.text??""),
-                                                    vat:double.tryParse( vatController?.text??""),
-                                                    sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
-                                                    totalPrice:double.tryParse( totalPricePriceController?.text??""),
+                                        }
+                                        else{
+                                          table1=[];
+                                        }
+                                        SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
+                                            salesOrderId: veritiaclid,
+                                            inventoryId: inventoryId?.text??"",
+                                            invoicedBy: "inv",
+                                            notes: noteController?.text??'',
+                                            remarks: remarksController?.text??"",
+                                            assignedTo: assignToController?.text??"",
+                                            discount:double.tryParse( discountController?.text??""),
+                                            unitCost:double.tryParse( unitCostController?.text??""),
+                                            excessTax:double.tryParse( exciseTaxController?.text??""),
+                                            taxableAmount:double.tryParse( taxableController?.text??""),
+                                            vat:double.tryParse( vatController?.text??""),
+                                            sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
+                                            totalPrice:double.tryParse( totalPricePriceController?.text??""),
 
 
-                                                    ivoiceLines:
-                                                    table1??[]
-                                                );
-                                                print("modelllls" + model.toString());
+                                            ivoiceLines:
+                                            table1??[]
+                                        );
+                                        print("modelllls" + model.toString());
 
-                                                context
-                                                    .read<InvoicepostCubit>()
-                                                    .postSalesInvoice(model);
+                                        context
+                                            .read<InvoicepostCubit>()
+                                            .postSalesInvoice(model);
 
-                                              }
+                                      }
+                                    },
+                                    discardFunction: (){
 
-
-                                            }
-                                        ),
-                                        SizedBox(
-                                          width: width * .008,
-                                        ),
-
-                                      ],
-                                    ),
+                                    },
                                   ),
+                                  // Container(
+                                  //   margin: EdgeInsets.only(right:width*.015,),
+                                  //   child: Row(
+                                  //     mainAxisAlignment: MainAxisAlignment.end,
+                                  //     children: [
+                                  //       // Button(Icons.delete, Colors.red,ctx: context,
+                                  //       //     text: "Discard",
+                                  //       //     onApply: (){
+                                  //       //
+                                  //       //
+                                  //       //
+                                  //       //
+                                  //       //
+                                  //       //     },
+                                  //       //     height: 29,
+                                  //       //     width: 90,
+                                  //       //     labelcolor: Colors.red,
+                                  //       //     iconColor: Colors.red,
+                                  //       //     bdr: true),
+                                  //       SizedBox(
+                                  //         width: width * .003,
+                                  //       ),
+                                  //       Button(Icons.check, Colors.grey,ctx: context,
+                                  //           text: "SAVE",
+                                  //           height: 29,
+                                  //           Color: Color(0xff3E4F5B),
+                                  //           width: 90,
+                                  //           labelcolor: Colors.white,
+                                  //           iconColor: Colors.white,
+                                  //           onApply: (){
+                                  //             if (updateCheck)
+                                  //               context.showSnackBarError(
+                                  //                   "please click the update button ");
+                                  //             else {
+                                  //               List<Postlines>  table1=[];
+                                  //               if(table.isNotEmpty){
+                                  //                 for(var i=0;i<table.length;i++)
+                                  //                   table1.add(Postlines(
+                                  //                     isInvoiced: table[i].isInvoiced??false,
+                                  //                     quantity: table[i].quantity ,
+                                  //                     isActive: table[i].isInvoiced??false,
+                                  //                     totalPrice: table[i].totalPrice,
+                                  //                     warrentyPrice: table[i].warrentyPrice,
+                                  //                     sellingPrice: table[i].sellingPriceTotal,
+                                  //                     vat: table[i].vat,
+                                  //                     taxableAmoubt: table[i].taxableAmount,
+                                  //                     unitCost: table[i].unitCost,
+                                  //                     excessTax: table[i].excessTax,
+                                  //                     salesOrderLineCode: table[i].salesOrderLineCode,
+                                  //
+                                  //                   ));
+                                  //
+                                  //               }
+                                  //               else{
+                                  //                 table1=[];
+                                  //               }
+                                  //               SalesReturnInvoicePostModel model = SalesReturnInvoicePostModel(
+                                  //                   salesOrderId: veritiaclid,
+                                  //                   inventoryId: inventoryId?.text??"",
+                                  //                   invoicedBy: "inv",
+                                  //                   notes: noteController?.text??'',
+                                  //                   remarks: remarksController?.text??"",
+                                  //                   assignedTo: assignToController?.text??"",
+                                  //                   discount:double.tryParse( discountController?.text??""),
+                                  //                   unitCost:double.tryParse( unitCostController?.text??""),
+                                  //                   excessTax:double.tryParse( exciseTaxController?.text??""),
+                                  //                   taxableAmount:double.tryParse( taxableController?.text??""),
+                                  //                   vat:double.tryParse( vatController?.text??""),
+                                  //                   sellingPriceTotal:double.tryParse( sellingPriceController?.text??""),
+                                  //                   totalPrice:double.tryParse( totalPricePriceController?.text??""),
+                                  //
+                                  //
+                                  //                   ivoiceLines:
+                                  //                   table1??[]
+                                  //               );
+                                  //               print("modelllls" + model.toString());
+                                  //
+                                  //               context
+                                  //                   .read<InvoicepostCubit>()
+                                  //                   .postSalesInvoice(model);
+                                  //
+                                  //             }
+                                  //
+                                  //
+                                  //           }
+                                  //       ),
+                                  //       SizedBox(
+                                  //         width: width * .008,
+                                  //       ),
+                                  //
+                                  //     ],
+                                  //   ),
+                                  // ),
 
                                 ],
                               ),
