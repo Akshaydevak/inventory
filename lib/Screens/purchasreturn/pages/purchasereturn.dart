@@ -18,104 +18,104 @@ class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderState
     TabController _tabController = TabController(length: 2, vsync: this,initialIndex:  Variable.subIndex[1]??0);
     double height=MediaQuery.of(context).size.height;
     double width=MediaQuery.of(context).size.width;
-    return  SingleChildScrollView(
-      child: Container(
-        color:Color(0xffF2F3F5),
-        child: Column(
-          children: [
-            // Container(
-            //   margin: EdgeInsets.only(
-            //       left: width * .014, right: width * .014),
-            //   width: double.infinity,
-            //   height: 55,
-            //   child: Column(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       SizedBox(
-            //         height: height * 0.02,
-            //       ),
-            //       TextWidget(text: "Sales")
-            //     ],
-            //   ),
-            // ),
+    return  Container(
+      color:Color(0xffF2F3F5),
+      child: Column(
+        children: [
+          // Container(
+          //   margin: EdgeInsets.only(
+          //       left: width * .014, right: width * .014),
+          //   width: double.infinity,
+          //   height: 55,
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     crossAxisAlignment: CrossAxisAlignment.start,
+          //     children: [
+          //       SizedBox(
+          //         height: height * 0.02,
+          //       ),
+          //       TextWidget(text: "Sales")
+          //     ],
+          //   ),
+          // ),
 
 
 
-            Container(
-              height:height,
-              width: double.infinity,
-              color: Colors.white,
-              child: Column(
-                children: [
+          Container(
+            height:height-100,
+            width: double.infinity,
+            color: Colors.white,
+            child: Column(
+              children: [
 
-                  Container(
-                    height: width*.045,
-                    decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
+                Container(
+                  height: width*.045,
+                  decoration:BoxDecoration(   border: Border(bottom: BorderSide(color:Color(0xffF2F3F5), width:5))),
 
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-
-
-                        Container(
-                          width:MediaQuery.of(context).size.width*.48,
-                          height: width*.052,
-                          margin: EdgeInsets.only(top:22),
-
-                          child: TabBar(
-
-                              labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
-                              unselectedLabelStyle: TextStyle(color: Color(0xff000000,),fontSize: width/22,fontWeight: FontWeight.w400),
-                              // padding: EdgeInsets.only(left: 13,),
-                              isScrollable: true,
-                              onTap: (va) async {
-                                final SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                Variable.subIndex[1]=va;
-                                final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
-                                prefs.setString('key', jsonEncode(strs));
-                              },
-
-                              indicatorSize: TabBarIndicatorSize.label,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
 
 
+                      Container(
+                        width:MediaQuery.of(context).size.width*.48,
+                        height: width*.052,
+                        margin: EdgeInsets.only(top:22),
 
-                              //indicatorSize:TabBarIndicatorSize.tab ,
+                        child: TabBar(
 
-                              indicatorColor: Color(0xff3E4F5B),
+                            labelStyle: TextStyle(color: Color(0xff000000,),fontWeight: FontWeight.bold),
+                            unselectedLabelStyle: TextStyle(color: Color(0xff000000,),fontSize: width/22,fontWeight: FontWeight.w400),
+                            // padding: EdgeInsets.only(left: 13,),
+                            isScrollable: true,
+                            onTap: (va) async {
+                              final SharedPreferences prefs =
+                                  await SharedPreferences.getInstance();
+                              Variable.subIndex[1]=va;
+                              final List<String> strs = Variable.subIndex.map((e) => e.toString()).toList();
+                              prefs.setString('key', jsonEncode(strs));
+                            },
 
-                              indicatorWeight: 5,
-                              indicator: UnderlineTabIndicator(
-                                borderSide: BorderSide(
-                                  width: 4.0,
-                                  color: Color(0xff3E4F5B),
-                                ),
-                                // insets: EdgeInsets.only(left: width*.014, right: width*.017)
+                            indicatorSize: TabBarIndicatorSize.label,
+
+
+
+                            //indicatorSize:TabBarIndicatorSize.tab ,
+
+                            indicatorColor: Color(0xff3E4F5B),
+
+                            indicatorWeight: 5,
+                            indicator: UnderlineTabIndicator(
+                              borderSide: BorderSide(
+                                width: 4.0,
+                                color: Color(0xff3E4F5B),
                               ),
-                              // padding: EdgeInsets.only(bottom: 10),
+                              // insets: EdgeInsets.only(left: width*.014, right: width*.017)
+                            ),
+                            // padding: EdgeInsets.only(bottom: 10),
 
-                              controller: _tabController,
-                              tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
-                                Text("Purchase Return Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
-                              ]),
+                            controller: _tabController,
+                            tabs: [ Text("General",style: TextStyle(color: Colors.black,fontSize: 13),),
+                              Text("Purchase Return Invoice",style: TextStyle(color: Colors.black,fontSize: 13),),
+                            ]),
+                      ),
+                      Container(
+                        child: Row(
+                          children: [
+
+
+
+                          ],
                         ),
-                        Container(
-                          child: Row(
-                            children: [
-
-
-
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
+                      )
+                    ],
                   ),
-                  Container(
+                ),
+                Expanded(
+                  child: Container(
                     width: width,
-                    height: height-100,
+                    // height: height-100,
 
                     child: TabBarView(
                       physics: NeverScrollableScrollPhysics(),
@@ -130,14 +130,14 @@ class _PurchaseReturnState extends State<PurchaseReturn>with TickerProviderState
 
                       ],
                     ),
-                  )
+                  ),
+                )
 
-                ],
-              ),
-
+              ],
             ),
-          ],
-        ),
+
+          ),
+        ],
       ),
     );
   }

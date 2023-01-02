@@ -57,6 +57,7 @@ class _ChannelStockAllocateScreenState extends State<ChannelStockAllocateScreen>
   int? veritiaclid = 0;
   int? channelId ;
   bool stockwarning = false;
+  bool suffixIconCheck = false;
   bool salesBlock = false;
   bool check = false;
   bool purchaseBlock = false;
@@ -398,65 +399,68 @@ if(addVirtual==null){
             double width=MediaQuery.of(context).size.width;
             return Scaffold(
               backgroundColor:  Pellet.bagroundColor,
-              body: SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      VariantVerticalList(
-                        list: list,
+              body: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    VariantVerticalList(
+                      list: list,
+                      suffixIconCheck: suffixIconCheck,
 
 
-                        selectedVertical: selectedVertical,
-                        itemsearch: itemsearch,
-                        ontap: (int index) {
+                      selectedVertical: selectedVertical,
+                      itemsearch: itemsearch,
+                      ontap: (int index) {
+                        setState(() {
+                          selectedVertical = index;
+                          clear();
+                          group.clear();
+                          check = false;
+                          addVirtualLimit=false;
+
+                          // select=false;
+                          // clear();
+                          // exportCheck=false;
+                          // addNew=true;
+
+                          // updateCheck=false;
+                          print("rijina" + result[index].id.toString());
+
+
+                          veritiaclid = result[index].id;
+                          // clear();
+                          // select=true;
+                          //
+                          //
+
+
                           setState(() {
-                            selectedVertical = index;
-                            clear();
-                            group.clear();
-                            check = false;
-                            addVirtualLimit=false;
+                            context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
+                            // context.read<ChannelstockallocationreadCubit>()
+                            //     .getChannelStockAllocationRead(veritiaclid, group[0].id);
+                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
-                            // select=false;
-                            // clear();
-                            // exportCheck=false;
-                            // addNew=true;
-
-                            // updateCheck=false;
-                            print("rijina" + result[index].id.toString());
-
-
-                            veritiaclid = result[index].id;
-                            // clear();
-                            // select=true;
-                            //
-                            //
-
-
-                            setState(() {
-                              context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
-                              // context.read<ChannelstockallocationreadCubit>()
-                              //     .getChannelStockAllocationRead(veritiaclid, group[0].id);
-                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                            });
                           });
-                        },
-                        search: (String va) {
-                          print(va);
+                        });
+                      },
+                      search: (String va) {
+                        print(va);
+                        context
+                            .read<ListvraiantCubit>()
+                            .getSearchVariantList(va);
+                        suffixIconCheck=true;
+                        if (va == "") {
                           context
                               .read<ListvraiantCubit>()
-                              .getSearchVariantList(va);
-                          if (va == "") {
-                            context
-                                .read<ListvraiantCubit>()
-                                .getVariantList();
-                          }
-                        },
-                        result: result,
-                      ),
-                      Expanded(child: Column(
+                              .getVariantList();
+                          suffixIconCheck=false;
+                        }
+                      },
+                      result: result,
+                    ),
+                    Expanded(child: SingleChildScrollView(
+                      child: Column(
                         children: [
                           SizedBox(height: 30,),
                           Container(
@@ -552,87 +556,119 @@ if(addVirtual==null){
 
                       ),
                           SizedBox(height: height * .08,),
-                          Container(
+                          SaveUpdateResponsiveButton(
+                            saveFunction: (){
+                              ratiooCheck(channelAllocationRatio.text,"1");
+                              ratiooCheck(minMaxRatioController.text,"");
+                              if(check!=true){
+                                ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
+                                  stockWarning: stockwarning,
+                                  salesblock: salesBlock,
+                                  purchaseBlock: purchaseBlock,
+                                  salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
+                                  purchaseblockQuantity: int.tryParse(purchaseBlockController.text),
+                                  channelAllocationRatio: channelAllocationRatio?.text??"",
+                                  minMaxRatio: minMaxRatioController.text,
+                                  reOrderPoint: int.tryParse(reorderPointQuantityController.text),
+                                  minimumQuantity: int.tryParse(minimumQuantityController.text),
+                                  maximumQuantity: int.tryParse(maximumQuantityController.text),
+                                  addVirtualStock: int.tryParse(addVirtualController.text),
+                                  virtualType: virtualStockTypeController.text,
+
+                                  reOrderQuantity: int.tryParse(returnedQuantityController.text),
 
 
+                                );
+                                print("Bad Model$model");
+                                context.read<ChannelStockAllocationPostCubit>().channelStockAllocationPatch(channelId, model);
 
 
-                  margin: EdgeInsets.only(right:width *.02,left: height *.02),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                // Button(Icons.delete, Colors.red,
-                                //     ctx: context,
-                                //     text: "Discard",
-                                //     onApply: () {
-                                //       // if(updateCheck){
-                                //       //   // clears();
-                                //       //
-                                //       //
-                                //       // }
-                                //
-                                //     },
-                                //     height: 29,
-                                //     width: 90,
-                                //     labelcolor: Colors.red,
-                                //     iconColor: Colors.red,
-                                //     bdr: true),
-                                SizedBox(
-                                  width: width * .008,
-                                ),
-                                Button(Icons.check, Colors.grey,
-                                    ctx: context,
-                                    text:"UPDATE",
-                                    height: 29,
-                                    Color: Color(0xff3E4F5B),
-                                    width: 90,
-                                    labelcolor: Colors.white,
-                                    iconColor: Colors.white,
-                                    onApply: () {
-                                    ratiooCheck(channelAllocationRatio.text,"1");
-                                    ratiooCheck(minMaxRatioController.text,"");
-                                    if(check!=true){
-                                      ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
-                                        stockWarning: stockwarning,
-                                        salesblock: salesBlock,
-                                        purchaseBlock: purchaseBlock,
-                                        salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
-                                        purchaseblockQuantity: int.tryParse(purchaseBlockController.text),
-                                        channelAllocationRatio: channelAllocationRatio?.text??"",
-                                        minMaxRatio: minMaxRatioController.text,
-                                        reOrderPoint: int.tryParse(reorderPointQuantityController.text),
-                                        minimumQuantity: int.tryParse(minimumQuantityController.text),
-                                        maximumQuantity: int.tryParse(maximumQuantityController.text),
-                                        addVirtualStock: int.tryParse(addVirtualController.text),
-                                        virtualType: virtualStockTypeController.text,
-
-                                        reOrderQuantity: int.tryParse(returnedQuantityController.text),
-
-
-                                      );
-                                      print("Bad Model$model");
-                                      context.read<ChannelStockAllocationPostCubit>().channelStockAllocationPatch(channelId, model);
-
-
-                                    }
-
-
-
-                                    }
-                                ),
-                                SizedBox(
-                                  // width: width * .008,
-                                ),
-                              ],
-                            ),
+                              }
+                            },
+                            discardFunction: (){},
+                            label:"UPDATE" ,
                           ),
+                //         Container(
+                //
+                //
+                //
+                //
+                // margin: EdgeInsets.only(right:width *.02,left: height *.02),
+                //           child: Row(
+                //             mainAxisAlignment: MainAxisAlignment.end,
+                //             children: [
+                //               // Button(Icons.delete, Colors.red,
+                //               //     ctx: context,
+                //               //     text: "Discard",
+                //               //     onApply: () {
+                //               //       // if(updateCheck){
+                //               //       //   // clears();
+                //               //       //
+                //               //       //
+                //               //       // }
+                //               //
+                //               //     },
+                //               //     height: 29,
+                //               //     width: 90,
+                //               //     labelcolor: Colors.red,
+                //               //     iconColor: Colors.red,
+                //               //     bdr: true),
+                //               SizedBox(
+                //                 width: width * .008,
+                //               ),
+                //               Button(Icons.check, Colors.grey,
+                //                   ctx: context,
+                //                   text:"UPDATE",
+                //                   height: 29,
+                //                   Color: Color(0xff3E4F5B),
+                //                   width: 90,
+                //                   labelcolor: Colors.white,
+                //                   iconColor: Colors.white,
+                //                   onApply: () {
+                //                   ratiooCheck(channelAllocationRatio.text,"1");
+                //                   ratiooCheck(minMaxRatioController.text,"");
+                //                   if(check!=true){
+                //                     ChannelAllocationStockStockReadModel model=ChannelAllocationStockStockReadModel(
+                //                       stockWarning: stockwarning,
+                //                       salesblock: salesBlock,
+                //                       purchaseBlock: purchaseBlock,
+                //                       salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
+                //                       purchaseblockQuantity: int.tryParse(purchaseBlockController.text),
+                //                       channelAllocationRatio: channelAllocationRatio?.text??"",
+                //                       minMaxRatio: minMaxRatioController.text,
+                //                       reOrderPoint: int.tryParse(reorderPointQuantityController.text),
+                //                       minimumQuantity: int.tryParse(minimumQuantityController.text),
+                //                       maximumQuantity: int.tryParse(maximumQuantityController.text),
+                //                       addVirtualStock: int.tryParse(addVirtualController.text),
+                //                       virtualType: virtualStockTypeController.text,
+                //
+                //                       reOrderQuantity: int.tryParse(returnedQuantityController.text),
+                //
+                //
+                //                     );
+                //                     print("Bad Model$model");
+                //                     context.read<ChannelStockAllocationPostCubit>().channelStockAllocationPatch(channelId, model);
+                //
+                //
+                //                   }
+                //
+                //
+                //
+                //                   }
+                //               ),
+                //               SizedBox(
+                //                 // width: width * .008,
+                //               ),
+                //             ],
+                //           ),
+                //         ),
 
 
                         ],
-                      ))
+                      ),
+                    ))
 
-                    ],
-                  ),
+                  ],
                 ),
               ),
             );

@@ -43,6 +43,7 @@ class HeirarchySalesStableTable extends StatefulWidget {
   final TextEditingController itemCatelog5;
    int? uomGroupid;
   final bool active;
+  final bool select;
   final Function activeChange;
   final Function idChange;
   final Function({String type}) imagePostCheck;
@@ -63,6 +64,7 @@ class HeirarchySalesStableTable extends StatefulWidget {
     required this.status,
     required this.active,
     required this.image1,
+    required this.select,
     required this.image2,
     required this.image3,
     required this.itemCatelog1,
@@ -370,7 +372,7 @@ class _HeirarchySalesStableTableState extends State<HeirarchySalesStableTable> {
                             height: height * .030,
                           ),
                           PopUpSwitchTile(
-                              value:widget. active??false,
+                              value:widget.select?true:widget. active,
                               title: "Is Active",
                               onClick: (gg) {
                                 widget.activeChange(!widget.active);
@@ -1224,13 +1226,13 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
             childrens:[
               TableRow(
 
-                // decoration: BoxDecoration(
+                decoration: BoxDecoration(
 
-                //     color: Colors.green.shade200,
+                    color: Colors.green.shade200,
 
-                //     shape: BoxShape.rectangle,
+                    shape: BoxShape.rectangle,
 
-                //     border: const Border(bottom: BorderSide(color: Colors.grey))),
+                    border: const Border(bottom: BorderSide(color: Colors.grey))),
 
                 children: [
 
@@ -1492,30 +1494,24 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
 
                       ]),],
               TableRow(
-                  decoration: BoxDecoration(
-                      color: Colors.grey
-                          .shade200,
-                      shape: BoxShape
-                          .rectangle,
-                      border:const  Border(
-                          left: BorderSide(
-                              width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
-                          bottom: BorderSide(
-                              width: .5,
-                              color: Colors
-                                  .grey,
-                              style: BorderStyle
-                                  .solid),
-                          right: BorderSide(
-                              color: Colors
-                                  .grey,
-                              width: .5,
-                              style: BorderStyle
-                                  .solid))),
+    decoration: BoxDecoration(
+    color: Pellet.tableRowColor,
+    shape: BoxShape.rectangle,
+    border:  Border(
+    left: BorderSide(
+
+    color: Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+    style: BorderStyle.solid),
+    bottom: BorderSide(
+
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    style: BorderStyle.solid),
+    right: BorderSide(
+    color:   Color(0xff3E4F5B).withOpacity(.1),
+    width: .4,
+
+    style: BorderStyle.solid))),
                   children: [
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
@@ -1598,9 +1594,12 @@ class VariantFrameWorkBottomTableState extends State<VariantFrameWorkBottomTable
     onComplete: (){
      setState(() {
        onChange=true;
+       if(val.text!=""){
          values.add(val.text);
          print(values.length);
          val.text='';
+       }
+
      });
     },
     ),

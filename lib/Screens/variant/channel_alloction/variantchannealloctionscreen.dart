@@ -13,6 +13,7 @@ import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allo
 import 'package:inventory/Screens/variant/channel_alloction/screens/channel_allocation_topscreen.dart';
 import 'package:inventory/Screens/variant/stock/cubits/stockvertical/stockvertical_cubit.dart';
 import 'package:inventory/Screens/variant/stock/models/stockverticallist.dart';
+import 'package:inventory/commonWidget/Colors.dart';
 import 'package:inventory/commonWidget/Textwidget.dart';
 import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/popupinputfield.dart';
@@ -42,6 +43,7 @@ class _VariantChannelAllocationScreenState
   String channelTypeCode = "";
   String channelTypeName = "";
   bool apiChecking = false;
+  bool suffixIconCheck = false;
   var paginated;
   List<StockVerticalReadModel> result = [];
   List<Category> channels = [];
@@ -248,62 +250,65 @@ class _VariantChannelAllocationScreenState
             builder: (context, state) {
               return Builder(builder: (context) {
                 return Scaffold(
-                  backgroundColor: Colors.white,
-                  body: SingleChildScrollView(
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          channelVerticalList(
-                            list: list,
+                  backgroundColor: Pellet.bagroundColor,
+                  body: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        channelVerticalList(
+                          list: list,
+                          suffixIconCheck:suffixIconCheck,
 
 
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            ontap: (int index) {
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          ontap: (int index) {
+                            setState(() {
+                              selectedVertical = index;
+
+                              // select=false;
+                              // clear();
+                              // exportCheck=false;
+                              // addNew=true;
+
+                              // updateCheck=false;
+
+
+
+                              veritiaclid = result[index].category?.id;
+                              channelTypeCode = result[index].category?.code.toString()??"";
+                              channelTypeName = result[index].category?.name.toString()??"";
+                              // clear();
+                              // select=true;
+                              //
+                              //
+
+
                               setState(() {
-                                selectedVertical = index;
+                                context.read<ChannelreadCubit>().getChannelRead(result[0].category?.id);
+                                // context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
-                                // select=false;
-                                // clear();
-                                // exportCheck=false;
-                                // addNew=true;
-
-                                // updateCheck=false;
-
-
-
-                                veritiaclid = result[index].category?.id;
-                                channelTypeCode = result[index].category?.code.toString()??"";
-                                channelTypeName = result[index].category?.name.toString()??"";
-                                // clear();
-                                // select=true;
-                                //
-                                //
-
-
-                                setState(() {
-                                  context.read<ChannelreadCubit>().getChannelRead(result[0].category?.id);
-                                  // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                                });
                               });
-                            },
-                            search: (String va) {
-                              print(va);
+                            });
+                          },
+                          search: (String va) {
+                            print(va);
+                            context
+                                .read<StockverticalCubit>()
+                                .searchStockList(va);
+                            suffixIconCheck=true;
+                            if (va == "") {
                               context
                                   .read<StockverticalCubit>()
-                                  .searchStockList(va);
-                              if (va == "") {
-                                context
-                                    .read<StockverticalCubit>()
-                                    .getStockList(Variable.inventory_ID);
-                              }
-                            },
-                            result: result,
-                          ),
-                          Expanded(
+                                  .getStockList(Variable.inventory_ID);
+                              suffixIconCheck=false;
+                            }
+                          },
+                          result: result,
+                        ),
+                        Expanded(
+                            child: SingleChildScrollView(
                               child: Column(
                                 children: [
                                   SizedBox(
@@ -550,9 +555,9 @@ class _VariantChannelAllocationScreenState
                                   ),
 
                                 ],
-                              ))
-                        ],
-                      ),
+                              ),
+                            ))
+                      ],
                     ),
                   ),
                 );

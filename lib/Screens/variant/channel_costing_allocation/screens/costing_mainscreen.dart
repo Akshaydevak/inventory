@@ -48,6 +48,7 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
   TextEditingController costingnameController=TextEditingController();
   List<BrandListModel> result = [];
   bool onChange=false;
+  bool suffixIconCheck=false;
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   var list;
@@ -344,69 +345,72 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
             onChange=false;
             return Scaffold(
               backgroundColor: Pellet.bagroundColor,
-              body: SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      VariantVerticalList(
-                        list: list,
+              body: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    VariantVerticalList(
+                      list: list,
 
 
-                        selectedVertical: selectedVertical,
-                        itemsearch: itemsearch,
-                        ontap: (int index) {
+                      selectedVertical: selectedVertical,
+                      itemsearch: itemsearch,
+                      suffixIconCheck: suffixIconCheck,
+                      ontap: (int index) {
+                        setState(() {
+                          selectedVertical = index;
+                          onChange=true;
+                          select=false;
+                          checkBoxLis.clear();
+                          selection.clear();
+                          table.clear();
+                          group.clear();
+                          clear();
+
+
+
+                          // clear();
+                          // exportCheck=false;
+                          // addNew=true;
+
+                          // updateCheck=false;
+                          print("rijina" + result[index].id.toString());
+
+
+                          veritiaclid = result[index].id;
+                          variantCode = result[0].code;
+                          // clear();
+                          // select=true;
+                          //
+                          //
+
+
                           setState(() {
-                            selectedVertical = index;
                             onChange=true;
-                            select=false;
-                            checkBoxLis.clear();
-                            selection.clear();
-                            table.clear();
-                            group.clear();
-                            clear();
+                            context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
+                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
-
-
-                            // clear();
-                            // exportCheck=false;
-                            // addNew=true;
-
-                            // updateCheck=false;
-                            print("rijina" + result[index].id.toString());
-
-
-                            veritiaclid = result[index].id;
-                            variantCode = result[0].code;
-                            // clear();
-                            // select=true;
-                            //
-                            //
-
-
-                            setState(() {
-                              onChange=true;
-                              context.read<ChannelstockverticalCubit>().getChannelAllocationList(veritiaclid!);
-                              // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                            });
                           });
-                        },
-                        search: (String va) {
-                          print(va);
+                        });
+                      },
+                      search: (String va) {
+                        print(va);
+                        context
+                            .read<ListvraiantCubit>()
+                            .getSearchVariantList(va);
+                        suffixIconCheck=true;
+                        if (va == "") {
                           context
                               .read<ListvraiantCubit>()
-                              .getSearchVariantList(va);
-                          if (va == "") {
-                            context
-                                .read<ListvraiantCubit>()
-                                .getVariantList();
-                          }
-                        },
-                        result: result,
-                      ),
-                      Expanded(child: Column(children: [
+                              .getVariantList();
+                          suffixIconCheck=false;
+                        }
+                      },
+                      result: result,
+                    ),
+                    Expanded(child: SingleChildScrollView(
+                      child: Column(children: [
 
                         ChannelScrollableScreen(
                           onPress: (int? index){
@@ -528,108 +532,160 @@ class _ChannelCostingMainScreenState extends State<ChannelCostingMainScreen> {
                             channelId:id
                         ),
                         SizedBox(height: height * .13,),
-                        Container(
-                          margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Button(Icons.delete, Colors.red,
-                                  ctx: context,
-                                  text: "DISCARD",
-                                  onApply: () {
-                                    // if(updateCheck){
-                                    //   // clears();
-                                    //
-                                    //
-                                    // }
+                        SaveUpdateResponsiveButton(
+                          saveFunction: (){
 
-                                  },
-                                  height: 29,
-                                  width: 90,
-                                  labelcolor: Colors.red,
-                                  iconColor: Colors.red,
-                                  bdr: true),
-                              SizedBox(
-                                width: width * .008,
-                              ),
-                              Button(Icons.check, Colors.grey,
-                                  ctx: context,
-                                  text:select?"SAVE":"UPDATE",
-                                  height: 29,
-                                  Color: Color(0xff3E4F5B),
-                                  width: 90,
-                                  labelcolor: Colors.white,
-                                  iconColor: Colors.white,
-                                  onApply: () {
-                                    print(costingMethodController.text);
-                                    if(select){
+                            if(select){
 
-                                      CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                                        channelId: channelId,
-                                        channelCode:channelCode,
-                                        channelStockId: channelStockId,
-                                        variantId: veritiaclid,
-                                        variantCode: variantCode,
-                                        inventoryId: Variable.inventory_ID,
-                                        pricingGpType: pricingGptypeController.text,
-                                        createdBy: Variable.created_by,
-                                        pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                                        costingMethodId: int.tryParse(costingMethodController.text),
-                                        gpPercentage:
-                                        double.tryParse(gpPercentegeController.text),
+                              CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                                channelId: channelId,
+                                channelCode:channelCode,
+                                channelStockId: channelStockId,
+                                variantId: veritiaclid,
+                                variantCode: variantCode,
+                                inventoryId: Variable.inventory_ID,
+                                pricingGpType: pricingGptypeController.text,
+                                createdBy: Variable.created_by,
+                                pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                                costingMethodId: int.tryParse(costingMethodController.text),
+                                gpPercentage:
+                                double.tryParse(gpPercentegeController.text),
 
-                                        // double.tryParse(gpPercentegeController.text),
-                                        unitCost:  double.tryParse(unitCostController.text),
-                                        sellingPrice:  double.tryParse(sellingPriceController.text),
+                                // double.tryParse(gpPercentegeController.text),
+                                unitCost:  double.tryParse(unitCostController.text),
+                                sellingPrice:  double.tryParse(sellingPriceController.text),
 
-                                      );
-                                      print("the serching model is here${model}");
-                                      print("the serching model is here${model.gpPercentage}");
-                                      context.read<CostingCreationCubit>().postCosting(model);
+                              );
+                              print("the serching model is here${model}");
+                              print("the serching model is here${model.gpPercentage}");
+                              context.read<CostingCreationCubit>().postCosting(model);
 
 
-                                    }
-                                    else{
+                            }
+                            else{
 
-                                      CostingPageCreationPostModel model=CostingPageCreationPostModel(
-                                        createdBy: Variable.created_by,
-                                        pricingGroupId: int.tryParse(pricingGroupIdController.text),
-                                        costingMethodId: int.tryParse(costingMethodController.text),
-                                        gpPercentage: double.tryParse(gpPercentegeController.text),
-                                        pricingGpType: pricingGptypeController.text,
-                                        unitCost:  double.tryParse(unitCostController.text),
-                                        sellingPrice:  double.tryParse(sellingPriceController.text),
-
-
-                                      );
-                                      print(model);
-                                      context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
-                                    }
+                              CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                                createdBy: Variable.created_by,
+                                pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                                costingMethodId: int.tryParse(costingMethodController.text),
+                                gpPercentage: double.tryParse(gpPercentegeController.text),
+                                pricingGpType: pricingGptypeController.text,
+                                unitCost:  double.tryParse(unitCostController.text),
+                                sellingPrice:  double.tryParse(sellingPriceController.text),
 
 
+                              );
+                              print(model);
+                              context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
+                            }
+                          },
+                          discardFunction: (){},
+                          label:select?"SAVE":"UPDATE" ,
 
-
-
-
-
-
-
-
-
-                                  }
-                              ),
-                              SizedBox(
-                                // width: width * .008,
-                              ),
-                            ],
-                          ),
                         ),
+                        // Container(
+                        //   margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.end,
+                        //     children: [
+                        //       Button(Icons.delete, Colors.red,
+                        //           ctx: context,
+                        //           text: "DISCARD",
+                        //           onApply: () {
+                        //
+                        //             // if(updateCheck){
+                        //             //   // clears();
+                        //             //
+                        //             //
+                        //             // }
+                        //
+                        //           },
+                        //           height: 29,
+                        //           width: 90,
+                        //           labelcolor: Colors.red,
+                        //           iconColor: Colors.red,
+                        //           bdr: true),
+                        //       SizedBox(
+                        //         width: width * .008,
+                        //       ),
+                        //       Button(Icons.check, Colors.grey,
+                        //           ctx: context,
+                        //           text:select?"SAVE":"UPDATE",
+                        //           height: 29,
+                        //           Color: Color(0xff3E4F5B),
+                        //           width: 90,
+                        //           labelcolor: Colors.white,
+                        //           iconColor: Colors.white,
+                        //           onApply: () {
+                        //             print(costingMethodController.text);
+                        //             if(select){
+                        //
+                        //               CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                        //                 channelId: channelId,
+                        //                 channelCode:channelCode,
+                        //                 channelStockId: channelStockId,
+                        //                 variantId: veritiaclid,
+                        //                 variantCode: variantCode,
+                        //                 inventoryId: Variable.inventory_ID,
+                        //                 pricingGpType: pricingGptypeController.text,
+                        //                 createdBy: Variable.created_by,
+                        //                 pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                        //                 costingMethodId: int.tryParse(costingMethodController.text),
+                        //                 gpPercentage:
+                        //                 double.tryParse(gpPercentegeController.text),
+                        //
+                        //                 // double.tryParse(gpPercentegeController.text),
+                        //                 unitCost:  double.tryParse(unitCostController.text),
+                        //                 sellingPrice:  double.tryParse(sellingPriceController.text),
+                        //
+                        //               );
+                        //               print("the serching model is here${model}");
+                        //               print("the serching model is here${model.gpPercentage}");
+                        //               context.read<CostingCreationCubit>().postCosting(model);
+                        //
+                        //
+                        //             }
+                        //             else{
+                        //
+                        //               CostingPageCreationPostModel model=CostingPageCreationPostModel(
+                        //                 createdBy: Variable.created_by,
+                        //                 pricingGroupId: int.tryParse(pricingGroupIdController.text),
+                        //                 costingMethodId: int.tryParse(costingMethodController.text),
+                        //                 gpPercentage: double.tryParse(gpPercentegeController.text),
+                        //                 pricingGpType: pricingGptypeController.text,
+                        //                 unitCost:  double.tryParse(unitCostController.text),
+                        //                 sellingPrice:  double.tryParse(sellingPriceController.text),
+                        //
+                        //
+                        //               );
+                        //               print(model);
+                        //               context.read<CostingCreationCubit>().patchCosting(model,channelTableSelcteddId);
+                        //             }
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //
+                        //           }
+                        //       ),
+                        //       SizedBox(
+                        //         // width: width * .008,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
 
 
-                      ],))
+                      ],),
+                    ))
 
-                    ],
-                  ),
+                  ],
                 ),
               ),
             );

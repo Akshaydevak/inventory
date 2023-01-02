@@ -400,60 +400,60 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                         return Scaffold(
                           backgroundColor: Pellet.bagroundColor,
 
-                          body: SingleChildScrollView(
-                            child: IntrinsicHeight(
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SalesReturnGeneralVerticalList(
-                                    selectedVertical: selectedVertical,
-                                    itemsearch: itemsearch,
-                                    ontap: (int index) {
-                                      setState(() {
-                                        selectedVertical = index;
-                                        select = false;
+                          body: IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SalesReturnGeneralVerticalList(
+                                  selectedVertical: selectedVertical,
+                                  itemsearch: itemsearch,
+                                  ontap: (int index) {
+                                    setState(() {
+                                      selectedVertical = index;
+                                      select = false;
 
-                                        table= [];
-                                        clear();
-                                        // _myWidgetState.currentState?.cl();
-                                        _myWidgetState.currentState?.table1=[];
+                                      table= [];
+                                      clear();
+                                      // _myWidgetState.currentState?.cl();
+                                      _myWidgetState.currentState?.table1=[];
 
-                                        veritiaclid = result[index].id;
-                                        context
-                                            .read<SalesgeneralreadCubit>()
-                                            .getSalesReturnGeneralRead(veritiaclid!);
-                                        // currentStock.clear();
-                                        //
-                                        // context
-                                        //     .read<SalesgeneralreadCubit>()
-                                        //     .getSalesGenralRead(veritiaclid!);
-                                        setState(() {});
-                                      });
-                                    },
-                                    result: result,
-                                    child:     tablePagination(
-                                          () => context
+                                      veritiaclid = result[index].id;
+                                      context
+                                          .read<SalesgeneralreadCubit>()
+                                          .getSalesReturnGeneralRead(veritiaclid!);
+                                      // currentStock.clear();
+                                      //
+                                      // context
+                                      //     .read<SalesgeneralreadCubit>()
+                                      //     .getSalesGenralRead(veritiaclid!);
+                                      setState(() {});
+                                    });
+                                  },
+                                  result: result,
+                                  child:     tablePagination(
+                                        () => context
+                                        .read<SalesreturnverticalCubit>()
+                                        .refresh(),
+                                    back: paginatedList?.previousUrl == null
+                                        ? null
+                                        : () {
+                                      context
                                           .read<SalesreturnverticalCubit>()
-                                          .refresh(),
-                                      back: paginatedList?.previousUrl == null
-                                          ? null
-                                          : () {
-                                        context
-                                            .read<SalesreturnverticalCubit>()
-                                            .previuosslotSectionPageList();
-                                      },
-                                      next:paginatedList?.nextPageUrl == null
-                                          ? null
-                                          : () {
-                                        // print(data.nextPageUrl);
-                                        context
-                                            .read<SalesreturnverticalCubit>()
-                                            .nextslotSectionPageList();
-                                      },
-                                    ),
+                                          .previuosslotSectionPageList();
+                                    },
+                                    next:paginatedList?.nextPageUrl == null
+                                        ? null
+                                        : () {
+                                      // print(data.nextPageUrl);
+                                      context
+                                          .read<SalesreturnverticalCubit>()
+                                          .nextslotSectionPageList();
+                                    },
                                   ),
-                                  Expanded(child: Column(
+                                ),
+                                Expanded(child: SingleChildScrollView(
+                                  child: Column(
                                     children: [
                                       Row(
                                         mainAxisAlignment:
@@ -703,11 +703,10 @@ class _SalesReturnGeneralState extends State<SalesReturnGeneral> {
                                       // ),
 
                                     ],
-                                  ))
+                                  ),
+                                ))
 
-                                ],
-                              ),
-
+                              ],
                             ),
 
                           ),

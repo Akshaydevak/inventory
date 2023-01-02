@@ -498,6 +498,8 @@ AttributeListModel _$AttributeListModelFromJson(Map<String, dynamic> json) {
 mixin _$AttributeListModel {
   int? get id => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
+  @JsonKey(name: "attribute_types")
+  List<String>? get attributeTypes => throw _privateConstructorUsedError;
   @JsonKey(name: "attribute_type")
   String? get attributeType => throw _privateConstructorUsedError;
   @JsonKey(name: "attribute_name")
@@ -520,6 +522,7 @@ abstract class $AttributeListModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? code,
+      @JsonKey(name: "attribute_types") List<String>? attributeTypes,
       @JsonKey(name: "attribute_type") String? attributeType,
       @JsonKey(name: "attribute_name") String? attributeName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -540,6 +543,7 @@ class _$AttributeListModelCopyWithImpl<$Res, $Val extends AttributeListModel>
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
+    Object? attributeTypes = freezed,
     Object? attributeType = freezed,
     Object? attributeName = freezed,
     Object? isActive = freezed,
@@ -553,6 +557,10 @@ class _$AttributeListModelCopyWithImpl<$Res, $Val extends AttributeListModel>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
+      attributeTypes: freezed == attributeTypes
+          ? _value.attributeTypes
+          : attributeTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       attributeType: freezed == attributeType
           ? _value.attributeType
           : attributeType // ignore: cast_nullable_to_non_nullable
@@ -580,6 +588,7 @@ abstract class _$$_AttributeListModelCopyWith<$Res>
   $Res call(
       {int? id,
       String? code,
+      @JsonKey(name: "attribute_types") List<String>? attributeTypes,
       @JsonKey(name: "attribute_type") String? attributeType,
       @JsonKey(name: "attribute_name") String? attributeName,
       @JsonKey(name: "is_active", defaultValue: false) bool? isActive});
@@ -598,6 +607,7 @@ class __$$_AttributeListModelCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? code = freezed,
+    Object? attributeTypes = freezed,
     Object? attributeType = freezed,
     Object? attributeName = freezed,
     Object? isActive = freezed,
@@ -611,6 +621,10 @@ class __$$_AttributeListModelCopyWithImpl<$Res>
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
               as String?,
+      attributeTypes: freezed == attributeTypes
+          ? _value._attributeTypes
+          : attributeTypes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       attributeType: freezed == attributeType
           ? _value.attributeType
           : attributeType // ignore: cast_nullable_to_non_nullable
@@ -633,9 +647,11 @@ class _$_AttributeListModel implements _AttributeListModel {
   const _$_AttributeListModel(
       {this.id,
       this.code,
+      @JsonKey(name: "attribute_types") final List<String>? attributeTypes,
       @JsonKey(name: "attribute_type") this.attributeType,
       @JsonKey(name: "attribute_name") this.attributeName,
-      @JsonKey(name: "is_active", defaultValue: false) this.isActive});
+      @JsonKey(name: "is_active", defaultValue: false) this.isActive})
+      : _attributeTypes = attributeTypes;
 
   factory _$_AttributeListModel.fromJson(Map<String, dynamic> json) =>
       _$$_AttributeListModelFromJson(json);
@@ -644,6 +660,16 @@ class _$_AttributeListModel implements _AttributeListModel {
   final int? id;
   @override
   final String? code;
+  final List<String>? _attributeTypes;
+  @override
+  @JsonKey(name: "attribute_types")
+  List<String>? get attributeTypes {
+    final value = _attributeTypes;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   @JsonKey(name: "attribute_type")
   final String? attributeType;
@@ -656,7 +682,7 @@ class _$_AttributeListModel implements _AttributeListModel {
 
   @override
   String toString() {
-    return 'AttributeListModel(id: $id, code: $code, attributeType: $attributeType, attributeName: $attributeName, isActive: $isActive)';
+    return 'AttributeListModel(id: $id, code: $code, attributeTypes: $attributeTypes, attributeType: $attributeType, attributeName: $attributeName, isActive: $isActive)';
   }
 
   @override
@@ -666,6 +692,8 @@ class _$_AttributeListModel implements _AttributeListModel {
             other is _$_AttributeListModel &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.code, code) || other.code == code) &&
+            const DeepCollectionEquality()
+                .equals(other._attributeTypes, _attributeTypes) &&
             (identical(other.attributeType, attributeType) ||
                 other.attributeType == attributeType) &&
             (identical(other.attributeName, attributeName) ||
@@ -677,7 +705,13 @@ class _$_AttributeListModel implements _AttributeListModel {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, code, attributeType, attributeName, isActive);
+      runtimeType,
+      id,
+      code,
+      const DeepCollectionEquality().hash(_attributeTypes),
+      attributeType,
+      attributeName,
+      isActive);
 
   @JsonKey(ignore: true)
   @override
@@ -698,6 +732,8 @@ abstract class _AttributeListModel implements AttributeListModel {
   const factory _AttributeListModel(
       {final int? id,
       final String? code,
+      @JsonKey(name: "attribute_types")
+          final List<String>? attributeTypes,
       @JsonKey(name: "attribute_type")
           final String? attributeType,
       @JsonKey(name: "attribute_name")
@@ -712,6 +748,9 @@ abstract class _AttributeListModel implements AttributeListModel {
   int? get id;
   @override
   String? get code;
+  @override
+  @JsonKey(name: "attribute_types")
+  List<String>? get attributeTypes;
   @override
   @JsonKey(name: "attribute_type")
   String? get attributeType;

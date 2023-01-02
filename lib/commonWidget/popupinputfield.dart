@@ -23,14 +23,20 @@ class PopUpInputField extends StatefulWidget {
   final List<String>? items;
   final List<String>? dropValues;
   final bool onAddNew;
+  final Function? ontap;
+  final bool readOnly;
+  final bool icondrop;
+
 
   const PopUpInputField({
     Key? key,
     this.read=false,
     this.height=40,
+    this.readOnly=false,
     this.isPrefix = false,
     this.boarType="",
     this.prefixLable = "",
+
     required this.label,
 
     this.required = false,
@@ -44,8 +50,9 @@ class PopUpInputField extends StatefulWidget {
     this.items,
     this.onListChange,
     this.dropValues,
+    this.icondrop = false,
     this.restricted = false,
-    this.onAddNew = false,
+    this.onAddNew = false, this.ontap,
   }) : super(key: key);
 
   @override
@@ -88,12 +95,18 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
               child:
               widget.boarType=="int"?
               TextFormField(
-                readOnly: widget.read,
+
+                onTap: (){
+                  widget.ontap!=null?widget.ontap!():null;
+                },
+                readOnly: widget.readOnly,
+
 
                 maxLines: widget.maxLines,
                 controller: widget.controller,
                 enabled: !widget.restricted,
                 onChanged: widget.onChanged,
+
                 keyboardType: TextInputType.number,
                 // inputFormatters: <TextInputFormatter>[
                 //
@@ -104,6 +117,7 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
 
 
                 decoration: InputDecoration(
+
                   prefixIconConstraints:
                   BoxConstraints(minWidth: 0, minHeight: 0),
                   prefixIcon: widget.isPrefix
@@ -137,7 +151,11 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
                 ),
               ):
               TextFormField(
-                readOnly: widget.read,
+
+                onTap: (){
+                  widget.ontap!=null?widget.ontap!():null;
+                },
+                readOnly: widget.readOnly,
                 maxLines: widget.maxLines,
                 controller: widget.controller,
                 enabled: !widget.restricted,
@@ -152,6 +170,10 @@ class _PopUpInputFieldState extends State<PopUpInputField> {
 
 
                 decoration: InputDecoration(
+                  suffixIcon: widget.icondrop?IconButton(onPressed:(){
+                    widget.ontap!=null?widget.ontap!():null;
+
+                  }, icon: Icon(Icons.more_horiz_rounded)):null,
                   prefixIconConstraints:
                   BoxConstraints(minWidth: 0, minHeight: 0),
                   prefixIcon: widget.isPrefix

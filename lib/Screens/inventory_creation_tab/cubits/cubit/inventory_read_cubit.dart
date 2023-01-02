@@ -10,6 +10,7 @@ class InventoryReadCubit extends Cubit<InventoryReadState> {
   InventoryReadCubit() : super(InventoryReadState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
   Future getInventoryRead(int id) async {
+    emit(InventoryReadState.initial());
     print("idddidd" + id.toString());
     final result = await _repos.getInventoryRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

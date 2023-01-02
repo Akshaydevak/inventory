@@ -27,27 +27,53 @@ Widget customTable({
         children: childrens,
       ),
     );
+class tableHeadtext extends StatelessWidget {
+  final String label;
+  final bool center;
+  final double height;
+  final double? size;
+  final Color textColor;
+  final Color? color;
+  final EdgeInsets? padding;
+  tableHeadtext( this.label,{this.center=false,this.height=46,this.size,this.textColor=Colors.white,this.color =  Pellet.tableBlueHeaderPrint,this.padding});
 
-Widget tableHeadtext(
-    String label, {
-      bool center=false,
-      double height = 46,
-      double? size,
-      Color? textColor = Colors.white,
-       Color? color =  Pellet.tableBlueHeaderPrint,
-      EdgeInsets? padding,
-    }) =>
-    Container(
-      alignment: center?Alignment.topLeft:Alignment.topLeft,
+  @override
+  Widget build(BuildContext context) {
+    double h=MediaQuery.of(context).size.height;
+    double w=MediaQuery.of(context).size.width;
+    return Container(  alignment: center?Alignment.topLeft:Alignment.topLeft,
       height: height,
-      padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:5,right:  12),
+      padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:h*.002,right:  5),
       color: color,
       child: Text(
         label,
         // textAlign: TextAlign.center,
         style: TextStyle(fontSize: size, color: textColor,),
-      ),
-    );
+      ),);
+  }
+}
+
+
+// Widget tableHeadtext(
+//     String label, {
+//       bool center=false,
+//       double height = 46,
+//       double? size,
+//       Color? textColor = Colors.white,
+//        Color? color =  Pellet.tableBlueHeaderPrint,
+//       EdgeInsets? padding,
+//     }) =>
+//     Container(
+//       alignment: center?Alignment.topLeft:Alignment.topLeft,
+//       height: height,
+//       padding: padding ?? EdgeInsets.only(left: 12,top: 12,bottom:5,right:  12),
+//       color: color,
+//       child: Text(
+//         label,
+//         // textAlign: TextAlign.center,
+//         style: TextStyle(fontSize: size, color: textColor,),
+//       ),
+//     );
 Widget textPadding(String label,
     {double fontSize = 14,
       EdgeInsets? padding,
@@ -66,27 +92,76 @@ Widget textPadding(String label,
         style: TextStyle(fontSize: fontSize, fontWeight: fontWeight),
       ),
     );
-Widget textOnclickPadding(
-{String? text,Function? ontap }
-
-    ){
-  return  Container(
 
 
-  child: InkWell(
-  onTap: () {
-    ontap!();
+class textOnclickPadding extends StatefulWidget {
+ final String? text;
+ final Function ontap;
+ textOnclickPadding({required this.text,required this. ontap});
+
+  @override
+  State<textOnclickPadding> createState() => _textOnclickPaddingState();
+}
+
+class _textOnclickPaddingState extends State<textOnclickPadding> {
+  bool isHover=false;
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+
+
+  child: MouseRegion(
+    onEnter: (event) {
+      isHover = true;
+      setState(() {});
+    },
+    onExit: (event) {
+      isHover = false;
+      setState(() {});
+    },
+    child: InkWell(
+    onTap: () {
+    widget.  ontap();
 
 },
 child: Container(
+  color:isHover?Colors.grey.shade200:Colors.transparent,
 padding: EdgeInsets.all(11),
 child:
-Text(text??""),
+Text(widget.text??"",style: TextStyle(fontSize: 13.5),),
 height: 45),
 ),
-);
-
+  ),
+);;
+  }
 }
+
+
+
+
+// Widget textOnclickPadding(
+// {String? text,Function? ontap }
+//
+//     ){
+//   return  Container(
+//
+//
+//   child: MouseRegion(
+//     child: InkWell(
+//     onTap: () {
+//       ontap!();
+//
+// },
+// child: Container(
+// padding: EdgeInsets.all(11),
+// child:
+// Text(text??""),
+// height: 45),
+// ),
+//   ),
+// );
+//
+// }
 
 
 

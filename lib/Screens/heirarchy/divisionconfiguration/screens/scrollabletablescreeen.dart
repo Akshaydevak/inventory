@@ -268,7 +268,7 @@ setState(() {
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
-                              height: 48),
+                              ),
 
 
 
@@ -768,7 +768,7 @@ class _GroupTableState extends State<GroupTable> {
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
-                            height: 48),
+                            ),
 
 
 
@@ -1270,7 +1270,7 @@ class _CategoryTableState extends State<CategoryTable> {
                             color: upDate[i]
                                 ? Colors.white
                                 : Colors.transparent,
-                            height: 48),
+                            ),
 
 
 

@@ -486,56 +486,56 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
     builder: (context) {
       return Scaffold(
         backgroundColor: Pellet.bagroundColor,
-              body: SingleChildScrollView(
-                child: IntrinsicHeight(
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
+              body: IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
 
-                      PurchaseVerticalList(
+                    PurchaseVerticalList(
 
-                        selectedVertical: selectedVertical,
-                        itemsearch: itemsearch,ontap: (int index){
+                      selectedVertical: selectedVertical,
+                      itemsearch: itemsearch,ontap: (int index){
+                      setState(() {
+                        selectedVertical=index;
+                        select=false;
+                        updateCheck=false;
+                        lines.clear();
+
+
+                        veritiaclid = result[index].id;
+                        currentStock.clear();
+
+
+                        context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
                         setState(() {
-                          selectedVertical=index;
-                          select=false;
-                          updateCheck=false;
-                          lines.clear();
 
-
-                          veritiaclid = result[index].id;
-                          currentStock.clear();
-
-
-                          context.read<GeneralreadCubit>().getGeneralPurchaseReturnRead(veritiaclid!);
-                          setState(() {
-
-                          });
                         });
-                      },result: result,
-                        child:     tablePagination(
-                      () => context
+                      });
+                    },result: result,
+                      child:     tablePagination(
+                    () => context
+                  .read<VertiacalCubit>()
+                  .refresh(),
+              back: paginatedList?.previousUrl == null
+                  ? null
+                  : () {
+                context
                     .read<VertiacalCubit>()
-                    .refresh(),
-                back: paginatedList?.previousUrl == null
-                    ? null
-                    : () {
-                  context
-                      .read<VertiacalCubit>()
-                      .previuosslotSectionPageList();
-                },
-                next:paginatedList?.nextPageUrl == null
-                    ? null
-                    : () {
-                  // print(data.nextPageUrl);
-                  context
-                      .read<VertiacalCubit>()
-                      .nextslotSectionPageList();
-                },
+                    .previuosslotSectionPageList();
+              },
+              next:paginatedList?.nextPageUrl == null
+                  ? null
+                  : () {
+                // print(data.nextPageUrl);
+                context
+                    .read<VertiacalCubit>()
+                    .nextslotSectionPageList();
+              },
               ),
-                      ),
-                      Expanded(
+                    ),
+                    Expanded(
+                      child: SingleChildScrollView(
                         child: Container(
                           color: Colors.white,
                           child: Column(
@@ -1500,10 +1500,9 @@ class _PurchaseReturnGeneralState extends State<PurchaseReturnGeneral> {
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-
               ),
             );
     }

@@ -121,8 +121,8 @@ const createMaterialApi =
     inventoryBaseUrl + "inventory-product/create-material";
 const readMaterialApi = inventoryBaseUrl + "inventory-product/patch-material/";
 const patchMaterialApi = inventoryBaseUrl + "inventory-product/patch-material/";
-const deleteMaterialApi =
-    inventoryBaseUrl + "inventory-product/patch-material/";
+const deleteMaterialApi = inventoryBaseUrl + "inventory-product/patch-material/";
+const attributePatchListApi = inventoryBaseUrl + "inventory-product/list-attribute";
 const createDivisionApi =
     inventoryBaseUrl + "inventory-product/create-division";
 const readDivisionApi = inventoryBaseUrl + "inventory-product/patch-division/";
@@ -180,10 +180,12 @@ const frameWorkListApi =
 const frameWorkReadApi =
     inventoryBaseUrl + "inventory-product/read-all-data-variant-framework/";
 //item creation
-const listItemVerticalListApi =
-    inventoryBaseUrl + "inventory-product/list-item";
+const listItemVerticalListApi = inventoryBaseUrl + "inventory-product/list-item";
+const attributePostApi = inventoryBaseUrl + "inventory-product/create-attribute";
+const attributePatchApi = inventoryBaseUrl + "inventory-product/read-patch-attribute/";
 const createItemApi = inventoryBaseUrl + "inventory-product/create-item";
 const readItemApi = inventoryBaseUrl + "inventory-product/read-item/";
+const readAttributeCreationApi = inventoryBaseUrl + "inventory-product/read-patch-attribute/";
 //variant detail page
 const createLinkedItemtApi =
     inventoryBaseUrl + "inventory-product/create-linkitem";
@@ -201,7 +203,7 @@ const salesListApi = inventoryBaseUrl +
 const variantSearchListApi =
     inventoryBaseUrl + "inventory-product/list-variants";
 const variantCreatetApi =
-    "http://192.168.1.37:8080/" + "inventory-product/create-variant-new/";
+    inventoryBaseUrl + "inventory-product/create-variant-new/";
 const variantPatchApi = inventoryBaseUrl + "inventory-product/variant-update/";
 //variant creation Apisssss>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const variantCreationListApi = inventoryBaseUrl + "inventory-product/list-item";

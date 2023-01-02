@@ -183,6 +183,10 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
 
 
                               controller: widget.purchaseBlockQuantity, title: "Purchase Block Quantity"),
+                          SizedBox(
+                            height: height * .0038,
+                          ),
+
                           // SizedBox(
                           //   height: height * .120,
                           // ),
@@ -371,6 +375,10 @@ class _AllocationStockStableTableState extends State<AllocationStockStableTable>
                               widget.trueOrFalseChange(type: "4",val:val);
                               setState(() {});
                             }),
+                        SizedBox(
+                          height: height * .038,
+                        ),
+
                         // SizedBox(
                         //   height: height * .08,
                         // ),

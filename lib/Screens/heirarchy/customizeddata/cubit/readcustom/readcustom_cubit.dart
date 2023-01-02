@@ -12,12 +12,14 @@ class ReadcustomCubit extends Cubit<ReadcustomState> {
   Future getCustomRead(
     int? id,
   ) async {
+    emit(ReadcustomState.initial());
     final result = await repo.getCustomRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
   Future getReturnRead(
 
   ) async {
+    emit(ReadcustomState.initial());
     final result = await repo.getReturnRead();
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

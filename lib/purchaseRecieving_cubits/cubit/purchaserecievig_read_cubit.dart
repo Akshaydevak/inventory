@@ -10,6 +10,7 @@ class PurchaserecievigReadCubit extends Cubit<PurchaserecievigReadState> {
   PurchaserecievigReadCubit() : super(PurchaserecievigReadState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
   Future getGeneralPurchaseRecievingRead(int? id) async {
+    emit(PurchaserecievigReadState.initial());
     print("akakakka");
     final result = await _repos.getGeneralPurchaseRecievingRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

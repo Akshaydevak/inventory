@@ -12,6 +12,7 @@ class CostingchannelReadCubit extends Cubit<CostingchannelReadState> {
   CostingchannelReadCubit() : super(CostingchannelReadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getChannelCostingRead(int? id) async {
+    emit(CostingchannelReadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getChannelCostingRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

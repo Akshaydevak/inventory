@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/widgets/popupcallwidgets/popupcallwidget.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -192,8 +193,14 @@ class _SelectableDropDownpopUpState extends State<SelectableDropDownpopUp> {
                   textFieldConfiguration: TextFieldConfiguration(
 
                       controller: TextEditingController(text: widget.value),
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       // onTap: () {},
                       decoration: InputDecoration(
+
+
 
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),

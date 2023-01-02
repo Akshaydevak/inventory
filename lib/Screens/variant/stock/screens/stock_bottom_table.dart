@@ -212,7 +212,9 @@ class StockBottomTableState extends State<StockBottomTable> {
 
 
                           ),
-                          TableTextButton(label: "",  onPress: (){},)
+                          TableCell(
+
+                              verticalAlignment: TableCellVerticalAlignment.middle,child: TableTextButton(label: "",  onPress: (){},))
 
 
 
@@ -280,7 +282,8 @@ class StockBottomTableState extends State<StockBottomTable> {
 
 
                       ),
-                      TableTextButton(label: "",  onPress: (){},)
+                      TableCell(
+                          verticalAlignment: TableCellVerticalAlignment.middle,child: TableTextButton(label: "",  onPress: (){},))
 
 
 

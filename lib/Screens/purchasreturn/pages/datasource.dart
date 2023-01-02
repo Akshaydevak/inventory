@@ -338,6 +338,17 @@ abstract class PurchaseSourceAbstract {
   Future<PaginatedResponse<List<BrandListModel>>> getCategoryList(String? code,
       {String? type, int? id});
   Future<CostingPageCreationPostModel> getChannelCostingRead(int? id);
+  Future<Returntypemodel> getReturnType(
+
+      );
+  Future<DoubleResponse> getAttributePost(String? attributeType,String? attributeName,bool? isActive);
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(String? code);
+  Future<AttributeListModel> getAttributeCreationRead(int? id);
+  Future<DoubleResponse> getAttributePatch(String? attributeType,String? attributeName,bool? isActive,int? id);
+  Future<AttributeListModel> getAttributeTypeList(
+
+      );
+  Future<ReadMessuremnetModel> getMessurementRead();
 }
 
 class PurchaseSourceImpl extends PurchaseSourceAbstract {
@@ -2322,6 +2333,12 @@ catch(e){
         }
 
         break;
+      case "create_attribute_delete":
+        {
+          url = attributePatchApi;
+        }
+
+        break;
     }
     path = url + id.toString();
     print(path);
@@ -3533,7 +3550,6 @@ catch(e){
           // data: model.toJson(),
 
           data:{
-
             "inventory_id": model.inventoryId,
             "search_name": model.searchName,
             "weight_uom_id":model.weightUomId,
@@ -3564,7 +3580,7 @@ catch(e){
             "ratio_to_eccommerce": model.ratioToEcommerce,
             "min_max_ratio": model.minMaxRatio,
             "whole_sale_stock": model.wholeSaleStock,
-            "min_sales_order_limit": model.minMaxRatio,
+            "min_sales_order_limit": model.minSalesOrderLimit,
             "max_sales_order_limit": model.maxSalesOrderLimit,
             "min_purchase_order_limit":model.minPurchaseOrderLimit,
             "max_purchase_order_limit": model.maxPurchaseOrderLimit,
@@ -3599,6 +3615,10 @@ catch(e){
             "image3": model.image3,
             "image4": model.image4,
             "image5": model.image5,
+            "weight_unit":model.weightUnit,
+            "length_unit":model.lengthUnit,
+            "width_unit":model.widthUnit,
+            "height_unit":model.heightUnit,
             "catalog1": model.catalog1,
             "catalog2": model.catalog2,
             "catalog3": model.catalog3,
@@ -3614,7 +3634,7 @@ catch(e){
             "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
             "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
             "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
-            "product_behaviour": model.productBehavior==null?{"name":"product behaviour","key_values":[{}]}:model.productBehavior,
+            "product_behaviour": model.productBehavior,
             "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
             "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
 
@@ -3648,7 +3668,7 @@ catch(e){
           "weight_uom_id":model.weightUomId,
         "display_name": model.displayName,
         "arabic_description": model.arabicDescription,
-        "additional_description": model.additionalInfo,
+        "additional_description": model.additionalDescription,
         "sales_uom": model.salesUom,
         "item_catalog": model.itemCatelog,
         "item_image": model.itemImage,
@@ -3704,6 +3724,10 @@ catch(e){
         "image3": model.image3,
         "image4": model.image4,
         "image5": model.image5,
+          "weight_unit":model.weightUnit,
+          "length_unit":model.lengthUnit,
+          "width_unit":model.widthUnit,
+          "height_unit":model.heightUnit,
         "catalog1": model.catalog1,
         "catalog2": model.catalog2,
         "catalog3": model.catalog3,
@@ -3719,7 +3743,7 @@ catch(e){
         "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
         "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
         "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
-        "product_behaviour": model.productBehavior==null?{"name":"product behaviour","key_values":[{}]}:model.productBehavior,
+          "product_behaviour": model.productBehavior,
         "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
         "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
 
@@ -3760,6 +3784,10 @@ catch(e){
           "need_multiple_integration":model.needMultipleIntegration,
           "weight":model.weight,
           "weight_uom_id":model.weightUomId,
+          "weight_unit":model.weightUnit,
+          "length_unit":model.lengthUnit,
+          "width_unit":model.widthUnit,
+          "height_unit":model.heightUnit,
 
           "barcode": model.barcode,
           "qrcode": model.qrcode,
@@ -3778,7 +3806,7 @@ catch(e){
           "actual_cost":model.actualCost,
           "base_price":model.basePrize,
           "produced_country": model.producedCountry,
-          "manufacture_id": 1,
+          "manufacture_id": model.manuFacturedId,
           "manufacture_name": model.manuFacturedName,
           "safty_stock": model.safetyStock,
           "reorder_point":model.reorderQuantity,
@@ -3812,8 +3840,8 @@ catch(e){
           "image5": model.image5,
           "catalog1": model.catalog1,
           "catalog2": model.catalog2,
-          "catalog3":
-          model.catalog3, "catalog4": model.catalog4,
+          "catalog3": model.catalog3,
+          "catalog4": model.catalog4,
           "catalog5": model.catalog5,
           "catalog6": model.catalog6,
           "catalog7":model.catalog7,
@@ -3839,7 +3867,7 @@ catch(e){
           "product_details": model.productDetails==null?{"name":"product details","key_values":[{}]}:model.productDetails,
           "usage_direction": model.usageDirection==null?{"name":"usage direction","key_values":[{}]}:model.usageDirection,
           "product_features": model.productFeatures==null?{"name":"product features","key_values":[{}]}:model.productFeatures,
-          "product_behaviour": model.productBehavior==null?{"name":"product behaviour","key_values":[{}]}:model.productBehavior,
+          "product_behaviour": model.productBehavior,
           "about_the_products": model.aboutProducts==null?{"name":"about the products","key_values":[{}]}:model.aboutProducts,
           "storage": model.storage==null?{"name":"storage","key_values":[{}]}: model.storage,
         },
@@ -6885,5 +6913,316 @@ catch(e){
       response.data['data']['count'].toString(),
       previousUrl: response.data['data']['previous'],
     );
+  }
+
+  @override
+  Future<Returntypemodel> getReturnType() async {
+
+    String path = readVariantApi + "${0}";
+    try {
+      print("ppppathreturntype" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("anamika" +response.data.toString());
+      Returntypemodel dataa = Returntypemodel.fromJson(response.data);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print("the error is" + e.toString());
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    Returntypemodel dataa = Returntypemodel.fromJson(response.data);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<DoubleResponse> getAttributePost(String? attributeType, String? attributeName, bool? isActive) async {
+print(attributePostApi);
+    try {
+      final response = await client.post(attributePostApi,
+          data: {
+            "attribute_type": attributeType,
+
+            "attribute_name": attributeName,
+
+            "is_active":isActive
+
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.post(attributePostApi,
+        data: {
+          "attribute_type": attributeType,
+
+          "attribute_name": attributeName,
+
+          "is_active":isActive
+
+        },
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+  }
+
+  @override
+  Future<PaginatedResponse<List<AttributeListModel>>> getAttributePatchList(String? code) async {
+    String path="";
+    code = code == null ? "" : code;
+
+
+
+    if (code == "")
+      path = attributePatchListApi;
+    else
+      path = attributePatchListApi + "?$code";
+
+    print(path);
+    final response = await client.get(path,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }));
+
+    List<AttributeListModel> items = [];
+    (response.data['data']['results'] as List).forEach((element) {
+      items.add(AttributeListModel.fromJson(element));
+    });
+    print("dataitemss" + items.toString());
+    return PaginatedResponse<List<AttributeListModel>>(
+        items,
+        response.data['data']['next'],
+        response.data['data']['count'].toString(),
+        previousUrl: response.data['data']['previous']
+    );
+  }
+
+  @override
+  Future<AttributeListModel> getAttributeCreationRead(int? id) async {
+    String path = readAttributeCreationApi + id.toString();
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      AttributeListModel dataa =
+      AttributeListModel.fromJson(response.data['data']['attribute_data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    print(path);
+    print("ppppath" + path.toString());
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("brand response" + response.toString());
+    AttributeListModel dataa =
+    AttributeListModel.fromJson(response.data['data']['attribute_data']);
+    print("rwead" + dataa.toString());
+    return dataa;
+
+  }
+
+  @override
+  Future<DoubleResponse> getAttributePatch(String? attributeType, String? attributeName, bool? isActive, int? id) async {
+    print(attributePatchApi);
+    String path=attributePatchApi+"$id";
+    try {
+      final response = await client.patch(path,
+          data: {
+            "attribute_type":attributeType,
+            "attribute_name": attributeName,
+            "is_active": isActive
+          },
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          }));
+      print("");
+      print(response);
+      print(response.data['message']);
+      if (response.data['status'] == 'failed') {
+        Variable.errorMessege = response.data['message'];
+      }
+      return DoubleResponse(
+          response.data['status'] == 'success', response.data['message']);
+    } catch (e) {
+      print("errrr" + e.toString());
+    }
+
+    final response = await client.patch(path,
+        data:{
+
+          "attribute_type":attributeType,
+
+          "attribute_name": attributeName,
+
+          "is_active": isActive
+
+        } ,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        }));
+    print("");
+    print(response);
+    print(response.data['message']);
+    if (response.data['status'] == 'failed') {
+      Variable.errorMessege = response.data['message'];
+    }
+    return DoubleResponse(
+        response.data['status'] == 'success', response.data['message']);
+
+  }
+
+  @override
+  Future<AttributeListModel> getAttributeTypeList() async {
+    String path = attributePostApi;
+    print("the searching aaaaappppppppppppppppppppppppppp${attributePostApi}");
+    try {
+      print("ppppath" + path.toString());
+      print(path);
+      final response = await client.get(
+        path,
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      AttributeListModel dataa =
+      AttributeListModel.fromJson(response.data['data']);
+      print("asasasaaaaaaaaaaaaaaaaaaaaa" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    final response = await client.get(
+      path,
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+
+    AttributeListModel dataa = AttributeListModel.fromJson(response.data['data']);
+    print("uomGroup read" + dataa.toString());
+    return dataa;
+    ;
+  }
+
+  @override
+  Future<ReadMessuremnetModel> getMessurementRead() async {
+    String path = createCustomApi ;
+    print(path);
+
+    try {
+      print(path);
+      final response = await client.get(
+        path,
+        // data:
+        // // {"payment_status": "completed", "order_status": "completed"},
+        // {
+        //
+        // },
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+        ),
+      );
+      print("responsesssssd" + response.toString());
+      ReadMessuremnetModel dataa =
+      ReadMessuremnetModel.fromJson(response.data['data']);
+      print("rwead" + dataa.toString());
+      return dataa;
+    } catch (e) {
+      print(e);
+    }
+
+    final response = await client.get(
+      path,
+      // data:
+      // // {"payment_status": "completed", "order_status": "completed"},
+      // {
+      //
+      // },
+      options: Options(
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+      ),
+    );
+    print("responsesssssd" + response.toString());
+    ReadMessuremnetModel dataa =
+    ReadMessuremnetModel.fromJson(response.data['data']);
+    print("rwead" + dataa.toString());
+    return dataa;
   }
 }

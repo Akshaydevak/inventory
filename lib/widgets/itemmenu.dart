@@ -69,7 +69,7 @@ class _ItemCardState extends State<ItemCard> {
                 border:widget.selectedVertical==widget.index? Border(
                   left:  BorderSide(width: 4.0, color: Color(0xff3E4F5B)),
                 ):  Border(left:  BorderSide(width:0, color:Colors.transparent),),
-                color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):Color(0xffEDF1F2),
+                color: widget.selectedVertical==widget.index?Color(0xff3E4F5B).withOpacity(.1):isHover?Colors.grey.shade300:Color(0xffEDF1F2),
               ),
 
               child: Center(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/model/costingmethodtypelisting.dart';
@@ -20,6 +22,7 @@ import 'package:dropdown_search/dropdown_search.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/uttils/variable.dart';
+import '../../../widgets/popupcallwidgets/popupcallwidget.dart';
 import 'cubits/generateqrcode/qrgenerating_cubit.dart';
 import 'model/screesns/variant tables.dart';
 import 'model/vendormodel.dart';
@@ -1480,6 +1483,10 @@ class VariantStabletable extends StatefulWidget {
   final TextEditingController status;
   final TextEditingController shelfType;
   final TextEditingController shelfTime;
+  final TextEditingController lengthUnit;
+  final TextEditingController weightUnit;
+  final TextEditingController heightUnit;
+  final TextEditingController widthUnit;
 
   final bool purchaseBlock;
   final int? veritiaclid;
@@ -1490,6 +1497,7 @@ class VariantStabletable extends StatefulWidget {
   final bool itmImage;
   final bool active;
   final int ? baseUomId;
+  final bool select;
   final bool needMultipleIntegration;
   final Function({String type}) imagePostCheck;
   final Function({String type, bool val}) trueOrFalseChange;
@@ -1498,6 +1506,7 @@ class VariantStabletable extends StatefulWidget {
     required this.weightUom,
     required this.imagePostCheck,
     required this.itemId,
+    required this.select,
     required this.weight,
     required this.baseUomId,
     required this.image3,
@@ -1576,7 +1585,7 @@ class VariantStabletable extends StatefulWidget {
     required this.purchaseUomName,
     required this.length,
     required this.width,
-    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption,
+    required this.height, required this.shelfType, required this.shelfTime, required this.haveGiftOption, required this.haveWrapOption, required this.lengthUnit, required this.weightUnit, required this.heightUnit, required this.widthUnit,
   });
 
   @override
@@ -1620,6 +1629,9 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
+
+
+
                     NewInputCard(
                         readOnly: true,
                         controller: widget.itemId,
@@ -1672,7 +1684,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     ),
                     NewInputCard(
                         controller: widget.arabicDescription,
-                        title: " Arabic Description"),
+                        title: "Arabic Description"),
                     SizedBox(
                       height: height * .030,
                     ),
@@ -1945,14 +1957,176 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(controller: widget.length, title: "Length"),
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      // height: 100,
+                      // width: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Length",
+                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            // height: 70,
+                            // width: 300,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  // height: 70,
+                                  width:150,
+                                  child: TextFormField(
+                                    controller: widget.length,
+                                    keyboardType:TextInputType.number,
+                                    inputFormatters:
+                                    <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ]
+                                    ,
+                                    decoration:  InputDecoration(
+                                      labelStyle: const TextStyle(
+                                        fontSize: 13,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                      // label: Text(
+                                      //   widget.label,
+                                      // ),
+                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+
+                                      // hintText: widget.label,
+                                      enabledBorder:OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                      focusedBorder:   OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                    ),
+                                    // contentPadding: EdgeInsets.all(20)
+                                  ),
+
+                                ),
+                                Container(
+                                  // height: 70,
+                                  width: 100,
+                                  child: PopUpCall(
+
+                                    type:"VariantLengthunitPopupCall",
+                                    value: widget.lengthUnit.text,
+                                    onSelection: (String? va) {
+                                      print(
+                                          "+++++++++++++++++++++++");
+                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      setState(() {
+                                        widget.lengthUnit.text = va??"";
+
+                                        // onChange = true;
+                                        // orderType = va!;
+                                      });
+                                    },
+
+
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    // NewInputCard(controller: widget.length, title: "Length"),
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.height,
-                        title: "Height(meter)"),
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      // height: 100,
+                      // width: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Height",
+                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            // height: 70,
+                            // width: 300,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  // height: 70,
+                                  width:150,
+                                  child: TextFormField(
+                                    controller: widget.height,
+                                    keyboardType:TextInputType.number,
+                                    inputFormatters:
+                                    <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ]
+                                    ,
+                                    decoration:  InputDecoration(
+                                      labelStyle: const TextStyle(
+                                        fontSize: 13,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                      // label: Text(
+                                      //   widget.label,
+                                      // ),
+                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+
+                                      // hintText: widget.label,
+                                      enabledBorder:OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                      focusedBorder:   OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                    ),
+                                    // contentPadding: EdgeInsets.all(20)
+                                  ),
+
+                                ),
+                                Container(
+                                  // height: 70,
+                                  width: 100,
+                                  child: PopUpCall(
+
+                                    type:"VariantHeightunitPopupCall",
+                                    value: widget.heightUnit.text,
+                                    onSelection: (String? va) {
+                                      print(
+                                          "+++++++++++++++++++++++");
+                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      setState(() {
+                                        widget.heightUnit.text = va??"";
+
+                                        // onChange = true;
+                                        // orderType = va!;
+                                      });
+                                    },
+
+
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller: widget.height,
+                    //     title: "Height(meter)"),
 
 
                     SizedBox(
@@ -1963,20 +2137,182 @@ class _VariantStabletableState extends State<VariantStabletable> {
                 Expanded(
                     child: Column(
                   children: [
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      // height: 100,
+                      // width: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Width",
+                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            // height: 70,
+                            // width: 300,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  // height: 70,
+                                  width:150,
+                                  child: TextFormField(
+                                    controller: widget.width,
+                                    keyboardType:TextInputType.number,
+                                    inputFormatters:
+                                    <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ]
+                                    ,
+                                    decoration:  InputDecoration(
+                                      labelStyle: const TextStyle(
+                                        fontSize: 13,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                      // label: Text(
+                                      //   widget.label,
+                                      // ),
+                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
 
-                    NewInputCard(
-                        formatter: true,
-                        controller:
+                                      // hintText: widget.label,
+                                      enabledBorder:OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
 
-                        widget.width, title: "Width(meter)"),
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                      focusedBorder:   OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                    ),
+                                    // contentPadding: EdgeInsets.all(20)
+                                  ),
+
+                                ),
+                                Container(
+                                  // height: 70,
+                                  width: 100,
+                                  child: PopUpCall(
+
+                                    type:"VariantWidthunitPopupCall",
+                                    value: widget.widthUnit.text,
+                                    onSelection: (String? va) {
+                                      print(
+                                          "+++++++++++++++++++++++");
+                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      setState(() {
+                                        widget.widthUnit.text = va??"";
+
+                                        // onChange = true;
+                                        // orderType = va!;
+                                      });
+                                    },
+
+
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller:
+                    //
+                    //     widget.width, title: "Width(meter)"),
 
                     SizedBox(
                       height: height * .030,
                     ),
-                    NewInputCard(
-                        formatter: true,
-                        controller: widget.weight,
-                        title: "Weight(kg)"),
+                    Container(
+                      margin: EdgeInsets.only(left: 20),
+                      // height: 100,
+                      // width: 300,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Weight",
+                            style: GoogleFonts.roboto(fontSize: 13,fontWeight: FontWeight.w600),
+                          ),
+                          Container(
+                            // height: 70,
+                            // width: 300,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  // height: 70,
+                                  width:150,
+                                  child: TextFormField(
+                                    controller: widget.weight,
+                                    keyboardType:TextInputType.number,
+                                    inputFormatters:
+                                    <TextInputFormatter>[
+                                      FilteringTextInputFormatter.digitsOnly
+                                    ]
+                                    ,
+                                    decoration:  InputDecoration(
+                                      labelStyle: const TextStyle(
+                                        fontSize: 13,
+                                        //fontStyle: FontStyle.italic,
+                                      ),
+                                      // label: Text(
+                                      //   widget.label,
+                                      // ),
+                                      hintStyle: const TextStyle(fontSize: 12,color: Colors.black),
+
+                                      // hintText: widget.label,
+                                      enabledBorder:OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                      focusedBorder:   OutlineInputBorder(
+                                          borderRadius:BorderRadius.circular(2),
+
+                                          borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                                    ),
+                                    // contentPadding: EdgeInsets.all(20)
+                                  ),
+
+                                ),
+                                Container(
+                                  // height: 70,
+                                  width: 100,
+                                  child: PopUpCall(
+
+                                    type:"VariantWeightunitPopupCall",
+                                    value: widget.weightUnit.text,
+                                    onSelection: (String? va) {
+                                      print(
+                                          "+++++++++++++++++++++++");
+                                      //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                      setState(() {
+                                        widget.weightUnit.text = va??"";
+
+                                        // onChange = true;
+                                        // orderType = va!;
+                                      });
+                                    },
+
+
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    // NewInputCard(
+                    //     formatter: true,
+                    //     controller: widget.weight,
+                    //     title: "Weight(kg)"),
 
                     SizedBox(
                       height: height * .030,
@@ -2004,6 +2340,36 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+                    // NewInputCard(
+                    //     // formatter: true,
+                    //     controller: widget.producedCountry,
+                    //     title: "Produced Country"),
+                    // NewInputCard(
+                    //   controller: widget.producedCountry,
+                    //   icondrop: true,
+                    //   title: "Produced Country",
+                    //   readOnly: true,
+                    //   ontap: () {
+                    //     showDailogPopUp(
+                    //       context,
+                    //       TableConfigurePopup(
+                    //         // id: widget.divisionId,
+                    //         type: "ProducedCountryPopup",
+                    //         valueSelect: (VariantReadModel va) {
+                    //           setState(() {
+                    //             widget.producedCountry.text =
+                    //                 va?.name.toString() ?? "";
+                    //
+                    //
+                    //
+                    //             // onChange = true;
+                    //             // orderType.text = va!;
+                    //           });
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
 
                     SelectableDropDownpopUp(
                       controller: widget.producedCountry,
@@ -2073,6 +2439,8 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     SizedBox(
                       height: height * .030,
                     ),
+
+
                     NewInputCard(
                         formatter: true,
                         controller: widget.saftyStock,
@@ -2145,7 +2513,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                       enable: true,
                       onSelection: (BrandListModel? va) {
                         setState(() {
-                          widget.sellingId.text = va?.code ?? "";
+                          widget.sellingId.text = va?.id.toString() ?? "";
                           widget.seblingNameController.text = va?.name ?? "";
 
                           setState(() {});
@@ -2248,7 +2616,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
 
 
                     SizedBox(
-                      height: height * .239,
+                      height: height * .265,
                     ),
                   ],
                 )),
@@ -3059,7 +3427,7 @@ class _VariantStabletableState extends State<VariantStabletable> {
                         label: "Catalog8"),
 
                     SizedBox(
-                      height: height * .129,
+                      height: height * .172,
                     ),
                     // SizedBox(
                     //   height: height * .140,
@@ -3163,12 +3531,15 @@ class _VariantStabletableState extends State<VariantStabletable> {
                     }),
                 PopUpSwitchTile(
                     paddingCheck: false,
-                    value: widget.active ?? false,
+                    value:widget.select?true: widget.active ?? false,
                     title: "Active",
                     onClick: (gg) {
-                      bool val = widget.active;
-                      val = !val;
-                      widget.trueOrFalseChange(type: "Active", val: val);
+                      if(widget.select!){
+                        bool val = widget.active;
+                        val = !val;
+                        widget.trueOrFalseChange(type: "Active", val: val);
+                      }
+
                       // widget.activeChange(!widget.active);
 
                       // extendedWarranty = gg;
@@ -3243,9 +3614,9 @@ class VendorDetailsVarient extends StatefulWidget {
 
 class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   bool onChange = false;
-  List<VendorDetails> vendorDetails = [];
-  List<bool> upDate = [];
-  List<bool> upDateButton = [];
+  List<VendorDetails> vendorDetails =List.from( []);
+  List<bool> upDate =List.from( []);
+  List<bool> upDateButton =List.from( []);
 
   String vendoeCode = "";
   TextEditingController code = TextEditingController();
@@ -3272,22 +3643,21 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    if (onChange == false) {
+    if (!onChange ) {
       upDate.clear();
-      vendorDetails.clear();
+      // vendorDetails.clear();
       upDateButton.clear();
       onSaveActive = false;
       codeListTextEditingController.clear();
       refCodeListTextEditingController.clear();
 
       print("welcome to the entire place");
+      vendorDetails=List.from(widget.vendorDetails??[]);
 
-      if (widget.vendorDetails?.isNotEmpty == true) {
-        print(vendorDetails);
+
         if (widget.vendorDetails?.isNotEmpty == true) {
-          for (var i = 0; i < widget.vendorDetails!.length - 1; i++) {
-            if (widget.vendorDetails?[i].vendorName != null &&
-             widget.vendorDetails?[i].vendorCode != null) {
+          for (var i = 0; i < widget.vendorDetails!.length; i++) {
+
               upDate.add(false);
               upDateButton.add(false);
               var nameValue = new TextEditingController(
@@ -3300,11 +3670,11 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                       ? ""
                       : vendorDetails[i].vendorReerenceCode);
               refCodeListTextEditingController.add(refValue);
-              vendorDetails.add(widget.vendorDetails![i]);
-            }
+
+
           }
         }
-      }
+
     }
     onChange = false;
     return Container(
@@ -3369,7 +3739,7 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
               ),
             ],
           ),
-          if (vendorDetails?.isNotEmpty == true) ...[
+          if (vendorDetails != null) ...[
             for (var i = 0; i < vendorDetails!.length; i++)
               TableRow(
                   decoration: BoxDecoration(
@@ -3567,26 +3937,29 @@ class _VendorDetailsVarientState extends State<VendorDetailsVarient> {
                         ? Pellet.tableBlueHeaderPrint
                         : Color(0xffe7e7e7),
                     onPress: () {
-                      widget.vendorTableEdit(list: vendorDetails);
-                      VendorDetails model = VendorDetails(
-                          vendorName: code.text ?? "",
-                          vendorReerenceCode: refCode.text ?? "",
-                          vendorCode: vendoeCode);
-                      onChange = true;
-                      setState(() {
-                        vendorDetails.add(model);
-                        upDate.add(false);
-                        upDateButton.add(false);
-                        var name = new TextEditingController(text: code.text);
-                        var ref = new TextEditingController(text: refCode.text);
+                      if(code.text!="" &&refCode.text!="") {
+                        VendorDetails model = VendorDetails(
+                            vendorName: code.text ?? "",
+                            vendorReerenceCode: refCode.text ?? "",
+                            vendorCode: vendoeCode);
+                        onChange = true;
+                        setState(() {
+                          vendorDetails.add(model);
+                          upDate.add(false);
+                          upDateButton.add(false);
+                          var name = new TextEditingController(text: code.text);
+                          var ref = new TextEditingController(text: refCode
+                              .text);
+                          widget.vendorTableEdit(list: vendorDetails);
 
-                        codeListTextEditingController.add(name);
-                        refCodeListTextEditingController.add(ref);
-                        widget.vendorTableEdit(list: vendorDetails);
-                        code.text = "";
-                        refCode.text = "";
-                        onSaveActive = false;
-                      });
+                          codeListTextEditingController.add(name);
+                          refCodeListTextEditingController.add(ref);
+                          widget.vendorTableEdit(list: vendorDetails);
+                          code.text = "";
+                          refCode.text = "";
+                          onSaveActive = false;
+                        });
+                      }
                     },
                     label: "Save",
                   ),

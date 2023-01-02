@@ -114,6 +114,27 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
     variableAmountController.text = VatableValue.toString();
     // _value=false;
   }
+  clear(){
+    actualCostController.clear();
+    discountController.clear();
+    exciseTaxController.clear();
+    focController.clear();
+    grandTotalController.clear();
+    invoiceCodeController.clear();
+     invoiceStatusController.clear();
+     noteController.clear();
+    orderedDateController.clear();
+     orderStatusController.clear();
+     paymentCodeController.clear();
+     paymentMethodController.clear();
+     paymentStatusController.clear();
+     purchaseCodeController.clear();
+   remarksController.clear();
+    unitCostController.clear();
+   variableAmountController.clear();
+ vatController.clear();
+    additionalVariants.clear();
+  }
 
 
 
@@ -202,6 +223,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                                 purchaseCodeController.text=data.orderCode??"";
 
 
+
                                 inventoryId=data.inventoryId??"";
                                 orderedDateController.text=data.orderDate??"";
                                 paymentCodeController.text=data.paymentCode??"";
@@ -249,6 +271,7 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               if(result.isNotEmpty){
                                 Variable.verticalid=result[0].id;
                                 veritiaclid=result[0].id;
+                                selectedVertical=0;
                                 context.read<InventoryReadCubit>().getInventoryRead(veritiaclid!);
                                 print("Variable.verticalid"+Variable.verticalid.toString());
                                 setState(() {
@@ -284,51 +307,52 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                   ),
 
                 ],
-                child: SingleChildScrollView(
-                  child: IntrinsicHeight(
-                      child:Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          VerticalList(selectedVertical: selectedVertical,
-                            tab:"II",
-                            itemsearch: itemsearch,ontap: (int index){
-                              setState(() {
-                                print("taped");
-                                select=false;
-                                selectedVertical=index;
+                child: IntrinsicHeight(
+                    child:Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        VerticalList(selectedVertical: selectedVertical,
+                          tab:"II",
+                          itemsearch: itemsearch,ontap: (int index){
+                            setState(() {
+                              print("taped");
+                              select=false;
+                              clear();
+                              selectedVertical=index;
 
-                                veritiaclid =
-                                    result[index].id;
-                                context
-                                    .read<
-                                    InventoryReadCubit>()
-                                    .getInventoryRead(
-                                    veritiaclid!);
-                              });
-                            },result: result,
-                            child:     tablePagination(
-                                  () => context
+                              veritiaclid =
+                                  result[index].id;
+                              context
+                                  .read<
+                                  InventoryReadCubit>()
+                                  .getInventoryRead(
+                                  veritiaclid!);
+                            });
+                          },result: result,
+                          child:     tablePagination(
+                                () => context
+                                .read<InventorysearchCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<InventorysearchCubit>()
-                                  .refresh(),
-                              back: paginatedList?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<InventorysearchCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next:paginatedList?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<InventorysearchCubit>()
-                                    .nextslotSectionPageList("");
-                              },
-                            ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .nextslotSectionPageList("");
+                            },
                           ),
-                          Expanded(child: Column(
+                        ),
+                        Expanded(child: SingleChildScrollView(
+                          child: Column(
                             children: [
                               Row(
                                 mainAxisAlignment:MainAxisAlignment.end,
@@ -1070,144 +1094,144 @@ class _InventoryInvoiceScreenState extends State<InventoryInvoiceScreen> {
                               // )
 
                             ],
-                          )),
+                          ),
+                        )),
 
-                        ],
-                      )
-                    // Column(
-                    //   children: [Row(
-                    //     children: [
-                    //       // VerticalList(selectedVertical: selectedVertical,
-                    //       //   itemsearch: itemsearch,ontap: (int index){
-                    //       //     setState(() {
-                    //       //       print("taped");
-                    //       //       select=false;
-                    //       //       selectedVertical=index;
-                    //       //
-                    //       //       veritiaclid =
-                    //       //           result[index].id;
-                    //       //       context
-                    //       //           .read<
-                    //       //           RequestformreadCubit>()
-                    //       //           .getRequestFormRead(
-                    //       //           veritiaclid!);
-                    //       //     });
-                    //       //   },result: result,
-                    //       // ),
-                    //
-                    //
-                    //       Expanded(child: Column(children: [
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "Invoice code"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "purchase order code"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "ordered date"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "payment code"),
-                    //         SizedBox(height: height*.035,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "payment status"),
-                    //         SizedBox(height: height*.035,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "payment method"),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //
-                    //
-                    //       ],)),
-                    //       Expanded(child: Column(children: [
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "order status"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "invoice status"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "discount"),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "foc"),
-                    //         SizedBox(height: height*.035,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "unit cost"),
-                    //         SizedBox(height: height*.035,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "variable amount"),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //
-                    //
-                    //       ],)),
-                    //       Expanded(child: Column(children: [
-                    //         SizedBox(height: height*.030,),
-                    //         SizedBox(height: height*.030,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "excise tax"),
-                    //         SizedBox(height: height*.020,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "vat"),
-                    //         SizedBox(height: height*.020,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "actual cost"),
-                    //         SizedBox(height: height*.020,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "grand total"),
-                    //         SizedBox(height: height*.020,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "note",height: 90,maxLines: 2,),
-                    //         SizedBox(height: height*.010,),
-                    //         NewInputCard(
-                    //             controller: controller, title: "remarks",height: 90,maxLines: 2,),
-                    //
-                    //
-                    //
-                    //
-                    //       ],)),
-                    //     ],
-                    //   ),
-                    //     SizedBox(height: 80,),
-                    //     Row(mainAxisAlignment: MainAxisAlignment.start,
-                    //       children: [
-                    //         TextWidget(text: "recieving lines"),
-                    //       ],
-                    //     ),
-                    //     Divider(color: Colors.grey,thickness: 1,),
-                    //     SizedBox(height: 5,),
-                    //    // ScrollableTable(),
-                    //     SizedBox(height: 100,),
-                    //
-                    //     Row(
-                    //       children: [
-                    //         Spacer(),
-                    //         // Button(Icons.delete, Colors.red,ctx: context,
-                    //         //     text: "Discard",height: 29,
-                    //         //     onApply: (){print("Akkk");},
-                    //         //     width: 90,labelcolor: Colors.red,iconColor: Colors.red),
-                    //         SizedBox(width: width*.008,),
-                    //
-                    //         // Button(Icons.check, Colors.grey,ctx: context,
-                    //         //     onApply: (){print("Akkk");},
-                    //         //     text: "Discard",height: 29,
-                    //         //     width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
-                    //         SizedBox(width: width*.008,),
-                    //       ],
-                    //     )
-                    //   ],
-                    //
-                    // ),
-                  ),
+                      ],
+                    )
+                  // Column(
+                  //   children: [Row(
+                  //     children: [
+                  //       // VerticalList(selectedVertical: selectedVertical,
+                  //       //   itemsearch: itemsearch,ontap: (int index){
+                  //       //     setState(() {
+                  //       //       print("taped");
+                  //       //       select=false;
+                  //       //       selectedVertical=index;
+                  //       //
+                  //       //       veritiaclid =
+                  //       //           result[index].id;
+                  //       //       context
+                  //       //           .read<
+                  //       //           RequestformreadCubit>()
+                  //       //           .getRequestFormRead(
+                  //       //           veritiaclid!);
+                  //       //     });
+                  //       //   },result: result,
+                  //       // ),
+                  //
+                  //
+                  //       Expanded(child: Column(children: [
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "Invoice code"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "purchase order code"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "ordered date"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "payment code"),
+                  //         SizedBox(height: height*.035,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "payment status"),
+                  //         SizedBox(height: height*.035,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "payment method"),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //
+                  //
+                  //       ],)),
+                  //       Expanded(child: Column(children: [
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "order status"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "invoice status"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "discount"),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "foc"),
+                  //         SizedBox(height: height*.035,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "unit cost"),
+                  //         SizedBox(height: height*.035,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "variable amount"),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //
+                  //
+                  //       ],)),
+                  //       Expanded(child: Column(children: [
+                  //         SizedBox(height: height*.030,),
+                  //         SizedBox(height: height*.030,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "excise tax"),
+                  //         SizedBox(height: height*.020,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "vat"),
+                  //         SizedBox(height: height*.020,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "actual cost"),
+                  //         SizedBox(height: height*.020,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "grand total"),
+                  //         SizedBox(height: height*.020,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "note",height: 90,maxLines: 2,),
+                  //         SizedBox(height: height*.010,),
+                  //         NewInputCard(
+                  //             controller: controller, title: "remarks",height: 90,maxLines: 2,),
+                  //
+                  //
+                  //
+                  //
+                  //       ],)),
+                  //     ],
+                  //   ),
+                  //     SizedBox(height: 80,),
+                  //     Row(mainAxisAlignment: MainAxisAlignment.start,
+                  //       children: [
+                  //         TextWidget(text: "recieving lines"),
+                  //       ],
+                  //     ),
+                  //     Divider(color: Colors.grey,thickness: 1,),
+                  //     SizedBox(height: 5,),
+                  //    // ScrollableTable(),
+                  //     SizedBox(height: 100,),
+                  //
+                  //     Row(
+                  //       children: [
+                  //         Spacer(),
+                  //         // Button(Icons.delete, Colors.red,ctx: context,
+                  //         //     text: "Discard",height: 29,
+                  //         //     onApply: (){print("Akkk");},
+                  //         //     width: 90,labelcolor: Colors.red,iconColor: Colors.red),
+                  //         SizedBox(width: width*.008,),
+                  //
+                  //         // Button(Icons.check, Colors.grey,ctx: context,
+                  //         //     onApply: (){print("Akkk");},
+                  //         //     text: "Discard",height: 29,
+                  //         //     width: 90,labelcolor: Colors.white,iconColor: Colors.white,Color:Color(0xff3E4F5B)),
+                  //         SizedBox(width: width*.008,),
+                  //       ],
+                  //     )
+                  //   ],
+                  //
+                  // ),
                 ),
               );
             }
@@ -1396,7 +1420,7 @@ Future<Uint8List> _generatePdf(PdfPageFormat format, String title,String orderDa
                               child: pw.Column(
                                 crossAxisAlignment:pw. CrossAxisAlignment.start,
                                 children: [
-                                  pw.   Text("Ahlan cart company Limed",
+                                  pw.   Text("Ahlan cart company Limted",
                                     style:  pw.TextStyle( fontSize:15,fontWeight:pw. FontWeight.bold ),),
                                   pw.  SizedBox(height: 2,),
                                   pw.  Text("Shop no. 514 5th floor aditya arcademall",

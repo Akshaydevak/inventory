@@ -13,6 +13,7 @@ class SalesgeneralpatcvhCubit extends Cubit<SalesgeneralpatcvhState> {
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getSalesGeneralPatch(int? id, SalesGeneralPostModel model) async {
     print("sunithi" + id.toString());
+    emit(SalesgeneralpatcvhState.initial());
     final result = await repo.getSalesGeneralPatch(model, id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

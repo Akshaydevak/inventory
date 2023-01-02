@@ -10,6 +10,8 @@ import 'package:inventory/Screens/variant/stock/models/stocktableread.dart';
 import 'package:inventory/Screens/variant/stock/screens/stock_bottom_table.dart';
 import 'package:inventory/Screens/variant/stock/screens/stock_stableTable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -51,6 +53,7 @@ class _StockScreenState extends State<StockScreen> {
   TextEditingController channelTypeController = TextEditingController();
   bool stockwarning = false;
   bool check = false;
+  bool suffixIconCheck = false;
   int? variantId  ;
   bool salesBlock = false;
   bool purchaseBlock = false;
@@ -418,62 +421,65 @@ class _StockScreenState extends State<StockScreen> {
                 },
                 builder: (context, state) {
                   return Scaffold(
-                    backgroundColor: Colors.white,
-                    body: SingleChildScrollView(
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            VariantVerticalList(
-                              list: list,
+                    backgroundColor: Pellet.bagroundColor,
+                    body: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          VariantVerticalList(
+                            list: list,
+                            suffixIconCheck: suffixIconCheck,
 
 
-                              selectedVertical: selectedVertical,
-                              itemsearch: itemsearch,
-                              ontap: (int index) {
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,
+                            ontap: (int index) {
+                              setState(() {
+                                selectedVertical = index;
+                                check=false;
+                                addVirtualLimit=false;
+
+                                // select=false;
+                                // clear();
+                                // exportCheck=false;
+                                // addNew=true;
+
+                                // updateCheck=false;
+                                print("rijina" + result[index].id.toString());
+
+
+                                veritiaclid = result[index].id;
+                                // clear();
+                                // select=true;
+                                //
+                                //
+
+
                                 setState(() {
-                                  selectedVertical = index;
-                                  check=false;
-                                  addVirtualLimit=false;
+                                  context.read<StocktablereadCubit>().getStockTableRead(result[index].code);
+                                  context.read<StockreadCubit>().getStockRead(veritiaclid!);
 
-                                  // select=false;
-                                  // clear();
-                                  // exportCheck=false;
-                                  // addNew=true;
-
-                                  // updateCheck=false;
-                                  print("rijina" + result[index].id.toString());
-
-
-                                  veritiaclid = result[index].id;
-                                  // clear();
-                                  // select=true;
-                                  //
-                                  //
-
-
-                                  setState(() {
-                                    context.read<StocktablereadCubit>().getStockTableRead(result[index].code);
-                                    context.read<StockreadCubit>().getStockRead(veritiaclid!);
-
-                                  });
                                 });
-                              },
-                              search: (String va) {
-                                print(va);
+                              });
+                            },
+                            search: (String va) {
+                              print(va);
+                              context
+                                  .read<ListvraiantCubit>()
+                                  .getSearchVariantList(va);
+                              suffixIconCheck=true;
+                              if (va == "") {
                                 context
                                     .read<ListvraiantCubit>()
-                                    .getSearchVariantList(va);
-                                if (va == "") {
-                                  context
-                                      .read<ListvraiantCubit>()
-                                      .getVariantList();
-                                }
-                              },
-                              result: result,
-                            ),
-                            Expanded(child: Column(
+                                    .getVariantList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                            result: result,
+                          ),
+                          Expanded(child: SingleChildScrollView(
+                            child: Column(
                               children: [
                                 VAriantStockStableTable(
                                   addCheckLimit: addCheckLimit,
@@ -528,83 +534,113 @@ class _StockScreenState extends State<StockScreen> {
 
 
                                 SizedBox(height: height * .1,),
-                                Container(
-                                  margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Button(Icons.delete, Colors.red,
-                                          ctx: context,
-                                          text: "DISCARD",
-                                          onApply: () {
-                                            // if(updateCheck){
-                                            //   // clears();
-                                            //
-                                            //
-                                            // }
-
-                                          },
-                                          height: 29,
-                                          width: 90,
-                                          labelcolor: Colors.red,
-                                          iconColor: Colors.red,
-                                          bdr: true),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                      Button(Icons.check, Colors.grey,
-                                          ctx: context,
-                                          text: "SAVE",
-                                          height: 29,
-                                          Color: Color(0xff3E4F5B),
-                                          width: 90,
-                                          labelcolor: Colors.white,
-                                          iconColor: Colors.white,
-                                          onApply: () {
+                                SaveUpdateResponsiveButton(
+                                  label:"SAVE" ,
+                                  discardFunction: (){},
+                                  saveFunction: (){
                                     ratiooCheck(minMaxRatioController.text,"");
                                     ratiooCheck(channelTypeController.text,"1");
-                               if(check!=true){
-                                   StockData model=StockData(
-                                     inventoryId: Variable.inventory_ID,
-                                     variantId: variantId,
-                                     stockWarning: stockwarning,
-                                     reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
-                                     reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
-                                     channelTypeAllocationRatio: channelTypeController?.text??"",
-                                     minMaxRatio: minMaxRatioController?.text??"",
-                                     salesBlocked: salesBlock??false,
-                                     maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
-                                     minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
-                                     addVirtualStock:int.tryParse(addVirtualStockController.text),
-                                     // int.tryParse(virtualStockController.text)??null,
-                                     virtualType: virtualStockTypeController?.text??"",
-                                     purchaseBlocked: purchaseBlock??false,
+                                    if(check!=true){
+                                      StockData model=StockData(
+                                        inventoryId: Variable.inventory_ID,
+                                        variantId: variantId,
+                                        stockWarning: stockwarning,
+                                        reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
+                                        reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
+                                        channelTypeAllocationRatio: channelTypeController?.text??"",
+                                        minMaxRatio: minMaxRatioController?.text??"",
+                                        salesBlocked: salesBlock??false,
+                                        maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
+                                        minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
+                                        addVirtualStock:int.tryParse(addVirtualStockController.text),
+                                        // int.tryParse(virtualStockController.text)??null,
+                                        virtualType: virtualStockTypeController?.text??"",
+                                        purchaseBlocked: purchaseBlock??false,
 
-                                   );
-                                   print(model);
-                                   context.read<StockpostCubit>().postStock(model);
-                               }
+                                      );
+                                      print(model);
+                                      context.read<StockpostCubit>().postStock(model);
+                                    }
 
-
-
-
-
-
-                                          }),
-                                      SizedBox(
-                                        width: width * .008,
-                                      ),
-                                    ],
-                                  ),
+                                  },
                                 ),
+                               //  Container(
+                               //    margin:  EdgeInsets.symmetric(horizontal:width *.0155 ),
+                               //    child: Row(
+                               //      mainAxisAlignment: MainAxisAlignment.end,
+                               //      children: [
+                               //        Button(Icons.delete, Colors.red,
+                               //            ctx: context,
+                               //            text: "DISCARD",
+                               //            onApply: () {
+                               //              // if(updateCheck){
+                               //              //   // clears();
+                               //              //
+                               //              //
+                               //              // }
+                               //
+                               //            },
+                               //            height: 29,
+                               //            width: 90,
+                               //            labelcolor: Colors.red,
+                               //            iconColor: Colors.red,
+                               //            bdr: true),
+                               //        SizedBox(
+                               //          width: width * .008,
+                               //        ),
+                               //        Button(Icons.check, Colors.grey,
+                               //            ctx: context,
+                               //            text: "SAVE",
+                               //            height: 29,
+                               //            Color: Color(0xff3E4F5B),
+                               //            width: 90,
+                               //            labelcolor: Colors.white,
+                               //            iconColor: Colors.white,
+                               //            onApply: () {
+                               //      ratiooCheck(minMaxRatioController.text,"");
+                               //      ratiooCheck(channelTypeController.text,"1");
+                               // if(check!=true){
+                               //     StockData model=StockData(
+                               //       inventoryId: Variable.inventory_ID,
+                               //       variantId: variantId,
+                               //       stockWarning: stockwarning,
+                               //       reOrderPoint:int.tryParse( reorderPointQuantityController?.text??""),
+                               //       reOrderQuantity: int.tryParse(reorderQuantityController?.text??""),
+                               //       channelTypeAllocationRatio: channelTypeController?.text??"",
+                               //       minMaxRatio: minMaxRatioController?.text??"",
+                               //       salesBlocked: salesBlock??false,
+                               //       maximumQuantity:int.tryParse(maximumQuantityController?.text??""),
+                               //       minimumQuantity: int.tryParse(minimumQuantityController?.text??""),
+                               //       addVirtualStock:int.tryParse(addVirtualStockController.text),
+                               //       // int.tryParse(virtualStockController.text)??null,
+                               //       virtualType: virtualStockTypeController?.text??"",
+                               //       purchaseBlocked: purchaseBlock??false,
+                               //
+                               //     );
+                               //     print(model);
+                               //     context.read<StockpostCubit>().postStock(model);
+                               // }
+                               //
+                               //
+                               //
+                               //
+                               //
+                               //
+                               //            }),
+                               //        SizedBox(
+                               //          width: width * .008,
+                               //        ),
+                               //      ],
+                               //    ),
+                               //  ),
 
                               ],
-                            )
+                            ),
+                          )
 
-                            )
+                          )
 
-                          ],
-                        ),
+                        ],
                       ),
                     ),
 

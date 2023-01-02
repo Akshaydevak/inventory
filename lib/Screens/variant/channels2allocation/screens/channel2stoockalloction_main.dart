@@ -13,6 +13,7 @@ import 'package:inventory/Screens/variant/channels2allocation/screens/channelbut
 import 'package:inventory/Screens/variant/channels2allocation/screens/stabletable.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
 import 'package:inventory/commonWidget/Colors.dart';
+import 'package:inventory/commonWidget/buttons.dart';
 import 'package:inventory/commonWidget/snackbar.dart';
 import 'package:inventory/commonWidget/verticalList.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -55,6 +56,7 @@ class _ChannelTypeStockAllocationState
   bool dailyStockAvailable = false;
   bool salesBlock = false;
   bool purchaseBlock = false;
+  bool suffixIconCheck = false;
   TextEditingController channelTypeController = TextEditingController();
   List<BrandListModel> result = [];
   List<ChannelListModel> checkBoxLis = [];
@@ -349,60 +351,63 @@ class _ChannelTypeStockAllocationState
                 double width = MediaQuery.of(context).size.width;
                 return Scaffold(
                   backgroundColor: Pellet.bagroundColor,
-                  body: SingleChildScrollView(
-                    child: IntrinsicHeight(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          VariantVerticalList(
-                            list: list,
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            ontap: (int index) {
+                  body: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        VariantVerticalList(
+                          list: list,
+                          suffixIconCheck: suffixIconCheck,
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          ontap: (int index) {
+                            setState(() {
+                              selectedVertical = index;
+                              group.clear();
+                              selection.clear();
+                              checkBoxLis.clear();
+                              clear();
+
+                              // select=false;
+                              // clear();
+                              // exportCheck=false;
+                              // addNew=true;
+
+                              // updateCheck=false;
+                              print("rijina" + result[index].id.toString());
+
+                              veritiaclid = result[index].id;
+                              // clear();
+                              // select=true;
+                              //
+                              //
+
                               setState(() {
-                                selectedVertical = index;
-                                group.clear();
-                                selection.clear();
-                                checkBoxLis.clear();
-                                clear();
-
-                                // select=false;
-                                // clear();
-                                // exportCheck=false;
-                                // addNew=true;
-
-                                // updateCheck=false;
-                                print("rijina" + result[index].id.toString());
-
-                                veritiaclid = result[index].id;
-                                // clear();
-                                // select=true;
-                                //
-                                //
-
-                                setState(() {
-                                  context
-                                      .read<ChannelstockverticalCubit>()
-                                      .getChannelAllocationList(veritiaclid!);
-                                  // context.read<StockreadCubit>().getStockRead(veritiaclid!);
-                                });
+                                context
+                                    .read<ChannelstockverticalCubit>()
+                                    .getChannelAllocationList(veritiaclid!);
+                                // context.read<StockreadCubit>().getStockRead(veritiaclid!);
                               });
-                            },
-                            search: (String va) {
-                              print(va);
+                            });
+                          },
+                          search: (String va) {
+                            print(va);
+                            context
+                                .read<ListvraiantCubit>()
+                                .getSearchVariantList(va);
+                            suffixIconCheck=true;
+                            if (va == "") {
                               context
                                   .read<ListvraiantCubit>()
-                                  .getSearchVariantList(va);
-                              if (va == "") {
-                                context
-                                    .read<ListvraiantCubit>()
-                                    .getVariantList();
-                              }
-                            },
-                            result: result,
-                          ),
-                          Expanded(
+                                  .getVariantList();
+                              suffixIconCheck=false;
+                            }
+                          },
+                          result: result,
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 ChannelScrollableScreen(
@@ -502,86 +507,127 @@ class _ChannelTypeStockAllocationState
                                 SizedBox(
                                   height: height * .06,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // Button(Icons.delete, Colors.red,
-                                    //     ctx: context,
-                                    //     text: "Discard",
-                                    //     onApply: () {
-                                    //       // if(updateCheck){
-                                    //       //   // clears();
-                                    //       //
-                                    //       //
-                                    //       // }
-                                    //
-                                    //     },
-                                    //     height: 29,
-                                    //     width: 90,
-                                    //     labelcolor: Colors.red,
-                                    //     iconColor: Colors.red,
-                                    //     bdr: true),
-                                    SizedBox(
-                                      width: width * .008,
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(
-                                          right: width * .02,
-                                          left: height * .02),
-                                      child: Button(Icons.check, Colors.grey,
-                                          ctx: context,
-                                          text: "UPDATE",
-                                          height: 29,
-                                          Color: Color(0xff3E4F5B),
-                                          width: 90,
-                                          labelcolor: Colors.white,
-                                          iconColor: Colors.white, onApply: () {
-                                        ChannelListModel model =
-                                            ChannelListModel(
-                                          stockWarning: stockwarning,
-                                          salesBlock: salesBlock,
-                                          purchaseBlocked:purchaseBlock ,
-                                          salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
-                                          purchaseBlockQuantity: int.tryParse(purchaseBlockController.text),
-                                          virtualType:
-                                              virtualStockTypeController.text,
-                                          addVirtualStock: int.tryParse(
-                                              addVirtualStock?.text ?? ""),
-                                          safetyStockQuantity: int.tryParse(
-                                              safetyStockController.text),
-                                          reOrderPoint: int.tryParse(
-                                              reorderPointQuantityController
-                                                  .text),
-                                          reOrderQuantity: int.tryParse(
-                                              reorderQuantityController.text),
-                                          channelStatusCrucialPoint:
-                                              int.tryParse(
-                                                  channelStatusCrucialPoint
-                                                      .text),
-                                          channelStatusMediumPoint:
-                                              int.tryParse(
-                                                  channelStatusMediumPoint
-                                                      .text),
-                                              dailyStockQuantity: int.tryParse(dailyStockQuantity.text),
-                                           isDAilyStockAvailable:dailyStockAvailable,
-                                        );
-                                        print("Bad Model$model");
-                                        context
-                                            .read<ChannelpatchCubit>()
-                                            .channel2StockAllocationPatch(
-                                                channelId, model);
-                                      }),
-                                    ),
-                                    SizedBox(
-                                        // width: width * .008,
-                                        ),
-                                  ],
+                                SaveUpdateResponsiveButton(
+                                  discardFunction: (){},
+                                  label: "UPDATE",
+                                  saveFunction: (){
+                                    ChannelListModel model =
+                                    ChannelListModel(
+                                      stockWarning: stockwarning,
+                                      salesBlock: salesBlock,
+                                      purchaseBlocked:purchaseBlock ,
+                                      salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
+                                      purchaseBlockQuantity: int.tryParse(purchaseBlockController.text),
+                                      virtualType:
+                                      virtualStockTypeController.text,
+                                      addVirtualStock: int.tryParse(
+                                          addVirtualStock?.text ?? ""),
+                                      safetyStockQuantity: int.tryParse(
+                                          safetyStockController.text),
+                                      reOrderPoint: int.tryParse(
+                                          reorderPointQuantityController
+                                              .text),
+                                      reOrderQuantity: int.tryParse(
+                                          reorderQuantityController.text),
+                                      channelStatusCrucialPoint:
+                                      int.tryParse(
+                                          channelStatusCrucialPoint
+                                              .text),
+                                      channelStatusMediumPoint:
+                                      int.tryParse(
+                                          channelStatusMediumPoint
+                                              .text),
+                                      dailyStockQuantity: int.tryParse(dailyStockQuantity.text),
+                                      isDAilyStockAvailable:dailyStockAvailable,
+                                    );
+                                    print("Bad Model$model");
+                                    context
+                                        .read<ChannelpatchCubit>()
+                                        .channel2StockAllocationPatch(
+                                        channelId, model);
+                                  },
+
                                 ),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.end,
+                                //   children: [
+                                //     // Button(Icons.delete, Colors.red,
+                                //     //     ctx: context,
+                                //     //     text: "Discard",
+                                //     //     onApply: () {
+                                //     //       // if(updateCheck){
+                                //     //       //   // clears();
+                                //     //       //
+                                //     //       //
+                                //     //       // }
+                                //     //
+                                //     //     },
+                                //     //     height: 29,
+                                //     //     width: 90,
+                                //     //     labelcolor: Colors.red,
+                                //     //     iconColor: Colors.red,
+                                //     //     bdr: true),
+                                //     SizedBox(
+                                //       width: width * .008,
+                                //     ),
+                                //     Container(
+                                //       margin: EdgeInsets.only(
+                                //           right: width * .02,
+                                //           left: height * .02),
+                                //       child: Button(Icons.check, Colors.grey,
+                                //           ctx: context,
+                                //           text: "UPDATE",
+                                //           height: 29,
+                                //           Color: Color(0xff3E4F5B),
+                                //           width: 90,
+                                //           labelcolor: Colors.white,
+                                //           iconColor: Colors.white, onApply: () {
+                                //         ChannelListModel model =
+                                //             ChannelListModel(
+                                //           stockWarning: stockwarning,
+                                //           salesBlock: salesBlock,
+                                //           purchaseBlocked:purchaseBlock ,
+                                //           salesblockQuantity: int.tryParse(salesBlockQuantityController.text),
+                                //           purchaseBlockQuantity: int.tryParse(purchaseBlockController.text),
+                                //           virtualType:
+                                //               virtualStockTypeController.text,
+                                //           addVirtualStock: int.tryParse(
+                                //               addVirtualStock?.text ?? ""),
+                                //           safetyStockQuantity: int.tryParse(
+                                //               safetyStockController.text),
+                                //           reOrderPoint: int.tryParse(
+                                //               reorderPointQuantityController
+                                //                   .text),
+                                //           reOrderQuantity: int.tryParse(
+                                //               reorderQuantityController.text),
+                                //           channelStatusCrucialPoint:
+                                //               int.tryParse(
+                                //                   channelStatusCrucialPoint
+                                //                       .text),
+                                //           channelStatusMediumPoint:
+                                //               int.tryParse(
+                                //                   channelStatusMediumPoint
+                                //                       .text),
+                                //               dailyStockQuantity: int.tryParse(dailyStockQuantity.text),
+                                //            isDAilyStockAvailable:dailyStockAvailable,
+                                //         );
+                                //         print("Bad Model$model");
+                                //         context
+                                //             .read<ChannelpatchCubit>()
+                                //             .channel2StockAllocationPatch(
+                                //                 channelId, model);
+                                //       }),
+                                //     ),
+                                //     SizedBox(
+                                //         // width: width * .008,
+                                //         ),
+                                //   ],
+                                // ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );

@@ -191,6 +191,38 @@ Map<String, dynamic> _$$_VariantReadModelToJson(_$_VariantReadModel instance) =>
       'have_wrap_option': instance.haveWrapOption,
     };
 
+_$_Returntypemodel _$$_ReturntypemodelFromJson(Map<String, dynamic> json) =>
+    _$_Returntypemodel(
+      returnType: (json['return_type'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      shelfType: (json['shelf_type'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      lengthUnit: (json['length_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      weightUnit: (json['weight_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      widthUnit: (json['width_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      heightUnit: (json['height_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_ReturntypemodelToJson(_$_Returntypemodel instance) =>
+    <String, dynamic>{
+      'return_type': instance.returnType,
+      'shelf_type': instance.shelfType,
+      'length_unit': instance.lengthUnit,
+      'weight_unit': instance.weightUnit,
+      'width_unit': instance.widthUnit,
+      'height_unit': instance.heightUnit,
+    };
+
 _$_SalesUomData _$$_SalesUomDataFromJson(Map<String, dynamic> json) =>
     _$_SalesUomData(
       key: json['key'] as int?,

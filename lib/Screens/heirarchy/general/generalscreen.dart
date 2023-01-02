@@ -416,38 +416,39 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
               return Builder(builder: (context) {
                 return Scaffold(
                   backgroundColor: Colors.white,
-                  body: SingleChildScrollView(
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          ItemVerticalList(
-                            list: list,
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            ontap: (int index) {
-                              setState(() {
-                                selectedVertical = index;
-                                active = false;
+                  body: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ItemVerticalList(
+                          list: list,
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          ontap: (int index) {
+                            setState(() {
+                              selectedVertical = index;
+                              active = false;
 
-                                // select=false;
-                                // updateCheck=false;
+                              // select=false;
+                              // updateCheck=false;
 
-                                veritiaclid = result[index].id;
-                                clear();
-                                select = false;
+                              veritiaclid = result[index].id;
+                              clear();
+                              select = false;
 
-                                context
-                                    .read<ItemreadCubit>()
-                                    .getItemRead(veritiaclid!);
 
-                                setState(() {});
-                              });
-                            },
-                            result: result,
-                          ),
-                          Expanded(
+                              context
+                                  .read<ItemreadCubit>()
+                                  .getItemRead(veritiaclid!);
+
+                              setState(() {});
+                            });
+                          },
+                          result: result,
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -477,6 +478,7 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                   ],
                                 ),
                                 HeirarchySalesStableTable(
+                                    select:select,
                                   uomGroupid: uomGroupId,
                                   uomGroupController: uomGroupController,
                                   uomController: uomCategoryController,
@@ -873,9 +875,9 @@ class _HeirarchyGeneralScreenState extends State<HeirarchyGeneralScreen> {
                                 // ),
                               ],
                             ),
-                          )
-                        ],
-                      ),
+                          ),
+                        )
+                      ],
                     ),
                   ),
                 );
@@ -2135,24 +2137,27 @@ Widget tablePagination(VoidCallback reset,
         {VoidCallback? next, VoidCallback? back}) =>
     Transform.scale(
       scale: .95,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Spacer(),
-          TextButton.icon(
-              onPressed: back,
-              icon: Icon(
-                Icons.arrow_back_ios,
-                size: 16,
-              ),
-              label: Text("Back",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
-          TextButton.icon(
-              onPressed: next,
-              label: Icon(
-                Icons.arrow_forward_ios,
-                size: 19,
-              ),
-              icon: Text("Next",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
-        ],
+      child: Container(
+        width: 300,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Spacer(),
+            TextButton.icon(
+                onPressed: back,
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 16,
+                ),
+                label: Text("Back",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+            TextButton.icon(
+                onPressed: next,
+                label: Icon(
+                  Icons.arrow_forward_ios,
+                  size: 19,
+                ),
+                icon: Text("Next",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),)),
+          ],
+        ),
       ),
     );

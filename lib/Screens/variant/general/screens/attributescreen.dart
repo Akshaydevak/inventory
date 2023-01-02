@@ -46,6 +46,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
       for (var i = 0; i < attribute.length; i++) {
         graphArray.add([]);
       }
+      print("graphArrayList"+graphArray.length.toString());
       // if
 
       for (var i = 0; i < attribute.length; i++) {
@@ -88,8 +89,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
           // );
 
         }
-        print("garray  0" + graphArray[0].toString());
-        print("garray   1" + graphArray[1].toString());
+
       }
 //        graphArray = new List.generate(attribute.length, (i) {
 //          print("the i is here"+i.toString());
@@ -118,7 +118,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
 
     }
     onChange = false;
-    print("grappphAtrray" + graphArray.toString());
+
 
     return BlocListener<VariantCreationRead2Cubit, VariantCreationRead2State>(
       listener: (context, state) {
@@ -156,6 +156,7 @@ class _AttributeScreenState extends State<AttributeScreen> {
                 itemCount: attribute.length,
                 itemBuilder: (context, index) {
                   return Container(
+                    margin: EdgeInsets.all(10),
                     // height: 400,
                     // width: MediaQuery.of(context).size.width / 2,
                     child: Column(

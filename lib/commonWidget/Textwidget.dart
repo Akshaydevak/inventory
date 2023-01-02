@@ -12,7 +12,7 @@ class TextWidget extends StatelessWidget {
     double h=MediaQuery.of(context).size.height;
     double w=MediaQuery.of(context).size.width;
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:w *.0155 ),
+      margin: EdgeInsets.symmetric(horizontal:w *.0175 ),
         child: Text(text,style: TextStyle(color: color,fontWeight: FontWeight.bold,fontSize: size),));
   }
 }

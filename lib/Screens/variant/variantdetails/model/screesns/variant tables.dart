@@ -100,7 +100,7 @@ class ProductTableState extends State<ProductTable> {
           controller: headingController,
           onChange: (va) {
             print(va);
-            aboutProducts = Storage(name: va,keyValues: keys);
+            aboutProducts = Storage(name: va??"About the Product",keyValues: keys);
             widget.storageTableEdit(
                 type: "1", list: aboutProducts);
           },
@@ -252,7 +252,7 @@ class ProductTableState extends State<ProductTable> {
                                   print(keys);
 
                                   aboutProducts = Storage(
-                                      name: headingController.text, keyValues: keys);
+                                      name: headingController?.text??"About the Product", keyValues: keys);
                                   widget.storageTableEdit(
                                       type: "1", list: aboutProducts);
                                 });
@@ -337,7 +337,7 @@ class ProductTableState extends State<ProductTable> {
                               nameListControllers.add(nameValue);
 
                               aboutProducts = Storage(
-                                  name: headingController.text, keyValues: keys);
+                                  name: headingController?.text??"About the Product", keyValues: keys);
                               widget.storageTableEdit(
                                   type: "1", list: aboutProducts);
                               name.text = "";
@@ -448,7 +448,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
           onChange: (va) {
             print(va);
             print(va);
-            productDetails = ProductFeatures(name: va,keyValues: keys);
+            productDetails = ProductFeatures(name: va??"Product details",keyValues: keys);
             widget.productTableEdit(
                 type: "1", list: productDetails);
           },
@@ -554,7 +554,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                 key: va,
                               );
                               productDetails = ProductFeatures(
-                                  name: heading.text, keyValues: keys);
+                                  name: heading?.text??"Product details", keyValues: keys);
                               // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
 
                             },
@@ -581,7 +581,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                 print(va);
                                 keys[i] = keys[i].copyWith(value: va);
                                 productDetails = ProductFeatures(
-                                    name: heading.text, keyValues: keys);
+                                    name: heading?.text??"Product details", keyValues: keys);
                                 // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
 
                               },
@@ -649,7 +649,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                       keyListTextEditingController.removeAt(i);
                                       valueListTextEditingController.removeAt(i);
                                       productDetails = ProductFeatures(
-                                          name: heading.text, keyValues: keys);
+                                          name: heading?.text??"Product details", keyValues: keys);
                                       // productDetails[i]=productDetails[i].copyWith(keyValues: keys);
                                       widget.productTableEdit(
                                           type: "1", list: productDetails);
@@ -762,7 +762,7 @@ class VariantProductDetailsState extends State<VariantProductDetails> {
                                 valueListTextEditingController.add(valValue);
 
                                 productDetails = ProductFeatures(
-                                    name: heading.text, keyValues: keys);
+                                    name: heading?.text??"Product details", keyValues: keys);
                                 widget.productTableEdit(
                                     type: "1", list: productDetails);
                                 key.text = "";
@@ -1333,7 +1333,7 @@ class AdditionaslInfoState extends State<AdditionaslInfo> {
 
                 children: [
                   tableHeadtext(
-                    'Additiona information',
+                    'Additional information',
 
                     padding: EdgeInsets.only(left: 13,top: 13),
 
@@ -3514,6 +3514,7 @@ class _ImportantInfoState extends State<ImportantInfo> {
   }
 }
 
+
 class ProductBehaviour extends StatefulWidget {
   final Function productFeaturesableAssign;
   final List<productBehaviour>? inforMationList;
@@ -3655,47 +3656,47 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
           if (inforMationList?.isNotEmpty == true) ...[
             for (var i = 0; i < inforMationList!.length; i++)
               TableRow(
-    decoration: BoxDecoration(
-    color: Pellet.tableRowColor,
-    shape: BoxShape.rectangle,
-    border:  Border(
-    left: BorderSide(
+                  decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
+                      shape: BoxShape.rectangle,
+                      border:  Border(
+                          left: BorderSide(
 
-    color: Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
-    style: BorderStyle.solid),
-    bottom: BorderSide(
+                              color: Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
+                              style: BorderStyle.solid),
+                          bottom: BorderSide(
 
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    style: BorderStyle.solid),
-    right: BorderSide(
-    color:   Color(0xff3E4F5B).withOpacity(.1),
-    width: .4,
+                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                              style: BorderStyle.solid),
+                          right: BorderSide(
+                              color:   Color(0xff3E4F5B).withOpacity(.1),
+                              width: .4,
 
-    style: BorderStyle.solid))),
+                              style: BorderStyle.solid))),
                   children: [
-    upDate[i]?  TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child:CustomDropDown(
-                          clr: upDate[i]?Colors.white:Colors.transparent,
+                    upDate[i]?  TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child:CustomDropDown(
+                            clr: upDate[i]?Colors.white:Colors.transparent,
 
-                          choosenValue: inforMationList?[i].genderGroup ?? "",
-                          onChange: (val) {
-                            onChange=true;
+                            choosenValue: inforMationList?[i].genderGroup ?? "",
+                            onChange: (val) {
+                              onChange=true;
 
-                            setState(() {
-                              upDateButton[i]=true;
-                            });
+                              setState(() {
+                                upDateButton[i]=true;
+                              });
 
-                            inforMationList?[i]=inforMationList[i].copyWith(genderGroup: val);
-                                 print(inforMationList);
-                            widget.productFeaturesableAssign(
-                                list: inforMationList);
-                          },
-                          items: items)
+                              inforMationList?[i]=inforMationList[i].copyWith(genderGroup: val);
+                              print(inforMationList);
+                              widget.productFeaturesableAssign(
+                                  list: inforMationList);
+                            },
+                            items: items)
                     ):  TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: textPadding(inforMationList?[i].genderGroup ?? "",height: 48)),
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child: textPadding(inforMationList?[i].genderGroup ?? "",height: 48)),
                     TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child: UnderLinedInput(
@@ -3717,15 +3718,15 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                         },
                       ),
                     ),
-    upDate[i]? TableCell(
-                      verticalAlignment: TableCellVerticalAlignment.middle,
-                      child:CustomDropDown(
-                          clr: upDate[i]?Colors.white:Colors.transparent,
-                          choosenValue:inforMationList[i].ethinik,
-                          onChange: (val) {
-                            onChange=true;
-                            setState(() {
+                    upDate[i]? TableCell(
+                        verticalAlignment: TableCellVerticalAlignment.middle,
+                        child:CustomDropDown(
+                            clr: upDate[i]?Colors.white:Colors.transparent,
+                            choosenValue:inforMationList[i].ethinik,
+                            onChange: (val) {
                               onChange=true;
+                              setState(() {
+                                onChange=true;
 
                                 upDateButton[i]=true;
 
@@ -3736,9 +3737,9 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                                 print(inforMationList);
                                 widget.productFeaturesableAssign(
                                     list: inforMationList);
-                            });
-                          },
-                          items: ethinikItem)
+                              });
+                            },
+                            items: ethinikItem)
 
 
                       // UnderLinedInput(
@@ -3755,7 +3756,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                       //   },
                       // ),
                     ):textPadding(inforMationList?[i].ethinik ?? "",height: 48),
-     TableCell(
+                    TableCell(
                       verticalAlignment: TableCellVerticalAlignment.middle,
                       child:
                       upDate[i]?        Container(
@@ -3773,17 +3774,17 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                           enable: true,
                           onSelection: (VariantReadModel? va) {
 
-                                  print(va);
-                                  onChange=true;
+                            print(va);
+                            onChange=true;
 
-                                  setState(() {
-                                    upDateButton[i]=true;
-                                  });
+                            setState(() {
+                              upDateButton[i]=true;
+                            });
 
-                                  inforMationList?[i]=inforMationList[i].copyWith(countries: va?.name??"");
-                                  print(inforMationList);
-                                  widget.productFeaturesableAssign(
-                                      list: inforMationList);
+                            inforMationList?[i]=inforMationList[i].copyWith(countries: va?.name??"");
+                            print(inforMationList);
+                            widget.productFeaturesableAssign(
+                                list: inforMationList);
                           },
                         ),
                       ):textPadding(inforMationList?[i].countries ?? "",height: 48),
@@ -3905,7 +3906,7 @@ class _ProductBehaviourState extends State<ProductBehaviour> {
                                       (element) =>
                                   element ==
                                       inforMationList?[
-                                    i]);
+                                      i]);
                               upDate.removeAt(i);
                               upDateButton.removeAt(i);
                               purposeListTextEditingController.removeAt(i);

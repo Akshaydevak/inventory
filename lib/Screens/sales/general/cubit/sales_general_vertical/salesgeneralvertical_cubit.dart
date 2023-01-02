@@ -16,6 +16,7 @@ class SalesgeneralverticalCubit extends Cubit<SalesgeneralverticalState> {
     next = null;
     prev = null;
     print("batista");
+    emit(SalesgeneralverticalState.initial());
     final result = await repo.getSalesGeneralVertical();
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;

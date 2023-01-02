@@ -42,6 +42,7 @@ class AttributeListModel with _$AttributeListModel {
 
 
 
+    @JsonKey(name: "attribute_types") final List<String>? attributeTypes,
     @JsonKey(name: "attribute_type") final String? attributeType,
     @JsonKey(name: "attribute_name") final String? attributeName,
     @JsonKey(name: "is_active",defaultValue: false) final bool? isActive,

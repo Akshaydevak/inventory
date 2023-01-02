@@ -52,6 +52,9 @@ _$_AttributeListModel _$$_AttributeListModelFromJson(
     _$_AttributeListModel(
       id: json['id'] as int?,
       code: json['code'] as String?,
+      attributeTypes: (json['attribute_types'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
       attributeType: json['attribute_type'] as String?,
       attributeName: json['attribute_name'] as String?,
       isActive: json['is_active'] as bool? ?? false,
@@ -62,6 +65,7 @@ Map<String, dynamic> _$$_AttributeListModelToJson(
     <String, dynamic>{
       'id': instance.id,
       'code': instance.code,
+      'attribute_types': instance.attributeTypes,
       'attribute_type': instance.attributeType,
       'attribute_name': instance.attributeName,
       'is_active': instance.isActive,

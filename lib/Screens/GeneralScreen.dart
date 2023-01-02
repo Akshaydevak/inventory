@@ -280,6 +280,10 @@ List<TextEditingController> vatController =[];
     // _value=false;
   }
   vatableAmountCalculation(double? unitCost,int? qty,double? excessTax,int? discount){
+    print(unitCost);
+    print(qty);
+    print(excessTax);
+    print(discount);
     Vamount =double.parse( (((unitCost! *
         qty!) +
         excessTax!) -
@@ -406,17 +410,17 @@ List<TextEditingController> vatController =[];
           var VatableValue1= table[i].variableAmount??0;
           var excessTAxValue1= table[i].excessTax??0;
 
-          unitcost = unitcost +unicost1;
+          unitcost =double.parse( (unitcost +unicost1).toStringAsFixed(2));
 
-          grands = grands + grands1;
-          actualValue = actualValue + actualValue1;
-          vatValue = vatValue + vatValue1;
-          discountValue = discountValue + discountValue1;
-          focValue = focValue + focValue1;
+          grands = double.parse((grands + grands1).toStringAsFixed(2));
+          actualValue =double.parse( (actualValue + actualValue1).toStringAsFixed(2));
+          vatValue = double.parse((vatValue + vatValue1).toStringAsFixed(2));
+          discountValue = double.parse((discountValue + discountValue1).toStringAsFixed(2));
+          focValue = double.parse((focValue + focValue1).toStringAsFixed(2));
 
-          VatableValue = VatableValue + VatableValue1;
+          VatableValue =double.parse( (VatableValue + VatableValue1).toStringAsFixed(2));
           print("excessTaxvalue"+excessTAxValue.toString());
-          excessTAxValue = excessTAxValue + excessTAxValue1;
+          excessTAxValue = double.parse((excessTAxValue + excessTAxValue1).toStringAsFixed(2));
         }
       }
     unitcourse.text = unitcost == 0 ? "" : unitcost.toString();
@@ -554,6 +558,7 @@ List<TextEditingController> vatController =[];
                               vrefcod = purchaseTable?.code;
                               vid = purchaseTable?.id;
                               purchaseTable?.excessTax != null ? eTax = purchaseTable?.excessTax : eTax = 0;
+                             excesstaxTestContoller?.text = purchaseTable?.excessTax.toString()??"" ;
                               Vbarcode = purchaseTable?.barCode?.barcodeNumber.toString();
 
                               setState(() {
@@ -816,51 +821,51 @@ else{
                     });
               },
               builder: (context, state) {
-                return SingleChildScrollView(
-                  child: IntrinsicHeight(
+                return IntrinsicHeight(
 
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        VerticalList(selectedVertical: selectedVertical,
-                          itemsearch: itemsearch,ontap: (int index){
-                            setState(() {
-                              print("taped");
-                              select=false;
-                              selectedVertical=index;
-                              currentStock=[];
-                              updateCheck=false;
-                              clear();
-                              table=[];
-                              setState(() {});
-                              veritiaclid = result[index].id;
-                              context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      VerticalList(selectedVertical: selectedVertical,
+                        itemsearch: itemsearch,ontap: (int index){
+                          setState(() {
+                            print("taped");
+                            select=false;
+                            selectedVertical=index;
+                            currentStock=[];
+                            updateCheck=false;
+                            clear();
+                            table=[];
+                            setState(() {});
+                            veritiaclid = result[index].id;
+                            context.read<GeneralPurchaseReadCubit>().getGeneralPurchaseRead(veritiaclid!);
 
-                            });
-                          },result: result,
-                            child:                    tablePagination(
-                                  () => context
+                          });
+                        },result: result,
+                          child:                    tablePagination(
+                                () => context
+                                .read<InventorysearchCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<InventorysearchCubit>()
-                                  .refresh(),
-                              back: paginatedList?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<InventorysearchCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next:paginatedList?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<InventorysearchCubit>()
-                                    .nextslotSectionPageList("");
-                              },
-                            ),
-                        ),
-                        Expanded(
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<InventorysearchCubit>()
+                                  .nextslotSectionPageList("");
+                            },
+                          ),
+                      ),
+                      Expanded(
+                        child: SingleChildScrollView(
                           child: Container(
                             child: Column(
                               children: [
@@ -934,6 +939,7 @@ else{
 
                                                     SelectableDropDownpopUp(
                                                       label: "Order Type",
+
                                                       type:"sellingngPrice-basedOn",
                                                       value: purchaseUom,
                                                       onSelection: (String? va) {
@@ -976,7 +982,7 @@ else{
                                                     ),
 
                                                     NewInputCard(
-                                                      controller: vendorCodeName,
+                                                      controller: vendorCode,
                                                       icondrop: true,
                                                       title: "Vendor Code",
                                                       readOnly: true,
@@ -2384,9 +2390,9 @@ else{
                                                                     },
                                                                   ),
                                                                 ),
-                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: Checkbox(value:
+                                                                TableCell(verticalAlignment: TableCellVerticalAlignment.middle, child: CheckedBoxs(valueChanger:
                                                                     this.isRecieved,
-                                                                    onChanged: (bool? value) {
+                                                                    onSelection: (bool? value) {
                                                                       setState(() {
                                                                       });
                                                                     },
@@ -2576,16 +2582,10 @@ else{
                                                                   ),
                                                                 ),
                                                                 TableCell(verticalAlignment: TableCellVerticalAlignment.middle,
-                                                                  child: InkWell(
-                                                                    child: Center(
-                                                                        child: Container(
-                                                                            decoration: BoxDecoration(
-                                                                                color: _value ? Color(0xff3E4F5B) : Colors.transparent,
-                                                                                border: Border.all(width: 2, color: Colors.grey)
-                                                                            ),
-                                                                            child: _value ? Icon(Icons.check,color: Colors.white, size: 15,
-                                                                            ) : SizedBox(height: 15, width: 15,))),
-                                                                    onTap: () {
+                                                                  child: CheckedBoxs(
+                                                                    valueChanger: _value ,
+
+                                                                    onSelection: (val) {
                                                                       setState(() {
                                                                         if (vminqty! >
                                                                             vmaxnqty!) {
@@ -2792,6 +2792,13 @@ else{
                                                 "please press update");
                                           }
                                           else{
+                                            var table1=[
+                                               for(var em in table)
+                                                 if(em.isActive==true)
+                                                   em
+                                            ];
+                                            print("filter table"+table1.toString());
+
                                             PurchaseOrderPost model = PurchaseOrderPost(
                                               purchaseOrderType: orderType == "" ? "" : orderType,
                                               iventoryId: Variable.inventory_ID,
@@ -2814,7 +2821,7 @@ else{
                                               grandTotal: grandtotal.text == "" ? 0 : double.parse(grandtotal.text),
                                               variableAmount: Variableamount.text == "" ? 0 : double.parse(Variableamount.text),
                                               createdBy: Variable.username,
-                                              orderLines: table,
+                                              orderLines: table1,
                                             );
                                             print("selecting "+model.toString());
                                             select? context.read<PurchaseorderpostCubit>().postPurchase(model):
@@ -2943,8 +2950,8 @@ else{
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },

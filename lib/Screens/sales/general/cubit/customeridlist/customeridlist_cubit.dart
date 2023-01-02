@@ -13,6 +13,7 @@ class CustomeridlistCubit extends Cubit<CustomeridlistState> {
   String? prev;
   String? next;
   Future getCustomerId() async {
+    emit(CustomeridlistState.initial());
     final result = await repo.getCustomerId("");
     print(result);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
@@ -30,6 +31,7 @@ class CustomeridlistCubit extends Cubit<CustomeridlistState> {
   }
 
   Future nextslotSectionPageList() async {
+    emit(CustomeridlistState.initial());
     final result = await repo.getCustomerId(next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -40,6 +42,7 @@ class CustomeridlistCubit extends Cubit<CustomeridlistState> {
   }
 
   Future previuosslotSectionPageList() async {
+    emit(CustomeridlistState.initial());
     // print(previous);
     final result = await repo.getCustomerId(prev);
     result.fold((l) => emit(_Error()), (r) {

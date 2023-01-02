@@ -18,6 +18,10 @@ class CustomCreationtModel with _$CustomCreationtModel {
     @JsonKey(name: "excess_tax") final double? excesstax,
     @JsonKey(name: "return_type") final String? returnType,
     @JsonKey(name: "shelf_type") final String? shelfType,
+    @JsonKey(name: "weight_unit") final String? weightUnit,
+    @JsonKey(name: "length_unit") final String? lengthUnit,
+    @JsonKey(name: "width_unit") final String? widthUnit,
+    @JsonKey(name: "height_unit") final String? heightUnit,
     @JsonKey(name: "return_time") final int? returnTime,
     @JsonKey(name: "weight_uom_id") final double? weightUomId,
     @JsonKey(name: "targeted_gp") final double? targetdGp,
@@ -40,6 +44,18 @@ class ReadCustomModel with _$ReadCustomModel {
   }) = _ReadCustomModel;
   factory ReadCustomModel.fromJson(Map<String, dynamic> json) =>
       _$ReadCustomModelFromJson(json);
+}
+@freezed
+class ReadMessuremnetModel with _$ReadMessuremnetModel {
+  const factory ReadMessuremnetModel({
+    @JsonKey(name: "length_unit") final List<String>? lengthUnit,
+    @JsonKey(name: "width_unit") final List<String>? widthUnit,
+    @JsonKey(name: "height_unit") final List<String>? heightUnit,
+    @JsonKey(name: "weight_unit") final List<String>? weightUnit,
+
+  }) = _ReadMessuremnetModel;
+  factory ReadMessuremnetModel.fromJson(Map<String, dynamic> json) =>
+      _$ReadMessuremnetModelFromJson(json);
 }
 
 @freezed

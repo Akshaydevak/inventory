@@ -37,7 +37,7 @@ class _ProductModulGeneralScreenState extends State<ProductModulGeneralScreen> {
   TextEditingController variantFrameWorkController = TextEditingController();
   TextEditingController variantFrameWorkNameController = TextEditingController();
   int? veritiaclid = 0;
-  var result_value;
+  var result_value;bool suffixIconCheck=false;
   List<BrandListModel> result = [];
   TextEditingController itemsearch = TextEditingController();
   TextEditingController variantController = TextEditingController();
@@ -644,62 +644,67 @@ print("the list is"+variantList.toString());
                 return Builder(builder: (context) {
                   return Scaffold(
                     backgroundColor: Colors.white,
-                    body: SingleChildScrollView(
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            VariantVerticalList(
-                              list: lists,
-                              selectedVertical: selectedVertical,
-                              itemsearch: itemsearch,
-                              ontap: (int index) {
+                    body: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          VariantVerticalList(
+                            list: lists,
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,
+                            suffixIconCheck:suffixIconCheck,
+                            ontap: (int index) {
+                              setState(() {
+                                selectedVertical = index;
+                                variantController.clear();
+                                variantNameController.clear();
+                                vals.clear();
+                                uomCode = result[index].uomCode.toString();
+
+                                // select=false;
+                                // clear();
+                                // exportCheck=false;
+                                // addNew=true;
+
+                                // updateCheck=false;
+                                print("rijina" + result[index].id.toString());
+
+                                veritiaclid = result[index].id;
+                                Variable.variantSearchId = result[index].id;
+                                // clear();
+                                // select=true;
+                                //
+                                //
+
                                 setState(() {
-                                  selectedVertical = index;
-                                  variantController.clear();
-                                  variantNameController.clear();
-                                  vals.clear();
-
-                                  // select=false;
-                                  // clear();
-                                  // exportCheck=false;
-                                  // addNew=true;
-
-                                  // updateCheck=false;
-                                  print("rijina" + result[index].id.toString());
-
-                                  veritiaclid = result[index].id;
-                                  Variable.variantSearchId = result[index].id;
-                                  // clear();
-                                  // select=true;
-                                  //
-                                  //
-
-                                  setState(() {
-                                    context
-                                        .read<VariantCreationReadCubit>()
-                                        .getVariantCreationRead(veritiaclid!);
-                                  });
+                                  context
+                                      .read<VariantCreationReadCubit>()
+                                      .getVariantCreationRead(veritiaclid!);
                                 });
-                              },
-                              search: (String va) {
-                                print(va);
+                              });
+                            },
+                            search: (String va) {
+                              print(va);
+                              context
+                                  .read<ListvariantCubit>()
+                                  .searchVariantList(va);
+                              suffixIconCheck=true;
+
+                              if (va == "") {
                                 context
                                     .read<ListvariantCubit>()
-                                    .searchVariantList(va);
-                                if (va == "") {
-                                  context
-                                      .read<ListvariantCubit>()
-                                      .getVariantCreationList();
-                                }
-                              },
-                              result: result,
-                            ),
-                            Expanded(
+                                    .getVariantCreationList();
+                                suffixIconCheck=false;
+                              }
+                            },
+                            result: result,
+                          ),
+                          Expanded(
+                              child: SingleChildScrollView(
                                 child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 15),
-                              child: Column(
+                            margin: EdgeInsets.symmetric(horizontal: 15),
+                            child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   SizedBox(
@@ -816,7 +821,7 @@ print("the list is"+variantList.toString());
                                           }
                                         }
                                       }
-                                      print("filterList"+variantList.runtimeType.toString());
+                                      print("filterList"+uomCode.toString());
 
 
 
@@ -906,10 +911,10 @@ print("the list is"+variantList.toString());
                                     height: height / 12,
                                   ),
                                 ],
-                              ),
-                            ))
-                          ],
-                        ),
+                            ),
+                          ),
+                              ))
+                        ],
                       ),
                     ),
                   );

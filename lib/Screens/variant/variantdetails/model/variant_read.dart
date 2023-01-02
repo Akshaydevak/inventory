@@ -93,6 +93,28 @@ class VariantReadModel with _$VariantReadModel {
   factory VariantReadModel.fromJson(Map<String, dynamic> json) =>
       _$VariantReadModelFromJson(json);
 }
+@freezed
+class Returntypemodel with _$Returntypemodel {
+  const factory Returntypemodel({
+
+
+
+
+    @JsonKey(name: "return_type") final List<String>? returnType,
+    @JsonKey(name: "shelf_type") final List<String>? shelfType,
+    @JsonKey(name: "length_unit") final List<String>? lengthUnit,
+    @JsonKey(name: "weight_unit") final List<String>? weightUnit,
+    @JsonKey(name: "width_unit") final List<String>? widthUnit,
+    @JsonKey(name: "height_unit") final List<String>? heightUnit,
+
+
+
+
+
+  }) = _Returntypemodel;
+  factory Returntypemodel.fromJson(Map<String, dynamic> json) =>
+      _$ReturntypemodelFromJson(json);
+}
 
 @freezed
 class SalesUomData with _$SalesUomData {

@@ -446,7 +446,7 @@ class InventoryDataSourceImpl extends LogisticDataSource {
       String? id, String? invdendotyId) async {
     print("Avalkkayi");
     String path = inventoryBaseUrl +
-        "inventory-stock/get-stock-quantity-by-variant/${Variable.inventory_ID}/$invdendotyId";
+        "inventory-stock/get-stock-quantity-by-variant/"+invdendotyId.toString()+"/"+Variable.inventory_ID.toString();
     print(path);
 
     try {

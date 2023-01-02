@@ -39,6 +39,14 @@ mixin _$CustomCreationtModel {
   String? get returnType => throw _privateConstructorUsedError;
   @JsonKey(name: "shelf_type")
   String? get shelfType => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "width_unit")
+  String? get widthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "height_unit")
+  String? get heightUnit => throw _privateConstructorUsedError;
   @JsonKey(name: "return_time")
   int? get returnTime => throw _privateConstructorUsedError;
   @JsonKey(name: "weight_uom_id")
@@ -90,6 +98,14 @@ abstract class $CustomCreationtModelCopyWith<$Res> {
           String? returnType,
       @JsonKey(name: "shelf_type")
           String? shelfType,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "return_time")
           int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -136,6 +152,10 @@ class _$CustomCreationtModelCopyWithImpl<$Res,
     Object? excesstax = freezed,
     Object? returnType = freezed,
     Object? shelfType = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? targetdGp = freezed,
@@ -194,6 +214,22 @@ class _$CustomCreationtModelCopyWithImpl<$Res,
       shelfType: freezed == shelfType
           ? _value.shelfType
           : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
               as String?,
       returnTime: freezed == returnTime
           ? _value.returnTime
@@ -263,6 +299,14 @@ abstract class _$$_CustomCreationtModelCopyWith<$Res>
           String? returnType,
       @JsonKey(name: "shelf_type")
           String? shelfType,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "return_time")
           int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -306,6 +350,10 @@ class __$$_CustomCreationtModelCopyWithImpl<$Res>
     Object? excesstax = freezed,
     Object? returnType = freezed,
     Object? shelfType = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? returnTime = freezed,
     Object? weightUomId = freezed,
     Object? targetdGp = freezed,
@@ -364,6 +412,22 @@ class __$$_CustomCreationtModelCopyWithImpl<$Res>
       shelfType: freezed == shelfType
           ? _value.shelfType
           : shelfType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
               as String?,
       returnTime: freezed == returnTime
           ? _value.returnTime
@@ -428,6 +492,14 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
           this.returnType,
       @JsonKey(name: "shelf_type")
           this.shelfType,
+      @JsonKey(name: "weight_unit")
+          this.weightUnit,
+      @JsonKey(name: "length_unit")
+          this.lengthUnit,
+      @JsonKey(name: "width_unit")
+          this.widthUnit,
+      @JsonKey(name: "height_unit")
+          this.heightUnit,
       @JsonKey(name: "return_time")
           this.returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -482,6 +554,18 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
   @JsonKey(name: "shelf_type")
   final String? shelfType;
   @override
+  @JsonKey(name: "weight_unit")
+  final String? weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  final String? lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  final String? widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  final String? heightUnit;
+  @override
   @JsonKey(name: "return_time")
   final int? returnTime;
   @override
@@ -511,7 +595,7 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
 
   @override
   String toString() {
-    return 'CustomCreationtModel(vat: $vat, height: $height, width: $width, length: $length, weight: $weight, mappingPlaceId: $mappingPlaceId, minimumGp: $minimumGp, averageGp: $averageGp, maximumGp: $maximumGp, excesstax: $excesstax, returnType: $returnType, shelfType: $shelfType, returnTime: $returnTime, weightUomId: $weightUomId, targetdGp: $targetdGp, groupId: $groupId, shelfTime: $shelfTime, isActive: $isActive, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, needMultipleIntgration: $needMultipleIntgration)';
+    return 'CustomCreationtModel(vat: $vat, height: $height, width: $width, length: $length, weight: $weight, mappingPlaceId: $mappingPlaceId, minimumGp: $minimumGp, averageGp: $averageGp, maximumGp: $maximumGp, excesstax: $excesstax, returnType: $returnType, shelfType: $shelfType, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, returnTime: $returnTime, weightUomId: $weightUomId, targetdGp: $targetdGp, groupId: $groupId, shelfTime: $shelfTime, isActive: $isActive, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, needMultipleIntgration: $needMultipleIntgration)';
   }
 
   @override
@@ -538,6 +622,14 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
                 other.returnType == returnType) &&
             (identical(other.shelfType, shelfType) ||
                 other.shelfType == shelfType) &&
+            (identical(other.weightUnit, weightUnit) ||
+                other.weightUnit == weightUnit) &&
+            (identical(other.lengthUnit, lengthUnit) ||
+                other.lengthUnit == lengthUnit) &&
+            (identical(other.widthUnit, widthUnit) ||
+                other.widthUnit == widthUnit) &&
+            (identical(other.heightUnit, heightUnit) ||
+                other.heightUnit == heightUnit) &&
             (identical(other.returnTime, returnTime) ||
                 other.returnTime == returnTime) &&
             (identical(other.weightUomId, weightUomId) ||
@@ -573,6 +665,10 @@ class _$_CustomCreationtModel implements _CustomCreationtModel {
         excesstax,
         returnType,
         shelfType,
+        weightUnit,
+        lengthUnit,
+        widthUnit,
+        heightUnit,
         returnTime,
         weightUomId,
         targetdGp,
@@ -620,6 +716,14 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
           final String? returnType,
       @JsonKey(name: "shelf_type")
           final String? shelfType,
+      @JsonKey(name: "weight_unit")
+          final String? weightUnit,
+      @JsonKey(name: "length_unit")
+          final String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          final String? widthUnit,
+      @JsonKey(name: "height_unit")
+          final String? heightUnit,
       @JsonKey(name: "return_time")
           final int? returnTime,
       @JsonKey(name: "weight_uom_id")
@@ -673,6 +777,18 @@ abstract class _CustomCreationtModel implements CustomCreationtModel {
   @override
   @JsonKey(name: "shelf_type")
   String? get shelfType;
+  @override
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  String? get widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  String? get heightUnit;
   @override
   @JsonKey(name: "return_time")
   int? get returnTime;
@@ -899,6 +1015,261 @@ abstract class _ReadCustomModel implements ReadCustomModel {
   @override
   @JsonKey(ignore: true)
   _$$_ReadCustomModelCopyWith<_$_ReadCustomModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ReadMessuremnetModel _$ReadMessuremnetModelFromJson(Map<String, dynamic> json) {
+  return _ReadMessuremnetModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ReadMessuremnetModel {
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ReadMessuremnetModelCopyWith<ReadMessuremnetModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReadMessuremnetModelCopyWith<$Res> {
+  factory $ReadMessuremnetModelCopyWith(ReadMessuremnetModel value,
+          $Res Function(ReadMessuremnetModel) then) =
+      _$ReadMessuremnetModelCopyWithImpl<$Res, ReadMessuremnetModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "length_unit") List<String>? lengthUnit,
+      @JsonKey(name: "width_unit") List<String>? widthUnit,
+      @JsonKey(name: "height_unit") List<String>? heightUnit,
+      @JsonKey(name: "weight_unit") List<String>? weightUnit});
+}
+
+/// @nodoc
+class _$ReadMessuremnetModelCopyWithImpl<$Res,
+        $Val extends ReadMessuremnetModel>
+    implements $ReadMessuremnetModelCopyWith<$Res> {
+  _$ReadMessuremnetModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
+    Object? weightUnit = freezed,
+  }) {
+    return _then(_value.copyWith(
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ReadMessuremnetModelCopyWith<$Res>
+    implements $ReadMessuremnetModelCopyWith<$Res> {
+  factory _$$_ReadMessuremnetModelCopyWith(_$_ReadMessuremnetModel value,
+          $Res Function(_$_ReadMessuremnetModel) then) =
+      __$$_ReadMessuremnetModelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "length_unit") List<String>? lengthUnit,
+      @JsonKey(name: "width_unit") List<String>? widthUnit,
+      @JsonKey(name: "height_unit") List<String>? heightUnit,
+      @JsonKey(name: "weight_unit") List<String>? weightUnit});
+}
+
+/// @nodoc
+class __$$_ReadMessuremnetModelCopyWithImpl<$Res>
+    extends _$ReadMessuremnetModelCopyWithImpl<$Res, _$_ReadMessuremnetModel>
+    implements _$$_ReadMessuremnetModelCopyWith<$Res> {
+  __$$_ReadMessuremnetModelCopyWithImpl(_$_ReadMessuremnetModel _value,
+      $Res Function(_$_ReadMessuremnetModel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
+    Object? weightUnit = freezed,
+  }) {
+    return _then(_$_ReadMessuremnetModel(
+      lengthUnit: freezed == lengthUnit
+          ? _value._lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      widthUnit: freezed == widthUnit
+          ? _value._widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      heightUnit: freezed == heightUnit
+          ? _value._heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weightUnit: freezed == weightUnit
+          ? _value._weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_ReadMessuremnetModel implements _ReadMessuremnetModel {
+  const _$_ReadMessuremnetModel(
+      {@JsonKey(name: "length_unit") final List<String>? lengthUnit,
+      @JsonKey(name: "width_unit") final List<String>? widthUnit,
+      @JsonKey(name: "height_unit") final List<String>? heightUnit,
+      @JsonKey(name: "weight_unit") final List<String>? weightUnit})
+      : _lengthUnit = lengthUnit,
+        _widthUnit = widthUnit,
+        _heightUnit = heightUnit,
+        _weightUnit = weightUnit;
+
+  factory _$_ReadMessuremnetModel.fromJson(Map<String, dynamic> json) =>
+      _$$_ReadMessuremnetModelFromJson(json);
+
+  final List<String>? _lengthUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit {
+    final value = _lengthUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _widthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit {
+    final value = _widthUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _heightUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit {
+    final value = _heightUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _weightUnit;
+  @override
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit {
+    final value = _weightUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'ReadMessuremnetModel(lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, weightUnit: $weightUnit)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_ReadMessuremnetModel &&
+            const DeepCollectionEquality()
+                .equals(other._lengthUnit, _lengthUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._widthUnit, _widthUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._heightUnit, _heightUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._weightUnit, _weightUnit));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_lengthUnit),
+      const DeepCollectionEquality().hash(_widthUnit),
+      const DeepCollectionEquality().hash(_heightUnit),
+      const DeepCollectionEquality().hash(_weightUnit));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ReadMessuremnetModelCopyWith<_$_ReadMessuremnetModel> get copyWith =>
+      __$$_ReadMessuremnetModelCopyWithImpl<_$_ReadMessuremnetModel>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ReadMessuremnetModelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ReadMessuremnetModel implements ReadMessuremnetModel {
+  const factory _ReadMessuremnetModel(
+          {@JsonKey(name: "length_unit") final List<String>? lengthUnit,
+          @JsonKey(name: "width_unit") final List<String>? widthUnit,
+          @JsonKey(name: "height_unit") final List<String>? heightUnit,
+          @JsonKey(name: "weight_unit") final List<String>? weightUnit}) =
+      _$_ReadMessuremnetModel;
+
+  factory _ReadMessuremnetModel.fromJson(Map<String, dynamic> json) =
+      _$_ReadMessuremnetModel.fromJson;
+
+  @override
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit;
+  @override
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ReadMessuremnetModelCopyWith<_$_ReadMessuremnetModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

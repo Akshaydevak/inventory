@@ -40,6 +40,10 @@ class VariantPatch with _$VariantPatch {
 
     @JsonKey(name: "variant_name") final String? variantName,
     @JsonKey(name: "maximum_gp") final double? maxGp,
+    @JsonKey(name: "weight_unit") final String? weightUnit,
+    @JsonKey(name: "length_unit") final String? lengthUnit,
+    @JsonKey(name: "width_unit") final String? widthUnit,
+    @JsonKey(name: "height_unit") final String? heightUnit,
 
     @JsonKey(name: "minimum_gp") final double? minGap,
     @JsonKey(name: "weight_uom_id") final int? weightUomId,

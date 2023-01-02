@@ -41,6 +41,7 @@ import 'cubit/customeridlist/shippingaddresscreation_cubit.dart';
 import 'cubit/postcubit/postcubit_cubit.dart';
 import 'cubit/sales_general_patch/salesgeneralpatcvh_cubit.dart';
 import 'cubit/sales_general_vertical/salesgeneralvertical_cubit.dart';
+import 'cubit/shippingaddress/shippingadrees_cubit.dart';
 import 'model/customeridlistmodel.dart';
 import 'model/shippinfaddressmodel.dart';
 
@@ -298,51 +299,30 @@ class _SalesGeneralState extends State<SalesGeneral> {
                           : table = [];
                       //   print("lll"+lines.toString());
                       //
-                      orderTypeController.text =
-                          data.salesOrderData?.orderType ?? "";
-                      orderModeController.text =
-                          data.salesOrderData?.orderMode ?? "";
-                      orderCodeController.text =
-                          data.salesOrderData?.salesOrderCode ?? "";
-                      orderDateController.text =
-                          data.salesOrderData?.orderedDate ?? "";
-                      invemtoryIdController.text =
-                          data.salesOrderData?.inventoryid ?? "";
-                      cstomerIdController.text =
-                          data.salesOrderData?.customerId ?? "";
+                      orderTypeController.text = data.salesOrderData?.orderType ?? "";
+                      orderModeController.text = data.salesOrderData?.orderMode ?? "";
+                      orderCodeController.text = data.salesOrderData?.salesOrderCode ?? "";
+                      orderDateController.text = data.salesOrderData?.orderedDate ?? "";
+                      invemtoryIdController.text = data.salesOrderData?.inventoryid ?? "";
+                      cstomerIdController.text = data.salesOrderData?.customerId ?? "";
                       trnController.text = data.salesOrderData?.trnNumber ?? "";
-                      shippingAddressIdController.text =
-                          data.salesOrderData?.shippingAddressId ?? "";
-                      billingAddressIdController.text =
-                          data.salesOrderData?.billingAddressId ?? "";
-                      slaesQuotesController.text =
-                          data.salesOrderData?.salesQuotesId ?? "";
-                      paymentIdController.text =
-                          data.salesOrderData?.paymentId ?? "";
-                      paymentStatusController.text =
-                          data.salesOrderData?.paymentStatus ?? "";
-                      orderStatusController.text =
-                          data.salesOrderData?.orderStatus ?? "";
-                      remarksController.text =
-                          data.salesOrderData?.remarks ?? "";
+                      shippingAddressIdController.text = data.salesOrderData?.shippingAddressId ?? "";
+                      billingAddressIdController.text = data.salesOrderData?.billingAddressId ?? "";
+                      slaesQuotesController.text = data.salesOrderData?.salesQuotesId ?? "";
+                      paymentIdController.text = data.salesOrderData?.paymentId ?? "";
+                      paymentStatusController.text = data.salesOrderData?.paymentStatus ?? "";
+                      orderStatusController.text = data.salesOrderData?.orderStatus ?? "";
+                      remarksController.text = data.salesOrderData?.remarks ?? "";
                       noteController.text = data.salesOrderData?.note ?? "";
-                      invoiceStatusController.text =
-                          data.salesOrderData?.invoiceStatus ?? "";
-                      unitCostController.text =
-                          data.salesOrderData?.unitCost.toString() ?? "";
-                      discountController.text =
-                          data.salesOrderData?.discount.toString() ?? "";
-                      exciseTAxController.text =
-                          data.salesOrderData?.excessTax.toString() ?? "";
-                      taxableAmountController.text =
-                          data.salesOrderData?.taxableAmount.toString() ?? "";
-                      vatController.text =
-                          data.salesOrderData?.vat.toString() ?? "";
-                      sellingPriceController.text =
-                          data.salesOrderData?.sellingPriceTotal.toString() ??
+                      invoiceStatusController.text = data.salesOrderData?.invoiceStatus ?? "";
+                      unitCostController.text = data.salesOrderData?.unitCost.toString() ?? "";
+                      discountController.text = data.salesOrderData?.discount.toString() ?? "";
+                      exciseTAxController.text = data.salesOrderData?.excessTax.toString() ?? "";
+                      taxableAmountController.text = data.salesOrderData?.taxableAmount.toString() ?? "";
+                      vatController.text = data.salesOrderData?.vat.toString() ?? "";
+                      sellingPriceController.text = data.salesOrderData?.sellingPriceTotal.toString() ??
                               "";
-                      toatalPriceController.text =
-                          data.salesOrderData?.totalPrice.toString() ?? "";
+                      toatalPriceController.text = data.salesOrderData?.totalPrice.toString() ?? "";
                       _getCurrentUser();
                       setState(() {});
                     });
@@ -435,54 +415,54 @@ class _SalesGeneralState extends State<SalesGeneral> {
             builder: (context, state) {
               return Builder(builder: (context) {
                 return Scaffold(
-                  backgroundColor: Colors.white,
-                  body: SingleChildScrollView(
-                    child: IntrinsicHeight(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SalesGeneralVerticalList(
-                            selectedVertical: selectedVertical,
-                            itemsearch: itemsearch,
-                            ontap: (int index) {
-                              setState(() {
-                                clears();
-                                selectedVertical = index;
-                                select = false;
+                  backgroundColor: Pellet.bagroundColor,
+                  body: IntrinsicHeight(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SalesGeneralVerticalList(
+                          selectedVertical: selectedVertical,
+                          itemsearch: itemsearch,
+                          ontap: (int index) {
+                            setState(() {
+                              clears();
+                              selectedVertical = index;
+                              select = false;
 
-                                veritiaclid = result[index].id;
-                                _myWidgetState.currentState?.currentStock=[];
-                                //
-                                context
-                                    .read<SalesgeneralreadCubit>()
-                                    .getSalesGenralRead(veritiaclid!);
-                                setState(() {});
-                              });
-                            },
-                            result: result,
-                            child:     tablePagination(
-                                  () => context
+                              veritiaclid = result[index].id;
+                              _myWidgetState.currentState?.currentStock=[];
+                              //
+                              context
+                                  .read<SalesgeneralreadCubit>()
+                                  .getSalesGenralRead(veritiaclid!);
+                              setState(() {});
+                            });
+                          },
+                          result: result,
+                          child:     tablePagination(
+                                () => context
+                                .read<SalesgeneralverticalCubit>()
+                                .refresh(),
+                            back: paginatedList?.previousUrl == null
+                                ? null
+                                : () {
+                              context
                                   .read<SalesgeneralverticalCubit>()
-                                  .refresh(),
-                              back: paginatedList?.previousUrl == null
-                                  ? null
-                                  : () {
-                                context
-                                    .read<SalesgeneralverticalCubit>()
-                                    .previuosslotSectionPageList();
-                              },
-                              next:paginatedList?.nextPageUrl == null
-                                  ? null
-                                  : () {
-                                // print(data.nextPageUrl);
-                                context
-                                    .read<SalesgeneralverticalCubit>()
-                                    .nextslotSectionPageList();
-                              },
-                            ),
+                                  .previuosslotSectionPageList();
+                            },
+                            next:paginatedList?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<SalesgeneralverticalCubit>()
+                                  .nextslotSectionPageList();
+                            },
                           ),
-                          Expanded(
+                        ),
+                        Expanded(
+                          child: SingleChildScrollView(
                             child: Column(
                               children: [
                                 Row(
@@ -792,8 +772,8 @@ class _SalesGeneralState extends State<SalesGeneral> {
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                 );
@@ -2564,40 +2544,44 @@ class _SalesGeneralGrowableTableState extends State<SalesGeneralGrowableTable> {
 
                                                 style: BorderStyle.solid))),
                                     children: [
-                                      PopUpCall(
-                                        inventory: Variable.inventory_ID,
-                                        // label: "purchase UOM",
-                                        type: "cost-method-list",
-                                        value: variantId,
-                                        onSelection: (VariantId? va) {
-                                          print("vaavvavvavavava"+va.toString());
-                                          print(va!.id.toString());
-                                          print("code" + va!.code.toString());
+        TableCell(
+          verticalAlignment:
+          TableCellVerticalAlignment.middle,
+                                        child: PopUpCall(
+                                          inventory: Variable.inventory_ID,
+                                          // label: "purchase UOM",
+                                          type: "cost-method-list",
+                                          value: variantId,
+                                          onSelection: (VariantId? va) {
+                                            print("vaavvavvavavava"+va.toString());
+                                            print(va!.id.toString());
+                                            print("code" + va!.code.toString());
 
-                                          setState(() {
-                                            clear=true;
-                                            stockCheck=true;
-                                            variantId = va.code;
-                                            int? id = va!.id;
-                                            print("is is" + id.toString());
-                                            Variable.tableedit = false;
-                                            // stockCheck=true;
+                                            setState(() {
+                                              clear=true;
+                                              stockCheck=true;
+                                              variantId = va.code;
+                                              int? id = va!.id;
+                                              print("is is" + id.toString());
+                                              Variable.tableedit = false;
+                                              // stockCheck=true;
 
-                                            // onChange = true;
-                                            context
-                                                .read<
-                                                TableDetailsCubitDartCubit>()
-                                                .getTableDetails(id);
-                                            setState(() {});
-                                            context
-                                                .read<PurchaseStockCubit>()
-                                                .getCurrentStock(
-                                                Variable.inventory_ID,
-                                                variantId);
+                                              // onChange = true;
+                                              context
+                                                  .read<
+                                                  TableDetailsCubitDartCubit>()
+                                                  .getTableDetails(id);
+                                              setState(() {});
+                                              context
+                                                  .read<PurchaseStockCubit>()
+                                                  .getCurrentStock(
+                                                  Variable.inventory_ID,
+                                                  variantId);
 
-                                            // orderType = va!;
-                                          });
-                                        },
+                                              // orderType = va!;
+                                            });
+                                          },
+                                        ),
                                       ),
                                       TableCell(
                                         verticalAlignment:
@@ -3095,11 +3079,12 @@ class _WarrantyDetailsPopUpState extends State<WarrantyDetailsPopUp> {
             print("postssssssss" + state.toString());
             state.maybeWhen(orElse: () {
               // context.
-              context.showSnackBarError("Loading");
+              // context.showSnackBarError("Loading");
             }, error: () {
               context.showSnackBarError(Variable.errorMessege);
             }, success: (data) {
               if (data.data1) {
+                context.read<ShippingadreesCubit>().getShippingId(id:widget.code);
 
                 showDailogPopUp(
                     context,

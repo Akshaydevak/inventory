@@ -12,7 +12,11 @@ class ItemreadCubit extends Cubit<ItemreadState> {
   Future getItemRead(
     int? id,
   ) async {
+    emit(ItemreadState.loading());
+
+
     final result = await repo.getItemRead(id);
+    ItemreadState.loading();
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }
 }

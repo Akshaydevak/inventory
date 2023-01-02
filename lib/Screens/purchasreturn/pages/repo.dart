@@ -409,6 +409,19 @@ abstract class PurchaseReturnRepoAbstract {
       int? id});
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>>
       getCategoryList(String? code, {String? type, int? id});
+  Future<Either<Failure, Returntypemodel>> getReturnType(
+
+      );
+  Future<Either<Failure, DoubleResponse>> getAttributePost(
+      String? attributeType,String? attributeName,bool? isActive);
+  Future<Either<Failure, DoubleResponse>> getAttributePatch(
+      String? attributeType,String? attributeName,bool? isActive,int ? id);
+  Future<Either<Failure,PaginatedResponse< List<AttributeListModel>>>> getAttributePatchList(String? code);
+  Future<Either<Failure, AttributeListModel>> getAttributeCreationRead(int? id);
+  Future<Either<Failure, AttributeListModel>> getAttributeTypeList(
+
+      );
+  Future<Either<Failure, ReadMessuremnetModel>> getMessurementRead();
 }
 
 class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
@@ -1530,5 +1543,51 @@ class PurchaseReturnImpl extends PurchaseReturnRepoAbstract {
   Future<Either<Failure, PaginatedResponse<List<BrandListModel>>>> getAllCategoryist(String? code) {
     return repoExecute<PaginatedResponse<List<BrandListModel>>>(
             () async => remoteDataSource.getAllCategoryist(code));
+  }
+
+  @override
+  Future<Either<Failure, Returntypemodel>> getReturnType() {
+    return repoExecute<Returntypemodel>(
+            () async => remoteDataSource.getReturnType(
+
+        ));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getAttributePost(String? attributeType, String? attributeName, bool? isActive) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.getAttributePost(attributeType,attributeName,isActive));
+  }
+
+  @override
+  Future<Either<Failure, PaginatedResponse<List<AttributeListModel>>>> getAttributePatchList(String? code) {
+    return repoExecute<PaginatedResponse<List<AttributeListModel>>>(
+            () async => remoteDataSource.getAttributePatchList(code));
+  }
+
+  @override
+  Future<Either<Failure, AttributeListModel>> getAttributeCreationRead(int? id) {
+    return repoExecute<AttributeListModel>(
+            () async => remoteDataSource.getAttributeCreationRead(id));
+  }
+
+  @override
+  Future<Either<Failure, DoubleResponse>> getAttributePatch(String? attributeType, String? attributeName, bool? isActive, int? id) {
+    return repoExecute<DoubleResponse>(
+            () async => remoteDataSource.getAttributePatch(attributeType,attributeName,isActive,id));
+  }
+
+  @override
+  Future<Either<Failure, AttributeListModel>> getAttributeTypeList() {
+    return repoExecute<AttributeListModel>(
+            () async => remoteDataSource.getAttributeTypeList(
+
+        ));
+  }
+
+  @override
+  Future<Either<Failure, ReadMessuremnetModel>> getMessurementRead() {
+    return repoExecute<ReadMessuremnetModel>(
+            () async => remoteDataSource.getMessurementRead());
   }
 }

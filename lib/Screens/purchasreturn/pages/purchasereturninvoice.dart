@@ -360,72 +360,72 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
             return Builder(builder: (context) {
               return Scaffold(
                 backgroundColor: Pellet.bagroundColor,
-                body: SingleChildScrollView(
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        PurchaseVerticalList(
-                          selectedVertical: selectedVertical,
-                          itemsearch: itemsearch,
-                          ontap: (int index) {
-                            setState(() {
-                              updateCheck=false;
-                              selectedVertical = index;
+                body: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      PurchaseVerticalList(
+                        selectedVertical: selectedVertical,
+                        itemsearch: itemsearch,
+                        ontap: (int index) {
+                          setState(() {
+                            updateCheck=false;
+                            selectedVertical = index;
 
-                              veritiaclid = result[index].id;
+                            veritiaclid = result[index].id;
 
-                              context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
-                              setState(() {});
-                            });
-                          },
-                          result: result,
-                          child:     tablePagination(
-                                () => context
+                            context.read<InvoiceReadCubit>().getInvoiceRead(veritiaclid!);
+                            setState(() {});
+                          });
+                        },
+                        result: result,
+                        child:     tablePagination(
+                              () => context
+                              .read<VertiacalCubit>()
+                              .refresh(),
+                          back: paginatedList?.previousUrl == null
+                              ? null
+                              : () {
+                            context
                                 .read<VertiacalCubit>()
-                                .refresh(),
-                            back: paginatedList?.previousUrl == null
-                                ? null
-                                : () {
-                              context
-                                  .read<VertiacalCubit>()
-                                  .previuosslotSectionPageList();
-                            },
-                            next:paginatedList?.nextPageUrl == null
-                                ? null
-                                : () {
-                              // print(data.nextPageUrl);
-                              context
-                                  .read<VertiacalCubit>()
-                                  .nextslotSectionPageList();
-                            },
-                          ),
+                                .previuosslotSectionPageList();
+                          },
+                          next:paginatedList?.nextPageUrl == null
+                              ? null
+                              : () {
+                            // print(data.nextPageUrl);
+                            context
+                                .read<VertiacalCubit>()
+                                .nextslotSectionPageList();
+                          },
                         ),
-                        // VerticalList(
-                        //   tab:"RF",
-                        //   selectedVertical: selectedVertical,
-                        //   itemsearch: itemsearch,ontap: (int index){
-                        //   setState(() {
-                        //     print("taped");
-                        //     select=false;
-                        //     clear();
-                        //     selectedVertical=index;
-                        //     updateCheck=false;
-                        //     currentStock.clear();
-                        //
-                        //     veritiaclid =
-                        //         result[index].id;
-                        //     Variable.verticalid2=result[index].id;
-                        //     context
-                        //         .read<
-                        //         RequestformreadCubit>()
-                        //         .getRequestFormRead(
-                        //         veritiaclid!);
-                        //   });
-                        // },result: result,
-                        // ),
-                        Expanded(
+                      ),
+                      // VerticalList(
+                      //   tab:"RF",
+                      //   selectedVertical: selectedVertical,
+                      //   itemsearch: itemsearch,ontap: (int index){
+                      //   setState(() {
+                      //     print("taped");
+                      //     select=false;
+                      //     clear();
+                      //     selectedVertical=index;
+                      //     updateCheck=false;
+                      //     currentStock.clear();
+                      //
+                      //     veritiaclid =
+                      //         result[index].id;
+                      //     Variable.verticalid2=result[index].id;
+                      //     context
+                      //         .read<
+                      //         RequestformreadCubit>()
+                      //         .getRequestFormRead(
+                      //         veritiaclid!);
+                      //   });
+                      // },result: result,
+                      // ),
+                      Expanded(
+                        child: SingleChildScrollView(
                           child: Container(
                             color: Colors.white,
                             child: Column(
@@ -762,8 +762,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                                                           i < lines!.length;
                                                           i++)
                                                         TableRow(
-                        decoration: BoxDecoration(
-                        color: Pellet.tableRowColor,
+                      decoration: BoxDecoration(
+                      color: Pellet.tableRowColor,
                             shape: BoxShape.rectangle,
                             border:  Border(
                                 left: BorderSide(
@@ -1337,8 +1337,8 @@ class _PurchaseReturnInvoiceState extends State<PurchaseReturnInvoice> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               );

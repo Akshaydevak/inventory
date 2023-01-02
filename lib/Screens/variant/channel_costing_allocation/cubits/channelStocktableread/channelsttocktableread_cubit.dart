@@ -10,6 +10,7 @@ class ChannelsttocktablereadCubit extends Cubit<ChannelsttocktablereadState> {
   ChannelsttocktablereadCubit() : super(ChannelsttocktablereadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getChannelStockTableRead(int? id) async {
+    emit(ChannelsttocktablereadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getChannelStockTableRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

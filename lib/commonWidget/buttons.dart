@@ -186,7 +186,8 @@ class SaveUpdateResponsiveButton extends StatelessWidget {
 final Function discardFunction;
 final Function saveFunction;
 final String label;
-SaveUpdateResponsiveButton({required this.label,required this.saveFunction,required this.discardFunction});
+final bool  isDelete;
+SaveUpdateResponsiveButton({required this.label,this.isDelete=false,required this.saveFunction,required this.discardFunction});
 
 
   @override
@@ -204,7 +205,7 @@ SaveUpdateResponsiveButton({required this.label,required this.saveFunction,requi
             children: [
 
 
-              Button(Icons.delete, Colors.red,
+            if(isDelete==false)  Button(Icons.delete, Colors.red,
                   ctx: context,
                   text: "DISCARD",
                   onApply: (){
@@ -235,6 +236,7 @@ SaveUpdateResponsiveButton({required this.label,required this.saveFunction,requi
             ],
           ),
         ),
+        SizedBox(height: 10,),
       ],
     );
   }

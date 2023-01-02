@@ -21,6 +21,10 @@ _$_CustomCreationtModel _$$_CustomCreationtModelFromJson(
       excesstax: (json['excess_tax'] as num?)?.toDouble(),
       returnType: json['return_type'] as String?,
       shelfType: json['shelf_type'] as String?,
+      weightUnit: json['weight_unit'] as String?,
+      lengthUnit: json['length_unit'] as String?,
+      widthUnit: json['width_unit'] as String?,
+      heightUnit: json['height_unit'] as String?,
       returnTime: json['return_time'] as int?,
       weightUomId: (json['weight_uom_id'] as num?)?.toDouble(),
       targetdGp: (json['targeted_gp'] as num?)?.toDouble(),
@@ -48,6 +52,10 @@ Map<String, dynamic> _$$_CustomCreationtModelToJson(
       'excess_tax': instance.excesstax,
       'return_type': instance.returnType,
       'shelf_type': instance.shelfType,
+      'weight_unit': instance.weightUnit,
+      'length_unit': instance.lengthUnit,
+      'width_unit': instance.widthUnit,
+      'height_unit': instance.heightUnit,
       'return_time': instance.returnTime,
       'weight_uom_id': instance.weightUomId,
       'targeted_gp': instance.targetdGp,
@@ -74,6 +82,32 @@ Map<String, dynamic> _$$_ReadCustomModelToJson(_$_ReadCustomModel instance) =>
     <String, dynamic>{
       'return_type': instance.returnType,
       'group_custom_data': instance.groupCustomdata,
+    };
+
+_$_ReadMessuremnetModel _$$_ReadMessuremnetModelFromJson(
+        Map<String, dynamic> json) =>
+    _$_ReadMessuremnetModel(
+      lengthUnit: (json['length_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      widthUnit: (json['width_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      heightUnit: (json['height_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      weightUnit: (json['weight_unit'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+    );
+
+Map<String, dynamic> _$$_ReadMessuremnetModelToJson(
+        _$_ReadMessuremnetModel instance) =>
+    <String, dynamic>{
+      'length_unit': instance.lengthUnit,
+      'width_unit': instance.widthUnit,
+      'height_unit': instance.heightUnit,
+      'weight_unit': instance.weightUnit,
     };
 
 _$_GroupCustomData _$$_GroupCustomDataFromJson(Map<String, dynamic> json) =>

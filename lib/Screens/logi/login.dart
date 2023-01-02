@@ -93,7 +93,7 @@ List<  InventoryListModel> inventoryList=[];
 
           } else {
             // changeIndex(0);
-            context.showSnackBarError(data.data2);
+            context.showSnackBarError(Variable.errorMessege);
           }
         });
   },

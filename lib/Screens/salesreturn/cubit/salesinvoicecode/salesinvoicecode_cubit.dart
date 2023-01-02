@@ -10,6 +10,7 @@ class SalesinvoicecodeCubit extends Cubit<SalesinvoicecodeState> {
   SalesinvoicecodeCubit() : super(SalesinvoicecodeState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getInvoiceCode() async {
+    emit(SalesinvoicecodeState.initial());
     final result = await repo.getInvoiceCode();
     print(result);
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));

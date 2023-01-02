@@ -12,6 +12,7 @@ class ReadDivisionConfigCubit extends Cubit<ReadDivisionConfigState> {
   Future getDivisionConfigRead(
     int? id,
   ) async {
+    emit(ReadDivisionConfigState.initial());
     final result = await repo.getDivisionConfigRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));
   }

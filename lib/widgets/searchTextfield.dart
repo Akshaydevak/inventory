@@ -6,15 +6,17 @@ class SearchTextfiled extends StatefulWidget {
   final Color suffixColor;
   final String hintText;
   final double h;
-  final double w;
+   double w;
   final bool suffiXCheck;
+  final bool  suffixIconCheck;
+
   final Function(String )? onChanged;
 
   final VoidCallback? onComplete;
   final VoidCallback? suffixOnComplete;
   final VoidCallback? onTap;
   final TextEditingController ctrlr;
-  SearchTextfiled({required this.color,this.onTap,this.suffixColor=Colors.black,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=600});
+  SearchTextfiled({required this.color,this.onTap,this.suffixColor=Colors.black,this.suffixIconCheck=false,this.suffiXCheck=false,required this.hintText,required this.ctrlr,this.onComplete,this.suffixOnComplete, this.onChanged,this.h=32,this.w=625});
 
   @override
   State<SearchTextfiled> createState() => _SearchTextfiledState();
@@ -25,6 +27,7 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
 
   @override
   Widget build(BuildContext context) {
+    widget.w=MediaQuery.of(context).size.width/2.11;
     return Container(
        // margin: EdgeInsets.only(top:3,),
         width: widget.w,
@@ -75,17 +78,17 @@ class _SearchTextfiledState extends State<SearchTextfiled> {
                     color: Pellet.tableBlueHeaderPrint,
 
                       // alignment: Alignment.center,
-                      padding: const EdgeInsets.only(right: 10),
+                      // padding: const EdgeInsets.only(right: 10),
                       child: GestureDetector(
                         child:  Icon(
                           Icons.search,color: widget.suffixColor,
                         ),
                       ))):Container(
                   // color: Colors.red,
-                  padding: const EdgeInsets.only(right: 10),
+                  padding:  EdgeInsets.only(right: 10),
                   child: GestureDetector(
-                    child: const Icon(
-                      Icons.search,color: Colors.grey,
+                    child:  Icon(
+                      Icons.search,color:widget.suffixIconCheck?Pellet.tableBlueHeaderPrint:Colors.grey,
                     ),
                   )),
 

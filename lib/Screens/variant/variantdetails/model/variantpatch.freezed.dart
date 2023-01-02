@@ -51,6 +51,14 @@ mixin _$VariantPatch {
   String? get variantName => throw _privateConstructorUsedError;
   @JsonKey(name: "maximum_gp")
   double? get maxGp => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "width_unit")
+  String? get widthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "height_unit")
+  String? get heightUnit => throw _privateConstructorUsedError;
   @JsonKey(name: "minimum_gp")
   double? get minGap => throw _privateConstructorUsedError;
   @JsonKey(name: "weight_uom_id")
@@ -230,6 +238,14 @@ abstract class $VariantPatchCopyWith<$Res> {
           String? variantName,
       @JsonKey(name: "maximum_gp")
           double? maxGp,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "minimum_gp")
           double? minGap,
       @JsonKey(name: "weight_uom_id")
@@ -414,6 +430,10 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
     Object? storage = freezed,
     Object? variantName = freezed,
     Object? maxGp = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? minGap = freezed,
     Object? weightUomId = freezed,
     Object? salesUom = freezed,
@@ -597,6 +617,22 @@ class _$VariantPatchCopyWithImpl<$Res, $Val extends VariantPatch>
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
       minGap: freezed == minGap
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
@@ -1009,6 +1045,14 @@ abstract class _$$_VariantPatchCopyWith<$Res>
           String? variantName,
       @JsonKey(name: "maximum_gp")
           double? maxGp,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "minimum_gp")
           double? minGap,
       @JsonKey(name: "weight_uom_id")
@@ -1200,6 +1244,10 @@ class __$$_VariantPatchCopyWithImpl<$Res>
     Object? storage = freezed,
     Object? variantName = freezed,
     Object? maxGp = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? minGap = freezed,
     Object? weightUomId = freezed,
     Object? salesUom = freezed,
@@ -1383,6 +1431,22 @@ class __$$_VariantPatchCopyWithImpl<$Res>
           ? _value.maxGp
           : maxGp // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
       minGap: freezed == minGap
           ? _value.minGap
           : minGap // ignore: cast_nullable_to_non_nullable
@@ -1682,6 +1746,14 @@ class _$_VariantPatch implements _VariantPatch {
           this.variantName,
       @JsonKey(name: "maximum_gp")
           this.maxGp,
+      @JsonKey(name: "weight_unit")
+          this.weightUnit,
+      @JsonKey(name: "length_unit")
+          this.lengthUnit,
+      @JsonKey(name: "width_unit")
+          this.widthUnit,
+      @JsonKey(name: "height_unit")
+          this.heightUnit,
       @JsonKey(name: "minimum_gp")
           this.minGap,
       @JsonKey(name: "weight_uom_id")
@@ -1880,6 +1952,18 @@ class _$_VariantPatch implements _VariantPatch {
   @override
   @JsonKey(name: "maximum_gp")
   final double? maxGp;
+  @override
+  @JsonKey(name: "weight_unit")
+  final String? weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  final String? lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  final String? widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  final String? heightUnit;
   @override
   @JsonKey(name: "minimum_gp")
   final double? minGap;
@@ -2106,7 +2190,7 @@ class _$_VariantPatch implements _VariantPatch {
 
   @override
   String toString() {
-    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
+    return 'VariantPatch(id: $id, code: $code, barcode: $barcode, qrcode: $qrcode, vat: $vat, description: $description, name: $name, status: $status, image1: $image1, image2: $image2, height: $height, width: $width, length: $length, weight: $weight, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, Ingrediants: $Ingrediants, storage: $storage, variantName: $variantName, maxGp: $maxGp, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, minGap: $minGap, weightUomId: $weightUomId, salesUom: $salesUom, purchaseUom: $purchaseUom, searchName: $searchName, displayName: $displayName, variantValue: $variantValue, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, posName: $posName, grossWeight: $grossWeight, netWeight: $netWeight, unitCost: $unitCost, actualCost: $actualCost, needMultipleIntegration: $needMultipleIntegration, landingCost: $landingCost, basePrize: $basePrize, manuFacturedId: $manuFacturedId, manuFacturedName: $manuFacturedName, safetyStock: $safetyStock, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, salesBolock: $salesBolock, purchaseBlock: $purchaseBlock, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, seblingId: $seblingId, sibilingCode: $sibilingCode, wholeSaleStock: $wholeSaleStock, stockWarning: $stockWarning, itemCatelog: $itemCatelog, itemImage: $itemImage, isActive: $isActive, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, vedioUrl: $vedioUrl, avgGp: $avgGp, targetedGp: $targetedGp, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, importantInfo: $importantInfo, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, productDetails: $productDetails, productFeatures: $productFeatures, aboutProducts: $aboutProducts, productBehavior: $productBehavior, usageDirection: $usageDirection, vendorDetails: $vendorDetails, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption, uomCode: $uomCode, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, inventoryId: $inventoryId, producedCountry: $producedCountry, excessTax: $excessTax, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime)';
   }
 
   @override
@@ -2154,6 +2238,14 @@ class _$_VariantPatch implements _VariantPatch {
             (identical(other.variantName, variantName) ||
                 other.variantName == variantName) &&
             (identical(other.maxGp, maxGp) || other.maxGp == maxGp) &&
+            (identical(other.weightUnit, weightUnit) ||
+                other.weightUnit == weightUnit) &&
+            (identical(other.lengthUnit, lengthUnit) ||
+                other.lengthUnit == lengthUnit) &&
+            (identical(other.widthUnit, widthUnit) ||
+                other.widthUnit == widthUnit) &&
+            (identical(other.heightUnit, heightUnit) ||
+                other.heightUnit == heightUnit) &&
             (identical(other.minGap, minGap) || other.minGap == minGap) &&
             (identical(other.weightUomId, weightUomId) ||
                 other.weightUomId == weightUomId) &&
@@ -2208,12 +2300,9 @@ class _$_VariantPatch implements _VariantPatch {
                 other.minSalesOrderLimit == minSalesOrderLimit) &&
             (identical(other.maxSalesOrderLimit, maxSalesOrderLimit) ||
                 other.maxSalesOrderLimit == maxSalesOrderLimit) &&
-            (identical(other.seblingId, seblingId) ||
-                other.seblingId == seblingId) &&
-            (identical(other.sibilingCode, sibilingCode) ||
-                other.sibilingCode == sibilingCode) &&
-            (identical(other.wholeSaleStock, wholeSaleStock) ||
-                other.wholeSaleStock == wholeSaleStock) &&
+            (identical(other.seblingId, seblingId) || other.seblingId == seblingId) &&
+            (identical(other.sibilingCode, sibilingCode) || other.sibilingCode == sibilingCode) &&
+            (identical(other.wholeSaleStock, wholeSaleStock) || other.wholeSaleStock == wholeSaleStock) &&
             (identical(other.stockWarning, stockWarning) || other.stockWarning == stockWarning) &&
             (identical(other.itemCatelog, itemCatelog) || other.itemCatelog == itemCatelog) &&
             (identical(other.itemImage, itemImage) || other.itemImage == itemImage) &&
@@ -2283,6 +2372,10 @@ class _$_VariantPatch implements _VariantPatch {
         storage,
         variantName,
         maxGp,
+        weightUnit,
+        lengthUnit,
+        widthUnit,
+        heightUnit,
         minGap,
         weightUomId,
         salesUom,
@@ -2397,6 +2490,14 @@ abstract class _VariantPatch implements VariantPatch {
           final String? variantName,
       @JsonKey(name: "maximum_gp")
           final double? maxGp,
+      @JsonKey(name: "weight_unit")
+          final String? weightUnit,
+      @JsonKey(name: "length_unit")
+          final String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          final String? widthUnit,
+      @JsonKey(name: "height_unit")
+          final String? heightUnit,
       @JsonKey(name: "minimum_gp")
           final double? minGap,
       @JsonKey(name: "weight_uom_id")
@@ -2591,6 +2692,18 @@ abstract class _VariantPatch implements VariantPatch {
   @override
   @JsonKey(name: "maximum_gp")
   double? get maxGp;
+  @override
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  String? get widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  String? get heightUnit;
   @override
   @JsonKey(name: "minimum_gp")
   double? get minGap;

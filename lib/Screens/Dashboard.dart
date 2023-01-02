@@ -159,6 +159,7 @@ class _DashBoardState extends State<DashBoard> with TickerProviderStateMixin {
                               children: [
                                 Expanded(
                                     child: Container(
+                                      height: height,
                                   child: Column(
                                     children: [
                                       Expanded(
@@ -619,7 +620,17 @@ class _RihtDrawerState extends State<RihtDrawer> {
                   ),
                 );
               },
-              label: "Frame Work"),
+              label: "Frame Work"), greyDivider(),
+          DrawerCared(
+              ontap: () {
+                showDailogPopUp(
+                  context,
+                  ConfigurePopup(
+                    type: "create_Attribute",
+                  ),
+                );
+              },
+              label: "Attribute"),
         ],
       ),
     );

@@ -19,6 +19,7 @@ import 'Screens/Dashboard.dart';
 import 'Screens/heirarchy/customizeddata/cubit/listcustom/listcustomvertical_cubit.dart';
 import 'Screens/heirarchy/divisionconfiguration/cubit/list/list_division_cubit.dart';
 import 'Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
+import 'Screens/heirarchy/general/cubits/attributepatchlist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
 import 'Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
@@ -192,6 +193,8 @@ class _MyAppState extends State<MyApp> {
           create: (context) => ListDivisionCubit(),
         ), BlocProvider(
           create: (context) => ShippingadreesCubit(),
+        ), BlocProvider(
+          create: (context) => AttributepatchlistCubit(),
         ),
       ],
       child: MaterialApp(

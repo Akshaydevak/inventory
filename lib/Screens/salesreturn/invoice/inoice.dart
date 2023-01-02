@@ -304,55 +304,55 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
                 builder: (context) {
                   return Scaffold(
                     backgroundColor: Pellet.bagroundColor,
-                    body: SingleChildScrollView(
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SalesReturnGeneralVerticalList(
-                              selectedVertical: selectedVertical,
-                              itemsearch: itemsearch,
-                              ontap: (int index) {
-                                setState(() {
-                                  selectedVertical = index;
-                                  // select = false;
+                    body: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SalesReturnGeneralVerticalList(
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,
+                            ontap: (int index) {
+                              setState(() {
+                                selectedVertical = index;
+                                // select = false;
 
-                                  veritiaclid = result[index].id;
-                                  // context
-                                  //     .read<SalesgeneralreadCubit>()
-                                  //     .getSalesReturnGeneralRead(veritiaclid!);
-                                  // currentStock.clear();
-                                  //
-                                  context
-                                      .read<SalesreturninvoicereadCubit>().getSalesReturnInvoiceRead(veritiaclid!);
+                                veritiaclid = result[index].id;
+                                // context
+                                //     .read<SalesgeneralreadCubit>()
+                                //     .getSalesReturnGeneralRead(veritiaclid!);
+                                // currentStock.clear();
+                                //
+                                context
+                                    .read<SalesreturninvoicereadCubit>().getSalesReturnInvoiceRead(veritiaclid!);
 
-                                  setState(() {});
-                                });
-                              },
-                              result: result,
-                              child:     tablePagination(
-                                    () => context
+                                setState(() {});
+                              });
+                            },
+                            result: result,
+                            child:     tablePagination(
+                                  () => context
+                                  .read<SalesreturnverticalCubit>()
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
                                     .read<SalesreturnverticalCubit>()
-                                    .refresh(),
-                                back: paginatedList?.previousUrl == null
-                                    ? null
-                                    : () {
-                                  context
-                                      .read<SalesreturnverticalCubit>()
-                                      .previuosslotSectionPageList();
-                                },
-                                next:paginatedList?.nextPageUrl == null
-                                    ? null
-                                    : () {
-                                  // print(data.nextPageUrl);
-                                  context
-                                      .read<SalesreturnverticalCubit>()
-                                      .nextslotSectionPageList();
-                                },
-                              ),
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<SalesreturnverticalCubit>()
+                                    .nextslotSectionPageList();
+                              },
                             ),
-                            Expanded(child: Column(
+                          ),
+                          Expanded(child: SingleChildScrollView(
+                            child: Column(
                               children: [
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -512,10 +512,10 @@ class _SalesReturnGeneralInvoiceState extends State<SalesReturnGeneralInvoice> {
 
                               ],
 
-                            ))
+                            ),
+                          ))
 
-                          ],
-                        ),
+                        ],
                       ),
                     ),
 
@@ -1644,13 +1644,17 @@ class _SalesReturnInvoiceGrowableTableState extends State<SalesReturnInvoiceGrow
                                             fontWeight: FontWeight.w500),
                                       ),
 
-                                      TableTextButton(
-                                        onPress: () {
-                                          widget.updateCheck(false);
-                                          widget.updation(table1);
-                                          // table1[i].copyWith(updatecheck: false);
-                                        },
-                                        label: "update",
+                                      TableCell(
+                                        verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                        child: TableTextButton(
+                                          onPress: () {
+                                            widget.updateCheck(false);
+                                            widget.updation(table1);
+                                            // table1[i].copyWith(updatecheck: false);
+                                          },
+                                          label: "update",
+                                        ),
                                       )
                                     ]),
 

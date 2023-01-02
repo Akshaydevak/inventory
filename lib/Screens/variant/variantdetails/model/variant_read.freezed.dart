@@ -2343,6 +2343,325 @@ abstract class _VariantReadModel implements VariantReadModel {
       throw _privateConstructorUsedError;
 }
 
+Returntypemodel _$ReturntypemodelFromJson(Map<String, dynamic> json) {
+  return _Returntypemodel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$Returntypemodel {
+  @JsonKey(name: "return_type")
+  List<String>? get returnType => throw _privateConstructorUsedError;
+  @JsonKey(name: "shelf_type")
+  List<String>? get shelfType => throw _privateConstructorUsedError;
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $ReturntypemodelCopyWith<Returntypemodel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReturntypemodelCopyWith<$Res> {
+  factory $ReturntypemodelCopyWith(
+          Returntypemodel value, $Res Function(Returntypemodel) then) =
+      _$ReturntypemodelCopyWithImpl<$Res, Returntypemodel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: "return_type") List<String>? returnType,
+      @JsonKey(name: "shelf_type") List<String>? shelfType,
+      @JsonKey(name: "length_unit") List<String>? lengthUnit,
+      @JsonKey(name: "weight_unit") List<String>? weightUnit,
+      @JsonKey(name: "width_unit") List<String>? widthUnit,
+      @JsonKey(name: "height_unit") List<String>? heightUnit});
+}
+
+/// @nodoc
+class _$ReturntypemodelCopyWithImpl<$Res, $Val extends Returntypemodel>
+    implements $ReturntypemodelCopyWith<$Res> {
+  _$ReturntypemodelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? returnType = freezed,
+    Object? shelfType = freezed,
+    Object? lengthUnit = freezed,
+    Object? weightUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
+  }) {
+    return _then(_value.copyWith(
+      returnType: freezed == returnType
+          ? _value.returnType
+          : returnType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      shelfType: freezed == shelfType
+          ? _value.shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$_ReturntypemodelCopyWith<$Res>
+    implements $ReturntypemodelCopyWith<$Res> {
+  factory _$$_ReturntypemodelCopyWith(
+          _$_Returntypemodel value, $Res Function(_$_Returntypemodel) then) =
+      __$$_ReturntypemodelCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: "return_type") List<String>? returnType,
+      @JsonKey(name: "shelf_type") List<String>? shelfType,
+      @JsonKey(name: "length_unit") List<String>? lengthUnit,
+      @JsonKey(name: "weight_unit") List<String>? weightUnit,
+      @JsonKey(name: "width_unit") List<String>? widthUnit,
+      @JsonKey(name: "height_unit") List<String>? heightUnit});
+}
+
+/// @nodoc
+class __$$_ReturntypemodelCopyWithImpl<$Res>
+    extends _$ReturntypemodelCopyWithImpl<$Res, _$_Returntypemodel>
+    implements _$$_ReturntypemodelCopyWith<$Res> {
+  __$$_ReturntypemodelCopyWithImpl(
+      _$_Returntypemodel _value, $Res Function(_$_Returntypemodel) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? returnType = freezed,
+    Object? shelfType = freezed,
+    Object? lengthUnit = freezed,
+    Object? weightUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
+  }) {
+    return _then(_$_Returntypemodel(
+      returnType: freezed == returnType
+          ? _value._returnType
+          : returnType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      shelfType: freezed == shelfType
+          ? _value._shelfType
+          : shelfType // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      lengthUnit: freezed == lengthUnit
+          ? _value._lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      weightUnit: freezed == weightUnit
+          ? _value._weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      widthUnit: freezed == widthUnit
+          ? _value._widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      heightUnit: freezed == heightUnit
+          ? _value._heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$_Returntypemodel implements _Returntypemodel {
+  const _$_Returntypemodel(
+      {@JsonKey(name: "return_type") final List<String>? returnType,
+      @JsonKey(name: "shelf_type") final List<String>? shelfType,
+      @JsonKey(name: "length_unit") final List<String>? lengthUnit,
+      @JsonKey(name: "weight_unit") final List<String>? weightUnit,
+      @JsonKey(name: "width_unit") final List<String>? widthUnit,
+      @JsonKey(name: "height_unit") final List<String>? heightUnit})
+      : _returnType = returnType,
+        _shelfType = shelfType,
+        _lengthUnit = lengthUnit,
+        _weightUnit = weightUnit,
+        _widthUnit = widthUnit,
+        _heightUnit = heightUnit;
+
+  factory _$_Returntypemodel.fromJson(Map<String, dynamic> json) =>
+      _$$_ReturntypemodelFromJson(json);
+
+  final List<String>? _returnType;
+  @override
+  @JsonKey(name: "return_type")
+  List<String>? get returnType {
+    final value = _returnType;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _shelfType;
+  @override
+  @JsonKey(name: "shelf_type")
+  List<String>? get shelfType {
+    final value = _shelfType;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _lengthUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit {
+    final value = _lengthUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _weightUnit;
+  @override
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit {
+    final value = _weightUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _widthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit {
+    final value = _widthUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _heightUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit {
+    final value = _heightUnit;
+    if (value == null) return null;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  String toString() {
+    return 'Returntypemodel(returnType: $returnType, shelfType: $shelfType, lengthUnit: $lengthUnit, weightUnit: $weightUnit, widthUnit: $widthUnit, heightUnit: $heightUnit)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_Returntypemodel &&
+            const DeepCollectionEquality()
+                .equals(other._returnType, _returnType) &&
+            const DeepCollectionEquality()
+                .equals(other._shelfType, _shelfType) &&
+            const DeepCollectionEquality()
+                .equals(other._lengthUnit, _lengthUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._weightUnit, _weightUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._widthUnit, _widthUnit) &&
+            const DeepCollectionEquality()
+                .equals(other._heightUnit, _heightUnit));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_returnType),
+      const DeepCollectionEquality().hash(_shelfType),
+      const DeepCollectionEquality().hash(_lengthUnit),
+      const DeepCollectionEquality().hash(_weightUnit),
+      const DeepCollectionEquality().hash(_widthUnit),
+      const DeepCollectionEquality().hash(_heightUnit));
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_ReturntypemodelCopyWith<_$_Returntypemodel> get copyWith =>
+      __$$_ReturntypemodelCopyWithImpl<_$_Returntypemodel>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$_ReturntypemodelToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Returntypemodel implements Returntypemodel {
+  const factory _Returntypemodel(
+          {@JsonKey(name: "return_type") final List<String>? returnType,
+          @JsonKey(name: "shelf_type") final List<String>? shelfType,
+          @JsonKey(name: "length_unit") final List<String>? lengthUnit,
+          @JsonKey(name: "weight_unit") final List<String>? weightUnit,
+          @JsonKey(name: "width_unit") final List<String>? widthUnit,
+          @JsonKey(name: "height_unit") final List<String>? heightUnit}) =
+      _$_Returntypemodel;
+
+  factory _Returntypemodel.fromJson(Map<String, dynamic> json) =
+      _$_Returntypemodel.fromJson;
+
+  @override
+  @JsonKey(name: "return_type")
+  List<String>? get returnType;
+  @override
+  @JsonKey(name: "shelf_type")
+  List<String>? get shelfType;
+  @override
+  @JsonKey(name: "length_unit")
+  List<String>? get lengthUnit;
+  @override
+  @JsonKey(name: "weight_unit")
+  List<String>? get weightUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  List<String>? get widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  List<String>? get heightUnit;
+  @override
+  @JsonKey(ignore: true)
+  _$$_ReturntypemodelCopyWith<_$_Returntypemodel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 SalesUomData _$SalesUomDataFromJson(Map<String, dynamic> json) {
   return _SalesUomData.fromJson(json);
 }

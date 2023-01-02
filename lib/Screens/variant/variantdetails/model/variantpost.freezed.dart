@@ -80,6 +80,14 @@ mixin _$VariantPost {
   String? get additionalDescription => throw _privateConstructorUsedError;
   @JsonKey(name: "unit_cost")
   double? get unitCost => throw _privateConstructorUsedError;
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "width_unit")
+  String? get widthUnit => throw _privateConstructorUsedError;
+  @JsonKey(name: "height_unit")
+  String? get heightUnit => throw _privateConstructorUsedError;
   @JsonKey(name: "actual_cost")
   double? get actualCost => throw _privateConstructorUsedError;
   @JsonKey(name: "landing_cost")
@@ -248,6 +256,14 @@ abstract class $VariantPostCopyWith<$Res> {
           String? additionalDescription,
       @JsonKey(name: "unit_cost")
           double? unitCost,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "actual_cost")
           double? actualCost,
       @JsonKey(name: "landing_cost")
@@ -408,6 +424,10 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
     Object? arabicDescription = freezed,
     Object? additionalDescription = freezed,
     Object? unitCost = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? actualCost = freezed,
     Object? landingCost = freezed,
     Object? grossWeight = freezed,
@@ -621,6 +641,22 @@ class _$VariantPostCopyWithImpl<$Res, $Val extends VariantPost>
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
       actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
@@ -988,6 +1024,14 @@ abstract class _$$_VariantPostCopyWith<$Res>
           String? additionalDescription,
       @JsonKey(name: "unit_cost")
           double? unitCost,
+      @JsonKey(name: "weight_unit")
+          String? weightUnit,
+      @JsonKey(name: "length_unit")
+          String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          String? widthUnit,
+      @JsonKey(name: "height_unit")
+          String? heightUnit,
       @JsonKey(name: "actual_cost")
           double? actualCost,
       @JsonKey(name: "landing_cost")
@@ -1155,6 +1199,10 @@ class __$$_VariantPostCopyWithImpl<$Res>
     Object? arabicDescription = freezed,
     Object? additionalDescription = freezed,
     Object? unitCost = freezed,
+    Object? weightUnit = freezed,
+    Object? lengthUnit = freezed,
+    Object? widthUnit = freezed,
+    Object? heightUnit = freezed,
     Object? actualCost = freezed,
     Object? landingCost = freezed,
     Object? grossWeight = freezed,
@@ -1368,6 +1416,22 @@ class __$$_VariantPostCopyWithImpl<$Res>
           ? _value.unitCost
           : unitCost // ignore: cast_nullable_to_non_nullable
               as double?,
+      weightUnit: freezed == weightUnit
+          ? _value.weightUnit
+          : weightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lengthUnit: freezed == lengthUnit
+          ? _value.lengthUnit
+          : lengthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      widthUnit: freezed == widthUnit
+          ? _value.widthUnit
+          : widthUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      heightUnit: freezed == heightUnit
+          ? _value.heightUnit
+          : heightUnit // ignore: cast_nullable_to_non_nullable
+              as String?,
       actualCost: freezed == actualCost
           ? _value.actualCost
           : actualCost // ignore: cast_nullable_to_non_nullable
@@ -1622,6 +1686,14 @@ class _$_VariantPost implements _VariantPost {
           this.additionalDescription,
       @JsonKey(name: "unit_cost")
           this.unitCost,
+      @JsonKey(name: "weight_unit")
+          this.weightUnit,
+      @JsonKey(name: "length_unit")
+          this.lengthUnit,
+      @JsonKey(name: "width_unit")
+          this.widthUnit,
+      @JsonKey(name: "height_unit")
+          this.heightUnit,
       @JsonKey(name: "actual_cost")
           this.actualCost,
       @JsonKey(name: "landing_cost")
@@ -1845,6 +1917,18 @@ class _$_VariantPost implements _VariantPost {
   @JsonKey(name: "unit_cost")
   final double? unitCost;
   @override
+  @JsonKey(name: "weight_unit")
+  final String? weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  final String? lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  final String? widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  final String? heightUnit;
+  @override
   @JsonKey(name: "actual_cost")
   final double? actualCost;
   @override
@@ -1995,7 +2079,7 @@ class _$_VariantPost implements _VariantPost {
 
   @override
   String toString() {
-    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
+    return 'VariantPost(id: $id, code: $code, vat: $vat, description: $description, name: $name, image1: $image1, image2: $image2, image3: $image3, image4: $image4, image5: $image5, catalog1: $catalog1, catalog2: $catalog2, catalog3: $catalog3, catalog4: $catalog4, catalog5: $catalog5, catalog6: $catalog6, catalog7: $catalog7, catalog8: $catalog8, length: $length, width: $width, weight: $weight, height: $height, Ingrediants: $Ingrediants, storage: $storage, inventoryId: $inventoryId, inventoryName: $inventoryName, weightUomId: $weightUomId, uomCode: $uomCode, varAlternativeRfid: $varAlternativeRfid, alternativeBarcode: $alternativeBarcode, alternativeQrCodeBarcode: $alternativeQrCodeBarcode, vendorDetails: $vendorDetails, vedioUrl: $vedioUrl, searchName: $searchName, needMultipleIntegration: $needMultipleIntegration, posName: $posName, displayName: $displayName, producedCountry: $producedCountry, arabicDescription: $arabicDescription, additionalDescription: $additionalDescription, unitCost: $unitCost, weightUnit: $weightUnit, lengthUnit: $lengthUnit, widthUnit: $widthUnit, heightUnit: $heightUnit, actualCost: $actualCost, landingCost: $landingCost, grossWeight: $grossWeight, netWeight: $netWeight, avgGp: $avgGp, maxGp: $maxGp, minGap: $minGap, targetedGp: $targetedGp, excessTax: $excessTax, retailSellingPricePercentage: $retailSellingPricePercentage, wholeSellingPricePercentage: $wholeSellingPricePercentage, onlineSellingPercenage: $onlineSellingPercenage, safetyStock: $safetyStock, salesUom: $salesUom, seblingId: $seblingId, purchaseUom: $purchaseUom, reOrderPoint: $reOrderPoint, reorderQuantity: $reorderQuantity, wholeSaleStock: $wholeSaleStock, minSalesOrderLimit: $minSalesOrderLimit, maxSalesOrderLimit: $maxSalesOrderLimit, minPurchaseOrderLimit: $minPurchaseOrderLimit, maxPurchaseOrderLimit: $maxPurchaseOrderLimit, purchaseBlock: $purchaseBlock, salesBolock: $salesBolock, stockWarning: $stockWarning, isActive: $isActive, itemCatelog: $itemCatelog, itemImage: $itemImage, ratioToEcommerce: $ratioToEcommerce, minMaxRatio: $minMaxRatio, returnType: $returnType, variantStatus: $variantStatus, returnTime: $returnTime, basePrize: $basePrize, aboutProducts: $aboutProducts, productDetails: $productDetails, productFeatures: $productFeatures, additionalInfo: $additionalInfo, nutriantsFacts: $nutriantsFacts, usageDirection: $usageDirection, importantInfo: $importantInfo, productBehavior: $productBehavior, shelfType: $shelfType, shelfTime: $shelfTime, haveGiftOption: $haveGiftOption, haveWrapOption: $haveWrapOption)';
   }
 
   @override
@@ -2069,6 +2153,14 @@ class _$_VariantPost implements _VariantPost {
                 other.additionalDescription == additionalDescription) &&
             (identical(other.unitCost, unitCost) ||
                 other.unitCost == unitCost) &&
+            (identical(other.weightUnit, weightUnit) ||
+                other.weightUnit == weightUnit) &&
+            (identical(other.lengthUnit, lengthUnit) ||
+                other.lengthUnit == lengthUnit) &&
+            (identical(other.widthUnit, widthUnit) ||
+                other.widthUnit == widthUnit) &&
+            (identical(other.heightUnit, heightUnit) ||
+                other.heightUnit == heightUnit) &&
             (identical(other.actualCost, actualCost) ||
                 other.actualCost == actualCost) &&
             (identical(other.landingCost, landingCost) ||
@@ -2088,14 +2180,10 @@ class _$_VariantPost implements _VariantPost {
                 other.retailSellingPricePercentage ==
                     retailSellingPricePercentage) &&
             (identical(other.wholeSellingPricePercentage, wholeSellingPricePercentage) ||
-                other.wholeSellingPricePercentage ==
-                    wholeSellingPricePercentage) &&
-            (identical(other.onlineSellingPercenage, onlineSellingPercenage) ||
-                other.onlineSellingPercenage == onlineSellingPercenage) &&
-            (identical(other.safetyStock, safetyStock) ||
-                other.safetyStock == safetyStock) &&
-            (identical(other.salesUom, salesUom) ||
-                other.salesUom == salesUom) &&
+                other.wholeSellingPricePercentage == wholeSellingPricePercentage) &&
+            (identical(other.onlineSellingPercenage, onlineSellingPercenage) || other.onlineSellingPercenage == onlineSellingPercenage) &&
+            (identical(other.safetyStock, safetyStock) || other.safetyStock == safetyStock) &&
+            (identical(other.salesUom, salesUom) || other.salesUom == salesUom) &&
             (identical(other.seblingId, seblingId) || other.seblingId == seblingId) &&
             (identical(other.purchaseUom, purchaseUom) || other.purchaseUom == purchaseUom) &&
             (identical(other.reOrderPoint, reOrderPoint) || other.reOrderPoint == reOrderPoint) &&
@@ -2176,6 +2264,10 @@ class _$_VariantPost implements _VariantPost {
         arabicDescription,
         additionalDescription,
         unitCost,
+        weightUnit,
+        lengthUnit,
+        widthUnit,
+        heightUnit,
         actualCost,
         landingCost,
         grossWeight,
@@ -2299,6 +2391,14 @@ abstract class _VariantPost implements VariantPost {
           final String? additionalDescription,
       @JsonKey(name: "unit_cost")
           final double? unitCost,
+      @JsonKey(name: "weight_unit")
+          final String? weightUnit,
+      @JsonKey(name: "length_unit")
+          final String? lengthUnit,
+      @JsonKey(name: "width_unit")
+          final String? widthUnit,
+      @JsonKey(name: "height_unit")
+          final String? heightUnit,
       @JsonKey(name: "actual_cost")
           final double? actualCost,
       @JsonKey(name: "landing_cost")
@@ -2496,6 +2596,18 @@ abstract class _VariantPost implements VariantPost {
   @override
   @JsonKey(name: "unit_cost")
   double? get unitCost;
+  @override
+  @JsonKey(name: "weight_unit")
+  String? get weightUnit;
+  @override
+  @JsonKey(name: "length_unit")
+  String? get lengthUnit;
+  @override
+  @JsonKey(name: "width_unit")
+  String? get widthUnit;
+  @override
+  @JsonKey(name: "height_unit")
+  String? get heightUnit;
   @override
   @JsonKey(name: "actual_cost")
   double? get actualCost;

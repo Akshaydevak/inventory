@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/allcategorylist_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/attributepatchlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomread/readbaseuom_cubit.dart';
@@ -35,6 +36,7 @@ import 'package:inventory/Screens/heirarchy/general/model/creatematerial.dart';
 import 'package:inventory/Screens/heirarchy/general/model/divisionread.dart';
 import 'package:inventory/Screens/heirarchy/general/model/listbrand.dart';
 import 'package:inventory/Screens/heirarchy/general/model/materialread.dart';
+import 'package:inventory/Screens/heirarchy/general/model/variantframeworkpost.dart';
 import 'package:inventory/Screens/heirarchy/general/screens.dart';
 import 'package:inventory/Screens/logi/inventorylist/inventorylist_cubit.dart';
 import 'package:inventory/Screens/logi/model/inventorylistmodel.dart';
@@ -49,6 +51,7 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/pric
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcosting/readcosting_cubit.dart';
 import 'package:inventory/Screens/variant/channel_costing_allocation/cubits/readcostingtype/readcostingtype_cubit.dart';
 import 'package:inventory/Screens/variant/channels2allocation/cubits/channellistread/channel_list_read_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/attributetypesave_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem/createlinkeditem_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/createlinkeditem/linkeditemlistread_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/linkeditemcreation/linked_itemcreation_cubit.dart';
@@ -74,6 +77,7 @@ import 'package:inventory/widgets/dropdownbutton.dart';
 import 'package:inventory/widgets/searchTextfield.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../Screens/heirarchy/general/cubits/attributecreationread_cubit.dart';
 import '../Screens/heirarchy/general/cubits/categoryread/categoryread_cubit.dart';
 import '../Screens/heirarchy/general/cubits/devision_list/materialdelete_cubit.dart';
 import '../Screens/heirarchy/general/cubits/imagepost/imagepost_cubit.dart';
@@ -957,6 +961,7 @@ class ConfigurePopup extends StatelessWidget {
         {
           data = GroupPopUp(
             type: type,
+            id:veritiaclid,
           );
         }
         break;
@@ -1000,6 +1005,12 @@ class ConfigurePopup extends StatelessWidget {
       case "create_framework":
         {
           data = CreateFrameWorkPopUp(
+            type: type,
+          );
+        }
+        break;    case "create_Attribute":
+        {
+          data = CreateAttributePopUp(
             type: type,
           );
         }
@@ -1146,7 +1157,7 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -1316,8 +1327,13 @@ class _CreateBrandPopUpState extends State<CreateBrandPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -1507,7 +1523,7 @@ class _PatchBrandPopUpState extends State<PatchBrandPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -1946,7 +1962,7 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -2098,6 +2114,12 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+                                      setState(() {
+                                        imageName="";
+                                        imageContollercontroller.clear();
+                                      });
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
                                       imageName = myFile?.fileName ?? "";
@@ -2127,8 +2149,13 @@ class _CreateMaterialPopUpState extends State<CreateMaterialPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -2322,7 +2349,7 @@ print(list1.contains(widget.linkedListItemTable?[0].name));
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -3171,7 +3198,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -3374,8 +3401,13 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -3571,7 +3603,7 @@ class _PatchMaterialPopUpState extends State<PatchMaterialPopUp> {
 //         print("delete" + state.toString());
 //         state.maybeWhen(orElse: () {
 //           // context.
-//           context.showSnackBarError("Loading");
+//
 //         }, error: () {
 //           context.showSnackBarError(Variable.errorMessege);
 //         }, success: (data) {
@@ -4490,7 +4522,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -4513,7 +4545,7 @@ class _PatchDevisionPopUpState extends State<PatchDevisionPopUp> {
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -4886,7 +4918,7 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -5061,8 +5093,13 @@ class _CreateStaticPopUpState extends State<CreateStaticPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -5256,7 +5293,7 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -5381,7 +5418,9 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                       // height: MediaQuery.of(context).size.height * .6,
                       child: IntrinsicHeight(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+
                             Expanded(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -5431,17 +5470,23 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                     ),
                                   Expanded(
                                     child: Container(
+
                                       // height: 400,
                                       // width: 400,
                                       child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
                                         children: [
+                                          SizedBox(height: 10,),
                                           Container(
-                                              // width: 400,
-                                              height: 250,
+                                             // color: Colors.red,
+                                              height: 150,
                                               child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Expanded(
                                                     child: Column(
+
                                                       children: [
                                                         Expanded(
                                                             child: Column(
@@ -5582,6 +5627,21 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                   )),
                                                 ],
                                               )),
+                                          Container(
+                                            margin: EdgeInsets.only(left: 13),
+                                            alignment: Alignment.topLeft,
+                                            child: CreateTextButton(
+                                              onPress:(){
+                                                costingTypeMethodeCheck = true; showDailogPopUp(
+                                                  context,
+                                                  ConfigurePopup(
+                                                    type: "create_Attribute",
+                                                  ),
+                                                );
+                                              },
+                                              label: "Create Attribute",
+                                            ),
+                                          ),
                                           SingleChildScrollView(
                                             child: Column(
                                               mainAxisAlignment: MainAxisAlignment.start,
@@ -5590,14 +5650,533 @@ class _CreateFrameWorkPopUpState extends State<CreateFrameWorkPopUp> {
                                                     height: 180,
 
 
-                                                    child:
-                                                        VariantFrameWorkBottomTable(
+                                                    child: VariantFrameWorkBottomTable(
                                                             listAssign:
                                                                 listAssign,
                                                             table: List.from(table))),
                                               ],
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //
+                                  //   child: Column(
+                                  //     children: [
+                                  //       Expanded(
+                                  //           child: Column(
+                                  //         children: [
+                                  //           NewInputCard(
+                                  //               readOnly: true,
+                                  //               controller: codeController,
+                                  //               title: "Code"),
+                                  //           SizedBox(
+                                  //             height: 10,
+                                  //           ),
+                                  //           NewInputCard(
+                                  //             controller: namecontroller,
+                                  //             title: "Name",
+                                  //           ),
+                                  //         ],
+                                  //       )),
+                                  //     ],
+                                  //   ),
+                                  // ),
+                                  // Expanded(
+                                  //     child: Column(
+                                  //   children: [
+                                  //     NewInputCard(
+                                  //       controller:
+                                  //           descriptionContollercontroller,
+                                  //       title: "Description",
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 10,
+                                  //     ),
+                                  //     SelectableDropDownpopUp(
+                                  //       controller: categoryNameController,
+                                  //       label: "category",
+                                  //       type: "Category_PopUpCall",
+                                  //       value: categoryNameController.text,
+                                  //       onchange: (vale) {
+                                  //         // print("searching for search"+vale.toString());
+                                  //         // context.read<CategorylistCubit>().searchCategoryist(vale);
+                                  //       },
+                                  //       enable: true,
+                                  //       onSelection: (BrandListModel? va) {
+                                  //         setState(() {
+                                  //           categoryNameController.text = va?.name ?? "";
+                                  //           categoryController.text = va?.code ?? "";
+                                  //           categoryid = va?.id;
+                                  //           Variable.categoryId = va?.id;
+                                  //           setState(() {});
+                                  //
+                                  //           // onChange = true;
+                                  //           // orderType.text = va!;
+                                  //         });
+                                  //       },
+                                  //       // onAddNew: () {
+                                  //       //   showDailogPopUp(
+                                  //       //     context,
+                                  //       //     ConfigurePopup(
+                                  //       //       type: "category_group",
+                                  //       //     ),
+                                  //       //   );
+                                  //       // },
+                                  //     ),
+                                  //     SizedBox(
+                                  //       height: 10,
+                                  //     ),
+                                  //     PopUpSwitchTile(
+                                  //         value: active ?? false,
+                                  //         title: "isActive",
+                                  //         onClick: (gg) {
+                                  //           onChange = true;
+                                  //           if (!addNew) active = !active!;
+                                  //
+                                  //           // extendedWarranty = gg;
+                                  //           // widget.changeExtendedWarranty(gg);
+                                  //           // onChangeExtWarranty = gg;
+                                  //           setState(() {});
+                                  //         }),
+                                  //   ],
+                                  // )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              });
+            },
+          ),
+        );
+      }),
+    );
+  }
+}
+
+
+
+class CreateAttributePopUp extends StatefulWidget {
+  final String type;
+
+  CreateAttributePopUp({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  @override
+  _CreateAttributePopUpState createState() => _CreateAttributePopUpState();
+}
+
+class _CreateAttributePopUpState extends State<CreateAttributePopUp> {
+  bool? active = costingTypeMethodeCheck?true:false;
+
+  bool onChange = false;
+  bool onChangeWarranty = false;
+  bool onChangeExtWarranty = false;
+  String imageName = "";
+  String imageEncode = "";
+  int selectedVertical = 0;
+  AttributeListModel? group;
+  int? veritiaclid = 0;
+  var list;
+
+  List<AttributeListModel> result = [];
+  TextEditingController itemsearch = TextEditingController();
+  String parentName = "";
+  bool changer = false;
+
+  TextEditingController codeController = TextEditingController();
+  TextEditingController namecontroller = TextEditingController();
+
+
+  int? categoryid;
+  TextEditingController attributeType =
+      TextEditingController();
+  bool addNew = false;
+  List<VariantLinesLiostModel> table = List.from([]);
+
+  listAssign(List<VariantLinesLiostModel> tables) {
+    onChange = true;
+    setState(() {
+      table = List.from(tables);
+    });
+  }
+
+  final GlobalKey<_CreateStaticPopUpState> _myWidgetState =
+      GlobalKey<_CreateStaticPopUpState>();
+
+  void changeAddNew(bool va) {
+    addNew = va;
+    onChange = false;
+  }
+
+  @override
+  void initState() {
+    if (costingTypeMethodeCheck != true){
+      context.read<AttributepatchlistCubit>().getAttributePatchList();
+    }
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // descriptionController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].description == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].description);
+    // durationController = TextEditingController(
+    //     text: widget.warranty?[widget.indexValue!].duration == null
+    //         ? ""
+    //         : widget.warranty?[widget.indexValue!].duration.toString());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => VariantframeworkpostCubit(),
+        ),
+        BlocProvider(
+          create: (context) => AttributecreationreadCubit(),
+        ), BlocProvider(
+          create: (context) => AttributetypesaveCubit(),
+        ),
+        BlocProvider(
+          create: (context) => MaterialdeleteCubit(),
+        ),
+      ],
+      child: Builder(builder: (context) {
+        return MultiBlocListener(
+          listeners: [
+            BlocListener<MaterialdeleteCubit, MaterialdeleteState>(
+              listener: (context, state) {
+                print("delete" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+                  // context.showSnackBarError("Loading");
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  if (data.data1) {
+
+                    setState(() {
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      context.read<AttributepatchlistCubit>().getAttributePatchList();
+
+                    });
+                  } else {
+                    context.showSnackBarError(data.data2);
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                  ;
+                });
+              },
+            ),
+            BlocListener<AttributecreationreadCubit, AttributecreationreadState>(
+              listener: (context, state) {
+                print("nnnnop" + state.toString());
+                state.maybeWhen(
+                    orElse: () {},
+                    error: () {
+                      print("error");
+                    },
+                    success: (data) {
+                      setState(() {
+                        print("the frame work read" + data.toString());
+                        group = data;
+                        codeController.text = data.code ?? "";
+                        namecontroller.text = data?.attributeName ?? "";
+                        attributeType.text=data?.attributeType??"";
+
+
+
+
+
+                        print(categoryid);
+
+                        active = data.isActive ?? false;
+                      });
+                    });
+              },
+            ),
+            BlocListener<AttributetypesaveCubit, AttributetypesaveState>(
+              listener: (context, state) {
+                print("postssssssss" + state.toString());
+                state.maybeWhen(orElse: () {
+                  // context.
+
+                }, error: () {
+                  context.showSnackBarError(Variable.errorMessege);
+                }, success: (data) {
+                  // Navigator.pop(context);
+                  if (data.data1) {
+                    print("here after  creation");
+
+                    setState(() {
+                      showDailogPopUp(
+                          context,
+                          SuccessPopup(
+                            content: data.data2,
+                            // table:table,
+                          ));
+                      if (costingTypeMethodeCheck == true)
+                        context.read<AttributepatchlistCubit>().getAttributePatchList();
+
+                      // context.read<FrameworklistCubit>().getFrameWorklist();
+                      print("here after  creation next call");
+                    });
+
+                    setState(() {});
+                  } else {
+                    showDailogPopUp(
+                        context,
+                        FailiurePopup(
+                          content: data.data2,
+                          // table:table,
+                        ));
+                  }
+                  ;
+                });
+              },
+            ),
+          ],
+          child: BlocConsumer<AttributepatchlistCubit, AttributepatchlistState>(
+            listener: (context, state) {
+              print("state" + state.toString());
+              state.maybeWhen(
+                  orElse: () {},
+                  error: () {
+                    print("error");
+                  },
+                  success: (list) {
+                    print("aaaaayyyiram" + list.data.toString());
+                    list = list;
+
+                    result = list.data;
+                    print("seee" + result.toString());
+                    setState(() {
+                      if (result.isNotEmpty) {
+                        veritiaclid = result[0].id;
+                        // Variable.verticalid=result[0].id;
+                        print("Variable.ak" + Variable.verticalid.toString());
+                        // if (costingTypeMethodeCheck != true)
+                     if( costingTypeMethodeCheck != true)   context
+                            .read<AttributecreationreadCubit>()
+                            .getAttributeCreationRead(veritiaclid!);
+                      } else {
+                        print("common");
+                        // select=true;
+                        setState(() {});
+                      }
+
+                      setState(() {});
+                    });
+                  });
+            },
+            builder: (context, state) {
+              return Builder(builder: (context) {
+                return AlertDialog(
+                  content: PopUpHeader(
+                    functionChane: true,
+                    buttonCheck: true,
+                    isDirectCreate: costingTypeMethodeCheck,
+                    onTap: () {
+                      addNew = !addNew;
+                      setState(() {});
+                    },
+                    key: _myWidgetState,
+                    addNew: addNew,
+                    // isDirectCreate:changer,
+
+                    label: "Create Attribute",
+                    onApply: () {
+                      print("save");
+
+                      context
+                          .read<AttributetypesaveCubit>().getAttributePost(attributeType.text ,namecontroller.text, active);
+
+                      // widget.onTap();
+                    },
+                    onEdit: () {
+
+
+
+                      context
+                          .read<AttributetypesaveCubit>().getAttributePatch(attributeType.text ,namecontroller.text, active,veritiaclid);
+
+                    },
+                    onCancel: () {
+                      context
+                          .read<MaterialdeleteCubit>()
+                          .materialDelete(veritiaclid, "create_attribute_delete");
+                    },
+
+                    onAddNew: (v) {},
+                    dataField: Expanded(
+                      // height: MediaQuery.of(context).size.height * .6,
+                      child: IntrinsicHeight(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+
+                            Expanded(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  if (costingTypeMethodeCheck != true)
+                                    AttributeVerticalList(
+                                      list: list,
+                                      selectedVertical: selectedVertical,
+                                      itemsearch: itemsearch,
+                                      ontap: (int index) {
+                                        setState(() {
+                                          selectedVertical = index;
+                                          table.clear();
+
+                                          // select=false;
+                                          // clear();
+                                          // exportCheck=false;
+                                          // addNew=true;
+
+                                          // updateCheck=false;
+                                          // print("rijina" +
+                                          //     // result[index].id.toString());
+
+                                          veritiaclid = result[index].id;
+                                          // clear();
+                                          // select=true;
+                                          //
+                                          //
+
+                                          setState(() {
+                                            context
+                                                .read<AttributecreationreadCubit>()
+                                                .getAttributeCreationRead(veritiaclid!);
+                                            // context.read<StockreadCubit>().getStockRead(veritiaclid!);
+                                          });
+                                        });
+                                      },
+                                      search: (String va) {
+                                        print(va);
+                                        context.read<AttributepatchlistCubit>().getSearchAttributePatchList(va);
+                                        if (va == "") {
+                                          context.read<AttributepatchlistCubit>().getAttributePatchList();
+                                        }
+                                      },
+                                      result: result,
+                                    ),
+                                  Expanded(
+                                    child: Container(
+
+                                      // height: 400,
+                                      // width: 400,
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          SizedBox(height: 10,),
+                                          Container(
+                                             // color: Colors.red,
+                                              height: 200,
+                                              child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Expanded(
+                                                    child: Column(
+
+                                                      children: [
+                                                        Expanded(
+                                                            child: Column(
+                                                          children: [
+                                                            NewInputCard(
+                                                                readOnly: true,
+                                                                controller:
+                                                                    codeController,
+                                                                title: "Code"),
+                                                            SizedBox(
+                                                              height: 10,
+                                                            ),
+                                                            NewInputCard(
+                                                              height: 60,
+                                                              controller:
+                                                                  namecontroller,
+                                                              title: "Name",
+                                                            ),
+                                                          ],
+                                                        )),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Expanded(
+                                                      child: Column(
+                                                    children: [
+                                                      SelectableDropDownpopUp(
+                                                        label: "Attribute Type",
+                                                        type:"attributeList_basedOn",
+                                                        value: attributeType.text,
+                                                        onSelection: (String? va) {
+                                                          print(
+                                                              "+++++++++++++++++++++++");
+                                                          //   print("val+++++++++++++++++++++++++++++++++++++s++++++++++${va?.orderTypes?[0]}");
+                                                          setState(() {
+                                                            attributeType.text = va??"";
+
+
+
+                                                          });
+                                                        },
+
+                                                        restricted: true,
+                                                      ),
+                                                      NewInputCard(
+                                                        height: 60,
+                                                        controller:
+                                                        attributeType,
+                                                        title: "Attribute Type",
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+
+                                                      SizedBox(
+                                                        height: 10,
+                                                      ),
+                                                      PopUpSwitchTile(
+                                                          value:
+                                                              active ?? false,
+                                                          title: "isActive",
+                                                          onClick: (gg) {
+                                                            onChange = true;
+                                                           if( costingTypeMethodeCheck!=true)
+                                                              active = !active!;
+
+                                                            // extendedWarranty = gg;
+                                                            // widget.changeExtendedWarranty(gg);
+                                                            // onChangeExtWarranty = gg;
+                                                            setState(() {});
+                                                          }),
+                                                    ],
+                                                  )),
+                                                ],
+                                              )),
+
                                         ],
                                       ),
                                     ),
@@ -5823,7 +6402,7 @@ class _CreateCostingMethodeTypePopUpState
                 print("delete" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -5842,7 +6421,7 @@ class _CreateCostingMethodeTypePopUpState
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -6184,7 +6763,7 @@ class CreateCostingState extends State<CreateCosting> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -6487,7 +7066,7 @@ class _CreateCostingMethodeCreatePopUpState
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -6909,7 +7488,7 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                 print("chaps" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -6943,7 +7522,7 @@ class _PricingGroupCreatePopUp extends State<PricingGroupCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -7266,7 +7845,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                 print("chaps" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -7303,7 +7882,7 @@ class _CreatePricingPopUp extends State<CreatePricingPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -7607,7 +8186,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -7640,7 +8219,7 @@ class _PricingCreatePopUp extends State<PricingCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -8093,7 +8672,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -8117,7 +8696,7 @@ class _LinkedItemCreatePopUp extends State<LinkedItemCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -8882,7 +9461,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -9300,7 +9879,7 @@ class _PatchStaticPopUpState extends State<PatchStaticPopUp> {
 //                     print("delete" + state.toString());
 //                     state.maybeWhen(orElse: () {
 //                       // context.
-//                       context.showSnackBarError("Loading");
+//
 //                     }, error: () {
 //                       context.showSnackBarError(Variable.errorMessege);
 //                     }, success: (data) {
@@ -9653,7 +10232,7 @@ class _UomGroupCreatePopUpState extends State<UomGroupCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -9947,7 +10526,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -9970,7 +10549,7 @@ class _UomGroupPopUpState extends State<UomGroupPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -10274,7 +10853,7 @@ class _UomCreatePopUpState extends State<UomCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -10638,7 +11217,7 @@ class _UomPopUpState extends State<UomPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -11090,7 +11669,7 @@ class _CategoryPopUpState extends State<CategoryPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -11597,7 +12176,7 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -11964,8 +12543,14 @@ class _CategoryCreatePopUpState extends State<CategoryCreatePopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+                                        // context.showSnackBarError(
+                                        //     "Please upload Image of size Lesser than 150kb");
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -12123,7 +12708,7 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -12543,9 +13128,11 @@ class _SubCategoryCreatePopUpState extends State<SubCategoryCreatePopUp> {
 
 class GroupPopUp extends StatefulWidget {
   final String type;
+  final int? id;
 
   GroupPopUp({
     Key? key,
+    this.id,
     required this.type,
   }) : super(key: key);
 
@@ -12640,7 +13227,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -12654,7 +13241,7 @@ class _GroupPopUpState extends State<GroupPopUp> {
                           // table:table,
                         ));
 
-                    context.read<GrouplistCubit>().getGroupListList();
+                    context.read<GrouplistCubit>().getGroupListList(id:widget.id);
                     setState(() {});
                   } else {
                     showDailogPopUp(
@@ -12781,6 +13368,15 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                       // loading = true;
                                       setState(() {});
                                     },
+                                    onCancel: (){
+
+                                      setState(() {
+                                        imageName="";
+                                        imageCodeController.clear();
+
+                                      });
+
+                                    },
                                     onChange: (myFile) {
                                       onChange = true;
                                       imageName = myFile?.fileName ?? "";
@@ -12810,8 +13406,13 @@ class _GroupPopUpState extends State<GroupPopUp> {
                                         //     .read<CreateWebImageCubit>()
                                         //     .createMobImage();
                                       } else
-                                        context.showSnackBarError(
-                                            "Please upload Image of size Lesser than 150kb");
+                                        showDailogPopUp(
+                                            context,
+                                            FailiurePopup(
+                                              content: "Please upload Image of size Lesser than 150kb",
+                                              // table:table,
+                                            ));
+
                                       setState(() {});
                                     },
                                     onCreate: true,
@@ -13071,7 +13672,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
                 print("postssssssss" + state.toString());
                 state.maybeWhen(orElse: () {
                   // context.
-                  context.showSnackBarError("Loading");
+
                 }, error: () {
                   context.showSnackBarError(Variable.errorMessege);
                 }, success: (data) {
@@ -14740,6 +15341,7 @@ class _GroupPatchPopUpState extends State<GroupPatchPopUp> {
 class PopUpHeader extends StatefulWidget {
   final bool? addNew;
   final bool? buttonNameOption;
+  final Widget? paginated;
   final bool buttonCheck;
   final bool functionChane;
   final VoidCallback? onTap;
@@ -14759,6 +15361,7 @@ class PopUpHeader extends StatefulWidget {
     Key? key,
     this.buttonNameOption = false,
     this.buttonName = "SAVE",
+    this.paginated ,
     this.buttonCheck = false,
     this.buttonVisible=true,
     this.functionChane = false,
@@ -14767,6 +15370,7 @@ class PopUpHeader extends StatefulWidget {
     this.widthPopup = 50,
     this.onCancel,
     this.changer = false,
+
     this.dataField,
     this.onAddNew,
     this.onApply,
@@ -14794,6 +15398,7 @@ class _PopUpHeaderState extends State<PopUpHeader> {
       padding: EdgeInsets.all(10),
       width: width/2,
       child: GeneralSavePage(
+        paginated: widget.paginated,
 
         onEdit: widget.onEdit,
         buttonName: widget.buttonName,

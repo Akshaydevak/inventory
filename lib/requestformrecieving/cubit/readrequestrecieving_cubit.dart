@@ -11,6 +11,7 @@ class ReadrequestrecievingCubit extends Cubit<ReadrequestrecievingState> {
   ReadrequestrecievingCubit() : super(ReadrequestrecievingState.initial());
   final InventoryRepository _repos = InventoryRepositoryImpl();
   Future getRequestFormReceivingRead(int id) async {
+    emit(ReadrequestrecievingState.initial());
     print("idddidd" + id.toString());
     final result = await _repos.getRequestFormReceivingRead(id,);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

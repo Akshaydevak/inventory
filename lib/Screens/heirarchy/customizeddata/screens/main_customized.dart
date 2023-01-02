@@ -40,7 +40,12 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   TextEditingController shelfType = TextEditingController();
   TextEditingController shelfTime = TextEditingController();
   TextEditingController lengthController = TextEditingController();
+  TextEditingController lengthUnit=TextEditingController(text: "centimeter");
+  TextEditingController widthUnit=TextEditingController(text:"centimeter");
+  TextEditingController heightUnit=TextEditingController(text:"centimeter");
+  TextEditingController weightUnit=TextEditingController(text: "kilo gram");
   bool active = false;
+  bool suffixIconCheck = false;
   bool haveGiftOption = false;
   bool haveWrapOption = false;
   bool needMultipleIntegreation = false;
@@ -50,6 +55,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   TextEditingController itemsearch = TextEditingController();
   int selectedVertical = 0;
   bool select=false;
+  bool onChange=false;
 
 
 
@@ -76,6 +82,11 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
     haveWrapOption=false;
     shelfType.clear();
     shelfTime.clear();
+   lengthUnit.text="";
+     widthUnit.text="";
+   heightUnit.text="";
+    weightUnit.text="";
+
 
     needMultipleIntegreation=false;
     setState(() {
@@ -265,7 +276,7 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
             }
             else {
               print("common");
-              // select=true;
+              select=true;
 
             }
 
@@ -275,63 +286,74 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
         });
   },
   builder: (context, state) {
+    if(onChange==false){
+      lengthUnit.text="meter";
+      widthUnit.text="centimeter";
+      heightUnit.text="centimeter";
+       weightUnit.text= "kilo gram";
+    }
+    onChange=false;
 
     return Scaffold(
                 backgroundColor: Pellet.bagroundColor,
-                body: SingleChildScrollView(
-                  child: IntrinsicHeight(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CustomIseVerticalList(
-                          list: list1,
+                body: IntrinsicHeight(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      CustomIseVerticalList(
+                        list: list1,
 
 
-                          selectedVertical: selectedVertical,
-                          itemsearch: itemsearch,
-                          ontap: (int index) {
-                            setState(() {
-                              selectedVertical = index;
+                        selectedVertical: selectedVertical,
+                        itemsearch: itemsearch,
+                        suffixIconCheck: suffixIconCheck,
+                        ontap: (int index) {
+                          onChange=true;
+                          setState(() {
+                            selectedVertical = index;
 
-                              select=false;
-                              // clear();
+                            select=false;
+                            clear();
 
-                              // addNew=true;
+                            // addNew=true;
 
-                              // updateCheck=false;
-
-
-
-                              veritiaclid = result[index].id;
-                              Variable.variantCode=result[index].code.toString();
-                              // clear();
-                              // select=true;
-                              //
-                              //
+                            // updateCheck=false;
 
 
 
+                            veritiaclid = result[index].id;
+                            Variable.variantCode=result[index].code.toString();
+                            // clear();
+                            // select=true;
+                            //
+                            //
 
-                              context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
 
 
-                            });
-                          },
-                          search: (String va) {
-                            print(va);
+
+                            context.read<ReadcustomCubit>().getCustomRead(veritiaclid!);
+
+
+                          });
+                        },
+                        search: (String va) {
+                          print(va);
+                          context
+                              .read<ListcustomverticalCubit>()
+                              .getSearchCustomList(va);
+                          suffixIconCheck=true;
+                          if (va == "") {
+                            suffixIconCheck=false;
                             context
                                 .read<ListcustomverticalCubit>()
-                                .getSearchCustomList(va);
-                            if (va == "") {
-                              context
-                                  .read<ListcustomverticalCubit>()
-                                  .getCustomVerticalList();
-                            }
-                          },
-                          result: result,
-                        ),
-                        Expanded(child: Column(
+                                .getCustomVerticalList();
+                          }
+                        },
+                        result: result,
+                      ),
+                      Expanded(child: SingleChildScrollView(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
 
@@ -343,7 +365,9 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                 TextButtonLarge(
                                   text: "CREATE",
                                   onPress: (){
+                                    onChange=true;
                                   clear();
+
                                   setState(() {
                                     select=true;
                                   });
@@ -358,6 +382,10 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
   builder: (context, state) {
     return CustomizedStableTable(
                               select:select,
+                              heightUnit: heightUnit,
+                              lengthUnit: lengthUnit,
+                              weightUnit: weightUnit,
+                              widthUnit: widthUnit,
                               shelfType:shelfType,
                               shelfTime:shelfTime,
                               haveGiftOption:haveGiftOption,
@@ -413,6 +441,11 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                                 CustomCreationtModel model=CustomCreationtModel(
                                   mappingPlaceId: Variable.inventory_ID,
                                   needMultipleIntgration: needMultipleIntegreation,
+                                  weightUnit: weightUnit.text.isEmpty?null:weightUnit.text,
+                                  heightUnit: heightUnit.text.isEmpty?null:heightUnit.text,
+                                  lengthUnit: lengthUnit.text.isEmpty?null:lengthUnit.text,
+                                  widthUnit: widthUnit.text.isEmpty?null:widthUnit.text,
+
                                   groupId:groupController.text.isEmpty?null: int.tryParse(groupController.text),
                                   returnTime:returnTimeController.text.isEmpty?null: int.tryParse(returnTimeController.text),
                                   minimumGp: minimumGpController.text.isEmpty?null:double.tryParse(minimumGpController.text),
@@ -544,13 +577,12 @@ class _CustomisedMainScreenState extends State<CustomisedMainScreen> {
                             // ),
 
                           ],
-                        ))
+                        ),
+                      ))
 
 
-                      ],
-                    ),
+                    ],
                   ),
-
                 )
                 ,
               );

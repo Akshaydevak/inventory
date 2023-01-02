@@ -9,6 +9,7 @@ class PurchaseinvoiceCubit extends Cubit<PurchaseinvoiceState> {
   PurchaseinvoiceCubit() : super(PurchaseinvoiceState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getPurchaseInvoice() async {
+    emit(PurchaseinvoiceState.initial());
     final result = await repo.getPurchaseInvoice();
 
     result.fold((l) => emit(_Error1()), (r) => emit(_Success(r)));

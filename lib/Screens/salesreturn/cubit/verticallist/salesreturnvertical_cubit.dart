@@ -15,6 +15,7 @@ class SalesreturnverticalCubit extends Cubit<SalesreturnverticalState> {
     next = null;
     prev = null;
     print("batista");
+    emit(SalesreturnverticalState.initial());
     final result = await repo.getSalesReturnGeneralVertical();
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -27,6 +28,7 @@ class SalesreturnverticalCubit extends Cubit<SalesreturnverticalState> {
   Future getSalesReturnSearch(
     String code,
   ) async {
+    emit(SalesreturnverticalState.initial());
     final result = await repo.getSalesReturnSearch(
      "code="+ code,
     );
@@ -39,6 +41,7 @@ class SalesreturnverticalCubit extends Cubit<SalesreturnverticalState> {
 
 
   Future nextslotSectionPageList({String? type}) async {
+    emit(SalesreturnverticalState.initial());
     final result = await repo.getSalesReturnSearch(next);
     result.fold((l) => emit(_Error()), (r) {
       next = r.nextPage;
@@ -49,6 +52,7 @@ class SalesreturnverticalCubit extends Cubit<SalesreturnverticalState> {
   }
 
   Future previuosslotSectionPageList({String? type}) async {
+    emit(SalesreturnverticalState.initial());
     // print(previous);
     final result = await repo.getSalesReturnSearch(prev);
     result.fold((l) => emit(_Error()), (r) {

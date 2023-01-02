@@ -63,7 +63,7 @@ class NewInputCard extends StatefulWidget {
      this.colors = const Color(0xffC3C7C9),
     this.maxLines = 1,
     this.height = 48.7,
-    this.fontsize = 13,
+    this.fontsize = 12,
   }) : super(key: key);
 
   @override
@@ -171,7 +171,7 @@ class _NewInputCardState extends State<NewInputCard> {
           ):
           Container(
             alignment: Alignment.center,
-            height: widget.height,
+            // height: widget.height,
 
 
             // color: widget.colors,
@@ -207,6 +207,8 @@ class _NewInputCardState extends State<NewInputCard> {
 
               // readOnly:limitOflength?limitOflength: widget.readOnly,
               readOnly: widget.readOnly,
+
+
               maxLength: widget.formatter? 10:widget.maxLines!=3?widget.textLimit:null,
               maxLines: widget.maxLines,
               controller: widget.controller.text=="null"?TextEditingController(text: ""):widget.controller,
@@ -222,6 +224,7 @@ class _NewInputCardState extends State<NewInputCard> {
 
               decoration: InputDecoration(
                 counterText: '',
+                contentPadding: null,
 
 
 
@@ -1499,6 +1502,9 @@ class _PopUpSwitchTileState extends State<PopUpSwitchTile> {
     );
   }
 }
+
+
+
 
 
 class CustomDropDown extends StatefulWidget {

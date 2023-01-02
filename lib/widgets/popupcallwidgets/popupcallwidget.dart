@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:inventory/Screens/heirarchy/customizeddata/cubit/messurement_cubit.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/cubit/readcustom/readcustom_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/attributecreationtypelist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/attributelist/attributelist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuom_creation/baseuomcreation_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
@@ -31,6 +34,7 @@ import 'package:inventory/Screens/variant/channel_costing_allocation/model/costi
 import 'package:inventory/Screens/variant/general/cubits/variant_selection/variantselection_cubit.dart';
 import 'package:inventory/Screens/variant/stock/cubits/virtualStocktype/virtualstocktype_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/listvraiant/listvraiant_cubit.dart';
+import 'package:inventory/Screens/variant/variantdetails/cubits/returntype_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/salesList/sales_list_cubit.dart';
 import 'package:inventory/Screens/variant/variantdetails/cubits/varaintRead/variantread_cubit.dart';
 import 'package:inventory/core/uttils/variable.dart';
@@ -45,6 +49,7 @@ import 'package:inventory/purchaserecievingmodel/generatemissing.dart';
 import 'package:inventory/requestformcubit/cubit/orderedperson_cubit.dart';
 import 'package:inventory/requestformcubit/cubit/ordertype_cubit.dart';
 
+import '../../Screens/heirarchy/customizeddata/model/creation_custom_model.dart';
 import '../../Screens/heirarchy/general/cubits/listbrand2/listbrand2_cubit.dart';
 import '../../Screens/heirarchy/general/cubits/subcategorylist/subcategory_cubit.dart';
 import '../../Screens/sales/general/cubit/salesordertype/sales_cubit.dart';
@@ -116,7 +121,55 @@ class _PopUpCallState extends State<PopUpCall> {
               enable: widget.enable,
               type: widget.type);
         }
-        break;      case "ReturnTypePopupCall":
+        break;
+      case "Length_unit":
+        {
+          data = CustomMessureentPopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;     case "Height_unit_popup":
+        {
+          data = CustomHeightPopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break; case "Weight_unit_popup":
+        {
+          data = CustomWeightPopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;break; case "Width_unit_popup":
+        {
+          data = CustomWidthPopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "attributeList_basedOn":
+        {
+          data = CreateAttributeListPopUpCall(
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "ReturnTypePopupCall":
         {
           data = ReturnTypePopupCall(
             id: widget.id,
@@ -126,7 +179,53 @@ class _PopUpCallState extends State<PopUpCall> {
               enable: widget.enable,
               type: widget.type);
         }
-        break;  case "CustomReturnTypePopupCall":
+        break;
+      case "VariantLengthunitPopupCall":
+        {
+          data = VariantLengthunitPopupCall(
+            id: widget.id,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "VariantWidthunitPopupCall":
+        {
+          data = VariantWidthunitPopupCall(
+            id: widget.id,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "VariantWeightunitPopupCall":
+        {
+          data = VariantWeightunitPopupCall(
+            id: widget.id,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+      case "VariantHeightunitPopupCall":
+        {
+          data = VariantHeightunitPopupCall(
+            id: widget.id,
+              onSelection: widget.onSelection,
+              onAddNew: widget.onAddNew,
+              value: widget.value,
+              enable: widget.enable,
+              type: widget.type);
+        }
+        break;
+
+      case "CustomReturnTypePopupCall":
         {
           data = CustomReturnTypePopupCall(
             id: widget.id,
@@ -611,6 +710,10 @@ class _SellingPriceBasedPopUpCallState
                       }
                     },
                     textFieldConfiguration: TextFieldConfiguration(
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
@@ -670,6 +773,711 @@ class _SellingPriceBasedPopUpCallState
   }
 }
 
+class CustomMessureentPopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CustomMessureentPopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CustomMessureentPopUpCallState createState() =>
+      _CustomMessureentPopUpCallState();
+}
+
+class _CustomMessureentPopUpCallState
+    extends State<CustomMessureentPopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<MessurementCubit>(
+        create: (context) => MessurementCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<MessurementCubit>().getMessurementRead();
+            return BlocBuilder<MessurementCubit,
+                MessurementState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.lengthUnit?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.lengthUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    ReadMessuremnetModel? newData;
+                    list.forEach((element) {
+                      newData?.lengthUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.lengthUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+class CustomHeightPopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CustomHeightPopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CustomHeightPopUpCallState createState() =>
+      _CustomHeightPopUpCallState();
+}
+
+class _CustomHeightPopUpCallState
+    extends State<CustomHeightPopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<MessurementCubit>(
+        create: (context) => MessurementCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<MessurementCubit>().getMessurementRead();
+            return BlocBuilder<MessurementCubit,
+                MessurementState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.heightUnit?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.heightUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    ReadMessuremnetModel? newData;
+                    list.forEach((element) {
+                      newData?.heightUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.heightUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+class CustomWeightPopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CustomWeightPopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CustomWeightPopUpCallState createState() =>
+      _CustomWeightPopUpCallState();
+}
+
+class _CustomWeightPopUpCallState
+    extends State<CustomWeightPopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<MessurementCubit>(
+        create: (context) => MessurementCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<MessurementCubit>().getMessurementRead();
+            return BlocBuilder<MessurementCubit,
+                MessurementState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.weightUnit?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.weightUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    ReadMessuremnetModel? newData;
+                    list.forEach((element) {
+                      newData?.weightUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.weightUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+class CustomWidthPopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CustomWidthPopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CustomWidthPopUpCallState createState() =>
+      _CustomWidthPopUpCallState();
+}
+
+class _CustomWidthPopUpCallState
+    extends State<CustomWidthPopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<MessurementCubit>(
+        create: (context) => MessurementCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<MessurementCubit>().getMessurementRead();
+            return BlocBuilder<MessurementCubit,
+                MessurementState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.widthUnit?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.widthUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    ReadMessuremnetModel? newData;
+                    list.forEach((element) {
+                      newData?.widthUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.widthUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+class CreateAttributeListPopUpCall extends StatefulWidget {
+  final String? value;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const CreateAttributeListPopUpCall(
+      {Key? key,
+      this.value,
+      this.onAddNew,
+      required this.onSelection,
+      required this.type,
+      required this.enable,
+      this.list})
+      : super(key: key);
+
+  @override
+  _CreateAttributeListPopUpCallState createState() =>
+      _CreateAttributeListPopUpCallState();
+}
+
+class _CreateAttributeListPopUpCallState
+    extends State<CreateAttributeListPopUpCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<AttributecreationtypelistCubit>(
+        create: (context) => AttributecreationtypelistCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<AttributecreationtypelistCubit>().getAttributeTypeList();
+            return BlocBuilder<AttributecreationtypelistCubit,
+                AttributecreationtypelistState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () => Center(
+                  child: CircularProgressIndicator(),
+                ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.attributeTypes?.length;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.attributeTypes![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    AttributeListModel? newData;
+                    list.forEach((element) {
+                      newData?.attributeTypes?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.attributeTypes!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+
+
+
+
 
 
 class ReturnTypePopupCall extends StatefulWidget {
@@ -708,13 +1516,13 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
   @override
   Widget build(BuildContext context) {
     label = widget.value;
-    return BlocProvider<VariantreadCubit>(
-        create: (context) =>  VariantreadCubit(),
+    return BlocProvider<ReturntypeCubit>(
+        create: (context) =>  ReturntypeCubit(),
         child: Builder(
           builder: (context) {
-            context.read<VariantreadCubit>().getVariantRead(widget.id);
-            return BlocBuilder<VariantreadCubit,
-                VariantreadState>(builder: (context, state) {
+            context.read<ReturntypeCubit>().getReturnType(widget.id);
+            return BlocBuilder<ReturntypeCubit,
+                ReturntypeState>(builder: (context, state) {
               print(state);
               return state.maybeWhen(
                 orElse: () =>
@@ -726,9 +1534,9 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                   print("data===" + data.toString());
                   List<String> list = [];
                   // list=data.orderTypes;
-                  int? length = data?.returType?.length;
+                  int? length = data?.returnType?.length??0;
                   for (var i = 0; i < length!; i++) {
-                    list.add(data!.returType![i]);
+                    list.add(data!.returnType![i]);
                   }
                   String? onSellingBasedSelect(var value, List<String> list) {
                     print("value" + value.toString());
@@ -752,6 +1560,10 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -768,7 +1580,579 @@ class _ReturnTypePopupCallState extends State<ReturnTypePopupCall> {
                         widget.onAddNew!();
                       else {
                         widget.onSelection(onSellingBasedSelect(
-                            suggestion.toString(), data!.returType!));
+                            suggestion.toString(), data!.returnType!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+class VariantLengthunitPopupCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const VariantLengthunitPopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.id,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _VariantLengthunitPopupCallState createState() =>
+      _VariantLengthunitPopupCallState();
+}
+
+class _VariantLengthunitPopupCallState extends State<VariantLengthunitPopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<ReturntypeCubit>(
+        create: (context) =>  ReturntypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<ReturntypeCubit>().getReturnType(widget.id);
+            return BlocBuilder<ReturntypeCubit,
+                ReturntypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () =>
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.lengthUnit?.length??0;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.lengthUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    Returntypemodel? newData;
+                    list.forEach((element) {
+                      newData?.lengthUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.lengthUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+class VariantWidthunitPopupCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const VariantWidthunitPopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.id,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _VariantWidthunitPopupCallState createState() =>
+      _VariantWidthunitPopupCallState();
+}
+
+class _VariantWidthunitPopupCallState extends State<VariantWidthunitPopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<ReturntypeCubit>(
+        create: (context) =>  ReturntypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<ReturntypeCubit>().getReturnType(widget.id);
+            return BlocBuilder<ReturntypeCubit,
+                ReturntypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () =>
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.widthUnit?.length??0;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.widthUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    Returntypemodel? newData;
+                    list.forEach((element) {
+                      newData?.widthUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.widthUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+
+class VariantWeightunitPopupCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const VariantWeightunitPopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.id,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _VariantWeightunitPopupCallState createState() =>
+      _VariantWeightunitPopupCallState();
+}
+
+class _VariantWeightunitPopupCallState extends State<VariantWeightunitPopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<ReturntypeCubit>(
+        create: (context) =>  ReturntypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<ReturntypeCubit>().getReturnType(widget.id);
+            return BlocBuilder<ReturntypeCubit,
+                ReturntypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () =>
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.weightUnit?.length??0;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.weightUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    Returntypemodel? newData;
+                    list.forEach((element) {
+                      newData?.weightUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.weightUnit!));
+                        // data.sellingPercntageBasedOn?.forEach((element) {
+                        //   if (element == suggestion)
+                        //     Variable.methodId = element.id;
+                        // });
+                      }
+                    },
+                    itemBuilder: (context, suggestion) {
+                      // if (suggestion == "Add new")
+                      //   return ListTile(
+                      //     leading: Icon(Icons.add_circle_outline_outlined),
+                      //     title: Text(suggestion.toString()),
+                      //   );
+                      return ListTile(
+                        ////leading: Icon(Icons.shopping_cart_outlined),
+                        title: Text(suggestion.toString()),
+                      );
+                    },
+                    suggestionsCallback: (String? value) async {
+                      return value == null || value.isEmpty
+                          ? list
+                          : search(value, list, widget.onAddNew);
+                    },
+                  );
+                },
+              );
+            });
+          },
+        ));
+  }
+
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+}
+
+
+class VariantHeightunitPopupCall extends StatefulWidget {
+  final String? value;
+  final int? id;
+  final VoidCallback? onAddNew;
+  final Function onSelection;
+  final String type;
+  final bool enable;
+  final List<String>? list;
+  const VariantHeightunitPopupCall(
+      {Key? key,
+        this.value,
+        this.onAddNew,
+        required this.id,
+        required this.onSelection,
+        required this.type,
+        required this.enable,
+        this.list})
+      : super(key: key);
+
+  @override
+  _VariantHeightunitPopupCallState createState() =>
+      _VariantHeightunitPopupCallState();
+}
+
+class _VariantHeightunitPopupCallState extends State<VariantHeightunitPopupCall> {
+  String? label;
+  TextEditingController _controller = TextEditingController();
+  @override
+  void initState() {
+    label = widget.value;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    label = widget.value;
+    return BlocProvider<ReturntypeCubit>(
+        create: (context) =>  ReturntypeCubit(),
+        child: Builder(
+          builder: (context) {
+            context.read<ReturntypeCubit>().getReturnType(widget.id);
+            return BlocBuilder<ReturntypeCubit,
+                ReturntypeState>(builder: (context, state) {
+              print(state);
+              return state.maybeWhen(
+                orElse: () =>
+                    Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                // error: () => {errorLoader(widget.onAddNew)},
+                success: (data) {
+                  print("data===" + data.toString());
+                  List<String> list = [];
+                  // list=data.orderTypes;
+                  int? length = data?.heightUnit?.length??0;
+                  for (var i = 0; i < length!; i++) {
+                    list.add(data!.heightUnit![i]);
+                  }
+                  String? onSellingBasedSelect(var value, List<String> list) {
+                    print("value" + value.toString());
+                    // print("value"+list.toString());
+
+                    Returntypemodel? newData;
+                    list.forEach((element) {
+                      newData?.heightUnit?.add(element);
+                    });
+                    return value;
+                  } // });
+
+                  if (widget.onAddNew != null) list.add("");
+                  _controller = TextEditingController(text: label);
+                  return TypeAheadFormField(
+                    enabled: widget.enable,
+                    validator: (value) {
+                      if (value != null && value.isEmpty) {
+                        return "required";
+                      }
+                    },
+                    textFieldConfiguration: TextFieldConfiguration(
+                        controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
+                        decoration: InputDecoration(
+                            isDense: true,
+                            enabledBorder:OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            focusedBorder:   OutlineInputBorder(
+                                borderRadius:BorderRadius.circular(2),
+
+                                borderSide: BorderSide(color: Color(0xff3E4F5B).withOpacity(.1))),
+                            suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                    onSuggestionSelected: (suggestion) {
+                      if (suggestion == "Add new")
+                        widget.onAddNew!();
+                      else {
+                        widget.onSelection(onSellingBasedSelect(
+                            suggestion.toString(), data!.heightUnit!));
                         // data.sellingPercntageBasedOn?.forEach((element) {
                         //   if (element == suggestion)
                         //     Variable.methodId = element.id;
@@ -892,6 +2276,10 @@ class _CustomReturnTypePopupCallState extends State<CustomReturnTypePopupCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -1031,6 +2419,10 @@ class _PgTypePopUpCallState extends State<PgTypePopUpCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -1166,6 +2558,10 @@ class _VirtualStockTypePopupCallState extends State<VirtualStockTypePopupCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -1326,6 +2722,10 @@ class _CostMethodPopUpCallState extends State<CostMethodPopUpCall> {
                         style: TextStyle(
                           fontSize: 13,
                         ),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         controller: _controller,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -1501,6 +2901,10 @@ class _AttributeListPopUpCallState extends State<AttributeListPopUpCall> {
                         style: TextStyle(
                           fontSize: 13,
                         ),
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         controller: _controller,
                         decoration: InputDecoration(
                             border: InputBorder.none,
@@ -1628,6 +3032,7 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                   _controller = TextEditingController(text: label);
                   return TypeAheadFormField(
                     enabled: widget.enable,
+
                     validator: (value) {
                       if (value != null && value.isEmpty) {
                         return "required";
@@ -1635,6 +3040,13 @@ class _RequestFoemOrderState extends State<RequestFoemOrder> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType:
+                        TextInputType.phone ,
+                        inputFormatters:
+
+                        <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r""))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -1782,6 +3194,10 @@ class _OrderedPersonRequestState extends State<OrderedPersonRequest> {
                   },
                   textFieldConfiguration: TextFieldConfiguration(
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           enabledBorder:OutlineInputBorder(
                               borderRadius:BorderRadius.circular(2),
@@ -1936,6 +3352,10 @@ class _VendorCodesSelectionState extends State<VendorCodesSelection> {
                         fontSize: 13,
                       ),
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // border: InputBorder.none,
                           isDense: true,
@@ -2230,6 +3650,10 @@ class _SalesOrderTypePopUpCallState extends State<SalesOrderTypePopUpCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -2369,6 +3793,10 @@ class _SalesOrderModePopUpCallState extends State<SalesOrderModePopUpCall> {
                     },
                     textFieldConfiguration: TextFieldConfiguration(
                         controller: _controller,
+                        keyboardType: TextInputType.phone,
+                        inputFormatters:  <TextInputFormatter>[
+                          FilteringTextInputFormatter.allow(RegExp(r" "))
+                        ],
                         decoration: InputDecoration(
                             isDense: true,
                             enabledBorder:OutlineInputBorder(
@@ -2508,6 +3936,10 @@ class _PriceTypePopUpCallState extends State<PriceTypePopUpCall> {
                       },
                       textFieldConfiguration: TextFieldConfiguration(
                           controller: _controller,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters:  <TextInputFormatter>[
+                            FilteringTextInputFormatter.allow(RegExp(r" "))
+                          ],
                           decoration: InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
@@ -2943,6 +4375,10 @@ class _InvoiceCodePopUpCallState extends State<InvoiceCodePopUpCall> {
                 },
                 textFieldConfiguration: TextFieldConfiguration(
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         isDense: true,
                         enabledBorder: OutlineInputBorder(
@@ -3382,6 +4818,10 @@ class _BrandListPopUpCallState extends State<BrandListPopUpCall> {
                       // context.read<Listbrand2Cubit>().searchSlotSectionPageList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -3693,6 +5133,10 @@ class _CostingMethodeTypePopUpCallPopUpCall
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -3849,6 +5293,10 @@ class _CostingCreateMethodePopUpCall
                       // search3(context, va);
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     controller: _controller,
                     decoration: InputDecoration(
                         // hintText: hintText,
@@ -4004,6 +5452,10 @@ class _PricingGroupPopUpCall extends State<PricingGroupPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -4161,6 +5613,10 @@ class _PricingPopUpCall extends State<PricingPopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -4326,6 +5782,10 @@ class _DivisionListPopUpCall extends State<DivisionListPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -4521,6 +5981,10 @@ class _VariantSerachPopUpCall extends State<VariantSerachPopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -4693,6 +6157,10 @@ class _CategoryListPopUpCall extends State<CategoryListPopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -4852,6 +6320,10 @@ class _GroupPopUpCall extends State<GroupPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -5008,6 +6480,10 @@ class _StaticListPopUpCall extends State<StaticListPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -5162,6 +6638,10 @@ class _FrameWorkPopUpCallPopUpCall extends State<FrameWorkPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -5320,6 +6800,10 @@ class _UomgroupPopUpCall extends State<UomgroupPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -5475,6 +6959,10 @@ class _UomPopUpCall extends State<UomPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,
@@ -5649,6 +7137,10 @@ class _SalesUomPopUpCall extends State<SalesUomPopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -5734,11 +7226,7 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
   String? label;
   String? hintText;
   TextEditingController _controller = TextEditingController();
-  @override
-  void initState() {
-    setState(() {});
-    super.initState();
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -5751,7 +7239,7 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
     return BlocProvider(
       create: (context) => ProducedcountryCubit(),
       child: Builder(builder: (context) {
-        context.read<ProducedcountryCubit>().getProducedCountry(widget.code);
+        // context.read<ProducedcountryCubit>().getProducedCountry(widget.code);
 
         return BlocBuilder<ProducedcountryCubit, ProducedcountryState>(
             builder: (context, state) {
@@ -5759,22 +7247,22 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
             orElse: () => Center(
               child: CircularProgressIndicator(),
             ),
-            error: () => TextFormField(
-              controller: TextEditingController(text: widget.value),
-              onTap: () {},
-              decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(2),
-                      borderSide: BorderSide(
-                          color: Color(0xff3E4F5B).withOpacity(.06))),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(2),
-                      borderSide: BorderSide(
-                          color: Color(0xff3E4F5B).withOpacity(.06))),
-                  isDense: true,
-                  border: OutlineInputBorder(),
-                  suffixIcon: Icon(Icons.keyboard_arrow_down)),
-            ),
+            // error: () => TextFormField(
+            //   controller: TextEditingController(text: widget.value),
+            //   onTap: () {},
+            //   decoration: InputDecoration(
+            //       enabledBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(2),
+            //           borderSide: BorderSide(
+            //               color: Color(0xff3E4F5B).withOpacity(.06))),
+            //       focusedBorder: OutlineInputBorder(
+            //           borderRadius: BorderRadius.circular(2),
+            //           borderSide: BorderSide(
+            //               color: Color(0xff3E4F5B).withOpacity(.06))),
+            //       isDense: true,
+            //       border: OutlineInputBorder(),
+            //       suffixIcon: Icon(Icons.keyboard_arrow_down)),
+            // ),
             // errorLoader(widget.onAddNew),
             success: (data) {
               print("anagha" + data.toString());
@@ -5809,66 +7297,68 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
               _controller = TextEditingController(text: label);
               // hintText = label;
 
-              return Container(
-                child: TypeAheadFormField(
-                  enabled: widget.enable,
-                  hideSuggestionsOnKeyboardHide: true,
-                  validator: (value) {
-                    if (value != null && value.isEmpty) {
-                      return "required";
-                    }
-                  },
-                  textFieldConfiguration: TextFieldConfiguration(
-                      style: TextStyle(fontSize: 13),
-                      onChanged: (va) {
-                        print(va);
-                        // search3(context, va);
-                        // context.read<MaterialListCubit>().searchMaterialList(va);
-                      },
-                      controller: _controller,
-                      decoration: InputDecoration(
-                          // hintText: hintText,
-                          isDense: true,
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(2),
-                              borderSide: BorderSide(
-                                  color: Color(0xff3E4F5B).withOpacity(.1))),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(2),
-                              borderSide: BorderSide(
-                                  color: Color(0xff3E4F5B).withOpacity(.1))),
-                          suffixIcon: Icon(Icons.keyboard_arrow_down))),
-                  onSuggestionSelected: (suggestion) {
-                    if (suggestion == "Add new")
-                      widget.onAddNew!();
-                    else {
-                      widget.onSelection(
-                          onSellingBasedSelect(suggestion.toString(), data));
-                    }
-                    // widget.onSelection(
-                    //     onSelect(suggestion.toString(), data ?? []));
-                  },
-                  itemBuilder: (context, suggestion) {
-                    if (suggestion == "Add new")
-                      return Column(
-                        children: [
-                          ListTile(
-                            leading: Icon(Icons.add_circle_outline_outlined),
-                            title: Text(suggestion.toString()),
-                          ),
-                        ],
-                      );
-                    return ListTile(
-                      ////leading: Icon(Icons.shopping_cart_outlined),
-                      title: Text(suggestion.toString()),
-                    );
-                  },
-                  suggestionsCallback: (String? value) async {
-                    return value == null || value.isEmpty
-                        ? list
-                        : search(value, list, widget.onAddNew);
-                  },
-                ),
+              return TypeAheadFormField(
+                enabled: widget.enable,
+                hideSuggestionsOnKeyboardHide: true,
+                validator: (value) {
+                  if (value != null && value.isEmpty) {
+                    return "required";
+                  }
+                },
+                textFieldConfiguration: TextFieldConfiguration(
+                    style: TextStyle(fontSize: 13),
+                    onChanged: (va) {
+                      print(va);
+                      // search3(context, va);
+                      // context.read<MaterialListCubit>().searchMaterialList(va);
+                    },
+                    controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
+                    decoration: InputDecoration(
+                        // hintText: hintText,
+                        isDense: true,
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1))),
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(2),
+                            borderSide: BorderSide(
+                                color: Color(0xff3E4F5B).withOpacity(.1))),
+                        suffixIcon: Icon(Icons.keyboard_arrow_down))),
+                onSuggestionSelected: (suggestion) {
+                  if (suggestion == "Add new")
+                    widget.onAddNew!();
+                  else {
+                    widget.onSelection(
+                        onSellingBasedSelect(suggestion.toString(), data));
+                  }
+                  // widget.onSelection(
+                  //     onSelect(suggestion.toString(), data ?? []));
+                },
+                itemBuilder: (context, suggestion) {
+                  // if (suggestion == "Add new")
+                  //   return Column(
+                  //     children: [
+                  //       ListTile(
+                  //         leading: Icon(Icons.add_circle_outline_outlined),
+                  //         title: Text(suggestion.toString()),
+                  //       ),
+                  //     ],
+                  //   );
+                  return ListTile(
+                    ////leading: Icon(Icons.shopping_cart_outlined),
+                    title: Text(suggestion.toString()),
+                  );
+                },
+                suggestionsCallback: (String? value) async {
+                  return value == null || value.isEmpty
+                      ? list
+                      : search(value, list, widget.onAddNew);
+                },
               );
             },
           );
@@ -5876,7 +7366,21 @@ class _ProducedCountryPopUpCall extends State<ProducedCountryPopUpCall> {
       }),
     );
   }
+  List<String> search(String value, List<String> list, VoidCallback? onAddNew) {
+    List<String> newList = [];
+    list.forEach((element) {
+      if (element.toLowerCase().contains(value.toLowerCase()))
+        newList.add(element);
+    });
+    onAddNew != null ? newList.add("Add new") : null;
+    return newList;
+  }
+
 }
+
+
+
+
 
 
 class StatePopUpCall extends StatefulWidget {
@@ -6004,6 +7508,10 @@ class _StatePopUpCall extends State<StatePopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -6184,6 +7692,10 @@ class _SeblingUomPopUpCall extends State<SeblingUomPopUpCall> {
                         // context.read<MaterialListCubit>().searchMaterialList(va);
                       },
                       controller: _controller,
+                      keyboardType: TextInputType.phone,
+                      inputFormatters:  <TextInputFormatter>[
+                        FilteringTextInputFormatter.allow(RegExp(r" "))
+                      ],
                       decoration: InputDecoration(
                           // hintText: hintText,
                           isDense: true,
@@ -6340,6 +7852,10 @@ class _SubcategoryPopUpCall extends State<SubcategoryPopUpCall> {
                       // context.read<MaterialListCubit>().searchMaterialList(va);
                     },
                     controller: _controller,
+                    keyboardType: TextInputType.phone,
+                    inputFormatters:  <TextInputFormatter>[
+                      FilteringTextInputFormatter.allow(RegExp(r" "))
+                    ],
                     decoration: InputDecoration(
                         // hintText: hintText,
                         isDense: true,

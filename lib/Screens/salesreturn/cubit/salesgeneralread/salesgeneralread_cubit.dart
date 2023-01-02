@@ -10,6 +10,7 @@ class SalesgeneralreadCubit extends Cubit<SalesgeneralreadState> {
   SalesgeneralreadCubit() : super(SalesgeneralreadState.initial());
   final PurchaseReturnRepoAbstract repo = PurchaseReturnImpl();
   Future getSalesReturnGeneralRead(int? id) async {
+    emit(SalesgeneralreadState.initial());
     print("idddidd" + id.toString());
     final result = await repo.getSalesReturnGeneralRead(id);
     result.fold((l) => emit(_Error()), (r) => emit(_Success(r)));

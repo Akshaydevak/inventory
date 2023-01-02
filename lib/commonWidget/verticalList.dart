@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:inventory/Invetory/inventorysearch_cubit.dart';
 import 'package:inventory/Screens/Dashboard.dart';
 import 'package:inventory/Screens/heirarchy/customizeddata/cubit/listcustom/listcustomvertical_cubit.dart';
+import 'package:inventory/Screens/heirarchy/general/cubits/attributepatchlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/baseuomlist/baseuomlist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/categorylist/categorylist_cubit.dart';
 import 'package:inventory/Screens/heirarchy/general/cubits/devision_list/devision_list_cubit.dart';
@@ -32,6 +33,7 @@ import 'package:scroll_to_index/scroll_to_index.dart';
 import 'package:inventory/model/purchaseorder.dart';
 
 import '../Screens/heirarchy/general/model/listbrand.dart';
+import '../Screens/heirarchy/general/model/variantframeworkpost.dart';
 import '../Screens/salesreturn/cubit/verticallist/salesreturnvertical_cubit.dart';
 import '../Screens/variant/stock/models/stockverticallist.dart';
 
@@ -52,6 +54,7 @@ class _VerticalListState extends State<VerticalList> {
   int? veritiaclid=0;
   List<PurchaseOrder>result=[];
   bool select=false;
+  bool suffixIconCheck=false;
   int selectedVertical=0;
   NavigationProvider vm = NavigationProvider();
   TextEditingController itemsearch=TextEditingController();
@@ -118,18 +121,26 @@ class _VerticalListState extends State<VerticalList> {
                               child: SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                suffixIconCheck: suffixIconCheck,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
+                                  setState(() {
+
+
                                   print("searching case"+va.toString());
                                   context
                                       .read<InventorysearchCubit>()
                                       .getSearch(widget.itemsearch.text,tab: widget.tab);
+                                  suffixIconCheck=true;
                                   if(va==""){
+                                    suffixIconCheck=false;
                                     context
                                         .read<InventorysearchCubit>()
                                         .getInventorySearch("code",tab: widget.tab);
 
+
                                   }
+                                  });
 
                                 },
                               )),
@@ -257,10 +268,11 @@ class DivisionConfigVerticalList extends StatefulWidget {
   final Widget? child;
   final   List<BrandListModel> result ;
   final String? tab;
+  final bool suffixIconCheck;
   int selectedVertical;
   final Function(int) ontap;
   final Function(String) search;
-  DivisionConfigVerticalList({ required this.itemsearch,required this.result, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox(), required this.search});
+  DivisionConfigVerticalList({ required this.itemsearch,required this.result,this.suffixIconCheck=false, required this.selectedVertical,required this.ontap,this.tab , this.child=const SizedBox(), required this.search});
   @override
   _DivisionConfigVerticalListState createState() => _DivisionConfigVerticalListState();
 }
@@ -334,6 +346,7 @@ class _DivisionConfigVerticalListState extends State<DivisionConfigVerticalList>
                           Container(
                               margin: EdgeInsets.all(5),
                               child: SearchTextfiled(
+                                suffixIconCheck: widget.suffixIconCheck,
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
                                 ctrlr:widget. itemsearch,
@@ -480,6 +493,7 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
   int? veritiaclid=0;
   List<PurchaseOrder>result=[];
   bool select=false;
+  bool suffixIconCheck=false;
   int selectedVertical=0;
   TextEditingController itemsearch=TextEditingController();
   NavigationProvider vm = NavigationProvider();
@@ -548,16 +562,19 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                               SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                suffixIconCheck:suffixIconCheck ,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
                                   print("searching case"+va.toString());
                                   context
                                       .read<VertiacalCubit>()
                                       .getSearch(widget.itemsearch.text);
+                                  suffixIconCheck=true;
                                   if(va==""){
                                     context
                                         .read<VertiacalCubit>()
                                         .getGeneralVertical();
+                                    suffixIconCheck=false;
 
                                   }
 
@@ -568,60 +585,60 @@ class _PurchaseVerticalListState extends State<PurchaseVerticalList> {
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: width * 0.009,
-                              right: width * 0.007,
-                            ),
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RectangleContainer(
-                                    "asset/rect1.png", context),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                Container(
-                                  color: Color(0xffFFFFFF),
-
-                                  height: width * .0197,
-                                  width: width * .111,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: width * .001,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: width * .007,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Add a Varient",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: width * .010,
-                                              overflow:
-                                              TextOverflow.ellipsis),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                RectangleContainer(
-                                    "asset/rect2.png", context),
-                              ],
-                            ),
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     left: width * 0.009,
+                          //     right: width * 0.007,
+                          //   ),
+                          //   child: Row(
+                          //     //mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       RectangleContainer(
+                          //           "asset/rect1.png", context),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       Container(
+                          //         color: Color(0xffFFFFFF),
+                          //
+                          //         height: width * .0197,
+                          //         width: width * .111,
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(
+                          //               width: width * .001,
+                          //             ),
+                          //             Icon(
+                          //               Icons.add,
+                          //               color: Colors.black,
+                          //               size: 14,
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * .007,
+                          //             ),
+                          //             Container(
+                          //               child: Text(
+                          //                 "Add a Varient",
+                          //                 style: TextStyle(
+                          //                     color: Colors.black,
+                          //                     fontSize: width * .010,
+                          //                     overflow:
+                          //                     TextOverflow.ellipsis),
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       RectangleContainer(
+                          //           "asset/rect2.png", context),
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(
                             height: height * .015,
                           ),
@@ -697,6 +714,7 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
   int? veritiaclid=0;
   List<salesOrderTypeModel>result=[];
   bool select=false;
+  bool suffixIconCheck=false;
   int selectedVertical=0;
   TextEditingController itemsearch=TextEditingController();
   NavigationProvider vm = NavigationProvider();
@@ -765,17 +783,25 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
                                 ctrlr:widget. itemsearch,
+                                suffixIconCheck:suffixIconCheck ,
                                 onChanged: (va) {
+                                  setState(() {
+
+
+
                                   print("searching case"+va.toString());
                                   context
                                       .read<VertiacalCubit>()
                                       .getSearch(widget.itemsearch.text);
+                                  suffixIconCheck=true;
                                   if(va==""){
-                                    // context
-                                    //     .read<VertiacalCubit>()
-                                    //     .getGeneralVertical();
+                                    context
+                                        .read<VertiacalCubit>()
+                                        .getGeneralVertical();
+                                    suffixIconCheck=false;
 
                                   }
+                                  });
 
                                 },
                               )),
@@ -783,63 +809,63 @@ class _SalesGeneralVerticalListState extends State<SalesGeneralVerticalList> {
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: width * 0.009,
-                              right: width * 0.007,
-                            ),
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RectangleContainer(
-                                    "asset/rect1.png", context),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                Container(
-                                  color: Color(0xffFFFFFF),
-
-                                  height: width * .0197,
-                                  width: width * .111,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: width * .001,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: width * .007,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Add a Varient",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: width * .010,
-                                              overflow:
-                                              TextOverflow.ellipsis),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                RectangleContainer(
-                                    "asset/rect2.png", context),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: height * .015,
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     left: width * 0.009,
+                          //     right: width * 0.007,
+                          //   ),
+                          //   child: Row(
+                          //     //mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       RectangleContainer(
+                          //           "asset/rect1.png", context),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       Container(
+                          //         color: Color(0xffFFFFFF),
+                          //
+                          //         height: width * .0197,
+                          //         width: width * .111,
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(
+                          //               width: width * .001,
+                          //             ),
+                          //             Icon(
+                          //               Icons.add,
+                          //               color: Colors.black,
+                          //               size: 14,
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * .007,
+                          //             ),
+                          //             Container(
+                          //               child: Text(
+                          //                 "Add a Varient",
+                          //                 style: TextStyle(
+                          //                     color: Colors.black,
+                          //                     fontSize: width * .010,
+                          //                     overflow:
+                          //                     TextOverflow.ellipsis),
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       RectangleContainer(
+                          //           "asset/rect2.png", context),
+                          //     ],
+                          //   ),
+                          // ),
+                          // SizedBox(
+                          //   height: height * .015,
+                          // ),
 
                           Expanded(
                               child: Container(
@@ -913,6 +939,7 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
   int? veritiaclid=0;
   List<salesOrderTypeModel>result=[];
   bool select=false;
+  bool suffixIconCheck=false;
   int selectedVertical=0;
   TextEditingController itemsearch=TextEditingController();
   NavigationProvider vm = NavigationProvider();
@@ -981,17 +1008,24 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
                                 ctrlr:widget. itemsearch,
+                                suffixIconCheck: suffixIconCheck,
                                 onChanged: (va) {
+                                  setState(() {
+
+
                                   print("searching case"+va.toString());
+                                  suffixIconCheck=true;
                                   context
                                       .read<SalesreturnverticalCubit>()
                                       .getSalesReturnSearch(widget.itemsearch.text);
                                   if(va==""){
+                                    suffixIconCheck=false;
                                     // context
                                     //     .read<VertiacalCubit>()
                                     //     .getGeneralVertical();
 
                                   }
+                                  });
 
                                 },
                               )),
@@ -999,60 +1033,60 @@ class _SalesReturnGeneralVerticalListState extends State<SalesReturnGeneralVerti
                             height:
                             MediaQuery.of(context).size.height * .008,
                           ),
-                          Container(
-                            margin: EdgeInsets.only(
-                              left: width * 0.009,
-                              right: width * 0.007,
-                            ),
-                            child: Row(
-                              //mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                RectangleContainer(
-                                    "asset/rect1.png", context),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                Container(
-                                  color: Color(0xffFFFFFF),
-
-                                  height: width * .0197,
-                                  width: width * .111,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: width * .001,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: Colors.black,
-                                        size: 14,
-                                      ),
-                                      SizedBox(
-                                        width: width * .007,
-                                      ),
-                                      Container(
-                                        child: Text(
-                                          "Add a Varient",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: width * .010,
-                                              overflow:
-                                              TextOverflow.ellipsis),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * .003,
-                                ),
-                                RectangleContainer(
-                                    "asset/rect2.png", context),
-                              ],
-                            ),
-                          ),
+                          // Container(
+                          //   margin: EdgeInsets.only(
+                          //     left: width * 0.009,
+                          //     right: width * 0.007,
+                          //   ),
+                          //   child: Row(
+                          //     //mainAxisAlignment: MainAxisAlignment.center,
+                          //     children: [
+                          //       RectangleContainer(
+                          //           "asset/rect1.png", context),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       Container(
+                          //         color: Color(0xffFFFFFF),
+                          //
+                          //         height: width * .0197,
+                          //         width: width * .111,
+                          //         child: Row(
+                          //           mainAxisAlignment:
+                          //           MainAxisAlignment.center,
+                          //           children: [
+                          //             SizedBox(
+                          //               width: width * .001,
+                          //             ),
+                          //             Icon(
+                          //               Icons.add,
+                          //               color: Colors.black,
+                          //               size: 14,
+                          //             ),
+                          //             SizedBox(
+                          //               width: width * .007,
+                          //             ),
+                          //             Container(
+                          //               child: Text(
+                          //                 "Add a Varient",
+                          //                 style: TextStyle(
+                          //                     color: Colors.black,
+                          //                     fontSize: width * .010,
+                          //                     overflow:
+                          //                     TextOverflow.ellipsis),
+                          //               ),
+                          //             )
+                          //           ],
+                          //         ),
+                          //       ),
+                          //       SizedBox(
+                          //         width: width * .003,
+                          //       ),
+                          //       RectangleContainer(
+                          //           "asset/rect2.png", context),
+                          //     ],
+                          //   ),
+                          // ),
                           SizedBox(
                             height: height * .015,
                           ),
@@ -2405,6 +2439,199 @@ class _FrameWorkVerticalListState extends State<FrameWorkVerticalList> {
 
 
 
+class AttributeVerticalList extends StatefulWidget {
+  final TextEditingController itemsearch;
+  final  PaginatedResponse<dynamic>? list;
+  final   List<AttributeListModel> result ;
+  final String? tab;
+  int selectedVertical;
+  final Function(int) ontap;
+  final Function(String) search;
+  AttributeVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  @override
+  _AttributeVerticalListState createState() => _AttributeVerticalListState();
+}
+
+class _AttributeVerticalListState extends State<AttributeVerticalList> {
+  late AutoScrollController controller;
+  int? veritiaclid=0;
+  List<AttributeListModel>result=[];
+  bool select=false;
+  int selectedVertical=0;
+  TextEditingController itemsearch=TextEditingController();
+  NavigationProvider vm = NavigationProvider();
+  @override
+  void initState() {
+
+    int verticalScrollIndex = 0;
+    controller = AutoScrollController(
+        viewportBoundaryGetter: () =>
+            Rect.fromLTRB(0, 0, 0, MediaQuery.of(context).padding.bottom),
+        axis: Axis.vertical);
+    super.initState();
+    // context.read<InventorysearchCubit>().getSearch("code").then((value) {
+    //   print("ak test"+value.toString());
+    // });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print("Static"+widget.result.toString());
+    Size size = MediaQuery.of(context).size;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
+    vm = Provider.of<NavigationProvider>(context);
+    return Container(
+      //     child: BlocProvider(
+      // create: (context) => InventorysearchCubit()..getInventorySearch("code"),
+      child: Builder(
+          builder: (context) {
+            return BlocConsumer<ListvraiantCubit, ListvraiantState>(
+              listener: (context, state) {
+                print("this portion is working");
+                state.maybeWhen(orElse:(){},
+                    error: (){
+                      print("error");
+                    },
+                    success: (list){
+                      print("listtt"+list.toString());
+                      result=list.data;setState(() {
+                        print("Here is the result");
+                        print(result);
+
+                      });
+
+                    }
+                );
+              },
+              builder: (context, state) {
+                return Container(
+                  height: double.infinity,
+                  width: width * .128,
+                  margin: EdgeInsets.all(10),
+                  child:
+
+                  Visibility(
+                    visible:  !vm.isCollapsed,
+                    child: Container(
+                      height: height,
+                      // height: double.minPositive,
+                      width: width * .128,
+                      //width: 232,
+                      color: Color(0xffEDF1F2),
+                      child: Column(
+                        children: [
+                          Container(
+                              margin: EdgeInsets.all(5),
+                              child:
+                              SearchTextfiled(
+                                color: Color(0xffFAFAFA),
+                                hintText: "Search...",
+                                ctrlr:widget. itemsearch,
+                                onChanged: (va) {
+                                  print("searching case"+va.toString());
+                                  widget.search(va);
+                                  // context
+                                  //     .read<ItemcreationListCubit>()
+                                  //     .searchItemList(widget.itemsearch.text);
+                                  // if(va==""){
+                                  //   // context
+                                  //   //     .read<VertiacalCubit>()
+                                  //   //     .getGeneralVertical();
+                                  //
+                                  // }
+
+                                },
+                              )
+                          ),
+                          SizedBox(
+                            height:
+                            MediaQuery.of(context).size.height * .008,
+                          ),
+
+
+                          Expanded(
+                              child: Container(
+                                  height: 0,
+                                  child: ListView.separated(
+
+
+
+                                    separatorBuilder: (context, index) {
+
+                                      return Divider(
+                                        height: 0,
+                                        color: Color(0xff2B3944)
+                                            .withOpacity(0.3),
+                                        // thickness: 1,
+                                      );
+                                    },
+                                    physics: ScrollPhysics(),
+                                    controller: controller,
+                                    itemBuilder: (context, index) {
+                                      return AutoScrollTag(
+                                          highlightColor: Colors.red,
+                                          controller: controller,
+                                          key: ValueKey(index),
+                                          index: index,
+                                          child: ItemCard(
+                                            index: index,
+                                            selectedVertical:widget. selectedVertical,
+                                            item: widget.result[index].attributeName,
+                                            id:widget. result[index]
+                                                .id
+                                                .toString(),
+                                            onClick: () {
+                                              widget.ontap( index);
+
+                                            },
+                                          ));
+                                    },
+                                    itemCount: widget.result.length,
+                                  )
+
+
+                              )),
+                          tablePagination(
+                                () => context
+                                .read<AttributepatchlistCubit>()
+                                .refresh(),
+                            back: widget.list?.previousUrl == null
+                                ? null
+                                : () {
+                              context
+                                  .read<AttributepatchlistCubit>()
+                                  .previuosslotSectionPageList();
+                            },
+                            next: widget.list?.nextPageUrl == null
+                                ? null
+                                : () {
+                              // print(data.nextPageUrl);
+                              context
+                                  .read<AttributepatchlistCubit>()
+                                  .nextslotSectionPageList();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }
+      ),
+
+    );
+
+  }
+}
+
+
+
+
+
 
 
 class PricingVerticalList extends StatefulWidget {
@@ -3708,6 +3935,7 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
   int? veritiaclid=0;
   List<BrandListModel>result=[];
   bool select=false;
+  bool suffixIconCheck=false;
   int selectedVertical=0;
   TextEditingController itemsearch=TextEditingController();
   NavigationProvider vm = NavigationProvider();
@@ -3759,16 +3987,23 @@ class _ItemVerticalListState extends State<ItemVerticalList> {
                               SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                suffixIconCheck:suffixIconCheck ,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
+                                  setState(() {
+
+
                                   print("searching case"+va.toString());
                                   context
                                       .read<ItemcreationListCubit>()
                                       .searchItemList(widget.itemsearch.text);
+                                  suffixIconCheck=true;
                                   if(va==""){
                                     context.read<ItemcreationListCubit>().getItemListList();
+                                    suffixIconCheck=false;
 
                                   }
+                                  });
 
                                 },
                               )
@@ -3864,9 +4099,10 @@ class VariantVerticalList extends StatefulWidget {
   final   List<BrandListModel> result ;
   final String? tab;
   int selectedVertical;
+  final bool suffixIconCheck;
   final Function(int) ontap;
   final Function(String) search;
-  VariantVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  VariantVerticalList({ required this.itemsearch,this.suffixIconCheck=false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
   @override
   _VariantVerticalListState createState() => _VariantVerticalListState();
 }
@@ -3945,6 +4181,7 @@ class _VariantVerticalListState extends State<VariantVerticalList> {
                               SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                suffixIconCheck: widget.suffixIconCheck,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
                                   print("searching case"+va.toString());
@@ -4055,10 +4292,11 @@ class CustomIseVerticalList extends StatefulWidget {
   final  PaginatedResponse<dynamic>? list;
   final   List<BrandListModel> result ;
   final String? tab;
+  final bool suffixIconCheck;
   int selectedVertical;
   final Function(int) ontap;
   final Function(String) search;
-  CustomIseVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  CustomIseVerticalList({ required this.itemsearch,this.suffixIconCheck =false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
   @override
   _CustomIseVerticalListState createState() => _CustomIseVerticalListState();
 }
@@ -4137,6 +4375,7 @@ class _CustomIseVerticalListState extends State<CustomIseVerticalList> {
                               SearchTextfiled(
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
+                                suffixIconCheck: widget.suffixIconCheck,
                                 ctrlr:widget. itemsearch,
                                 onChanged: (va) {
                                   print("searching case"+va.toString());
@@ -4246,10 +4485,11 @@ class channelVerticalList extends StatefulWidget {
   final  PaginatedResponse<dynamic>? list;
   final   List<StockVerticalReadModel> result ;
   final String? tab;
+  final bool suffixIconCheck;
   int selectedVertical;
   final Function(int) ontap;
   final Function(String) search;
-  channelVerticalList({ required this.itemsearch,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
+  channelVerticalList({ required this.itemsearch,this.suffixIconCheck=false,required this.list,required this.result, required this.selectedVertical,required this.ontap,this.tab,required this.search});
   @override
   _channelVerticalListtState createState() => _channelVerticalListtState();
 }
@@ -4329,6 +4569,7 @@ class _channelVerticalListtState extends State<channelVerticalList> {
                                 color: Color(0xffFAFAFA),
                                 hintText: "Search...",
                                 ctrlr:widget. itemsearch,
+                                suffixIconCheck: widget.suffixIconCheck,
                                 onChanged: (va) {
                                   print("searching case"+va.toString());
                                   widget.search(va);

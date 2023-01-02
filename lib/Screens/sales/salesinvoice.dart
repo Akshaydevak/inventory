@@ -272,53 +272,53 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                 builder: (context) {
                   return Scaffold(
                     backgroundColor: Pellet.bagroundColor,
-                    body: SingleChildScrollView(
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SalesGeneralVerticalList(
+                    body: IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SalesGeneralVerticalList(
 
-                              selectedVertical: selectedVertical,
-                              itemsearch: itemsearch,ontap: (int index){
+                            selectedVertical: selectedVertical,
+                            itemsearch: itemsearch,ontap: (int index){
+                            setState(() {
+                              selectedVertical=index;
+                              // select=false;
+
+
+
+                              veritiaclid = result[index].id;
+                              // currentStock.clear();
+                              //
+                              context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
                               setState(() {
-                                selectedVertical=index;
-                                // select=false;
 
-
-
-                                veritiaclid = result[index].id;
-                                // currentStock.clear();
-                                //
-                                context.read<InvoicereadCubit>().getSalesInvoiceRead(veritiaclid!);
-                                setState(() {
-
-                                });
                               });
-                            },result: result,
-                              child:     tablePagination(
-                                    () => context
+                            });
+                          },result: result,
+                            child:     tablePagination(
+                                  () => context
+                                  .read<SalesgeneralverticalCubit>()
+                                  .refresh(),
+                              back: paginatedList?.previousUrl == null
+                                  ? null
+                                  : () {
+                                context
                                     .read<SalesgeneralverticalCubit>()
-                                    .refresh(),
-                                back: paginatedList?.previousUrl == null
-                                    ? null
-                                    : () {
-                                  context
-                                      .read<SalesgeneralverticalCubit>()
-                                      .previuosslotSectionPageList();
-                                },
-                                next:paginatedList?.nextPageUrl == null
-                                    ? null
-                                    : () {
-                                  // print(data.nextPageUrl);
-                                  context
-                                      .read<SalesgeneralverticalCubit>()
-                                      .nextslotSectionPageList();
-                                },
-                              ),
+                                    .previuosslotSectionPageList();
+                              },
+                              next:paginatedList?.nextPageUrl == null
+                                  ? null
+                                  : () {
+                                // print(data.nextPageUrl);
+                                context
+                                    .read<SalesgeneralverticalCubit>()
+                                    .nextslotSectionPageList();
+                              },
                             ),
-                            Expanded(
+                          ),
+                          Expanded(
+                            child: SingleChildScrollView(
                               child: Column(
                                 children: [
                                   Row(
@@ -561,10 +561,9 @@ class _SalesInvoiceScreenState extends State<SalesInvoiceScreen> {
                                 ],
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-
                     ),
                   );
                 }
